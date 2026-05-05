@@ -1,0 +1,84 @@
+---
+title: "Semaine 07 - Méthodes de lissage pour la prévision court terme"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 07 - Méthodes de lissage pour la prévision court terme
+
+## Let’s eat the cake
+
+Objectif : utiliser des méthodes de lissage pour produire des prévisions simples et utiles.
+
+Compétences développées :
+- Calculer une moyenne mobile.
+- Comprendre le lissage exponentiel.
+- Évaluer une prévision court terme.
+
+Application business : prévoir la demande hebdomadaire ou mensuelle.
+
+Résultat final attendu : une prévision de court terme accompagnée d'une mesure d'erreur.
+
+Lien avec une décision d'affaires réelle : décider d'un niveau de stock ou de personnel.
+
+## Mise en contexte
+
+Un commerce alimentaire doit prévoir la demande hebdomadaire pour réduire les ruptures de stock et les surplus.
+
+TODO: Ajouter un jeu de données de demande hebdomadaire.
+
+## Concepts clés
+
+- Moyenne mobile.
+- Lissage exponentiel simple.
+- Erreur de prévision.
+- MAE, RMSE et MAPE.
+- Arbitrage entre réactivité et stabilité.
+
+## Capsules de la semaine
+
+- Capsule 1 : Pourquoi lisser une série?
+- Capsule 2 : Moyennes mobiles.
+- Capsule 3 : Lissage exponentiel et mesure d'erreur.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Comparer une prévision très réactive et une prévision très stable.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(slider)
+
+demande_lissee <- demande |>
+  arrange(semaine) |>
+  mutate(moyenne_mobile_4 = slider::slide_dbl(unites, mean, .before = 3, .complete = TRUE))
+```
+
+AE 3 : réflexion critique. Déterminer quel type d'erreur est le plus coûteux pour l'entreprise.
+
+## Mini-cas business
+
+Prévision court terme pour éviter les ruptures d'inventaire.
+
+## À retenir
+
+Le bon niveau de lissage dépend du coût d'une erreur et de la rapidité des changements dans la demande.
+
+## Erreurs fréquentes
+
+- Choisir une fenêtre de lissage sans justification.
+- Confondre ajustement passé et performance future.
+- Ignorer les coûts asymétriques des erreurs.
+
+## Trace de portfolio ou livrable court
+
+Comparer deux méthodes de lissage et recommander celle à utiliser.
+
+## Pour aller plus loin
+
+TODO: Ajouter un exercice sur le choix d'une fenêtre de moyenne mobile.
+

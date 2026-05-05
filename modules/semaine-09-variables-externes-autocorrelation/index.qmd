@@ -1,0 +1,90 @@
+---
+title: "Semaine 09 - Prévision avec variables externes et autocorrélation"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 09 - Prévision avec variables externes et autocorrélation
+
+## Let’s eat the cake
+
+Objectif : améliorer une prévision en intégrant des variables externes et en vérifiant la dépendance temporelle.
+
+Compétences développées :
+- Ajouter des variables explicatives à un modèle de prévision.
+- Lire un graphique de résidus temporels.
+- Repérer une autocorrélation problématique.
+
+Application business : prévoir les ventes avec promotions, prix ou indicateurs économiques.
+
+Résultat final attendu : un modèle de prévision avec facteurs externes et diagnostic des résidus.
+
+Lien avec une décision d'affaires réelle : quantifier l'effet attendu d'une promotion ou d'un changement de prix.
+
+## Mise en contexte
+
+Une entreprise veut prévoir ses ventes mensuelles en tenant compte des promotions, du prix moyen et d'un indicateur économique canadien.
+
+TODO: Ajouter un jeu de données combinant ventes et variables externes.
+
+## Concepts clés
+
+- Variables externes.
+- Retards temporels.
+- Résidus ordonnés dans le temps.
+- Autocorrélation.
+- Validation temporelle.
+
+## Capsules de la semaine
+
+- Capsule 1 : Quand une variable externe aide-t-elle la prévision?
+- Capsule 2 : Résidus et dépendance temporelle.
+- Capsule 3 : Limites d'un modèle explicatif pour prévoir.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Identifier une variable externe pertinente pour prévoir la demande.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(broom)
+
+modele_externe <- lm(
+  ventes ~ tendance + promotion + prix_moyen + indicateur_economique,
+  data = ventes_mensuelles
+)
+
+augment(modele_externe) |>
+  ggplot(aes(date, .resid)) +
+  geom_line() +
+  geom_hline(yintercept = 0)
+```
+
+AE 3 : réflexion critique. Expliquer pourquoi une variable externe doit être disponible au moment de prévoir.
+
+## Mini-cas business
+
+Prévoir les ventes avec promotions : quelle campagne justifie son coût?
+
+## À retenir
+
+Une variable externe améliore la décision seulement si elle est pertinente, disponible et stable dans le contexte de prévision.
+
+## Erreurs fréquentes
+
+- Utiliser une variable future inconnue au moment de prévoir.
+- Ignorer l'ordre temporel des résidus.
+- Ajouter trop de variables sans justification d'affaires.
+
+## Trace de portfolio ou livrable court
+
+Décrire une variable externe, son rôle attendu et sa limite.
+
+## Pour aller plus loin
+
+TODO: Ajouter un exercice sur la validation temporelle.
+

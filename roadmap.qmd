@@ -1,0 +1,224 @@
+---
+title: "Roadmap de refonte du cours"
+format:
+  html:
+    embed-resources: true
+---
+
+# Roadmap de refonte du cours
+
+## Objectif
+
+Cette roadmap sert à organiser la refonte complète du cours MQT-2101 autour d'une progression plus appliquée, plus claire et plus orientée vers la décision d'affaires.
+
+Le résultat visé est un site Quarto publiable, maintenable et directement utilisable par les étudiant·es, avec du matériel en R, des activités contextualisées et des livrables progressifs.
+
+## Principes directeurs
+
+- Chaque séance doit partir d'une décision d'affaires réelle ou réaliste.
+- Chaque semaine doit expliquer où on va, pourquoi on y va et ce que les étudiant·es sauront faire.
+- Les exemples doivent privilégier des contextes d'administration : ventes, marketing, opérations, finance, ressources humaines, satisfaction client, inventaire et prévision.
+- Les contextes québécois ou canadiens doivent être utilisés lorsque cela améliore la pertinence pédagogique.
+- Le code doit être en R et les documents doivent être en Quarto.
+- Les données confidentielles ou nominatives ne doivent jamais être publiées.
+
+## Vue d'ensemble
+
+| Phase | Priorité | Résultat attendu |
+|---|---:|---|
+| 0. Stabiliser le dépôt et le site | Très haute | Site Quarto publié et structure propre |
+| 1. Cartographier l'ancien matériel | Très haute | Inventaire exploitable sans copier tel quel |
+| 2. Définir la progression pédagogique | Très haute | Plan hebdomadaire final avec objectifs et livrables |
+| 3. Construire les données du cours | Haute | Jeux de données propres, documentés et reproductibles |
+| 4. Rédiger les semaines | Haute | Notes, capsules, exercices et mini-cas |
+| 5. Développer les ateliers | Haute | Ateliers guidés et cas appliqués |
+| 6. Refaire les évaluations | Haute | Évaluations cohérentes avec les compétences |
+| 7. Produire les ressources transversales | Moyenne | Guides R, Quarto, statistiques et modélisation |
+| 8. Tester, publier et améliorer | Continue | Site fiable, clair et prêt pour l'enseignement |
+
+## Phase 0 - Stabiliser le dépôt et le site
+
+Statut : en cours.
+
+À faire :
+
+- Initialiser le dépôt Git.
+- Créer le dépôt GitHub.
+- Publier le site avec GitHub Pages depuis `docs/`.
+- Vérifier que `anciens_documents/sources_privees/` est ignoré par Git.
+- Vérifier que les solutionnaires ne sont pas rendus dans `docs/`.
+- Ajouter cette roadmap dans la navigation du site.
+
+Critère de réussite : le site est accessible en ligne et aucune archive privée n'est publiée.
+
+## Phase 1 - Cartographier l'ancien matériel
+
+Statut : à faire.
+
+À faire :
+
+- Extraire localement les ZIP dans `anciens_documents/sources_privees/extraits/`.
+- Faire une table de correspondance entre ancien matériel et nouvelle structure.
+- Identifier les contenus réutilisables comme inspiration : thèmes, jeux de données, exercices, évaluations.
+- Identifier les contenus à remplacer : exemples trop génériques, données peu contextualisées, consignes désuètes.
+- Repérer les fichiers nominatifs ou sensibles et les exclure de toute publication.
+
+Livrable : un fichier `anciens_documents/correspondance_ancienne_nouvelle_structure.md`.
+
+## Phase 2 - Définir la progression pédagogique
+
+Statut : à faire.
+
+À faire :
+
+- Finaliser les objectifs d'apprentissage par semaine.
+- Définir le livrable court de chaque semaine.
+- Harmoniser les sections `Let’s eat the cake`.
+- Clarifier les liens entre semaines, ateliers et évaluations.
+- Définir les compétences évaluées dans les questionnaires, l'intra et le final.
+
+Livrable : une version finalisée de `plan-de-cours.qmd` et `calendrier.qmd`.
+
+## Phase 3 - Construire les données du cours
+
+Statut : à faire.
+
+À faire :
+
+- Choisir les jeux de données officiels du cours.
+- Prioriser des données canadiennes ou québécoises lorsque pertinent.
+- Créer des jeux de données simulés lorsque les données réelles posent des enjeux de confidentialité.
+- Écrire les scripts de préparation dans `scripts/`.
+- Documenter chaque jeu de données dans `donnees/README.md`.
+- Ajouter un dictionnaire de variables pour chaque jeu de données important.
+
+Livrables :
+
+- Données préparées dans `donnees/preparees/`.
+- Données simulées dans `donnees/simulees/`.
+- Scripts reproductibles dans `scripts/`.
+- Dictionnaires de données.
+
+## Phase 4 - Rédiger les semaines
+
+Statut : à faire.
+
+À faire pour chaque semaine :
+
+- Rédiger la mise en contexte business.
+- Compléter les concepts clés.
+- Écrire trois capsules courtes.
+- Ajouter trois exercices intégrés : interprétation, code R, réflexion critique.
+- Développer un mini-cas business.
+- Ajouter les erreurs fréquentes.
+- Définir une trace de portfolio ou un livrable court.
+- Ajouter les références ou ressources pertinentes.
+
+Ordre recommandé :
+
+1. Semaine 01 : diagnostic statistique et décision.
+2. Semaine 02 : R, Quarto et reproductibilité.
+3. Semaine 03 : régression linéaire.
+4. Semaine 04 : transformations et non-linéarité.
+5. Semaine 05 : préparation intra.
+6. Semaine 06 : séries chronologiques.
+7. Semaine 07 : lissage.
+8. Semaine 08 : tendance et saisonnalité.
+9. Semaine 09 : variables externes et autocorrélation.
+10. Semaine 10 : classification et modèles avancés.
+
+## Phase 5 - Développer les ateliers
+
+Statut : à faire.
+
+À faire :
+
+- Atelier 01 : explorer un tableau de données d'affaires.
+- Atelier 02 : étude de cas de régression.
+- Atelier 03 : prévision de ventes ou de demande.
+- Atelier 04 : cas intégrateur de fin de session.
+
+Chaque atelier doit contenir :
+
+- un objectif clair;
+- des consignes pas à pas;
+- un jeu de données;
+- un livrable court;
+- une grille formative;
+- un solutionnaire conservé hors navigation et hors rendu public.
+
+## Phase 6 - Refaire les évaluations
+
+Statut : à faire.
+
+À faire :
+
+- Définir la pondération officielle.
+- Rédiger le questionnaire sur la régression.
+- Rédiger l'examen intra sur la régression.
+- Rédiger le questionnaire sur les séries chronologiques.
+- Rédiger l'examen final sur la prévision.
+- Créer les grilles d'évaluation dans `evaluations/grilles/`.
+- Vérifier l'alignement entre objectifs, ateliers et évaluations.
+
+Critère de réussite : chaque évaluation mesure une compétence explicitement travaillée dans les semaines ou ateliers.
+
+## Phase 7 - Produire les ressources transversales
+
+Statut : à faire.
+
+À faire :
+
+- Compléter l'aide-mémoire R.
+- Compléter l'aide-mémoire statistique.
+- Compléter l'aide-mémoire modélisation.
+- Compléter le guide Quarto.
+- Compléter le guide RStudio.
+- Ajouter une page de dépannage pour les erreurs fréquentes en R.
+
+Livrable : une section `ressources/` utilisable pendant tout le cours.
+
+## Phase 8 - Tester, publier et améliorer
+
+Statut : continu.
+
+À faire :
+
+- Rendre le site avec `quarto render` avant chaque publication.
+- Vérifier les liens internes.
+- Vérifier que les blocs de code R sont reproductibles.
+- Vérifier que les données nécessaires sont disponibles.
+- Tester le site sur GitHub Pages.
+- Faire une passe de cohérence pédagogique avant le début de la session.
+- Faire une passe de correction après chaque séance donnée.
+
+Commandes utiles :
+
+```r
+quarto::quarto_render(".")
+```
+
+```r
+source("scripts/99_render_site.R")
+```
+
+## Checklist avant la session
+
+- Le calendrier officiel est ajouté.
+- Le plan de cours est finalisé.
+- Les semaines 01 à 05 sont complètes.
+- Les ateliers 01 et 02 sont complets.
+- L'examen intra est prêt.
+- Les données de régression sont prêtes et documentées.
+- Les semaines 06 à 10 sont complètes ou suffisamment avancées.
+- Les ateliers 03 et 04 sont complets.
+- L'examen final est prêt.
+- Le site GitHub Pages est à jour.
+- Les fichiers privés ne sont pas suivis par Git.
+
+## Références techniques
+
+- Documentation Quarto sur les sites web : https://quarto.org/docs/websites/
+- Documentation Quarto sur GitHub Pages : https://quarto.org/docs/publishing/github-pages.html
+- Documentation GitHub Pages : https://docs.github.com/pages
+

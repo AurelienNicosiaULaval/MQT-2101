@@ -1,0 +1,87 @@
+---
+title: "Semaine 02 - Analyse de données avec R et Quarto"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 02 - Analyse de données avec R et Quarto
+
+## Let’s eat the cake
+
+Objectif : construire un premier flux de travail reproductible avec R et Quarto.
+
+Compétences développées :
+- Importer un tableau de données.
+- Résumer et visualiser des variables d'affaires.
+- Produire un court rapport Quarto.
+
+Application business : explorer un fichier de transactions ou de ventes mensuelles.
+
+Résultat final attendu : un mini-rapport HTML reproductible.
+
+Lien avec une décision d'affaires réelle : produire un diagnostic partageable à une équipe de gestion.
+
+## Mise en contexte
+
+Une PME québécoise veut comprendre la progression de ses ventes et repérer les mois où la performance s'écarte du comportement habituel.
+
+TODO: Ajouter un jeu de données de ventes mensuelles simulées.
+
+## Concepts clés
+
+- Projet R et chemins relatifs.
+- Importation avec `readr`.
+- Transformation avec `dplyr`.
+- Visualisation avec `ggplot2`.
+- Rapport reproductible avec Quarto.
+
+## Capsules de la semaine
+
+- Capsule 1 : Organiser un projet d'analyse.
+- Capsule 2 : Lire, nettoyer et résumer un tableau.
+- Capsule 3 : Générer un document Quarto.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Lire un tableau de ventes et identifier les variables utiles.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+ventes_mensuelles <- readr::read_csv("modules/semaine-02-r-quarto/data/ventes_mensuelles.csv")
+
+ventes_mensuelles |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE)
+  )
+```
+
+AE 3 : réflexion critique. Identifier ce qui rend un rapport reproductible utile pour une équipe.
+
+## Mini-cas business
+
+Premier rapport d'analyse pour une direction régionale.
+
+## À retenir
+
+R et Quarto servent à relier code, résultats et interprétation dans un même document vérifiable.
+
+## Erreurs fréquentes
+
+- Utiliser des chemins absolus propres à un seul ordinateur.
+- Modifier les données manuellement sans trace.
+- Omettre les packages requis.
+
+## Trace de portfolio ou livrable court
+
+Produire une page Quarto contenant une importation, un résumé et un graphique.
+
+## Pour aller plus loin
+
+TODO: Ajouter une capsule sur les projets RStudio et la structure de dossiers.
+

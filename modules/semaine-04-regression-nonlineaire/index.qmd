@@ -1,0 +1,88 @@
+---
+title: "Semaine 04 - Régression non linéaire et transformations"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 04 - Régression non linéaire et transformations
+
+## Let’s eat the cake
+
+Objectif : reconnaître et modéliser des relations qui ne sont pas linéaires sur l'échelle originale.
+
+Compétences développées :
+- Visualiser une relation non linéaire.
+- Utiliser des transformations simples.
+- Comparer des modèles selon leur interprétation d'affaires.
+
+Application business : modéliser le panier moyen selon le trafic ou la fidélité client.
+
+Résultat final attendu : une proposition de transformation et son interprétation.
+
+Lien avec une décision d'affaires réelle : éviter une extrapolation trompeuse dans une décision de prix, de marketing ou d'inventaire.
+
+## Mise en contexte
+
+Un commerce observe que les ventes augmentent avec l'achalandage, mais de moins en moins rapidement lorsque le magasin devient saturé.
+
+TODO: Ajouter un exemple de données d'achalandage et de ventes.
+
+## Concepts clés
+
+- Courbure et saturation.
+- Transformation logarithmique.
+- Terme quadratique.
+- Comparaison visuelle des ajustements.
+- Interprétation sur l'échelle transformée.
+
+## Capsules de la semaine
+
+- Capsule 1 : Détecter une relation non linéaire.
+- Capsule 2 : Transformations et termes polynomiaux.
+- Capsule 3 : Choisir un modèle interprétable.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Décrire la forme d'une relation ventes-achalandage.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(broom)
+
+modele_log <- lm(log(ventes) ~ achalandage, data = commerce)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = commerce)
+
+bind_rows(
+  broom::glance(modele_log) |> mutate(modele = "log"),
+  broom::glance(modele_quad) |> mutate(modele = "quadratique")
+)
+```
+
+AE 3 : réflexion critique. Expliquer pourquoi un meilleur ajustement numérique n'est pas toujours un meilleur modèle d'affaires.
+
+## Mini-cas business
+
+Achalandage et saturation : quand une promotion cesse-t-elle de produire un gain proportionnel?
+
+## À retenir
+
+Une transformation doit améliorer l'ajustement tout en gardant une interprétation utile pour la décision.
+
+## Erreurs fréquentes
+
+- Transformer sans regarder les graphiques.
+- Comparer des modèles sur des échelles différentes sans prudence.
+- Extrapoler au-delà de la plage observée.
+
+## Trace de portfolio ou livrable court
+
+Comparer deux modèles et recommander celui qui sert le mieux la décision.
+
+## Pour aller plus loin
+
+TODO: Ajouter un exemple de transformation logarithmique avec interprétation en pourcentage.
+

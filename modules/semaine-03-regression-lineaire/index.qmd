@@ -1,0 +1,85 @@
+---
+title: "Semaine 03 - Régression linéaire pour expliquer une variable d'affaires"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 03 - Régression linéaire pour expliquer une variable d'affaires
+
+## Let’s eat the cake
+
+Objectif : utiliser la régression linéaire pour expliquer une variable quantitative.
+
+Compétences développées :
+- Ajuster un modèle linéaire simple.
+- Interpréter une pente et une ordonnée à l'origine.
+- Relier les résultats à une décision de gestion.
+
+Application business : expliquer le chiffre d'affaires selon l'investissement marketing.
+
+Résultat final attendu : une interprétation de modèle claire et utile pour la décision.
+
+Lien avec une décision d'affaires réelle : estimer l'effet moyen d'une hausse de budget marketing sur les ventes.
+
+## Mise en contexte
+
+Une entreprise analyse les ventes mensuelles de ses campagnes numériques au Canada et veut quantifier la relation entre budget publicitaire et revenus.
+
+TODO: Ajouter un jeu de données de campagnes marketing.
+
+## Concepts clés
+
+- Variable réponse et variable explicative.
+- Droite de régression.
+- Résidus.
+- Coefficient de détermination.
+- Interprétation des coefficients.
+
+## Capsules de la semaine
+
+- Capsule 1 : Pourquoi modéliser une relation d'affaires?
+- Capsule 2 : Ajuster et interpréter `lm()`.
+- Capsule 3 : Diagnostics de base.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Expliquer la signification d'une pente dans un contexte de ventes.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(broom)
+
+modele_ventes <- lm(ventes ~ budget_marketing, data = campagnes)
+
+broom::tidy(modele_ventes)
+broom::glance(modele_ventes)
+```
+
+AE 3 : réflexion critique. Discuter des limites d'une interprétation causale.
+
+## Mini-cas business
+
+Budget marketing et ventes : faut-il augmenter l'investissement?
+
+## À retenir
+
+La régression linéaire aide à quantifier une relation moyenne, mais l'interprétation dépend de la qualité du contexte et des données.
+
+## Erreurs fréquentes
+
+- Lire la pente sans unité.
+- Confondre association et causalité.
+- Négliger les points atypiques.
+
+## Trace de portfolio ou livrable court
+
+Présenter un modèle linéaire en trois phrases : relation, ampleur et limite.
+
+## Pour aller plus loin
+
+TODO: Ajouter une lecture sur la communication des coefficients à un public non technique.
+

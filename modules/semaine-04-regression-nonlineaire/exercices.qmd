@@ -1,0 +1,26 @@
+---
+title: "Exercices - Semaine 04"
+format:
+  html:
+    embed-resources: true
+---
+
+# Exercices - Semaine 04
+
+## Objectif
+
+Comparer des modèles linéaires transformés ou non linéaires simples.
+
+## Exercices
+
+TODO: Ajouter un mini-cas sur achalandage, saturation et ventes.
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+ggplot(commerce, aes(achalandage, ventes)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2))
+```
+

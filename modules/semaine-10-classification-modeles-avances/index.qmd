@@ -1,0 +1,85 @@
+---
+title: "Semaine 10 - Résultats binaires, classification et modèles avancés"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 10 - Résultats binaires, classification et modèles avancés
+
+## Let’s eat the cake
+
+Objectif : analyser une décision d'affaires lorsque le résultat est binaire.
+
+Compétences développées :
+- Définir une variable cible binaire.
+- Comprendre une probabilité prédite.
+- Évaluer une classification avec des mesures adaptées.
+
+Application business : prévoir le risque de départ des clients ou la réponse à une campagne.
+
+Résultat final attendu : une interprétation de modèle orientée action.
+
+Lien avec une décision d'affaires réelle : cibler les clients à contacter en priorité.
+
+## Mise en contexte
+
+Une entreprise de services veut identifier les clients qui risquent de quitter afin de cibler une offre de fidélisation.
+
+TODO: Ajouter un jeu de données de fidélisation client simulé ou anonymisé.
+
+## Concepts clés
+
+- Variable binaire.
+- Probabilité prédite.
+- Seuil de classification.
+- Matrice de confusion.
+- Sensibilité, spécificité et précision.
+- Coût des faux positifs et faux négatifs.
+
+## Capsules de la semaine
+
+- Capsule 1 : Résultats binaires en administration.
+- Capsule 2 : De la probabilité à l'action.
+- Capsule 3 : Évaluer une décision de classification.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Relier un seuil de classification à une stratégie de fidélisation.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(tidymodels)
+
+modele_attrition <- logistic_reg() |>
+  set_engine("glm") |>
+  fit(depart ~ anciennete + satisfaction + appels_service, data = clients)
+```
+
+AE 3 : réflexion critique. Comparer le coût d'un client à risque non détecté et celui d'une offre envoyée inutilement.
+
+## Mini-cas business
+
+Fidélisation client : qui contacter cette semaine?
+
+## À retenir
+
+Une bonne classification est d'abord une bonne décision sous contrainte de coût, de capacité et de risque.
+
+## Erreurs fréquentes
+
+- Évaluer seulement l'exactitude globale.
+- Choisir un seuil arbitraire.
+- Oublier les conséquences d'affaires des erreurs.
+
+## Trace de portfolio ou livrable court
+
+Proposer une règle de ciblage et justifier le seuil choisi.
+
+## Pour aller plus loin
+
+TODO: Ajouter une ouverture vers les arbres, forêts aléatoires ou réseaux de neurones.
+

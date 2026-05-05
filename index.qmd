@@ -1,0 +1,39 @@
+---
+title: "MQT-2101 : Analyse et modélisation des données"
+format:
+  html:
+    embed-resources: true
+---
+
+# Bienvenue
+
+Ce site regroupe le matériel principal du cours MQT-2101. Le cours est centré sur l'analyse appliquée des données, la modélisation, la prévision et l'utilisation de R pour soutenir des décisions d'affaires.
+
+## Objectif du site
+
+Fournir une structure claire pour les notes, les capsules, les exercices, les ateliers, les évaluations, les jeux de données et les ressources du cours.
+
+## Progression
+
+Le cours commence par le diagnostic statistique et l'utilisation de R, puis avance vers la régression, la prévision, les séries chronologiques et les modèles de classification.
+
+## Orientation business
+
+Les exemples et mini-cas privilégient les contextes d'administration : ventes, achalandage, campagnes marketing, satisfaction client, demande, inventaire, finance, ressources humaines et performance organisationnelle.
+
+```{r}
+#| eval: false
+# Exemple de point de départ pour une analyse business
+library(tidyverse)
+
+ventes <- readr::read_csv("donnees/preparees/ventes_pme.csv")
+
+ventes |>
+  group_by(mois) |>
+  summarise(chiffre_affaires = sum(chiffre_affaires, na.rm = TRUE))
+```
+
+## À compléter
+
+TODO: Ajouter une courte présentation du cours, les liens institutionnels pertinents et les consignes de navigation pour les étudiant·es.
+

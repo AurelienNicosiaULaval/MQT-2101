@@ -1,0 +1,36 @@
+---
+title: "Guide Quarto"
+format:
+  html:
+    embed-resources: true
+---
+
+# Guide Quarto
+
+## Objectif
+
+Aider les étudiant·es à produire des rapports reproductibles avec Quarto.
+
+## Structure minimale
+
+```r
+writeLines(
+  c(
+    "---",
+    'title: "Analyse de cas"',
+    "format:",
+    "  html:",
+    "    embed-resources: true",
+    "---"
+  ),
+  "rapport.qmd"
+)
+```
+
+## Rendu
+
+```r
+quarto::quarto_render("rapport.qmd")
+```
+
+TODO: Ajouter des consignes sur les figures, tableaux et chemins relatifs.

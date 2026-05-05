@@ -1,0 +1,85 @@
+---
+title: "Semaine 01 - Introduction, décisions d'affaires et diagnostic statistique"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 01 - Introduction, décisions d'affaires et diagnostic statistique
+
+## Let’s eat the cake
+
+Objectif : comprendre le rôle de l'analyse statistique dans une décision d'affaires.
+
+Compétences développées :
+- Formuler une question d'affaires en question statistique.
+- Identifier les variables utiles à une analyse.
+- Distinguer description, explication, prévision et décision.
+
+Application business : diagnostiquer la performance de succursales d'une entreprise québécoise.
+
+Résultat final attendu : une première grille de diagnostic reliant données, indicateurs et décisions.
+
+Lien avec une décision d'affaires réelle : prioriser les succursales qui méritent une intervention de gestion.
+
+## Mise en contexte
+
+Une chaîne de commerces au Québec observe des écarts de ventes entre succursales. La direction veut savoir si ces écarts relèvent de l'achalandage, du panier moyen, de la saison ou d'une différence opérationnelle.
+
+TODO: Ajouter un court jeu de données simulé ou réel anonymisé.
+
+## Concepts clés
+
+- Variable, observation, unité statistique.
+- Population, échantillon et biais de sélection.
+- Indicateur descriptif et indicateur décisionnel.
+- Question descriptive, explicative et prédictive.
+
+## Capsules de la semaine
+
+- Capsule 1 : Du problème d'affaires à la question statistique.
+- Capsule 2 : Types de données en administration.
+- Capsule 3 : Diagnostic initial et pièges d'interprétation.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Identifier les variables pertinentes pour expliquer un écart de performance entre succursales.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+diagnostic_succursales <- tibble(
+  succursale = c("Québec", "Lévis", "Montréal"),
+  ventes = c(125000, 98000, 143000),
+  clients = c(2100, 1750, 2600)
+) |>
+  mutate(panier_moyen = ventes / clients)
+```
+
+AE 3 : réflexion critique. Expliquer pourquoi un chiffre de ventes plus élevé ne signifie pas toujours une meilleure performance.
+
+## Mini-cas business
+
+Diagnostic express d'un réseau de succursales : où concentrer une visite de gestion?
+
+## À retenir
+
+Une bonne analyse commence par une décision à éclairer, pas par une méthode à appliquer.
+
+## Erreurs fréquentes
+
+- Confondre corrélation descriptive et relation causale.
+- Choisir une méthode avant de comprendre la question.
+- Ignorer les unités d'observation.
+
+## Trace de portfolio ou livrable court
+
+Rédiger une question d'affaires, les données nécessaires et une recommandation analytique préliminaire.
+
+## Pour aller plus loin
+
+TODO: Ajouter une lecture courte sur la pensée statistique en contexte de gestion.
+

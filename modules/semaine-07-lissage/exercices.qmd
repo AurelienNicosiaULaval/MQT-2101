@@ -1,0 +1,27 @@
+---
+title: "Exercices - Semaine 07"
+format:
+  html:
+    embed-resources: true
+---
+
+# Exercices - Semaine 07
+
+## Objectif
+
+Comparer des méthodes simples de lissage.
+
+## Exercices
+
+TODO: Ajouter un exercice de demande hebdomadaire et d'erreur de prévision.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(slider)
+
+demande |>
+  arrange(semaine) |>
+  mutate(mm_4 = slider::slide_dbl(unites, mean, .before = 3, .complete = TRUE))
+```
+

@@ -1,0 +1,26 @@
+---
+title: "Exercices - Semaine 08"
+format:
+  html:
+    embed-resources: true
+---
+
+# Exercices - Semaine 08
+
+## Objectif
+
+Modéliser une tendance et une saisonnalité dans une série de ventes.
+
+## Exercices
+
+TODO: Ajouter un exercice de ventes mensuelles d'une PME.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(lubridate)
+
+modele <- lm(ventes ~ t + month(date, label = TRUE), data = ventes_mensuelles)
+summary(modele)
+```
+

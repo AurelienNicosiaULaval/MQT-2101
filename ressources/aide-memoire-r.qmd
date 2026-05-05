@@ -1,0 +1,32 @@
+---
+title: "Aide-mémoire R"
+format:
+  html:
+    embed-resources: true
+---
+
+# Aide-mémoire R
+
+## Objectif
+
+Fournir les commandes R les plus utiles pour le cours.
+
+## Importer
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+donnees <- readr::read_csv("donnees/preparees/fichier.csv")
+```
+
+## Résumer
+
+```{r}
+#| eval: false
+donnees |>
+  summarise(across(where(is.numeric), mean, na.rm = TRUE))
+```
+
+TODO: Ajouter les verbes `filter()`, `mutate()`, `group_by()` et `summarise()`.
+

@@ -1,0 +1,87 @@
+---
+title: "Semaine 08 - Modèles de prévision avec tendance et saisonnalité"
+format:
+  html:
+    embed-resources: true
+---
+
+# Semaine 08 - Modèles de prévision avec tendance et saisonnalité
+
+## Let’s eat the cake
+
+Objectif : modéliser des séries avec tendance et saisonnalité.
+
+Compétences développées :
+- Identifier une tendance.
+- Représenter la saisonnalité.
+- Ajuster un modèle de prévision basé sur le temps.
+
+Application business : prévoir les ventes mensuelles d'une PME.
+
+Résultat final attendu : une prévision saisonnière interprétée dans un contexte de gestion.
+
+Lien avec une décision d'affaires réelle : préparer les budgets, achats et objectifs par période.
+
+## Mise en contexte
+
+Une PME québécoise observe des pics de ventes récurrents à certaines périodes de l'année et veut prévoir ses revenus mensuels.
+
+TODO: Ajouter un jeu de données avec tendance et saisonnalité.
+
+## Concepts clés
+
+- Tendance déterministe.
+- Variables indicatrices saisonnières.
+- Décomposition.
+- Prévision hors échantillon.
+- Incertitude de prévision.
+
+## Capsules de la semaine
+
+- Capsule 1 : Décrire tendance et saisonnalité.
+- Capsule 2 : Modéliser le temps.
+- Capsule 3 : Traduire une prévision en plan d'action.
+
+## Exercices d’application intégrés
+
+AE 1 : interprétation. Identifier les périodes de haute et basse saison.
+
+AE 2 : calcul ou code R.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(lubridate)
+
+modele_saisonnier <- lm(
+  ventes ~ index_temps + month(date, label = TRUE),
+  data = ventes_mensuelles
+)
+
+summary(modele_saisonnier)
+```
+
+AE 3 : réflexion critique. Discuter du risque d'utiliser une tendance passée dans un marché qui change.
+
+## Mini-cas business
+
+Budget de ventes : intégrer la saisonnalité dans les objectifs mensuels.
+
+## À retenir
+
+Une prévision saisonnière devient utile lorsqu'elle est reliée à des décisions de capacité, de budget ou d'inventaire.
+
+## Erreurs fréquentes
+
+- Oublier la fréquence de la série.
+- Interpréter les mois sans catégorie de référence claire.
+- Présenter une prévision sans incertitude.
+
+## Trace de portfolio ou livrable court
+
+Produire un graphique de prévision avec une recommandation opérationnelle.
+
+## Pour aller plus loin
+
+TODO: Ajouter un exemple avec `fable` ou `forecast`.
+

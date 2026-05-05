@@ -1,0 +1,26 @@
+---
+title: "Exercices - Semaine 09"
+format:
+  html:
+    embed-resources: true
+---
+
+# Exercices - Semaine 09
+
+## Objectif
+
+Ajouter des variables externes à un modèle de prévision.
+
+## Exercices
+
+TODO: Ajouter un exercice avec promotions et ventes.
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(broom)
+
+modele <- lm(ventes ~ tendance + promotion + prix_moyen, data = ventes_mensuelles)
+broom::augment(modele)
+```
+

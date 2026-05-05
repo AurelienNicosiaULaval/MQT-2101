@@ -1,0 +1,43 @@
+---
+title: "Installation"
+format:
+  html:
+    embed-resources: true
+---
+
+# Installation
+
+## Logiciels requis
+
+- R
+- RStudio ou Positron
+- Quarto
+- Git
+
+TODO: Ajouter les liens institutionnels et les consignes propres aux laboratoires de la FSA.
+
+## Packages R
+
+Les packages du cours peuvent être installés avec le script suivant :
+
+```r
+source("scripts/00_install_packages.R")
+```
+
+## Vérification rapide
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+tibble(
+  mois = c("janvier", "février", "mars"),
+  ventes = c(125000, 131000, 128500)
+) |>
+  ggplot(aes(mois, ventes, group = 1)) +
+  geom_line() +
+  geom_point()
+```
+
+TODO: Ajouter une section de dépannage pour l'installation de Quarto, Rtools et les problèmes de chemins d'accès.
+
