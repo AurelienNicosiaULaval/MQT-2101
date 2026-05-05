@@ -1,5 +1,5 @@
 ---
-title: "Semaine 01 - Introduction, décisions d'affaires et diagnostic statistique"
+title: "Semaine 01 - Parcours autonome"
 format:
   html:
     embed-resources: true
@@ -9,77 +9,260 @@ format:
 
 ## Let’s eat the cake
 
-Objectif : comprendre le rôle de l'analyse statistique dans une décision d'affaires.
+Objectif : comprendre à quoi sert l'analyse statistique dans une décision d'affaires et apprendre à formuler une première question analytique.
 
 Compétences développées :
-- Formuler une question d'affaires en question statistique.
-- Identifier les variables utiles à une analyse.
-- Distinguer description, explication, prévision et décision.
 
-Application business : diagnostiquer la performance de succursales d'une entreprise québécoise.
+- distinguer une décision d'affaires, une question analytique et un indicateur;
+- reconnaître l'unité d'observation et les variables d'un tableau;
+- différencier description, explication, prévision et décision;
+- construire un premier diagnostic statistique;
+- formuler une recommandation prudente à partir d'indicateurs simples.
 
-Résultat final attendu : une première grille de diagnostic reliant données, indicateurs et décisions.
+Application business : préparer une première lecture de la performance de succursales à partir d'un jeu de données pédagogique.
 
-Lien avec une décision d'affaires réelle : prioriser les succursales qui méritent une intervention de gestion.
+Résultat final attendu : une fiche de diagnostic d'une page reliant une décision, des indicateurs, deux constats et une prochaine analyse.
 
-## Mise en contexte
+Lien avec une décision d'affaires réelle : apprendre à prioriser une dimension d'analyse avant de demander une modélisation plus avancée.
 
-Une chaîne de commerces au Québec observe des écarts de ventes entre succursales. La direction veut savoir si ces écarts relèvent de l'achalandage, du panier moyen, de la saison ou d'une différence opérationnelle.
+## Logique pédagogique de la semaine
 
-TODO: Ajouter un court jeu de données simulé ou réel anonymisé.
+Cette semaine introduit une idée centrale du cours : une analyse statistique commence par une question claire, pas par une méthode.
 
-## Concepts clés
+Le parcours utilise un jeu de données pédagogique sur des succursales afin d'illustrer les liens entre :
 
-- Variable, observation, unité statistique.
-- Population, échantillon et biais de sélection.
-- Indicateur descriptif et indicateur décisionnel.
-- Question descriptive, explicative et prédictive.
+- une décision d'affaires;
+- une question analytique;
+- une unité d'observation;
+- des variables;
+- des indicateurs;
+- une interprétation prudente.
 
-## Capsules de la semaine
+La première semaine sert à installer cette logique. Avant de coder beaucoup, il faut savoir quoi regarder, pourquoi le regarder et ce que l'on peut conclure.
 
-- Capsule 1 : Du problème d'affaires à la question statistique.
-- Capsule 2 : Types de données en administration.
-- Capsule 3 : Diagnostic initial et pièges d'interprétation.
+## Parcours autonome de la semaine
 
-## Exercices d’application intégrés
+| Moment | Activité | Résultat produit |
+|---|---|---|
+| 1 | Comprendre le rôle de l'analyse | Une décision d'affaires reformulée |
+| 2 | Lire un tableau de diagnostic | Unité d'observation et variables identifiées |
+| 3 | Choisir des indicateurs | Indicateurs reliés à une décision |
+| 4 | Faire un premier calcul | Tableau de diagnostic enrichi |
+| 5 | Interpréter prudemment | Deux constats et une limite |
+| 6 | Conclure | Trace de portfolio |
 
-AE 1 : interprétation. Identifier les variables pertinentes pour expliquer un écart de performance entre succursales.
+## Données
 
-AE 2 : calcul ou code R.
+Le fichier utilisé est `data/diagnostic_succursales.csv`.
+
+[Télécharger le fichier CSV](data/diagnostic_succursales.csv)
 
 ```{r}
-#| eval: false
+#| label: setup-semaine-01
+#| include: false
 library(tidyverse)
+library(janitor)
+library(scales)
 
-diagnostic_succursales <- tibble(
-  succursale = c("Québec", "Lévis", "Montréal"),
-  ventes = c(125000, 98000, 143000),
-  clients = c(2100, 1750, 2600)
-) |>
-  mutate(panier_moyen = ventes / clients)
+data_path <- if (file.exists("data/diagnostic_succursales.csv")) {
+  "data/diagnostic_succursales.csv"
+} else {
+  "modules/semaine-01-introduction/data/diagnostic_succursales.csv"
+}
+
+diagnostic <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
 ```
 
-AE 3 : réflexion critique. Expliquer pourquoi un chiffre de ventes plus élevé ne signifie pas toujours une meilleure performance.
+```{r}
+#| label: apercu-semaine-01
+diagnostic
+```
+
+## Épisode 1 - Pourquoi analyser?
+
+::: {.callout-note title="Capsule vidéo 1 - De la décision au tableau"}
+À insérer : une vidéo de 4 à 6 minutes qui explique qu'une analyse commence par une décision à éclairer, pas par une méthode.
+:::
+
+Question centrale :
+
+> Quels indicateurs permettent de repérer les dimensions qui méritent une analyse plus poussée?
+
+La question n'est pas encore :
+
+> Quel modèle faut-il ajuster?
+
+Une meilleure question de départ est plutôt :
+
+> Quels indicateurs permettent de repérer les succursales qui méritent une analyse plus poussée?
+
+::: {.callout-tip title="À vous 1 - Reformuler la décision"}
+Dans votre fiche de diagnostic, écrivez une phrase qui commence par : `La décision à éclairer est...`
+:::
+
+## Épisode 2 - Lire le tableau
+
+::: {.callout-note title="Capsule vidéo 2 - Observation, variable, indicateur"}
+À insérer : une vidéo courte sur l'unité d'observation, les variables numériques, les variables catégorielles et les indicateurs.
+:::
+
+### Démonstration 1 - Inspecter rapidement
+
+```{r}
+#| label: demo-inspection-semaine-01
+glimpse(diagnostic)
+```
+
+::: {.callout-tip title="À vous 2 - Identifier la structure"}
+Répondez dans votre fiche :
+
+- Quelle est l'unité d'observation?
+- Quelles variables décrivent la performance commerciale?
+- Quelles variables décrivent l'expérience client ou les opérations?
+:::
+
+## Épisode 3 - Relier indicateurs et décisions
+
+::: {.callout-note title="Capsule vidéo 3 - Indicateur descriptif ou décisionnel?"}
+À insérer : une capsule qui distingue un chiffre intéressant d'un indicateur utile pour décider.
+:::
+
+Un même tableau peut servir plusieurs décisions.
+
+| Décision possible | Indicateur utile |
+|---|---|
+| Prioriser une succursale pour une analyse complémentaire | ventes, satisfaction, ruptures de stock |
+| Évaluer l'expérience client | satisfaction, délai de livraison |
+| Examiner la performance commerciale | ventes, clients, panier moyen |
+| Préparer une analyse de régression | variable réponse et variables explicatives candidates |
+
+::: {.callout-tip title="À vous 3 - Choisir trois indicateurs"}
+Choisissez trois indicateurs et expliquez en une phrase pourquoi chacun peut aider à éclairer la décision.
+:::
+
+## Épisode 4 - Faire un premier diagnostic
+
+### Démonstration 2 - Ajouter un indicateur simple
+
+```{r}
+#| label: demo-diagnostic-semaine-01
+diagnostic_enrichi <- diagnostic |>
+  mutate(
+    ventes_par_client = ventes_mensuelles / clients,
+    signal_attention = case_when(
+      satisfaction < 8 & ruptures_stock >= 5 ~ "opérations et satisfaction",
+      ventes_mensuelles < median(ventes_mensuelles) ~ "ventes sous la médiane",
+      TRUE ~ "aucun signal majeur"
+    )
+  )
+
+diagnostic_enrichi |>
+  select(
+    succursale,
+    ventes_mensuelles,
+    clients,
+    ventes_par_client,
+    satisfaction,
+    ruptures_stock,
+    signal_attention
+  ) |>
+  mutate(
+    ventes_mensuelles = currency_ca(ventes_mensuelles),
+    ventes_par_client = currency_ca(ventes_par_client)
+  )
+```
+
+::: {.callout-tip title="À vous 4 - Trouver deux signaux"}
+À partir du tableau, identifiez deux succursales qui méritent une analyse complémentaire. Pour chaque succursale, nommez l'indicateur qui justifie votre choix.
+:::
+
+## Épisode 5 - Visualiser pour discuter
+
+```{r}
+#| label: graphique-diagnostic-semaine-01
+#| fig-width: 8
+#| fig-height: 4.8
+diagnostic |>
+  mutate(succursale = fct_reorder(succursale, ventes_mensuelles)) |>
+  ggplot(aes(ventes_mensuelles, succursale, fill = satisfaction)) +
+  geom_col() +
+  scale_x_continuous(labels = currency_ca) +
+  scale_fill_gradient(low = "#E76F51", high = "#2A9D8F") +
+  labs(
+    title = "Ventes mensuelles et satisfaction par succursale",
+    x = "Ventes mensuelles",
+    y = NULL,
+    fill = "Satisfaction"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+::: {.callout-important title="Pause diagnostic"}
+Ce graphique aide à comparer les succursales. Il ne permet pas de conclure qu'une variable cause une autre variable.
+:::
+
+## Épisode 6 - Description, explication, prévision, décision
+
+::: {.callout-note title="Capsule vidéo 4 - Quatre niveaux d'analyse"}
+À insérer : une vidéo qui distingue décrire, expliquer, prévoir et décider.
+:::
+
+| Niveau | Question typique |
+|---|---|
+| Décrire | Que s'est-il passé? |
+| Expliquer | Quels facteurs sont associés au résultat? |
+| Prévoir | Que pourrait-il se passer ensuite? |
+| Décider | Quelle action recommander? |
+
+Dans cette première semaine, on reste surtout au niveau descriptif. Le reste du cours ajoutera progressivement les outils pour expliquer, prévoir et décider avec plus de rigueur.
 
 ## Mini-cas business
 
-Diagnostic express d'un réseau de succursales : où concentrer une visite de gestion?
+Le mini-cas compare trois façons de prioriser la suite de l'analyse :
+
+- commencer par la succursale qui vend le moins;
+- commencer par la succursale qui combine satisfaction faible et ruptures de stock;
+- demander une analyse plus complète avant toute intervention.
+
+::: {.callout-tip title="À vous 5 - Recommandation prudente"}
+Rédigez une recommandation en trois phrases :
+
+1. Les indicateurs suggèrent que...
+2. La limite principale de ce diagnostic est...
+3. La prochaine analyse devrait...
+:::
 
 ## À retenir
 
-Une bonne analyse commence par une décision à éclairer, pas par une méthode à appliquer.
+Une analyse utile commence par une décision, puis traduit cette décision en question analytique, en variables et en indicateurs.
 
 ## Erreurs fréquentes
 
-- Confondre corrélation descriptive et relation causale.
-- Choisir une méthode avant de comprendre la question.
-- Ignorer les unités d'observation.
+- Commencer par une méthode plutôt que par une décision.
+- Confondre ventes totales et performance globale.
+- Interpréter un graphique descriptif comme une preuve causale.
+- Oublier de nommer l'unité d'observation.
 
-## Trace de portfolio ou livrable court
+## Trace de portfolio
 
-Rédiger une question d'affaires, les données nécessaires et une recommandation analytique préliminaire.
+Votre trace de portfolio s'intitule `Diagnostic initial de succursales`.
+
+Elle doit contenir :
+
+- la décision à éclairer;
+- trois indicateurs choisis;
+- deux constats descriptifs;
+- une limite;
+- une prochaine analyse recommandée.
 
 ## Pour aller plus loin
 
-TODO: Ajouter une lecture courte sur la pensée statistique en contexte de gestion.
-
+La semaine 02 introduira R et Quarto plus systématiquement. L'atelier 01 viendra ensuite transformer cette logique de diagnostic en rapport Quarto plus complet avec un tableau de données mensuelles.

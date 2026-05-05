@@ -4012,9 +4012,22 @@ vertical-align: -.125em;
 
 <section id="atelier-01---explorer-un-tableau-de-données-daffaires" class="level1">
 <h1>Atelier 01 - Explorer un tableau de données d’affaires</h1>
+<div class="callout callout-style-default callout-note callout-titled" title="Place dans la progression">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Place dans la progression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cet atelier n’est pas la première semaine du cours. Il vient après les premières séances d’introduction et de prise en main de R/Quarto. Il sert à transformer la logique de diagnostic vue en semaine 01 en un rapport Quarto plus complet.</p>
+</div>
+</div>
 <section id="lets-eat-the-cake" class="level2">
 <h2 class="anchored" data-anchor-id="lets-eat-the-cake">Let’s eat the cake</h2>
-<p>Objectif : apprendre à explorer un tableau de données d’affaires avec R pour produire un premier diagnostic utile à une direction.</p>
+<p>Objectif : apprendre à explorer un tableau de données d’affaires avec R pour produire un premier diagnostic descriptif.</p>
 <p>Compétences développées :</p>
 <ul>
 <li>importer un fichier CSV;</li>
@@ -4024,17 +4037,17 @@ vertical-align: -.125em;
 <li>produire des graphiques exploratoires;</li>
 <li>formuler des constats utiles pour une décision d’affaires.</li>
 </ul>
-<p>Application business : analyser les ventes mensuelles d’une PME québécoise fictive qui exploite cinq succursales.</p>
+<p>Application business : analyser un jeu de données pédagogique sur les ventes mensuelles de cinq succursales.</p>
 <p>Résultat final attendu : un court rapport Quarto qui présente trois constats, deux graphiques et une recommandation de prochaine analyse.</p>
-<p>Lien avec une décision d’affaires réelle : aider la direction à choisir si elle doit d’abord investiguer les ventes, la satisfaction, les ruptures de stock ou les délais de livraison.</p>
+<p>Lien avec une décision d’affaires réelle : apprendre à choisir si une analyse doit d’abord porter sur les ventes, la satisfaction, les ruptures de stock ou les délais de livraison.</p>
 </section>
 <section id="le-fil-conducteur" class="level2">
 <h2 class="anchored" data-anchor-id="le-fil-conducteur">Le fil conducteur</h2>
-<p>Vous venez d’être recruté·e comme analyste junior pour Les Comptoirs du Nord, une PME fictive qui vend des produits locaux dans cinq succursales au Québec.</p>
-<p>La directrice générale prépare une rencontre de performance. Elle ne veut pas encore un modèle statistique complexe. Elle veut d’abord comprendre ce que les données racontent.</p>
-<p>Votre mission :</p>
+<p>Cet atelier prolonge la semaine 01. La semaine 01 installe la logique de diagnostic; l’atelier 01 transforme cette logique en rapport Quarto reproductible.</p>
+<p>Le parcours reste volontairement descriptif. L’objectif n’est pas encore d’ajuster un modèle, mais de lire un tableau, calculer des indicateurs et formuler des constats prudents.</p>
+<p>Question centrale :</p>
 <blockquote class="blockquote">
-<p>Produire un diagnostic initial qui aide la direction à décider quelle question analyser en priorité.</p>
+<p>Quels indicateurs descriptifs permettent de repérer les succursales ou les dimensions opérationnelles qui méritent une analyse plus poussée?</p>
 </blockquote>
 </section>
 <section id="parcours-autonome" class="level2">
@@ -4051,7 +4064,7 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td>1</td>
-<td>Comprendre la demande</td>
+<td>Comprendre la question centrale</td>
 <td>Question d’affaires reformulée</td>
 </tr>
 <tr class="even">
@@ -4113,7 +4126,7 @@ vertical-align: -.125em;
 </section>
 <section id="aperçu-du-rendu-attendu" class="level2">
 <h2 class="anchored" data-anchor-id="aperçu-du-rendu-attendu">Aperçu du rendu attendu</h2>
-<p>Le diagnostic final doit être court, mais il doit être assez clair pour soutenir une discussion de gestion.</p>
+<p>Le diagnostic final doit être court, mais il doit être assez clair pour soutenir une discussion pédagogique ou décisionnelle.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diagnostic_succursales <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale, region) <span class="sc">|&gt;</span></span>

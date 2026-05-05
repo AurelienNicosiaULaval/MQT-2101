@@ -9,20 +9,46 @@ format:
 
 ## Objectif
 
-Pratiquer la formulation de questions statistiques à partir de situations d'affaires.
+Ces exercices servent à préparer la trace de portfolio de la semaine 01.
 
-## Exercices
+## Exercice 1 - Reformuler la décision
 
-TODO: Ajouter un exercice d'interprétation, un exercice avec R et une question critique.
+Question de départ :
+
+> Certaines succursales performent moins bien que d'autres. Il faut comprendre quels indicateurs regarder en premier.
+
+À faire :
+
+- reformuler la décision à éclairer;
+- proposer une question analytique;
+- nommer deux indicateurs utiles.
+
+## Exercice 2 - Lire le tableau
 
 ```{r}
 #| eval: false
 library(tidyverse)
 
-succursales <- tibble(
-  succursale = c("A", "B", "C"),
-  ventes = c(100000, 85000, 120000),
-  clients = c(1800, 1600, 2300)
+diagnostic <- readr::read_csv(
+  "modules/semaine-01-introduction/data/diagnostic_succursales.csv",
+  show_col_types = FALSE
 )
+
+glimpse(diagnostic)
 ```
 
+À faire :
+
+- identifier l'unité d'observation;
+- classer les variables en variables de performance commerciale et variables opérationnelles;
+- repérer une variable qui pourrait devenir une variable réponse dans un modèle futur.
+
+## Exercice 3 - Interpréter prudemment
+
+À partir du graphique de la page principale, rédiger deux constats descriptifs.
+
+Chaque constat doit contenir :
+
+- un résultat observé;
+- une comparaison;
+- une limite d'interprétation.

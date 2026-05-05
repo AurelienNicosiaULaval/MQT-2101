@@ -3978,7 +3978,9 @@ vertical-align: -.125em;
   <li><a href="#exercices---semaine-01" id="toc-exercices---semaine-01" class="nav-link active" data-scroll-target="#exercices---semaine-01">Exercices - Semaine 01</a>
   <ul class="collapse">
   <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#exercices" id="toc-exercices" class="nav-link" data-scroll-target="#exercices">Exercices</a></li>
+  <li><a href="#exercice-1---reformuler-la-décision" id="toc-exercice-1---reformuler-la-décision" class="nav-link" data-scroll-target="#exercice-1---reformuler-la-décision">Exercice 1 - Reformuler la décision</a></li>
+  <li><a href="#exercice-2---lire-le-tableau" id="toc-exercice-2---lire-le-tableau" class="nav-link" data-scroll-target="#exercice-2---lire-le-tableau">Exercice 2 - Lire le tableau</a></li>
+  <li><a href="#exercice-3---interpréter-prudemment" id="toc-exercice-3---interpréter-prudemment" class="nav-link" data-scroll-target="#exercice-3---interpréter-prudemment">Exercice 3 - Interpréter prudemment</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4009,20 +4011,49 @@ vertical-align: -.125em;
 <h1>Exercices - Semaine 01</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Pratiquer la formulation de questions statistiques à partir de situations d’affaires.</p>
+<p>Ces exercices servent à préparer la trace de portfolio de la semaine 01.</p>
 </section>
-<section id="exercices" class="level2">
-<h2 class="anchored" data-anchor-id="exercices">Exercices</h2>
-<p>TODO: Ajouter un exercice d’interprétation, un exercice avec R et une question critique.</p>
+<section id="exercice-1---reformuler-la-décision" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-1---reformuler-la-décision">Exercice 1 - Reformuler la décision</h2>
+<p>Question de départ :</p>
+<blockquote class="blockquote">
+<p>Certaines succursales performent moins bien que d’autres. Il faut comprendre quels indicateurs regarder en premier.</p>
+</blockquote>
+<p>À faire :</p>
+<ul>
+<li>reformuler la décision à éclairer;</li>
+<li>proposer une question analytique;</li>
+<li>nommer deux indicateurs utiles.</li>
+</ul>
+</section>
+<section id="exercice-2---lire-le-tableau" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-2---lire-le-tableau">Exercice 2 - Lire le tableau</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>succursales <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">succursale =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ventes =</span> <span class="fu">c</span>(<span class="dv">100000</span>, <span class="dv">85000</span>, <span class="dv">120000</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">clients =</span> <span class="fu">c</span>(<span class="dv">1800</span>, <span class="dv">1600</span>, <span class="dv">2300</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>diagnostic <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-01-introduction/data/diagnostic_succursales.csv&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(diagnostic)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>À faire :</p>
+<ul>
+<li>identifier l’unité d’observation;</li>
+<li>classer les variables en variables de performance commerciale et variables opérationnelles;</li>
+<li>repérer une variable qui pourrait devenir une variable réponse dans un modèle futur.</li>
+</ul>
+</section>
+<section id="exercice-3---interpréter-prudemment" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-3---interpréter-prudemment">Exercice 3 - Interpréter prudemment</h2>
+<p>À partir du graphique de la page principale, rédiger deux constats descriptifs.</p>
+<p>Chaque constat doit contenir :</p>
+<ul>
+<li>un résultat observé;</li>
+<li>une comparaison;</li>
+<li>une limite d’interprétation.</li>
+</ul>
 
 
 </section>

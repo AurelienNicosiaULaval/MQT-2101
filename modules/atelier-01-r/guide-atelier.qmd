@@ -7,15 +7,19 @@ format:
 
 # Guide autonome - Atelier 01
 
-## Votre mission
+::: {.callout-note title="Place dans la progression"}
+Cet atelier se fait après la semaine 01 et la semaine 02. La semaine 01 installe la logique décisionnelle; cet atelier vous fait pratiquer cette logique dans un rapport Quarto.
+:::
 
-Vous êtes analyste junior chez Les Comptoirs du Nord, une PME fictive qui vend des produits locaux dans cinq succursales au Québec.
+## Objectif du parcours
 
-La directrice générale vous écrit :
+Cet atelier est un parcours guidé pour apprendre à explorer un tableau de données d'affaires dans R et à produire un court rapport Quarto.
 
-> Nous avons les ventes mensuelles de nos succursales pour 2025. Avant de décider où concentrer nos efforts, j'aimerais un diagnostic simple : quelles succursales ou quels indicateurs méritent notre attention?
+Question centrale :
 
-Votre rôle n'est pas encore de prouver une relation causale. Votre rôle est de transformer un tableau brut en premiers constats utiles.
+> Qu'est-ce qu'un tableau de ventes mensuelles permet de dire, et que ne permet-il pas encore de conclure?
+
+L'objectif n'est pas encore de prouver une relation causale. L'objectif est de transformer un tableau brut en premiers constats descriptifs, en distinguant clairement observation, indicateur, interprétation et limite.
 
 ## Ce que vous allez construire
 
@@ -70,13 +74,13 @@ currency_ca <- scales::label_dollar(
 )
 ```
 
-## Épisode 1 - Entrer dans le problème
+## Épisode 1 - Entrer dans la question
 
-::: {.callout-note title="Capsule vidéo 1 - La demande de gestion"}
-À insérer : une courte vidéo de 3 à 5 minutes qui présente la PME fictive, la demande de la direction et la différence entre exploration descriptive et modélisation.
+::: {.callout-note title="Capsule vidéo 1 - La question centrale"}
+À insérer : une courte vidéo de 3 à 5 minutes qui présente la question centrale, le jeu de données et la différence entre exploration descriptive et modélisation.
 :::
 
-La question de la direction est encore vague. Une bonne première étape consiste à la reformuler en question analytique.
+Une question d'affaires est souvent trop générale pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.
 
 Question de départ :
 
@@ -86,8 +90,8 @@ Question analytique :
 
 > Quels indicateurs descriptifs permettent de repérer les succursales ou les dimensions opérationnelles qui méritent une analyse plus poussée?
 
-::: {.callout-tip title="À vous 1 - Reformuler la mission"}
-Dans votre rapport, écrivez en deux phrases ce que la direction veut savoir et ce que votre diagnostic peut réellement fournir.
+::: {.callout-tip title="À vous 1 - Reformuler la question"}
+Dans votre rapport, écrivez en deux phrases ce que la question d'affaires demande et ce que le diagnostic descriptif peut réellement fournir.
 :::
 
 ::: {.callout-important title="Pause diagnostic"}
@@ -122,7 +126,7 @@ Ce que vous devez remarquer :
 - d'autres décrivent le marketing, les opérations et la satisfaction.
 
 ::: {.callout-tip title="À vous 2 - Décrire le tableau"}
-Ajoutez à votre rapport une phrase qui décrit l'unité d'observation et une phrase qui nomme trois variables utiles pour la direction.
+Ajoutez à votre rapport une phrase qui décrit l'unité d'observation et une phrase qui nomme trois variables utiles pour une décision d'affaires.
 :::
 
 ### Trace portfolio
@@ -165,7 +169,7 @@ Si une variable contient des valeurs manquantes, il ne faut pas l'ignorer. Pour 
 ## Épisode 4 - Construire les premiers indicateurs
 
 ::: {.callout-note title="Capsule vidéo 4 - Du tableau brut aux indicateurs"}
-À insérer : une vidéo sur le passage des variables brutes aux indicateurs utiles pour une direction : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.
+À insérer : une vidéo sur le passage des variables brutes aux indicateurs utiles pour une décision d'affaires : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.
 :::
 
 ### Démonstration 3 - Résumer par succursale
@@ -194,7 +198,7 @@ synthese_succursales |>
   )
 ```
 
-::: {.callout-tip title="À vous 4 - Lire le tableau comme gestionnaire"}
+::: {.callout-tip title="À vous 4 - Lire le tableau de façon décisionnelle"}
 Répondez à ces questions dans votre rapport :
 
 - Quelle succursale génère le plus de ventes?
@@ -268,7 +272,7 @@ Ce graphique ne prouve pas que les ruptures causent une baisse de satisfaction. 
 ## Épisode 6 - Passer du résultat au constat
 
 ::: {.callout-note title="Capsule vidéo 6 - Écrire un constat utile"}
-À insérer : une vidéo courte qui montre comment passer d'un tableau ou d'un graphique à une phrase interprétable par une direction.
+À insérer : une vidéo courte qui montre comment passer d'un tableau ou d'un graphique à une phrase interprétable dans un contexte d'affaires.
 :::
 
 Un bon constat contient trois éléments :
@@ -279,7 +283,7 @@ Un bon constat contient trois éléments :
 
 Exemple :
 
-> Montréal génère les ventes les plus élevées, mais cette information doit être mise en relation avec le nombre de clients et le panier moyen. La direction devrait donc distinguer volume d'achalandage et valeur moyenne des transactions.
+> Montréal génère les ventes les plus élevées, mais cette information doit être mise en relation avec le nombre de clients et le panier moyen. Le diagnostic doit donc distinguer volume d'achalandage et valeur moyenne des transactions.
 
 ::: {.callout-tip title="À vous 6 - Écrire vos trois constats"}
 Dans votre rapport, écrivez :
@@ -324,7 +328,7 @@ ventes |>
 
 1. Les données suggèrent que...
 2. La prochaine analyse devrait vérifier...
-3. Cette analyse aiderait la direction à décider...
+3. Cette analyse aiderait à décider...
 :::
 
 ## Livrable final
@@ -344,7 +348,7 @@ Votre fichier Quarto doit contenir les sections suivantes :
 
 | Critère | Attendu |
 |---|---|
-| Question d'affaires | La demande de la direction est reformulée clairement |
+| Question d'affaires | La question centrale est reformulée clairement |
 | Importation | Le fichier CSV est importé avec un chemin relatif |
 | Inspection | L'unité d'observation et les variables sont décrites |
 | Qualité des données | Les valeurs manquantes sont repérées et commentées |
