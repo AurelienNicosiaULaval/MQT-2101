@@ -942,42 +942,105 @@
     "href": "modules/atelier-01-r/index.html",
     "title": "Atelier 01 - Explorer un tableau de données d’affaires",
     "section": "",
-    "text": "Objectif : explorer un tableau de données avec R et produire un diagnostic descriptif.\nCompétences développées : - Importer un fichier CSV. - Décrire les variables. - Produire des résumés et graphiques utiles.\nApplication business : analyser des indicateurs de performance d’une équipe ou d’une PME.\nRésultat final attendu : un rapport court avec trois constats.\nLien avec une décision d’affaires réelle : repérer les variables qui méritent une analyse plus poussée.\n\n\n\nUne équipe de gestion reçoit un tableau de données clients et doit produire un diagnostic initial avant une rencontre de direction.\n\n\n\n\nÉtape 1 : importer les données.\nÉtape 2 : inspecter les variables.\nÉtape 3 : produire trois résumés.\nÉtape 4 : formuler une recommandation préliminaire.\n\n\n\n\nExplorer un tableau de satisfaction client pour prioriser les analyses suivantes.\n\n\n\nUn fichier Quarto contenant le code R, les tableaux de synthèse et une courte interprétation.\nTODO: Ajouter les données et la grille de correction formative."
+    "text": "Objectif : apprendre à explorer un tableau de données d’affaires avec R afin de produire un premier diagnostic utile pour une décision de gestion.\nCompétences développées : - Importer un fichier CSV. - Inspecter la structure d’un tableau. - Repérer les valeurs manquantes. - Calculer des indicateurs descriptifs. - Produire des graphiques simples et interprétables. - Transformer une exploration en recommandation préliminaire.\nApplication business : analyser les ventes mensuelles d’une PME québécoise fictive qui exploite cinq succursales.\nRésultat final attendu : un court rapport Quarto contenant trois constats, deux graphiques et une recommandation de prochaine analyse.\nLien avec une décision d’affaires réelle : aider la direction à décider quelles succursales ou quels indicateurs doivent être analysés en priorité.\n\n\n\nLa direction de la PME fictive Les Comptoirs du Nord prépare une rencontre de performance trimestrielle. Elle possède un tableau mensuel contenant les ventes, le nombre de clients, les dépenses marketing, les délais de livraison, les ruptures de stock et la satisfaction client.\nLa question de départ est volontairement simple :\n\nQuelles succursales ou quels indicateurs méritent l’attention de la direction avant de construire un modèle plus avancé?\n\n\n\n\n\nObservation et variable.\nVariable numérique et variable catégorielle.\nValeur manquante.\nIndicateur descriptif.\nGraphique exploratoire.\nConstat descriptif et recommandation préliminaire.\n\n\n\n\nLe fichier utilisé est data/ventes_pme_quebec.csv.\nTélécharger le fichier CSV\nLe tableau contient 60 observations et 15 variables.\n\nventes |&gt;\n  select(mois, succursale, ventes, clients, panier_moyen, satisfaction) |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 6\n  mois       succursale     ventes clients panier_moyen satisfaction\n  &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;\n1 2025-01-01 Gatineau       129858    2188         59.4          7.6\n2 2025-01-01 Montréal       168615    2568         65.7          7.9\n3 2025-01-01 Québec         142295    2280         62.4          8.7\n4 2025-01-01 Sherbrooke     120156    2013         59.7          8.5\n5 2025-01-01 Trois-Rivières 108008    1967         54.9          7.1\n6 2025-02-01 Gatineau       115542    2100         55.0          7  \n7 2025-02-01 Montréal       158520    2468         64.2          8.5\n8 2025-02-01 Québec         157178    2417         65.0         NA  \n\n\n\n\n\nCapsule 1 : Importer et inspecter un tableau avec readr::read_csv() et glimpse().\nCapsule 2 : Résumer les variables pour trouver les premiers signaux d’affaires.\nCapsule 3 : Visualiser les ventes, les clients et la satisfaction pour préparer une recommandation.\n\n\n\n\nÉtape 1 : importer les données.\nÉtape 2 : inspecter les variables.\nÉtape 3 : repérer les valeurs manquantes.\nÉtape 4 : calculer des indicateurs par succursale.\nÉtape 5 : produire deux visualisations.\nÉtape 6 : formuler trois constats et une recommandation.\n\n\n\n\n\ndiagnostic_succursales &lt;- ventes |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\ndiagnostic_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  )\n\n# A tibble: 5 × 7\n  succursale     region             ventes_totales clients_totaux panier_moyen\n  &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       \n1 Montréal       Montréal           1 923 795 $             31351 61,27 $     \n2 Québec         Capitale-Nationale 1 740 846 $             27586 63,02 $     \n3 Sherbrooke     Estrie             1 453 016 $             23858 60,82 $     \n4 Gatineau       Outaouais          1 442 128 $             24166 59,59 $     \n5 Trois-Rivières Mauricie           1 403 919 $             22334 62,92 $     \n# ℹ 2 more variables: satisfaction_moyenne &lt;dbl&gt;, ruptures_stock &lt;dbl&gt;\n\n\n\nventes |&gt;\n  group_by(succursale) |&gt;\n  summarise(ventes_totales = sum(ventes), .groups = \"drop\") |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#2A9D8F\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes annuelles par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\nAE 1 : interprétation. Identifier la succursale qui génère le plus de ventes et expliquer pourquoi cette information ne suffit pas pour conclure qu’elle est la plus performante.\nAE 2 : calcul ou code R. Calculer le panier moyen, la satisfaction moyenne et le nombre total de ruptures de stock par succursale.\nAE 3 : réflexion critique. Proposer une variable supplémentaire qui aiderait la direction à mieux comprendre la performance commerciale.\n\n\n\nLa direction hésite entre trois priorités : augmenter le budget marketing, réduire les ruptures de stock ou améliorer les délais de livraison. L’atelier doit produire les premiers indices permettant de choisir où concentrer l’analyse.\n\n\n\nUn fichier Quarto de deux pages maximum contenant :\n\nune courte description du tableau;\nun diagnostic des valeurs manquantes;\nun tableau synthèse par succursale;\ndeux graphiques;\ntrois constats;\nune recommandation de prochaine analyse.\n\n\n\n\nUne exploration descriptive ne donne pas encore une preuve causale. Elle sert à comprendre le tableau, repérer les signaux importants et poser de meilleures questions pour la suite.\n\n\n\n\nSe fier uniquement aux ventes totales sans tenir compte du nombre de clients.\nOublier de vérifier les valeurs manquantes.\nProduire un graphique sans message d’affaires.\nConfondre un constat descriptif avec une recommandation définitive.\n\n\n\n\nAjouter au portfolio une section intitulée Diagnostic initial d'une PME québécoise, avec les trois constats les plus utiles pour une direction.\n\n\n\nLe guide détaillé de l’atelier est disponible ici :\nGuide de l’atelier 01"
   },
   {
     "objectID": "modules/atelier-01-r/index.html#lets-eat-the-cake",
     "href": "modules/atelier-01-r/index.html#lets-eat-the-cake",
     "title": "Atelier 01 - Explorer un tableau de données d’affaires",
     "section": "",
-    "text": "Objectif : explorer un tableau de données avec R et produire un diagnostic descriptif.\nCompétences développées : - Importer un fichier CSV. - Décrire les variables. - Produire des résumés et graphiques utiles.\nApplication business : analyser des indicateurs de performance d’une équipe ou d’une PME.\nRésultat final attendu : un rapport court avec trois constats.\nLien avec une décision d’affaires réelle : repérer les variables qui méritent une analyse plus poussée."
+    "text": "Objectif : apprendre à explorer un tableau de données d’affaires avec R afin de produire un premier diagnostic utile pour une décision de gestion.\nCompétences développées : - Importer un fichier CSV. - Inspecter la structure d’un tableau. - Repérer les valeurs manquantes. - Calculer des indicateurs descriptifs. - Produire des graphiques simples et interprétables. - Transformer une exploration en recommandation préliminaire.\nApplication business : analyser les ventes mensuelles d’une PME québécoise fictive qui exploite cinq succursales.\nRésultat final attendu : un court rapport Quarto contenant trois constats, deux graphiques et une recommandation de prochaine analyse.\nLien avec une décision d’affaires réelle : aider la direction à décider quelles succursales ou quels indicateurs doivent être analysés en priorité."
   },
   {
     "objectID": "modules/atelier-01-r/index.html#mise-en-contexte",
     "href": "modules/atelier-01-r/index.html#mise-en-contexte",
     "title": "Atelier 01 - Explorer un tableau de données d’affaires",
     "section": "",
-    "text": "Une équipe de gestion reçoit un tableau de données clients et doit produire un diagnostic initial avant une rencontre de direction."
+    "text": "La direction de la PME fictive Les Comptoirs du Nord prépare une rencontre de performance trimestrielle. Elle possède un tableau mensuel contenant les ventes, le nombre de clients, les dépenses marketing, les délais de livraison, les ruptures de stock et la satisfaction client.\nLa question de départ est volontairement simple :\n\nQuelles succursales ou quels indicateurs méritent l’attention de la direction avant de construire un modèle plus avancé?"
   },
   {
-    "objectID": "modules/atelier-01-r/index.html#déroulement",
-    "href": "modules/atelier-01-r/index.html#déroulement",
+    "objectID": "modules/atelier-01-r/index.html#concepts-clés",
+    "href": "modules/atelier-01-r/index.html#concepts-clés",
     "title": "Atelier 01 - Explorer un tableau de données d’affaires",
     "section": "",
-    "text": "Étape 1 : importer les données.\nÉtape 2 : inspecter les variables.\nÉtape 3 : produire trois résumés.\nÉtape 4 : formuler une recommandation préliminaire."
+    "text": "Observation et variable.\nVariable numérique et variable catégorielle.\nValeur manquante.\nIndicateur descriptif.\nGraphique exploratoire.\nConstat descriptif et recommandation préliminaire."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#données",
+    "href": "modules/atelier-01-r/index.html#données",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Le fichier utilisé est data/ventes_pme_quebec.csv.\nTélécharger le fichier CSV\nLe tableau contient 60 observations et 15 variables.\n\nventes |&gt;\n  select(mois, succursale, ventes, clients, panier_moyen, satisfaction) |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 6\n  mois       succursale     ventes clients panier_moyen satisfaction\n  &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;\n1 2025-01-01 Gatineau       129858    2188         59.4          7.6\n2 2025-01-01 Montréal       168615    2568         65.7          7.9\n3 2025-01-01 Québec         142295    2280         62.4          8.7\n4 2025-01-01 Sherbrooke     120156    2013         59.7          8.5\n5 2025-01-01 Trois-Rivières 108008    1967         54.9          7.1\n6 2025-02-01 Gatineau       115542    2100         55.0          7  \n7 2025-02-01 Montréal       158520    2468         64.2          8.5\n8 2025-02-01 Québec         157178    2417         65.0         NA"
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#capsules-de-latelier",
+    "href": "modules/atelier-01-r/index.html#capsules-de-latelier",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Capsule 1 : Importer et inspecter un tableau avec readr::read_csv() et glimpse().\nCapsule 2 : Résumer les variables pour trouver les premiers signaux d’affaires.\nCapsule 3 : Visualiser les ventes, les clients et la satisfaction pour préparer une recommandation."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#déroulement-proposé",
+    "href": "modules/atelier-01-r/index.html#déroulement-proposé",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Étape 1 : importer les données.\nÉtape 2 : inspecter les variables.\nÉtape 3 : repérer les valeurs manquantes.\nÉtape 4 : calculer des indicateurs par succursale.\nÉtape 5 : produire deux visualisations.\nÉtape 6 : formuler trois constats et une recommandation."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#exemple-de-diagnostic-attendu",
+    "href": "modules/atelier-01-r/index.html#exemple-de-diagnostic-attendu",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "diagnostic_succursales &lt;- ventes |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\ndiagnostic_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  )\n\n# A tibble: 5 × 7\n  succursale     region             ventes_totales clients_totaux panier_moyen\n  &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       \n1 Montréal       Montréal           1 923 795 $             31351 61,27 $     \n2 Québec         Capitale-Nationale 1 740 846 $             27586 63,02 $     \n3 Sherbrooke     Estrie             1 453 016 $             23858 60,82 $     \n4 Gatineau       Outaouais          1 442 128 $             24166 59,59 $     \n5 Trois-Rivières Mauricie           1 403 919 $             22334 62,92 $     \n# ℹ 2 more variables: satisfaction_moyenne &lt;dbl&gt;, ruptures_stock &lt;dbl&gt;\n\n\n\nventes |&gt;\n  group_by(succursale) |&gt;\n  summarise(ventes_totales = sum(ventes), .groups = \"drop\") |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#2A9D8F\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes annuelles par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)"
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#exercices-dapplication-intégrés",
+    "href": "modules/atelier-01-r/index.html#exercices-dapplication-intégrés",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "AE 1 : interprétation. Identifier la succursale qui génère le plus de ventes et expliquer pourquoi cette information ne suffit pas pour conclure qu’elle est la plus performante.\nAE 2 : calcul ou code R. Calculer le panier moyen, la satisfaction moyenne et le nombre total de ruptures de stock par succursale.\nAE 3 : réflexion critique. Proposer une variable supplémentaire qui aiderait la direction à mieux comprendre la performance commerciale."
   },
   {
     "objectID": "modules/atelier-01-r/index.html#mini-cas-business",
     "href": "modules/atelier-01-r/index.html#mini-cas-business",
     "title": "Atelier 01 - Explorer un tableau de données d’affaires",
     "section": "",
-    "text": "Explorer un tableau de satisfaction client pour prioriser les analyses suivantes."
+    "text": "La direction hésite entre trois priorités : augmenter le budget marketing, réduire les ruptures de stock ou améliorer les délais de livraison. L’atelier doit produire les premiers indices permettant de choisir où concentrer l’analyse."
   },
   {
     "objectID": "modules/atelier-01-r/index.html#livrable",
     "href": "modules/atelier-01-r/index.html#livrable",
     "title": "Atelier 01 - Explorer un tableau de données d’affaires",
     "section": "",
-    "text": "Un fichier Quarto contenant le code R, les tableaux de synthèse et une courte interprétation.\nTODO: Ajouter les données et la grille de correction formative."
+    "text": "Un fichier Quarto de deux pages maximum contenant :\n\nune courte description du tableau;\nun diagnostic des valeurs manquantes;\nun tableau synthèse par succursale;\ndeux graphiques;\ntrois constats;\nune recommandation de prochaine analyse."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#à-retenir",
+    "href": "modules/atelier-01-r/index.html#à-retenir",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Une exploration descriptive ne donne pas encore une preuve causale. Elle sert à comprendre le tableau, repérer les signaux importants et poser de meilleures questions pour la suite."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#erreurs-fréquentes",
+    "href": "modules/atelier-01-r/index.html#erreurs-fréquentes",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Se fier uniquement aux ventes totales sans tenir compte du nombre de clients.\nOublier de vérifier les valeurs manquantes.\nProduire un graphique sans message d’affaires.\nConfondre un constat descriptif avec une recommandation définitive."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#trace-de-portfolio",
+    "href": "modules/atelier-01-r/index.html#trace-de-portfolio",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Ajouter au portfolio une section intitulée Diagnostic initial d'une PME québécoise, avec les trois constats les plus utiles pour une direction."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#pour-aller-plus-loin",
+    "href": "modules/atelier-01-r/index.html#pour-aller-plus-loin",
+    "title": "Atelier 01 - Explorer un tableau de données d’affaires",
+    "section": "",
+    "text": "Le guide détaillé de l’atelier est disponible ici :\nGuide de l’atelier 01"
   },
   {
     "objectID": "installation.html",
@@ -1264,21 +1327,105 @@
     "href": "modules/atelier-01-r/guide-atelier.html",
     "title": "Guide atelier 01",
     "section": "",
-    "text": "Guider l’exploration d’un tableau de données d’affaires.\n\n\n\nTODO: Ajouter les étapes détaillées, le fichier de départ et les questions.\n\nlibrary(tidyverse)\n\ndonnees &lt;- readr::read_csv(\"modules/atelier-01-r/data/donnees_atelier_01.csv\")\nglimpse(donnees)"
+    "text": "Produire un diagnostic descriptif reproductible à partir d’un tableau de données d’affaires.\nÀ la fin de l’atelier, le livrable doit permettre à une direction de comprendre rapidement :\n\nce que contient le tableau;\noù se trouvent les données manquantes;\nquelles succursales se distinguent;\nquels indicateurs méritent une analyse plus poussée.\n\n\n\n\nLa PME fictive Les Comptoirs du Nord exploite cinq succursales au Québec. Elle vend des produits locaux en magasin et observe des différences de performance entre succursales.\nLa direction veut préparer une rencontre de gestion. Elle ne demande pas encore un modèle statistique. Elle veut d’abord un diagnostic clair, visuel et reproductible.\nQuestion d’affaires :\n\nQuels signaux ressortent du tableau de ventes mensuelles, et quelle analyse devrait être priorisée ensuite?\n\n\n\n\nFichier : data/ventes_pme_quebec.csv.\nTélécharger le fichier CSV\nChaque ligne représente une succursale pour un mois de l’année 2025.\n\n\n\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes &lt;- readr::read_csv(data_path, show_col_types = FALSE) |&gt;\n  clean_names()\n\nglimpse(ventes)\n\nRows: 60\nColumns: 15\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Sherbrooke\", …\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 410, 520, 460, 390, 360, 410, 520, 460, 390, 360…\n$ campagne_locale       &lt;dbl&gt; 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, …\n$ depenses_marketing    &lt;dbl&gt; 4799, 5755, 5646, 2367, 7671, 4771, 3070, 5029, …\n$ clients               &lt;dbl&gt; 2188, 2568, 2280, 2013, 1967, 2100, 2468, 2417, …\n$ panier_moyen          &lt;dbl&gt; 59.35, 65.66, 62.41, 59.69, 54.91, 55.02, 64.23,…\n$ ventes                &lt;dbl&gt; 129858, 168615, 142295, 120156, 108008, 115542, …\n$ delai_livraison_jours &lt;dbl&gt; 3.0, 2.5, 2.4, 2.3, 2.1, 3.5, 1.7, 2.4, 2.2, 2.2…\n$ ruptures_stock        &lt;dbl&gt; 6, 3, 1, 3, 1, 1, 0, 2, 1, 1, 1, 0, 1, 2, 0, 1, …\n$ satisfaction          &lt;dbl&gt; 7.6, 7.9, 8.7, 8.5, 7.1, 7.0, 8.5, NA, 7.4, 8.0,…\n$ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.042,…\n\n\nÀ vérifier :\n\nCombien y a-t-il d’observations?\nCombien y a-t-il de variables?\nQuelle est l’unité d’observation?\nQuelles variables sont numériques?\nQuelles variables sont catégorielles?\n\n\n\n\n\ntibble(\n  variable = names(ventes),\n  type = map_chr(ventes, \\(x) class(x)[1]),\n  valeurs_manquantes = map_int(ventes, \\(x) sum(is.na(x)))\n)\n\n# A tibble: 15 × 3\n   variable              type      valeurs_manquantes\n   &lt;chr&gt;                 &lt;chr&gt;                  &lt;int&gt;\n 1 mois                  Date                       0\n 2 mois_label            character                  0\n 3 saison                character                  0\n 4 succursale            character                  0\n 5 region                character                  0\n 6 surface_m2            numeric                    0\n 7 campagne_locale       numeric                    0\n 8 depenses_marketing    numeric                    0\n 9 clients               numeric                    0\n10 panier_moyen          numeric                    0\n11 ventes                numeric                    0\n12 delai_livraison_jours numeric                    2\n13 ruptures_stock        numeric                    0\n14 satisfaction          numeric                    3\n15 taux_retour           numeric                    0\n\n\nQuestion : quelles variables sont directement utiles pour une décision de gestion?\n\n\n\n\nventes |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0) |&gt;\n  arrange(desc(valeurs_manquantes))\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 satisfaction                           3\n2 delai_livraison_jours                  2\n\n\nInterprétation attendue :\n\nnommer les variables touchées;\nexpliquer pourquoi ces valeurs manquantes peuvent influencer l’analyse;\nproposer une action simple avant d’aller plus loin.\n\n\n\n\n\nsynthese_succursales &lt;- ventes |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),\n    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\nsynthese_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1),\n    delai_moyen = round(delai_moyen, 1)\n  )\n\n# A tibble: 5 × 8\n  succursale     region             ventes_totales clients_totaux panier_moyen\n  &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       \n1 Montréal       Montréal           1 923 795 $             31351 61,27 $     \n2 Québec         Capitale-Nationale 1 740 846 $             27586 63,02 $     \n3 Sherbrooke     Estrie             1 453 016 $             23858 60,82 $     \n4 Gatineau       Outaouais          1 442 128 $             24166 59,59 $     \n5 Trois-Rivières Mauricie           1 403 919 $             22334 62,92 $     \n# ℹ 3 more variables: satisfaction_moyenne &lt;dbl&gt;, delai_moyen &lt;dbl&gt;,\n#   ruptures_stock &lt;dbl&gt;\n\n\nQuestions :\n\nQuelle succursale vend le plus?\nQuelle succursale a le panier moyen le plus élevé?\nQuelle succursale semble avoir le plus de problèmes opérationnels?\nEst-ce que la réponse change selon l’indicateur choisi?\n\n\n\n\n\nsynthese_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#2A9D8F\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes annuelles par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nMessage attendu : ce graphique sert à repérer les succursales qui contribuent le plus au chiffre d’affaires.\n\n\n\n\nventes |&gt;\n  ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +\n  geom_point(size = 2.4, alpha = 0.8) +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"#1F2933\") +\n  labs(\n    title = \"Satisfaction client et ruptures de stock\",\n    x = \"Nombre de ruptures de stock\",\n    y = \"Satisfaction moyenne sur 10\",\n    color = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nQuestion : observe-t-on un signal descriptif qui justifierait une analyse plus poussée?\n\n\n\nUn bon constat doit contenir :\n\nun indicateur;\nune comparaison;\nune implication d’affaires.\n\nExemple de forme attendue :\n\nLa succursale X génère le plus de ventes, mais la succursale Y obtient un panier moyen plus élevé. La direction devrait donc distinguer volume de clientèle et valeur moyenne par transaction.\n\nÀ produire :\n\nUn constat sur les ventes.\nUn constat sur la satisfaction ou les délais.\nUn constat sur les ruptures de stock ou le marketing.\n\n\n\n\nChoisir une seule priorité :\n\nanalyser l’effet des dépenses marketing;\nanalyser les ruptures de stock;\nanalyser les délais de livraison;\ncomparer les succursales à clientèle comparable.\n\nLa recommandation doit tenir en trois phrases :\n\nCe que les données suggèrent.\nCe qu’il faut vérifier ensuite.\nQuelle décision de gestion cela pourrait éclairer.\n\n\n\n\nRemettre un fichier Quarto contenant :\n\nle code d’importation;\nle diagnostic des valeurs manquantes;\nle tableau synthèse;\ndeux graphiques;\ntrois constats;\nune recommandation courte.\n\n\n\n\n\n\n\n\n\n\n\nCritère\nAttendu\n\n\n\n\nImportation\nLe fichier CSV est importé sans chemin absolu\n\n\nInspection\nLa structure et les valeurs manquantes sont vérifiées\n\n\nIndicateurs\nLes indicateurs sont calculés par succursale\n\n\nGraphiques\nLes graphiques ont un titre, des axes clairs et un message\n\n\nInterprétation\nLes constats sont liés à une décision d’affaires\n\n\nReproductibilité\nLe document Quarto se rend sans modification\n\n\n\n\n\n\nModifier le tableau synthèse pour comparer les mois de haute saison aux autres mois.\n\nventes |&gt;\n  group_by(saison) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  )\n\n# A tibble: 3 × 4\n  saison    ventes_totales satisfaction_moyenne ruptures_stock\n  &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;          &lt;dbl&gt;\n1 haute     1 541 747 $                     7.6             27\n2 moyenne   1 965 806 $                     7.8             29\n3 reguliere 4 456 151 $                     7.6             77"
   },
   {
     "objectID": "modules/atelier-01-r/guide-atelier.html#objectif",
     "href": "modules/atelier-01-r/guide-atelier.html#objectif",
     "title": "Guide atelier 01",
     "section": "",
-    "text": "Guider l’exploration d’un tableau de données d’affaires."
+    "text": "Produire un diagnostic descriptif reproductible à partir d’un tableau de données d’affaires.\nÀ la fin de l’atelier, le livrable doit permettre à une direction de comprendre rapidement :\n\nce que contient le tableau;\noù se trouvent les données manquantes;\nquelles succursales se distinguent;\nquels indicateurs méritent une analyse plus poussée."
   },
   {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#consignes",
-    "href": "modules/atelier-01-r/guide-atelier.html#consignes",
+    "objectID": "modules/atelier-01-r/guide-atelier.html#mise-en-situation",
+    "href": "modules/atelier-01-r/guide-atelier.html#mise-en-situation",
     "title": "Guide atelier 01",
     "section": "",
-    "text": "TODO: Ajouter les étapes détaillées, le fichier de départ et les questions.\n\nlibrary(tidyverse)\n\ndonnees &lt;- readr::read_csv(\"modules/atelier-01-r/data/donnees_atelier_01.csv\")\nglimpse(donnees)"
+    "text": "La PME fictive Les Comptoirs du Nord exploite cinq succursales au Québec. Elle vend des produits locaux en magasin et observe des différences de performance entre succursales.\nLa direction veut préparer une rencontre de gestion. Elle ne demande pas encore un modèle statistique. Elle veut d’abord un diagnostic clair, visuel et reproductible.\nQuestion d’affaires :\n\nQuels signaux ressortent du tableau de ventes mensuelles, et quelle analyse devrait être priorisée ensuite?"
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#données",
+    "href": "modules/atelier-01-r/guide-atelier.html#données",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "Fichier : data/ventes_pme_quebec.csv.\nTélécharger le fichier CSV\nChaque ligne représente une succursale pour un mois de l’année 2025."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-1---importer-le-tableau",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-1---importer-le-tableau",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(janitor)\n\nventes &lt;- readr::read_csv(data_path, show_col_types = FALSE) |&gt;\n  clean_names()\n\nglimpse(ventes)\n\nRows: 60\nColumns: 15\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Sherbrooke\", …\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 410, 520, 460, 390, 360, 410, 520, 460, 390, 360…\n$ campagne_locale       &lt;dbl&gt; 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, …\n$ depenses_marketing    &lt;dbl&gt; 4799, 5755, 5646, 2367, 7671, 4771, 3070, 5029, …\n$ clients               &lt;dbl&gt; 2188, 2568, 2280, 2013, 1967, 2100, 2468, 2417, …\n$ panier_moyen          &lt;dbl&gt; 59.35, 65.66, 62.41, 59.69, 54.91, 55.02, 64.23,…\n$ ventes                &lt;dbl&gt; 129858, 168615, 142295, 120156, 108008, 115542, …\n$ delai_livraison_jours &lt;dbl&gt; 3.0, 2.5, 2.4, 2.3, 2.1, 3.5, 1.7, 2.4, 2.2, 2.2…\n$ ruptures_stock        &lt;dbl&gt; 6, 3, 1, 3, 1, 1, 0, 2, 1, 1, 1, 0, 1, 2, 0, 1, …\n$ satisfaction          &lt;dbl&gt; 7.6, 7.9, 8.7, 8.5, 7.1, 7.0, 8.5, NA, 7.4, 8.0,…\n$ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.042,…\n\n\nÀ vérifier :\n\nCombien y a-t-il d’observations?\nCombien y a-t-il de variables?\nQuelle est l’unité d’observation?\nQuelles variables sont numériques?\nQuelles variables sont catégorielles?"
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-2---comprendre-les-variables",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-2---comprendre-les-variables",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "tibble(\n  variable = names(ventes),\n  type = map_chr(ventes, \\(x) class(x)[1]),\n  valeurs_manquantes = map_int(ventes, \\(x) sum(is.na(x)))\n)\n\n# A tibble: 15 × 3\n   variable              type      valeurs_manquantes\n   &lt;chr&gt;                 &lt;chr&gt;                  &lt;int&gt;\n 1 mois                  Date                       0\n 2 mois_label            character                  0\n 3 saison                character                  0\n 4 succursale            character                  0\n 5 region                character                  0\n 6 surface_m2            numeric                    0\n 7 campagne_locale       numeric                    0\n 8 depenses_marketing    numeric                    0\n 9 clients               numeric                    0\n10 panier_moyen          numeric                    0\n11 ventes                numeric                    0\n12 delai_livraison_jours numeric                    2\n13 ruptures_stock        numeric                    0\n14 satisfaction          numeric                    3\n15 taux_retour           numeric                    0\n\n\nQuestion : quelles variables sont directement utiles pour une décision de gestion?"
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-3---diagnostiquer-les-valeurs-manquantes",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-3---diagnostiquer-les-valeurs-manquantes",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "ventes |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0) |&gt;\n  arrange(desc(valeurs_manquantes))\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 satisfaction                           3\n2 delai_livraison_jours                  2\n\n\nInterprétation attendue :\n\nnommer les variables touchées;\nexpliquer pourquoi ces valeurs manquantes peuvent influencer l’analyse;\nproposer une action simple avant d’aller plus loin."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-4---produire-un-tableau-synthèse-par-succursale",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-4---produire-un-tableau-synthèse-par-succursale",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "synthese_succursales &lt;- ventes |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),\n    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\nsynthese_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1),\n    delai_moyen = round(delai_moyen, 1)\n  )\n\n# A tibble: 5 × 8\n  succursale     region             ventes_totales clients_totaux panier_moyen\n  &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       \n1 Montréal       Montréal           1 923 795 $             31351 61,27 $     \n2 Québec         Capitale-Nationale 1 740 846 $             27586 63,02 $     \n3 Sherbrooke     Estrie             1 453 016 $             23858 60,82 $     \n4 Gatineau       Outaouais          1 442 128 $             24166 59,59 $     \n5 Trois-Rivières Mauricie           1 403 919 $             22334 62,92 $     \n# ℹ 3 more variables: satisfaction_moyenne &lt;dbl&gt;, delai_moyen &lt;dbl&gt;,\n#   ruptures_stock &lt;dbl&gt;\n\n\nQuestions :\n\nQuelle succursale vend le plus?\nQuelle succursale a le panier moyen le plus élevé?\nQuelle succursale semble avoir le plus de problèmes opérationnels?\nEst-ce que la réponse change selon l’indicateur choisi?"
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-5---visualiser-les-ventes",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-5---visualiser-les-ventes",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "synthese_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#2A9D8F\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes annuelles par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nMessage attendu : ce graphique sert à repérer les succursales qui contribuent le plus au chiffre d’affaires."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-6---visualiser-la-relation-entre-satisfaction-et-problèmes-opérationnels",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-6---visualiser-la-relation-entre-satisfaction-et-problèmes-opérationnels",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "ventes |&gt;\n  ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +\n  geom_point(size = 2.4, alpha = 0.8) +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"#1F2933\") +\n  labs(\n    title = \"Satisfaction client et ruptures de stock\",\n    x = \"Nombre de ruptures de stock\",\n    y = \"Satisfaction moyenne sur 10\",\n    color = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nQuestion : observe-t-on un signal descriptif qui justifierait une analyse plus poussée?"
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-7---formuler-trois-constats",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-7---formuler-trois-constats",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "Un bon constat doit contenir :\n\nun indicateur;\nune comparaison;\nune implication d’affaires.\n\nExemple de forme attendue :\n\nLa succursale X génère le plus de ventes, mais la succursale Y obtient un panier moyen plus élevé. La direction devrait donc distinguer volume de clientèle et valeur moyenne par transaction.\n\nÀ produire :\n\nUn constat sur les ventes.\nUn constat sur la satisfaction ou les délais.\nUn constat sur les ruptures de stock ou le marketing."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-8---recommandation-de-prochaine-analyse",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-8---recommandation-de-prochaine-analyse",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "Choisir une seule priorité :\n\nanalyser l’effet des dépenses marketing;\nanalyser les ruptures de stock;\nanalyser les délais de livraison;\ncomparer les succursales à clientèle comparable.\n\nLa recommandation doit tenir en trois phrases :\n\nCe que les données suggèrent.\nCe qu’il faut vérifier ensuite.\nQuelle décision de gestion cela pourrait éclairer."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#livrable",
+    "href": "modules/atelier-01-r/guide-atelier.html#livrable",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "Remettre un fichier Quarto contenant :\n\nle code d’importation;\nle diagnostic des valeurs manquantes;\nle tableau synthèse;\ndeux graphiques;\ntrois constats;\nune recommandation courte."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#grille-formative",
+    "href": "modules/atelier-01-r/guide-atelier.html#grille-formative",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "Critère\nAttendu\n\n\n\n\nImportation\nLe fichier CSV est importé sans chemin absolu\n\n\nInspection\nLa structure et les valeurs manquantes sont vérifiées\n\n\nIndicateurs\nLes indicateurs sont calculés par succursale\n\n\nGraphiques\nLes graphiques ont un titre, des axes clairs et un message\n\n\nInterprétation\nLes constats sont liés à une décision d’affaires\n\n\nReproductibilité\nLe document Quarto se rend sans modification"
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#pour-aller-plus-loin",
+    "href": "modules/atelier-01-r/guide-atelier.html#pour-aller-plus-loin",
+    "title": "Guide atelier 01",
+    "section": "",
+    "text": "Modifier le tableau synthèse pour comparer les mois de haute saison aux autres mois.\n\nventes |&gt;\n  group_by(saison) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  )\n\n# A tibble: 3 × 4\n  saison    ventes_totales satisfaction_moyenne ruptures_stock\n  &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;          &lt;dbl&gt;\n1 haute     1 541 747 $                     7.6             27\n2 moyenne   1 965 806 $                     7.8             29\n3 reguliere 4 456 151 $                     7.6             77"
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html",

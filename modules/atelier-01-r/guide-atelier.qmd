@@ -5,21 +5,269 @@ format:
     embed-resources: true
 ---
 
-# Guide atelier 01
+# Guide atelier 01 - Explorer un tableau de données d'affaires
 
 ## Objectif
 
-Guider l'exploration d'un tableau de données d'affaires.
+Produire un diagnostic descriptif reproductible à partir d'un tableau de données d'affaires.
 
-## Consignes
+À la fin de l'atelier, le livrable doit permettre à une direction de comprendre rapidement :
 
-TODO: Ajouter les étapes détaillées, le fichier de départ et les questions.
+- ce que contient le tableau;
+- où se trouvent les données manquantes;
+- quelles succursales se distinguent;
+- quels indicateurs méritent une analyse plus poussée.
+
+## Mise en situation
+
+La PME fictive Les Comptoirs du Nord exploite cinq succursales au Québec. Elle vend des produits locaux en magasin et observe des différences de performance entre succursales.
+
+La direction veut préparer une rencontre de gestion. Elle ne demande pas encore un modèle statistique. Elle veut d'abord un diagnostic clair, visuel et reproductible.
+
+Question d'affaires :
+
+> Quels signaux ressortent du tableau de ventes mensuelles, et quelle analyse devrait être priorisée ensuite?
+
+## Données
+
+Fichier : `data/ventes_pme_quebec.csv`.
+
+[Télécharger le fichier CSV](data/ventes_pme_quebec.csv)
+
+Chaque ligne représente une succursale pour un mois de l'année 2025.
 
 ```{r}
-#| eval: false
+#| label: setup-atelier-01-guide
+#| include: false
 library(tidyverse)
+library(janitor)
+library(scales)
 
-donnees <- readr::read_csv("modules/atelier-01-r/data/donnees_atelier_01.csv")
-glimpse(donnees)
+data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
+  "data/ventes_pme_quebec.csv"
+} else {
+  "modules/atelier-01-r/data/ventes_pme_quebec.csv"
+}
+
+ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names() |>
+  mutate(
+    mois = as.Date(mois),
+    campagne_locale = factor(
+      campagne_locale,
+      levels = c(0, 1),
+      labels = c("non", "oui")
+    )
+  )
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
 ```
 
+## Étape 1 - Importer le tableau
+
+```{r}
+library(tidyverse)
+library(janitor)
+
+ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
+
+glimpse(ventes)
+```
+
+À vérifier :
+
+- Combien y a-t-il d'observations?
+- Combien y a-t-il de variables?
+- Quelle est l'unité d'observation?
+- Quelles variables sont numériques?
+- Quelles variables sont catégorielles?
+
+## Étape 2 - Comprendre les variables
+
+```{r}
+#| label: dictionnaire-rapide-atelier-01
+tibble(
+  variable = names(ventes),
+  type = map_chr(ventes, \(x) class(x)[1]),
+  valeurs_manquantes = map_int(ventes, \(x) sum(is.na(x)))
+)
+```
+
+Question : quelles variables sont directement utiles pour une décision de gestion?
+
+## Étape 3 - Diagnostiquer les valeurs manquantes
+
+```{r}
+#| label: valeurs-manquantes-atelier-01
+ventes |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0) |>
+  arrange(desc(valeurs_manquantes))
+```
+
+Interprétation attendue :
+
+- nommer les variables touchées;
+- expliquer pourquoi ces valeurs manquantes peuvent influencer l'analyse;
+- proposer une action simple avant d'aller plus loin.
+
+## Étape 4 - Produire un tableau synthèse par succursale
+
+```{r}
+#| label: tableau-synthese-atelier-01
+synthese_succursales <- ventes |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
+    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+synthese_succursales |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    panier_moyen = currency_ca(panier_moyen),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1),
+    delai_moyen = round(delai_moyen, 1)
+  )
+```
+
+Questions :
+
+- Quelle succursale vend le plus?
+- Quelle succursale a le panier moyen le plus élevé?
+- Quelle succursale semble avoir le plus de problèmes opérationnels?
+- Est-ce que la réponse change selon l'indicateur choisi?
+
+## Étape 5 - Visualiser les ventes
+
+```{r}
+#| label: ventes-par-succursale-atelier-01
+#| fig-width: 8
+#| fig-height: 4.8
+synthese_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(ventes_totales, succursale)) +
+  geom_col(fill = "#2A9D8F") +
+  scale_x_continuous(labels = currency_ca) +
+  labs(
+    title = "Ventes annuelles par succursale",
+    x = "Ventes",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Message attendu : ce graphique sert à repérer les succursales qui contribuent le plus au chiffre d'affaires.
+
+## Étape 6 - Visualiser la relation entre satisfaction et problèmes opérationnels
+
+```{r}
+#| label: satisfaction-ruptures-atelier-01
+#| fig-width: 8
+#| fig-height: 5
+ventes |>
+  ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +
+  geom_point(size = 2.4, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1F2933") +
+  labs(
+    title = "Satisfaction client et ruptures de stock",
+    x = "Nombre de ruptures de stock",
+    y = "Satisfaction moyenne sur 10",
+    color = "Succursale"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Question : observe-t-on un signal descriptif qui justifierait une analyse plus poussée?
+
+## Étape 7 - Formuler trois constats
+
+Un bon constat doit contenir :
+
+- un indicateur;
+- une comparaison;
+- une implication d'affaires.
+
+Exemple de forme attendue :
+
+> La succursale X génère le plus de ventes, mais la succursale Y obtient un panier moyen plus élevé. La direction devrait donc distinguer volume de clientèle et valeur moyenne par transaction.
+
+À produire :
+
+1. Un constat sur les ventes.
+2. Un constat sur la satisfaction ou les délais.
+3. Un constat sur les ruptures de stock ou le marketing.
+
+## Étape 8 - Recommandation de prochaine analyse
+
+Choisir une seule priorité :
+
+- analyser l'effet des dépenses marketing;
+- analyser les ruptures de stock;
+- analyser les délais de livraison;
+- comparer les succursales à clientèle comparable.
+
+La recommandation doit tenir en trois phrases :
+
+1. Ce que les données suggèrent.
+2. Ce qu'il faut vérifier ensuite.
+3. Quelle décision de gestion cela pourrait éclairer.
+
+## Livrable
+
+Remettre un fichier Quarto contenant :
+
+- le code d'importation;
+- le diagnostic des valeurs manquantes;
+- le tableau synthèse;
+- deux graphiques;
+- trois constats;
+- une recommandation courte.
+
+## Grille formative
+
+| Critère | Attendu |
+|---|---|
+| Importation | Le fichier CSV est importé sans chemin absolu |
+| Inspection | La structure et les valeurs manquantes sont vérifiées |
+| Indicateurs | Les indicateurs sont calculés par succursale |
+| Graphiques | Les graphiques ont un titre, des axes clairs et un message |
+| Interprétation | Les constats sont liés à une décision d'affaires |
+| Reproductibilité | Le document Quarto se rend sans modification |
+
+## Pour aller plus loin
+
+Modifier le tableau synthèse pour comparer les mois de haute saison aux autres mois.
+
+```{r}
+#| label: haute-saison-atelier-01
+ventes |>
+  group_by(saison) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  )
+```
