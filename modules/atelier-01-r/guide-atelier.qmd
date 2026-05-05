@@ -1,40 +1,53 @@
 ---
-title: "Guide atelier 01"
+title: "Guide autonome - Atelier 01"
 format:
   html:
     embed-resources: true
 ---
 
-# Guide atelier 01 - Explorer un tableau de données d'affaires
+# Guide autonome - Atelier 01
 
-## Objectif
+## Votre mission
 
-Produire un diagnostic descriptif reproductible à partir d'un tableau de données d'affaires.
+Vous êtes analyste junior chez Les Comptoirs du Nord, une PME fictive qui vend des produits locaux dans cinq succursales au Québec.
 
-À la fin de l'atelier, le livrable doit permettre à une direction de comprendre rapidement :
+La directrice générale vous écrit :
 
-- ce que contient le tableau;
-- où se trouvent les données manquantes;
-- quelles succursales se distinguent;
-- quels indicateurs méritent une analyse plus poussée.
+> Nous avons les ventes mensuelles de nos succursales pour 2025. Avant de décider où concentrer nos efforts, j'aimerais un diagnostic simple : quelles succursales ou quels indicateurs méritent notre attention?
 
-## Mise en situation
+Votre rôle n'est pas encore de prouver une relation causale. Votre rôle est de transformer un tableau brut en premiers constats utiles.
 
-La PME fictive Les Comptoirs du Nord exploite cinq succursales au Québec. Elle vend des produits locaux en magasin et observe des différences de performance entre succursales.
+## Ce que vous allez construire
 
-La direction veut préparer une rencontre de gestion. Elle ne demande pas encore un modèle statistique. Elle veut d'abord un diagnostic clair, visuel et reproductible.
+À la fin du parcours, vous aurez un mini-rapport Quarto contenant :
 
-Question d'affaires :
+- une question d'affaires reformulée;
+- une description du tableau;
+- un diagnostic des valeurs manquantes;
+- un tableau synthèse par succursale;
+- deux visualisations;
+- trois constats;
+- une recommandation de prochaine analyse.
 
-> Quels signaux ressortent du tableau de ventes mensuelles, et quelle analyse devrait être priorisée ensuite?
+## Organisation du parcours
 
-## Données
+Ce guide alterne cinq types d'activités.
+
+| Type | Ce que vous faites |
+|---|---|
+| Capsule | Vous comprenez l'idée avant de coder |
+| Démonstration | Vous observez une démarche complète |
+| À vous | Vous produisez une partie du livrable |
+| Pause diagnostic | Vous vérifiez que vous comprenez ce que vous venez de faire |
+| Trace portfolio | Vous gardez une phrase ou un résultat pour votre rapport final |
+
+Temps estimé : 2 h à 3 h.
+
+## Données et préparation
 
 Fichier : `data/ventes_pme_quebec.csv`.
 
 [Télécharger le fichier CSV](data/ventes_pme_quebec.csv)
-
-Chaque ligne représente une succursale pour un mois de l'année 2025.
 
 ```{r}
 #| label: setup-atelier-01-guide
@@ -49,17 +62,6 @@ data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
   "modules/atelier-01-r/data/ventes_pme_quebec.csv"
 }
 
-ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
-  clean_names() |>
-  mutate(
-    mois = as.Date(mois),
-    campagne_locale = factor(
-      campagne_locale,
-      levels = c(0, 1),
-      labels = c("non", "oui")
-    )
-  )
-
 currency_ca <- scales::label_dollar(
   prefix = "",
   suffix = " $",
@@ -68,9 +70,40 @@ currency_ca <- scales::label_dollar(
 )
 ```
 
-## Étape 1 - Importer le tableau
+## Épisode 1 - Entrer dans le problème
+
+::: {.callout-note title="Capsule vidéo 1 - La demande de gestion"}
+À insérer : une courte vidéo de 3 à 5 minutes qui présente la PME fictive, la demande de la direction et la différence entre exploration descriptive et modélisation.
+:::
+
+La question de la direction est encore vague. Une bonne première étape consiste à la reformuler en question analytique.
+
+Question de départ :
+
+> Qu'est-ce que les données de ventes mensuelles révèlent sur la performance des succursales?
+
+Question analytique :
+
+> Quels indicateurs descriptifs permettent de repérer les succursales ou les dimensions opérationnelles qui méritent une analyse plus poussée?
+
+::: {.callout-tip title="À vous 1 - Reformuler la mission"}
+Dans votre rapport, écrivez en deux phrases ce que la direction veut savoir et ce que votre diagnostic peut réellement fournir.
+:::
+
+::: {.callout-important title="Pause diagnostic"}
+À cette étape, vous ne cherchez pas encore à expliquer les ventes. Vous cherchez à comprendre le tableau et à repérer des signaux.
+:::
+
+## Épisode 2 - Importer les données
+
+::: {.callout-note title="Capsule vidéo 2 - Un tableau, une unité d'observation"}
+À insérer : une vidéo courte sur les notions d'observation, de variable, de type de variable et de chemin relatif dans un projet R.
+:::
+
+### Démonstration 1 - Charger le fichier
 
 ```{r}
+#| label: demo-importer-atelier-01
 library(tidyverse)
 library(janitor)
 
@@ -80,32 +113,35 @@ ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
 glimpse(ventes)
 ```
 
-À vérifier :
+Ce que vous devez remarquer :
 
-- Combien y a-t-il d'observations?
-- Combien y a-t-il de variables?
-- Quelle est l'unité d'observation?
-- Quelles variables sont numériques?
-- Quelles variables sont catégorielles?
+- le tableau a `r nrow(ventes)` lignes;
+- le tableau a `r ncol(ventes)` colonnes;
+- chaque ligne représente une succursale pour un mois;
+- certaines variables décrivent les ventes;
+- d'autres décrivent le marketing, les opérations et la satisfaction.
 
-## Étape 2 - Comprendre les variables
+::: {.callout-tip title="À vous 2 - Décrire le tableau"}
+Ajoutez à votre rapport une phrase qui décrit l'unité d'observation et une phrase qui nomme trois variables utiles pour la direction.
+:::
+
+### Trace portfolio
+
+Phrase à adapter :
+
+> Le tableau contient des observations mensuelles par succursale. Il permet de comparer la performance commerciale, l'expérience client et certains enjeux opérationnels.
+
+## Épisode 3 - Vérifier la qualité minimale
+
+::: {.callout-note title="Capsule vidéo 3 - Pourquoi vérifier les valeurs manquantes?"}
+À insérer : une vidéo courte qui explique pourquoi un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes.
+:::
+
+### Démonstration 2 - Repérer les valeurs manquantes
 
 ```{r}
-#| label: dictionnaire-rapide-atelier-01
-tibble(
-  variable = names(ventes),
-  type = map_chr(ventes, \(x) class(x)[1]),
-  valeurs_manquantes = map_int(ventes, \(x) sum(is.na(x)))
-)
-```
-
-Question : quelles variables sont directement utiles pour une décision de gestion?
-
-## Étape 3 - Diagnostiquer les valeurs manquantes
-
-```{r}
-#| label: valeurs-manquantes-atelier-01
-ventes |>
+#| label: demo-valeurs-manquantes-atelier-01
+diagnostic_manquants <- ventes |>
   summarise(across(everything(), \(x) sum(is.na(x)))) |>
   pivot_longer(
     cols = everything(),
@@ -114,18 +150,28 @@ ventes |>
   ) |>
   filter(valeurs_manquantes > 0) |>
   arrange(desc(valeurs_manquantes))
+
+diagnostic_manquants
 ```
 
-Interprétation attendue :
+::: {.callout-tip title="À vous 3 - Interpréter la qualité des données"}
+Dans votre rapport, nommez les variables qui contiennent des valeurs manquantes. Expliquez en une phrase pourquoi cela peut influencer le diagnostic.
+:::
 
-- nommer les variables touchées;
-- expliquer pourquoi ces valeurs manquantes peuvent influencer l'analyse;
-- proposer une action simple avant d'aller plus loin.
+::: {.callout-important title="Pause diagnostic"}
+Si une variable contient des valeurs manquantes, il ne faut pas l'ignorer. Pour cet atelier, vous pouvez utiliser `na.rm = TRUE`, mais votre rapport doit signaler le problème.
+:::
 
-## Étape 4 - Produire un tableau synthèse par succursale
+## Épisode 4 - Construire les premiers indicateurs
+
+::: {.callout-note title="Capsule vidéo 4 - Du tableau brut aux indicateurs"}
+À insérer : une vidéo sur le passage des variables brutes aux indicateurs utiles pour une direction : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.
+:::
+
+### Démonstration 3 - Résumer par succursale
 
 ```{r}
-#| label: tableau-synthese-atelier-01
+#| label: demo-synthese-succursales-atelier-01
 synthese_succursales <- ventes |>
   group_by(succursale, region) |>
   summarise(
@@ -148,17 +194,29 @@ synthese_succursales |>
   )
 ```
 
-Questions :
+::: {.callout-tip title="À vous 4 - Lire le tableau comme gestionnaire"}
+Répondez à ces questions dans votre rapport :
 
-- Quelle succursale vend le plus?
+- Quelle succursale génère le plus de ventes?
 - Quelle succursale a le panier moyen le plus élevé?
-- Quelle succursale semble avoir le plus de problèmes opérationnels?
-- Est-ce que la réponse change selon l'indicateur choisi?
+- Quelle succursale semble avoir le plus de ruptures de stock?
+- Est-ce que la même succursale ressort pour tous les indicateurs?
+:::
 
-## Étape 5 - Visualiser les ventes
+### Trace portfolio
+
+Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui aident vraiment la décision.
+
+## Épisode 5 - Visualiser pour comparer
+
+::: {.callout-note title="Capsule vidéo 5 - Un graphique doit porter un message"}
+À insérer : une vidéo courte sur le choix d'un graphique simple, le titre, les axes et le message d'affaires.
+:::
+
+### Démonstration 4 - Comparer les ventes annuelles
 
 ```{r}
-#| label: ventes-par-succursale-atelier-01
+#| label: demo-graphique-ventes-atelier-01
 #| fig-width: 8
 #| fig-height: 4.8
 synthese_succursales |>
@@ -174,12 +232,20 @@ synthese_succursales |>
   theme_minimal(base_size = 12)
 ```
 
-Message attendu : ce graphique sert à repérer les succursales qui contribuent le plus au chiffre d'affaires.
+Ce graphique répond à une question simple : quelles succursales contribuent le plus au chiffre d'affaires?
 
-## Étape 6 - Visualiser la relation entre satisfaction et problèmes opérationnels
+::: {.callout-tip title="À vous 5 - Ajouter un deuxième graphique"}
+Créez un graphique qui explore une autre dimension de la performance. Choisissez une des options suivantes :
+
+- satisfaction et ruptures de stock;
+- ventes et dépenses marketing;
+- satisfaction et délai de livraison.
+:::
+
+### Démonstration 5 - Satisfaction et ruptures de stock
 
 ```{r}
-#| label: satisfaction-ruptures-atelier-01
+#| label: demo-satisfaction-ruptures-atelier-01
 #| fig-width: 8
 #| fig-height: 5
 ventes |>
@@ -195,69 +261,50 @@ ventes |>
   theme_minimal(base_size = 12)
 ```
 
-Question : observe-t-on un signal descriptif qui justifierait une analyse plus poussée?
+::: {.callout-important title="Pause diagnostic"}
+Ce graphique ne prouve pas que les ruptures causent une baisse de satisfaction. Il suggère seulement une relation descriptive à examiner plus sérieusement.
+:::
 
-## Étape 7 - Formuler trois constats
+## Épisode 6 - Passer du résultat au constat
 
-Un bon constat doit contenir :
+::: {.callout-note title="Capsule vidéo 6 - Écrire un constat utile"}
+À insérer : une vidéo courte qui montre comment passer d'un tableau ou d'un graphique à une phrase interprétable par une direction.
+:::
 
-- un indicateur;
+Un bon constat contient trois éléments :
+
+- un résultat observé;
 - une comparaison;
 - une implication d'affaires.
 
-Exemple de forme attendue :
+Exemple :
 
-> La succursale X génère le plus de ventes, mais la succursale Y obtient un panier moyen plus élevé. La direction devrait donc distinguer volume de clientèle et valeur moyenne par transaction.
+> Montréal génère les ventes les plus élevées, mais cette information doit être mise en relation avec le nombre de clients et le panier moyen. La direction devrait donc distinguer volume d'achalandage et valeur moyenne des transactions.
 
-À produire :
+::: {.callout-tip title="À vous 6 - Écrire vos trois constats"}
+Dans votre rapport, écrivez :
 
-1. Un constat sur les ventes.
-2. Un constat sur la satisfaction ou les délais.
-3. Un constat sur les ruptures de stock ou le marketing.
+1. un constat sur les ventes;
+2. un constat sur la satisfaction, les délais ou les ruptures;
+3. un constat sur une analyse à prioriser.
+:::
 
-## Étape 8 - Recommandation de prochaine analyse
+## Épisode 7 - Recommander une prochaine analyse
 
-Choisir une seule priorité :
+Votre diagnostic doit finir par une recommandation courte. Choisissez une seule priorité.
+
+Options possibles :
 
 - analyser l'effet des dépenses marketing;
 - analyser les ruptures de stock;
 - analyser les délais de livraison;
-- comparer les succursales à clientèle comparable.
+- comparer les succursales à clientèle comparable;
+- analyser les périodes de haute saison séparément.
 
-La recommandation doit tenir en trois phrases :
-
-1. Ce que les données suggèrent.
-2. Ce qu'il faut vérifier ensuite.
-3. Quelle décision de gestion cela pourrait éclairer.
-
-## Livrable
-
-Remettre un fichier Quarto contenant :
-
-- le code d'importation;
-- le diagnostic des valeurs manquantes;
-- le tableau synthèse;
-- deux graphiques;
-- trois constats;
-- une recommandation courte.
-
-## Grille formative
-
-| Critère | Attendu |
-|---|---|
-| Importation | Le fichier CSV est importé sans chemin absolu |
-| Inspection | La structure et les valeurs manquantes sont vérifiées |
-| Indicateurs | Les indicateurs sont calculés par succursale |
-| Graphiques | Les graphiques ont un titre, des axes clairs et un message |
-| Interprétation | Les constats sont liés à une décision d'affaires |
-| Reproductibilité | Le document Quarto se rend sans modification |
-
-## Pour aller plus loin
-
-Modifier le tableau synthèse pour comparer les mois de haute saison aux autres mois.
+### Démonstration 6 - Comparer les saisons
 
 ```{r}
-#| label: haute-saison-atelier-01
+#| label: demo-saison-atelier-01
 ventes |>
   group_by(saison) |>
   summarise(
@@ -271,3 +318,50 @@ ventes |>
     satisfaction_moyenne = round(satisfaction_moyenne, 1)
   )
 ```
+
+::: {.callout-tip title="À vous 7 - Formuler la recommandation"}
+Écrivez trois phrases :
+
+1. Les données suggèrent que...
+2. La prochaine analyse devrait vérifier...
+3. Cette analyse aiderait la direction à décider...
+:::
+
+## Livrable final
+
+Votre fichier Quarto doit contenir les sections suivantes :
+
+1. Question d'affaires.
+2. Description du tableau.
+3. Diagnostic des valeurs manquantes.
+4. Tableau synthèse par succursale.
+5. Graphique 1 : ventes par succursale.
+6. Graphique 2 : indicateur opérationnel ou satisfaction.
+7. Trois constats.
+8. Recommandation de prochaine analyse.
+
+## Grille formative
+
+| Critère | Attendu |
+|---|---|
+| Question d'affaires | La demande de la direction est reformulée clairement |
+| Importation | Le fichier CSV est importé avec un chemin relatif |
+| Inspection | L'unité d'observation et les variables sont décrites |
+| Qualité des données | Les valeurs manquantes sont repérées et commentées |
+| Indicateurs | Les indicateurs sont calculés par succursale |
+| Graphiques | Les graphiques ont un titre, des axes clairs et un message |
+| Interprétation | Les constats sont liés à une décision d'affaires |
+| Reproductibilité | Le document Quarto se rend sans modification |
+
+## Fin du parcours
+
+Vous avez maintenant une première version du raisonnement qui sera utilisé tout au long du cours :
+
+1. comprendre la décision;
+2. inspecter les données;
+3. produire des indicateurs;
+4. visualiser;
+5. interpréter;
+6. recommander la prochaine analyse.
+
+La suite du cours ajoutera progressivement des modèles statistiques pour expliquer, prévoir et décider avec plus de rigueur.

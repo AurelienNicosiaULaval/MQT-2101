@@ -1,5 +1,5 @@
 ---
-title: "Atelier 01 - Explorer un tableau de données d'affaires"
+title: "Atelier 01 - Parcours autonome"
 format:
   html:
     embed-resources: true
@@ -9,38 +9,46 @@ format:
 
 ## Let’s eat the cake
 
-Objectif : apprendre à explorer un tableau de données d'affaires avec R afin de produire un premier diagnostic utile pour une décision de gestion.
+Objectif : apprendre à explorer un tableau de données d'affaires avec R pour produire un premier diagnostic utile à une direction.
 
 Compétences développées :
-- Importer un fichier CSV.
-- Inspecter la structure d'un tableau.
-- Repérer les valeurs manquantes.
-- Calculer des indicateurs descriptifs.
-- Produire des graphiques simples et interprétables.
-- Transformer une exploration en recommandation préliminaire.
+
+- importer un fichier CSV;
+- reconnaître l'unité d'observation et les variables;
+- repérer les valeurs manquantes;
+- calculer des indicateurs descriptifs;
+- produire des graphiques exploratoires;
+- formuler des constats utiles pour une décision d'affaires.
 
 Application business : analyser les ventes mensuelles d'une PME québécoise fictive qui exploite cinq succursales.
 
-Résultat final attendu : un court rapport Quarto contenant trois constats, deux graphiques et une recommandation de prochaine analyse.
+Résultat final attendu : un court rapport Quarto qui présente trois constats, deux graphiques et une recommandation de prochaine analyse.
 
-Lien avec une décision d'affaires réelle : aider la direction à décider quelles succursales ou quels indicateurs doivent être analysés en priorité.
+Lien avec une décision d'affaires réelle : aider la direction à choisir si elle doit d'abord investiguer les ventes, la satisfaction, les ruptures de stock ou les délais de livraison.
 
-## Mise en contexte
+## Le fil conducteur
 
-La direction de la PME fictive Les Comptoirs du Nord prépare une rencontre de performance trimestrielle. Elle possède un tableau mensuel contenant les ventes, le nombre de clients, les dépenses marketing, les délais de livraison, les ruptures de stock et la satisfaction client.
+Vous venez d'être recruté·e comme analyste junior pour Les Comptoirs du Nord, une PME fictive qui vend des produits locaux dans cinq succursales au Québec.
 
-La question de départ est volontairement simple :
+La directrice générale prépare une rencontre de performance. Elle ne veut pas encore un modèle statistique complexe. Elle veut d'abord comprendre ce que les données racontent.
 
-> Quelles succursales ou quels indicateurs méritent l'attention de la direction avant de construire un modèle plus avancé?
+Votre mission :
 
-## Concepts clés
+> Produire un diagnostic initial qui aide la direction à décider quelle question analyser en priorité.
 
-- Observation et variable.
-- Variable numérique et variable catégorielle.
-- Valeur manquante.
-- Indicateur descriptif.
-- Graphique exploratoire.
-- Constat descriptif et recommandation préliminaire.
+## Parcours autonome
+
+Le module est conçu pour être fait seul·e, dans l'ordre. À chaque étape, vous alternez entre une capsule, une démonstration, un exercice d'application et une trace à ajouter à votre livrable.
+
+| Moment | Activité | Résultat produit |
+|---|---|---|
+| 1 | Comprendre la demande | Question d'affaires reformulée |
+| 2 | Importer les données | Tableau chargé dans R |
+| 3 | Inspecter le tableau | Description des variables |
+| 4 | Vérifier la qualité | Diagnostic des valeurs manquantes |
+| 5 | Résumer par succursale | Tableau d'indicateurs |
+| 6 | Visualiser les signaux | Deux graphiques |
+| 7 | Conclure | Trois constats et une recommandation |
 
 ## Données
 
@@ -62,6 +70,7 @@ data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
 }
 
 ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names() |>
   mutate(
     mois = as.Date(mois),
     campagne_locale = factor(
@@ -79,33 +88,18 @@ currency_ca <- scales::label_dollar(
 )
 ```
 
-Le tableau contient `r nrow(ventes)` observations et `r ncol(ventes)` variables.
+Ce tableau contient `r nrow(ventes)` observations et `r ncol(ventes)` variables. Chaque ligne correspond à une succursale pour un mois de l'année 2025.
 
 ```{r}
 #| label: apercu-atelier-01
 ventes |>
-  select(mois, succursale, ventes, clients, panier_moyen, satisfaction) |>
+  select(mois, succursale, region, ventes, clients, panier_moyen, satisfaction) |>
   slice_head(n = 8)
 ```
 
-## Capsules de l'atelier
+## Aperçu du rendu attendu
 
-Capsule 1 : Importer et inspecter un tableau avec `readr::read_csv()` et `glimpse()`.
-
-Capsule 2 : Résumer les variables pour trouver les premiers signaux d'affaires.
-
-Capsule 3 : Visualiser les ventes, les clients et la satisfaction pour préparer une recommandation.
-
-## Déroulement proposé
-
-- Étape 1 : importer les données.
-- Étape 2 : inspecter les variables.
-- Étape 3 : repérer les valeurs manquantes.
-- Étape 4 : calculer des indicateurs par succursale.
-- Étape 5 : produire deux visualisations.
-- Étape 6 : formuler trois constats et une recommandation.
-
-## Exemple de diagnostic attendu
+Le diagnostic final doit être court, mais il doit être assez clair pour soutenir une discussion de gestion.
 
 ```{r}
 #| label: diagnostic-succursales-atelier-01
@@ -133,9 +127,7 @@ diagnostic_succursales |>
 #| label: graphique-ventes-succursales-atelier-01
 #| fig-width: 8
 #| fig-height: 4.8
-ventes |>
-  group_by(succursale) |>
-  summarise(ventes_totales = sum(ventes), .groups = "drop") |>
+diagnostic_succursales |>
   mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
   ggplot(aes(ventes_totales, succursale)) +
   geom_col(fill = "#2A9D8F") +
@@ -148,46 +140,21 @@ ventes |>
   theme_minimal(base_size = 12)
 ```
 
-## Exercices d'application intégrés
-
-AE 1 : interprétation. Identifier la succursale qui génère le plus de ventes et expliquer pourquoi cette information ne suffit pas pour conclure qu'elle est la plus performante.
-
-AE 2 : calcul ou code R. Calculer le panier moyen, la satisfaction moyenne et le nombre total de ruptures de stock par succursale.
-
-AE 3 : réflexion critique. Proposer une variable supplémentaire qui aiderait la direction à mieux comprendre la performance commerciale.
-
-## Mini-cas business
-
-La direction hésite entre trois priorités : augmenter le budget marketing, réduire les ruptures de stock ou améliorer les délais de livraison. L'atelier doit produire les premiers indices permettant de choisir où concentrer l'analyse.
-
 ## Livrable
 
-Un fichier Quarto de deux pages maximum contenant :
+À la fin du parcours, vous remettez un fichier Quarto de deux pages maximum contenant :
 
-- une courte description du tableau;
+- la question d'affaires reformulée;
+- une description rapide du tableau;
 - un diagnostic des valeurs manquantes;
 - un tableau synthèse par succursale;
 - deux graphiques;
 - trois constats;
 - une recommandation de prochaine analyse.
 
-## À retenir
+## Commencer
 
-Une exploration descriptive ne donne pas encore une preuve causale. Elle sert à comprendre le tableau, repérer les signaux importants et poser de meilleures questions pour la suite.
+Le parcours complet est ici :
 
-## Erreurs fréquentes
+[Ouvrir le guide autonome de l'atelier 01](guide-atelier.qmd)
 
-- Se fier uniquement aux ventes totales sans tenir compte du nombre de clients.
-- Oublier de vérifier les valeurs manquantes.
-- Produire un graphique sans message d'affaires.
-- Confondre un constat descriptif avec une recommandation définitive.
-
-## Trace de portfolio
-
-Ajouter au portfolio une section intitulée `Diagnostic initial d'une PME québécoise`, avec les trois constats les plus utiles pour une direction.
-
-## Pour aller plus loin
-
-Le guide détaillé de l'atelier est disponible ici :
-
-[Guide de l'atelier 01](guide-atelier.qmd)
