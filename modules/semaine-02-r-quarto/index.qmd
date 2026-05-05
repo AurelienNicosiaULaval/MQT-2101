@@ -1,87 +1,319 @@
 ---
-title: "Semaine 02 - Analyse de données avec R et Quarto"
+title: "Semaine 02 - Introduction à l'analyse avec R"
 format:
   html:
     embed-resources: true
 ---
 
-# Semaine 02 - Analyse de données avec R et Quarto
+# Séance 02 : Introduction à l'analyse et traitement des données avec le logiciel R
+
+::: {.callout-note title="Référence A25"}
+Cette page reconstruit la séance du 10 septembre 2025. Elle reprend la logique de l'ancien portail : installation, interface RStudio, projet R, importation, gestion des données, graphiques et exercice autonome.
+:::
 
 ## Let’s eat the cake
 
-Objectif : construire un premier flux de travail reproductible avec R et Quarto.
+Objectif : prendre en main R, RStudio et Quarto pour importer, inspecter, préparer et visualiser un tableau de données.
 
 Compétences développées :
-- Importer un tableau de données.
-- Résumer et visualiser des variables d'affaires.
-- Produire un court rapport Quarto.
 
-Application business : explorer un fichier de transactions ou de ventes mensuelles.
+- installer ou vérifier les logiciels nécessaires;
+- reconnaître les principales fenêtres de RStudio;
+- créer un projet R;
+- importer un fichier CSV;
+- charger les packages utiles;
+- inspecter la structure d'un tableau;
+- repérer les valeurs manquantes;
+- transformer des variables textuelles en facteurs;
+- produire un tableau descriptif et un graphique;
+- rendre un mini-rapport Quarto.
 
-Résultat final attendu : un mini-rapport HTML reproductible.
+Application business : explorer un tableau de ventes et d'opérations d'une organisation québécoise.
 
-Lien avec une décision d'affaires réelle : produire un diagnostic partageable à une équipe de gestion.
+Résultat final attendu : un mini-rapport Quarto contenant une importation, une inspection, un diagnostic des valeurs manquantes, un tableau descriptif, un graphique et deux constats.
 
-## Mise en contexte
+Lien avec une décision d'affaires réelle : produire une première analyse reproductible avant de partager des résultats à une équipe.
 
-Une PME québécoise veut comprendre la progression de ses ventes et repérer les mois où la performance s'écarte du comportement habituel.
+## Introduction à la séance
 
-TODO: Ajouter un jeu de données de ventes mensuelles simulées.
+Cette séance introduit le logiciel R pour traiter et visualiser des données statistiques. Elle transforme les gestes techniques de base en un flux de travail reproductible.
+
+Au cours de cette séance, nous abordons :
+
+- l'installation de R et RStudio;
+- l'exploration de l'interface RStudio;
+- la création d'un projet;
+- l'importation de données;
+- la gestion minimale d'un tableau;
+- la création de graphiques;
+- les commandes R utiles pour préparer les données;
+- le passage d'une présentation PowerPoint ancienne à un rapport Quarto reproductible.
+
+## Parcours autonome de la semaine
+
+| Moment | Activité | Résultat produit |
+|---|---|---|
+| 1 | Vérifier l'installation | R, RStudio et Quarto disponibles |
+| 2 | Comprendre l'interface | Fenêtres principales de RStudio identifiées |
+| 3 | Créer un projet | Dossier de travail reproductible |
+| 4 | Importer le CSV | Tableau chargé dans R |
+| 5 | Inspecter et préparer | Variables et valeurs manquantes repérées |
+| 6 | Résumer et visualiser | Tableau descriptif et graphique |
+| 7 | Rendre le rapport | Mini-rapport Quarto HTML |
+
+## Présentations
+
+Les anciennes présentations étaient organisées autour de quatre blocs : explorer RStudio, exemples avec R, traitement des données et données à utiliser. Elles sont reprises ici sous forme de capsules :
+
+- installer R et RStudio;
+- explorer RStudio;
+- créer un projet;
+- importer un fichier CSV;
+- traiter et sélectionner des données;
+- produire des graphiques;
+- rendre un document Quarto.
+
+::: {.callout-note title="Capsule vidéo 1 - Installer et ouvrir l'environnement"}
+À insérer : une capsule sur l'installation de R, RStudio et Quarto, puis sur la vérification de l'installation.
+:::
+
+::: {.callout-note title="Capsule vidéo 2 - Explorer RStudio"}
+À insérer : une capsule sur les fenêtres Source, Console, Environment, Files, Plots, Packages, Help et Viewer.
+:::
+
+::: {.callout-note title="Capsule vidéo 3 - Importer et inspecter un tableau"}
+À insérer : une capsule sur `read_csv()`, `glimpse()`, `summary()` et la lecture des types de variables.
+:::
+
+::: {.callout-note title="Capsule vidéo 4 - Traiter et visualiser"}
+À insérer : une capsule sur `mutate()`, `group_by()`, `summarise()` et `ggplot()`.
+:::
+
+## À faire
+
+L'ancien travail demandé était une analyse de données présentée dans un fichier PowerPoint. Dans la nouvelle version du cours, le livrable devient un mini-rapport Quarto.
+
+À produire :
+
+1. créer un projet R;
+2. ouvrir un fichier `.qmd`;
+3. importer `ventes_operations_quebec.csv`;
+4. inspecter les variables;
+5. vérifier les valeurs manquantes;
+6. factoriser les variables catégorielles;
+7. produire un tableau et un graphique;
+8. écrire deux constats;
+9. rendre le document en HTML.
+
+## Données
+
+Le fichier utilisé est [ventes_operations_quebec.csv](data/ventes_operations_quebec.csv).
+
+```{r}
+#| label: setup-semaine-02
+#| include: false
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)
+
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
+```
+
+```{r}
+#| label: apercu-semaine-02
+ventes_operations |>
+  slice_head(n = 8)
+```
 
 ## Concepts clés
 
-- Projet R et chemins relatifs.
-- Importation avec `readr`.
-- Transformation avec `dplyr`.
-- Visualisation avec `ggplot2`.
-- Rapport reproductible avec Quarto.
+- Projet R : dossier qui garde ensemble code, données et résultats.
+- Chemin relatif : chemin qui fonctionne à partir du dossier du projet.
+- Package : ensemble de fonctions à charger avec `library()`.
+- Importation : lecture d'un fichier dans un objet R.
+- Data frame : tableau de données.
+- Facteur : variable catégorielle utilisée pour l'analyse.
+- Valeur manquante : donnée absente codée `NA`.
+- Quarto : document qui combine texte, code, résultats et graphiques.
 
-## Capsules de la semaine
+## Démonstration 1 - Inspecter le tableau
 
-- Capsule 1 : Organiser un projet d'analyse.
-- Capsule 2 : Lire, nettoyer et résumer un tableau.
-- Capsule 3 : Générer un document Quarto.
+```{r}
+#| label: inspection-semaine-02
+glimpse(ventes_operations)
+```
 
-## Exercices d’application intégrés
+Questions à se poser :
 
-AE 1 : interprétation. Lire un tableau de ventes et identifier les variables utiles.
+- Que représente une ligne?
+- Quelles variables sont numériques?
+- Quelles variables sont catégorielles?
+- Quelles variables contiennent des dates?
 
-AE 2 : calcul ou code R.
+## Démonstration 2 - Factoriser les variables catégorielles
+
+```{r}
+#| label: factorisation-semaine-02
+ventes_preparees <- ventes_operations |>
+  mutate(
+    mois = ymd(mois),
+    succursale = factor(succursale),
+    region = factor(region),
+    campagne_locale = factor(campagne_locale),
+    canal_principal = factor(canal_principal)
+  )
+
+summary(ventes_preparees)
+```
+
+## Démonstration 3 - Vérifier les valeurs manquantes
+
+```{r}
+#| label: valeurs-manquantes-semaine-02
+diagnostic_manquants <- ventes_preparees |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0)
+
+diagnostic_manquants
+```
+
+::: {.callout-important title="À retenir"}
+Une valeur manquante n'est pas une erreur à supprimer automatiquement. Il faut d'abord comprendre où elle apparaît et comment elle peut influencer le résultat.
+:::
+
+## Démonstration 4 - Résumer un tableau
+
+```{r}
+#| label: resume-succursale-semaine-02
+resume_succursales <- ventes_preparees |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+resume_succursales |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    panier_moyen = currency_ca(panier_moyen),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  )
+```
+
+## Démonstration 5 - Créer un graphique
+
+```{r}
+#| label: graphique-semaine-02
+#| fig-width: 8
+#| fig-height: 4.8
+resume_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(ventes_totales, succursale)) +
+  geom_col(fill = "#0B4F6C") +
+  scale_x_continuous(labels = currency_ca) +
+  labs(
+    title = "Ventes totales par succursale",
+    x = "Ventes",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+## Exercices d'application intégrés
+
+### AE 1 : interprétation
+
+Identifier l'unité d'observation et trois variables utiles pour une première analyse d'affaires.
+
+### AE 2 : calcul ou code R
 
 ```{r}
 #| eval: false
 library(tidyverse)
+library(janitor)
 
-ventes_mensuelles <- readr::read_csv("modules/semaine-02-r-quarto/data/ventes_mensuelles.csv")
+ventes_operations <- readr::read_csv(
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv",
+  show_col_types = FALSE
+) |>
+  clean_names()
 
-ventes_mensuelles |>
+ventes_operations |>
+  group_by(canal_principal) |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE)
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
   )
 ```
 
-AE 3 : réflexion critique. Identifier ce qui rend un rapport reproductible utile pour une équipe.
+### AE 3 : réflexion critique
+
+Expliquer pourquoi un rapport Quarto est plus reproductible qu'une présentation où les résultats sont copiés manuellement.
 
 ## Mini-cas business
 
-Premier rapport d'analyse pour une direction régionale.
+Un premier rapport doit déterminer si les ventes diffèrent davantage selon la succursale, le canal principal ou la présence d'une campagne locale. Le but n'est pas encore de conclure causalement. Le but est de structurer une première exploration reproductible.
 
 ## À retenir
 
-R et Quarto servent à relier code, résultats et interprétation dans un même document vérifiable.
+R sert à exécuter l'analyse, RStudio aide à organiser le travail et Quarto permet de rendre les résultats vérifiables dans un rapport.
 
 ## Erreurs fréquentes
 
-- Utiliser des chemins absolus propres à un seul ordinateur.
-- Modifier les données manuellement sans trace.
-- Omettre les packages requis.
+- Travailler sans projet R.
+- Utiliser un chemin absolu propre à un ordinateur.
+- Oublier de charger les packages nécessaires.
+- Interpréter `NA` comme une valeur numérique.
+- Modifier le CSV à la main sans garder de trace.
+- Copier un graphique dans un document sans conserver le code.
 
 ## Trace de portfolio ou livrable court
 
-Produire une page Quarto contenant une importation, un résumé et un graphique.
+Votre livrable s'intitule `Premier rapport Quarto avec R`.
+
+Il doit contenir :
+
+- le code d'importation;
+- une phrase sur l'unité d'observation;
+- un diagnostic des valeurs manquantes;
+- un tableau résumé;
+- un graphique;
+- deux constats descriptifs;
+- une limite.
+
+## Lien avec l'ancien matériel
+
+Cette semaine reprend la structure de l'ancienne séance 02 : installation, exploration de RStudio, importation, gestion des données, graphiques et exercice autonome.
+
+L'ancien exercice basé sur `masculinity.csv` n'est pas publié dans ce site. Il est remplacé par `ventes_operations_quebec.csv`, qui permet de travailler les mêmes compétences techniques dans un contexte d'administration.
+
+Les anciens PDF, fichiers PowerPoint et ressources externes ne sont pas copiés dans le site public.
 
 ## Pour aller plus loin
 
-TODO: Ajouter une capsule sur les projets RStudio et la structure de dossiers.
-
+L'atelier 01 prolonge cette séance. Il reprend l'importation, l'inspection et les graphiques dans un parcours plus complet de diagnostic descriptif.

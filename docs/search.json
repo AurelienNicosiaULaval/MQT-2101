@@ -681,149 +681,254 @@
   {
     "objectID": "modules/semaine-02-r-quarto/index.html",
     "href": "modules/semaine-02-r-quarto/index.html",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Objectif : construire un premier flux de travail reproductible avec R et Quarto.\nCompétences développées : - Importer un tableau de données. - Résumer et visualiser des variables d’affaires. - Produire un court rapport Quarto.\nApplication business : explorer un fichier de transactions ou de ventes mensuelles.\nRésultat final attendu : un mini-rapport HTML reproductible.\nLien avec une décision d’affaires réelle : produire un diagnostic partageable à une équipe de gestion.\n\n\n\nUne PME québécoise veut comprendre la progression de ses ventes et repérer les mois où la performance s’écarte du comportement habituel.\nTODO: Ajouter un jeu de données de ventes mensuelles simulées.\n\n\n\n\nProjet R et chemins relatifs.\nImportation avec readr.\nTransformation avec dplyr.\nVisualisation avec ggplot2.\nRapport reproductible avec Quarto.\n\n\n\n\n\nCapsule 1 : Organiser un projet d’analyse.\nCapsule 2 : Lire, nettoyer et résumer un tableau.\nCapsule 3 : Générer un document Quarto.\n\n\n\n\nAE 1 : interprétation. Lire un tableau de ventes et identifier les variables utiles.\nAE 2 : calcul ou code R.\n\nlibrary(tidyverse)\n\nventes_mensuelles &lt;- readr::read_csv(\"modules/semaine-02-r-quarto/data/ventes_mensuelles.csv\")\n\nventes_mensuelles |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE)\n  )\n\nAE 3 : réflexion critique. Identifier ce qui rend un rapport reproductible utile pour une équipe.\n\n\n\nPremier rapport d’analyse pour une direction régionale.\n\n\n\nR et Quarto servent à relier code, résultats et interprétation dans un même document vérifiable.\n\n\n\n\nUtiliser des chemins absolus propres à un seul ordinateur.\nModifier les données manuellement sans trace.\nOmettre les packages requis.\n\n\n\n\nProduire une page Quarto contenant une importation, un résumé et un graphique.\n\n\n\nTODO: Ajouter une capsule sur les projets RStudio et la structure de dossiers."
+    "text": "Référence A25\n\n\n\nCette page reconstruit la séance du 10 septembre 2025. Elle reprend la logique de l’ancien portail : installation, interface RStudio, projet R, importation, gestion des données, graphiques et exercice autonome.\n\n\n\n\nObjectif : prendre en main R, RStudio et Quarto pour importer, inspecter, préparer et visualiser un tableau de données.\nCompétences développées :\n\ninstaller ou vérifier les logiciels nécessaires;\nreconnaître les principales fenêtres de RStudio;\ncréer un projet R;\nimporter un fichier CSV;\ncharger les packages utiles;\ninspecter la structure d’un tableau;\nrepérer les valeurs manquantes;\ntransformer des variables textuelles en facteurs;\nproduire un tableau descriptif et un graphique;\nrendre un mini-rapport Quarto.\n\nApplication business : explorer un tableau de ventes et d’opérations d’une organisation québécoise.\nRésultat final attendu : un mini-rapport Quarto contenant une importation, une inspection, un diagnostic des valeurs manquantes, un tableau descriptif, un graphique et deux constats.\nLien avec une décision d’affaires réelle : produire une première analyse reproductible avant de partager des résultats à une équipe.\n\n\n\nCette séance introduit le logiciel R pour traiter et visualiser des données statistiques. Elle transforme les gestes techniques de base en un flux de travail reproductible.\nAu cours de cette séance, nous abordons :\n\nl’installation de R et RStudio;\nl’exploration de l’interface RStudio;\nla création d’un projet;\nl’importation de données;\nla gestion minimale d’un tableau;\nla création de graphiques;\nles commandes R utiles pour préparer les données;\nle passage d’une présentation PowerPoint ancienne à un rapport Quarto reproductible.\n\n\n\n\n\n\n\n\n\n\n\n\nMoment\nActivité\nRésultat produit\n\n\n\n\n1\nVérifier l’installation\nR, RStudio et Quarto disponibles\n\n\n2\nComprendre l’interface\nFenêtres principales de RStudio identifiées\n\n\n3\nCréer un projet\nDossier de travail reproductible\n\n\n4\nImporter le CSV\nTableau chargé dans R\n\n\n5\nInspecter et préparer\nVariables et valeurs manquantes repérées\n\n\n6\nRésumer et visualiser\nTableau descriptif et graphique\n\n\n7\nRendre le rapport\nMini-rapport Quarto HTML\n\n\n\n\n\n\nLes anciennes présentations étaient organisées autour de quatre blocs : explorer RStudio, exemples avec R, traitement des données et données à utiliser. Elles sont reprises ici sous forme de capsules :\n\ninstaller R et RStudio;\nexplorer RStudio;\ncréer un projet;\nimporter un fichier CSV;\ntraiter et sélectionner des données;\nproduire des graphiques;\nrendre un document Quarto.\n\n\n\n\n\n\n\nCapsule vidéo 1 - Installer et ouvrir l’environnement\n\n\n\nÀ insérer : une capsule sur l’installation de R, RStudio et Quarto, puis sur la vérification de l’installation.\n\n\n\n\n\n\n\n\nCapsule vidéo 2 - Explorer RStudio\n\n\n\nÀ insérer : une capsule sur les fenêtres Source, Console, Environment, Files, Plots, Packages, Help et Viewer.\n\n\n\n\n\n\n\n\nCapsule vidéo 3 - Importer et inspecter un tableau\n\n\n\nÀ insérer : une capsule sur read_csv(), glimpse(), summary() et la lecture des types de variables.\n\n\n\n\n\n\n\n\nCapsule vidéo 4 - Traiter et visualiser\n\n\n\nÀ insérer : une capsule sur mutate(), group_by(), summarise() et ggplot().\n\n\n\n\n\nL’ancien travail demandé était une analyse de données présentée dans un fichier PowerPoint. Dans la nouvelle version du cours, le livrable devient un mini-rapport Quarto.\nÀ produire :\n\ncréer un projet R;\nouvrir un fichier .qmd;\nimporter ventes_operations_quebec.csv;\ninspecter les variables;\nvérifier les valeurs manquantes;\nfactoriser les variables catégorielles;\nproduire un tableau et un graphique;\nécrire deux constats;\nrendre le document en HTML.\n\n\n\n\nLe fichier utilisé est ventes_operations_quebec.csv.\n\nventes_operations |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 12\n  mois       mois_nom succursale     region           surface_m2 campagne_locale\n  &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;          \n1 2025-01-01 janvier  Montréal       Montréal                540 non            \n2 2025-01-01 janvier  Québec         Capitale-Nation…        420 oui            \n3 2025-01-01 janvier  Sherbrooke     Estrie                  360 non            \n4 2025-01-01 janvier  Trois-Rivières Mauricie                335 non            \n5 2025-02-01 février  Montréal       Montréal                540 non            \n6 2025-02-01 février  Québec         Capitale-Nation…        420 non            \n7 2025-02-01 février  Sherbrooke     Estrie                  360 oui            \n8 2025-02-01 février  Trois-Rivières Mauricie                335 oui            \n# ℹ 6 more variables: canal_principal &lt;chr&gt;, clients &lt;dbl&gt;, panier_moyen &lt;dbl&gt;,\n#   ventes &lt;dbl&gt;, delai_livraison_jours &lt;dbl&gt;, satisfaction &lt;dbl&gt;\n\n\n\n\n\n\nProjet R : dossier qui garde ensemble code, données et résultats.\nChemin relatif : chemin qui fonctionne à partir du dossier du projet.\nPackage : ensemble de fonctions à charger avec library().\nImportation : lecture d’un fichier dans un objet R.\nData frame : tableau de données.\nFacteur : variable catégorielle utilisée pour l’analyse.\nValeur manquante : donnée absente codée NA.\nQuarto : document qui combine texte, code, résultats et graphiques.\n\n\n\n\n\nglimpse(ventes_operations)\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…\n\n\nQuestions à se poser :\n\nQue représente une ligne?\nQuelles variables sont numériques?\nQuelles variables sont catégorielles?\nQuelles variables contiennent des dates?\n\n\n\n\n\nventes_preparees &lt;- ventes_operations |&gt;\n  mutate(\n    mois = ymd(mois),\n    succursale = factor(succursale),\n    region = factor(region),\n    campagne_locale = factor(campagne_locale),\n    canal_principal = factor(canal_principal)\n  )\n\nsummary(ventes_preparees)\n\n      mois              mois_nom                  succursale\n Min.   :2025-01-01   Length:24          Montréal      :6   \n 1st Qu.:2025-02-01   Class :character   Québec        :6   \n Median :2025-03-16   Mode  :character   Sherbrooke    :6   \n Mean   :2025-03-17                      Trois-Rivières:6   \n 3rd Qu.:2025-05-01                                         \n Max.   :2025-06-01                                         \n                                                            \n                region    surface_m2    campagne_locale  canal_principal\n Capitale-Nationale:6   Min.   :335.0   non:11          magasin  :11    \n Estrie            :6   1st Qu.:353.8   oui:13          telephone: 3    \n Mauricie          :6   Median :390.0                   web      :10    \n Montréal          :6   Mean   :413.8                                   \n                        3rd Qu.:450.0                                   \n                        Max.   :540.0                                   \n                                                                        \n    clients      panier_moyen       ventes       delai_livraison_jours\n Min.   :1199   Min.   :51.89   Min.   : 75656   Min.   :1.8          \n 1st Qu.:1558   1st Qu.:57.42   1st Qu.: 92837   1st Qu.:2.9          \n Median :1676   Median :58.97   Median :102896   Median :3.5          \n Mean   :1820   Mean   :60.08   Mean   :108985   Mean   :3.3          \n 3rd Qu.:2172   3rd Qu.:63.45   3rd Qu.:127324   3rd Qu.:3.7          \n Max.   :2501   Max.   :68.21   Max.   :146519   Max.   :4.6          \n                                                 NA's   :1            \n  satisfaction  \n Min.   :7.300  \n 1st Qu.:7.800  \n Median :7.950  \n Mean   :8.050  \n 3rd Qu.:8.375  \n Max.   :9.100  \n NA's   :2      \n\n\n\n\n\n\ndiagnostic_manquants &lt;- ventes_preparees |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0)\n\ndiagnostic_manquants\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2\n\n\n\n\n\n\n\n\nÀ retenir\n\n\n\nUne valeur manquante n’est pas une erreur à supprimer automatiquement. Il faut d’abord comprendre où elle apparaît et comment elle peut influencer le résultat.\n\n\n\n\n\n\nresume_succursales &lt;- ventes_preparees |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\nresume_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  )\n\n# A tibble: 4 × 6\n  succursale     region             ventes_totales clients_totaux panier_moyen\n  &lt;fct&gt;          &lt;fct&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       \n1 Montréal       Montréal           831 777 $               14057 59,24 $     \n2 Québec         Capitale-Nationale 677 971 $               11464 59,02 $     \n3 Sherbrooke     Estrie             589 922 $                9565 61,71 $     \n4 Trois-Rivières Mauricie           515 975 $                8589 60,35 $     \n# ℹ 1 more variable: satisfaction_moyenne &lt;dbl&gt;\n\n\n\n\n\n\nresume_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes totales par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdentifier l’unité d’observation et trois variables utiles pour une première analyse d’affaires.\n\n\n\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes_operations &lt;- readr::read_csv(\n  \"modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nventes_operations |&gt;\n  group_by(canal_principal) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n\n\n\nExpliquer pourquoi un rapport Quarto est plus reproductible qu’une présentation où les résultats sont copiés manuellement.\n\n\n\n\nUn premier rapport doit déterminer si les ventes diffèrent davantage selon la succursale, le canal principal ou la présence d’une campagne locale. Le but n’est pas encore de conclure causalement. Le but est de structurer une première exploration reproductible.\n\n\n\nR sert à exécuter l’analyse, RStudio aide à organiser le travail et Quarto permet de rendre les résultats vérifiables dans un rapport.\n\n\n\n\nTravailler sans projet R.\nUtiliser un chemin absolu propre à un ordinateur.\nOublier de charger les packages nécessaires.\nInterpréter NA comme une valeur numérique.\nModifier le CSV à la main sans garder de trace.\nCopier un graphique dans un document sans conserver le code.\n\n\n\n\nVotre livrable s’intitule Premier rapport Quarto avec R.\nIl doit contenir :\n\nle code d’importation;\nune phrase sur l’unité d’observation;\nun diagnostic des valeurs manquantes;\nun tableau résumé;\nun graphique;\ndeux constats descriptifs;\nune limite.\n\n\n\n\nCette semaine reprend la structure de l’ancienne séance 02 : installation, exploration de RStudio, importation, gestion des données, graphiques et exercice autonome.\nL’ancien exercice basé sur masculinity.csv n’est pas publié dans ce site. Il est remplacé par ventes_operations_quebec.csv, qui permet de travailler les mêmes compétences techniques dans un contexte d’administration.\nLes anciens PDF, fichiers PowerPoint et ressources externes ne sont pas copiés dans le site public.\n\n\n\nL’atelier 01 prolonge cette séance. Il reprend l’importation, l’inspection et les graphiques dans un parcours plus complet de diagnostic descriptif."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#lets-eat-the-cake",
     "href": "modules/semaine-02-r-quarto/index.html#lets-eat-the-cake",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Objectif : construire un premier flux de travail reproductible avec R et Quarto.\nCompétences développées : - Importer un tableau de données. - Résumer et visualiser des variables d’affaires. - Produire un court rapport Quarto.\nApplication business : explorer un fichier de transactions ou de ventes mensuelles.\nRésultat final attendu : un mini-rapport HTML reproductible.\nLien avec une décision d’affaires réelle : produire un diagnostic partageable à une équipe de gestion."
+    "text": "Objectif : prendre en main R, RStudio et Quarto pour importer, inspecter, préparer et visualiser un tableau de données.\nCompétences développées :\n\ninstaller ou vérifier les logiciels nécessaires;\nreconnaître les principales fenêtres de RStudio;\ncréer un projet R;\nimporter un fichier CSV;\ncharger les packages utiles;\ninspecter la structure d’un tableau;\nrepérer les valeurs manquantes;\ntransformer des variables textuelles en facteurs;\nproduire un tableau descriptif et un graphique;\nrendre un mini-rapport Quarto.\n\nApplication business : explorer un tableau de ventes et d’opérations d’une organisation québécoise.\nRésultat final attendu : un mini-rapport Quarto contenant une importation, une inspection, un diagnostic des valeurs manquantes, un tableau descriptif, un graphique et deux constats.\nLien avec une décision d’affaires réelle : produire une première analyse reproductible avant de partager des résultats à une équipe."
   },
   {
-    "objectID": "modules/semaine-02-r-quarto/index.html#mise-en-contexte",
-    "href": "modules/semaine-02-r-quarto/index.html#mise-en-contexte",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "objectID": "modules/semaine-02-r-quarto/index.html#introduction-à-la-séance",
+    "href": "modules/semaine-02-r-quarto/index.html#introduction-à-la-séance",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Une PME québécoise veut comprendre la progression de ses ventes et repérer les mois où la performance s’écarte du comportement habituel.\nTODO: Ajouter un jeu de données de ventes mensuelles simulées."
+    "text": "Cette séance introduit le logiciel R pour traiter et visualiser des données statistiques. Elle transforme les gestes techniques de base en un flux de travail reproductible.\nAu cours de cette séance, nous abordons :\n\nl’installation de R et RStudio;\nl’exploration de l’interface RStudio;\nla création d’un projet;\nl’importation de données;\nla gestion minimale d’un tableau;\nla création de graphiques;\nles commandes R utiles pour préparer les données;\nle passage d’une présentation PowerPoint ancienne à un rapport Quarto reproductible."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#parcours-autonome-de-la-semaine",
+    "href": "modules/semaine-02-r-quarto/index.html#parcours-autonome-de-la-semaine",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "Moment\nActivité\nRésultat produit\n\n\n\n\n1\nVérifier l’installation\nR, RStudio et Quarto disponibles\n\n\n2\nComprendre l’interface\nFenêtres principales de RStudio identifiées\n\n\n3\nCréer un projet\nDossier de travail reproductible\n\n\n4\nImporter le CSV\nTableau chargé dans R\n\n\n5\nInspecter et préparer\nVariables et valeurs manquantes repérées\n\n\n6\nRésumer et visualiser\nTableau descriptif et graphique\n\n\n7\nRendre le rapport\nMini-rapport Quarto HTML"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#présentations",
+    "href": "modules/semaine-02-r-quarto/index.html#présentations",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "Les anciennes présentations étaient organisées autour de quatre blocs : explorer RStudio, exemples avec R, traitement des données et données à utiliser. Elles sont reprises ici sous forme de capsules :\n\ninstaller R et RStudio;\nexplorer RStudio;\ncréer un projet;\nimporter un fichier CSV;\ntraiter et sélectionner des données;\nproduire des graphiques;\nrendre un document Quarto.\n\n\n\n\n\n\n\nCapsule vidéo 1 - Installer et ouvrir l’environnement\n\n\n\nÀ insérer : une capsule sur l’installation de R, RStudio et Quarto, puis sur la vérification de l’installation.\n\n\n\n\n\n\n\n\nCapsule vidéo 2 - Explorer RStudio\n\n\n\nÀ insérer : une capsule sur les fenêtres Source, Console, Environment, Files, Plots, Packages, Help et Viewer.\n\n\n\n\n\n\n\n\nCapsule vidéo 3 - Importer et inspecter un tableau\n\n\n\nÀ insérer : une capsule sur read_csv(), glimpse(), summary() et la lecture des types de variables.\n\n\n\n\n\n\n\n\nCapsule vidéo 4 - Traiter et visualiser\n\n\n\nÀ insérer : une capsule sur mutate(), group_by(), summarise() et ggplot()."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#à-faire",
+    "href": "modules/semaine-02-r-quarto/index.html#à-faire",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "L’ancien travail demandé était une analyse de données présentée dans un fichier PowerPoint. Dans la nouvelle version du cours, le livrable devient un mini-rapport Quarto.\nÀ produire :\n\ncréer un projet R;\nouvrir un fichier .qmd;\nimporter ventes_operations_quebec.csv;\ninspecter les variables;\nvérifier les valeurs manquantes;\nfactoriser les variables catégorielles;\nproduire un tableau et un graphique;\nécrire deux constats;\nrendre le document en HTML."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#données",
+    "href": "modules/semaine-02-r-quarto/index.html#données",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "Le fichier utilisé est ventes_operations_quebec.csv.\n\nventes_operations |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 12\n  mois       mois_nom succursale     region           surface_m2 campagne_locale\n  &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;          \n1 2025-01-01 janvier  Montréal       Montréal                540 non            \n2 2025-01-01 janvier  Québec         Capitale-Nation…        420 oui            \n3 2025-01-01 janvier  Sherbrooke     Estrie                  360 non            \n4 2025-01-01 janvier  Trois-Rivières Mauricie                335 non            \n5 2025-02-01 février  Montréal       Montréal                540 non            \n6 2025-02-01 février  Québec         Capitale-Nation…        420 non            \n7 2025-02-01 février  Sherbrooke     Estrie                  360 oui            \n8 2025-02-01 février  Trois-Rivières Mauricie                335 oui            \n# ℹ 6 more variables: canal_principal &lt;chr&gt;, clients &lt;dbl&gt;, panier_moyen &lt;dbl&gt;,\n#   ventes &lt;dbl&gt;, delai_livraison_jours &lt;dbl&gt;, satisfaction &lt;dbl&gt;"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#concepts-clés",
     "href": "modules/semaine-02-r-quarto/index.html#concepts-clés",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Projet R et chemins relatifs.\nImportation avec readr.\nTransformation avec dplyr.\nVisualisation avec ggplot2.\nRapport reproductible avec Quarto."
+    "text": "Projet R : dossier qui garde ensemble code, données et résultats.\nChemin relatif : chemin qui fonctionne à partir du dossier du projet.\nPackage : ensemble de fonctions à charger avec library().\nImportation : lecture d’un fichier dans un objet R.\nData frame : tableau de données.\nFacteur : variable catégorielle utilisée pour l’analyse.\nValeur manquante : donnée absente codée NA.\nQuarto : document qui combine texte, code, résultats et graphiques."
   },
   {
-    "objectID": "modules/semaine-02-r-quarto/index.html#capsules-de-la-semaine",
-    "href": "modules/semaine-02-r-quarto/index.html#capsules-de-la-semaine",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "objectID": "modules/semaine-02-r-quarto/index.html#démonstration-1---inspecter-le-tableau",
+    "href": "modules/semaine-02-r-quarto/index.html#démonstration-1---inspecter-le-tableau",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Capsule 1 : Organiser un projet d’analyse.\nCapsule 2 : Lire, nettoyer et résumer un tableau.\nCapsule 3 : Générer un document Quarto."
+    "text": "glimpse(ventes_operations)\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…\n\n\nQuestions à se poser :\n\nQue représente une ligne?\nQuelles variables sont numériques?\nQuelles variables sont catégorielles?\nQuelles variables contiennent des dates?"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#démonstration-2---factoriser-les-variables-catégorielles",
+    "href": "modules/semaine-02-r-quarto/index.html#démonstration-2---factoriser-les-variables-catégorielles",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "ventes_preparees &lt;- ventes_operations |&gt;\n  mutate(\n    mois = ymd(mois),\n    succursale = factor(succursale),\n    region = factor(region),\n    campagne_locale = factor(campagne_locale),\n    canal_principal = factor(canal_principal)\n  )\n\nsummary(ventes_preparees)\n\n      mois              mois_nom                  succursale\n Min.   :2025-01-01   Length:24          Montréal      :6   \n 1st Qu.:2025-02-01   Class :character   Québec        :6   \n Median :2025-03-16   Mode  :character   Sherbrooke    :6   \n Mean   :2025-03-17                      Trois-Rivières:6   \n 3rd Qu.:2025-05-01                                         \n Max.   :2025-06-01                                         \n                                                            \n                region    surface_m2    campagne_locale  canal_principal\n Capitale-Nationale:6   Min.   :335.0   non:11          magasin  :11    \n Estrie            :6   1st Qu.:353.8   oui:13          telephone: 3    \n Mauricie          :6   Median :390.0                   web      :10    \n Montréal          :6   Mean   :413.8                                   \n                        3rd Qu.:450.0                                   \n                        Max.   :540.0                                   \n                                                                        \n    clients      panier_moyen       ventes       delai_livraison_jours\n Min.   :1199   Min.   :51.89   Min.   : 75656   Min.   :1.8          \n 1st Qu.:1558   1st Qu.:57.42   1st Qu.: 92837   1st Qu.:2.9          \n Median :1676   Median :58.97   Median :102896   Median :3.5          \n Mean   :1820   Mean   :60.08   Mean   :108985   Mean   :3.3          \n 3rd Qu.:2172   3rd Qu.:63.45   3rd Qu.:127324   3rd Qu.:3.7          \n Max.   :2501   Max.   :68.21   Max.   :146519   Max.   :4.6          \n                                                 NA's   :1            \n  satisfaction  \n Min.   :7.300  \n 1st Qu.:7.800  \n Median :7.950  \n Mean   :8.050  \n 3rd Qu.:8.375  \n Max.   :9.100  \n NA's   :2"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#démonstration-3---vérifier-les-valeurs-manquantes",
+    "href": "modules/semaine-02-r-quarto/index.html#démonstration-3---vérifier-les-valeurs-manquantes",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "diagnostic_manquants &lt;- ventes_preparees |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0)\n\ndiagnostic_manquants\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2\n\n\n\n\n\n\n\n\nÀ retenir\n\n\n\nUne valeur manquante n’est pas une erreur à supprimer automatiquement. Il faut d’abord comprendre où elle apparaît et comment elle peut influencer le résultat."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#démonstration-4---résumer-un-tableau",
+    "href": "modules/semaine-02-r-quarto/index.html#démonstration-4---résumer-un-tableau",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "resume_succursales &lt;- ventes_preparees |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\nresume_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  )\n\n# A tibble: 4 × 6\n  succursale     region             ventes_totales clients_totaux panier_moyen\n  &lt;fct&gt;          &lt;fct&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       \n1 Montréal       Montréal           831 777 $               14057 59,24 $     \n2 Québec         Capitale-Nationale 677 971 $               11464 59,02 $     \n3 Sherbrooke     Estrie             589 922 $                9565 61,71 $     \n4 Trois-Rivières Mauricie           515 975 $                8589 60,35 $     \n# ℹ 1 more variable: satisfaction_moyenne &lt;dbl&gt;"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#démonstration-5---créer-un-graphique",
+    "href": "modules/semaine-02-r-quarto/index.html#démonstration-5---créer-un-graphique",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "resume_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes totales par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#exercices-dapplication-intégrés",
     "href": "modules/semaine-02-r-quarto/index.html#exercices-dapplication-intégrés",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "AE 1 : interprétation. Lire un tableau de ventes et identifier les variables utiles.\nAE 2 : calcul ou code R.\n\nlibrary(tidyverse)\n\nventes_mensuelles &lt;- readr::read_csv(\"modules/semaine-02-r-quarto/data/ventes_mensuelles.csv\")\n\nventes_mensuelles |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    panier_moyen = mean(panier_moyen, na.rm = TRUE)\n  )\n\nAE 3 : réflexion critique. Identifier ce qui rend un rapport reproductible utile pour une équipe."
+    "text": "Identifier l’unité d’observation et trois variables utiles pour une première analyse d’affaires.\n\n\n\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes_operations &lt;- readr::read_csv(\n  \"modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nventes_operations |&gt;\n  group_by(canal_principal) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n\n\n\nExpliquer pourquoi un rapport Quarto est plus reproductible qu’une présentation où les résultats sont copiés manuellement."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#mini-cas-business",
     "href": "modules/semaine-02-r-quarto/index.html#mini-cas-business",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Premier rapport d’analyse pour une direction régionale."
+    "text": "Un premier rapport doit déterminer si les ventes diffèrent davantage selon la succursale, le canal principal ou la présence d’une campagne locale. Le but n’est pas encore de conclure causalement. Le but est de structurer une première exploration reproductible."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#à-retenir",
     "href": "modules/semaine-02-r-quarto/index.html#à-retenir",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "R et Quarto servent à relier code, résultats et interprétation dans un même document vérifiable."
+    "text": "R sert à exécuter l’analyse, RStudio aide à organiser le travail et Quarto permet de rendre les résultats vérifiables dans un rapport."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#erreurs-fréquentes",
     "href": "modules/semaine-02-r-quarto/index.html#erreurs-fréquentes",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Utiliser des chemins absolus propres à un seul ordinateur.\nModifier les données manuellement sans trace.\nOmettre les packages requis."
+    "text": "Travailler sans projet R.\nUtiliser un chemin absolu propre à un ordinateur.\nOublier de charger les packages nécessaires.\nInterpréter NA comme une valeur numérique.\nModifier le CSV à la main sans garder de trace.\nCopier un graphique dans un document sans conserver le code."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#trace-de-portfolio-ou-livrable-court",
     "href": "modules/semaine-02-r-quarto/index.html#trace-de-portfolio-ou-livrable-court",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "Produire une page Quarto contenant une importation, un résumé et un graphique."
+    "text": "Votre livrable s’intitule Premier rapport Quarto avec R.\nIl doit contenir :\n\nle code d’importation;\nune phrase sur l’unité d’observation;\nun diagnostic des valeurs manquantes;\nun tableau résumé;\nun graphique;\ndeux constats descriptifs;\nune limite."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#lien-avec-lancien-matériel",
+    "href": "modules/semaine-02-r-quarto/index.html#lien-avec-lancien-matériel",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
+    "section": "",
+    "text": "Cette semaine reprend la structure de l’ancienne séance 02 : installation, exploration de RStudio, importation, gestion des données, graphiques et exercice autonome.\nL’ancien exercice basé sur masculinity.csv n’est pas publié dans ce site. Il est remplacé par ventes_operations_quebec.csv, qui permet de travailler les mêmes compétences techniques dans un contexte d’administration.\nLes anciens PDF, fichiers PowerPoint et ressources externes ne sont pas copiés dans le site public."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#pour-aller-plus-loin",
     "href": "modules/semaine-02-r-quarto/index.html#pour-aller-plus-loin",
-    "title": "Semaine 02 - Analyse de données avec R et Quarto",
+    "title": "Semaine 02 - Introduction à l’analyse avec R",
     "section": "",
-    "text": "TODO: Ajouter une capsule sur les projets RStudio et la structure de dossiers."
+    "text": "L’atelier 01 prolonge cette séance. Il reprend l’importation, l’inspection et les graphiques dans un parcours plus complet de diagnostic descriptif."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html",
     "href": "modules/semaine-02-r-quarto/capsules.html",
     "title": "Capsules - Semaine 02",
     "section": "",
-    "text": "Accompagner les étudiant·es dans la prise en main de R, RStudio et Quarto.\n\n\n\nTODO: Ajouter une démonstration de création de projet.\n\n\n\nTODO: Ajouter une capsule sur read_csv(), glimpse() et summarise().\n\n\n\nTODO: Ajouter une capsule sur quarto render."
+    "text": "Cette page organise les capsules à produire pour accompagner la prise en main de R, RStudio et Quarto.\n\n\n\nDurée cible : 4 à 6 minutes.\nObjectif : vérifier que l’environnement de travail est prêt.\nÀ couvrir :\n\nrôle de R;\nrôle de RStudio;\nrôle de Quarto;\nvérification de l’installation;\nemplacement des fichiers du projet.\n\n\n\n\nDurée cible : 5 à 7 minutes.\nObjectif : reconnaître les principales fenêtres et savoir quoi y chercher.\nÀ couvrir :\n\nSource;\nConsole;\nEnvironment;\nFiles;\nPlots;\nPackages;\nHelp;\nViewer.\n\n\n\n\nDurée cible : 4 à 6 minutes.\nObjectif : comprendre pourquoi le projet R est la base de la reproductibilité.\nÀ couvrir :\n\ndossier de projet;\nchemins relatifs;\ndossier data;\nfichiers .qmd;\nerreurs fréquentes liées aux chemins.\n\n\n\n\nDurée cible : 6 à 8 minutes.\nObjectif : charger un tableau et vérifier sa structure.\nÀ couvrir :\n\nreadr::read_csv();\njanitor::clean_names();\nglimpse();\nsummary();\ntypes de variables;\npremières lignes du tableau.\n\n\n\n\nDurée cible : 6 à 8 minutes.\nObjectif : appliquer les premières transformations utiles.\nÀ couvrir :\n\nmutate();\nvariables facteurs;\nvaleurs manquantes;\ngroup_by();\nsummarise().\n\n\n\n\nDurée cible : 6 à 8 minutes.\nObjectif : produire un graphique simple et rendre un document HTML.\nÀ couvrir :\n\nggplot();\ngeom_col();\ntitre et axes;\nquarto render;\nvérification du HTML produit.\n\n\n\n\nLes anciennes présentations Explorer R, R Exemples et Traitement et sélection des données avec R sont transformées en capsules courtes. Les fichiers PDF et PowerPoint d’origine ne sont pas publiés."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#objectif",
     "href": "modules/semaine-02-r-quarto/capsules.html#objectif",
     "title": "Capsules - Semaine 02",
     "section": "",
-    "text": "Accompagner les étudiant·es dans la prise en main de R, RStudio et Quarto."
+    "text": "Cette page organise les capsules à produire pour accompagner la prise en main de R, RStudio et Quarto."
   },
   {
-    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-1---projet-r",
-    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-1---projet-r",
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-1---installer-r-rstudio-et-quarto",
+    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-1---installer-r-rstudio-et-quarto",
     "title": "Capsules - Semaine 02",
     "section": "",
-    "text": "TODO: Ajouter une démonstration de création de projet."
+    "text": "Durée cible : 4 à 6 minutes.\nObjectif : vérifier que l’environnement de travail est prêt.\nÀ couvrir :\n\nrôle de R;\nrôle de RStudio;\nrôle de Quarto;\nvérification de l’installation;\nemplacement des fichiers du projet."
   },
   {
-    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-2---importer-et-résumer",
-    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-2---importer-et-résumer",
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-2---explorer-linterface-rstudio",
+    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-2---explorer-linterface-rstudio",
     "title": "Capsules - Semaine 02",
     "section": "",
-    "text": "TODO: Ajouter une capsule sur read_csv(), glimpse() et summarise()."
+    "text": "Durée cible : 5 à 7 minutes.\nObjectif : reconnaître les principales fenêtres et savoir quoi y chercher.\nÀ couvrir :\n\nSource;\nConsole;\nEnvironment;\nFiles;\nPlots;\nPackages;\nHelp;\nViewer."
   },
   {
-    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-3---rendre-un-document-quarto",
-    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-3---rendre-un-document-quarto",
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-3---créer-un-projet-r",
+    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-3---créer-un-projet-r",
     "title": "Capsules - Semaine 02",
     "section": "",
-    "text": "TODO: Ajouter une capsule sur quarto render."
+    "text": "Durée cible : 4 à 6 minutes.\nObjectif : comprendre pourquoi le projet R est la base de la reproductibilité.\nÀ couvrir :\n\ndossier de projet;\nchemins relatifs;\ndossier data;\nfichiers .qmd;\nerreurs fréquentes liées aux chemins."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-4---importer-et-inspecter-un-fichier-csv",
+    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-4---importer-et-inspecter-un-fichier-csv",
+    "title": "Capsules - Semaine 02",
+    "section": "",
+    "text": "Durée cible : 6 à 8 minutes.\nObjectif : charger un tableau et vérifier sa structure.\nÀ couvrir :\n\nreadr::read_csv();\njanitor::clean_names();\nglimpse();\nsummary();\ntypes de variables;\npremières lignes du tableau."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-5---traiter-les-données",
+    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-5---traiter-les-données",
+    "title": "Capsules - Semaine 02",
+    "section": "",
+    "text": "Durée cible : 6 à 8 minutes.\nObjectif : appliquer les premières transformations utiles.\nÀ couvrir :\n\nmutate();\nvariables facteurs;\nvaleurs manquantes;\ngroup_by();\nsummarise()."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-6---créer-un-graphique-et-rendre-le-rapport",
+    "href": "modules/semaine-02-r-quarto/capsules.html#capsule-6---créer-un-graphique-et-rendre-le-rapport",
+    "title": "Capsules - Semaine 02",
+    "section": "",
+    "text": "Durée cible : 6 à 8 minutes.\nObjectif : produire un graphique simple et rendre un document HTML.\nÀ couvrir :\n\nggplot();\ngeom_col();\ntitre et axes;\nquarto render;\nvérification du HTML produit."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/capsules.html#lien-avec-lancien-matériel",
+    "href": "modules/semaine-02-r-quarto/capsules.html#lien-avec-lancien-matériel",
+    "title": "Capsules - Semaine 02",
+    "section": "",
+    "text": "Les anciennes présentations Explorer R, R Exemples et Traitement et sélection des données avec R sont transformées en capsules courtes. Les fichiers PDF et PowerPoint d’origine ne sont pas publiés."
   },
   {
     "objectID": "modules/semaine-01-introduction/exercices.html",
     "href": "modules/semaine-01-introduction/exercices.html",
     "title": "Exercices - Semaine 01",
     "section": "",
-    "text": "Ces exercices servent à préparer la trace de portfolio de la semaine 01.\n\n\n\nQuestion de départ :\n\nCertaines succursales performent moins bien que d’autres. Il faut comprendre quels indicateurs regarder en premier.\n\nÀ faire :\n\nreformuler la décision à éclairer;\nproposer une question analytique;\nnommer deux indicateurs utiles.\n\n\n\n\n\nlibrary(tidyverse)\n\ndiagnostic &lt;- readr::read_csv(\n  \"modules/semaine-01-introduction/data/diagnostic_succursales.csv\",\n  show_col_types = FALSE\n)\n\nglimpse(diagnostic)\n\nÀ faire :\n\nidentifier l’unité d’observation;\nclasser les variables en variables de performance commerciale et variables opérationnelles;\nrepérer une variable qui pourrait devenir une variable réponse dans un modèle futur.\n\n\n\n\nÀ partir du graphique de la page principale, rédiger deux constats descriptifs.\nChaque constat doit contenir :\n\nun résultat observé;\nune comparaison;\nune limite d’interprétation."
+    "text": "Ces exercices servent à préparer la trace de portfolio de la séance 01 et à diagnostiquer les notions statistiques à consolider.\n\n\n\nFichier : birth_us.csv.\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nbirth_us &lt;- readr::read_csv(\n  \"modules/semaine-01-introduction/data/birth_us.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nglimpse(birth_us)\n\nÀ faire :\n\nnommer l’unité d’observation;\nclasser les variables par type;\nrepérer les variables qui décrivent le temps;\nécrire un indicateur descriptif pertinent.\n\n\n\n\nÀ partir de birth_us.csv, produire :\n\nle minimum du nombre de naissances;\nla moyenne;\nla médiane;\nle maximum;\nun histogramme.\n\n\nbirth_us |&gt;\n  summarise(\n    minimum = min(births, na.rm = TRUE),\n    moyenne = mean(births, na.rm = TRUE),\n    mediane = median(births, na.rm = TRUE),\n    maximum = max(births, na.rm = TRUE)\n  )\n\n\n\n\nFichier : safety_airlines.csv.\n\nsafety_airlines &lt;- readr::read_csv(\n  \"modules/semaine-01-introduction/data/safety_airlines.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nsafety_airlines |&gt;\n  mutate(\n    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,\n    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards\n  ) |&gt;\n  select(airline, incidents_00_14, incidents_par_milliard)\n\nÀ faire :\n\ncomparer le nombre brut d’incidents et le taux indicatif;\nexpliquer pourquoi l’échelle de comparaison change l’interprétation;\nécrire une limite de l’analyse.\n\n\n\n\nRépondre en quelques lignes :\n\nquelle notion statistique est la plus claire pour vous;\nquelle notion doit être revue;\nquelle compétence R sera nécessaire dès la semaine 02;\nquelle erreur d’interprétation faut-il éviter.\n\n\n\n\nRemettre une trace de portfolio d’une page maximum avec :\n\nune synthèse du diagnostic de compétences;\nun tableau de variables classées par type;\nun graphique;\ndeux constats descriptifs;\nune limite d’interprétation."
   },
   {
     "objectID": "modules/semaine-01-introduction/exercices.html#objectif",
     "href": "modules/semaine-01-introduction/exercices.html#objectif",
     "title": "Exercices - Semaine 01",
     "section": "",
-    "text": "Ces exercices servent à préparer la trace de portfolio de la semaine 01."
+    "text": "Ces exercices servent à préparer la trace de portfolio de la séance 01 et à diagnostiquer les notions statistiques à consolider."
   },
   {
-    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-1---reformuler-la-décision",
-    "href": "modules/semaine-01-introduction/exercices.html#exercice-1---reformuler-la-décision",
+    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-1---lire-la-structure-dun-tableau",
+    "href": "modules/semaine-01-introduction/exercices.html#exercice-1---lire-la-structure-dun-tableau",
     "title": "Exercices - Semaine 01",
     "section": "",
-    "text": "Question de départ :\n\nCertaines succursales performent moins bien que d’autres. Il faut comprendre quels indicateurs regarder en premier.\n\nÀ faire :\n\nreformuler la décision à éclairer;\nproposer une question analytique;\nnommer deux indicateurs utiles."
+    "text": "Fichier : birth_us.csv.\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nbirth_us &lt;- readr::read_csv(\n  \"modules/semaine-01-introduction/data/birth_us.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nglimpse(birth_us)\n\nÀ faire :\n\nnommer l’unité d’observation;\nclasser les variables par type;\nrepérer les variables qui décrivent le temps;\nécrire un indicateur descriptif pertinent."
   },
   {
-    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-2---lire-le-tableau",
-    "href": "modules/semaine-01-introduction/exercices.html#exercice-2---lire-le-tableau",
+    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-2---produire-une-analyse-univariée",
+    "href": "modules/semaine-01-introduction/exercices.html#exercice-2---produire-une-analyse-univariée",
     "title": "Exercices - Semaine 01",
     "section": "",
-    "text": "library(tidyverse)\n\ndiagnostic &lt;- readr::read_csv(\n  \"modules/semaine-01-introduction/data/diagnostic_succursales.csv\",\n  show_col_types = FALSE\n)\n\nglimpse(diagnostic)\n\nÀ faire :\n\nidentifier l’unité d’observation;\nclasser les variables en variables de performance commerciale et variables opérationnelles;\nrepérer une variable qui pourrait devenir une variable réponse dans un modèle futur."
+    "text": "À partir de birth_us.csv, produire :\n\nle minimum du nombre de naissances;\nla moyenne;\nla médiane;\nle maximum;\nun histogramme.\n\n\nbirth_us |&gt;\n  summarise(\n    minimum = min(births, na.rm = TRUE),\n    moyenne = mean(births, na.rm = TRUE),\n    mediane = median(births, na.rm = TRUE),\n    maximum = max(births, na.rm = TRUE)\n  )"
   },
   {
-    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-3---interpréter-prudemment",
-    "href": "modules/semaine-01-introduction/exercices.html#exercice-3---interpréter-prudemment",
+    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-3---comparer-des-indicateurs",
+    "href": "modules/semaine-01-introduction/exercices.html#exercice-3---comparer-des-indicateurs",
     "title": "Exercices - Semaine 01",
     "section": "",
-    "text": "À partir du graphique de la page principale, rédiger deux constats descriptifs.\nChaque constat doit contenir :\n\nun résultat observé;\nune comparaison;\nune limite d’interprétation."
+    "text": "Fichier : safety_airlines.csv.\n\nsafety_airlines &lt;- readr::read_csv(\n  \"modules/semaine-01-introduction/data/safety_airlines.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nsafety_airlines |&gt;\n  mutate(\n    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,\n    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards\n  ) |&gt;\n  select(airline, incidents_00_14, incidents_par_milliard)\n\nÀ faire :\n\ncomparer le nombre brut d’incidents et le taux indicatif;\nexpliquer pourquoi l’échelle de comparaison change l’interprétation;\nécrire une limite de l’analyse."
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/exercices.html#exercice-4---diagnostic-de-compétences",
+    "href": "modules/semaine-01-introduction/exercices.html#exercice-4---diagnostic-de-compétences",
+    "title": "Exercices - Semaine 01",
+    "section": "",
+    "text": "Répondre en quelques lignes :\n\nquelle notion statistique est la plus claire pour vous;\nquelle notion doit être revue;\nquelle compétence R sera nécessaire dès la semaine 02;\nquelle erreur d’interprétation faut-il éviter."
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/exercices.html#livrable-court",
+    "href": "modules/semaine-01-introduction/exercices.html#livrable-court",
+    "title": "Exercices - Semaine 01",
+    "section": "",
+    "text": "Remettre une trace de portfolio d’une page maximum avec :\n\nune synthèse du diagnostic de compétences;\nun tableau de variables classées par type;\nun graphique;\ndeux constats descriptifs;\nune limite d’interprétation."
   },
   {
     "objectID": "modules/atelier-04-recapitulation/index.html",
@@ -1215,7 +1320,21 @@
     "href": "calendrier.html",
     "title": "Calendrier",
     "section": "",
-    "text": "Calendrier\nLes dates précises seront ajoutées lorsque le calendrier de la session sera confirmé.\n\n\n\n\n\n\n\n\nBloc\nActivité\nThème\n\n\n\n\nSemaine 01\nSéance 01\nIntroduction, décisions d’affaires et diagnostic statistique\n\n\nSemaine 02\nSéance 02\nIntroduction à R et Quarto\n\n\nSemaine 03\nAtelier 1\nExplorer un tableau de données d’affaires\n\n\nSemaine 04\nSéance 03\nRégression linéaire\n\n\nSemaine 05\nSéance 04\nRégression non linéaire et transformations\n\n\nSemaine 06\nAtelier 2\nÉtude de cas business en régression\n\n\nSemaine 07\nSéance 05\nPréparation à l’examen intra\n\n\nSemaine 08\nExamen intra\nAnalyse de régression à la maison\n\n\nSemaine 09\nSéance 06\nIntroduction à la prévision et aux séries chronologiques\n\n\nSemaine 10\nSéance 07\nMéthodes de lissage\n\n\nSemaine 11\nSéance 08\nTendance et saisonnalité\n\n\nSemaine 12\nAtelier 3\nPrévision des ventes ou de la demande\n\n\nSemaine 13\nSéance 09\nVariables externes et autocorrélation\n\n\nSemaine 14\nSéance 10\nRésultats binaires, classification et modèles avancés\n\n\nSemaine 15\nAtelier 4\nRécapitulation et intégration\n\n\nFin de session\nExamen final\nAnalyse de prévision à la maison\n\n\n\nTODO: Ajouter les dates officielles, les échéances et les liens directs vers les pages de remise."
+    "text": "Ce calendrier reprend la progression de référence de l’automne 2025. Les dates ci-dessous servent à documenter l’organisation ancienne du cours et à guider la migration du matériel. Elles ne constituent pas encore le calendrier officiel d’une prochaine offre.\n\n\n\n\n\n\n\n\n\n\n\n\n\nOrdre\nDate A25\nActivité\nThème\nDestination Quarto\nSource ancienne\n\n\n\n\n1\n3 sept. 2025\nSéance 01\nIntroduction au cours et évaluation des compétences statistiques\nmodules/semaine-01-introduction/\nCaptures du portail et Solutionnaires séances.zip\n\n\n2\n10 sept. 2025\nSéance 02\nIntroduction à l’analyse et traitement des données avec le logiciel R\nmodules/semaine-02-r-quarto/\nSéance 02 - Introduction.zip\n\n\n3\n17 sept. 2025\nAtelier en classe 1\nExercices appliqués sur RStudio avec jeux de données\nmodules/atelier-01-r/\nAtelier en classe 1.zip\n\n\n4\n24 sept. 2025\nSéance 03\nRégression linéaire\nmodules/semaine-03-regression-lineaire/\nSéance 03 - Régression.zip\n\n\n5\n1 oct. 2025\nSéance 04\nRégression non linéaire\nmodules/semaine-04-regression-nonlineaire/\nSéance 04 - Régression non.zip\n\n\n6\n8 oct. 2025\nAtelier en classe 2\nExercices appliqués sur la régression\nmodules/atelier-02-regression/\nAtelier en classe 2.zip\n\n\n7\n15 oct. 2025\nSéance 05\nPréparation à l’examen intra\nmodules/semaine-05-preparation-intra/\nSéance 05 - Préparation à.zip\n\n\n8\n23 oct. 2025\nExamen intra à la maison\nAnalyse de régression, durée 48 heures\nevaluations/examen-intra.qmd\nArchive privée, non publiée\n\n\n9\n22 oct. 2025\nSéance 06\nPrévision et introduction aux séries chronologiques\nmodules/semaine-06-series-chronologiques-intro/\nSéance 06 - La prévision.zip\n\n\n10\nSemaine de lecture\nPause pédagogique\nConsolidation et préparation\ncalendrier.qmd\nPlan A25\n\n\n11\n5 nov. 2025\nSéance 07\nMéthodes de lissage\nmodules/semaine-07-lissage/\nSéance 07 - Méthodes de.zip\n\n\n12\n12 nov. 2025\nSéance 08\nModèles basés sur la régression I, saisonnalité et tendance\nmodules/semaine-08-tendance-saisonnalite/\nSéance 08 - Modèles.zip\n\n\n13\n19 nov. 2025\nAtelier en classe 3\nExercices appliqués sur les séries chronologiques\nmodules/atelier-03-series-chronologiques/\nAtelier en classe 3.zip\n\n\n14\n26 nov. 2025\nSéance 09\nModèles basés sur la régression II, autocorrélation et informations externes\nmodules/semaine-09-variables-externes-autocorrelation/\nSéance 09 - Modèles basés.zip\n\n\n15\n3 déc. 2025\nSéance 10\nPrévision des résultats binaires et réseaux de neurones\nmodules/semaine-10-classification-modeles-avances/\nSéance 10 - Prévision des.zip\n\n\n16\n10 déc. 2025\nAtelier en classe 4\nExercices appliqués sur les séries chronologiques\nmodules/atelier-04-recapitulation/\nAtelier en classe 4.zip\n\n\n17\n10 déc. 2025\nSéance 11\nRécapitulation et exercice sur les séries chronologiques\nmodules/atelier-04-recapitulation/\nSéance 11.zip\n\n\n18\n10 déc. 2025\nPréparation à l’examen final\nRévision et préparation\nevaluations/examen-final.qmd\nPréparation à l'examen.zip\n\n\n19\n13 déc. 2025\nExamen final à la maison\nAnalyse de prévision, durée 48 heures\nevaluations/examen-final.qmd\nArchive privée, non publiée\n\n\n\n\n\n\n\nLes anciens ZIP servent de référence, mais ne sont pas publiés dans le site.\nLes documents sensibles, les examens et les solutionnaires restent dans les sources privées.\nLes activités sont converties en parcours Quarto autonomes avec exemples en R.\nLes anciens jeux de données sont réutilisés seulement lorsqu’ils peuvent être publiés sans risque.\nLes contextes business, québécois ou canadiens sont privilégiés lorsque le matériel ancien est remplacé."
+  },
+  {
+    "objectID": "calendrier.html#progression-de-référence-a25",
+    "href": "calendrier.html#progression-de-référence-a25",
+    "title": "Calendrier",
+    "section": "",
+    "text": "Ordre\nDate A25\nActivité\nThème\nDestination Quarto\nSource ancienne\n\n\n\n\n1\n3 sept. 2025\nSéance 01\nIntroduction au cours et évaluation des compétences statistiques\nmodules/semaine-01-introduction/\nCaptures du portail et Solutionnaires séances.zip\n\n\n2\n10 sept. 2025\nSéance 02\nIntroduction à l’analyse et traitement des données avec le logiciel R\nmodules/semaine-02-r-quarto/\nSéance 02 - Introduction.zip\n\n\n3\n17 sept. 2025\nAtelier en classe 1\nExercices appliqués sur RStudio avec jeux de données\nmodules/atelier-01-r/\nAtelier en classe 1.zip\n\n\n4\n24 sept. 2025\nSéance 03\nRégression linéaire\nmodules/semaine-03-regression-lineaire/\nSéance 03 - Régression.zip\n\n\n5\n1 oct. 2025\nSéance 04\nRégression non linéaire\nmodules/semaine-04-regression-nonlineaire/\nSéance 04 - Régression non.zip\n\n\n6\n8 oct. 2025\nAtelier en classe 2\nExercices appliqués sur la régression\nmodules/atelier-02-regression/\nAtelier en classe 2.zip\n\n\n7\n15 oct. 2025\nSéance 05\nPréparation à l’examen intra\nmodules/semaine-05-preparation-intra/\nSéance 05 - Préparation à.zip\n\n\n8\n23 oct. 2025\nExamen intra à la maison\nAnalyse de régression, durée 48 heures\nevaluations/examen-intra.qmd\nArchive privée, non publiée\n\n\n9\n22 oct. 2025\nSéance 06\nPrévision et introduction aux séries chronologiques\nmodules/semaine-06-series-chronologiques-intro/\nSéance 06 - La prévision.zip\n\n\n10\nSemaine de lecture\nPause pédagogique\nConsolidation et préparation\ncalendrier.qmd\nPlan A25\n\n\n11\n5 nov. 2025\nSéance 07\nMéthodes de lissage\nmodules/semaine-07-lissage/\nSéance 07 - Méthodes de.zip\n\n\n12\n12 nov. 2025\nSéance 08\nModèles basés sur la régression I, saisonnalité et tendance\nmodules/semaine-08-tendance-saisonnalite/\nSéance 08 - Modèles.zip\n\n\n13\n19 nov. 2025\nAtelier en classe 3\nExercices appliqués sur les séries chronologiques\nmodules/atelier-03-series-chronologiques/\nAtelier en classe 3.zip\n\n\n14\n26 nov. 2025\nSéance 09\nModèles basés sur la régression II, autocorrélation et informations externes\nmodules/semaine-09-variables-externes-autocorrelation/\nSéance 09 - Modèles basés.zip\n\n\n15\n3 déc. 2025\nSéance 10\nPrévision des résultats binaires et réseaux de neurones\nmodules/semaine-10-classification-modeles-avances/\nSéance 10 - Prévision des.zip\n\n\n16\n10 déc. 2025\nAtelier en classe 4\nExercices appliqués sur les séries chronologiques\nmodules/atelier-04-recapitulation/\nAtelier en classe 4.zip\n\n\n17\n10 déc. 2025\nSéance 11\nRécapitulation et exercice sur les séries chronologiques\nmodules/atelier-04-recapitulation/\nSéance 11.zip\n\n\n18\n10 déc. 2025\nPréparation à l’examen final\nRévision et préparation\nevaluations/examen-final.qmd\nPréparation à l'examen.zip\n\n\n19\n13 déc. 2025\nExamen final à la maison\nAnalyse de prévision, durée 48 heures\nevaluations/examen-final.qmd\nArchive privée, non publiée"
+  },
+  {
+    "objectID": "calendrier.html#principes-de-migration",
+    "href": "calendrier.html#principes-de-migration",
+    "title": "Calendrier",
+    "section": "",
+    "text": "Les anciens ZIP servent de référence, mais ne sont pas publiés dans le site.\nLes documents sensibles, les examens et les solutionnaires restent dans les sources privées.\nLes activités sont converties en parcours Quarto autonomes avec exemples en R.\nLes anciens jeux de données sont réutilisés seulement lorsqu’ils peuvent être publiés sans risque.\nLes contextes business, québécois ou canadiens sont privilégiés lorsque le matériel ancien est remplacé."
   },
   {
     "objectID": "migration-ancien-materiel.html",
@@ -1460,175 +1579,245 @@
     "href": "modules/semaine-01-introduction/capsules.html",
     "title": "Capsules - Semaine 01",
     "section": "",
-    "text": "Cette page regroupe les capsules à produire pour accompagner le parcours autonome de la semaine 01.\n\n\n\nDurée cible : 4 à 6 minutes.\nObjectif : montrer qu’une analyse commence par une décision à éclairer.\nÀ couvrir :\n\ndécision d’affaires;\nquestion analytique;\nindicateur;\nlimite d’un diagnostic descriptif.\n\n\n\n\nDurée cible : 4 à 6 minutes.\nObjectif : expliquer comment lire un tableau de données.\nÀ couvrir :\n\nunité d’observation;\nvariable numérique;\nvariable catégorielle;\nindicateur utile pour une décision d’affaires.\n\n\n\n\nDurée cible : 4 à 6 minutes.\nObjectif : distinguer un chiffre intéressant d’un indicateur utile.\nÀ couvrir :\n\nventes;\nclients;\npanier moyen;\nsatisfaction;\nruptures de stock;\nlien avec une décision.\n\n\n\n\nDurée cible : 5 à 7 minutes.\nObjectif : présenter la progression générale du cours.\nÀ couvrir :\n\ndescription;\nexplication;\nprévision;\ndécision;\nplace de la régression et des séries chronologiques dans le cours."
+    "text": "Cette page organise les capsules à produire pour reconstruire l’ancienne séance 01 dans un format Quarto autonome.\n\n\n\nDurée cible : 5 à 7 minutes.\nObjectif : présenter la progression du cours, les ateliers, les évaluations et la place de la première séance.\nÀ couvrir :\n\nstructure générale du cours;\nrôle des séances et des ateliers;\nplace de la régression et de la prévision;\nattentes liées au travail autonome;\nutilité du quiz diagnostique.\n\n\n\n\nDurée cible : 6 à 8 minutes.\nObjectif : revoir les notions statistiques nécessaires avant de commencer la modélisation.\nÀ couvrir :\n\nobservation et variable;\nvariable numérique et variable catégorielle;\nmoyenne, médiane, écart type;\ntableau de fréquences;\nlecture prudente d’un graphique.\n\n\n\n\nDurée cible : 5 à 7 minutes.\nObjectif : montrer que le type d’une variable influence les traitements et les graphiques possibles.\nÀ couvrir :\n\ndates;\nvariables quantitatives;\nvariables qualitatives;\ncodes numériques;\nunités et échelles de mesure.\n\n\n\n\nDurée cible : 6 à 8 minutes.\nObjectif : présenter les problèmes à résoudre avant l’analyse.\nÀ couvrir :\n\nnoms de variables;\nvaleurs manquantes;\ndoublons;\nformats de dates;\ncohérence des unités;\ndocumentation des transformations.\n\n\n\n\nDurée cible : 6 à 8 minutes.\nObjectif : distinguer la description d’une variable et l’étude d’une relation descriptive entre deux variables.\nÀ couvrir :\n\nhistogramme;\nboîte à moustaches;\ntableau résumé;\ngraphique bivarié;\ndifférence entre association descriptive et explication.\n\n\n\n\nLes anciennes présentations portaient sur les modules du cours, les modèles mathématiques, la préparation des données et l’exploration univariée et bivariée. Ces contenus seront transformés en capsules courtes. Les fichiers originaux ne sont pas publiés dans ce site."
   },
   {
     "objectID": "modules/semaine-01-introduction/capsules.html#objectif",
     "href": "modules/semaine-01-introduction/capsules.html#objectif",
     "title": "Capsules - Semaine 01",
     "section": "",
-    "text": "Cette page regroupe les capsules à produire pour accompagner le parcours autonome de la semaine 01."
+    "text": "Cette page organise les capsules à produire pour reconstruire l’ancienne séance 01 dans un format Quarto autonome."
   },
   {
-    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-1---de-la-décision-au-tableau",
-    "href": "modules/semaine-01-introduction/capsules.html#capsule-1---de-la-décision-au-tableau",
+    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-1---organisation-du-cours",
+    "href": "modules/semaine-01-introduction/capsules.html#capsule-1---organisation-du-cours",
     "title": "Capsules - Semaine 01",
     "section": "",
-    "text": "Durée cible : 4 à 6 minutes.\nObjectif : montrer qu’une analyse commence par une décision à éclairer.\nÀ couvrir :\n\ndécision d’affaires;\nquestion analytique;\nindicateur;\nlimite d’un diagnostic descriptif."
+    "text": "Durée cible : 5 à 7 minutes.\nObjectif : présenter la progression du cours, les ateliers, les évaluations et la place de la première séance.\nÀ couvrir :\n\nstructure générale du cours;\nrôle des séances et des ateliers;\nplace de la régression et de la prévision;\nattentes liées au travail autonome;\nutilité du quiz diagnostique."
   },
   {
-    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-2---observation-variable-indicateur",
-    "href": "modules/semaine-01-introduction/capsules.html#capsule-2---observation-variable-indicateur",
+    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-2---compétences-statistiques-de-départ",
+    "href": "modules/semaine-01-introduction/capsules.html#capsule-2---compétences-statistiques-de-départ",
     "title": "Capsules - Semaine 01",
     "section": "",
-    "text": "Durée cible : 4 à 6 minutes.\nObjectif : expliquer comment lire un tableau de données.\nÀ couvrir :\n\nunité d’observation;\nvariable numérique;\nvariable catégorielle;\nindicateur utile pour une décision d’affaires."
+    "text": "Durée cible : 6 à 8 minutes.\nObjectif : revoir les notions statistiques nécessaires avant de commencer la modélisation.\nÀ couvrir :\n\nobservation et variable;\nvariable numérique et variable catégorielle;\nmoyenne, médiane, écart type;\ntableau de fréquences;\nlecture prudente d’un graphique."
   },
   {
-    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-3---indicateur-descriptif-ou-décisionnel",
-    "href": "modules/semaine-01-introduction/capsules.html#capsule-3---indicateur-descriptif-ou-décisionnel",
+    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-3---typologie-des-données",
+    "href": "modules/semaine-01-introduction/capsules.html#capsule-3---typologie-des-données",
     "title": "Capsules - Semaine 01",
     "section": "",
-    "text": "Durée cible : 4 à 6 minutes.\nObjectif : distinguer un chiffre intéressant d’un indicateur utile.\nÀ couvrir :\n\nventes;\nclients;\npanier moyen;\nsatisfaction;\nruptures de stock;\nlien avec une décision."
+    "text": "Durée cible : 5 à 7 minutes.\nObjectif : montrer que le type d’une variable influence les traitements et les graphiques possibles.\nÀ couvrir :\n\ndates;\nvariables quantitatives;\nvariables qualitatives;\ncodes numériques;\nunités et échelles de mesure."
   },
   {
-    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-4---décrire-expliquer-prévoir-décider",
-    "href": "modules/semaine-01-introduction/capsules.html#capsule-4---décrire-expliquer-prévoir-décider",
+    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-4---préparation-des-données",
+    "href": "modules/semaine-01-introduction/capsules.html#capsule-4---préparation-des-données",
     "title": "Capsules - Semaine 01",
     "section": "",
-    "text": "Durée cible : 5 à 7 minutes.\nObjectif : présenter la progression générale du cours.\nÀ couvrir :\n\ndescription;\nexplication;\nprévision;\ndécision;\nplace de la régression et des séries chronologiques dans le cours."
+    "text": "Durée cible : 6 à 8 minutes.\nObjectif : présenter les problèmes à résoudre avant l’analyse.\nÀ couvrir :\n\nnoms de variables;\nvaleurs manquantes;\ndoublons;\nformats de dates;\ncohérence des unités;\ndocumentation des transformations."
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/capsules.html#capsule-5---exploration-univariée-et-bivariée",
+    "href": "modules/semaine-01-introduction/capsules.html#capsule-5---exploration-univariée-et-bivariée",
+    "title": "Capsules - Semaine 01",
+    "section": "",
+    "text": "Durée cible : 6 à 8 minutes.\nObjectif : distinguer la description d’une variable et l’étude d’une relation descriptive entre deux variables.\nÀ couvrir :\n\nhistogramme;\nboîte à moustaches;\ntableau résumé;\ngraphique bivarié;\ndifférence entre association descriptive et explication."
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/capsules.html#lien-avec-lancien-matériel",
+    "href": "modules/semaine-01-introduction/capsules.html#lien-avec-lancien-matériel",
+    "title": "Capsules - Semaine 01",
+    "section": "",
+    "text": "Les anciennes présentations portaient sur les modules du cours, les modèles mathématiques, la préparation des données et l’exploration univariée et bivariée. Ces contenus seront transformés en capsules courtes. Les fichiers originaux ne sont pas publiés dans ce site."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html",
     "href": "modules/semaine-01-introduction/index.html",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Objectif : comprendre à quoi sert l’analyse statistique dans une décision d’affaires et apprendre à formuler une première question analytique.\nCompétences développées :\n\ndistinguer une décision d’affaires, une question analytique et un indicateur;\nreconnaître l’unité d’observation et les variables d’un tableau;\ndifférencier description, explication, prévision et décision;\nconstruire un premier diagnostic statistique;\nformuler une recommandation prudente à partir d’indicateurs simples.\n\nApplication business : préparer une première lecture de la performance de succursales à partir d’un jeu de données pédagogique.\nRésultat final attendu : une fiche de diagnostic d’une page reliant une décision, des indicateurs, deux constats et une prochaine analyse.\nLien avec une décision d’affaires réelle : apprendre à prioriser une dimension d’analyse avant de demander une modélisation plus avancée.\n\n\n\nCette semaine introduit une idée centrale du cours : une analyse statistique commence par une question claire, pas par une méthode.\nLe parcours utilise un jeu de données pédagogique sur des succursales afin d’illustrer les liens entre :\n\nune décision d’affaires;\nune question analytique;\nune unité d’observation;\ndes variables;\ndes indicateurs;\nune interprétation prudente.\n\nLa première semaine sert à installer cette logique. Avant de coder beaucoup, il faut savoir quoi regarder, pourquoi le regarder et ce que l’on peut conclure.\n\n\n\n\n\n\n\n\n\n\n\nMoment\nActivité\nRésultat produit\n\n\n\n\n1\nComprendre le rôle de l’analyse\nUne décision d’affaires reformulée\n\n\n2\nLire un tableau de diagnostic\nUnité d’observation et variables identifiées\n\n\n3\nChoisir des indicateurs\nIndicateurs reliés à une décision\n\n\n4\nFaire un premier calcul\nTableau de diagnostic enrichi\n\n\n5\nInterpréter prudemment\nDeux constats et une limite\n\n\n6\nConclure\nTrace de portfolio\n\n\n\n\n\n\nLe fichier utilisé est data/diagnostic_succursales.csv.\nTélécharger le fichier CSV\n\ndiagnostic\n\n# A tibble: 5 × 8\n  succursale     region      ventes_mensuelles clients panier_moyen satisfaction\n  &lt;chr&gt;          &lt;chr&gt;                   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;\n1 Québec         Capitale-N…            142295    2280         62.4          8.7\n2 Montréal       Montréal               168615    2568         65.7          7.9\n3 Sherbrooke     Estrie                 120156    2013         59.7          8.5\n4 Trois-Rivières Mauricie               108458    1842         58.9          7.4\n5 Gatineau       Outaouais              129858    2188         59.4          7.6\n# ℹ 2 more variables: delai_livraison_jours &lt;dbl&gt;, ruptures_stock &lt;dbl&gt;\n\n\n\n\n\n\n\n\n\n\n\nCapsule vidéo 1 - De la décision au tableau\n\n\n\nÀ insérer : une vidéo de 4 à 6 minutes qui explique qu’une analyse commence par une décision à éclairer, pas par une méthode.\n\n\nQuestion centrale :\n\nQuels indicateurs permettent de repérer les dimensions qui méritent une analyse plus poussée?\n\nLa question n’est pas encore :\n\nQuel modèle faut-il ajuster?\n\nUne meilleure question de départ est plutôt :\n\nQuels indicateurs permettent de repérer les succursales qui méritent une analyse plus poussée?\n\n\n\n\n\n\n\nÀ vous 1 - Reformuler la décision\n\n\n\nDans votre fiche de diagnostic, écrivez une phrase qui commence par : La décision à éclairer est...\n\n\n\n\n\n\n\n\n\n\n\nCapsule vidéo 2 - Observation, variable, indicateur\n\n\n\nÀ insérer : une vidéo courte sur l’unité d’observation, les variables numériques, les variables catégorielles et les indicateurs.\n\n\n\n\n\nglimpse(diagnostic)\n\nRows: 5\nColumns: 8\n$ succursale            &lt;chr&gt; \"Québec\", \"Montréal\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Capitale-Nationale\", \"Montréal\", \"Estrie\", \"Mau…\n$ ventes_mensuelles     &lt;dbl&gt; 142295, 168615, 120156, 108458, 129858\n$ clients               &lt;dbl&gt; 2280, 2568, 2013, 1842, 2188\n$ panier_moyen          &lt;dbl&gt; 62.41, 65.66, 59.69, 58.88, 59.35\n$ satisfaction          &lt;dbl&gt; 8.7, 7.9, 8.5, 7.4, 7.6\n$ delai_livraison_jours &lt;dbl&gt; 2.4, 2.5, 2.3, 3.4, 3.0\n$ ruptures_stock        &lt;dbl&gt; 1, 3, 3, 5, 6\n\n\n\n\n\n\n\n\nÀ vous 2 - Identifier la structure\n\n\n\nRépondez dans votre fiche :\n\nQuelle est l’unité d’observation?\nQuelles variables décrivent la performance commerciale?\nQuelles variables décrivent l’expérience client ou les opérations?\n\n\n\n\n\n\n\n\n\n\n\n\n\nCapsule vidéo 3 - Indicateur descriptif ou décisionnel?\n\n\n\nÀ insérer : une capsule qui distingue un chiffre intéressant d’un indicateur utile pour décider.\n\n\nUn même tableau peut servir plusieurs décisions.\n\n\n\n\n\n\n\nDécision possible\nIndicateur utile\n\n\n\n\nPrioriser une succursale pour une analyse complémentaire\nventes, satisfaction, ruptures de stock\n\n\nÉvaluer l’expérience client\nsatisfaction, délai de livraison\n\n\nExaminer la performance commerciale\nventes, clients, panier moyen\n\n\nPréparer une analyse de régression\nvariable réponse et variables explicatives candidates\n\n\n\n\n\n\n\n\n\nÀ vous 3 - Choisir trois indicateurs\n\n\n\nChoisissez trois indicateurs et expliquez en une phrase pourquoi chacun peut aider à éclairer la décision.\n\n\n\n\n\n\n\n\ndiagnostic_enrichi &lt;- diagnostic |&gt;\n  mutate(\n    ventes_par_client = ventes_mensuelles / clients,\n    signal_attention = case_when(\n      satisfaction &lt; 8 & ruptures_stock &gt;= 5 ~ \"opérations et satisfaction\",\n      ventes_mensuelles &lt; median(ventes_mensuelles) ~ \"ventes sous la médiane\",\n      TRUE ~ \"aucun signal majeur\"\n    )\n  )\n\ndiagnostic_enrichi |&gt;\n  select(\n    succursale,\n    ventes_mensuelles,\n    clients,\n    ventes_par_client,\n    satisfaction,\n    ruptures_stock,\n    signal_attention\n  ) |&gt;\n  mutate(\n    ventes_mensuelles = currency_ca(ventes_mensuelles),\n    ventes_par_client = currency_ca(ventes_par_client)\n  )\n\n# A tibble: 5 × 7\n  succursale     ventes_mensuelles clients ventes_par_client satisfaction\n  &lt;chr&gt;          &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;\n1 Québec         142 295 $            2280 62,41 $                    8.7\n2 Montréal       168 615 $            2568 65,66 $                    7.9\n3 Sherbrooke     120 156 $            2013 59,69 $                    8.5\n4 Trois-Rivières 108 458 $            1842 58,88 $                    7.4\n5 Gatineau       129 858 $            2188 59,35 $                    7.6\n# ℹ 2 more variables: ruptures_stock &lt;dbl&gt;, signal_attention &lt;chr&gt;\n\n\n\n\n\n\n\n\nÀ vous 4 - Trouver deux signaux\n\n\n\nÀ partir du tableau, identifiez deux succursales qui méritent une analyse complémentaire. Pour chaque succursale, nommez l’indicateur qui justifie votre choix.\n\n\n\n\n\n\n\ndiagnostic |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_mensuelles)) |&gt;\n  ggplot(aes(ventes_mensuelles, succursale, fill = satisfaction)) +\n  geom_col() +\n  scale_x_continuous(labels = currency_ca) +\n  scale_fill_gradient(low = \"#E76F51\", high = \"#2A9D8F\") +\n  labs(\n    title = \"Ventes mensuelles et satisfaction par succursale\",\n    x = \"Ventes mensuelles\",\n    y = NULL,\n    fill = \"Satisfaction\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nCe graphique aide à comparer les succursales. Il ne permet pas de conclure qu’une variable cause une autre variable.\n\n\n\n\n\n\n\n\n\n\n\nCapsule vidéo 4 - Quatre niveaux d’analyse\n\n\n\nÀ insérer : une vidéo qui distingue décrire, expliquer, prévoir et décider.\n\n\n\n\n\nNiveau\nQuestion typique\n\n\n\n\nDécrire\nQue s’est-il passé?\n\n\nExpliquer\nQuels facteurs sont associés au résultat?\n\n\nPrévoir\nQue pourrait-il se passer ensuite?\n\n\nDécider\nQuelle action recommander?\n\n\n\nDans cette première semaine, on reste surtout au niveau descriptif. Le reste du cours ajoutera progressivement les outils pour expliquer, prévoir et décider avec plus de rigueur.\n\n\n\nLe mini-cas compare trois façons de prioriser la suite de l’analyse :\n\ncommencer par la succursale qui vend le moins;\ncommencer par la succursale qui combine satisfaction faible et ruptures de stock;\ndemander une analyse plus complète avant toute intervention.\n\n\n\n\n\n\n\nÀ vous 5 - Recommandation prudente\n\n\n\nRédigez une recommandation en trois phrases :\n\nLes indicateurs suggèrent que…\nLa limite principale de ce diagnostic est…\nLa prochaine analyse devrait…\n\n\n\n\n\n\nUne analyse utile commence par une décision, puis traduit cette décision en question analytique, en variables et en indicateurs.\n\n\n\n\nCommencer par une méthode plutôt que par une décision.\nConfondre ventes totales et performance globale.\nInterpréter un graphique descriptif comme une preuve causale.\nOublier de nommer l’unité d’observation.\n\n\n\n\nVotre trace de portfolio s’intitule Diagnostic initial de succursales.\nElle doit contenir :\n\nla décision à éclairer;\ntrois indicateurs choisis;\ndeux constats descriptifs;\nune limite;\nune prochaine analyse recommandée.\n\n\n\n\nLa semaine 02 introduira R et Quarto plus systématiquement. L’atelier 01 viendra ensuite transformer cette logique de diagnostic en rapport Quarto plus complet avec un tableau de données mensuelles."
+    "text": "Référence A25\n\n\n\nCette page reconstruit la séance du 3 septembre 2025 à partir des captures de l’ancien portail et des fichiers non nominatifs trouvés dans les archives locales.\n\n\n\n\nObjectif : comprendre l’organisation du cours, revoir les compétences statistiques de base et préparer une première démarche de traitement des données.\nCompétences développées :\n\nsituer les objectifs du cours et les évaluations;\nreconnaître les principaux types de données;\nidentifier les problèmes fréquents de préparation des données;\ndistinguer analyse univariée, analyse bivariée et modélisation;\nproduire un premier diagnostic statistique descriptif;\nnommer les acquis à consolider avant les séances de régression et de prévision.\n\nApplication business : vérifier la qualité et la structure d’un tableau avant de l’utiliser pour une décision d’affaires.\nRésultat final attendu : une trace de portfolio qui résume les compétences statistiques à consolider, les variables clés d’un tableau et deux constats descriptifs prudents.\nLien avec une décision d’affaires réelle : éviter de prendre une décision à partir d’un tableau mal compris, mal préparé ou décrit avec des indicateurs inadaptés.\n\n\n\nLa première séance présente le cours et ses objectifs. Elle sert aussi de diagnostic de départ : les notions vues dans les cours préalables sont réactivées avant de passer aux modèles de régression et aux séries chronologiques.\nAu cours de cette séance, nous abordons :\n\nl’introduction à l’analyse des données;\nla typologie des données;\nles problèmes de préparation et de traitement;\nles bases de l’exploration univariée et bivariée;\nle rôle d’un quiz diagnostique de compétences statistiques.\n\nÀ la fin de la séance, vous devriez être en mesure de :\n\ncomprendre les principaux problèmes liés à la préparation des données;\npréparer un plan d’action avant une analyse;\nrésoudre des problèmes simples de traitement de données;\nlire un tableau statistique avec prudence.\n\n\n\n\n\n\n\n\n\n\n\n\nMoment\nActivité\nRésultat produit\n\n\n\n\n1\nLire l’organisation du cours\nListe des objectifs et évaluations à surveiller\n\n\n2\nFaire le diagnostic de départ\nCompétences statistiques à consolider\n\n\n3\nRevoir les types de données\nVariables classées par type\n\n\n4\nPréparer les données\nProblèmes de traitement repérés\n\n\n5\nExplorer univarié et bivarié\nDeux constats descriptifs\n\n\n6\nConclure\nTrace de portfolio courte\n\n\n\n\n\n\nLes anciennes présentations sont conservées comme sources privées. Elles ne sont pas publiées dans ce site, mais leur structure est reprise sous forme de capsules :\n\ndescription des modules du cours;\nmodèles mathématiques et statistiques;\npréparation des données;\nexploration des données en analyse univariée;\nexploration des données en analyse bivariée.\n\n\n\n\n\n\n\nCapsule vidéo 1 - Organisation du cours\n\n\n\nÀ insérer : une capsule qui présente les objectifs, les évaluations, les attentes de travail et le rôle des ateliers.\n\n\n\n\n\n\n\n\nCapsule vidéo 2 - Compétences statistiques de départ\n\n\n\nÀ insérer : une capsule de rappel sur variables, tableaux, mesures descriptives, graphiques et interprétation prudente.\n\n\n\n\n\n\n\n\nCapsule vidéo 3 - Préparer les données avant d’analyser\n\n\n\nÀ insérer : une capsule sur valeurs manquantes, codage des variables, unités, échelles et cohérence des données.\n\n\n\n\n\nLes activités de cette séance remplacent l’ancien exercice Excel par un exercice reproductible en R.\n\nCompléter le quiz diagnostique de compétences statistiques.\nTélécharger les deux fichiers CSV publics de la semaine.\nLire les deux tableaux dans R.\nProduire un court diagnostic descriptif.\nIdentifier les notions à revoir avant la semaine 02.\n\n\n\n\nLes fichiers utilisés sont :\n\nbirth_us.csv\nsafety_airlines.csv\n\n\nbirth_us |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 5\n   year month date_of_month day_of_week births\n  &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;\n1  1994     1             1           6   8096\n2  1994     1             2           7   7772\n3  1994     1             3           1  10142\n4  1994     1             4           2  11248\n5  1994     1             5           3  11053\n6  1994     1             6           4  11406\n\n\n\nsafety_airlines |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 8\n  airline           avail_seat_km_per_week incidents_85_99 fatal_accidents_85_99\n  &lt;chr&gt;                              &lt;dbl&gt;           &lt;dbl&gt;                 &lt;dbl&gt;\n1 Aer Lingus                     320906734               2                     0\n2 Aeroflot*                     1197672318              76                    14\n3 Aerolineas Argen…              385803648               6                     0\n4 Aeromexico*                    596871813               3                     1\n5 Air Canada                    1865253802               2                     0\n6 Air France                    3004002661              14                     4\n# ℹ 4 more variables: fatalities_85_99 &lt;dbl&gt;, incidents_00_14 &lt;dbl&gt;,\n#   fatal_accidents_00_14 &lt;dbl&gt;, fatalities_00_14 &lt;dbl&gt;\n\n\n\n\n\n\nObservation : ligne d’un tableau.\nVariable : caractéristique mesurée ou codée.\nType de variable : numérique, catégorielle, date, texte.\nPréparation des données : correction des noms, formats, valeurs manquantes et unités.\nAnalyse univariée : description d’une variable.\nAnalyse bivariée : relation descriptive entre deux variables.\nIndicateur : résumé numérique utile pour comprendre une question.\nLimite : ce que les données ne permettent pas de conclure.\n\n\n\n\n\nbirth_prepare &lt;- birth_us |&gt;\n  mutate(\n    date = make_date(year, month, date_of_month),\n    jour_semaine = factor(\n      day_of_week,\n      levels = 1:7,\n      labels = c(\n        \"lundi\",\n        \"mardi\",\n        \"mercredi\",\n        \"jeudi\",\n        \"vendredi\",\n        \"samedi\",\n        \"dimanche\"\n      )\n    )\n  )\n\nbirth_prepare |&gt;\n  select(date, jour_semaine, births) |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 3\n  date       jour_semaine births\n  &lt;date&gt;     &lt;fct&gt;         &lt;dbl&gt;\n1 1994-01-01 samedi         8096\n2 1994-01-02 dimanche       7772\n3 1994-01-03 lundi         10142\n4 1994-01-04 mardi         11248\n5 1994-01-05 mercredi      11053\n6 1994-01-06 jeudi         11406\n\n\nÀ observer :\n\nl’unité d’observation;\nle type de chaque variable;\nles variables qui peuvent être utilisées pour une analyse temporelle;\nles limites d’un codage numérique du jour de la semaine.\n\n\n\n\n\nbirth_prepare |&gt;\n  summarise(\n    jours = n(),\n    naissances_min = min(births, na.rm = TRUE),\n    naissances_moyennes = mean(births, na.rm = TRUE),\n    naissances_max = max(births, na.rm = TRUE)\n  ) |&gt;\n  mutate(across(where(is.numeric), round, 1))\n\n# A tibble: 1 × 4\n  jours naissances_min naissances_moyennes naissances_max\n  &lt;dbl&gt;          &lt;dbl&gt;               &lt;dbl&gt;          &lt;dbl&gt;\n1  3664           1620              22651.       39722137\n\n\n\nbirth_prepare |&gt;\n  ggplot(aes(births)) +\n  geom_histogram(bins = 30, fill = \"#2A9D8F\", color = \"white\") +\n  labs(\n    title = \"Distribution quotidienne du nombre de naissances\",\n    x = \"Nombre de naissances\",\n    y = \"Nombre de jours\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\n\nbirth_prepare |&gt;\n  filter(!is.na(jour_semaine)) |&gt;\n  ggplot(aes(jour_semaine, births)) +\n  geom_boxplot(fill = \"#E9C46A\", color = \"#1F2933\") +\n  labs(\n    title = \"Naissances selon le jour de la semaine\",\n    x = NULL,\n    y = \"Nombre de naissances\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInterprétation prudente\n\n\n\nLe graphique décrit des écarts. Il ne suffit pas à expliquer les causes de ces écarts.\n\n\n\n\n\nLe fichier safety_airlines.csv permet de rappeler qu’un indicateur doit être comparé à une échelle pertinente.\n\nsafety_resume &lt;- safety_airlines |&gt;\n  mutate(\n    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,\n    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards\n  ) |&gt;\n  arrange(desc(incidents_par_milliard))\n\nsafety_resume |&gt;\n  select(\n    airline,\n    avail_seat_km_per_week,\n    incidents_00_14,\n    incidents_par_milliard\n  ) |&gt;\n  mutate(\n    avail_seat_km_per_week = number_fr(avail_seat_km_per_week),\n    incidents_par_milliard = round(incidents_par_milliard, 3)\n  ) |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 4\n  airline          avail_seat_km_per_week incidents_00_14 incidents_par_milliard\n  &lt;chr&gt;            &lt;chr&gt;                            &lt;dbl&gt;                  &lt;dbl&gt;\n1 Nombre d'obs.    56                                  56            1282051.   \n2 Pakistan Intern… 348 563 137                         10                  0.037\n3 Saudi Arabian    859 673 901                         11                  0.016\n4 Sri Lankan / Ai… 325 582 976                          4                  0.016\n5 Ethiopian Airli… 488 560 643                          5                  0.013\n6 Royal Air Maroc  295 705 339                          3                  0.013\n7 Gulf Air         301 379 762                          3                  0.013\n8 SAS*             682 971 852                          6                  0.011\n\n\n\n\n\n\n\nPour birth_us.csv, identifier :\n\nl’unité d’observation;\nune variable numérique;\nune variable de temps;\nun indicateur descriptif utile.\n\n\n\n\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nbirth_us &lt;- readr::read_csv(\"modules/semaine-01-introduction/data/birth_us.csv\") |&gt;\n  clean_names()\n\nbirth_us |&gt;\n  group_by(month) |&gt;\n  summarise(\n    naissances_moyennes = mean(births, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n\n\n\nExpliquer en trois phrases pourquoi un tableau doit être préparé et compris avant de choisir une méthode statistique.\n\n\n\n\nUne organisation doit produire rapidement un diagnostic à partir d’un tableau reçu. Avant de modéliser, elle doit répondre à quatre questions :\n\nQue représente une ligne?\nQuelles variables sont numériques ou catégorielles?\nQuelles transformations sont nécessaires?\nQuels constats sont descriptifs seulement?\n\nL’objectif n’est pas encore de recommander une action. L’objectif est de préparer une analyse fiable.\n\n\n\nUne analyse statistique sérieuse commence par la compréhension du tableau, la vérification des variables et une exploration descriptive prudente.\n\n\n\n\nConfondre le nom d’une variable et son sens statistique.\nInterpréter un code numérique comme une mesure continue.\nComparer des volumes sans tenir compte de l’exposition ou de la taille.\nPasser directement à un modèle sans vérifier les données.\nOublier de nommer les limites d’un constat descriptif.\n\n\n\n\nVotre trace de portfolio s’intitule Diagnostic de départ des compétences statistiques.\nElle doit contenir :\n\ndeux notions statistiques à consolider;\nl’unité d’observation de birth_us.csv;\ntrois variables classées par type;\nun constat univarié;\nun constat bivarié;\nune limite d’interprétation.\n\n\n\n\nCette semaine reprend l’esprit de l’ancienne séance 01 : introduction au cours, diagnostic des compétences statistiques, préparation des données et exploration descriptive. Les fichiers BirthUS.xlsx et SafetyAirlines.xlsx ont été convertis en CSV pour permettre un travail reproductible en R.\nLes fichiers PowerPoint, PDF de narration, lectures protégées et solutionnaires Excel d’origine ne sont pas publiés.\n\n\n\nLa semaine 02 introduit R, RStudio et Quarto plus systématiquement. Elle transforme le travail préparatoire de cette séance en rapport reproductible."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#lets-eat-the-cake",
     "href": "modules/semaine-01-introduction/index.html#lets-eat-the-cake",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Objectif : comprendre à quoi sert l’analyse statistique dans une décision d’affaires et apprendre à formuler une première question analytique.\nCompétences développées :\n\ndistinguer une décision d’affaires, une question analytique et un indicateur;\nreconnaître l’unité d’observation et les variables d’un tableau;\ndifférencier description, explication, prévision et décision;\nconstruire un premier diagnostic statistique;\nformuler une recommandation prudente à partir d’indicateurs simples.\n\nApplication business : préparer une première lecture de la performance de succursales à partir d’un jeu de données pédagogique.\nRésultat final attendu : une fiche de diagnostic d’une page reliant une décision, des indicateurs, deux constats et une prochaine analyse.\nLien avec une décision d’affaires réelle : apprendre à prioriser une dimension d’analyse avant de demander une modélisation plus avancée."
+    "text": "Objectif : comprendre l’organisation du cours, revoir les compétences statistiques de base et préparer une première démarche de traitement des données.\nCompétences développées :\n\nsituer les objectifs du cours et les évaluations;\nreconnaître les principaux types de données;\nidentifier les problèmes fréquents de préparation des données;\ndistinguer analyse univariée, analyse bivariée et modélisation;\nproduire un premier diagnostic statistique descriptif;\nnommer les acquis à consolider avant les séances de régression et de prévision.\n\nApplication business : vérifier la qualité et la structure d’un tableau avant de l’utiliser pour une décision d’affaires.\nRésultat final attendu : une trace de portfolio qui résume les compétences statistiques à consolider, les variables clés d’un tableau et deux constats descriptifs prudents.\nLien avec une décision d’affaires réelle : éviter de prendre une décision à partir d’un tableau mal compris, mal préparé ou décrit avec des indicateurs inadaptés."
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#logique-pédagogique-de-la-semaine",
-    "href": "modules/semaine-01-introduction/index.html#logique-pédagogique-de-la-semaine",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#introduction-à-la-séance",
+    "href": "modules/semaine-01-introduction/index.html#introduction-à-la-séance",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Cette semaine introduit une idée centrale du cours : une analyse statistique commence par une question claire, pas par une méthode.\nLe parcours utilise un jeu de données pédagogique sur des succursales afin d’illustrer les liens entre :\n\nune décision d’affaires;\nune question analytique;\nune unité d’observation;\ndes variables;\ndes indicateurs;\nune interprétation prudente.\n\nLa première semaine sert à installer cette logique. Avant de coder beaucoup, il faut savoir quoi regarder, pourquoi le regarder et ce que l’on peut conclure."
+    "text": "La première séance présente le cours et ses objectifs. Elle sert aussi de diagnostic de départ : les notions vues dans les cours préalables sont réactivées avant de passer aux modèles de régression et aux séries chronologiques.\nAu cours de cette séance, nous abordons :\n\nl’introduction à l’analyse des données;\nla typologie des données;\nles problèmes de préparation et de traitement;\nles bases de l’exploration univariée et bivariée;\nle rôle d’un quiz diagnostique de compétences statistiques.\n\nÀ la fin de la séance, vous devriez être en mesure de :\n\ncomprendre les principaux problèmes liés à la préparation des données;\npréparer un plan d’action avant une analyse;\nrésoudre des problèmes simples de traitement de données;\nlire un tableau statistique avec prudence."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#parcours-autonome-de-la-semaine",
     "href": "modules/semaine-01-introduction/index.html#parcours-autonome-de-la-semaine",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Moment\nActivité\nRésultat produit\n\n\n\n\n1\nComprendre le rôle de l’analyse\nUne décision d’affaires reformulée\n\n\n2\nLire un tableau de diagnostic\nUnité d’observation et variables identifiées\n\n\n3\nChoisir des indicateurs\nIndicateurs reliés à une décision\n\n\n4\nFaire un premier calcul\nTableau de diagnostic enrichi\n\n\n5\nInterpréter prudemment\nDeux constats et une limite\n\n\n6\nConclure\nTrace de portfolio"
+    "text": "Moment\nActivité\nRésultat produit\n\n\n\n\n1\nLire l’organisation du cours\nListe des objectifs et évaluations à surveiller\n\n\n2\nFaire le diagnostic de départ\nCompétences statistiques à consolider\n\n\n3\nRevoir les types de données\nVariables classées par type\n\n\n4\nPréparer les données\nProblèmes de traitement repérés\n\n\n5\nExplorer univarié et bivarié\nDeux constats descriptifs\n\n\n6\nConclure\nTrace de portfolio courte"
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/index.html#présentations",
+    "href": "modules/semaine-01-introduction/index.html#présentations",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
+    "section": "",
+    "text": "Les anciennes présentations sont conservées comme sources privées. Elles ne sont pas publiées dans ce site, mais leur structure est reprise sous forme de capsules :\n\ndescription des modules du cours;\nmodèles mathématiques et statistiques;\npréparation des données;\nexploration des données en analyse univariée;\nexploration des données en analyse bivariée.\n\n\n\n\n\n\n\nCapsule vidéo 1 - Organisation du cours\n\n\n\nÀ insérer : une capsule qui présente les objectifs, les évaluations, les attentes de travail et le rôle des ateliers.\n\n\n\n\n\n\n\n\nCapsule vidéo 2 - Compétences statistiques de départ\n\n\n\nÀ insérer : une capsule de rappel sur variables, tableaux, mesures descriptives, graphiques et interprétation prudente.\n\n\n\n\n\n\n\n\nCapsule vidéo 3 - Préparer les données avant d’analyser\n\n\n\nÀ insérer : une capsule sur valeurs manquantes, codage des variables, unités, échelles et cohérence des données."
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/index.html#à-faire",
+    "href": "modules/semaine-01-introduction/index.html#à-faire",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
+    "section": "",
+    "text": "Les activités de cette séance remplacent l’ancien exercice Excel par un exercice reproductible en R.\n\nCompléter le quiz diagnostique de compétences statistiques.\nTélécharger les deux fichiers CSV publics de la semaine.\nLire les deux tableaux dans R.\nProduire un court diagnostic descriptif.\nIdentifier les notions à revoir avant la semaine 02."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#données",
     "href": "modules/semaine-01-introduction/index.html#données",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Le fichier utilisé est data/diagnostic_succursales.csv.\nTélécharger le fichier CSV\n\ndiagnostic\n\n# A tibble: 5 × 8\n  succursale     region      ventes_mensuelles clients panier_moyen satisfaction\n  &lt;chr&gt;          &lt;chr&gt;                   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;\n1 Québec         Capitale-N…            142295    2280         62.4          8.7\n2 Montréal       Montréal               168615    2568         65.7          7.9\n3 Sherbrooke     Estrie                 120156    2013         59.7          8.5\n4 Trois-Rivières Mauricie               108458    1842         58.9          7.4\n5 Gatineau       Outaouais              129858    2188         59.4          7.6\n# ℹ 2 more variables: delai_livraison_jours &lt;dbl&gt;, ruptures_stock &lt;dbl&gt;"
+    "text": "Les fichiers utilisés sont :\n\nbirth_us.csv\nsafety_airlines.csv\n\n\nbirth_us |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 5\n   year month date_of_month day_of_week births\n  &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;\n1  1994     1             1           6   8096\n2  1994     1             2           7   7772\n3  1994     1             3           1  10142\n4  1994     1             4           2  11248\n5  1994     1             5           3  11053\n6  1994     1             6           4  11406\n\n\n\nsafety_airlines |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 8\n  airline           avail_seat_km_per_week incidents_85_99 fatal_accidents_85_99\n  &lt;chr&gt;                              &lt;dbl&gt;           &lt;dbl&gt;                 &lt;dbl&gt;\n1 Aer Lingus                     320906734               2                     0\n2 Aeroflot*                     1197672318              76                    14\n3 Aerolineas Argen…              385803648               6                     0\n4 Aeromexico*                    596871813               3                     1\n5 Air Canada                    1865253802               2                     0\n6 Air France                    3004002661              14                     4\n# ℹ 4 more variables: fatalities_85_99 &lt;dbl&gt;, incidents_00_14 &lt;dbl&gt;,\n#   fatal_accidents_00_14 &lt;dbl&gt;, fatalities_00_14 &lt;dbl&gt;"
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#épisode-1---pourquoi-analyser",
-    "href": "modules/semaine-01-introduction/index.html#épisode-1---pourquoi-analyser",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#concepts-clés",
+    "href": "modules/semaine-01-introduction/index.html#concepts-clés",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Capsule vidéo 1 - De la décision au tableau\n\n\n\nÀ insérer : une vidéo de 4 à 6 minutes qui explique qu’une analyse commence par une décision à éclairer, pas par une méthode.\n\n\nQuestion centrale :\n\nQuels indicateurs permettent de repérer les dimensions qui méritent une analyse plus poussée?\n\nLa question n’est pas encore :\n\nQuel modèle faut-il ajuster?\n\nUne meilleure question de départ est plutôt :\n\nQuels indicateurs permettent de repérer les succursales qui méritent une analyse plus poussée?\n\n\n\n\n\n\n\nÀ vous 1 - Reformuler la décision\n\n\n\nDans votre fiche de diagnostic, écrivez une phrase qui commence par : La décision à éclairer est..."
+    "text": "Observation : ligne d’un tableau.\nVariable : caractéristique mesurée ou codée.\nType de variable : numérique, catégorielle, date, texte.\nPréparation des données : correction des noms, formats, valeurs manquantes et unités.\nAnalyse univariée : description d’une variable.\nAnalyse bivariée : relation descriptive entre deux variables.\nIndicateur : résumé numérique utile pour comprendre une question.\nLimite : ce que les données ne permettent pas de conclure."
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#épisode-2---lire-le-tableau",
-    "href": "modules/semaine-01-introduction/index.html#épisode-2---lire-le-tableau",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#démonstration-1---lire-et-préparer-un-tableau",
+    "href": "modules/semaine-01-introduction/index.html#démonstration-1---lire-et-préparer-un-tableau",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Capsule vidéo 2 - Observation, variable, indicateur\n\n\n\nÀ insérer : une vidéo courte sur l’unité d’observation, les variables numériques, les variables catégorielles et les indicateurs.\n\n\n\n\n\nglimpse(diagnostic)\n\nRows: 5\nColumns: 8\n$ succursale            &lt;chr&gt; \"Québec\", \"Montréal\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Capitale-Nationale\", \"Montréal\", \"Estrie\", \"Mau…\n$ ventes_mensuelles     &lt;dbl&gt; 142295, 168615, 120156, 108458, 129858\n$ clients               &lt;dbl&gt; 2280, 2568, 2013, 1842, 2188\n$ panier_moyen          &lt;dbl&gt; 62.41, 65.66, 59.69, 58.88, 59.35\n$ satisfaction          &lt;dbl&gt; 8.7, 7.9, 8.5, 7.4, 7.6\n$ delai_livraison_jours &lt;dbl&gt; 2.4, 2.5, 2.3, 3.4, 3.0\n$ ruptures_stock        &lt;dbl&gt; 1, 3, 3, 5, 6\n\n\n\n\n\n\n\n\nÀ vous 2 - Identifier la structure\n\n\n\nRépondez dans votre fiche :\n\nQuelle est l’unité d’observation?\nQuelles variables décrivent la performance commerciale?\nQuelles variables décrivent l’expérience client ou les opérations?"
+    "text": "birth_prepare &lt;- birth_us |&gt;\n  mutate(\n    date = make_date(year, month, date_of_month),\n    jour_semaine = factor(\n      day_of_week,\n      levels = 1:7,\n      labels = c(\n        \"lundi\",\n        \"mardi\",\n        \"mercredi\",\n        \"jeudi\",\n        \"vendredi\",\n        \"samedi\",\n        \"dimanche\"\n      )\n    )\n  )\n\nbirth_prepare |&gt;\n  select(date, jour_semaine, births) |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 3\n  date       jour_semaine births\n  &lt;date&gt;     &lt;fct&gt;         &lt;dbl&gt;\n1 1994-01-01 samedi         8096\n2 1994-01-02 dimanche       7772\n3 1994-01-03 lundi         10142\n4 1994-01-04 mardi         11248\n5 1994-01-05 mercredi      11053\n6 1994-01-06 jeudi         11406\n\n\nÀ observer :\n\nl’unité d’observation;\nle type de chaque variable;\nles variables qui peuvent être utilisées pour une analyse temporelle;\nles limites d’un codage numérique du jour de la semaine."
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#épisode-3---relier-indicateurs-et-décisions",
-    "href": "modules/semaine-01-introduction/index.html#épisode-3---relier-indicateurs-et-décisions",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#démonstration-2---analyse-univariée",
+    "href": "modules/semaine-01-introduction/index.html#démonstration-2---analyse-univariée",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Capsule vidéo 3 - Indicateur descriptif ou décisionnel?\n\n\n\nÀ insérer : une capsule qui distingue un chiffre intéressant d’un indicateur utile pour décider.\n\n\nUn même tableau peut servir plusieurs décisions.\n\n\n\n\n\n\n\nDécision possible\nIndicateur utile\n\n\n\n\nPrioriser une succursale pour une analyse complémentaire\nventes, satisfaction, ruptures de stock\n\n\nÉvaluer l’expérience client\nsatisfaction, délai de livraison\n\n\nExaminer la performance commerciale\nventes, clients, panier moyen\n\n\nPréparer une analyse de régression\nvariable réponse et variables explicatives candidates\n\n\n\n\n\n\n\n\n\nÀ vous 3 - Choisir trois indicateurs\n\n\n\nChoisissez trois indicateurs et expliquez en une phrase pourquoi chacun peut aider à éclairer la décision."
+    "text": "birth_prepare |&gt;\n  summarise(\n    jours = n(),\n    naissances_min = min(births, na.rm = TRUE),\n    naissances_moyennes = mean(births, na.rm = TRUE),\n    naissances_max = max(births, na.rm = TRUE)\n  ) |&gt;\n  mutate(across(where(is.numeric), round, 1))\n\n# A tibble: 1 × 4\n  jours naissances_min naissances_moyennes naissances_max\n  &lt;dbl&gt;          &lt;dbl&gt;               &lt;dbl&gt;          &lt;dbl&gt;\n1  3664           1620              22651.       39722137\n\n\n\nbirth_prepare |&gt;\n  ggplot(aes(births)) +\n  geom_histogram(bins = 30, fill = \"#2A9D8F\", color = \"white\") +\n  labs(\n    title = \"Distribution quotidienne du nombre de naissances\",\n    x = \"Nombre de naissances\",\n    y = \"Nombre de jours\"\n  ) +\n  theme_minimal(base_size = 12)"
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#épisode-4---faire-un-premier-diagnostic",
-    "href": "modules/semaine-01-introduction/index.html#épisode-4---faire-un-premier-diagnostic",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#démonstration-3---analyse-bivariée",
+    "href": "modules/semaine-01-introduction/index.html#démonstration-3---analyse-bivariée",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "diagnostic_enrichi &lt;- diagnostic |&gt;\n  mutate(\n    ventes_par_client = ventes_mensuelles / clients,\n    signal_attention = case_when(\n      satisfaction &lt; 8 & ruptures_stock &gt;= 5 ~ \"opérations et satisfaction\",\n      ventes_mensuelles &lt; median(ventes_mensuelles) ~ \"ventes sous la médiane\",\n      TRUE ~ \"aucun signal majeur\"\n    )\n  )\n\ndiagnostic_enrichi |&gt;\n  select(\n    succursale,\n    ventes_mensuelles,\n    clients,\n    ventes_par_client,\n    satisfaction,\n    ruptures_stock,\n    signal_attention\n  ) |&gt;\n  mutate(\n    ventes_mensuelles = currency_ca(ventes_mensuelles),\n    ventes_par_client = currency_ca(ventes_par_client)\n  )\n\n# A tibble: 5 × 7\n  succursale     ventes_mensuelles clients ventes_par_client satisfaction\n  &lt;chr&gt;          &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;\n1 Québec         142 295 $            2280 62,41 $                    8.7\n2 Montréal       168 615 $            2568 65,66 $                    7.9\n3 Sherbrooke     120 156 $            2013 59,69 $                    8.5\n4 Trois-Rivières 108 458 $            1842 58,88 $                    7.4\n5 Gatineau       129 858 $            2188 59,35 $                    7.6\n# ℹ 2 more variables: ruptures_stock &lt;dbl&gt;, signal_attention &lt;chr&gt;\n\n\n\n\n\n\n\n\nÀ vous 4 - Trouver deux signaux\n\n\n\nÀ partir du tableau, identifiez deux succursales qui méritent une analyse complémentaire. Pour chaque succursale, nommez l’indicateur qui justifie votre choix."
+    "text": "birth_prepare |&gt;\n  filter(!is.na(jour_semaine)) |&gt;\n  ggplot(aes(jour_semaine, births)) +\n  geom_boxplot(fill = \"#E9C46A\", color = \"#1F2933\") +\n  labs(\n    title = \"Naissances selon le jour de la semaine\",\n    x = NULL,\n    y = \"Nombre de naissances\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInterprétation prudente\n\n\n\nLe graphique décrit des écarts. Il ne suffit pas à expliquer les causes de ces écarts."
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#épisode-5---visualiser-pour-discuter",
-    "href": "modules/semaine-01-introduction/index.html#épisode-5---visualiser-pour-discuter",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#démonstration-4---indicateurs-et-échelle-de-comparaison",
+    "href": "modules/semaine-01-introduction/index.html#démonstration-4---indicateurs-et-échelle-de-comparaison",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "diagnostic |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_mensuelles)) |&gt;\n  ggplot(aes(ventes_mensuelles, succursale, fill = satisfaction)) +\n  geom_col() +\n  scale_x_continuous(labels = currency_ca) +\n  scale_fill_gradient(low = \"#E76F51\", high = \"#2A9D8F\") +\n  labs(\n    title = \"Ventes mensuelles et satisfaction par succursale\",\n    x = \"Ventes mensuelles\",\n    y = NULL,\n    fill = \"Satisfaction\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nCe graphique aide à comparer les succursales. Il ne permet pas de conclure qu’une variable cause une autre variable."
+    "text": "Le fichier safety_airlines.csv permet de rappeler qu’un indicateur doit être comparé à une échelle pertinente.\n\nsafety_resume &lt;- safety_airlines |&gt;\n  mutate(\n    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,\n    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards\n  ) |&gt;\n  arrange(desc(incidents_par_milliard))\n\nsafety_resume |&gt;\n  select(\n    airline,\n    avail_seat_km_per_week,\n    incidents_00_14,\n    incidents_par_milliard\n  ) |&gt;\n  mutate(\n    avail_seat_km_per_week = number_fr(avail_seat_km_per_week),\n    incidents_par_milliard = round(incidents_par_milliard, 3)\n  ) |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 4\n  airline          avail_seat_km_per_week incidents_00_14 incidents_par_milliard\n  &lt;chr&gt;            &lt;chr&gt;                            &lt;dbl&gt;                  &lt;dbl&gt;\n1 Nombre d'obs.    56                                  56            1282051.   \n2 Pakistan Intern… 348 563 137                         10                  0.037\n3 Saudi Arabian    859 673 901                         11                  0.016\n4 Sri Lankan / Ai… 325 582 976                          4                  0.016\n5 Ethiopian Airli… 488 560 643                          5                  0.013\n6 Royal Air Maroc  295 705 339                          3                  0.013\n7 Gulf Air         301 379 762                          3                  0.013\n8 SAS*             682 971 852                          6                  0.011"
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#épisode-6---description-explication-prévision-décision",
-    "href": "modules/semaine-01-introduction/index.html#épisode-6---description-explication-prévision-décision",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#exercices-dapplication-intégrés",
+    "href": "modules/semaine-01-introduction/index.html#exercices-dapplication-intégrés",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Capsule vidéo 4 - Quatre niveaux d’analyse\n\n\n\nÀ insérer : une vidéo qui distingue décrire, expliquer, prévoir et décider.\n\n\n\n\n\nNiveau\nQuestion typique\n\n\n\n\nDécrire\nQue s’est-il passé?\n\n\nExpliquer\nQuels facteurs sont associés au résultat?\n\n\nPrévoir\nQue pourrait-il se passer ensuite?\n\n\nDécider\nQuelle action recommander?\n\n\n\nDans cette première semaine, on reste surtout au niveau descriptif. Le reste du cours ajoutera progressivement les outils pour expliquer, prévoir et décider avec plus de rigueur."
+    "text": "Pour birth_us.csv, identifier :\n\nl’unité d’observation;\nune variable numérique;\nune variable de temps;\nun indicateur descriptif utile.\n\n\n\n\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nbirth_us &lt;- readr::read_csv(\"modules/semaine-01-introduction/data/birth_us.csv\") |&gt;\n  clean_names()\n\nbirth_us |&gt;\n  group_by(month) |&gt;\n  summarise(\n    naissances_moyennes = mean(births, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n\n\n\nExpliquer en trois phrases pourquoi un tableau doit être préparé et compris avant de choisir une méthode statistique."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#mini-cas-business",
     "href": "modules/semaine-01-introduction/index.html#mini-cas-business",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Le mini-cas compare trois façons de prioriser la suite de l’analyse :\n\ncommencer par la succursale qui vend le moins;\ncommencer par la succursale qui combine satisfaction faible et ruptures de stock;\ndemander une analyse plus complète avant toute intervention.\n\n\n\n\n\n\n\nÀ vous 5 - Recommandation prudente\n\n\n\nRédigez une recommandation en trois phrases :\n\nLes indicateurs suggèrent que…\nLa limite principale de ce diagnostic est…\nLa prochaine analyse devrait…"
+    "text": "Une organisation doit produire rapidement un diagnostic à partir d’un tableau reçu. Avant de modéliser, elle doit répondre à quatre questions :\n\nQue représente une ligne?\nQuelles variables sont numériques ou catégorielles?\nQuelles transformations sont nécessaires?\nQuels constats sont descriptifs seulement?\n\nL’objectif n’est pas encore de recommander une action. L’objectif est de préparer une analyse fiable."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#à-retenir",
     "href": "modules/semaine-01-introduction/index.html#à-retenir",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Une analyse utile commence par une décision, puis traduit cette décision en question analytique, en variables et en indicateurs."
+    "text": "Une analyse statistique sérieuse commence par la compréhension du tableau, la vérification des variables et une exploration descriptive prudente."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#erreurs-fréquentes",
     "href": "modules/semaine-01-introduction/index.html#erreurs-fréquentes",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Commencer par une méthode plutôt que par une décision.\nConfondre ventes totales et performance globale.\nInterpréter un graphique descriptif comme une preuve causale.\nOublier de nommer l’unité d’observation."
+    "text": "Confondre le nom d’une variable et son sens statistique.\nInterpréter un code numérique comme une mesure continue.\nComparer des volumes sans tenir compte de l’exposition ou de la taille.\nPasser directement à un modèle sans vérifier les données.\nOublier de nommer les limites d’un constat descriptif."
   },
   {
-    "objectID": "modules/semaine-01-introduction/index.html#trace-de-portfolio",
-    "href": "modules/semaine-01-introduction/index.html#trace-de-portfolio",
-    "title": "Semaine 01 - Parcours autonome",
+    "objectID": "modules/semaine-01-introduction/index.html#trace-de-portfolio-ou-livrable-court",
+    "href": "modules/semaine-01-introduction/index.html#trace-de-portfolio-ou-livrable-court",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "Votre trace de portfolio s’intitule Diagnostic initial de succursales.\nElle doit contenir :\n\nla décision à éclairer;\ntrois indicateurs choisis;\ndeux constats descriptifs;\nune limite;\nune prochaine analyse recommandée."
+    "text": "Votre trace de portfolio s’intitule Diagnostic de départ des compétences statistiques.\nElle doit contenir :\n\ndeux notions statistiques à consolider;\nl’unité d’observation de birth_us.csv;\ntrois variables classées par type;\nun constat univarié;\nun constat bivarié;\nune limite d’interprétation."
+  },
+  {
+    "objectID": "modules/semaine-01-introduction/index.html#lien-avec-lancien-matériel",
+    "href": "modules/semaine-01-introduction/index.html#lien-avec-lancien-matériel",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
+    "section": "",
+    "text": "Cette semaine reprend l’esprit de l’ancienne séance 01 : introduction au cours, diagnostic des compétences statistiques, préparation des données et exploration descriptive. Les fichiers BirthUS.xlsx et SafetyAirlines.xlsx ont été convertis en CSV pour permettre un travail reproductible en R.\nLes fichiers PowerPoint, PDF de narration, lectures protégées et solutionnaires Excel d’origine ne sont pas publiés."
   },
   {
     "objectID": "modules/semaine-01-introduction/index.html#pour-aller-plus-loin",
     "href": "modules/semaine-01-introduction/index.html#pour-aller-plus-loin",
-    "title": "Semaine 01 - Parcours autonome",
+    "title": "Semaine 01 - Introduction au cours et compétences statistiques",
     "section": "",
-    "text": "La semaine 02 introduira R et Quarto plus systématiquement. L’atelier 01 viendra ensuite transformer cette logique de diagnostic en rapport Quarto plus complet avec un tableau de données mensuelles."
+    "text": "La semaine 02 introduit R, RStudio et Quarto plus systématiquement. Elle transforme le travail préparatoire de cette séance en rapport reproductible."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html",
     "href": "modules/semaine-02-r-quarto/exercices.html",
     "title": "Exercices - Semaine 02",
     "section": "",
-    "text": "Créer un premier rapport reproductible avec un tableau de données d’affaires.\n\n\n\nTODO: Ajouter un fichier CSV simple dans data/ et demander un résumé par mois ou région.\n\nlibrary(tidyverse)\n\ndonnees &lt;- readr::read_csv(\"modules/semaine-02-r-quarto/data/ventes_mensuelles.csv\")\nglimpse(donnees)"
+    "text": "Créer un premier rapport Quarto reproductible à partir d’un tableau de données d’affaires.\n\n\n\nFichier : ventes_operations_quebec.csv.\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes_operations &lt;- readr::read_csv(\n  \"modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nglimpse(ventes_operations)\n\nÀ faire :\n\ncréer un projet R;\nplacer le fichier dans le dossier data;\nimporter le fichier;\nvérifier le nombre de lignes et de colonnes;\nnommer l’unité d’observation.\n\n\n\n\nClasser les variables suivantes :\n\nmois;\nsuccursale;\nregion;\ncampagne_locale;\ncanal_principal;\nclients;\npanier_moyen;\nventes;\nsatisfaction.\n\nÀ faire :\n\ndistinguer variables numériques, catégorielles et dates;\nfactoriser les variables catégorielles;\nexpliquer pourquoi cette étape est utile.\n\n\n\n\n\nventes_operations |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0)\n\nÀ faire :\n\nnommer les variables incomplètes;\nexpliquer une conséquence possible sur le diagnostic;\nindiquer comment signaler ce problème dans un rapport.\n\n\n\n\n\nventes_operations |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\nÀ faire :\n\nproduire un tableau par succursale;\ninterpréter deux résultats;\nnommer une limite.\n\n\n\n\n\nventes_operations |&gt;\n  group_by(canal_principal) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  ggplot(aes(ventes_totales, canal_principal)) +\n  geom_col() +\n  labs(\n    title = \"Ventes par canal principal\",\n    x = \"Ventes\",\n    y = NULL\n  )\n\nÀ faire :\n\najouter un titre clair;\nvérifier les axes;\nécrire un constat descriptif.\n\n\n\n\nRemettre un mini-rapport Quarto contenant :\n\nle code d’importation;\nune inspection du tableau;\nun diagnostic des valeurs manquantes;\nun tableau descriptif;\nun graphique;\ndeux constats;\nune limite d’interprétation."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#objectif",
     "href": "modules/semaine-02-r-quarto/exercices.html#objectif",
     "title": "Exercices - Semaine 02",
     "section": "",
-    "text": "Créer un premier rapport reproductible avec un tableau de données d’affaires."
+    "text": "Créer un premier rapport Quarto reproductible à partir d’un tableau de données d’affaires."
   },
   {
-    "objectID": "modules/semaine-02-r-quarto/exercices.html#exercices",
-    "href": "modules/semaine-02-r-quarto/exercices.html#exercices",
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-1---créer-le-projet-et-importer-les-données",
+    "href": "modules/semaine-02-r-quarto/exercices.html#exercice-1---créer-le-projet-et-importer-les-données",
     "title": "Exercices - Semaine 02",
     "section": "",
-    "text": "TODO: Ajouter un fichier CSV simple dans data/ et demander un résumé par mois ou région.\n\nlibrary(tidyverse)\n\ndonnees &lt;- readr::read_csv(\"modules/semaine-02-r-quarto/data/ventes_mensuelles.csv\")\nglimpse(donnees)"
+    "text": "Fichier : ventes_operations_quebec.csv.\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes_operations &lt;- readr::read_csv(\n  \"modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()\n\nglimpse(ventes_operations)\n\nÀ faire :\n\ncréer un projet R;\nplacer le fichier dans le dossier data;\nimporter le fichier;\nvérifier le nombre de lignes et de colonnes;\nnommer l’unité d’observation."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-2---identifier-les-types-de-variables",
+    "href": "modules/semaine-02-r-quarto/exercices.html#exercice-2---identifier-les-types-de-variables",
+    "title": "Exercices - Semaine 02",
+    "section": "",
+    "text": "Classer les variables suivantes :\n\nmois;\nsuccursale;\nregion;\ncampagne_locale;\ncanal_principal;\nclients;\npanier_moyen;\nventes;\nsatisfaction.\n\nÀ faire :\n\ndistinguer variables numériques, catégorielles et dates;\nfactoriser les variables catégorielles;\nexpliquer pourquoi cette étape est utile."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-3---repérer-les-valeurs-manquantes",
+    "href": "modules/semaine-02-r-quarto/exercices.html#exercice-3---repérer-les-valeurs-manquantes",
+    "title": "Exercices - Semaine 02",
+    "section": "",
+    "text": "ventes_operations |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0)\n\nÀ faire :\n\nnommer les variables incomplètes;\nexpliquer une conséquence possible sur le diagnostic;\nindiquer comment signaler ce problème dans un rapport."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-4---produire-un-tableau-descriptif",
+    "href": "modules/semaine-02-r-quarto/exercices.html#exercice-4---produire-un-tableau-descriptif",
+    "title": "Exercices - Semaine 02",
+    "section": "",
+    "text": "ventes_operations |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\nÀ faire :\n\nproduire un tableau par succursale;\ninterpréter deux résultats;\nnommer une limite."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-5---produire-un-graphique",
+    "href": "modules/semaine-02-r-quarto/exercices.html#exercice-5---produire-un-graphique",
+    "title": "Exercices - Semaine 02",
+    "section": "",
+    "text": "ventes_operations |&gt;\n  group_by(canal_principal) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  ggplot(aes(ventes_totales, canal_principal)) +\n  geom_col() +\n  labs(\n    title = \"Ventes par canal principal\",\n    x = \"Ventes\",\n    y = NULL\n  )\n\nÀ faire :\n\najouter un titre clair;\nvérifier les axes;\nécrire un constat descriptif."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#livrable-court",
+    "href": "modules/semaine-02-r-quarto/exercices.html#livrable-court",
+    "title": "Exercices - Semaine 02",
+    "section": "",
+    "text": "Remettre un mini-rapport Quarto contenant :\n\nle code d’importation;\nune inspection du tableau;\nun diagnostic des valeurs manquantes;\nun tableau descriptif;\nun graphique;\ndeux constats;\nune limite d’interprétation."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html",

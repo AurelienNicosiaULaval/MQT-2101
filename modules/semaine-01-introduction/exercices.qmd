@@ -9,46 +9,95 @@ format:
 
 ## Objectif
 
-Ces exercices servent à préparer la trace de portfolio de la semaine 01.
+Ces exercices servent à préparer la trace de portfolio de la séance 01 et à diagnostiquer les notions statistiques à consolider.
 
-## Exercice 1 - Reformuler la décision
+## Exercice 1 - Lire la structure d'un tableau
 
-Question de départ :
-
-> Certaines succursales performent moins bien que d'autres. Il faut comprendre quels indicateurs regarder en premier.
-
-À faire :
-
-- reformuler la décision à éclairer;
-- proposer une question analytique;
-- nommer deux indicateurs utiles.
-
-## Exercice 2 - Lire le tableau
+Fichier : `birth_us.csv`.
 
 ```{r}
 #| eval: false
 library(tidyverse)
+library(janitor)
 
-diagnostic <- readr::read_csv(
-  "modules/semaine-01-introduction/data/diagnostic_succursales.csv",
+birth_us <- readr::read_csv(
+  "modules/semaine-01-introduction/data/birth_us.csv",
   show_col_types = FALSE
-)
+) |>
+  clean_names()
 
-glimpse(diagnostic)
+glimpse(birth_us)
 ```
 
 À faire :
 
-- identifier l'unité d'observation;
-- classer les variables en variables de performance commerciale et variables opérationnelles;
-- repérer une variable qui pourrait devenir une variable réponse dans un modèle futur.
+- nommer l'unité d'observation;
+- classer les variables par type;
+- repérer les variables qui décrivent le temps;
+- écrire un indicateur descriptif pertinent.
 
-## Exercice 3 - Interpréter prudemment
+## Exercice 2 - Produire une analyse univariée
 
-À partir du graphique de la page principale, rédiger deux constats descriptifs.
+À partir de `birth_us.csv`, produire :
 
-Chaque constat doit contenir :
+- le minimum du nombre de naissances;
+- la moyenne;
+- la médiane;
+- le maximum;
+- un histogramme.
 
-- un résultat observé;
-- une comparaison;
+```{r}
+#| eval: false
+birth_us |>
+  summarise(
+    minimum = min(births, na.rm = TRUE),
+    moyenne = mean(births, na.rm = TRUE),
+    mediane = median(births, na.rm = TRUE),
+    maximum = max(births, na.rm = TRUE)
+  )
+```
+
+## Exercice 3 - Comparer des indicateurs
+
+Fichier : `safety_airlines.csv`.
+
+```{r}
+#| eval: false
+safety_airlines <- readr::read_csv(
+  "modules/semaine-01-introduction/data/safety_airlines.csv",
+  show_col_types = FALSE
+) |>
+  clean_names()
+
+safety_airlines |>
+  mutate(
+    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
+    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
+  ) |>
+  select(airline, incidents_00_14, incidents_par_milliard)
+```
+
+À faire :
+
+- comparer le nombre brut d'incidents et le taux indicatif;
+- expliquer pourquoi l'échelle de comparaison change l'interprétation;
+- écrire une limite de l'analyse.
+
+## Exercice 4 - Diagnostic de compétences
+
+Répondre en quelques lignes :
+
+- quelle notion statistique est la plus claire pour vous;
+- quelle notion doit être revue;
+- quelle compétence R sera nécessaire dès la semaine 02;
+- quelle erreur d'interprétation faut-il éviter.
+
+## Livrable court
+
+Remettre une trace de portfolio d'une page maximum avec :
+
+- une synthèse du diagnostic de compétences;
+- un tableau de variables classées par type;
+- un graphique;
+- deux constats descriptifs;
 - une limite d'interprétation.

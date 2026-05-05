@@ -9,17 +9,127 @@ format:
 
 ## Objectif
 
-Créer un premier rapport reproductible avec un tableau de données d'affaires.
+Créer un premier rapport Quarto reproductible à partir d'un tableau de données d'affaires.
 
-## Exercices
+## Exercice 1 - Créer le projet et importer les données
 
-TODO: Ajouter un fichier CSV simple dans `data/` et demander un résumé par mois ou région.
+Fichier : `ventes_operations_quebec.csv`.
 
 ```{r}
 #| eval: false
 library(tidyverse)
+library(janitor)
 
-donnees <- readr::read_csv("modules/semaine-02-r-quarto/data/ventes_mensuelles.csv")
-glimpse(donnees)
+ventes_operations <- readr::read_csv(
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv",
+  show_col_types = FALSE
+) |>
+  clean_names()
+
+glimpse(ventes_operations)
 ```
 
+À faire :
+
+- créer un projet R;
+- placer le fichier dans le dossier `data`;
+- importer le fichier;
+- vérifier le nombre de lignes et de colonnes;
+- nommer l'unité d'observation.
+
+## Exercice 2 - Identifier les types de variables
+
+Classer les variables suivantes :
+
+- `mois`;
+- `succursale`;
+- `region`;
+- `campagne_locale`;
+- `canal_principal`;
+- `clients`;
+- `panier_moyen`;
+- `ventes`;
+- `satisfaction`.
+
+À faire :
+
+- distinguer variables numériques, catégorielles et dates;
+- factoriser les variables catégorielles;
+- expliquer pourquoi cette étape est utile.
+
+## Exercice 3 - Repérer les valeurs manquantes
+
+```{r}
+#| eval: false
+ventes_operations |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0)
+```
+
+À faire :
+
+- nommer les variables incomplètes;
+- expliquer une conséquence possible sur le diagnostic;
+- indiquer comment signaler ce problème dans un rapport.
+
+## Exercice 4 - Produire un tableau descriptif
+
+```{r}
+#| eval: false
+ventes_operations |>
+  group_by(succursale) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+À faire :
+
+- produire un tableau par succursale;
+- interpréter deux résultats;
+- nommer une limite.
+
+## Exercice 5 - Produire un graphique
+
+```{r}
+#| eval: false
+ventes_operations |>
+  group_by(canal_principal) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(ventes_totales, canal_principal)) +
+  geom_col() +
+  labs(
+    title = "Ventes par canal principal",
+    x = "Ventes",
+    y = NULL
+  )
+```
+
+À faire :
+
+- ajouter un titre clair;
+- vérifier les axes;
+- écrire un constat descriptif.
+
+## Livrable court
+
+Remettre un mini-rapport Quarto contenant :
+
+- le code d'importation;
+- une inspection du tableau;
+- un diagnostic des valeurs manquantes;
+- un tableau descriptif;
+- un graphique;
+- deux constats;
+- une limite d'interprétation.

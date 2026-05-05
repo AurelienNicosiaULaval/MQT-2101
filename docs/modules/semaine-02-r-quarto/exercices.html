@@ -3978,7 +3978,12 @@ vertical-align: -.125em;
   <li><a href="#exercices---semaine-02" id="toc-exercices---semaine-02" class="nav-link active" data-scroll-target="#exercices---semaine-02">Exercices - Semaine 02</a>
   <ul class="collapse">
   <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#exercices" id="toc-exercices" class="nav-link" data-scroll-target="#exercices">Exercices</a></li>
+  <li><a href="#exercice-1---créer-le-projet-et-importer-les-données" id="toc-exercice-1---créer-le-projet-et-importer-les-données" class="nav-link" data-scroll-target="#exercice-1---créer-le-projet-et-importer-les-données">Exercice 1 - Créer le projet et importer les données</a></li>
+  <li><a href="#exercice-2---identifier-les-types-de-variables" id="toc-exercice-2---identifier-les-types-de-variables" class="nav-link" data-scroll-target="#exercice-2---identifier-les-types-de-variables">Exercice 2 - Identifier les types de variables</a></li>
+  <li><a href="#exercice-3---repérer-les-valeurs-manquantes" id="toc-exercice-3---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#exercice-3---repérer-les-valeurs-manquantes">Exercice 3 - Repérer les valeurs manquantes</a></li>
+  <li><a href="#exercice-4---produire-un-tableau-descriptif" id="toc-exercice-4---produire-un-tableau-descriptif" class="nav-link" data-scroll-target="#exercice-4---produire-un-tableau-descriptif">Exercice 4 - Produire un tableau descriptif</a></li>
+  <li><a href="#exercice-5---produire-un-graphique" id="toc-exercice-5---produire-un-graphique" class="nav-link" data-scroll-target="#exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</a></li>
+  <li><a href="#livrable-court" id="toc-livrable-court" class="nav-link" data-scroll-target="#livrable-court">Livrable court</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4009,17 +4014,127 @@ vertical-align: -.125em;
 <h1>Exercices - Semaine 02</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Créer un premier rapport reproductible avec un tableau de données d’affaires.</p>
+<p>Créer un premier rapport Quarto reproductible à partir d’un tableau de données d’affaires.</p>
 </section>
-<section id="exercices" class="level2">
-<h2 class="anchored" data-anchor-id="exercices">Exercices</h2>
-<p>TODO: Ajouter un fichier CSV simple dans <code>data/</code> et demander un résumé par mois ou région.</p>
+<section id="exercice-1---créer-le-projet-et-importer-les-données" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-1---créer-le-projet-et-importer-les-données">Exercice 1 - Créer le projet et importer les données</h2>
+<p>Fichier : <code>ventes_operations_quebec.csv</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>donnees <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;modules/semaine-02-r-quarto/data/ventes_mensuelles.csv&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(donnees)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ventes_operations <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes_operations)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>À faire :</p>
+<ul>
+<li>créer un projet R;</li>
+<li>placer le fichier dans le dossier <code>data</code>;</li>
+<li>importer le fichier;</li>
+<li>vérifier le nombre de lignes et de colonnes;</li>
+<li>nommer l’unité d’observation.</li>
+</ul>
+</section>
+<section id="exercice-2---identifier-les-types-de-variables" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-2---identifier-les-types-de-variables">Exercice 2 - Identifier les types de variables</h2>
+<p>Classer les variables suivantes :</p>
+<ul>
+<li><code>mois</code>;</li>
+<li><code>succursale</code>;</li>
+<li><code>region</code>;</li>
+<li><code>campagne_locale</code>;</li>
+<li><code>canal_principal</code>;</li>
+<li><code>clients</code>;</li>
+<li><code>panier_moyen</code>;</li>
+<li><code>ventes</code>;</li>
+<li><code>satisfaction</code>.</li>
+</ul>
+<p>À faire :</p>
+<ul>
+<li>distinguer variables numériques, catégorielles et dates;</li>
+<li>factoriser les variables catégorielles;</li>
+<li>expliquer pourquoi cette étape est utile.</li>
+</ul>
+</section>
+<section id="exercice-3---repérer-les-valeurs-manquantes" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-3---repérer-les-valeurs-manquantes">Exercice 3 - Repérer les valeurs manquantes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ventes_operations <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;valeurs_manquantes&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(valeurs_manquantes <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>À faire :</p>
+<ul>
+<li>nommer les variables incomplètes;</li>
+<li>expliquer une conséquence possible sur le diagnostic;</li>
+<li>indiquer comment signaler ce problème dans un rapport.</li>
+</ul>
+</section>
+<section id="exercice-4---produire-un-tableau-descriptif" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-4---produire-un-tableau-descriptif">Exercice 4 - Produire un tableau descriptif</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ventes_operations <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>À faire :</p>
+<ul>
+<li>produire un tableau par succursale;</li>
+<li>interpréter deux résultats;</li>
+<li>nommer une limite.</li>
+</ul>
+</section>
+<section id="exercice-5---produire-un-graphique" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ventes_operations <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(canal_principal) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ventes_totales, canal_principal)) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Ventes par canal principal&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Ventes&quot;</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>À faire :</p>
+<ul>
+<li>ajouter un titre clair;</li>
+<li>vérifier les axes;</li>
+<li>écrire un constat descriptif.</li>
+</ul>
+</section>
+<section id="livrable-court" class="level2">
+<h2 class="anchored" data-anchor-id="livrable-court">Livrable court</h2>
+<p>Remettre un mini-rapport Quarto contenant :</p>
+<ul>
+<li>le code d’importation;</li>
+<li>une inspection du tableau;</li>
+<li>un diagnostic des valeurs manquantes;</li>
+<li>un tableau descriptif;</li>
+<li>un graphique;</li>
+<li>deux constats;</li>
+<li>une limite d’interprétation.</li>
+</ul>
 
 
 </section>

@@ -11,6 +11,7 @@ L'ancien matériel sert de référence. Il ne doit pas être copié tel quel. Ch
 | Ancienne source | Nouvelle destination | Réutilisation prévue |
 |---|---|---|
 | Plan de cours PDF | `plan-de-cours.qmd`, `calendrier.qmd` | Progression, évaluations, objectifs |
+| Séance 01 Introduction au cours | `modules/semaine-01-introduction/` | Captures du portail, quiz diagnostique, préparation des données, exploration descriptive, fichiers BirthUS et SafetyAirlines |
 | Séance 02 Introduction | `modules/semaine-02-r-quarto/` | Introduction à R et exploration de données |
 | Atelier en classe 1 | `modules/atelier-01-r/` | Structure d'atelier d'importation et exploration |
 | Séance 03 Régression | `modules/semaine-03-regression-lineaire/` | Corrélation, régression, exercices R |
@@ -36,4 +37,3 @@ Les données anciennes sont à classer en trois groupes :
 - à remplacer parce qu'elles sont trop génériques, classiques ou peu alignées avec le cours.
 
 Inventaire agrégé : `anciens_documents/inventaire_archives.csv`.
-

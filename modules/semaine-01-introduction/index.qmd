@@ -1,268 +1,343 @@
 ---
-title: "Semaine 01 - Parcours autonome"
+title: "Semaine 01 - Introduction au cours et compétences statistiques"
 format:
   html:
     embed-resources: true
 ---
 
-# Semaine 01 - Introduction, décisions d'affaires et diagnostic statistique
+# Séance 01 : Introduction au cours et évaluation des compétences statistiques
+
+::: {.callout-note title="Référence A25"}
+Cette page reconstruit la séance du 3 septembre 2025 à partir des captures de l'ancien portail et des fichiers non nominatifs trouvés dans les archives locales.
+:::
 
 ## Let’s eat the cake
 
-Objectif : comprendre à quoi sert l'analyse statistique dans une décision d'affaires et apprendre à formuler une première question analytique.
+Objectif : comprendre l'organisation du cours, revoir les compétences statistiques de base et préparer une première démarche de traitement des données.
 
 Compétences développées :
 
-- distinguer une décision d'affaires, une question analytique et un indicateur;
-- reconnaître l'unité d'observation et les variables d'un tableau;
-- différencier description, explication, prévision et décision;
-- construire un premier diagnostic statistique;
-- formuler une recommandation prudente à partir d'indicateurs simples.
+- situer les objectifs du cours et les évaluations;
+- reconnaître les principaux types de données;
+- identifier les problèmes fréquents de préparation des données;
+- distinguer analyse univariée, analyse bivariée et modélisation;
+- produire un premier diagnostic statistique descriptif;
+- nommer les acquis à consolider avant les séances de régression et de prévision.
 
-Application business : préparer une première lecture de la performance de succursales à partir d'un jeu de données pédagogique.
+Application business : vérifier la qualité et la structure d'un tableau avant de l'utiliser pour une décision d'affaires.
 
-Résultat final attendu : une fiche de diagnostic d'une page reliant une décision, des indicateurs, deux constats et une prochaine analyse.
+Résultat final attendu : une trace de portfolio qui résume les compétences statistiques à consolider, les variables clés d'un tableau et deux constats descriptifs prudents.
 
-Lien avec une décision d'affaires réelle : apprendre à prioriser une dimension d'analyse avant de demander une modélisation plus avancée.
+Lien avec une décision d'affaires réelle : éviter de prendre une décision à partir d'un tableau mal compris, mal préparé ou décrit avec des indicateurs inadaptés.
 
-## Logique pédagogique de la semaine
+## Introduction à la séance
 
-Cette semaine introduit une idée centrale du cours : une analyse statistique commence par une question claire, pas par une méthode.
+La première séance présente le cours et ses objectifs. Elle sert aussi de diagnostic de départ : les notions vues dans les cours préalables sont réactivées avant de passer aux modèles de régression et aux séries chronologiques.
 
-Le parcours utilise un jeu de données pédagogique sur des succursales afin d'illustrer les liens entre :
+Au cours de cette séance, nous abordons :
 
-- une décision d'affaires;
-- une question analytique;
-- une unité d'observation;
-- des variables;
-- des indicateurs;
-- une interprétation prudente.
+- l'introduction à l'analyse des données;
+- la typologie des données;
+- les problèmes de préparation et de traitement;
+- les bases de l'exploration univariée et bivariée;
+- le rôle d'un quiz diagnostique de compétences statistiques.
 
-La première semaine sert à installer cette logique. Avant de coder beaucoup, il faut savoir quoi regarder, pourquoi le regarder et ce que l'on peut conclure.
+À la fin de la séance, vous devriez être en mesure de :
+
+- comprendre les principaux problèmes liés à la préparation des données;
+- préparer un plan d'action avant une analyse;
+- résoudre des problèmes simples de traitement de données;
+- lire un tableau statistique avec prudence.
 
 ## Parcours autonome de la semaine
 
 | Moment | Activité | Résultat produit |
 |---|---|---|
-| 1 | Comprendre le rôle de l'analyse | Une décision d'affaires reformulée |
-| 2 | Lire un tableau de diagnostic | Unité d'observation et variables identifiées |
-| 3 | Choisir des indicateurs | Indicateurs reliés à une décision |
-| 4 | Faire un premier calcul | Tableau de diagnostic enrichi |
-| 5 | Interpréter prudemment | Deux constats et une limite |
-| 6 | Conclure | Trace de portfolio |
+| 1 | Lire l'organisation du cours | Liste des objectifs et évaluations à surveiller |
+| 2 | Faire le diagnostic de départ | Compétences statistiques à consolider |
+| 3 | Revoir les types de données | Variables classées par type |
+| 4 | Préparer les données | Problèmes de traitement repérés |
+| 5 | Explorer univarié et bivarié | Deux constats descriptifs |
+| 6 | Conclure | Trace de portfolio courte |
+
+## Présentations
+
+Les anciennes présentations sont conservées comme sources privées. Elles ne sont pas publiées dans ce site, mais leur structure est reprise sous forme de capsules :
+
+- description des modules du cours;
+- modèles mathématiques et statistiques;
+- préparation des données;
+- exploration des données en analyse univariée;
+- exploration des données en analyse bivariée.
+
+::: {.callout-note title="Capsule vidéo 1 - Organisation du cours"}
+À insérer : une capsule qui présente les objectifs, les évaluations, les attentes de travail et le rôle des ateliers.
+:::
+
+::: {.callout-note title="Capsule vidéo 2 - Compétences statistiques de départ"}
+À insérer : une capsule de rappel sur variables, tableaux, mesures descriptives, graphiques et interprétation prudente.
+:::
+
+::: {.callout-note title="Capsule vidéo 3 - Préparer les données avant d'analyser"}
+À insérer : une capsule sur valeurs manquantes, codage des variables, unités, échelles et cohérence des données.
+:::
+
+## À faire
+
+Les activités de cette séance remplacent l'ancien exercice Excel par un exercice reproductible en R.
+
+1. Compléter le quiz diagnostique de compétences statistiques.
+2. Télécharger les deux fichiers CSV publics de la semaine.
+3. Lire les deux tableaux dans R.
+4. Produire un court diagnostic descriptif.
+5. Identifier les notions à revoir avant la semaine 02.
 
 ## Données
 
-Le fichier utilisé est `data/diagnostic_succursales.csv`.
+Les fichiers utilisés sont :
 
-[Télécharger le fichier CSV](data/diagnostic_succursales.csv)
+- [birth_us.csv](data/birth_us.csv)
+- [safety_airlines.csv](data/safety_airlines.csv)
 
 ```{r}
 #| label: setup-semaine-01
 #| include: false
 library(tidyverse)
 library(janitor)
+library(lubridate)
 library(scales)
 
-data_path <- if (file.exists("data/diagnostic_succursales.csv")) {
-  "data/diagnostic_succursales.csv"
+birth_path <- if (file.exists("data/birth_us.csv")) {
+  "data/birth_us.csv"
 } else {
-  "modules/semaine-01-introduction/data/diagnostic_succursales.csv"
+  "modules/semaine-01-introduction/data/birth_us.csv"
 }
 
-diagnostic <- readr::read_csv(data_path, show_col_types = FALSE) |>
+safety_path <- if (file.exists("data/safety_airlines.csv")) {
+  "data/safety_airlines.csv"
+} else {
+  "modules/semaine-01-introduction/data/safety_airlines.csv"
+}
+
+birth_us <- readr::read_csv(birth_path, show_col_types = FALSE) |>
   clean_names()
 
-currency_ca <- scales::label_dollar(
-  prefix = "",
-  suffix = " $",
-  big.mark = " ",
-  decimal.mark = ","
-)
+safety_airlines <- readr::read_csv(safety_path, show_col_types = FALSE) |>
+  clean_names()
+
+number_fr <- scales::label_number(big.mark = " ", decimal.mark = ",")
 ```
 
 ```{r}
-#| label: apercu-semaine-01
-diagnostic
+#| label: apercu-birth-us
+birth_us |>
+  slice_head(n = 6)
 ```
 
-## Épisode 1 - Pourquoi analyser?
-
-::: {.callout-note title="Capsule vidéo 1 - De la décision au tableau"}
-À insérer : une vidéo de 4 à 6 minutes qui explique qu'une analyse commence par une décision à éclairer, pas par une méthode.
-:::
-
-Question centrale :
-
-> Quels indicateurs permettent de repérer les dimensions qui méritent une analyse plus poussée?
-
-La question n'est pas encore :
-
-> Quel modèle faut-il ajuster?
-
-Une meilleure question de départ est plutôt :
-
-> Quels indicateurs permettent de repérer les succursales qui méritent une analyse plus poussée?
-
-::: {.callout-tip title="À vous 1 - Reformuler la décision"}
-Dans votre fiche de diagnostic, écrivez une phrase qui commence par : `La décision à éclairer est...`
-:::
-
-## Épisode 2 - Lire le tableau
-
-::: {.callout-note title="Capsule vidéo 2 - Observation, variable, indicateur"}
-À insérer : une vidéo courte sur l'unité d'observation, les variables numériques, les variables catégorielles et les indicateurs.
-:::
-
-### Démonstration 1 - Inspecter rapidement
-
 ```{r}
-#| label: demo-inspection-semaine-01
-glimpse(diagnostic)
+#| label: apercu-safety-airlines
+safety_airlines |>
+  slice_head(n = 6)
 ```
 
-::: {.callout-tip title="À vous 2 - Identifier la structure"}
-Répondez dans votre fiche :
+## Concepts clés
 
-- Quelle est l'unité d'observation?
-- Quelles variables décrivent la performance commerciale?
-- Quelles variables décrivent l'expérience client ou les opérations?
-:::
+- Observation : ligne d'un tableau.
+- Variable : caractéristique mesurée ou codée.
+- Type de variable : numérique, catégorielle, date, texte.
+- Préparation des données : correction des noms, formats, valeurs manquantes et unités.
+- Analyse univariée : description d'une variable.
+- Analyse bivariée : relation descriptive entre deux variables.
+- Indicateur : résumé numérique utile pour comprendre une question.
+- Limite : ce que les données ne permettent pas de conclure.
 
-## Épisode 3 - Relier indicateurs et décisions
-
-::: {.callout-note title="Capsule vidéo 3 - Indicateur descriptif ou décisionnel?"}
-À insérer : une capsule qui distingue un chiffre intéressant d'un indicateur utile pour décider.
-:::
-
-Un même tableau peut servir plusieurs décisions.
-
-| Décision possible | Indicateur utile |
-|---|---|
-| Prioriser une succursale pour une analyse complémentaire | ventes, satisfaction, ruptures de stock |
-| Évaluer l'expérience client | satisfaction, délai de livraison |
-| Examiner la performance commerciale | ventes, clients, panier moyen |
-| Préparer une analyse de régression | variable réponse et variables explicatives candidates |
-
-::: {.callout-tip title="À vous 3 - Choisir trois indicateurs"}
-Choisissez trois indicateurs et expliquez en une phrase pourquoi chacun peut aider à éclairer la décision.
-:::
-
-## Épisode 4 - Faire un premier diagnostic
-
-### Démonstration 2 - Ajouter un indicateur simple
+## Démonstration 1 - Lire et préparer un tableau
 
 ```{r}
-#| label: demo-diagnostic-semaine-01
-diagnostic_enrichi <- diagnostic |>
+#| label: preparation-birth-us
+birth_prepare <- birth_us |>
   mutate(
-    ventes_par_client = ventes_mensuelles / clients,
-    signal_attention = case_when(
-      satisfaction < 8 & ruptures_stock >= 5 ~ "opérations et satisfaction",
-      ventes_mensuelles < median(ventes_mensuelles) ~ "ventes sous la médiane",
-      TRUE ~ "aucun signal majeur"
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi",
+        "mardi",
+        "mercredi",
+        "jeudi",
+        "vendredi",
+        "samedi",
+        "dimanche"
+      )
     )
   )
 
-diagnostic_enrichi |>
-  select(
-    succursale,
-    ventes_mensuelles,
-    clients,
-    ventes_par_client,
-    satisfaction,
-    ruptures_stock,
-    signal_attention
-  ) |>
-  mutate(
-    ventes_mensuelles = currency_ca(ventes_mensuelles),
-    ventes_par_client = currency_ca(ventes_par_client)
-  )
+birth_prepare |>
+  select(date, jour_semaine, births) |>
+  slice_head(n = 6)
 ```
 
-::: {.callout-tip title="À vous 4 - Trouver deux signaux"}
-À partir du tableau, identifiez deux succursales qui méritent une analyse complémentaire. Pour chaque succursale, nommez l'indicateur qui justifie votre choix.
-:::
+À observer :
 
-## Épisode 5 - Visualiser pour discuter
+- l'unité d'observation;
+- le type de chaque variable;
+- les variables qui peuvent être utilisées pour une analyse temporelle;
+- les limites d'un codage numérique du jour de la semaine.
+
+## Démonstration 2 - Analyse univariée
 
 ```{r}
-#| label: graphique-diagnostic-semaine-01
+#| label: resume-birth-us
+birth_prepare |>
+  summarise(
+    jours = n(),
+    naissances_min = min(births, na.rm = TRUE),
+    naissances_moyennes = mean(births, na.rm = TRUE),
+    naissances_max = max(births, na.rm = TRUE)
+  ) |>
+  mutate(across(where(is.numeric), round, 1))
+```
+
+```{r}
+#| label: graphique-birth-us
 #| fig-width: 8
 #| fig-height: 4.8
-diagnostic |>
-  mutate(succursale = fct_reorder(succursale, ventes_mensuelles)) |>
-  ggplot(aes(ventes_mensuelles, succursale, fill = satisfaction)) +
-  geom_col() +
-  scale_x_continuous(labels = currency_ca) +
-  scale_fill_gradient(low = "#E76F51", high = "#2A9D8F") +
+birth_prepare |>
+  ggplot(aes(births)) +
+  geom_histogram(bins = 30, fill = "#2A9D8F", color = "white") +
   labs(
-    title = "Ventes mensuelles et satisfaction par succursale",
-    x = "Ventes mensuelles",
-    y = NULL,
-    fill = "Satisfaction"
+    title = "Distribution quotidienne du nombre de naissances",
+    x = "Nombre de naissances",
+    y = "Nombre de jours"
   ) +
   theme_minimal(base_size = 12)
 ```
 
-::: {.callout-important title="Pause diagnostic"}
-Ce graphique aide à comparer les succursales. Il ne permet pas de conclure qu'une variable cause une autre variable.
+## Démonstration 3 - Analyse bivariée
+
+```{r}
+#| label: naissance-jour-semaine
+#| fig-width: 8
+#| fig-height: 4.8
+birth_prepare |>
+  filter(!is.na(jour_semaine)) |>
+  ggplot(aes(jour_semaine, births)) +
+  geom_boxplot(fill = "#E9C46A", color = "#1F2933") +
+  labs(
+    title = "Naissances selon le jour de la semaine",
+    x = NULL,
+    y = "Nombre de naissances"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+::: {.callout-important title="Interprétation prudente"}
+Le graphique décrit des écarts. Il ne suffit pas à expliquer les causes de ces écarts.
 :::
 
-## Épisode 6 - Description, explication, prévision, décision
+## Démonstration 4 - Indicateurs et échelle de comparaison
 
-::: {.callout-note title="Capsule vidéo 4 - Quatre niveaux d'analyse"}
-À insérer : une vidéo qui distingue décrire, expliquer, prévoir et décider.
-:::
+Le fichier `safety_airlines.csv` permet de rappeler qu'un indicateur doit être comparé à une échelle pertinente.
 
-| Niveau | Question typique |
-|---|---|
-| Décrire | Que s'est-il passé? |
-| Expliquer | Quels facteurs sont associés au résultat? |
-| Prévoir | Que pourrait-il se passer ensuite? |
-| Décider | Quelle action recommander? |
+```{r}
+#| label: safety-indicateurs
+safety_resume <- safety_airlines |>
+  mutate(
+    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
+    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
+  ) |>
+  arrange(desc(incidents_par_milliard))
 
-Dans cette première semaine, on reste surtout au niveau descriptif. Le reste du cours ajoutera progressivement les outils pour expliquer, prévoir et décider avec plus de rigueur.
+safety_resume |>
+  select(
+    airline,
+    avail_seat_km_per_week,
+    incidents_00_14,
+    incidents_par_milliard
+  ) |>
+  mutate(
+    avail_seat_km_per_week = number_fr(avail_seat_km_per_week),
+    incidents_par_milliard = round(incidents_par_milliard, 3)
+  ) |>
+  slice_head(n = 8)
+```
+
+## Exercices d'application intégrés
+
+### AE 1 : interprétation
+
+Pour `birth_us.csv`, identifier :
+
+- l'unité d'observation;
+- une variable numérique;
+- une variable de temps;
+- un indicateur descriptif utile.
+
+### AE 2 : calcul ou code R
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(janitor)
+
+birth_us <- readr::read_csv("modules/semaine-01-introduction/data/birth_us.csv") |>
+  clean_names()
+
+birth_us |>
+  group_by(month) |>
+  summarise(
+    naissances_moyennes = mean(births, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+### AE 3 : réflexion critique
+
+Expliquer en trois phrases pourquoi un tableau doit être préparé et compris avant de choisir une méthode statistique.
 
 ## Mini-cas business
 
-Le mini-cas compare trois façons de prioriser la suite de l'analyse :
+Une organisation doit produire rapidement un diagnostic à partir d'un tableau reçu. Avant de modéliser, elle doit répondre à quatre questions :
 
-- commencer par la succursale qui vend le moins;
-- commencer par la succursale qui combine satisfaction faible et ruptures de stock;
-- demander une analyse plus complète avant toute intervention.
+- Que représente une ligne?
+- Quelles variables sont numériques ou catégorielles?
+- Quelles transformations sont nécessaires?
+- Quels constats sont descriptifs seulement?
 
-::: {.callout-tip title="À vous 5 - Recommandation prudente"}
-Rédigez une recommandation en trois phrases :
-
-1. Les indicateurs suggèrent que...
-2. La limite principale de ce diagnostic est...
-3. La prochaine analyse devrait...
-:::
+L'objectif n'est pas encore de recommander une action. L'objectif est de préparer une analyse fiable.
 
 ## À retenir
 
-Une analyse utile commence par une décision, puis traduit cette décision en question analytique, en variables et en indicateurs.
+Une analyse statistique sérieuse commence par la compréhension du tableau, la vérification des variables et une exploration descriptive prudente.
 
 ## Erreurs fréquentes
 
-- Commencer par une méthode plutôt que par une décision.
-- Confondre ventes totales et performance globale.
-- Interpréter un graphique descriptif comme une preuve causale.
-- Oublier de nommer l'unité d'observation.
+- Confondre le nom d'une variable et son sens statistique.
+- Interpréter un code numérique comme une mesure continue.
+- Comparer des volumes sans tenir compte de l'exposition ou de la taille.
+- Passer directement à un modèle sans vérifier les données.
+- Oublier de nommer les limites d'un constat descriptif.
 
-## Trace de portfolio
+## Trace de portfolio ou livrable court
 
-Votre trace de portfolio s'intitule `Diagnostic initial de succursales`.
+Votre trace de portfolio s'intitule `Diagnostic de départ des compétences statistiques`.
 
 Elle doit contenir :
 
-- la décision à éclairer;
-- trois indicateurs choisis;
-- deux constats descriptifs;
-- une limite;
-- une prochaine analyse recommandée.
+- deux notions statistiques à consolider;
+- l'unité d'observation de `birth_us.csv`;
+- trois variables classées par type;
+- un constat univarié;
+- un constat bivarié;
+- une limite d'interprétation.
+
+## Lien avec l'ancien matériel
+
+Cette semaine reprend l'esprit de l'ancienne séance 01 : introduction au cours, diagnostic des compétences statistiques, préparation des données et exploration descriptive. Les fichiers `BirthUS.xlsx` et `SafetyAirlines.xlsx` ont été convertis en CSV pour permettre un travail reproductible en R.
+
+Les fichiers PowerPoint, PDF de narration, lectures protégées et solutionnaires Excel d'origine ne sont pas publiés.
 
 ## Pour aller plus loin
 
-La semaine 02 introduira R et Quarto plus systématiquement. L'atelier 01 viendra ensuite transformer cette logique de diagnostic en rapport Quarto plus complet avec un tableau de données mensuelles.
+La semaine 02 introduit R, RStudio et Quarto plus systématiquement. Elle transforme le travail préparatoire de cette séance en rapport reproductible.

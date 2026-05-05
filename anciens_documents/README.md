@@ -28,6 +28,8 @@ Le dossier `sources_privees/` est ignoré par Git afin d'éviter la publication 
 | `MQT-2101-A25_Séance 11 _.zip` | Récapitulation ancienne |
 | `MQT-2101_A25_86582.pdf` | Ancien plan de cours |
 
+Note : l'archive complète de la séance 01 n'est pas présente dans le dépôt. La reconstruction de la semaine 01 utilise les captures du portail et les fichiers non nominatifs `BirthUS.xlsx` et `SafetyAirlines.xlsx` trouvés dans `MQT-2101-A25_Solutionnaires séances.zip`.
+
 ## Extraction locale
 
 Pour extraire les archives sans écraser les fichiers existants :
