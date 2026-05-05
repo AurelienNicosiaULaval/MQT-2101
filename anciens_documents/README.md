@@ -36,7 +36,13 @@ Pour extraire les archives sans écraser les fichiers existants :
 source("scripts/02_extract_old_material.R")
 ```
 
-Les fichiers extraits seront placés dans `sources_privees/extraits/`.
+Les fichiers extraits seront placés dans `sources_privees/extraits/`. Les archives d'examen sont ignorées par défaut parce qu'elles peuvent contenir des fichiers nominatifs.
+
+## Inventaire et correspondance
+
+L'inventaire agrégé est dans `inventaire_archives.csv`.
+
+La correspondance entre l'ancien matériel et la nouvelle structure du cours est dans `correspondance_ancienne_nouvelle_structure.md`.
 
 ## Règles d'intégration
 
@@ -44,4 +50,3 @@ Les fichiers extraits seront placés dans `sources_privees/extraits/`.
 - Ne pas publier de fichiers nominatifs.
 - Utiliser les anciennes ressources comme référence de structure et de thèmes.
 - Réécrire progressivement les activités dans une forme plus appliquée, orientée administration et décision d'affaires.
-

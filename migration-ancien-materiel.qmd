@@ -1,0 +1,130 @@
+---
+title: "Migration de l'ancien matériel"
+format:
+  html:
+    embed-resources: true
+---
+
+# Migration de l'ancien matériel
+
+## Objectif
+
+Cette page documente la phase 1 de la refonte du cours : utiliser l'ancien matériel comme source de référence, tout en reconstruisant le cours dans la nouvelle structure Quarto.
+
+L'objectif n'est pas de copier l'ancien cours. L'objectif est de récupérer ce qui est utile, de le convertir en `.qmd`, de moderniser le code R, de remplacer ou adapter les exemples, et de rattacher chaque activité à une décision d'affaires.
+
+## Décision de migration
+
+- Les anciennes archives restent dans `anciens_documents/sources_privees/`, un dossier ignoré par Git.
+- Les archives d'examen sont considérées sensibles et ne sont pas extraites par défaut.
+- Les anciens fichiers PDF, HTML, Rmd, CSV et XLSX servent de référence locale.
+- Les nouveaux contenus publiés doivent être écrits en Quarto et en R.
+- Les jeux de données ne doivent être publiés que si leur origine, leur licence et leur niveau de confidentialité sont acceptables.
+
+## Inventaire agrégé
+
+Un inventaire agrégé est disponible dans `anciens_documents/inventaire_archives.csv`.
+
+Résumé actuel :
+
+| Type | Nombre repéré dans les extraits pédagogiques |
+|---|---:|
+| Rmd | 12 |
+| CSV | 38 |
+| XLSX | 8 |
+| PDF | 60 |
+| HTML | 13 |
+| PPTX | 5 |
+
+Les deux archives d'examen à la maison ne sont pas utilisées pour le site public.
+
+## Correspondance ancienne vers nouvelle structure
+
+| Ancienne source | Nouvelle destination | Ce qu'on récupère | Ce qu'on modifie |
+|---|---|---|---|
+| Plan de cours PDF | `plan-de-cours.qmd`, `calendrier.qmd` | Progression générale, évaluations, objectifs | Reformuler autour de la décision d'affaires et de la nouvelle structure hebdomadaire |
+| Séance 02 Introduction | `modules/semaine-02-r-quarto/` | Introduction à R, importation, exploration, premiers exemples | Convertir en Quarto, simplifier le flux de travail, remplacer les exemples peu liés à l'administration |
+| Atelier en classe 1 | `modules/atelier-01-r/` | Exercices d'importation et d'exploration | Remplacer les données étudiantes ou génériques par un tableau d'affaires |
+| Séance 03 Régression | `modules/semaine-03-regression-lineaire/` | Corrélation, régression linéaire, exercices R | Recontextualiser vers ventes, marketing, satisfaction client ou performance de succursales |
+| Séance 04 Régression non linéaire | `modules/semaine-04-regression-nonlineaire/` | Régression logistique, transformations, modèles non linéaires | Clarifier la distinction non-linéarité, logistique et décision; créer des cas de départ client, crédit ou RH |
+| Atelier en classe 2 | `modules/atelier-02-regression/` | Structure d'atelier de régression et données RH | Refaire en étude de cas business complète avec livrable court |
+| Séance 05 Préparation intra | `modules/semaine-05-preparation-intra/`, `evaluations/examen-intra.qmd` | Structure de révision, exemples d'examen | Créer un canevas Quarto et une grille alignée avec les compétences |
+| Préparation à l'examen | `evaluations/`, `modules/atelier-04-recapitulation/` | Exemple de rapport et logique de synthèse | Ne pas reprendre tel quel; transformer en modèle de réponse et critères d'évaluation |
+| Séance 06 Prévision | `modules/semaine-06-series-chronologiques-intro/` | Introduction aux séries chronologiques, horizon, validation | Remplacer ou compléter les exemples par ventes, demande ou tourisme |
+| Séance 07 Lissage | `modules/semaine-07-lissage/` | Moyennes mobiles, lissage exponentiel, ETS | Moderniser le code, ajouter interprétation coût d'erreur et décision de stock |
+| Séance 08 Modèles avec tendance et saisonnalité | `modules/semaine-08-tendance-saisonnalite/` | Tendance, saisonnalité, exemples de ventes | Transformer en cas PME avec objectifs mensuels |
+| Atelier en classe 3 | `modules/atelier-03-series-chronologiques/` | Exercices de séries chronologiques | Refaire autour de prévision de ventes, demande ou achalandage |
+| Séance 09 Modèles basés sur la régression II | `modules/semaine-09-variables-externes-autocorrelation/` | Variables externes, autocorrélation, validation | Ajouter un scénario avec promotions, prix et indicateurs économiques disponibles au moment de prévoir |
+| Séance 10 Prévision des résultats binaires | `modules/semaine-10-classification-modeles-avances/` | Résultats binaires, logistique, classification | Centrer sur fidélisation client, réponse marketing ou risque de défaut |
+| Séance 11 Récapitulation | `modules/atelier-04-recapitulation/` | Synthèse de fin de session | Transformer en atelier intégrateur avec décision finale |
+| Solutionnaires séances | `modules/*/solutions.qmd` | Inspiration pour les solutions | Garder hors rendu public et retravailler après les exercices |
+
+## Stratégie de mise à jour des contenus
+
+Pour chaque module, la migration doit suivre le même protocole :
+
+1. Lire localement les anciennes présentations, Rmd, HTML et données pertinentes.
+2. Extraire les concepts qui restent pédagogiquement utiles.
+3. Écrire ou réécrire la section `Let’s eat the cake`.
+4. Créer une mise en contexte business plus claire.
+5. Remplacer les exemples par des données d'administration lorsque possible.
+6. Convertir le code vers un style R moderne et reproductible.
+7. Ajouter les exercices AE 1, AE 2 et AE 3.
+8. Ajouter un mini-cas business.
+9. Ajouter un livrable court de portfolio.
+10. Rendre le site et vérifier que le module compile.
+
+## Priorité de réutilisation des données
+
+| Données anciennes repérées | Priorité | Décision provisoire |
+|---|---:|---|
+| `employee_survey.csv` | Haute | Réutiliser comme inspiration pour RH et satisfaction au travail; vérifier origine et licence |
+| `ventes.csv` | Haute | Examiner pour semaine 08; potentiellement adapter à une PME québécoise |
+| `Loan.csv`, `Green.csv` | Moyenne | Examiner pour classification, crédit ou décision client |
+| `chomage.csv` | Moyenne | Examiner pour indicateurs économiques et contexte canadien ou québécois si pertinent |
+| `amtrak_ridership.csv` | Moyenne | Utile pour la méthode, mais contexte à remplacer ou compléter par transport, tourisme ou ventes locales |
+| `GoldPrices.csv`, `stockmk.xlsx` | Moyenne | Utile pour prévision financière; à contextualiser en finance d'entreprise |
+| `StudentPerformanceFactors.csv`, `apple_quality.csv`, `masculinity.csv` | Faible | Peu aligné avec administration; remplacer sauf si besoin d'exercice technique court |
+| `Titanic.csv`, `Titanic_dataset.csv`, `Auto` | Faible | Trop classiques ou peu alignés; éviter dans la nouvelle version |
+| Données COVID mondiales | Faible | À éviter sauf si une décision opérationnelle claire est ajoutée |
+| Données d'examen avec fichiers nominatifs | Nulle | Ne pas utiliser ni publier |
+
+Je ne connais pas encore l'origine ni la licence de tous ces fichiers. Cette vérification doit être faite avant toute publication de données.
+
+## Plan de travail immédiat
+
+1. Créer un fichier de travail par module avec les anciennes sources à consulter.
+2. Prioriser les semaines 01 à 05, car elles mènent à l'examen intra.
+3. Construire un premier jeu de données business pour l'atelier 01.
+4. Construire ou adapter un jeu de données de régression pour les semaines 03 et 04.
+5. Préparer une version moderne du canevas d'examen intra.
+6. Reporter les données non vérifiées dans une liste de validation.
+
+## Commandes utiles
+
+```r
+source("scripts/02_extract_old_material.R")
+```
+
+```r
+source("scripts/03_inventory_old_material.R")
+```
+
+## État de la phase 1
+
+Statut : commencé.
+
+Fait :
+
+- Extraction locale du matériel pédagogique non sensible.
+- Exclusion par défaut des archives d'examen.
+- Inventaire agrégé des archives.
+- Table de correspondance ancien matériel vers nouvelle structure.
+
+À faire :
+
+- Examiner plus finement les Rmd et PDF par module.
+- Vérifier l'origine et la licence des données.
+- Décider quels jeux de données seront adaptés, remplacés ou simulés.
+- Commencer la migration détaillée de la semaine 01 et de la semaine 02.
+

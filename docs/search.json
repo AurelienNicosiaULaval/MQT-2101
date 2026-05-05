@@ -1008,88 +1008,11 @@
     "text": "library(tidyverse)\n\ntibble(\n  mois = c(\"janvier\", \"février\", \"mars\"),\n  ventes = c(125000, 131000, 128500)\n) |&gt;\n  ggplot(aes(mois, ventes, group = 1)) +\n  geom_line() +\n  geom_point()\n\nTODO: Ajouter une section de dépannage pour l’installation de Quarto, Rtools et les problèmes de chemins d’accès."
   },
   {
-    "objectID": "calendrier.html",
-    "href": "calendrier.html",
-    "title": "Calendrier",
-    "section": "",
-    "text": "Calendrier\nLes dates précises seront ajoutées lorsque le calendrier de la session sera confirmé.\n\n\n\n\n\n\n\n\nBloc\nActivité\nThème\n\n\n\n\nSemaine 01\nSéance 01\nIntroduction, décisions d’affaires et diagnostic statistique\n\n\nSemaine 02\nSéance 02\nIntroduction à R et Quarto\n\n\nSemaine 03\nAtelier 1\nExplorer un tableau de données d’affaires\n\n\nSemaine 04\nSéance 03\nRégression linéaire\n\n\nSemaine 05\nSéance 04\nRégression non linéaire et transformations\n\n\nSemaine 06\nAtelier 2\nÉtude de cas business en régression\n\n\nSemaine 07\nSéance 05\nPréparation à l’examen intra\n\n\nSemaine 08\nExamen intra\nAnalyse de régression à la maison\n\n\nSemaine 09\nSéance 06\nIntroduction à la prévision et aux séries chronologiques\n\n\nSemaine 10\nSéance 07\nMéthodes de lissage\n\n\nSemaine 11\nSéance 08\nTendance et saisonnalité\n\n\nSemaine 12\nAtelier 3\nPrévision des ventes ou de la demande\n\n\nSemaine 13\nSéance 09\nVariables externes et autocorrélation\n\n\nSemaine 14\nSéance 10\nRésultats binaires, classification et modèles avancés\n\n\nSemaine 15\nAtelier 4\nRécapitulation et intégration\n\n\nFin de session\nExamen final\nAnalyse de prévision à la maison\n\n\n\nTODO: Ajouter les dates officielles, les échéances et les liens directs vers les pages de remise."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MQT-2101 : Analyse et modélisation des données",
-    "section": "",
-    "text": "Ce site regroupe le matériel principal du cours MQT-2101. Le cours est centré sur l’analyse appliquée des données, la modélisation, la prévision et l’utilisation de R pour soutenir des décisions d’affaires.\n\n\nFournir une structure claire pour les notes, les capsules, les exercices, les ateliers, les évaluations, les jeux de données et les ressources du cours.\n\n\n\nLe cours commence par le diagnostic statistique et l’utilisation de R, puis avance vers la régression, la prévision, les séries chronologiques et les modèles de classification.\n\n\n\nLes exemples et mini-cas privilégient les contextes d’administration : ventes, achalandage, campagnes marketing, satisfaction client, demande, inventaire, finance, ressources humaines et performance organisationnelle.\n\n# Exemple de point de départ pour une analyse business\nlibrary(tidyverse)\n\nventes &lt;- readr::read_csv(\"donnees/preparees/ventes_pme.csv\")\n\nventes |&gt;\n  group_by(mois) |&gt;\n  summarise(chiffre_affaires = sum(chiffre_affaires, na.rm = TRUE))\n\n\n\n\nTODO: Ajouter une courte présentation du cours, les liens institutionnels pertinents et les consignes de navigation pour les étudiant·es."
-  },
-  {
-    "objectID": "index.html#objectif-du-site",
-    "href": "index.html#objectif-du-site",
-    "title": "MQT-2101 : Analyse et modélisation des données",
-    "section": "",
-    "text": "Fournir une structure claire pour les notes, les capsules, les exercices, les ateliers, les évaluations, les jeux de données et les ressources du cours."
-  },
-  {
-    "objectID": "index.html#progression",
-    "href": "index.html#progression",
-    "title": "MQT-2101 : Analyse et modélisation des données",
-    "section": "",
-    "text": "Le cours commence par le diagnostic statistique et l’utilisation de R, puis avance vers la régression, la prévision, les séries chronologiques et les modèles de classification."
-  },
-  {
-    "objectID": "index.html#orientation-business",
-    "href": "index.html#orientation-business",
-    "title": "MQT-2101 : Analyse et modélisation des données",
-    "section": "",
-    "text": "Les exemples et mini-cas privilégient les contextes d’administration : ventes, achalandage, campagnes marketing, satisfaction client, demande, inventaire, finance, ressources humaines et performance organisationnelle.\n\n# Exemple de point de départ pour une analyse business\nlibrary(tidyverse)\n\nventes &lt;- readr::read_csv(\"donnees/preparees/ventes_pme.csv\")\n\nventes |&gt;\n  group_by(mois) |&gt;\n  summarise(chiffre_affaires = sum(chiffre_affaires, na.rm = TRUE))"
-  },
-  {
-    "objectID": "index.html#à-compléter",
-    "href": "index.html#à-compléter",
-    "title": "MQT-2101 : Analyse et modélisation des données",
-    "section": "",
-    "text": "TODO: Ajouter une courte présentation du cours, les liens institutionnels pertinents et les consignes de navigation pour les étudiant·es."
-  },
-  {
-    "objectID": "plan-de-cours.html",
-    "href": "plan-de-cours.html",
-    "title": "Plan de cours",
-    "section": "",
-    "text": "Ce cours présente des méthodes d’analyse et de modélisation des données utilisées en appui à la prise de décision d’affaires. Les thèmes principaux sont l’exploration de données, la régression, la prévision, les séries chronologiques et les modèles pour résultats binaires.\n\n\n\nDévelopper la capacité d’analyser des données d’affaires avec R, de construire des modèles appropriés et de communiquer les résultats dans un langage utile pour la décision.\n\n\n\n\nPréparer et décrire un tableau de données d’affaires.\nInterpréter des relations entre variables.\nAjuster et évaluer des modèles de régression.\nProduire des prévisions à court ou moyen terme.\nComparer des modèles selon leur utilité décisionnelle.\nPrésenter une recommandation claire à un public de gestion.\n\n\n\n\nVoir la section Évaluations pour les squelettes des questionnaires, de l’examen intra et de l’examen final.\nTODO: Remplacer cette version par le plan officiel lorsque les dates, pondérations et modalités de la session seront confirmées."
-  },
-  {
-    "objectID": "plan-de-cours.html#description-provisoire",
-    "href": "plan-de-cours.html#description-provisoire",
-    "title": "Plan de cours",
-    "section": "",
-    "text": "Ce cours présente des méthodes d’analyse et de modélisation des données utilisées en appui à la prise de décision d’affaires. Les thèmes principaux sont l’exploration de données, la régression, la prévision, les séries chronologiques et les modèles pour résultats binaires."
-  },
-  {
-    "objectID": "plan-de-cours.html#objectif-général",
-    "href": "plan-de-cours.html#objectif-général",
-    "title": "Plan de cours",
-    "section": "",
-    "text": "Développer la capacité d’analyser des données d’affaires avec R, de construire des modèles appropriés et de communiquer les résultats dans un langage utile pour la décision."
-  },
-  {
-    "objectID": "plan-de-cours.html#objectifs-spécifiques",
-    "href": "plan-de-cours.html#objectifs-spécifiques",
-    "title": "Plan de cours",
-    "section": "",
-    "text": "Préparer et décrire un tableau de données d’affaires.\nInterpréter des relations entre variables.\nAjuster et évaluer des modèles de régression.\nProduire des prévisions à court ou moyen terme.\nComparer des modèles selon leur utilité décisionnelle.\nPrésenter une recommandation claire à un public de gestion."
-  },
-  {
-    "objectID": "plan-de-cours.html#évaluations",
-    "href": "plan-de-cours.html#évaluations",
-    "title": "Plan de cours",
-    "section": "",
-    "text": "Voir la section Évaluations pour les squelettes des questionnaires, de l’examen intra et de l’examen final.\nTODO: Remplacer cette version par le plan officiel lorsque les dates, pondérations et modalités de la session seront confirmées."
-  },
-  {
     "objectID": "roadmap.html",
     "href": "roadmap.html",
     "title": "Roadmap de refonte du cours",
     "section": "",
-    "text": "Cette roadmap sert à organiser la refonte complète du cours MQT-2101 autour d’une progression plus appliquée, plus claire et plus orientée vers la décision d’affaires.\nLe résultat visé est un site Quarto publiable, maintenable et directement utilisable par les étudiant·es, avec du matériel en R, des activités contextualisées et des livrables progressifs.\n\n\n\n\nChaque séance doit partir d’une décision d’affaires réelle ou réaliste.\nChaque semaine doit expliquer où on va, pourquoi on y va et ce que les étudiant·es sauront faire.\nLes exemples doivent privilégier des contextes d’administration : ventes, marketing, opérations, finance, ressources humaines, satisfaction client, inventaire et prévision.\nLes contextes québécois ou canadiens doivent être utilisés lorsque cela améliore la pertinence pédagogique.\nLe code doit être en R et les documents doivent être en Quarto.\nLes données confidentielles ou nominatives ne doivent jamais être publiées.\n\n\n\n\n\n\n\n\n\n\n\n\nPhase\nPriorité\nRésultat attendu\n\n\n\n\n0. Stabiliser le dépôt et le site\nTrès haute\nSite Quarto publié et structure propre\n\n\n1. Cartographier l’ancien matériel\nTrès haute\nInventaire exploitable sans copier tel quel\n\n\n2. Définir la progression pédagogique\nTrès haute\nPlan hebdomadaire final avec objectifs et livrables\n\n\n3. Construire les données du cours\nHaute\nJeux de données propres, documentés et reproductibles\n\n\n4. Rédiger les semaines\nHaute\nNotes, capsules, exercices et mini-cas\n\n\n5. Développer les ateliers\nHaute\nAteliers guidés et cas appliqués\n\n\n6. Refaire les évaluations\nHaute\nÉvaluations cohérentes avec les compétences\n\n\n7. Produire les ressources transversales\nMoyenne\nGuides R, Quarto, statistiques et modélisation\n\n\n8. Tester, publier et améliorer\nContinue\nSite fiable, clair et prêt pour l’enseignement\n\n\n\n\n\n\nStatut : en cours.\nÀ faire :\n\nInitialiser le dépôt Git.\nCréer le dépôt GitHub.\nPublier le site avec GitHub Pages depuis docs/.\nVérifier que anciens_documents/sources_privees/ est ignoré par Git.\nVérifier que les solutionnaires ne sont pas rendus dans docs/.\nAjouter cette roadmap dans la navigation du site.\n\nCritère de réussite : le site est accessible en ligne et aucune archive privée n’est publiée.\n\n\n\nStatut : à faire.\nÀ faire :\n\nExtraire localement les ZIP dans anciens_documents/sources_privees/extraits/.\nFaire une table de correspondance entre ancien matériel et nouvelle structure.\nIdentifier les contenus réutilisables comme inspiration : thèmes, jeux de données, exercices, évaluations.\nIdentifier les contenus à remplacer : exemples trop génériques, données peu contextualisées, consignes désuètes.\nRepérer les fichiers nominatifs ou sensibles et les exclure de toute publication.\n\nLivrable : un fichier anciens_documents/correspondance_ancienne_nouvelle_structure.md.\n\n\n\nStatut : à faire.\nÀ faire :\n\nFinaliser les objectifs d’apprentissage par semaine.\nDéfinir le livrable court de chaque semaine.\nHarmoniser les sections Let’s eat the cake.\nClarifier les liens entre semaines, ateliers et évaluations.\nDéfinir les compétences évaluées dans les questionnaires, l’intra et le final.\n\nLivrable : une version finalisée de plan-de-cours.qmd et calendrier.qmd.\n\n\n\nStatut : à faire.\nÀ faire :\n\nChoisir les jeux de données officiels du cours.\nPrioriser des données canadiennes ou québécoises lorsque pertinent.\nCréer des jeux de données simulés lorsque les données réelles posent des enjeux de confidentialité.\nÉcrire les scripts de préparation dans scripts/.\nDocumenter chaque jeu de données dans donnees/README.md.\nAjouter un dictionnaire de variables pour chaque jeu de données important.\n\nLivrables :\n\nDonnées préparées dans donnees/preparees/.\nDonnées simulées dans donnees/simulees/.\nScripts reproductibles dans scripts/.\nDictionnaires de données.\n\n\n\n\nStatut : à faire.\nÀ faire pour chaque semaine :\n\nRédiger la mise en contexte business.\nCompléter les concepts clés.\nÉcrire trois capsules courtes.\nAjouter trois exercices intégrés : interprétation, code R, réflexion critique.\nDévelopper un mini-cas business.\nAjouter les erreurs fréquentes.\nDéfinir une trace de portfolio ou un livrable court.\nAjouter les références ou ressources pertinentes.\n\nOrdre recommandé :\n\nSemaine 01 : diagnostic statistique et décision.\nSemaine 02 : R, Quarto et reproductibilité.\nSemaine 03 : régression linéaire.\nSemaine 04 : transformations et non-linéarité.\nSemaine 05 : préparation intra.\nSemaine 06 : séries chronologiques.\nSemaine 07 : lissage.\nSemaine 08 : tendance et saisonnalité.\nSemaine 09 : variables externes et autocorrélation.\nSemaine 10 : classification et modèles avancés.\n\n\n\n\nStatut : à faire.\nÀ faire :\n\nAtelier 01 : explorer un tableau de données d’affaires.\nAtelier 02 : étude de cas de régression.\nAtelier 03 : prévision de ventes ou de demande.\nAtelier 04 : cas intégrateur de fin de session.\n\nChaque atelier doit contenir :\n\nun objectif clair;\ndes consignes pas à pas;\nun jeu de données;\nun livrable court;\nune grille formative;\nun solutionnaire conservé hors navigation et hors rendu public.\n\n\n\n\nStatut : à faire.\nÀ faire :\n\nDéfinir la pondération officielle.\nRédiger le questionnaire sur la régression.\nRédiger l’examen intra sur la régression.\nRédiger le questionnaire sur les séries chronologiques.\nRédiger l’examen final sur la prévision.\nCréer les grilles d’évaluation dans evaluations/grilles/.\nVérifier l’alignement entre objectifs, ateliers et évaluations.\n\nCritère de réussite : chaque évaluation mesure une compétence explicitement travaillée dans les semaines ou ateliers.\n\n\n\nStatut : à faire.\nÀ faire :\n\nCompléter l’aide-mémoire R.\nCompléter l’aide-mémoire statistique.\nCompléter l’aide-mémoire modélisation.\nCompléter le guide Quarto.\nCompléter le guide RStudio.\nAjouter une page de dépannage pour les erreurs fréquentes en R.\n\nLivrable : une section ressources/ utilisable pendant tout le cours.\n\n\n\nStatut : continu.\nÀ faire :\n\nRendre le site avec quarto render avant chaque publication.\nVérifier les liens internes.\nVérifier que les blocs de code R sont reproductibles.\nVérifier que les données nécessaires sont disponibles.\nTester le site sur GitHub Pages.\nFaire une passe de cohérence pédagogique avant le début de la session.\nFaire une passe de correction après chaque séance donnée.\n\nCommandes utiles :\nquarto::quarto_render(\".\")\nsource(\"scripts/99_render_site.R\")\n\n\n\n\nLe calendrier officiel est ajouté.\nLe plan de cours est finalisé.\nLes semaines 01 à 05 sont complètes.\nLes ateliers 01 et 02 sont complets.\nL’examen intra est prêt.\nLes données de régression sont prêtes et documentées.\nLes semaines 06 à 10 sont complètes ou suffisamment avancées.\nLes ateliers 03 et 04 sont complets.\nL’examen final est prêt.\nLe site GitHub Pages est à jour.\nLes fichiers privés ne sont pas suivis par Git.\n\n\n\n\n\nDocumentation Quarto sur les sites web : https://quarto.org/docs/websites/\nDocumentation Quarto sur GitHub Pages : https://quarto.org/docs/publishing/github-pages.html\nDocumentation GitHub Pages : https://docs.github.com/pages"
+    "text": "Cette roadmap sert à organiser la refonte complète du cours MQT-2101 autour d’une progression plus appliquée, plus claire et plus orientée vers la décision d’affaires.\nLe résultat visé est un site Quarto publiable, maintenable et directement utilisable par les étudiant·es, avec du matériel en R, des activités contextualisées et des livrables progressifs.\n\n\n\n\nChaque séance doit partir d’une décision d’affaires réelle ou réaliste.\nChaque semaine doit expliquer où on va, pourquoi on y va et ce que les étudiant·es sauront faire.\nLes exemples doivent privilégier des contextes d’administration : ventes, marketing, opérations, finance, ressources humaines, satisfaction client, inventaire et prévision.\nLes contextes québécois ou canadiens doivent être utilisés lorsque cela améliore la pertinence pédagogique.\nLe code doit être en R et les documents doivent être en Quarto.\nLes données confidentielles ou nominatives ne doivent jamais être publiées.\n\n\n\n\n\n\n\n\n\n\n\n\nPhase\nPriorité\nRésultat attendu\n\n\n\n\n0. Stabiliser le dépôt et le site\nTrès haute\nSite Quarto publié et structure propre\n\n\n1. Cartographier l’ancien matériel\nTrès haute\nInventaire exploitable sans copier tel quel\n\n\n2. Définir la progression pédagogique\nTrès haute\nPlan hebdomadaire final avec objectifs et livrables\n\n\n3. Construire les données du cours\nHaute\nJeux de données propres, documentés et reproductibles\n\n\n4. Rédiger les semaines\nHaute\nNotes, capsules, exercices et mini-cas\n\n\n5. Développer les ateliers\nHaute\nAteliers guidés et cas appliqués\n\n\n6. Refaire les évaluations\nHaute\nÉvaluations cohérentes avec les compétences\n\n\n7. Produire les ressources transversales\nMoyenne\nGuides R, Quarto, statistiques et modélisation\n\n\n8. Tester, publier et améliorer\nContinue\nSite fiable, clair et prêt pour l’enseignement\n\n\n\n\n\n\nStatut : en cours.\nÀ faire :\n\nInitialiser le dépôt Git.\nCréer le dépôt GitHub.\nPublier le site avec GitHub Pages depuis docs/.\nVérifier que anciens_documents/sources_privees/ est ignoré par Git.\nVérifier que les solutionnaires ne sont pas rendus dans docs/.\nAjouter cette roadmap dans la navigation du site.\n\nCritère de réussite : le site est accessible en ligne et aucune archive privée n’est publiée.\n\n\n\nStatut : commencé.\nÀ faire :\n\nExtraire localement les ZIP dans anciens_documents/sources_privees/extraits/.\nFaire une table de correspondance entre ancien matériel et nouvelle structure.\nIdentifier les contenus réutilisables comme inspiration : thèmes, jeux de données, exercices, évaluations.\nIdentifier les contenus à remplacer : exemples trop génériques, données peu contextualisées, consignes désuètes.\nRepérer les fichiers nominatifs ou sensibles et les exclure de toute publication.\n\nLivrable : un fichier anciens_documents/correspondance_ancienne_nouvelle_structure.md.\nÉtat actuel :\n\nLe matériel pédagogique non sensible a été extrait localement.\nLes archives d’examen sont ignorées par défaut.\nUn inventaire agrégé est disponible dans anciens_documents/inventaire_archives.csv.\nLa page migration-ancien-materiel.qmd documente la stratégie de réutilisation.\n\n\n\n\nStatut : à faire.\nÀ faire :\n\nFinaliser les objectifs d’apprentissage par semaine.\nDéfinir le livrable court de chaque semaine.\nHarmoniser les sections Let’s eat the cake.\nClarifier les liens entre semaines, ateliers et évaluations.\nDéfinir les compétences évaluées dans les questionnaires, l’intra et le final.\n\nLivrable : une version finalisée de plan-de-cours.qmd et calendrier.qmd.\n\n\n\nStatut : à faire.\nÀ faire :\n\nChoisir les jeux de données officiels du cours.\nPrioriser des données canadiennes ou québécoises lorsque pertinent.\nCréer des jeux de données simulés lorsque les données réelles posent des enjeux de confidentialité.\nÉcrire les scripts de préparation dans scripts/.\nDocumenter chaque jeu de données dans donnees/README.md.\nAjouter un dictionnaire de variables pour chaque jeu de données important.\n\nLivrables :\n\nDonnées préparées dans donnees/preparees/.\nDonnées simulées dans donnees/simulees/.\nScripts reproductibles dans scripts/.\nDictionnaires de données.\n\n\n\n\nStatut : à faire.\nÀ faire pour chaque semaine :\n\nRédiger la mise en contexte business.\nCompléter les concepts clés.\nÉcrire trois capsules courtes.\nAjouter trois exercices intégrés : interprétation, code R, réflexion critique.\nDévelopper un mini-cas business.\nAjouter les erreurs fréquentes.\nDéfinir une trace de portfolio ou un livrable court.\nAjouter les références ou ressources pertinentes.\n\nOrdre recommandé :\n\nSemaine 01 : diagnostic statistique et décision.\nSemaine 02 : R, Quarto et reproductibilité.\nSemaine 03 : régression linéaire.\nSemaine 04 : transformations et non-linéarité.\nSemaine 05 : préparation intra.\nSemaine 06 : séries chronologiques.\nSemaine 07 : lissage.\nSemaine 08 : tendance et saisonnalité.\nSemaine 09 : variables externes et autocorrélation.\nSemaine 10 : classification et modèles avancés.\n\n\n\n\nStatut : à faire.\nÀ faire :\n\nAtelier 01 : explorer un tableau de données d’affaires.\nAtelier 02 : étude de cas de régression.\nAtelier 03 : prévision de ventes ou de demande.\nAtelier 04 : cas intégrateur de fin de session.\n\nChaque atelier doit contenir :\n\nun objectif clair;\ndes consignes pas à pas;\nun jeu de données;\nun livrable court;\nune grille formative;\nun solutionnaire conservé hors navigation et hors rendu public.\n\n\n\n\nStatut : à faire.\nÀ faire :\n\nDéfinir la pondération officielle.\nRédiger le questionnaire sur la régression.\nRédiger l’examen intra sur la régression.\nRédiger le questionnaire sur les séries chronologiques.\nRédiger l’examen final sur la prévision.\nCréer les grilles d’évaluation dans evaluations/grilles/.\nVérifier l’alignement entre objectifs, ateliers et évaluations.\n\nCritère de réussite : chaque évaluation mesure une compétence explicitement travaillée dans les semaines ou ateliers.\n\n\n\nStatut : à faire.\nÀ faire :\n\nCompléter l’aide-mémoire R.\nCompléter l’aide-mémoire statistique.\nCompléter l’aide-mémoire modélisation.\nCompléter le guide Quarto.\nCompléter le guide RStudio.\nAjouter une page de dépannage pour les erreurs fréquentes en R.\n\nLivrable : une section ressources/ utilisable pendant tout le cours.\n\n\n\nStatut : continu.\nÀ faire :\n\nRendre le site avec quarto render avant chaque publication.\nVérifier les liens internes.\nVérifier que les blocs de code R sont reproductibles.\nVérifier que les données nécessaires sont disponibles.\nTester le site sur GitHub Pages.\nFaire une passe de cohérence pédagogique avant le début de la session.\nFaire une passe de correction après chaque séance donnée.\n\nCommandes utiles :\nquarto::quarto_render(\".\")\nsource(\"scripts/99_render_site.R\")\n\n\n\n\nLe calendrier officiel est ajouté.\nLe plan de cours est finalisé.\nLes semaines 01 à 05 sont complètes.\nLes ateliers 01 et 02 sont complets.\nL’examen intra est prêt.\nLes données de régression sont prêtes et documentées.\nLes semaines 06 à 10 sont complètes ou suffisamment avancées.\nLes ateliers 03 et 04 sont complets.\nL’examen final est prêt.\nLe site GitHub Pages est à jour.\nLes fichiers privés ne sont pas suivis par Git.\n\n\n\n\n\nDocumentation Quarto sur les sites web : https://quarto.org/docs/websites/\nDocumentation Quarto sur GitHub Pages : https://quarto.org/docs/publishing/github-pages.html\nDocumentation GitHub Pages : https://docs.github.com/pages"
   },
   {
     "objectID": "roadmap.html#objectif",
@@ -1124,7 +1047,7 @@
     "href": "roadmap.html#phase-1---cartographier-lancien-matériel",
     "title": "Roadmap de refonte du cours",
     "section": "",
-    "text": "Statut : à faire.\nÀ faire :\n\nExtraire localement les ZIP dans anciens_documents/sources_privees/extraits/.\nFaire une table de correspondance entre ancien matériel et nouvelle structure.\nIdentifier les contenus réutilisables comme inspiration : thèmes, jeux de données, exercices, évaluations.\nIdentifier les contenus à remplacer : exemples trop génériques, données peu contextualisées, consignes désuètes.\nRepérer les fichiers nominatifs ou sensibles et les exclure de toute publication.\n\nLivrable : un fichier anciens_documents/correspondance_ancienne_nouvelle_structure.md."
+    "text": "Statut : commencé.\nÀ faire :\n\nExtraire localement les ZIP dans anciens_documents/sources_privees/extraits/.\nFaire une table de correspondance entre ancien matériel et nouvelle structure.\nIdentifier les contenus réutilisables comme inspiration : thèmes, jeux de données, exercices, évaluations.\nIdentifier les contenus à remplacer : exemples trop génériques, données peu contextualisées, consignes désuètes.\nRepérer les fichiers nominatifs ou sensibles et les exclure de toute publication.\n\nLivrable : un fichier anciens_documents/correspondance_ancienne_nouvelle_structure.md.\nÉtat actuel :\n\nLe matériel pédagogique non sensible a été extrait localement.\nLes archives d’examen sont ignorées par défaut.\nUn inventaire agrégé est disponible dans anciens_documents/inventaire_archives.csv.\nLa page migration-ancien-materiel.qmd documente la stratégie de réutilisation."
   },
   {
     "objectID": "roadmap.html#phase-2---définir-la-progression-pédagogique",
@@ -1188,6 +1111,153 @@
     "title": "Roadmap de refonte du cours",
     "section": "",
     "text": "Documentation Quarto sur les sites web : https://quarto.org/docs/websites/\nDocumentation Quarto sur GitHub Pages : https://quarto.org/docs/publishing/github-pages.html\nDocumentation GitHub Pages : https://docs.github.com/pages"
+  },
+  {
+    "objectID": "plan-de-cours.html",
+    "href": "plan-de-cours.html",
+    "title": "Plan de cours",
+    "section": "",
+    "text": "Ce cours présente des méthodes d’analyse et de modélisation des données utilisées en appui à la prise de décision d’affaires. Les thèmes principaux sont l’exploration de données, la régression, la prévision, les séries chronologiques et les modèles pour résultats binaires.\n\n\n\nDévelopper la capacité d’analyser des données d’affaires avec R, de construire des modèles appropriés et de communiquer les résultats dans un langage utile pour la décision.\n\n\n\n\nPréparer et décrire un tableau de données d’affaires.\nInterpréter des relations entre variables.\nAjuster et évaluer des modèles de régression.\nProduire des prévisions à court ou moyen terme.\nComparer des modèles selon leur utilité décisionnelle.\nPrésenter une recommandation claire à un public de gestion.\n\n\n\n\nVoir la section Évaluations pour les squelettes des questionnaires, de l’examen intra et de l’examen final.\nTODO: Remplacer cette version par le plan officiel lorsque les dates, pondérations et modalités de la session seront confirmées."
+  },
+  {
+    "objectID": "plan-de-cours.html#description-provisoire",
+    "href": "plan-de-cours.html#description-provisoire",
+    "title": "Plan de cours",
+    "section": "",
+    "text": "Ce cours présente des méthodes d’analyse et de modélisation des données utilisées en appui à la prise de décision d’affaires. Les thèmes principaux sont l’exploration de données, la régression, la prévision, les séries chronologiques et les modèles pour résultats binaires."
+  },
+  {
+    "objectID": "plan-de-cours.html#objectif-général",
+    "href": "plan-de-cours.html#objectif-général",
+    "title": "Plan de cours",
+    "section": "",
+    "text": "Développer la capacité d’analyser des données d’affaires avec R, de construire des modèles appropriés et de communiquer les résultats dans un langage utile pour la décision."
+  },
+  {
+    "objectID": "plan-de-cours.html#objectifs-spécifiques",
+    "href": "plan-de-cours.html#objectifs-spécifiques",
+    "title": "Plan de cours",
+    "section": "",
+    "text": "Préparer et décrire un tableau de données d’affaires.\nInterpréter des relations entre variables.\nAjuster et évaluer des modèles de régression.\nProduire des prévisions à court ou moyen terme.\nComparer des modèles selon leur utilité décisionnelle.\nPrésenter une recommandation claire à un public de gestion."
+  },
+  {
+    "objectID": "plan-de-cours.html#évaluations",
+    "href": "plan-de-cours.html#évaluations",
+    "title": "Plan de cours",
+    "section": "",
+    "text": "Voir la section Évaluations pour les squelettes des questionnaires, de l’examen intra et de l’examen final.\nTODO: Remplacer cette version par le plan officiel lorsque les dates, pondérations et modalités de la session seront confirmées."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MQT-2101 : Analyse et modélisation des données",
+    "section": "",
+    "text": "Ce site regroupe le matériel principal du cours MQT-2101. Le cours est centré sur l’analyse appliquée des données, la modélisation, la prévision et l’utilisation de R pour soutenir des décisions d’affaires.\n\n\nFournir une structure claire pour les notes, les capsules, les exercices, les ateliers, les évaluations, les jeux de données et les ressources du cours.\n\n\n\nLe cours commence par le diagnostic statistique et l’utilisation de R, puis avance vers la régression, la prévision, les séries chronologiques et les modèles de classification.\n\n\n\nLes exemples et mini-cas privilégient les contextes d’administration : ventes, achalandage, campagnes marketing, satisfaction client, demande, inventaire, finance, ressources humaines et performance organisationnelle.\n\n# Exemple de point de départ pour une analyse business\nlibrary(tidyverse)\n\nventes &lt;- readr::read_csv(\"donnees/preparees/ventes_pme.csv\")\n\nventes |&gt;\n  group_by(mois) |&gt;\n  summarise(chiffre_affaires = sum(chiffre_affaires, na.rm = TRUE))\n\n\n\n\nTODO: Ajouter une courte présentation du cours, les liens institutionnels pertinents et les consignes de navigation pour les étudiant·es."
+  },
+  {
+    "objectID": "index.html#objectif-du-site",
+    "href": "index.html#objectif-du-site",
+    "title": "MQT-2101 : Analyse et modélisation des données",
+    "section": "",
+    "text": "Fournir une structure claire pour les notes, les capsules, les exercices, les ateliers, les évaluations, les jeux de données et les ressources du cours."
+  },
+  {
+    "objectID": "index.html#progression",
+    "href": "index.html#progression",
+    "title": "MQT-2101 : Analyse et modélisation des données",
+    "section": "",
+    "text": "Le cours commence par le diagnostic statistique et l’utilisation de R, puis avance vers la régression, la prévision, les séries chronologiques et les modèles de classification."
+  },
+  {
+    "objectID": "index.html#orientation-business",
+    "href": "index.html#orientation-business",
+    "title": "MQT-2101 : Analyse et modélisation des données",
+    "section": "",
+    "text": "Les exemples et mini-cas privilégient les contextes d’administration : ventes, achalandage, campagnes marketing, satisfaction client, demande, inventaire, finance, ressources humaines et performance organisationnelle.\n\n# Exemple de point de départ pour une analyse business\nlibrary(tidyverse)\n\nventes &lt;- readr::read_csv(\"donnees/preparees/ventes_pme.csv\")\n\nventes |&gt;\n  group_by(mois) |&gt;\n  summarise(chiffre_affaires = sum(chiffre_affaires, na.rm = TRUE))"
+  },
+  {
+    "objectID": "index.html#à-compléter",
+    "href": "index.html#à-compléter",
+    "title": "MQT-2101 : Analyse et modélisation des données",
+    "section": "",
+    "text": "TODO: Ajouter une courte présentation du cours, les liens institutionnels pertinents et les consignes de navigation pour les étudiant·es."
+  },
+  {
+    "objectID": "calendrier.html",
+    "href": "calendrier.html",
+    "title": "Calendrier",
+    "section": "",
+    "text": "Calendrier\nLes dates précises seront ajoutées lorsque le calendrier de la session sera confirmé.\n\n\n\n\n\n\n\n\nBloc\nActivité\nThème\n\n\n\n\nSemaine 01\nSéance 01\nIntroduction, décisions d’affaires et diagnostic statistique\n\n\nSemaine 02\nSéance 02\nIntroduction à R et Quarto\n\n\nSemaine 03\nAtelier 1\nExplorer un tableau de données d’affaires\n\n\nSemaine 04\nSéance 03\nRégression linéaire\n\n\nSemaine 05\nSéance 04\nRégression non linéaire et transformations\n\n\nSemaine 06\nAtelier 2\nÉtude de cas business en régression\n\n\nSemaine 07\nSéance 05\nPréparation à l’examen intra\n\n\nSemaine 08\nExamen intra\nAnalyse de régression à la maison\n\n\nSemaine 09\nSéance 06\nIntroduction à la prévision et aux séries chronologiques\n\n\nSemaine 10\nSéance 07\nMéthodes de lissage\n\n\nSemaine 11\nSéance 08\nTendance et saisonnalité\n\n\nSemaine 12\nAtelier 3\nPrévision des ventes ou de la demande\n\n\nSemaine 13\nSéance 09\nVariables externes et autocorrélation\n\n\nSemaine 14\nSéance 10\nRésultats binaires, classification et modèles avancés\n\n\nSemaine 15\nAtelier 4\nRécapitulation et intégration\n\n\nFin de session\nExamen final\nAnalyse de prévision à la maison\n\n\n\nTODO: Ajouter les dates officielles, les échéances et les liens directs vers les pages de remise."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html",
+    "href": "migration-ancien-materiel.html",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Cette page documente la phase 1 de la refonte du cours : utiliser l’ancien matériel comme source de référence, tout en reconstruisant le cours dans la nouvelle structure Quarto.\nL’objectif n’est pas de copier l’ancien cours. L’objectif est de récupérer ce qui est utile, de le convertir en .qmd, de moderniser le code R, de remplacer ou adapter les exemples, et de rattacher chaque activité à une décision d’affaires.\n\n\n\n\nLes anciennes archives restent dans anciens_documents/sources_privees/, un dossier ignoré par Git.\nLes archives d’examen sont considérées sensibles et ne sont pas extraites par défaut.\nLes anciens fichiers PDF, HTML, Rmd, CSV et XLSX servent de référence locale.\nLes nouveaux contenus publiés doivent être écrits en Quarto et en R.\nLes jeux de données ne doivent être publiés que si leur origine, leur licence et leur niveau de confidentialité sont acceptables.\n\n\n\n\nUn inventaire agrégé est disponible dans anciens_documents/inventaire_archives.csv.\nRésumé actuel :\n\n\n\nType\nNombre repéré dans les extraits pédagogiques\n\n\n\n\nRmd\n12\n\n\nCSV\n38\n\n\nXLSX\n8\n\n\nPDF\n60\n\n\nHTML\n13\n\n\nPPTX\n5\n\n\n\nLes deux archives d’examen à la maison ne sont pas utilisées pour le site public.\n\n\n\n\n\n\n\n\n\n\n\n\nAncienne source\nNouvelle destination\nCe qu’on récupère\nCe qu’on modifie\n\n\n\n\nPlan de cours PDF\nplan-de-cours.qmd, calendrier.qmd\nProgression générale, évaluations, objectifs\nReformuler autour de la décision d’affaires et de la nouvelle structure hebdomadaire\n\n\nSéance 02 Introduction\nmodules/semaine-02-r-quarto/\nIntroduction à R, importation, exploration, premiers exemples\nConvertir en Quarto, simplifier le flux de travail, remplacer les exemples peu liés à l’administration\n\n\nAtelier en classe 1\nmodules/atelier-01-r/\nExercices d’importation et d’exploration\nRemplacer les données étudiantes ou génériques par un tableau d’affaires\n\n\nSéance 03 Régression\nmodules/semaine-03-regression-lineaire/\nCorrélation, régression linéaire, exercices R\nRecontextualiser vers ventes, marketing, satisfaction client ou performance de succursales\n\n\nSéance 04 Régression non linéaire\nmodules/semaine-04-regression-nonlineaire/\nRégression logistique, transformations, modèles non linéaires\nClarifier la distinction non-linéarité, logistique et décision; créer des cas de départ client, crédit ou RH\n\n\nAtelier en classe 2\nmodules/atelier-02-regression/\nStructure d’atelier de régression et données RH\nRefaire en étude de cas business complète avec livrable court\n\n\nSéance 05 Préparation intra\nmodules/semaine-05-preparation-intra/, evaluations/examen-intra.qmd\nStructure de révision, exemples d’examen\nCréer un canevas Quarto et une grille alignée avec les compétences\n\n\nPréparation à l’examen\nevaluations/, modules/atelier-04-recapitulation/\nExemple de rapport et logique de synthèse\nNe pas reprendre tel quel; transformer en modèle de réponse et critères d’évaluation\n\n\nSéance 06 Prévision\nmodules/semaine-06-series-chronologiques-intro/\nIntroduction aux séries chronologiques, horizon, validation\nRemplacer ou compléter les exemples par ventes, demande ou tourisme\n\n\nSéance 07 Lissage\nmodules/semaine-07-lissage/\nMoyennes mobiles, lissage exponentiel, ETS\nModerniser le code, ajouter interprétation coût d’erreur et décision de stock\n\n\nSéance 08 Modèles avec tendance et saisonnalité\nmodules/semaine-08-tendance-saisonnalite/\nTendance, saisonnalité, exemples de ventes\nTransformer en cas PME avec objectifs mensuels\n\n\nAtelier en classe 3\nmodules/atelier-03-series-chronologiques/\nExercices de séries chronologiques\nRefaire autour de prévision de ventes, demande ou achalandage\n\n\nSéance 09 Modèles basés sur la régression II\nmodules/semaine-09-variables-externes-autocorrelation/\nVariables externes, autocorrélation, validation\nAjouter un scénario avec promotions, prix et indicateurs économiques disponibles au moment de prévoir\n\n\nSéance 10 Prévision des résultats binaires\nmodules/semaine-10-classification-modeles-avances/\nRésultats binaires, logistique, classification\nCentrer sur fidélisation client, réponse marketing ou risque de défaut\n\n\nSéance 11 Récapitulation\nmodules/atelier-04-recapitulation/\nSynthèse de fin de session\nTransformer en atelier intégrateur avec décision finale\n\n\nSolutionnaires séances\nmodules/*/solutions.qmd\nInspiration pour les solutions\nGarder hors rendu public et retravailler après les exercices\n\n\n\n\n\n\nPour chaque module, la migration doit suivre le même protocole :\n\nLire localement les anciennes présentations, Rmd, HTML et données pertinentes.\nExtraire les concepts qui restent pédagogiquement utiles.\nÉcrire ou réécrire la section Let’s eat the cake.\nCréer une mise en contexte business plus claire.\nRemplacer les exemples par des données d’administration lorsque possible.\nConvertir le code vers un style R moderne et reproductible.\nAjouter les exercices AE 1, AE 2 et AE 3.\nAjouter un mini-cas business.\nAjouter un livrable court de portfolio.\nRendre le site et vérifier que le module compile.\n\n\n\n\n\n\n\n\n\n\n\n\nDonnées anciennes repérées\nPriorité\nDécision provisoire\n\n\n\n\nemployee_survey.csv\nHaute\nRéutiliser comme inspiration pour RH et satisfaction au travail; vérifier origine et licence\n\n\nventes.csv\nHaute\nExaminer pour semaine 08; potentiellement adapter à une PME québécoise\n\n\nLoan.csv, Green.csv\nMoyenne\nExaminer pour classification, crédit ou décision client\n\n\nchomage.csv\nMoyenne\nExaminer pour indicateurs économiques et contexte canadien ou québécois si pertinent\n\n\namtrak_ridership.csv\nMoyenne\nUtile pour la méthode, mais contexte à remplacer ou compléter par transport, tourisme ou ventes locales\n\n\nGoldPrices.csv, stockmk.xlsx\nMoyenne\nUtile pour prévision financière; à contextualiser en finance d’entreprise\n\n\nStudentPerformanceFactors.csv, apple_quality.csv, masculinity.csv\nFaible\nPeu aligné avec administration; remplacer sauf si besoin d’exercice technique court\n\n\nTitanic.csv, Titanic_dataset.csv, Auto\nFaible\nTrop classiques ou peu alignés; éviter dans la nouvelle version\n\n\nDonnées COVID mondiales\nFaible\nÀ éviter sauf si une décision opérationnelle claire est ajoutée\n\n\nDonnées d’examen avec fichiers nominatifs\nNulle\nNe pas utiliser ni publier\n\n\n\nJe ne connais pas encore l’origine ni la licence de tous ces fichiers. Cette vérification doit être faite avant toute publication de données.\n\n\n\n\nCréer un fichier de travail par module avec les anciennes sources à consulter.\nPrioriser les semaines 01 à 05, car elles mènent à l’examen intra.\nConstruire un premier jeu de données business pour l’atelier 01.\nConstruire ou adapter un jeu de données de régression pour les semaines 03 et 04.\nPréparer une version moderne du canevas d’examen intra.\nReporter les données non vérifiées dans une liste de validation.\n\n\n\n\nsource(\"scripts/02_extract_old_material.R\")\nsource(\"scripts/03_inventory_old_material.R\")\n\n\n\nStatut : commencé.\nFait :\n\nExtraction locale du matériel pédagogique non sensible.\nExclusion par défaut des archives d’examen.\nInventaire agrégé des archives.\nTable de correspondance ancien matériel vers nouvelle structure.\n\nÀ faire :\n\nExaminer plus finement les Rmd et PDF par module.\nVérifier l’origine et la licence des données.\nDécider quels jeux de données seront adaptés, remplacés ou simulés.\nCommencer la migration détaillée de la semaine 01 et de la semaine 02."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#objectif",
+    "href": "migration-ancien-materiel.html#objectif",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Cette page documente la phase 1 de la refonte du cours : utiliser l’ancien matériel comme source de référence, tout en reconstruisant le cours dans la nouvelle structure Quarto.\nL’objectif n’est pas de copier l’ancien cours. L’objectif est de récupérer ce qui est utile, de le convertir en .qmd, de moderniser le code R, de remplacer ou adapter les exemples, et de rattacher chaque activité à une décision d’affaires."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#décision-de-migration",
+    "href": "migration-ancien-materiel.html#décision-de-migration",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Les anciennes archives restent dans anciens_documents/sources_privees/, un dossier ignoré par Git.\nLes archives d’examen sont considérées sensibles et ne sont pas extraites par défaut.\nLes anciens fichiers PDF, HTML, Rmd, CSV et XLSX servent de référence locale.\nLes nouveaux contenus publiés doivent être écrits en Quarto et en R.\nLes jeux de données ne doivent être publiés que si leur origine, leur licence et leur niveau de confidentialité sont acceptables."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#inventaire-agrégé",
+    "href": "migration-ancien-materiel.html#inventaire-agrégé",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Un inventaire agrégé est disponible dans anciens_documents/inventaire_archives.csv.\nRésumé actuel :\n\n\n\nType\nNombre repéré dans les extraits pédagogiques\n\n\n\n\nRmd\n12\n\n\nCSV\n38\n\n\nXLSX\n8\n\n\nPDF\n60\n\n\nHTML\n13\n\n\nPPTX\n5\n\n\n\nLes deux archives d’examen à la maison ne sont pas utilisées pour le site public."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#correspondance-ancienne-vers-nouvelle-structure",
+    "href": "migration-ancien-materiel.html#correspondance-ancienne-vers-nouvelle-structure",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Ancienne source\nNouvelle destination\nCe qu’on récupère\nCe qu’on modifie\n\n\n\n\nPlan de cours PDF\nplan-de-cours.qmd, calendrier.qmd\nProgression générale, évaluations, objectifs\nReformuler autour de la décision d’affaires et de la nouvelle structure hebdomadaire\n\n\nSéance 02 Introduction\nmodules/semaine-02-r-quarto/\nIntroduction à R, importation, exploration, premiers exemples\nConvertir en Quarto, simplifier le flux de travail, remplacer les exemples peu liés à l’administration\n\n\nAtelier en classe 1\nmodules/atelier-01-r/\nExercices d’importation et d’exploration\nRemplacer les données étudiantes ou génériques par un tableau d’affaires\n\n\nSéance 03 Régression\nmodules/semaine-03-regression-lineaire/\nCorrélation, régression linéaire, exercices R\nRecontextualiser vers ventes, marketing, satisfaction client ou performance de succursales\n\n\nSéance 04 Régression non linéaire\nmodules/semaine-04-regression-nonlineaire/\nRégression logistique, transformations, modèles non linéaires\nClarifier la distinction non-linéarité, logistique et décision; créer des cas de départ client, crédit ou RH\n\n\nAtelier en classe 2\nmodules/atelier-02-regression/\nStructure d’atelier de régression et données RH\nRefaire en étude de cas business complète avec livrable court\n\n\nSéance 05 Préparation intra\nmodules/semaine-05-preparation-intra/, evaluations/examen-intra.qmd\nStructure de révision, exemples d’examen\nCréer un canevas Quarto et une grille alignée avec les compétences\n\n\nPréparation à l’examen\nevaluations/, modules/atelier-04-recapitulation/\nExemple de rapport et logique de synthèse\nNe pas reprendre tel quel; transformer en modèle de réponse et critères d’évaluation\n\n\nSéance 06 Prévision\nmodules/semaine-06-series-chronologiques-intro/\nIntroduction aux séries chronologiques, horizon, validation\nRemplacer ou compléter les exemples par ventes, demande ou tourisme\n\n\nSéance 07 Lissage\nmodules/semaine-07-lissage/\nMoyennes mobiles, lissage exponentiel, ETS\nModerniser le code, ajouter interprétation coût d’erreur et décision de stock\n\n\nSéance 08 Modèles avec tendance et saisonnalité\nmodules/semaine-08-tendance-saisonnalite/\nTendance, saisonnalité, exemples de ventes\nTransformer en cas PME avec objectifs mensuels\n\n\nAtelier en classe 3\nmodules/atelier-03-series-chronologiques/\nExercices de séries chronologiques\nRefaire autour de prévision de ventes, demande ou achalandage\n\n\nSéance 09 Modèles basés sur la régression II\nmodules/semaine-09-variables-externes-autocorrelation/\nVariables externes, autocorrélation, validation\nAjouter un scénario avec promotions, prix et indicateurs économiques disponibles au moment de prévoir\n\n\nSéance 10 Prévision des résultats binaires\nmodules/semaine-10-classification-modeles-avances/\nRésultats binaires, logistique, classification\nCentrer sur fidélisation client, réponse marketing ou risque de défaut\n\n\nSéance 11 Récapitulation\nmodules/atelier-04-recapitulation/\nSynthèse de fin de session\nTransformer en atelier intégrateur avec décision finale\n\n\nSolutionnaires séances\nmodules/*/solutions.qmd\nInspiration pour les solutions\nGarder hors rendu public et retravailler après les exercices"
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#stratégie-de-mise-à-jour-des-contenus",
+    "href": "migration-ancien-materiel.html#stratégie-de-mise-à-jour-des-contenus",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Pour chaque module, la migration doit suivre le même protocole :\n\nLire localement les anciennes présentations, Rmd, HTML et données pertinentes.\nExtraire les concepts qui restent pédagogiquement utiles.\nÉcrire ou réécrire la section Let’s eat the cake.\nCréer une mise en contexte business plus claire.\nRemplacer les exemples par des données d’administration lorsque possible.\nConvertir le code vers un style R moderne et reproductible.\nAjouter les exercices AE 1, AE 2 et AE 3.\nAjouter un mini-cas business.\nAjouter un livrable court de portfolio.\nRendre le site et vérifier que le module compile."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#priorité-de-réutilisation-des-données",
+    "href": "migration-ancien-materiel.html#priorité-de-réutilisation-des-données",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Données anciennes repérées\nPriorité\nDécision provisoire\n\n\n\n\nemployee_survey.csv\nHaute\nRéutiliser comme inspiration pour RH et satisfaction au travail; vérifier origine et licence\n\n\nventes.csv\nHaute\nExaminer pour semaine 08; potentiellement adapter à une PME québécoise\n\n\nLoan.csv, Green.csv\nMoyenne\nExaminer pour classification, crédit ou décision client\n\n\nchomage.csv\nMoyenne\nExaminer pour indicateurs économiques et contexte canadien ou québécois si pertinent\n\n\namtrak_ridership.csv\nMoyenne\nUtile pour la méthode, mais contexte à remplacer ou compléter par transport, tourisme ou ventes locales\n\n\nGoldPrices.csv, stockmk.xlsx\nMoyenne\nUtile pour prévision financière; à contextualiser en finance d’entreprise\n\n\nStudentPerformanceFactors.csv, apple_quality.csv, masculinity.csv\nFaible\nPeu aligné avec administration; remplacer sauf si besoin d’exercice technique court\n\n\nTitanic.csv, Titanic_dataset.csv, Auto\nFaible\nTrop classiques ou peu alignés; éviter dans la nouvelle version\n\n\nDonnées COVID mondiales\nFaible\nÀ éviter sauf si une décision opérationnelle claire est ajoutée\n\n\nDonnées d’examen avec fichiers nominatifs\nNulle\nNe pas utiliser ni publier\n\n\n\nJe ne connais pas encore l’origine ni la licence de tous ces fichiers. Cette vérification doit être faite avant toute publication de données."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#plan-de-travail-immédiat",
+    "href": "migration-ancien-materiel.html#plan-de-travail-immédiat",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Créer un fichier de travail par module avec les anciennes sources à consulter.\nPrioriser les semaines 01 à 05, car elles mènent à l’examen intra.\nConstruire un premier jeu de données business pour l’atelier 01.\nConstruire ou adapter un jeu de données de régression pour les semaines 03 et 04.\nPréparer une version moderne du canevas d’examen intra.\nReporter les données non vérifiées dans une liste de validation."
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#commandes-utiles",
+    "href": "migration-ancien-materiel.html#commandes-utiles",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "source(\"scripts/02_extract_old_material.R\")\nsource(\"scripts/03_inventory_old_material.R\")"
+  },
+  {
+    "objectID": "migration-ancien-materiel.html#état-de-la-phase-1",
+    "href": "migration-ancien-materiel.html#état-de-la-phase-1",
+    "title": "Migration de l’ancien matériel",
+    "section": "",
+    "text": "Statut : commencé.\nFait :\n\nExtraction locale du matériel pédagogique non sensible.\nExclusion par défaut des archives d’examen.\nInventaire agrégé des archives.\nTable de correspondance ancien matériel vers nouvelle structure.\n\nÀ faire :\n\nExaminer plus finement les Rmd et PDF par module.\nVérifier l’origine et la licence des données.\nDécider quels jeux de données seront adaptés, remplacés ou simulés.\nCommencer la migration détaillée de la semaine 01 et de la semaine 02."
   },
   {
     "objectID": "modules/atelier-01-r/guide-atelier.html",

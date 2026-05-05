@@ -102,7 +102,15 @@ Pour extraire les archives localement :
 source("scripts/02_extract_old_material.R")
 ```
 
-L'extraction se fait dans `anciens_documents/sources_privees/extraits/` sans écraser les fichiers existants.
+L'extraction se fait dans `anciens_documents/sources_privees/extraits/` sans écraser les fichiers existants. Les archives d'examen sont ignorées par défaut parce qu'elles peuvent contenir des fichiers nominatifs.
+
+Pour créer l'inventaire agrégé :
+
+```r
+source("scripts/03_inventory_old_material.R")
+```
+
+La correspondance entre l'ancien matériel et la nouvelle structure est documentée dans `migration-ancien-materiel.qmd` et `anciens_documents/correspondance_ancienne_nouvelle_structure.md`.
 
 ## Prochaines étapes pédagogiques
 
@@ -110,4 +118,3 @@ L'extraction se fait dans `anciens_documents/sources_privees/extraits/` sans éc
 - Ajouter des données canadiennes ou québécoises lorsque c'est pertinent.
 - Construire des mini-cas orientés ventes, demande, marketing, opérations, finance, ressources humaines et performance organisationnelle.
 - Ajouter les grilles officielles d'évaluation.
-
