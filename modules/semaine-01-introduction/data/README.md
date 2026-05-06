@@ -6,7 +6,8 @@ Ce dossier contient les jeux de données publics utilisés pour reconstruire la 
 
 - `birth_us.csv` : observations quotidiennes de naissances aux États-Unis, utilisées pour revoir les variables, les observations, les mesures descriptives et la préparation d'un tableau.
 - `safety_airlines.csv` : données descriptives sur des compagnies aériennes, utilisées pour discuter des indicateurs, des échelles de comparaison et de la lecture prudente d'un tableau.
-- `diagnostic_succursales.csv` : jeu de données simulé créé pendant la première ébauche du module. Il est conservé pour traçabilité, mais le parcours principal utilise `birth_us.csv` et `safety_airlines.csv`.
+
+Le fichier `diagnostic_succursales.csv`, créé pendant une première ébauche du module, n'est plus publié avec la semaine 01. Il est archivé dans `anciens_documents/traces_creation/semaine-01/` pour conserver la trace du travail sans l'inclure dans le site étudiant.
 
 ## Origine
 
