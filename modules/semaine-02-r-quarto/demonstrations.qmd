@@ -9,41 +9,137 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Reproduire un premier flux de travail R et Quarto : importer un fichier CSV, inspecter le tableau, préparer les variables, vérifier les valeurs manquantes, produire un résumé et créer un graphique.
 
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-semaine-02-demonstrations
+#| include: false
 library(tidyverse)
 library(janitor)
+library(lubridate)
+library(scales)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Démonstration 1 - Inspecter le tableau
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+#| label: inspection-semaine-02
+glimpse(ventes_operations)
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+Questions à se poser :
+
+- Que représente une ligne?
+- Quelles variables sont numériques?
+- Quelles variables sont catégorielles?
+- Quelles variables contiennent des dates?
+
+## Démonstration 2 - Factoriser les variables catégorielles
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+#| label: factorisation-semaine-02
+ventes_preparees <- ventes_operations |>
+  mutate(
+    mois = ymd(mois),
+    succursale = factor(succursale),
+    region = factor(region),
+    campagne_locale = factor(campagne_locale),
+    canal_principal = factor(canal_principal)
+  )
+
+ventes_preparees |>
+  summarise(
+    nb_lignes = n(),
+    nb_succursales = n_distinct(succursale),
+    nb_regions = n_distinct(region),
+    nb_canaux = n_distinct(canal_principal),
+    mois_min = min(mois, na.rm = TRUE),
+    mois_max = max(mois, na.rm = TRUE)
+  ) |>
+  knitr::kable()
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## Démonstration 3 - Vérifier les valeurs manquantes
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+```{r}
+#| label: valeurs-manquantes-semaine-02
+diagnostic_manquants <- ventes_preparees |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0)
 
-## À vérifier
+diagnostic_manquants
+```
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+::: {.callout-important title="À retenir"}
+Une valeur manquante n'est pas une erreur à supprimer automatiquement. Il faut d'abord comprendre où elle apparaît et comment elle peut influencer le résultat.
+:::
 
+## Démonstration 4 - Résumer un tableau
+
+```{r}
+#| label: resume-succursale-semaine-02
+resume_succursales <- ventes_preparees |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+resume_succursales |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    panier_moyen = currency_ca(panier_moyen),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  ) |>
+  knitr::kable()
+```
+
+## Démonstration 5 - Créer un graphique
+
+```{r}
+#| label: graphique-semaine-02
+#| fig-width: 8
+#| fig-height: 4.8
+resume_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(ventes_totales, succursale)) +
+  geom_col(fill = "#0B4F6C") +
+  scale_x_continuous(labels = currency_ca) +
+  labs(
+    title = "Ventes totales par succursale",
+    x = "Ventes",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+## Synthèse
+
+Un premier rapport reproductible doit conserver le code d'importation, les transformations, les diagnostics et les graphiques. Les résultats deviennent ainsi vérifiables et réutilisables.

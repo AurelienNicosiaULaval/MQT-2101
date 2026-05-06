@@ -7,35 +7,9 @@ format:
 
 # Semaine 04 - Régression non linéaire et transformations
 
+Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
 
-
-
-
-
-## Parcours d'apprentissage
-
-Cette page principale donne l'ordre de travail recommandé. Les pages spécialisées servent à consulter les capsules, les démonstrations, les exercices, les lectures et les consignes sans surcharger le parcours.
-
-| Étape | À faire | Où aller | Trace attendue |
-|---:|---|---|---|
-| 1 | Lire l'objectif, la section `Let’s eat the cake` et le contexte. | Page actuelle | Une phrase sur ce que le module permet de faire. |
-| 2 | Visionner la capsule 1 : Limites de la relation linéaire. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 3 | Faire la pause active associée à la capsule 1. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 4 | Visionner la capsule 2 : Transformations de variables. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 5 | Faire la pause active associée à la capsule 2. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 6 | Visionner la capsule 3 : Modèles non linéaires simples. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 7 | Faire la pause active associée à la capsule 3. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 8 | Visionner la capsule 4 : Interprétation appliquée. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 9 | Faire la pause active associée à la capsule 4. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 10 | Reproduire les démonstrations R dans l'ordre. | [Démonstrations R](demonstrations.qmd) | Code exécuté et résultat observé. |
-| 11 | Faire les exercices sans regarder les solutions. | [Exercices](exercices.qmd) | Réponses et code R personnels. |
-| 12 | Ouvrir les solutions cachées pour corriger et annoter son travail. | [Exercices](exercices.qmd) | Corrections et questions restantes. |
-| 13 | Consulter les lectures ciblées. | [Lectures](lectures.qmd) | Une idée ou référence à retenir. |
-| 14 | Produire le livrable court. | [Informations](informations.qmd) | Comparaison de deux spécifications de modèle. |
-
-::: {.callout-tip title="Mode de travail"}
-Le module est conçu pour être fait de façon autonome : capsule courte, pause active, démonstration R, exercice, correction, synthèse.
-:::
+Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.
 
 ## Let’s eat the cake
 
@@ -52,11 +26,15 @@ Résultat final attendu : une proposition de transformation et son interprétati
 
 Lien avec une décision d'affaires réelle : éviter une extrapolation trompeuse dans une décision de prix, de marketing ou d'inventaire.
 
+
+
 ## Mise en contexte
 
 Un commerce observe que les ventes augmentent avec l'achalandage, mais de moins en moins rapidement lorsque le magasin devient saturé.
 
 TODO: Ajouter un exemple de données d'achalandage et de ventes.
+
+
 
 ## Concepts clés
 
@@ -66,41 +44,87 @@ TODO: Ajouter un exemple de données d'achalandage et de ventes.
 - Comparaison visuelle des ajustements.
 - Interprétation sur l'échelle transformée.
 
-## Capsules de la semaine
 
-- Capsule 1 : Détecter une relation non linéaire.
-- Capsule 2 : Transformations et termes polynomiaux.
-- Capsule 3 : Choisir un modèle interprétable.
 
-## Exercices d’application intégrés
+## Préparer votre espace de travail
 
-AE 1 : interprétation. Décrire la forme d'une relation ventes-achalandage.
+Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.
 
-AE 2 : calcul ou code R.
+Vérifiez aussi les fichiers disponibles dans [les informations du module](informations.qmd), notamment les données publiques et les consignes liées au matériel ancien.
 
-```{r}
-#| eval: false
-library(tidyverse)
-library(broom)
+## Capsule 1 - Limites de la relation linéaire
 
-modele_log <- lm(log(ventes) ~ achalandage, data = commerce)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = commerce)
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
 
-bind_rows(
-  broom::glance(modele_log) |> mutate(modele = "log"),
-  broom::glance(modele_quad) |> mutate(modele = "quadratique")
-)
-```
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
 
-AE 3 : réflexion critique. Expliquer pourquoi un meilleur ajustement numérique n'est pas toujours un meilleur modèle d'affaires.
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
+
+## Capsule 2 - Transformations de variables
+
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
+
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
+
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
+
+## Capsule 3 - Modèles non linéaires simples
+
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
+
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
+
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
+
+## Capsule 4 - Interprétation appliquée
+
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
+
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
+
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
+
+## Démonstrations R
+
+Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
+
+Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
+
+## Exercices d'application
+
+Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
+
+Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
+
+## Correction avec solutions cachées
+
+Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
+
+Trace attendue : une correction courte et une liste de questions restantes.
+
+## Lectures ciblées
+
+Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
+
+Trace attendue : une idée utile, une définition ou une référence à retenir.
+
+## Trace finale
+
+Terminez le module en produisant le livrable court : Comparaison de deux spécifications de modèle.
+
+Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
 
 ## Mini-cas business
 
 Achalandage et saturation : quand une promotion cesse-t-elle de produire un gain proportionnel?
 
+
+
 ## À retenir
 
 Une transformation doit améliorer l'ajustement tout en gardant une interprétation utile pour la décision.
+
+
 
 ## Erreurs fréquentes
 
@@ -108,11 +132,16 @@ Une transformation doit améliorer l'ajustement tout en gardant une interprétat
 - Comparer des modèles sur des échelles différentes sans prudence.
 - Extrapoler au-delà de la plage observée.
 
-## Trace de portfolio ou livrable court
 
-Comparer deux modèles et recommander celui qui sert le mieux la décision.
+
+## Lien avec l'ancien matériel
+
+Source ancienne de référence : `MQT-2101-A25_Séance 04_ Régression non.zip`.
+
+Les fichiers privés, PowerPoint, PDF protégés, solutionnaires et archives ne sont pas publiés dans le site.
+
+
 
 ## Pour aller plus loin
 
 TODO: Ajouter un exemple de transformation logarithmique avec interprétation en pourcentage.
-

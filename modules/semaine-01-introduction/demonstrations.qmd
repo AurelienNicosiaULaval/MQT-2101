@@ -9,41 +9,153 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Reproduire les premiers gestes d'analyse descriptive avec R : importer un tableau, vérifier les variables, produire des indicateurs simples et interpréter les résultats avec prudence.
+
+Ces démonstrations accompagnent le parcours de la semaine 01. Elles ne remplacent pas les exercices : elles montrent d'abord comment raisonner avec le code.
 
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-semaine-01-demonstrations
+#| include: false
 library(tidyverse)
 library(janitor)
+library(lubridate)
+library(scales)
 
-# TODO charger les packages propres au module.
+birth_path <- if (file.exists("data/birth_us.csv")) {
+  "data/birth_us.csv"
+} else {
+  "modules/semaine-01-introduction/data/birth_us.csv"
+}
+
+safety_path <- if (file.exists("data/safety_airlines.csv")) {
+  "data/safety_airlines.csv"
+} else {
+  "modules/semaine-01-introduction/data/safety_airlines.csv"
+}
+
+birth_us <- readr::read_csv(birth_path, show_col_types = FALSE) |>
+  clean_names()
+
+safety_airlines <- readr::read_csv(safety_path, show_col_types = FALSE) |>
+  clean_names()
+
+number_fr <- scales::label_number(big.mark = " ", decimal.mark = ",")
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Démonstration 1 - Lire et préparer un tableau
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+#| label: preparation-birth-us
+birth_prepare <- birth_us |>
+  mutate(
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi",
+        "mardi",
+        "mercredi",
+        "jeudi",
+        "vendredi",
+        "samedi",
+        "dimanche"
+      )
+    )
+  )
+
+birth_prepare |>
+  select(date, jour_semaine, births) |>
+  slice_head(n = 6)
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+À observer :
+
+- l'unité d'observation;
+- le type de chaque variable;
+- les variables qui peuvent être utilisées pour une analyse temporelle;
+- les limites d'un codage numérique du jour de la semaine.
+
+## Démonstration 2 - Analyse univariée
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+#| label: resume-birth-us
+birth_prepare |>
+  summarise(
+    jours = n(),
+    naissances_min = min(births, na.rm = TRUE),
+    naissances_moyennes = mean(births, na.rm = TRUE),
+    naissances_max = max(births, na.rm = TRUE)
+  ) |>
+  mutate(across(where(is.numeric), \(x) round(x, 1)))
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+```{r}
+#| label: graphique-birth-us
+#| fig-width: 8
+#| fig-height: 4.8
+birth_prepare |>
+  ggplot(aes(births)) +
+  geom_histogram(bins = 30, fill = "#2A9D8F", color = "white") +
+  labs(
+    title = "Distribution quotidienne du nombre de naissances",
+    x = "Nombre de naissances",
+    y = "Nombre de jours"
+  ) +
+  theme_minimal(base_size = 12)
+```
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+## Démonstration 3 - Analyse bivariée
 
-## À vérifier
+```{r}
+#| label: naissance-jour-semaine
+#| fig-width: 8
+#| fig-height: 4.8
+birth_prepare |>
+  filter(!is.na(jour_semaine)) |>
+  ggplot(aes(jour_semaine, births)) +
+  geom_boxplot(fill = "#E9C46A", color = "#1F2933") +
+  labs(
+    title = "Naissances selon le jour de la semaine",
+    x = NULL,
+    y = "Nombre de naissances"
+  ) +
+  theme_minimal(base_size = 12)
+```
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+::: {.callout-important title="Interprétation prudente"}
+Le graphique décrit des écarts. Il ne suffit pas à expliquer les causes de ces écarts.
+:::
 
+## Démonstration 4 - Indicateurs et échelle de comparaison
+
+Le fichier `safety_airlines.csv` permet de rappeler qu'un indicateur doit être comparé à une échelle pertinente.
+
+```{r}
+#| label: safety-indicateurs
+safety_resume <- safety_airlines |>
+  mutate(
+    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
+    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
+  ) |>
+  arrange(desc(incidents_par_milliard))
+
+safety_resume |>
+  select(
+    airline,
+    avail_seat_km_per_week,
+    incidents_00_14,
+    incidents_par_milliard
+  ) |>
+  mutate(
+    avail_seat_km_per_week = number_fr(avail_seat_km_per_week),
+    incidents_par_milliard = round(incidents_par_milliard, 3)
+  ) |>
+  slice_head(n = 8)
+```
+
+## Synthèse
+
+Avant de choisir une méthode statistique, il faut comprendre ce que représente une ligne, reconnaître les types de variables, vérifier les formats et choisir des indicateurs adaptés à l'échelle de comparaison.

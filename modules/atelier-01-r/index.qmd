@@ -7,37 +7,9 @@ format:
 
 # Atelier 01 - Explorer un tableau de données d'affaires
 
+Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
 
-
-
-
-
-## Parcours d'apprentissage
-
-Cette page principale donne l'ordre de travail recommandé. Les pages spécialisées servent à consulter les capsules, les démonstrations, les exercices, les lectures et les consignes sans surcharger le parcours.
-
-| Étape | À faire | Où aller | Trace attendue |
-|---:|---|---|---|
-| 1 | Lire l'objectif, la section `Let’s eat the cake` et le contexte. | Page actuelle | Une phrase sur ce que le module permet de faire. |
-| 2 | Visionner la capsule 1 : Rappel du diagnostic statistique. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 3 | Faire la pause active associée à la capsule 1. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 4 | Visionner la capsule 2 : Importation et inspection. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 5 | Faire la pause active associée à la capsule 2. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 6 | Visionner la capsule 3 : Indicateurs descriptifs. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 7 | Faire la pause active associée à la capsule 3. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 8 | Visionner la capsule 4 : Graphiques exploratoires. Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |
-| 9 | Faire la pause active associée à la capsule 4. | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |
-| 10 | Reproduire les démonstrations R dans l'ordre. | [Démonstrations R](demonstrations.qmd) | Code exécuté et résultat observé. |
-| 11 | Faire les exercices sans regarder les solutions. | [Exercices](exercices.qmd) | Réponses et code R personnels. |
-| 12 | Ouvrir les solutions cachées pour corriger et annoter son travail. | [Exercices](exercices.qmd) | Corrections et questions restantes. |
-| 13 | Consulter les lectures ciblées. | [Lectures](lectures.qmd) | Une idée ou référence à retenir. |
-| 14 | Produire le livrable court. | [Informations](informations.qmd) | Court rapport Quarto d'exploration. |
-
-::: {.callout-tip title="Mode de travail"}
-Le module est conçu pour être fait de façon autonome : capsule courte, pause active, démonstration R, exercice, correction, synthèse.
-:::
-
-Pour les ateliers, le [guide d'atelier](guide-atelier.qmd) donne aussi le déroulement détaillé en classe.
+Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.
 
 ## Let’s eat the cake
 
@@ -58,134 +30,101 @@ Résultat final attendu : un court rapport Quarto qui présente trois constats, 
 
 Lien avec une décision d'affaires réelle : apprendre à choisir si une analyse doit d'abord porter sur les ventes, la satisfaction, les ruptures de stock ou les délais de livraison.
 
-## Le fil conducteur
 
-Cet atelier prolonge la semaine 01. La semaine 01 installe la logique de diagnostic; l'atelier 01 transforme cette logique en rapport Quarto reproductible.
 
-Le parcours reste volontairement descriptif. L'objectif n'est pas encore d'ajuster un modèle, mais de lire un tableau, calculer des indicateurs et formuler des constats prudents.
+## Mise en contexte
 
-Question centrale :
+TODO rédiger le contexte pédagogique du module et préciser pourquoi les notions sont utiles pour la suite du cours.
 
-> Quels indicateurs descriptifs permettent de repérer les succursales ou les dimensions opérationnelles qui méritent une analyse plus poussée?
 
-## Parcours autonome
 
-Le module est conçu pour être fait seul·e, dans l'ordre. À chaque étape, vous alternez entre une capsule, une démonstration, un exercice d'application et une trace à ajouter à votre livrable.
+## Repères avant les capsules
 
-| Moment | Activité | Résultat produit |
-|---|---|---|
-| 1 | Comprendre la question centrale | Question d'affaires reformulée |
-| 2 | Importer les données | Tableau chargé dans R |
-| 3 | Inspecter le tableau | Description des variables |
-| 4 | Vérifier la qualité | Diagnostic des valeurs manquantes |
-| 5 | Résumer par succursale | Tableau d'indicateurs |
-| 6 | Visualiser les signaux | Deux graphiques |
-| 7 | Conclure | Trois constats et une recommandation |
+Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.
 
-## Données
 
-Le fichier utilisé est `data/ventes_pme_quebec.csv`.
+## Préparer votre espace de travail
 
-[Télécharger le fichier CSV](data/ventes_pme_quebec.csv)
+Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.
 
-```{r}
-#| label: setup-atelier-01-index
-#| include: false
-library(tidyverse)
-library(janitor)
-library(scales)
+Vérifiez aussi les fichiers disponibles dans [les informations du module](informations.qmd), notamment les données publiques et les consignes liées au matériel ancien.
 
-data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
-  "data/ventes_pme_quebec.csv"
-} else {
-  "modules/atelier-01-r/data/ventes_pme_quebec.csv"
-}
+Pour l'atelier, le [guide d'atelier](guide-atelier.qmd) donne le déroulement détaillé des manipulations à réaliser.
 
-ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
-  clean_names() |>
-  mutate(
-    mois = as.Date(mois),
-    campagne_locale = factor(
-      campagne_locale,
-      levels = c(0, 1),
-      labels = c("non", "oui")
-    )
-  )
 
-currency_ca <- scales::label_dollar(
-  prefix = "",
-  suffix = " $",
-  big.mark = " ",
-  decimal.mark = ","
-)
-```
+## Capsule 1 - Rappel du diagnostic statistique
 
-Ce tableau contient `r nrow(ventes)` observations et `r ncol(ventes)` variables. Chaque ligne correspond à une succursale pour un mois de l'année 2025.
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
 
-```{r}
-#| label: apercu-atelier-01
-ventes |>
-  select(mois, succursale, region, ventes, clients, panier_moyen, satisfaction) |>
-  slice_head(n = 8)
-```
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
 
-## Aperçu du rendu attendu
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
 
-Le diagnostic final doit être court, mais il doit être assez clair pour soutenir une discussion pédagogique ou décisionnelle.
+## Capsule 2 - Importation et inspection
 
-```{r}
-#| label: diagnostic-succursales-atelier-01
-diagnostic_succursales <- ventes |>
-  group_by(succursale, region) |>
-  summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
-    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
-    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  arrange(desc(ventes_totales))
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
 
-diagnostic_succursales |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    panier_moyen = currency_ca(panier_moyen),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1)
-  )
-```
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
 
-```{r}
-#| label: graphique-ventes-succursales-atelier-01
-#| fig-width: 8
-#| fig-height: 4.8
-diagnostic_succursales |>
-  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
-  ggplot(aes(ventes_totales, succursale)) +
-  geom_col(fill = "#2A9D8F") +
-  scale_x_continuous(labels = currency_ca) +
-  labs(
-    title = "Ventes annuelles par succursale",
-    x = "Ventes",
-    y = NULL
-  ) +
-  theme_minimal(base_size = 12)
-```
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
 
-## Livrable
+## Capsule 3 - Indicateurs descriptifs
 
-À la fin du parcours, vous remettez un fichier Quarto de deux pages maximum contenant :
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
 
-- la question d'affaires reformulée;
-- une description rapide du tableau;
-- un diagnostic des valeurs manquantes;
-- un tableau synthèse par succursale;
-- deux graphiques;
-- trois constats;
-- une recommandation de prochaine analyse.
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
 
-## Commencer
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
 
-Le parcours complet est ici :
+## Capsule 4 - Graphiques exploratoires
 
-[Ouvrir le guide autonome de l'atelier 01](guide-atelier.qmd)
+Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
+
+Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
+
+Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
+
+## Démonstrations R
+
+Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
+
+Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
+
+## Exercices d'application
+
+Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
+
+Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
+
+## Correction avec solutions cachées
+
+Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
+
+Trace attendue : une correction courte et une liste de questions restantes.
+
+## Lectures ciblées
+
+Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
+
+Trace attendue : une idée utile, une définition ou une référence à retenir.
+
+## Trace finale
+
+Terminez le module en produisant le livrable court : Court rapport Quarto d'exploration.
+
+Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+
+
+
+
+## Lien avec l'ancien matériel
+
+Source ancienne de référence : `MQT-2101-A25_Atelier en classe 1 .zip`.
+
+Les fichiers privés, PowerPoint, PDF protégés, solutionnaires et archives ne sont pas publiés dans le site.
+
+
+
+## Pour aller plus loin
+
+TODO ajouter une ressource complémentaire ou une piste de consolidation.

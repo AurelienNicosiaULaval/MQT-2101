@@ -242,6 +242,14 @@ write_if_missing <- function(path, lines = character()) {
   }
 }
 
+trim_trailing_blank_lines <- function(lines) {
+  while (length(lines) > 0L && identical(lines[[length(lines)]], "")) {
+    lines <- lines[-length(lines)]
+  }
+
+  lines
+}
+
 capsule_media_tabset <- function(i) {
   capsule_id <- sprintf("%02d", i)
   c(
@@ -271,121 +279,203 @@ capsule_media_tabset <- function(i) {
   )
 }
 
-learning_path_block <- function(spec) {
-  step <- 1L
-  rows <- c(
-    "| Étape | À faire | Où aller | Trace attendue |",
-    "|---:|---|---|---|",
-    paste0(
-      "| ", step, " | Lire l'objectif, la section `Let’s eat the cake` et le contexte. | Page actuelle | Une phrase sur ce que le module permet de faire. |"
-    )
-  )
-
-  step <- step + 1L
-  for (i in seq_along(spec$capsules)) {
-    rows <- c(
-      rows,
-      paste0(
-        "| ", step, " | Visionner la capsule ", i, " : ",
-        spec$capsules[[i]],
-        ". Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |"
-      )
-    )
-    step <- step + 1L
-    rows <- c(
-      rows,
-      paste0(
-        "| ", step, " | Faire la pause active associée à la capsule ", i, ". | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |"
-      )
-    )
-    step <- step + 1L
+section_bounds <- function(lines) {
+  h2 <- grep("^## ", lines)
+  if (length(h2) == 0L) {
+    return(data.frame(start = integer(), end = integer(), title = character()))
   }
 
-  rows <- c(
-    rows,
-    paste0(
-      "| ", step, " | Reproduire les démonstrations R dans l'ordre. | [Démonstrations R](demonstrations.qmd) | Code exécuté et résultat observé. |"
-    )
+  data.frame(
+    start = h2,
+    end = c(h2[-1] - 1L, length(lines)),
+    title = lines[h2],
+    stringsAsFactors = FALSE
   )
-  step <- step + 1L
-  rows <- c(
-    rows,
-    paste0(
-      "| ", step, " | Faire les exercices sans regarder les solutions. | [Exercices](exercices.qmd) | Réponses et code R personnels. |"
-    )
-  )
-  step <- step + 1L
-  rows <- c(
-    rows,
-    paste0(
-      "| ", step, " | Ouvrir les solutions cachées pour corriger et annoter son travail. | [Exercices](exercices.qmd) | Corrections et questions restantes. |"
-    )
-  )
-  step <- step + 1L
-  rows <- c(
-    rows,
-    paste0(
-      "| ", step, " | Consulter les lectures ciblées. | [Lectures](lectures.qmd) | Une idée ou référence à retenir. |"
-    )
-  )
-  step <- step + 1L
-  rows <- c(
-    rows,
-    paste0(
-      "| ", step, " | Produire le livrable court. | [Informations](informations.qmd) | ", spec$livrable, " |"
-    )
-  )
-
-  links <- c(
-    "",
-    "## Parcours d'apprentissage",
-    "",
-    "Cette page principale donne l'ordre de travail recommandé. Les pages spécialisées servent à consulter les capsules, les démonstrations, les exercices, les lectures et les consignes sans surcharger le parcours.",
-    "",
-    rows,
-    "",
-    "::: {.callout-tip title=\"Mode de travail\"}",
-    "Le module est conçu pour être fait de façon autonome : capsule courte, pause active, démonstration R, exercice, correction, synthèse.",
-    ":::"
-  )
-
-  if (identical(spec$type, "atelier") && file.exists(file.path(spec$dir, "guide-atelier.qmd"))) {
-    links <- c(
-      links,
-      "",
-      "Pour les ateliers, le [guide d'atelier](guide-atelier.qmd) donne aussi le déroulement détaillé en classe."
-    )
-  }
-
-  c(links, "")
 }
 
-upsert_learning_path <- function(spec) {
+extract_section <- function(lines, pattern) {
+  bounds <- section_bounds(lines)
+  hit <- grep(pattern, bounds$title)
+  if (length(hit) == 0L) return(character())
+
+  hit <- hit[1]
+  lines[seq(from = bounds$start[[hit]], to = bounds$end[[hit]])]
+}
+
+extract_first_section <- function(lines, patterns) {
+  for (pattern in patterns) {
+    section <- extract_section(lines, pattern)
+    if (length(section) > 0L) return(section)
+  }
+
+  character()
+}
+
+fallback_lets_eat_the_cake <- function(spec) {
+  c(
+    "## Let’s eat the cake",
+    "",
+    paste0("Objectif : situer le rôle du module `", spec$label, "` dans la progression du cours."),
+    "",
+    "Compétences développées :",
+    "",
+    "- identifier les notions importantes du module;",
+    "- relier les notions à une tâche d'analyse de données;",
+    "- préparer le travail R et le livrable court.",
+    "",
+    paste0("Application business : TODO préciser une application d'administration liée à `", spec$titre, "`."),
+    "",
+    paste0("Résultat final attendu : ", spec$livrable),
+    "",
+    "Lien avec une décision d'affaires réelle : TODO formuler la décision que ce module permettra d'éclairer.",
+    ""
+  )
+}
+
+narrated_capsule_steps <- function(spec) {
+  unlist(lapply(seq_along(spec$capsules), function(i) {
+    c(
+      paste0("## Capsule ", i, " - ", spec$capsules[[i]]),
+      "",
+      paste0(
+        "Poursuivez le parcours dans [les capsules](capsules.qmd). ",
+        "Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. ",
+        "Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule."
+      ),
+      "",
+      "Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.",
+      "",
+      "Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.",
+      ""
+    )
+  }))
+}
+
+narrated_index_page <- function(spec, lines) {
+  h1 <- grep("^# ", lines)[1]
+  header <- if (!is.na(h1)) lines[seq_len(h1)] else c(yaml(spec$titre), paste0("# ", spec$label))
+
+  lets <- extract_first_section(lines, c("^## Let’s eat the cake$"))
+  if (length(lets) == 0L) lets <- fallback_lets_eat_the_cake(spec)
+
+  context <- extract_first_section(
+    lines,
+    c("^## Introduction à la séance$", "^## Mise en contexte$")
+  )
+  if (length(context) == 0L) {
+    context <- c(
+      "## Mise en contexte",
+      "",
+      "TODO rédiger le contexte pédagogique du module et préciser pourquoi les notions sont utiles pour la suite du cours.",
+      ""
+    )
+  }
+
+  concepts <- extract_first_section(lines, c("^## Concepts clés$"))
+  mini_case <- extract_first_section(lines, c("^## Mini-cas business$"))
+  retenir <- extract_first_section(lines, c("^## À retenir$"))
+  erreurs <- extract_first_section(lines, c("^## Erreurs fréquentes$"))
+  ancien <- extract_first_section(lines, c("^## Lien avec l'ancien matériel$"))
+  aller_plus_loin <- extract_first_section(lines, c("^## Pour aller plus loin$"))
+
+  atelier_guide <- if (identical(spec$type, "atelier") && file.exists(file.path(spec$dir, "guide-atelier.qmd"))) {
+    c(
+      "",
+      "Pour l'atelier, le [guide d'atelier](guide-atelier.qmd) donne le déroulement détaillé des manipulations à réaliser.",
+      ""
+    )
+  } else {
+    character()
+  }
+
+  body <- c(
+    "",
+    "Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.",
+    "",
+    "Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.",
+    "",
+    lets,
+    "",
+    context,
+    "",
+    if (length(concepts) > 0L) concepts else c(
+      "## Repères avant les capsules",
+      "",
+      "Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.",
+      ""
+    ),
+    "",
+    "## Préparer votre espace de travail",
+    "",
+    "Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.",
+    "",
+    "Vérifiez aussi les fichiers disponibles dans [les informations du module](informations.qmd), notamment les données publiques et les consignes liées au matériel ancien.",
+    atelier_guide,
+    "",
+    narrated_capsule_steps(spec),
+    "## Démonstrations R",
+    "",
+    "Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.",
+    "",
+    "Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.",
+    "",
+    "## Exercices d'application",
+    "",
+    "Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.",
+    "",
+    "Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.",
+    "",
+    "## Correction avec solutions cachées",
+    "",
+    "Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.",
+    "",
+    "Trace attendue : une correction courte et une liste de questions restantes.",
+    "",
+    "## Lectures ciblées",
+    "",
+    "Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.",
+    "",
+    "Trace attendue : une idée utile, une définition ou une référence à retenir.",
+    "",
+    "## Trace finale",
+    "",
+    paste0("Terminez le module en produisant le livrable court : ", spec$livrable),
+    "",
+    "Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.",
+    "",
+    if (length(mini_case) > 0L) mini_case else character(),
+    "",
+    if (length(retenir) > 0L) retenir else character(),
+    "",
+    if (length(erreurs) > 0L) erreurs else character(),
+    "",
+    if (length(ancien) > 0L) ancien else c(
+      "## Lien avec l'ancien matériel",
+      "",
+      paste0("Source ancienne de référence : `", spec$source, "`."),
+      "",
+      "Les fichiers privés, PowerPoint, PDF protégés, solutionnaires et archives ne sont pas publiés dans le site.",
+      ""
+    ),
+    "",
+    if (length(aller_plus_loin) > 0L) aller_plus_loin else c(
+      "## Pour aller plus loin",
+      "",
+      "TODO ajouter une ressource complémentaire ou une piste de consolidation.",
+      ""
+    )
+  )
+
+  c(header, body)
+}
+
+rewrite_index_as_narrated_path <- function(spec) {
   path <- file.path(spec$dir, "index.qmd")
   if (!file.exists(path)) return(invisible(FALSE))
 
   lines <- readLines(path, warn = FALSE)
-  h1 <- grep("^# ", lines)[1]
-  if (is.na(h1)) return(invisible(FALSE))
-
-  old_start <- grep("^## (Pages du module|Parcours d'apprentissage)$", lines)
-  if (length(old_start) > 0) {
-    old_start <- old_start[1]
-    following_h2 <- grep("^## ", lines)
-    following_h2 <- following_h2[following_h2 > old_start]
-    old_end <- if (length(following_h2) > 0) following_h2[1] - 1L else length(lines)
-    before <- if (old_start > 1L) lines[seq_len(old_start - 1L)] else character()
-    after <- if (old_end < length(lines)) lines[seq(from = old_end + 1L, to = length(lines))] else character()
-    new_lines <- c(
-      before,
-      learning_path_block(spec),
-      after
-    )
-  } else {
-    new_lines <- append(lines, learning_path_block(spec), after = h1)
-  }
-
-  writeLines(new_lines, path, useBytes = TRUE)
+  new_lines <- narrated_index_page(spec, lines)
+  writeLines(trim_trailing_blank_lines(new_lines), path, useBytes = TRUE)
   invisible(TRUE)
 }
 
@@ -842,7 +932,7 @@ for (spec in module_specs) {
   write_qmd_if_missing(file.path(spec$dir, "informations.qmd"), informations_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "data", "README.md"), data_readme(spec))
 
-  upsert_learning_path(spec)
+  rewrite_index_as_narrated_path(spec)
   ensure_capsule_sections(spec)
   insert_capsule_tabsets(spec)
   upsert_media_info(spec)
