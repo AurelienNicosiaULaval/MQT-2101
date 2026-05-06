@@ -4,17 +4,11 @@ options(warn = -1)
 
 suppressPackageStartupMessages({
   library(tidyverse)
-  library(readxl)
   library(janitor)
   library(lubridate)
 })
 
-solution_zip <- file.path(
-  "anciens_documents",
-  "sources_privees",
-  "archives_zip",
-  "MQT-2101-A25_Solutionnaires séances.zip"
-)
+archives_dir <- file.path("anciens_documents", "sources_privees", "archives_zip")
 
 week_01_data_dir <- file.path("modules", "semaine-01-introduction", "data")
 week_02_data_dir <- file.path("modules", "semaine-02-r-quarto", "data")
@@ -22,48 +16,57 @@ week_02_data_dir <- file.path("modules", "semaine-02-r-quarto", "data")
 dir.create(week_01_data_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(week_02_data_dir, recursive = TRUE, showWarnings = FALSE)
 
-if (!file.exists(solution_zip)) {
-  stop("Archive introuvable : ", solution_zip)
+archives_zip <- list.files(
+  archives_dir,
+  pattern = "\\.zip$",
+  full.names = TRUE
+)
+
+seance_01_zip <- archives_zip |>
+  keep(~ str_detect(basename(.x), "ance 01") && str_detect(basename(.x), "Introduction"))
+
+if (length(seance_01_zip) != 1L) {
+  stop("L'archive de la séance 01 doit être trouvée une seule fois dans : ", archives_dir)
 }
 
-extract_dir <- file.path(tempdir(), "mqt2101_solutionnaires_publics")
+extract_dir <- file.path(tempdir(), "mqt2101_seance_01_publics")
 unlink(extract_dir, recursive = TRUE)
 dir.create(extract_dir, recursive = TRUE, showWarnings = FALSE)
 
 if (nzchar(Sys.which("bsdtar"))) {
   status <- system2(
     "bsdtar",
-    c("-xf", shQuote(solution_zip), "-C", shQuote(extract_dir))
+    c("-xf", shQuote(seance_01_zip), "-C", shQuote(extract_dir))
   )
   if (!identical(status, 0L)) {
-    stop("Extraction impossible avec bsdtar : ", solution_zip)
+    stop("Extraction impossible avec bsdtar : ", seance_01_zip)
   }
 } else {
-  utils::unzip(solution_zip, exdir = extract_dir, overwrite = TRUE)
+  utils::unzip(seance_01_zip, exdir = extract_dir, overwrite = TRUE)
 }
 
 birth_file <- list.files(
   extract_dir,
-  pattern = "^BirthUS\\.xlsx$",
+  pattern = "^BirthUS\\.csv$",
   recursive = TRUE,
   full.names = TRUE
 )
 
 safety_file <- list.files(
   extract_dir,
-  pattern = "^SafetyAirlines\\.xlsx$",
+  pattern = "^SafetyAirlines\\.csv$",
   recursive = TRUE,
   full.names = TRUE
 )
 
 if (length(birth_file) != 1L || length(safety_file) != 1L) {
-  stop("Les fichiers BirthUS.xlsx et SafetyAirlines.xlsx doivent être trouvés une seule fois.")
+  stop("Les fichiers BirthUS.csv et SafetyAirlines.csv doivent être trouvés une seule fois.")
 }
 
-birth_us <- readxl::read_excel(birth_file) |>
+birth_us <- readr::read_csv(birth_file, show_col_types = FALSE) |>
   janitor::clean_names()
 
-safety_airlines <- readxl::read_excel(safety_file) |>
+safety_airlines <- readr::read_csv(safety_file, show_col_types = FALSE) |>
   janitor::clean_names()
 
 readr::write_csv(birth_us, file.path(week_01_data_dir, "birth_us.csv"))

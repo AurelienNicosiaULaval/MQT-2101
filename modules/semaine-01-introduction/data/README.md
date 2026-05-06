@@ -11,9 +11,9 @@ Le fichier `diagnostic_succursales.csv`, créé pendant une première ébauche d
 
 ## Origine
 
-`birth_us.csv` et `safety_airlines.csv` ont été convertis depuis les fichiers Excel non nominatifs trouvés dans l'archive locale `MQT-2101-A25_Solutionnaires séances.zip`.
+`birth_us.csv` et `safety_airlines.csv` proviennent de l'archive locale `MQT-2101-A25_Séance 01 _  Introduction.zip`.
 
-Les fichiers Excel d'origine ne sont pas publiés.
+Les fichiers PDF, PowerPoint et lectures d'origine ne sont pas publiés avec le site.
 
 ## Reproduction
 

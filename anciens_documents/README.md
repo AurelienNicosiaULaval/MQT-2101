@@ -16,6 +16,7 @@ Le dossier `sources_privees/` est ignoré par Git afin d'éviter la publication 
 | `MQT-2101-A25_Examen intra à la maison.zip` | Archives privées d'examen |
 | `MQT-2101-A25_Préparation à l'examen.zip` | Préparation à l'examen |
 | `MQT-2101-A25_Solutionnaires séances.zip` | Solutionnaires anciens |
+| `MQT-2101-A25_Séance 01 _  Introduction.zip` | Présentations, narrations, lectures, exercice et données de la séance 01 |
 | `MQT-2101-A25_Séance 02 _  Introduction.zip` | Présentations et données |
 | `MQT-2101-A25_Séance 03 _ Régression.zip` | Régression |
 | `MQT-2101-A25_Séance 04_ Régression non.zip` | Régression non linéaire |
@@ -28,7 +29,7 @@ Le dossier `sources_privees/` est ignoré par Git afin d'éviter la publication 
 | `MQT-2101-A25_Séance 11 _.zip` | Récapitulation ancienne |
 | `MQT-2101_A25_86582.pdf` | Ancien plan de cours |
 
-Note : l'archive complète de la séance 01 n'est pas présente dans le dépôt. La reconstruction de la semaine 01 utilise les captures du portail et les fichiers non nominatifs `BirthUS.xlsx` et `SafetyAirlines.xlsx` trouvés dans `MQT-2101-A25_Solutionnaires séances.zip`.
+Note : l'archive complète de la séance 01 a été retrouvée dans le dossier `Téléchargements` et copiée dans les sources privées locales. Les fichiers publics `birth_us.csv` et `safety_airlines.csv` de la semaine 01 proviennent maintenant de cette archive.
 
 ## Extraction locale
 
