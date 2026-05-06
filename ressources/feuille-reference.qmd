@@ -1,0 +1,170 @@
+---
+title: "Feuille de référence"
+format:
+  html:
+    embed-resources: true
+---
+
+# Feuille de référence
+
+## Objectif
+
+Cette feuille rassemble les repères les plus utiles pour les exercices, les ateliers et les livrables courts du cours.
+
+## Avant d'analyser
+
+Questions à poser avant le code :
+
+- Que représente une ligne du tableau?
+- Quelle est la variable à expliquer, prévoir ou comparer?
+- Quelles variables sont numériques, catégorielles ou temporelles?
+- Quelles valeurs manquent?
+- Quelle décision ou interprétation doit être éclairée?
+- Quelle limite doit être mentionnée?
+
+## Importer et inspecter
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(janitor)
+
+donnees <- readr::read_csv("data/fichier.csv", show_col_types = FALSE) |>
+  clean_names()
+
+glimpse(donnees)
+summary(donnees)
+```
+
+## Résumer
+
+```{r}
+#| eval: false
+donnees |>
+  summarise(
+    n = n(),
+    moyenne = mean(variable, na.rm = TRUE),
+    mediane = median(variable, na.rm = TRUE),
+    ecart_type = sd(variable, na.rm = TRUE)
+  )
+```
+
+## Comparer des groupes
+
+```{r}
+#| eval: false
+donnees |>
+  group_by(groupe) |>
+  summarise(
+    n = n(),
+    moyenne = mean(variable, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+## Visualiser
+
+```{r}
+#| eval: false
+donnees |>
+  ggplot(aes(x = variable)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution de la variable",
+    x = "Variable",
+    y = "Nombre d'observations"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| eval: false
+donnees |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relation entre deux variables",
+    x = "Variable explicative",
+    y = "Variable réponse"
+  ) +
+  theme_minimal()
+```
+
+## Modéliser
+
+```{r}
+#| eval: false
+library(broom)
+
+modele <- lm(y ~ x, data = donnees)
+
+broom::tidy(modele)
+broom::glance(modele)
+```
+
+Questions d'interprétation :
+
+- Quel est le signe du coefficient?
+- Quelle est son unité?
+- Quelle variation moyenne représente-t-il?
+- Le résultat est-il descriptif ou causal?
+- Quelles limites doivent être mentionnées?
+
+## Prévoir
+
+```{r}
+#| eval: false
+donnees_temps |>
+  ggplot(aes(x = date, y = valeur)) +
+  geom_line() +
+  labs(
+    title = "Évolution dans le temps",
+    x = NULL,
+    y = "Valeur"
+  ) +
+  theme_minimal()
+```
+
+Questions à poser :
+
+- La série contient-elle une tendance?
+- Y a-t-il une saisonnalité?
+- La dernière période ressemble-t-elle aux périodes précédentes?
+- La prévision sert-elle à une décision de court ou de moyen terme?
+
+## Utiliser l'IA avec prudence
+
+Questions utiles à poser à un outil d'IA, si l'enseignant l'autorise :
+
+- Peux-tu expliquer ce code R ligne par ligne?
+- Quelles limites d'interprétation devrais-je mentionner?
+- Quelles erreurs fréquentes vois-tu dans cette conclusion?
+- Comment reformuler ce résultat pour un public non technique?
+
+À ne pas faire :
+
+- remettre une réponse produite sans vérification;
+- demander une conclusion sans regarder les données;
+- ignorer le code R;
+- utiliser l'IA pour contourner les consignes d'évaluation.
+
+## Phrase d'interprétation type
+
+Structure recommandée :
+
+1. Le résultat indique que...
+2. Dans ce contexte, cela signifie que...
+3. Pour la décision, cela suggère...
+4. Toutefois, il faut être prudent parce que...
+
+## Mini-rapport Quarto
+
+Un livrable court devrait contenir :
+
+- la question analysée;
+- les données utilisées;
+- le code R minimal;
+- un tableau ou un graphique;
+- une interprétation;
+- une limite.

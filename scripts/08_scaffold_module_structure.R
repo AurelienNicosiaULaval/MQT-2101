@@ -250,6 +250,23 @@ trim_trailing_blank_lines <- function(lines) {
   lines
 }
 
+normalize_blank_lines <- function(lines, max_blank = 1L) {
+  output <- character()
+  blank_run <- 0L
+
+  for (line in lines) {
+    if (identical(line, "")) {
+      blank_run <- blank_run + 1L
+      if (blank_run <= max_blank) output <- c(output, line)
+    } else {
+      blank_run <- 0L
+      output <- c(output, line)
+    }
+  }
+
+  trim_trailing_blank_lines(output)
+}
+
 capsule_media_tabset <- function(i) {
   capsule_id <- sprintf("%02d", i)
   c(
@@ -351,6 +368,21 @@ narrated_capsule_steps <- function(spec) {
   }))
 }
 
+audience_section <- function(spec) {
+  c(
+    "## Utilité pour le génie et l'administration",
+    "",
+    "Le module doit être lu avec deux angles complémentaires.",
+    "",
+    "Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.",
+    "",
+    "Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.",
+    "",
+    "L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.",
+    ""
+  )
+}
+
 narrated_index_page <- function(spec, lines) {
   h1 <- grep("^# ", lines)[1]
   header <- if (!is.na(h1)) lines[seq_len(h1)] else c(yaml(spec$titre), paste0("# ", spec$label))
@@ -397,6 +429,8 @@ narrated_index_page <- function(spec, lines) {
     lets,
     "",
     context,
+    "",
+    audience_section(spec),
     "",
     if (length(concepts) > 0L) concepts else c(
       "## Repères avant les capsules",
@@ -475,7 +509,7 @@ rewrite_index_as_narrated_path <- function(spec) {
 
   lines <- readLines(path, warn = FALSE)
   new_lines <- narrated_index_page(spec, lines)
-  writeLines(trim_trailing_blank_lines(new_lines), path, useBytes = TRUE)
+  writeLines(normalize_blank_lines(new_lines), path, useBytes = TRUE)
   invisible(TRUE)
 }
 

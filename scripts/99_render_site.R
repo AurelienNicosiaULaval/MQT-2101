@@ -6,5 +6,16 @@ if (!requireNamespace("quarto", quietly = TRUE)) {
 
 quarto::quarto_render(input = ".")
 
-message("Site rendu dans le dossier docs/.")
+docs_files <- list.files(
+  "docs",
+  pattern = "\\.(html|json|css)$",
+  recursive = TRUE,
+  full.names = TRUE
+)
 
+for (file in docs_files) {
+  lines <- readLines(file, warn = FALSE)
+  writeLines(sub("[ \t]+$", "", lines), file, useBytes = TRUE)
+}
+
+message("Site rendu dans le dossier docs/.")
