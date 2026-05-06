@@ -1,0 +1,153 @@
+---
+title: "Gabarit de module"
+format:
+  html:
+    embed-resources: true
+---
+
+# Gabarit de module
+
+## Objectif
+
+Cette page fixe la structure commune de chaque module du cours MQT-2101. Elle sert de référence pour convertir l'ancien matériel en parcours Quarto autonome.
+
+Chaque module doit guider l'étudiant dans un ordre clair :
+
+1. comprendre l'objectif;
+2. regarder une capsule courte;
+3. faire une pause active;
+4. reproduire une démonstration R;
+5. faire un exercice;
+6. consulter la solution cachée seulement après une tentative;
+7. produire une trace courte.
+
+## Structure obligatoire du dossier
+
+Chaque module doit contenir les fichiers suivants :
+
+```text
+modules/nom-du-module/
+├── index.qmd
+├── capsules.qmd
+├── demonstrations.qmd
+├── exercices.qmd
+├── lectures.qmd
+├── informations.qmd
+├── solutions.qmd
+└── data/
+    └── README.md
+```
+
+Les fichiers `solutions.qmd` restent hors navigation publique. Les solutions visibles dans `exercices.qmd` doivent être cachées par défaut.
+
+## `index.qmd`
+
+La page principale est le parcours de l'étudiant.
+
+Elle doit contenir :
+
+- le titre officiel du module;
+- une section `Pages du module`;
+- la section `Let’s eat the cake`;
+- une introduction courte;
+- un parcours autonome dans l'ordre;
+- des liens vers les capsules, démonstrations, exercices, lectures et informations;
+- le livrable ou la trace de portfolio.
+
+## `capsules.qmd`
+
+Les PPT de l'ancien cours doivent être traduits en Quarto, puis découpés en capsules courtes.
+
+Chaque capsule doit contenir :
+
+- un objectif;
+- les idées essentielles;
+- un exemple simple;
+- une pause active;
+- une transition vers un exercice ou une démonstration.
+
+Les PPT ne sont pas copiés tels quels. Ils servent de source pour reconstruire une version plus claire, plus concise et plus adaptée au parcours autonome.
+
+## `demonstrations.qmd`
+
+Cette page regroupe les démonstrations en R.
+
+Chaque démonstration doit contenir :
+
+- les packages nécessaires;
+- l'importation des données;
+- une manipulation ou une modélisation;
+- un résultat visible;
+- une interprétation en mots.
+
+Le code doit être complet, reproductible et en R seulement.
+
+## `exercices.qmd`
+
+Cette page contient les exercices à faire après les capsules et les démonstrations.
+
+Structure recommandée :
+
+- exercice d'interprétation;
+- exercice de code R;
+- exercice de réflexion critique;
+- mini-cas appliqué;
+- livrable court.
+
+Les solutions doivent être cachées :
+
+````qmd
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| eval: false
+# Code R de solution.
+```
+:::
+````
+
+## `lectures.qmd`
+
+Cette page rassemble :
+
+- les lectures obligatoires;
+- les lectures facultatives;
+- les ressources externes;
+- les indications sur ce qui doit être retenu.
+
+Les PDF protégés ne doivent pas être publiés dans le site.
+
+## `informations.qmd`
+
+Cette page regroupe les éléments pratiques :
+
+- fichiers publics;
+- données;
+- consignes;
+- critères de réussite;
+- livrable;
+- ancien matériel utilisé;
+- fichiers privés non publiés.
+
+## Règles de conversion des PPT
+
+Pour chaque présentation ancienne :
+
+1. identifier le message pédagogique principal;
+2. supprimer les répétitions inutiles;
+3. convertir le contenu en texte Quarto;
+4. ajouter une pause active;
+5. ajouter ou adapter un exemple;
+6. relier le contenu à une décision, une interprétation ou une tâche d'analyse;
+7. prévoir un exercice immédiatement après.
+
+## Règles de qualité
+
+- un module doit pouvoir être suivi sans consigne orale supplémentaire;
+- chaque page doit avoir un objectif explicite;
+- les exemples de code doivent être en R;
+- les données publiées doivent être documentées;
+- les fichiers anciens privés ne doivent pas être publiés;
+- les solutions doivent rester cachées ou hors navigation;
+- le contenu doit rester sérieux, pédagogique et appliqué.
