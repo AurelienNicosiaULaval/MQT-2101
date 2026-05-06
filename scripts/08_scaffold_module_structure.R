@@ -10,12 +10,12 @@ module_specs <- list(
     donnees = c("birth_us.csv", "safety_airlines.csv"),
     capsules = c(
       "Organisation du cours",
-      "Modeles mathematiques et statistiques",
-      "Preparation des donnees",
-      "Exploration univariee",
-      "Exploration bivariee"
+      "Modèles mathématiques et statistiques",
+      "Préparation des données",
+      "Exploration univariée",
+      "Exploration bivariée"
     ),
-    livrable = "Trace de portfolio sur le diagnostic de depart."
+    livrable = "Trace de portfolio sur le diagnostic de départ."
   ),
   list(
     dir = "modules/semaine-02-r-quarto",
@@ -25,11 +25,12 @@ module_specs <- list(
     source = "MQT-2101-A25_Séance 02 _  Introduction.zip",
     donnees = c("ventes_operations_quebec.csv"),
     capsules = c(
-      "Installation et verification de l'environnement",
+      "Installation et vérification de l'environnement",
       "Interface RStudio",
       "Projet R et organisation des fichiers",
       "Importation et inspection d'un CSV",
-      "Traitement et graphiques"
+      "Traitement des données",
+      "Graphique et rendu Quarto"
     ),
     livrable = "Mini-rapport Quarto reproductible."
   ),
@@ -57,11 +58,11 @@ module_specs <- list(
     donnees = character(),
     capsules = c(
       "Relation entre deux variables d'affaires",
-      "Modele lineaire simple",
-      "Interpretation des coefficients",
-      "Qualite d'ajustement et residus"
+      "Modèle linéaire simple",
+      "Interprétation des coefficients",
+      "Qualité d'ajustement et résidus"
     ),
-    livrable = "Interpretation courte d'un modele lineaire."
+    livrable = "Interprétation courte d'un modèle linéaire."
   ),
   list(
     dir = "modules/semaine-04-regression-nonlineaire",
@@ -71,12 +72,12 @@ module_specs <- list(
     source = "MQT-2101-A25_Séance 04_ Régression non.zip",
     donnees = character(),
     capsules = c(
-      "Limites de la relation lineaire",
+      "Limites de la relation linéaire",
       "Transformations de variables",
-      "Modeles non lineaires simples",
-      "Interpretation appliquee"
+      "Modèles non linéaires simples",
+      "Interprétation appliquée"
     ),
-    livrable = "Comparaison de deux specifications de modele."
+    livrable = "Comparaison de deux spécifications de modèle."
   ),
   list(
     dir = "modules/atelier-02-regression",
@@ -86,7 +87,7 @@ module_specs <- list(
     source = "MQT-2101-A25_Atelier en classe 2.zip",
     donnees = character(),
     capsules = c(
-      "Question d'affaires et variable reponse",
+      "Question d'affaires et variable réponse",
       "Nuage de points et relation",
       "Ajustement du modele",
       "Recommandation et limites"
@@ -101,12 +102,12 @@ module_specs <- list(
     source = "MQT-2101-A25_Séance 05 _ Préparation à.zip",
     donnees = character(),
     capsules = c(
-      "Synthese des competences",
+      "Synthèse des compétences",
       "Lire une question d'examen",
       "Structurer une reponse",
       "Erreurs frequentes"
     ),
-    livrable = "Plan de revision et reponse type."
+    livrable = "Plan de révision et réponse type."
   ),
   list(
     dir = "modules/semaine-06-series-chronologiques-intro",
@@ -116,12 +117,12 @@ module_specs <- list(
     source = "MQT-2101-A25_Séance 06 _  La prévision.zip",
     donnees = character(),
     capsules = c(
-      "Pourquoi prevoir en gestion",
+      "Pourquoi prévoir en gestion",
       "Structure d'une serie chronologique",
       "Visualiser une serie",
       "Premiers diagnostics temporels"
     ),
-    livrable = "Diagnostic initial d'une serie de ventes ou de demande."
+    livrable = "Diagnostic initial d'une série de ventes ou de demande."
   ),
   list(
     dir = "modules/semaine-07-lissage",
@@ -131,12 +132,12 @@ module_specs <- list(
     source = "MQT-2101-A25_Séance 07 _ Méthodes de.zip",
     donnees = character(),
     capsules = c(
-      "Prevision court terme",
+      "Prévision court terme",
       "Moyennes mobiles",
       "Lissage exponentiel",
       "Evaluation d'une prevision"
     ),
-    livrable = "Comparaison de methodes de lissage."
+    livrable = "Comparaison de méthodes de lissage."
   ),
   list(
     dir = "modules/semaine-08-tendance-saisonnalite",
@@ -147,11 +148,11 @@ module_specs <- list(
     donnees = character(),
     capsules = c(
       "Tendance",
-      "Saisonnalite",
+      "Saisonnalité",
       "Variables indicatrices",
-      "Modele de prevision interpretable"
+      "Modèle de prévision interprétable"
     ),
-    livrable = "Modele avec tendance et saisonnalite."
+    livrable = "Modèle avec tendance et saisonnalité."
   ),
   list(
     dir = "modules/atelier-03-series-chronologiques",
@@ -161,10 +162,10 @@ module_specs <- list(
     source = "MQT-2101-A25_Atelier en classe 3.zip",
     donnees = character(),
     capsules = c(
-      "Question de prevision",
-      "Preparation d'une serie",
-      "Modele de base",
-      "Communication de la prevision"
+      "Question de prévision",
+      "Préparation d'une série",
+      "Modèle de base",
+      "Communication de la prévision"
     ),
     livrable = "Rapport de prevision court."
   ),
@@ -177,9 +178,9 @@ module_specs <- list(
     donnees = character(),
     capsules = c(
       "Variables explicatives externes",
-      "Autocorrelation",
+      "Autocorrélation",
       "Diagnostics temporels",
-      "Interpretation decisionnelle"
+      "Interprétation décisionnelle"
     ),
     livrable = "Diagnostic d'un modele avec variables externes."
   ),
@@ -191,10 +192,10 @@ module_specs <- list(
     source = "MQT-2101-A25_Séance 10 _ Prévision des.zip",
     donnees = character(),
     capsules = c(
-      "Resultat binaire",
-      "Classification appliquee",
-      "Probabilites et seuils",
-      "Introduction aux modeles avances"
+      "Résultat binaire",
+      "Classification appliquée",
+      "Probabilités et seuils",
+      "Introduction aux modèles avancés"
     ),
     livrable = "Interpretation d'un modele de classification."
   ),
@@ -209,9 +210,9 @@ module_specs <- list(
       "Choisir une approche",
       "Relire les diagnostics",
       "Comparer les resultats",
-      "Preparer la synthese finale"
+      "Préparer la synthèse finale"
     ),
-    livrable = "Synthese integratrice."
+    livrable = "Synthèse intégratrice."
   )
 )
 
@@ -234,38 +235,156 @@ write_qmd_if_missing <- function(path, lines) {
   }
 }
 
-module_links_block <- function(spec) {
+write_if_missing <- function(path, lines = character()) {
+  if (!file.exists(path)) {
+    dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+    writeLines(lines, path, useBytes = TRUE)
+  }
+}
+
+capsule_media_tabset <- function(i) {
+  capsule_id <- sprintf("%02d", i)
+  c(
+    "",
+    "::: {.panel-tabset}",
+    "### Vidéo",
+    "",
+    "::: {.callout-note title=\"Vidéo à intégrer\"}",
+    paste0("TODO intégrer ici la vidéo courte de la capsule ", i, "."),
+    ":::",
+    "",
+    paste0("Emplacement prévu : `media/videos/capsule-", capsule_id, ".mp4` ou lien vidéo institutionnel."),
+    "",
+    "### Support QMD/PDF",
+    "",
+    paste0("TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule ", i, "."),
+    "",
+    paste0("Emplacement prévu : `media/pdf/capsule-", capsule_id, "-support.pdf`."),
+    "",
+    "### Narration PDF",
+    "",
+    paste0("TODO ajouter la narration PDF de la capsule ", i, " lorsque le fichier est validé pour publication."),
+    "",
+    paste0("Emplacement prévu : `media/narration/capsule-", capsule_id, "-narration.pdf`."),
+    ":::",
+    ""
+  )
+}
+
+learning_path_block <- function(spec) {
+  step <- 1L
+  rows <- c(
+    "| Étape | À faire | Où aller | Trace attendue |",
+    "|---:|---|---|---|",
+    paste0(
+      "| ", step, " | Lire l'objectif, la section `Let’s eat the cake` et le contexte. | Page actuelle | Une phrase sur ce que le module permet de faire. |"
+    )
+  )
+
+  step <- step + 1L
+  for (i in seq_along(spec$capsules)) {
+    rows <- c(
+      rows,
+      paste0(
+        "| ", step, " | Visionner la capsule ", i, " : ",
+        spec$capsules[[i]],
+        ". Utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`. | [Capsules](capsules.qmd) | Notes courtes sur l'idée principale. |"
+      )
+    )
+    step <- step + 1L
+    rows <- c(
+      rows,
+      paste0(
+        "| ", step, " | Faire la pause active associée à la capsule ", i, ". | [Capsules](capsules.qmd) | Réponse courte ou micro-tâche complétée. |"
+      )
+    )
+    step <- step + 1L
+  }
+
+  rows <- c(
+    rows,
+    paste0(
+      "| ", step, " | Reproduire les démonstrations R dans l'ordre. | [Démonstrations R](demonstrations.qmd) | Code exécuté et résultat observé. |"
+    )
+  )
+  step <- step + 1L
+  rows <- c(
+    rows,
+    paste0(
+      "| ", step, " | Faire les exercices sans regarder les solutions. | [Exercices](exercices.qmd) | Réponses et code R personnels. |"
+    )
+  )
+  step <- step + 1L
+  rows <- c(
+    rows,
+    paste0(
+      "| ", step, " | Ouvrir les solutions cachées pour corriger et annoter son travail. | [Exercices](exercices.qmd) | Corrections et questions restantes. |"
+    )
+  )
+  step <- step + 1L
+  rows <- c(
+    rows,
+    paste0(
+      "| ", step, " | Consulter les lectures ciblées. | [Lectures](lectures.qmd) | Une idée ou référence à retenir. |"
+    )
+  )
+  step <- step + 1L
+  rows <- c(
+    rows,
+    paste0(
+      "| ", step, " | Produire le livrable court. | [Informations](informations.qmd) | ", spec$livrable, " |"
+    )
+  )
+
   links <- c(
     "",
-    "## Pages du module",
+    "## Parcours d'apprentissage",
     "",
-    "Ce module suit le gabarit commun du cours. Les pages sont conçues pour être suivies dans l'ordre.",
+    "Cette page principale donne l'ordre de travail recommandé. Les pages spécialisées servent à consulter les capsules, les démonstrations, les exercices, les lectures et les consignes sans surcharger le parcours.",
     "",
-    "- [Capsules](capsules.qmd) : contenu issu des anciennes présentations, découpé en courtes unités.",
-    "- [Démonstrations R](demonstrations.qmd) : code reproductible et exemples guidés.",
-    "- [Exercices](exercices.qmd) : pratique autonome avec solutions cachées.",
-    "- [Lectures](lectures.qmd) : lectures obligatoires, facultatives et ressources externes.",
-    "- [Informations](informations.qmd) : fichiers, consignes, livrable et lien avec l'ancien matériel."
+    rows,
+    "",
+    "::: {.callout-tip title=\"Mode de travail\"}",
+    "Le module est conçu pour être fait de façon autonome : capsule courte, pause active, démonstration R, exercice, correction, synthèse.",
+    ":::"
   )
 
   if (identical(spec$type, "atelier") && file.exists(file.path(spec$dir, "guide-atelier.qmd"))) {
-    links <- c(links, "- [Guide d'atelier](guide-atelier.qmd) : déroulement détaillé de l'atelier.")
+    links <- c(
+      links,
+      "",
+      "Pour les ateliers, le [guide d'atelier](guide-atelier.qmd) donne aussi le déroulement détaillé en classe."
+    )
   }
 
   c(links, "")
 }
 
-insert_module_links <- function(spec) {
+upsert_learning_path <- function(spec) {
   path <- file.path(spec$dir, "index.qmd")
   if (!file.exists(path)) return(invisible(FALSE))
 
   lines <- readLines(path, warn = FALSE)
-  if (any(grepl("^## Pages du module$", lines))) return(invisible(FALSE))
-
   h1 <- grep("^# ", lines)[1]
   if (is.na(h1)) return(invisible(FALSE))
 
-  new_lines <- append(lines, module_links_block(spec), after = h1)
+  old_start <- grep("^## (Pages du module|Parcours d'apprentissage)$", lines)
+  if (length(old_start) > 0) {
+    old_start <- old_start[1]
+    following_h2 <- grep("^## ", lines)
+    following_h2 <- following_h2[following_h2 > old_start]
+    old_end <- if (length(following_h2) > 0) following_h2[1] - 1L else length(lines)
+    before <- if (old_start > 1L) lines[seq_len(old_start - 1L)] else character()
+    after <- if (old_end < length(lines)) lines[seq(from = old_end + 1L, to = length(lines))] else character()
+    new_lines <- c(
+      before,
+      learning_path_block(spec),
+      after
+    )
+  } else {
+    new_lines <- append(lines, learning_path_block(spec), after = h1)
+  }
+
   writeLines(new_lines, path, useBytes = TRUE)
   invisible(TRUE)
 }
@@ -274,7 +393,7 @@ capsules_page <- function(spec) {
   capsule_lines <- unlist(lapply(seq_along(spec$capsules), function(i) {
     c(
       paste0("## Capsule ", i, " - ", spec$capsules[[i]]),
-      "",
+      capsule_media_tabset(i),
       "Durée cible : 5 à 8 minutes.",
       "",
       "Objectif : TODO traduire et synthétiser la portion correspondante du ou des PPT.",
@@ -472,6 +591,12 @@ informations_page <- function(spec) {
     "",
     "Ces fichiers restent dans `anciens_documents/sources_privees/` et ne sont pas publiés.",
     "",
+    "## Médias de capsule",
+    "",
+    "- `media/videos/` : vidéos courtes intégrées dans l'onglet `Vidéo`.",
+    "- `media/pdf/` : supports PDF générés à partir des contenus Quarto.",
+    "- `media/narration/` : narrations PDF validées pour publication.",
+    "",
     "## Consignes de travail autonome",
     "",
     "1. Lire la page principale du module.",
@@ -575,9 +700,140 @@ append_capsule_pause_model <- function(spec) {
   invisible(TRUE)
 }
 
+insert_capsule_tabsets <- function(spec) {
+  path <- file.path(spec$dir, "capsules.qmd")
+  if (!file.exists(path)) return(invisible(FALSE))
+
+  lines <- readLines(path, warn = FALSE)
+  headings <- grep("^## Capsule [0-9]+", lines)
+  if (length(headings) == 0L) return(invisible(FALSE))
+
+  for (heading in rev(headings)) {
+    next_h2 <- headings[headings > heading]
+    next_h2 <- if (length(next_h2) > 0L) next_h2[1] else {
+      other_h2 <- grep("^## ", lines)
+      other_h2 <- other_h2[other_h2 > heading]
+      if (length(other_h2) > 0L) other_h2[1] else length(lines) + 1L
+    }
+
+    body <- lines[seq(from = heading + 1L, to = next_h2 - 1L)]
+    if (any(grepl("^::: \\{\\.panel-tabset\\}", body))) next
+
+    capsule_number <- sub("^## Capsule ([0-9]+).*$", "\\1", lines[[heading]])
+    if (!grepl("^[0-9]+$", capsule_number)) capsule_number <- "1"
+
+    lines <- append(lines, capsule_media_tabset(as.integer(capsule_number)), after = heading)
+  }
+
+  writeLines(lines, path, useBytes = TRUE)
+  invisible(TRUE)
+}
+
+upsert_media_info <- function(spec) {
+  path <- file.path(spec$dir, "informations.qmd")
+  if (!file.exists(path)) return(invisible(FALSE))
+
+  lines <- readLines(path, warn = FALSE)
+  if (any(grepl("^## Médias de capsule$", lines))) return(invisible(FALSE))
+
+  private_section <- grep("^Ces fichiers restent dans `anciens_documents/sources_privees/`", lines)
+  if (length(private_section) == 0L) return(invisible(FALSE))
+
+  addition <- c(
+    "",
+    "## Médias de capsule",
+    "",
+    "- `media/videos/` : vidéos courtes intégrées dans l'onglet `Vidéo`.",
+    "- `media/pdf/` : supports PDF générés à partir des contenus Quarto.",
+    "- `media/narration/` : narrations PDF validées pour publication.",
+    ""
+  )
+
+  lines <- append(lines, addition, after = private_section[1])
+  writeLines(lines, path, useBytes = TRUE)
+  invisible(TRUE)
+}
+
+ensure_capsule_sections <- function(spec) {
+  path <- file.path(spec$dir, "capsules.qmd")
+  if (!file.exists(path)) return(invisible(FALSE))
+
+  lines <- readLines(path, warn = FALSE)
+  headings <- grep("^## Capsule [0-9]+", lines)
+  existing_numbers <- integer()
+
+  if (length(headings) > 0L) {
+    existing_numbers <- as.integer(sub("^## Capsule ([0-9]+).*$", "\\1", lines[headings]))
+    existing_numbers <- existing_numbers[!is.na(existing_numbers)]
+  }
+
+  missing_numbers <- setdiff(seq_along(spec$capsules), existing_numbers)
+  if (length(missing_numbers) == 0L) return(invisible(FALSE))
+
+  insert_before <- grep("^## (Lien avec l'ancien matériel|À compléter|Règle de découpage)", lines)
+  insert_at <- if (length(insert_before) > 0L) insert_before[1] - 1L else length(lines)
+
+  additions <- unlist(lapply(missing_numbers, function(i) {
+    c(
+      "",
+      paste0("## Capsule ", i, " - ", spec$capsules[[i]]),
+      capsule_media_tabset(i),
+      "Durée cible : 5 à 8 minutes.",
+      "",
+      "Objectif : TODO traduire et synthétiser la portion correspondante du ou des PPT.",
+      "",
+      "À couvrir :",
+      "",
+      "- TODO idée principale;",
+      "- TODO exemple simple;",
+      "- TODO lien avec une décision ou une interprétation d'affaires.",
+      "",
+      "### Pause active",
+      "",
+      "TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.",
+      ""
+    )
+  }))
+
+  lines <- append(lines, additions, after = insert_at)
+  writeLines(lines, path, useBytes = TRUE)
+  invisible(TRUE)
+}
+
+ensure_media_dirs <- function(spec) {
+  media_dirs <- file.path(spec$dir, "media", c("videos", "pdf", "narration"))
+  for (media_dir in media_dirs) {
+    dir.create(media_dir, recursive = TRUE, showWarnings = FALSE)
+    write_if_missing(file.path(media_dir, ".gitkeep"))
+  }
+
+  write_if_missing(
+    file.path(spec$dir, "media", "README.md"),
+    c(
+      paste0("# Médias - ", spec$label),
+      "",
+      "Ce dossier sert à préparer les médias publics du module.",
+      "",
+      "## Sous-dossiers",
+      "",
+      "- `videos/` : vidéos courtes intégrées dans les capsules.",
+      "- `pdf/` : supports PDF générés à partir des contenus Quarto.",
+      "- `narration/` : PDF de narration validés pour publication.",
+      "",
+      "## Règles",
+      "",
+      "- ne pas publier de documents privés ou protégés sans validation;",
+      "- privilégier des vidéos courtes;",
+      "- garder le même numéro de capsule entre vidéo, support et narration;",
+      "- documenter toute source ancienne utilisée."
+    )
+  )
+}
+
 for (spec in module_specs) {
   dir.create(spec$dir, recursive = TRUE, showWarnings = FALSE)
   dir.create(file.path(spec$dir, "data"), recursive = TRUE, showWarnings = FALSE)
+  ensure_media_dirs(spec)
 
   write_qmd_if_missing(file.path(spec$dir, "capsules.qmd"), capsules_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "demonstrations.qmd"), demonstrations_page(spec))
@@ -586,7 +842,10 @@ for (spec in module_specs) {
   write_qmd_if_missing(file.path(spec$dir, "informations.qmd"), informations_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "data", "README.md"), data_readme(spec))
 
-  insert_module_links(spec)
+  upsert_learning_path(spec)
+  ensure_capsule_sections(spec)
+  insert_capsule_tabsets(spec)
+  upsert_media_info(spec)
   append_hidden_solution_model(spec)
   append_capsule_pause_model(spec)
 }
