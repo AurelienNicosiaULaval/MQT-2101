@@ -3799,7 +3799,8 @@ vertical-align: -.125em;
 }</script>
 
 
-<style type="text/css">.hero-learning {
+<style type="text/css">.learning-hero,
+.hero-learning {
 margin: 1rem 0 1.75rem;
 padding: clamp(1.25rem, 2.6vw, 2rem);
 border: 1px solid #d9e2e8;
@@ -3807,6 +3808,7 @@ border-left: 6px solid #b5121b;
 border-radius: 8px;
 background: #f7fafc;
 }
+.learning-hero h2,
 .hero-learning h2 {
 max-width: 820px;
 margin: 0.15rem 0 0.55rem;
@@ -3814,6 +3816,7 @@ color: #123244;
 font-size: 2rem;
 line-height: 1.16;
 }
+.learning-hero p,
 .hero-learning p {
 max-width: 880px;
 margin-bottom: 1.25rem;
@@ -3855,6 +3858,7 @@ font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
 }
+.path-grid,
 .learning-path {
 display: grid;
 grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -3913,16 +3917,55 @@ margin-bottom: 0.8rem;
 .step-card .callout {
 margin: 1rem 0;
 }
-.deliverable-card {
+.step-list {
+margin: 1.25rem 0 2rem;
+}
+.deliverable-box,
+.deliverable-card,
+.help-box {
 margin: 1.1rem 0 1.35rem;
 padding: 1.1rem 1.25rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #f8fbfd;
 }
+.compact-box {
+margin-top: 1rem;
+}
+.resource-grid {
+display: grid;
+grid-template-columns: repeat(5, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.resource-card {
+padding: 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.04);
+}
+.resource-card h3 {
+margin: 0 0 0.45rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.resource-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
 .deliverable-card p:last-child {
 margin-bottom: 0;
 }
+.deliverable-box p:last-child,
+.help-box p:last-child,
+.help-box ol:last-child {
+margin-bottom: 0;
+}
+.checklist-box,
 .checklist-card {
 margin: 1rem 0 1.5rem;
 padding: 1rem 1.2rem;
@@ -3931,6 +3974,7 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.04);
 }
+.checklist-box ul,
 .checklist-card ul {
 display: grid;
 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3945,22 +3989,32 @@ margin-top: 0;
 }
 @media (max-width: 992px) {
 .quick-facts,
+.path-grid,
+.resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 }
 @media (max-width: 640px) {
+.learning-hero,
 .hero-learning,
 .step-card,
+.deliverable-box,
 .deliverable-card,
-.checklist-card {
+.checklist-box,
+.checklist-card,
+.help-box {
 padding: 1rem;
 }
+.learning-hero h2,
 .hero-learning h2 {
 font-size: 1.55rem;
 }
 .quick-facts,
+.path-grid,
+.resource-grid,
 .learning-path,
+.checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
@@ -4135,28 +4189,14 @@ min-height: auto;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#semaine-02" id="toc-semaine-02" class="nav-link active" data-scroll-target="#semaine-02">Semaine 02</a>
-  <ul class="collapse">
-  <li><a href="#mission-de-la-séance" id="toc-mission-de-la-séance" class="nav-link" data-scroll-target="#mission-de-la-séance">Mission de la séance</a></li>
-  <li><a href="#parcours-dapprentissage" id="toc-parcours-dapprentissage" class="nav-link" data-scroll-target="#parcours-dapprentissage">Parcours d’apprentissage</a></li>
-  <li><a href="#étapes-guidées" id="toc-étapes-guidées" class="nav-link" data-scroll-target="#étapes-guidées">Étapes guidées</a>
-  <ul class="collapse">
-  <li><a href="#étape-1-vérifier-lenvironnement" id="toc-étape-1-vérifier-lenvironnement" class="nav-link" data-scroll-target="#étape-1-vérifier-lenvironnement">Étape 1 : Vérifier l’environnement</a></li>
-  <li><a href="#étape-2-comprendre-rstudio" id="toc-étape-2-comprendre-rstudio" class="nav-link" data-scroll-target="#étape-2-comprendre-rstudio">Étape 2 : Comprendre RStudio</a></li>
-  <li><a href="#étape-3-organiser-le-projet" id="toc-étape-3-organiser-le-projet" class="nav-link" data-scroll-target="#étape-3-organiser-le-projet">Étape 3 : Organiser le projet</a></li>
-  <li><a href="#étape-4-importer-les-données" id="toc-étape-4-importer-les-données" class="nav-link" data-scroll-target="#étape-4-importer-les-données">Étape 4 : Importer les données</a></li>
-  <li><a href="#étape-5-inspecter-le-tableau" id="toc-étape-5-inspecter-le-tableau" class="nav-link" data-scroll-target="#étape-5-inspecter-le-tableau">Étape 5 : Inspecter le tableau</a></li>
-  <li><a href="#étape-6-nettoyer-minimalement" id="toc-étape-6-nettoyer-minimalement" class="nav-link" data-scroll-target="#étape-6-nettoyer-minimalement">Étape 6 : Nettoyer minimalement</a></li>
-  <li><a href="#étape-7-visualiser" id="toc-étape-7-visualiser" class="nav-link" data-scroll-target="#étape-7-visualiser">Étape 7 : Visualiser</a></li>
-  <li><a href="#étape-8-produire-le-mini-rapport" id="toc-étape-8-produire-le-mini-rapport" class="nav-link" data-scroll-target="#étape-8-produire-le-mini-rapport">Étape 8 : Produire le mini-rapport</a></li>
-  </ul></li>
-  <li><a href="#exercices-dapplication-intégrés" id="toc-exercices-dapplication-intégrés" class="nav-link" data-scroll-target="#exercices-dapplication-intégrés">Exercices d’application intégrés</a></li>
-  <li><a href="#concepts-clés" id="toc-concepts-clés" class="nav-link" data-scroll-target="#concepts-clés">Concepts clés</a></li>
-  <li><a href="#grille-dauto-vérification" id="toc-grille-dauto-vérification" class="nav-link" data-scroll-target="#grille-dauto-vérification">Grille d’auto-vérification</a></li>
+  <li><a href="#lets-eat-the-cake" id="toc-lets-eat-the-cake" class="nav-link active" data-scroll-target="#lets-eat-the-cake">Let’s eat the cake</a></li>
+  <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#à-faire-dans-lordre" id="toc-à-faire-dans-lordre" class="nav-link" data-scroll-target="#à-faire-dans-lordre">À faire dans l’ordre</a></li>
+  <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
+  <li><a href="#production-finale" id="toc-production-finale" class="nav-link" data-scroll-target="#production-finale">Production finale</a></li>
+  <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
   <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
-  <li><a href="#lectures-et-matériel-du-module" id="toc-lectures-et-matériel-du-module" class="nav-link" data-scroll-target="#lectures-et-matériel-du-module">Lectures et matériel du module</a></li>
   <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4166,7 +4206,7 @@ min-height: auto;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Semaine 02</h1>
-<p class="subtitle lead">De fichier CSV à premiers constats : commencer une analyse avec R</p>
+<p class="subtitle lead">Premiers pas avec R, RStudio et Quarto</p>
 </div>
 
 
@@ -4183,144 +4223,172 @@ min-height: auto;
 </header>
 
 
-<section id="semaine-02" class="level1">
-<h1>Semaine 02</h1>
-<div class="hero-learning">
+<div class="learning-hero">
 <p class="hero-kicker">
 Séance autonome
 </p>
-<h2 class="anchored" data-anchor-id="semaine-02">
-De fichier CSV à premiers constats : commencer une analyse avec R
+<h2 class="anchored">
+Premiers pas avec R, RStudio et Quarto
 </h2>
-<p>
-Cette semaine vous guide pas à pas dans un premier flux de travail reproductible : vérifier l’environnement, ouvrir RStudio, organiser un projet, importer un fichier CSV, inspecter les données, produire un graphique et rendre un mini-rapport Quarto.
-</p>
+<p>Importer, inspecter, résumer et visualiser un premier tableau de données. Cette semaine sert à installer les bases techniques nécessaires pour travailler de façon reproductible avec R. Le parcours vous guide depuis l’environnement de travail jusqu’à la production d’un mini-rapport Quarto.</p>
 <div class="quick-facts">
-<pre><code>&lt;div class=&quot;fact-card&quot;&gt;
-  &lt;div class=&quot;fact-label&quot;&gt;Durée estimée&lt;/div&gt;
-  &lt;div class=&quot;fact-value&quot;&gt;2 h 30 à 3 h&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;fact-card&quot;&gt;
-  &lt;div class=&quot;fact-label&quot;&gt;Outils&lt;/div&gt;
-  &lt;div class=&quot;fact-value&quot;&gt;R, RStudio, Quarto&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;fact-card&quot;&gt;
-  &lt;div class=&quot;fact-label&quot;&gt;Données&lt;/div&gt;
-  &lt;div class=&quot;fact-value&quot;&gt;ventes_operations_quebec.csv&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;fact-card&quot;&gt;
-  &lt;div class=&quot;fact-label&quot;&gt;Livrable&lt;/div&gt;
-  &lt;div class=&quot;fact-value&quot;&gt;Mini-rapport Quarto reproductible&lt;/div&gt;
-&lt;/div&gt;</code></pre>
+<div class="fact-card">
+<div class="fact-label">
+Durée estimée
+</div>
+<div class="fact-value">
+2 h 30 à 3 h
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Let’s eat the cake">
+<div class="fact-card">
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio, Quarto
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-label">
+Données
+</div>
+<div class="fact-value">
+ventes_operations_quebec.csv
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-label">
+Production finale
+</div>
+<div class="fact-value">
+Mini-rapport Quarto
+</div>
+</div>
+</div>
+</div>
+<section id="lets-eat-the-cake" class="level2">
+<h2 class="anchored" data-anchor-id="lets-eat-the-cake">Let’s eat the cake</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="À quoi sert cette semaine?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Let’s eat the cake
+À quoi sert cette semaine?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Pourquoi cette séance est utile?</p>
-<p>Elle transforme les premiers gestes techniques dans R en une méthode de travail complète : importer, inspecter, résumer, visualiser et rendre compte.</p>
-<p>Quelle compétence professionnelle développe-t-on?</p>
-<p>Vous apprenez à produire une première analyse reproductible à partir d’un fichier de données d’affaires, sans modifier le fichier source à la main.</p>
-<p>Quelle décision d’affaires pourra-t-on mieux préparer?</p>
-<p>Une équipe de gestion pourra mieux comprendre où regarder avant d’analyser les ventes par succursale, canal, région ou campagne locale.</p>
-<p>Quel résultat concret sera produit?</p>
-<p>Un mini-rapport Quarto contenant une importation, une inspection, un diagnostic des valeurs manquantes, un tableau descriptif, un graphique et deux constats d’affaires.</p>
+<p>Cette semaine vous apprend à passer d’un fichier de données à une première analyse reproductible. Ces gestes reviendront dans tout le cours : régression, prévision, séries chronologiques et évaluation de modèles.</p>
+<p>Objectif : prendre en main R, RStudio et Quarto pour importer, inspecter, préparer et visualiser un tableau de données.</p>
+<p>Compétences développées : vérifier l’environnement, reconnaître les zones de RStudio, utiliser un projet R, importer un CSV, inspecter un tableau, repérer les valeurs manquantes, produire un tableau descriptif, créer un graphique et rendre un document Quarto.</p>
+<p>Résultat attendu : un mini-rapport Quarto court, reproductible et appuyé par deux constats descriptifs.</p>
 </div>
 </div>
-<section id="mission-de-la-séance" class="level2">
-<h2 class="anchored" data-anchor-id="mission-de-la-séance">Mission de la séance</h2>
-<div class="deliverable-card">
+<p>Le fil conducteur reste appliqué à des données en administration : ventes, opérations, clients, prévision et performance organisationnelle. Lorsque les consignes l’autorisent, l’IA peut servir d’outil de questionnement ou de vérification, mais le raisonnement statistique, le code R et l’interprétation restent au centre du travail.</p>
+<div class="deliverable-box compact-box">
 <p class="card-kicker">
-Mise en situation
+À la fin de la semaine
 </p>
 <p>
-Vous jouez le rôle d’un·e analyste junior. Une organisation québécoise vous transmet un fichier de ventes et d’opérations. Votre mandat est de produire une première analyse reproductible pour aider une équipe de gestion à comprendre les données avant de passer à des modèles plus avancés.
-</p>
-<p>
-Le but n’est pas encore de conclure causalement. Le but est de vérifier le fichier, repérer les variables importantes, détecter les valeurs manquantes et formuler des constats descriptifs utiles.
+Vous devriez pouvoir importer le fichier <code>ventes_operations_quebec.csv</code>, inspecter sa structure, repérer les valeurs manquantes, produire un résumé, créer un graphique et formuler deux constats descriptifs simples.
 </p>
 </div>
-<p>À la fin de cette page, vous devriez être capable de :</p>
-<ul>
-<li>vérifier votre environnement R/RStudio;</li>
-<li>comprendre les zones principales de RStudio;</li>
-<li>créer ou utiliser un projet R;</li>
-<li>importer un fichier CSV;</li>
-<li>inspecter un tableau de données;</li>
-<li>repérer des valeurs manquantes;</li>
-<li>produire un tableau descriptif simple;</li>
-<li>produire un graphique simple;</li>
-<li>rendre un mini-rapport Quarto;</li>
-<li>formuler deux constats d’affaires.</li>
-</ul>
-<p>Le fil conducteur est celui d’une analyse en administration : ventes, opérations, performance organisationnelle et satisfaction client. Lorsque les consignes l’autorisent, l’IA peut servir d’outil de questionnement ou de vérification, mais le raisonnement statistique, le code R et l’interprétation restent au centre du travail.</p>
 </section>
-<section id="parcours-dapprentissage" class="level2">
-<h2 class="anchored" data-anchor-id="parcours-dapprentissage">Parcours d’apprentissage</h2>
-<p>Revenez toujours à cette page pour garder le fil. Les pages spécialisées servent de ressources au bon moment : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, <a href="../../modules/semaine-02-r-quarto/lectures.html">lectures</a> et <a href="../../modules/semaine-02-r-quarto/informations.html">informations du module</a>.</p>
-<div class="learning-path">
+<section id="votre-parcours" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Revenez toujours à cette page pour garder le fil. Les pages spécialisées servent de ressources au bon moment.</p>
+<div class="path-grid">
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;1&lt;/div&gt;
-&lt;h3&gt;Vérifier l&#39;environnement&lt;/h3&gt;
-&lt;p&gt;S&#39;assurer que R, RStudio, Quarto et les packages essentiels fonctionnent.&lt;/p&gt;</code></pre>
+<div class="path-number">
+1
+</div>
+<section id="préparer-lenvironnement" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="préparer-lenvironnement">Préparer l’environnement</h3>
+<p>Vérifier que R, RStudio et les packages essentiels fonctionnent.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 1.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;2&lt;/div&gt;
-&lt;h3&gt;Comprendre RStudio&lt;/h3&gt;
-&lt;p&gt;Repérer la console, l&#39;éditeur, l&#39;environnement, les fichiers et les graphiques.&lt;/p&gt;</code></pre>
+<div class="path-number">
+2
+</div>
+<section id="explorer-rstudio" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="explorer-rstudio">Explorer RStudio</h3>
+<p>Repérer la console, l’éditeur, l’environnement, les fichiers et les graphiques.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 2.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;3&lt;/div&gt;
-&lt;h3&gt;Organiser le projet&lt;/h3&gt;
-&lt;p&gt;Garder ensemble code, données et résultats avec des chemins relatifs.&lt;/p&gt;</code></pre>
+<div class="path-number">
+3
+</div>
+<section id="organiser-les-fichiers" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="organiser-les-fichiers">Organiser les fichiers</h3>
+<p>Utiliser un projet R et des chemins relatifs.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 3.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;4&lt;/div&gt;
-&lt;h3&gt;Importer les données&lt;/h3&gt;
-&lt;p&gt;Lire le CSV de ventes et vérifier immédiatement les dimensions du tableau.&lt;/p&gt;</code></pre>
+<div class="path-number">
+4
+</div>
+<section id="importer-les-données" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="importer-les-données">Importer les données</h3>
+<p>Lire le fichier CSV et vérifier les dimensions du tableau.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;5&lt;/div&gt;
-&lt;h3&gt;Inspecter le tableau&lt;/h3&gt;
-&lt;p&gt;Identifier l&#39;unité d&#39;observation, les variables et les types de données.&lt;/p&gt;</code></pre>
+<div class="path-number">
+5
+</div>
+<section id="inspecter-le-tableau" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="inspecter-le-tableau">Inspecter le tableau</h3>
+<p>Identifier les lignes, les colonnes et les types de variables.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 1 et 2.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;6&lt;/div&gt;
-&lt;h3&gt;Nettoyer minimalement&lt;/h3&gt;
-&lt;p&gt;Préparer les variables catégorielles et diagnostiquer les valeurs manquantes.&lt;/p&gt;</code></pre>
+<div class="path-number">
+6
+</div>
+<section id="résumer-les-variables" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="résumer-les-variables">Résumer les variables</h3>
+<p>Repérer les valeurs manquantes et produire un résumé descriptif.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 2 à 4.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;7&lt;/div&gt;
-&lt;h3&gt;Visualiser&lt;/h3&gt;
-&lt;p&gt;Produire un graphique simple qui soutient une lecture de gestion.&lt;/p&gt;</code></pre>
+<div class="path-number">
+7
+</div>
+<section id="visualiser-les-données" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="visualiser-les-données">Visualiser les données</h3>
+<p>Créer un graphique simple avec un titre et des axes lisibles.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstration 5.</p>
+</section>
 </div>
 <div class="path-card">
-<pre><code>&lt;div class=&quot;path-number&quot;&gt;8&lt;/div&gt;
-&lt;h3&gt;Produire le mini-rapport&lt;/h3&gt;
-&lt;p&gt;Rendre un document Quarto court, vérifiable et orienté vers les constats.&lt;/p&gt;</code></pre>
+<div class="path-number">
+8
+</div>
+<section id="produire-le-mini-rapport" class="level3 unlisted">
+<h3 class="unlisted anchored" data-anchor-id="produire-le-mini-rapport">Produire le mini-rapport</h3>
+<p>Rassembler le code, les résultats et les constats dans Quarto.</p>
+<p>Ressource : <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, livrable court.</p>
+</section>
 </div>
 </div>
 </section>
-<section id="étapes-guidées" class="level2">
-<h2 class="anchored" data-anchor-id="étapes-guidées">Étapes guidées</h2>
-<section id="étape-1-vérifier-lenvironnement" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-1-vérifier-lenvironnement">Étape 1 : Vérifier l’environnement</h3>
-<p>Objectif de l’étape : s’assurer que R, RStudio, Quarto et les packages utiles sont disponibles.</p>
-<p>À faire :</p>
-<ul>
-<li>ouvrir RStudio;</li>
-<li>exécuter une commande simple dans la console;</li>
-<li>charger les packages nécessaires avec <code>library(tidyverse)</code> et, au besoin, <code>library(janitor)</code>;</li>
-<li>noter tout message d’installation ou de package manquant.</li>
-</ul>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 1, puis <a href="../../modules/semaine-02-r-quarto/informations.html">informations du module</a> pour les fichiers publics.</p>
+<section id="à-faire-dans-lordre" class="level2">
+<h2 class="anchored" data-anchor-id="à-faire-dans-lordre">À faire dans l’ordre</h2>
+<div class="step-list">
+<section id="étape-1-vérifier-lenvironnement" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-1-vérifier-lenvironnement">Étape 1 : Vérifier l’environnement</h3>
+<p>Objectif : s’assurer que R, RStudio, Quarto et les packages nécessaires fonctionnent.</p>
+<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 1, puis <a href="../../modules/semaine-02-r-quarto/informations.html">informations du module</a> pour retrouver les fichiers publics.</p>
+<p>Action à réaliser : ouvrir RStudio, exécuter une commande simple dans la console et charger <code>tidyverse</code>.</p>
+<p>Trace à conserver : une courte note indiquant que l’environnement fonctionne.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="AE 2.1 : vérifier que R fonctionne">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -4331,23 +4399,16 @@ AE 2.1 : vérifier que R fonctionne
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>. Notez ce qui s’affiche et indiquez si l’environnement est prêt.</p>
+<p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>. Notez le résultat obtenu.</p>
 </div>
 </div>
-<p>Trace attendue : une capture ou une courte note indiquant que R répond, que les packages sont chargés et que vous savez où se trouve le dossier de travail.</p>
 </section>
-<section id="étape-2-comprendre-rstudio" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-2-comprendre-rstudio">Étape 2 : Comprendre RStudio</h3>
-<p>Objectif de l’étape : reconnaître les zones principales de RStudio et savoir quoi y faire.</p>
-<p>À faire :</p>
-<ul>
-<li>repérer la zone Source pour écrire du code et du texte Quarto;</li>
-<li>repérer la Console pour exécuter rapidement des commandes;</li>
-<li>repérer Environment pour voir les objets créés;</li>
-<li>repérer Files, Plots, Packages, Help et Viewer;</li>
-<li>expliquer quel panneau vous aide à retrouver le fichier CSV.</li>
-</ul>
+<section id="étape-2-comprendre-rstudio" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-2-comprendre-rstudio">Étape 2 : Comprendre RStudio</h3>
+<p>Objectif : reconnaître les principales zones de l’interface.</p>
 <p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 2.</p>
+<p>Action à réaliser : identifier la console, l’éditeur, l’environnement, l’onglet Files et l’onglet Plots.</p>
+<p>Trace à conserver : une phrase expliquant le rôle de deux zones de RStudio.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="AE 2.2 : identifier les zones de RStudio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -4358,226 +4419,176 @@ AE 2.2 : identifier les zones de RStudio
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers, afficher un graphique.</p>
+<p>Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers ou afficher un graphique.</p>
 </div>
 </div>
-<p>Trace attendue : un court schéma, une liste annotée ou quelques phrases expliquant le rôle des principales zones.</p>
 </section>
-<section id="étape-3-organiser-le-projet" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-3-organiser-le-projet">Étape 3 : Organiser le projet</h3>
-<p>Objectif de l’étape : utiliser un projet R pour rendre l’analyse reproductible.</p>
-<p>À faire :</p>
-<ul>
-<li>créer ou ouvrir un projet R;</li>
-<li>vérifier que le fichier <code>ventes_operations_quebec.csv</code> est dans le dossier <code>data</code>;</li>
-<li>utiliser un chemin relatif plutôt qu’un chemin propre à votre ordinateur;</li>
-<li>créer le fichier Quarto qui deviendra le mini-rapport.</li>
-</ul>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 3, puis <a href="../../modules/semaine-02-r-quarto/informations.html">informations du module</a>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.3 : expliquer pourquoi un projet R est utile">
+<section id="étape-3-utiliser-un-projet-r" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-3-utiliser-un-projet-r">Étape 3 : Utiliser un projet R</h3>
+<p>Objectif : comprendre pourquoi le projet R est la base de la reproductibilité.</p>
+<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 3.</p>
+<p>Action à réaliser : créer ou ouvrir un projet R, puis vérifier où se trouve le dossier <code>data</code>.</p>
+<p>Trace à conserver : le nom du projet et une phrase sur l’intérêt des chemins relatifs.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.3 : expliquer l&#39;utilité d&#39;un projet R">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AE 2.3 : expliquer pourquoi un projet R est utile
+AE 2.3 : expliquer l’utilité d’un projet R
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En deux ou trois phrases, expliquez pourquoi un projet R réduit les erreurs de chemins et facilite le partage d’une analyse.</p>
+<p>Expliquez en deux ou trois phrases pourquoi un projet R réduit les erreurs de chemins et facilite la reprise d’une analyse.</p>
 </div>
 </div>
-<p>Trace attendue : le nom du projet, l’emplacement du fichier CSV et une phrase sur l’utilité des chemins relatifs.</p>
 </section>
-<section id="étape-4-importer-les-données" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-4-importer-les-données">Étape 4 : Importer les données</h3>
-<p>Objectif de l’étape : lire un fichier CSV dans R et vérifier que l’objet créé correspond au fichier attendu.</p>
-<p>À faire :</p>
-<ul>
-<li>ouvrir <a href="../../modules/semaine-02-r-quarto/demonstrations.html">les démonstrations R</a>;</li>
-<li>exécuter le code d’importation;</li>
-<li>vérifier les dimensions du tableau;</li>
-<li>conserver le code dans votre mini-rapport Quarto.</li>
-</ul>
+<section id="étape-4-importer-les-données" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-4-importer-les-données">Étape 4 : Importer les données</h3>
+<p>Objectif : lire le fichier CSV dans R.</p>
 <p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 4, puis <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, préparation et démonstration 1.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.4 : importer le fichier CSV">
+<p>Action à réaliser : exécuter le code d’importation et vérifier les dimensions du tableau.</p>
+<p>Trace à conserver : le code d’importation et le résultat de <code>glimpse()</code> ou de <code>dim()</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.4 : importer les données">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AE 2.4 : importer le fichier CSV
+AE 2.4 : importer les données
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Importez <code>ventes_operations_quebec.csv</code>. Combien de lignes et de colonnes contient le fichier? Que représente une ligne?</p>
+<p>Importez le fichier <code>ventes_operations_quebec.csv</code>, puis indiquez le nombre de lignes et de colonnes du tableau.</p>
 </div>
 </div>
-<p>Trace attendue : code d’importation, résultat de <code>glimpse()</code> ou de <code>dim()</code>, puis une phrase d’interprétation.</p>
 </section>
-<section id="étape-5-inspecter-le-tableau" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-5-inspecter-le-tableau">Étape 5 : Inspecter le tableau</h3>
-<p>Objectif de l’étape : comprendre la structure du tableau avant de calculer des résultats.</p>
-<p>À faire :</p>
-<ul>
-<li>identifier les variables numériques;</li>
-<li>identifier les variables catégorielles;</li>
-<li>repérer les dates ou périodes;</li>
-<li>nommer l’unité d’observation;</li>
-<li>vérifier les premières lignes du tableau.</li>
-</ul>
+<section id="étape-5-inspecter-le-tableau" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-5-inspecter-le-tableau">Étape 5 : Inspecter le tableau</h3>
+<p>Objectif : comprendre la structure du tableau avant de calculer des résultats.</p>
 <p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstration 1, et <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 1 et 2.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.5 : repérer les variables et les valeurs manquantes">
+<p>Action à réaliser : identifier l’unité d’observation, les variables numériques, les variables catégorielles et les variables de date ou de période.</p>
+<p>Trace à conserver : une liste courte des variables importantes et de leur type.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.5 : inspecter les lignes, colonnes et types de variables">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AE 2.5 : repérer les variables et les valeurs manquantes
+AE 2.5 : inspecter les lignes, colonnes et types de variables
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Classez les variables principales du fichier, puis indiquez quelles variables devront être surveillées pour les valeurs manquantes.</p>
+<p>Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.</p>
 </div>
 </div>
-<p>Trace attendue : une liste courte des variables importantes, leur type et une phrase sur l’unité d’observation.</p>
 </section>
-<section id="étape-6-nettoyer-minimalement" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-6-nettoyer-minimalement">Étape 6 : Nettoyer minimalement</h3>
-<p>Objectif de l’étape : préparer les variables utiles sans transformer inutilement les données.</p>
-<p>À faire :</p>
-<ul>
-<li>convertir les variables catégorielles en facteurs lorsque c’est utile;</li>
-<li>vérifier les valeurs manquantes avec <code>is.na()</code> et <code>summarise()</code>;</li>
-<li>ne pas supprimer automatiquement les lignes incomplètes;</li>
-<li>écrire une phrase sur l’impact possible des valeurs manquantes.</li>
-</ul>
+<section id="étape-6-repérer-les-valeurs-manquantes" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-6-repérer-les-valeurs-manquantes">Étape 6 : Repérer les valeurs manquantes</h3>
+<p>Objectif : produire un diagnostic simple des données absentes.</p>
 <p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 5, <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 2 et 3, puis <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercice 3.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.5 : diagnostic des valeurs manquantes">
+<p>Action à réaliser : utiliser <code>is.na()</code>, <code>summarise()</code> et <code>pivot_longer()</code> pour compter les valeurs manquantes.</p>
+<p>Trace à conserver : un petit tableau de diagnostic et une phrase d’interprétation.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.6 : repérer les valeurs manquantes">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AE 2.5 : diagnostic des valeurs manquantes
+AE 2.6 : repérer les valeurs manquantes
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Produisez un petit diagnostic des valeurs manquantes. Nommez les variables incomplètes et expliquez une conséquence possible pour l’analyse.</p>
+<p>Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.</p>
 </div>
 </div>
-<p>Trace attendue : tableau des valeurs manquantes et courte interprétation.</p>
 </section>
-<section id="étape-7-visualiser" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-7-visualiser">Étape 7 : Visualiser</h3>
-<p>Objectif de l’étape : produire un graphique simple qui aide à comparer une dimension d’affaires.</p>
-<p>À faire :</p>
-<ul>
-<li>produire un tableau descriptif par succursale ou par canal principal;</li>
-<li>construire un graphique avec <code>ggplot()</code>;</li>
-<li>ajouter un titre clair et des axes lisibles;</li>
-<li>écrire un constat descriptif, sans conclure à une causalité.</li>
-</ul>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 6, <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 4 et 5, puis <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 4 et 5.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.6 : produire un graphique simple">
+<section id="étape-7-résumer-et-visualiser" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-7-résumer-et-visualiser">Étape 7 : Résumer et visualiser</h3>
+<p>Objectif : produire un tableau descriptif et un graphique simple.</p>
+<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 4 et 5, puis <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 4 et 5.</p>
+<p>Action à réaliser : résumer les ventes par succursale ou par canal principal, puis construire un graphique avec <code>ggplot()</code>.</p>
+<p>Trace à conserver : le code du tableau descriptif, le code du graphique et une phrase d’interprétation.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.7 : produire un tableau descriptif">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AE 2.6 : produire un graphique simple
+AE 2.7 : produire un tableau descriptif
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Créez un graphique des ventes par canal principal ou par succursale. Le graphique doit permettre une comparaison immédiate.</p>
+<p>Produisez un tableau descriptif par succursale ou par canal principal, puis interprétez un résultat.</p>
 </div>
 </div>
-<p>Trace attendue : code du tableau descriptif, code du graphique et une phrase d’interprétation.</p>
-</section>
-<section id="étape-8-produire-le-mini-rapport" class="level3 step-card">
-<h3 class="anchored" data-anchor-id="étape-8-produire-le-mini-rapport">Étape 8 : Produire le mini-rapport</h3>
-<p>Objectif de l’étape : rendre un document Quarto qui combine contexte, code, résultats et constats.</p>
-<p>À faire :</p>
-<ul>
-<li>intégrer les traces des étapes précédentes dans un fichier <code>.qmd</code>;</li>
-<li>rendre le document avec le bouton Render ou avec <code>quarto render</code>;</li>
-<li>vérifier que le HTML contient les résultats attendus;</li>
-<li>comparer votre travail avec les solutions cachées seulement après une vraie tentative.</li>
-</ul>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 6, <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, <a href="../../modules/semaine-02-r-quarto/lectures.html">lectures</a> et <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.7 : formuler deux constats d&#39;affaires">
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.8 : produire un graphique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AE 2.7 : formuler deux constats d’affaires
+AE 2.8 : produire un graphique
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À partir du tableau descriptif et du graphique, formulez deux constats utiles pour une équipe de gestion. Chaque constat doit mentionner la variable observée et rester descriptif.</p>
+<p>Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.</p>
 </div>
 </div>
-<p>Trace attendue : mini-rapport Quarto rendu en HTML, deux constats d’affaires et une question d’analyse pour la suite.</p>
 </section>
-</section>
-<section id="exercices-dapplication-intégrés" class="level2">
-<h2 class="anchored" data-anchor-id="exercices-dapplication-intégrés">Exercices d’application intégrés</h2>
-<p>Les AE sont intégrées aux étapes, mais vous devez conserver une trace personnelle de vos réponses.</p>
-<ul>
-<li>AE 2.1 : vérifier que R fonctionne.</li>
-<li>AE 2.2 : identifier les zones de RStudio.</li>
-<li>AE 2.3 : expliquer pourquoi un projet R est utile.</li>
-<li>AE 2.4 : importer le fichier CSV.</li>
-<li>AE 2.5 : repérer les variables et les valeurs manquantes.</li>
-<li>AE 2.6 : produire un graphique simple.</li>
-<li>AE 2.7 : formuler deux constats d’affaires.</li>
-</ul>
-<p>Faites <a href="../../modules/semaine-02-r-quarto/exercices.html">les exercices</a> avant d’ouvrir les solutions cachées. Ensuite, corrigez votre raisonnement, annotez ce qui doit être repris et notez vos questions restantes.</p>
-</section>
-<section id="concepts-clés" class="level2">
-<h2 class="anchored" data-anchor-id="concepts-clés">Concepts clés</h2>
-<div class="learning-path concepts-grid">
-<div class="path-card">
-<pre><code>&lt;h3&gt;Projet R&lt;/h3&gt;
-&lt;p&gt;Dossier qui garde ensemble code, données et résultats.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Chemin relatif&lt;/h3&gt;
-&lt;p&gt;Chemin qui fonctionne à partir du dossier du projet.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Package&lt;/h3&gt;
-&lt;p&gt;Ensemble de fonctions à charger avec &lt;code&gt;library()&lt;/code&gt;.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Importation&lt;/h3&gt;
-&lt;p&gt;Lecture d&#39;un fichier dans un objet R.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Data frame&lt;/h3&gt;
-&lt;p&gt;Tableau de données utilisé dans l&#39;analyse.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Facteur&lt;/h3&gt;
-&lt;p&gt;Variable catégorielle préparée pour l&#39;analyse.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Valeur manquante&lt;/h3&gt;
-&lt;p&gt;Donnée absente codée &lt;code&gt;NA&lt;/code&gt;.&lt;/p&gt;</code></pre>
-</div>
-<div class="path-card">
-<pre><code>&lt;h3&gt;Quarto&lt;/h3&gt;
-&lt;p&gt;Document qui combine texte, code, résultats et graphiques.&lt;/p&gt;</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Erreurs fréquentes">
+<section id="étape-8-rendre-le-mini-rapport" class="level3 unlisted step-card">
+<h3 class="unlisted anchored" data-anchor-id="étape-8-rendre-le-mini-rapport">Étape 8 : Rendre le mini-rapport</h3>
+<p>Objectif : combiner texte, code, résultats et constats dans un fichier Quarto.</p>
+<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 6, <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a> et <a href="../../modules/semaine-02-r-quarto/lectures.html">lectures</a>.</p>
+<p>Action à réaliser : intégrer les traces précédentes dans un fichier <code>.qmd</code>, puis rendre le document avec Render ou <code>quarto render</code>.</p>
+<p>Trace à conserver : le fichier HTML rendu et deux constats descriptifs.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.9 : formuler deux constats descriptifs">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Erreurs fréquentes
+AE 2.9 : formuler deux constats descriptifs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée.</p>
+</div>
+</div>
+</section>
+</div>
+</section>
+<section id="ressources-du-module" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
+<div class="resource-grid">
+<section id="capsules" class="level3 unlisted resource-card">
+<h3 class="unlisted anchored" data-anchor-id="capsules">Capsules</h3>
+<p><a href="../../modules/semaine-02-r-quarto/capsules.html">Comprendre les gestes de base</a> avant de les reproduire dans R.</p>
+</section>
+<section id="démonstrations-r" class="level3 unlisted resource-card">
+<h3 class="unlisted anchored" data-anchor-id="démonstrations-r">Démonstrations R</h3>
+<p><a href="../../modules/semaine-02-r-quarto/demonstrations.html">Reproduire le code pas à pas</a> pour importer, inspecter, résumer et visualiser.</p>
+</section>
+<section id="exercices" class="level3 unlisted resource-card">
+<h3 class="unlisted anchored" data-anchor-id="exercices">Exercices</h3>
+<p><a href="../../modules/semaine-02-r-quarto/exercices.html">Pratiquer sans regarder la solution</a>, puis comparer votre démarche après une vraie tentative.</p>
+</section>
+<section id="lectures" class="level3 unlisted resource-card">
+<h3 class="unlisted anchored" data-anchor-id="lectures">Lectures</h3>
+<p><a href="../../modules/semaine-02-r-quarto/lectures.html">Clarifier les notions techniques</a> lorsque les capsules ou les exercices soulèvent une question.</p>
+</section>
+<section id="informations-du-module" class="level3 unlisted resource-card">
+<h3 class="unlisted anchored" data-anchor-id="informations-du-module">Informations du module</h3>
+<p><a href="../../modules/semaine-02-r-quarto/informations.html">Retrouver les fichiers nécessaires</a>, les consignes pratiques et les rappels sur le matériel ancien.</p>
+</section>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Erreurs fréquentes à éviter">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Erreurs fréquentes à éviter
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -4587,75 +4598,84 @@ Erreurs fréquentes
 <li>Oublier de charger les packages nécessaires.</li>
 <li>Interpréter <code>NA</code> comme une valeur numérique.</li>
 <li>Modifier le CSV à la main sans garder de trace.</li>
-<li>Copier un graphique dans un document sans conserver le code.</li>
+<li>Copier un graphique sans conserver le code.</li>
 </ul>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled" title="Production finale">
+<p>Les anciens PDF, fichiers PowerPoint et ressources externes privées ne sont pas copiés dans le site public. L’ancien exercice basé sur <code>masculinity.csv</code> est remplacé par <code>ventes_operations_quebec.csv</code>, qui permet de travailler les mêmes compétences techniques avec un jeu de données adapté au cours.</p>
+</section>
+<section id="production-finale" class="level2">
+<h2 class="anchored" data-anchor-id="production-finale">Production finale</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Mini-rapport Quarto">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Production finale
+Mini-rapport Quarto
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Votre mini-rapport Quarto doit contenir :</p>
+<p>À la fin de la semaine, vous devez produire un mini-rapport Quarto court et reproductible.</p>
+</div>
+</div>
+<div class="deliverable-box">
+<p>Votre mini-rapport doit contenir :</p>
 <ul>
-<li>une courte mise en contexte;</li>
+<li>une courte introduction;</li>
 <li>le code d’importation;</li>
 <li>une inspection du tableau;</li>
-<li>un diagnostic simple des valeurs manquantes;</li>
+<li>un court diagnostic des valeurs manquantes;</li>
 <li>un tableau descriptif;</li>
 <li>un graphique;</li>
-<li>deux constats d’affaires;</li>
-<li>une question d’analyse pour la suite.</li>
+<li>deux constats descriptifs;</li>
+<li>une question que vous aimeriez approfondir.</li>
 </ul>
-<p>Déposez une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, sans recopier tout le contenu.</p>
-</div>
+<p>La production sert à montrer ce que vous savez faire à la fin de la semaine. Elle n’a pas besoin d’être longue.</p>
 </div>
 </section>
-<section id="grille-dauto-vérification" class="level2">
-<h2 class="anchored" data-anchor-id="grille-dauto-vérification">Grille d’auto-vérification</h2>
-<div class="checklist-card">
+<section id="auto-vérification" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<p>Avant de passer à la semaine suivante, je peux dire que :</p>
+<div class="checklist-box">
 <ul class="task-list">
 <li><label><input type="checkbox">J’ai ouvert RStudio.</label></li>
+<li><label><input type="checkbox">J’ai compris les principales zones de l’interface.</label></li>
 <li><label><input type="checkbox">J’ai utilisé un projet R.</label></li>
-<li><label><input type="checkbox">J’ai importé le fichier CSV.</label></li>
+<li><label><input type="checkbox">J’ai importé un fichier CSV.</label></li>
 <li><label><input type="checkbox">J’ai inspecté les données.</label></li>
 <li><label><input type="checkbox">J’ai repéré les valeurs manquantes.</label></li>
 <li><label><input type="checkbox">J’ai produit un tableau descriptif.</label></li>
 <li><label><input type="checkbox">J’ai produit un graphique.</label></li>
 <li><label><input type="checkbox">J’ai rendu un fichier Quarto.</label></li>
-<li><label><input type="checkbox">J’ai formulé deux constats d’affaires.</label></li>
+<li><label><input type="checkbox">J’ai formulé deux constats descriptifs.</label></li>
 </ul>
 </div>
 </section>
 <section id="je-suis-bloquée" class="level2">
 <h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
-<p>Avant de demander de l’aide, faites ces vérifications dans l’ordre :</p>
+<div class="help-box">
+<p>Avant de demander de l’aide, vérifiez dans l’ordre :</p>
 <ol type="1">
-<li>vérifier que vous êtes dans le bon dossier de projet;</li>
-<li>vérifier le chemin du fichier <code>ventes_operations_quebec.csv</code>;</li>
-<li>relancer <code>library(tidyverse)</code> et les autres packages nécessaires;</li>
-<li>lire le message d’erreur, surtout le nom de l’objet ou du fichier manquant;</li>
-<li>comparer votre code avec <a href="../../modules/semaine-02-r-quarto/demonstrations.html">les démonstrations R</a>;</li>
-<li>poser une question précise sur le forum, avec le code tenté et le message d’erreur complet.</li>
+<li>le dossier du projet;</li>
+<li>le chemin du fichier <code>ventes_operations_quebec.csv</code>;</li>
+<li>le chargement des packages avec <code>library(tidyverse)</code>;</li>
+<li>le message d’erreur, surtout le nom de l’objet ou du fichier manquant;</li>
+<li>le code correspondant dans <a href="../../modules/semaine-02-r-quarto/demonstrations.html">les démonstrations R</a>;</li>
+<li>la précision de votre question sur le forum, avec le code tenté et le message d’erreur complet.</li>
 </ol>
-</section>
-<section id="lectures-et-matériel-du-module" class="level2">
-<h2 class="anchored" data-anchor-id="lectures-et-matériel-du-module">Lectures et matériel du module</h2>
-<p>Consultez <a href="../../modules/semaine-02-r-quarto/lectures.html">les lectures</a> de façon ciblée. Il ne s’agit pas de tout lire mécaniquement : notez une idée, une définition ou une ressource qui clarifie une étape du parcours.</p>
-<p>Cette semaine reprend la structure de l’ancienne séance 02 : installation, exploration de RStudio, importation, gestion des données, graphiques et exercice autonome. L’ancien exercice basé sur <code>masculinity.csv</code> n’est pas publié dans ce site. Il est remplacé par <code>ventes_operations_quebec.csv</code>, qui permet de travailler les mêmes compétences techniques dans un contexte d’administration.</p>
-<p>Les anciens PDF, fichiers PowerPoint et ressources externes privées ne sont pas copiés dans le site public.</p>
+</div>
 </section>
 <section id="pour-aller-plus-loin" class="level2">
 <h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
-<p><a href="../../modules/atelier-01-r/index.html">L’atelier 01</a> prolonge cette séance en réutilisant les mêmes gestes dans un diagnostic descriptif plus complet : importer, inspecter, résumer, visualiser et interpréter un tableau de données d’affaires.</p>
+<ul>
+<li>Refaire les exercices avec un autre jeu de données public du cours.</li>
+<li>Modifier le graphique en changeant la variable de comparaison.</li>
+<li>Ajouter une statistique descriptive pertinente.</li>
+<li>Préparer <a href="../../modules/atelier-01-r/index.html">l’atelier 01</a>, qui réutilise les mêmes gestes dans un diagnostic descriptif plus complet.</li>
+</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
