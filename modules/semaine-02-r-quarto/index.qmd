@@ -1,184 +1,418 @@
 ---
-title: "Semaine 02 - Introduction à l'analyse avec R"
+title: "Semaine 02"
+subtitle: "De fichier CSV à premiers constats : commencer une analyse avec R"
 format:
   html:
     embed-resources: true
 ---
 
-# Séance 02 : Introduction à l'analyse et traitement des données avec le logiciel R
+# Semaine 02
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+<div class="hero-learning">
+  <p class="hero-kicker">Séance autonome</p>
+  <h2>De fichier CSV à premiers constats : commencer une analyse avec R</h2>
+  <p>
+    Cette semaine vous guide pas à pas dans un premier flux de travail reproductible :
+    vérifier l'environnement, ouvrir RStudio, organiser un projet, importer un fichier CSV,
+    inspecter les données, produire un graphique et rendre un mini-rapport Quarto.
+  </p>
+  <div class="quick-facts">
+    <div class="fact-card">
+      <div class="fact-label">Durée estimée</div>
+      <div class="fact-value">2 h 30 à 3 h</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-label">Outils</div>
+      <div class="fact-value">R, RStudio, Quarto</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-label">Données</div>
+      <div class="fact-value">ventes_operations_quebec.csv</div>
+    </div>
+    <div class="fact-card">
+      <div class="fact-label">Livrable</div>
+      <div class="fact-value">Mini-rapport Quarto reproductible</div>
+    </div>
+  </div>
+</div>
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+::: {.callout-note title="Let’s eat the cake"}
+Pourquoi cette séance est utile?
 
-## Let’s eat the cake
+Elle transforme les premiers gestes techniques dans R en une méthode de travail complète : importer, inspecter, résumer, visualiser et rendre compte.
 
-Objectif : prendre en main R, RStudio et Quarto pour importer, inspecter, préparer et visualiser un tableau de données.
+Quelle compétence professionnelle développe-t-on?
 
-Compétences développées :
+Vous apprenez à produire une première analyse reproductible à partir d'un fichier de données d'affaires, sans modifier le fichier source à la main.
 
-- installer ou vérifier les logiciels nécessaires;
-- reconnaître les principales fenêtres de RStudio;
-- créer un projet R;
+Quelle décision d'affaires pourra-t-on mieux préparer?
+
+Une équipe de gestion pourra mieux comprendre où regarder avant d'analyser les ventes par succursale, canal, région ou campagne locale.
+
+Quel résultat concret sera produit?
+
+Un mini-rapport Quarto contenant une importation, une inspection, un diagnostic des valeurs manquantes, un tableau descriptif, un graphique et deux constats d'affaires.
+:::
+
+## Mission de la séance
+
+<div class="deliverable-card">
+  <p class="card-kicker">Mise en situation</p>
+  <p>
+    Vous jouez le rôle d'un·e analyste junior. Une organisation québécoise vous transmet
+    un fichier de ventes et d'opérations. Votre mandat est de produire une première analyse
+    reproductible pour aider une équipe de gestion à comprendre les données avant de passer
+    à des modèles plus avancés.
+  </p>
+  <p>
+    Le but n'est pas encore de conclure causalement. Le but est de vérifier le fichier,
+    repérer les variables importantes, détecter les valeurs manquantes et formuler des
+    constats descriptifs utiles.
+  </p>
+</div>
+
+À la fin de cette page, vous devriez être capable de :
+
+- vérifier votre environnement R/RStudio;
+- comprendre les zones principales de RStudio;
+- créer ou utiliser un projet R;
 - importer un fichier CSV;
-- charger les packages utiles;
-- inspecter la structure d'un tableau;
-- repérer les valeurs manquantes;
-- transformer des variables textuelles en facteurs;
-- produire un tableau descriptif et un graphique;
-- rendre un mini-rapport Quarto.
+- inspecter un tableau de données;
+- repérer des valeurs manquantes;
+- produire un tableau descriptif simple;
+- produire un graphique simple;
+- rendre un mini-rapport Quarto;
+- formuler deux constats d'affaires.
 
-Application business : explorer un tableau de ventes et d'opérations d'une organisation québécoise.
+Le fil conducteur est celui d'une analyse en administration : ventes, opérations, performance organisationnelle et satisfaction client. Lorsque les consignes l'autorisent, l'IA peut servir d'outil de questionnement ou de vérification, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
 
-Résultat final attendu : un mini-rapport Quarto contenant une importation, une inspection, un diagnostic des valeurs manquantes, un tableau descriptif, un graphique et deux constats.
+## Parcours d'apprentissage
 
-Lien avec une décision d'affaires réelle : produire une première analyse reproductible avant de partager des résultats à une équipe.
+Revenez toujours à cette page pour garder le fil. Les pages spécialisées servent de ressources au bon moment : [capsules](capsules.qmd), [démonstrations R](demonstrations.qmd), [exercices](exercices.qmd), [lectures](lectures.qmd) et [informations du module](informations.qmd).
 
-## Introduction à la séance
+<div class="learning-path">
+  <div class="path-card">
+    <div class="path-number">1</div>
+    <h3>Vérifier l'environnement</h3>
+    <p>S'assurer que R, RStudio, Quarto et les packages essentiels fonctionnent.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">2</div>
+    <h3>Comprendre RStudio</h3>
+    <p>Repérer la console, l'éditeur, l'environnement, les fichiers et les graphiques.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">3</div>
+    <h3>Organiser le projet</h3>
+    <p>Garder ensemble code, données et résultats avec des chemins relatifs.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">4</div>
+    <h3>Importer les données</h3>
+    <p>Lire le CSV de ventes et vérifier immédiatement les dimensions du tableau.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">5</div>
+    <h3>Inspecter le tableau</h3>
+    <p>Identifier l'unité d'observation, les variables et les types de données.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">6</div>
+    <h3>Nettoyer minimalement</h3>
+    <p>Préparer les variables catégorielles et diagnostiquer les valeurs manquantes.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">7</div>
+    <h3>Visualiser</h3>
+    <p>Produire un graphique simple qui soutient une lecture de gestion.</p>
+  </div>
+  <div class="path-card">
+    <div class="path-number">8</div>
+    <h3>Produire le mini-rapport</h3>
+    <p>Rendre un document Quarto court, vérifiable et orienté vers les constats.</p>
+  </div>
+</div>
 
-Cette séance introduit le logiciel R pour traiter et visualiser des données statistiques. Elle transforme les gestes techniques de base en un flux de travail reproductible.
+## Étapes guidées
 
-Au cours de cette séance, nous abordons :
+::: {.step-card}
+### Étape 1 : Vérifier l'environnement
 
-- l'installation de R et RStudio;
-- l'exploration de l'interface RStudio;
-- la création d'un projet;
-- l'importation de données;
-- la gestion minimale d'un tableau;
-- la création de graphiques;
-- les commandes R utiles pour préparer les données;
-- le passage d'une présentation PowerPoint ancienne à un rapport Quarto reproductible.
+Objectif de l'étape : s'assurer que R, RStudio, Quarto et les packages utiles sont disponibles.
 
-## Utilité pour le génie et l'administration
+À faire :
 
-Le module doit être lu avec deux angles complémentaires.
+- ouvrir RStudio;
+- exécuter une commande simple dans la console;
+- charger les packages nécessaires avec `library(tidyverse)` et, au besoin, `library(janitor)`;
+- noter tout message d'installation ou de package manquant.
 
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
+Ressource à consulter : [capsules](capsules.qmd), capsule 1, puis [informations du module](informations.qmd) pour les fichiers publics.
 
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
+::: {.callout-tip title="AE 2.1 : vérifier que R fonctionne"}
+Dans la console, exécutez une commande simple, par exemple `1 + 1`, puis chargez `tidyverse`. Notez ce qui s'affiche et indiquez si l'environnement est prêt.
+:::
 
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
+Trace attendue : une capture ou une courte note indiquant que R répond, que les packages sont chargés et que vous savez où se trouve le dossier de travail.
+:::
+
+::: {.step-card}
+### Étape 2 : Comprendre RStudio
+
+Objectif de l'étape : reconnaître les zones principales de RStudio et savoir quoi y faire.
+
+À faire :
+
+- repérer la zone Source pour écrire du code et du texte Quarto;
+- repérer la Console pour exécuter rapidement des commandes;
+- repérer Environment pour voir les objets créés;
+- repérer Files, Plots, Packages, Help et Viewer;
+- expliquer quel panneau vous aide à retrouver le fichier CSV.
+
+Ressource à consulter : [capsules](capsules.qmd), capsule 2.
+
+::: {.callout-tip title="AE 2.2 : identifier les zones de RStudio"}
+Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers, afficher un graphique.
+:::
+
+Trace attendue : un court schéma, une liste annotée ou quelques phrases expliquant le rôle des principales zones.
+:::
+
+::: {.step-card}
+### Étape 3 : Organiser le projet
+
+Objectif de l'étape : utiliser un projet R pour rendre l'analyse reproductible.
+
+À faire :
+
+- créer ou ouvrir un projet R;
+- vérifier que le fichier `ventes_operations_quebec.csv` est dans le dossier `data`;
+- utiliser un chemin relatif plutôt qu'un chemin propre à votre ordinateur;
+- créer le fichier Quarto qui deviendra le mini-rapport.
+
+Ressource à consulter : [capsules](capsules.qmd), capsule 3, puis [informations du module](informations.qmd).
+
+::: {.callout-tip title="AE 2.3 : expliquer pourquoi un projet R est utile"}
+En deux ou trois phrases, expliquez pourquoi un projet R réduit les erreurs de chemins et facilite le partage d'une analyse.
+:::
+
+Trace attendue : le nom du projet, l'emplacement du fichier CSV et une phrase sur l'utilité des chemins relatifs.
+:::
+
+::: {.step-card}
+### Étape 4 : Importer les données
+
+Objectif de l'étape : lire un fichier CSV dans R et vérifier que l'objet créé correspond au fichier attendu.
+
+À faire :
+
+- ouvrir [les démonstrations R](demonstrations.qmd);
+- exécuter le code d'importation;
+- vérifier les dimensions du tableau;
+- conserver le code dans votre mini-rapport Quarto.
+
+Ressource à consulter : [capsules](capsules.qmd), capsule 4, puis [démonstrations R](demonstrations.qmd), préparation et démonstration 1.
+
+::: {.callout-tip title="AE 2.4 : importer le fichier CSV"}
+Importez `ventes_operations_quebec.csv`. Combien de lignes et de colonnes contient le fichier? Que représente une ligne?
+:::
+
+Trace attendue : code d'importation, résultat de `glimpse()` ou de `dim()`, puis une phrase d'interprétation.
+:::
+
+::: {.step-card}
+### Étape 5 : Inspecter le tableau
+
+Objectif de l'étape : comprendre la structure du tableau avant de calculer des résultats.
+
+À faire :
+
+- identifier les variables numériques;
+- identifier les variables catégorielles;
+- repérer les dates ou périodes;
+- nommer l'unité d'observation;
+- vérifier les premières lignes du tableau.
+
+Ressource à consulter : [démonstrations R](demonstrations.qmd), démonstration 1, et [exercices](exercices.qmd), exercices 1 et 2.
+
+::: {.callout-tip title="AE 2.5 : repérer les variables et les valeurs manquantes"}
+Classez les variables principales du fichier, puis indiquez quelles variables devront être surveillées pour les valeurs manquantes.
+:::
+
+Trace attendue : une liste courte des variables importantes, leur type et une phrase sur l'unité d'observation.
+:::
+
+::: {.step-card}
+### Étape 6 : Nettoyer minimalement
+
+Objectif de l'étape : préparer les variables utiles sans transformer inutilement les données.
+
+À faire :
+
+- convertir les variables catégorielles en facteurs lorsque c'est utile;
+- vérifier les valeurs manquantes avec `is.na()` et `summarise()`;
+- ne pas supprimer automatiquement les lignes incomplètes;
+- écrire une phrase sur l'impact possible des valeurs manquantes.
+
+Ressource à consulter : [capsules](capsules.qmd), capsule 5, [démonstrations R](demonstrations.qmd), démonstrations 2 et 3, puis [exercices](exercices.qmd), exercice 3.
+
+::: {.callout-tip title="AE 2.5 : diagnostic des valeurs manquantes"}
+Produisez un petit diagnostic des valeurs manquantes. Nommez les variables incomplètes et expliquez une conséquence possible pour l'analyse.
+:::
+
+Trace attendue : tableau des valeurs manquantes et courte interprétation.
+:::
+
+::: {.step-card}
+### Étape 7 : Visualiser
+
+Objectif de l'étape : produire un graphique simple qui aide à comparer une dimension d'affaires.
+
+À faire :
+
+- produire un tableau descriptif par succursale ou par canal principal;
+- construire un graphique avec `ggplot()`;
+- ajouter un titre clair et des axes lisibles;
+- écrire un constat descriptif, sans conclure à une causalité.
+
+Ressource à consulter : [capsules](capsules.qmd), capsule 6, [démonstrations R](demonstrations.qmd), démonstrations 4 et 5, puis [exercices](exercices.qmd), exercices 4 et 5.
+
+::: {.callout-tip title="AE 2.6 : produire un graphique simple"}
+Créez un graphique des ventes par canal principal ou par succursale. Le graphique doit permettre une comparaison immédiate.
+:::
+
+Trace attendue : code du tableau descriptif, code du graphique et une phrase d'interprétation.
+:::
+
+::: {.step-card}
+### Étape 8 : Produire le mini-rapport
+
+Objectif de l'étape : rendre un document Quarto qui combine contexte, code, résultats et constats.
+
+À faire :
+
+- intégrer les traces des étapes précédentes dans un fichier `.qmd`;
+- rendre le document avec le bouton Render ou avec `quarto render`;
+- vérifier que le HTML contient les résultats attendus;
+- comparer votre travail avec les solutions cachées seulement après une vraie tentative.
+
+Ressource à consulter : [capsules](capsules.qmd), capsule 6, [exercices](exercices.qmd), [lectures](lectures.qmd) et [démonstrations R](demonstrations.qmd).
+
+::: {.callout-tip title="AE 2.7 : formuler deux constats d'affaires"}
+À partir du tableau descriptif et du graphique, formulez deux constats utiles pour une équipe de gestion. Chaque constat doit mentionner la variable observée et rester descriptif.
+:::
+
+Trace attendue : mini-rapport Quarto rendu en HTML, deux constats d'affaires et une question d'analyse pour la suite.
+:::
+
+## Exercices d'application intégrés
+
+Les AE sont intégrées aux étapes, mais vous devez conserver une trace personnelle de vos réponses.
+
+- AE 2.1 : vérifier que R fonctionne.
+- AE 2.2 : identifier les zones de RStudio.
+- AE 2.3 : expliquer pourquoi un projet R est utile.
+- AE 2.4 : importer le fichier CSV.
+- AE 2.5 : repérer les variables et les valeurs manquantes.
+- AE 2.6 : produire un graphique simple.
+- AE 2.7 : formuler deux constats d'affaires.
+
+Faites [les exercices](exercices.qmd) avant d'ouvrir les solutions cachées. Ensuite, corrigez votre raisonnement, annotez ce qui doit être repris et notez vos questions restantes.
 
 ## Concepts clés
 
-- Projet R : dossier qui garde ensemble code, données et résultats.
-- Chemin relatif : chemin qui fonctionne à partir du dossier du projet.
-- Package : ensemble de fonctions à charger avec `library()`.
-- Importation : lecture d'un fichier dans un objet R.
-- Data frame : tableau de données.
-- Facteur : variable catégorielle utilisée pour l'analyse.
-- Valeur manquante : donnée absente codée `NA`.
-- Quarto : document qui combine texte, code, résultats et graphiques.
+<div class="learning-path concepts-grid">
+  <div class="path-card">
+    <h3>Projet R</h3>
+    <p>Dossier qui garde ensemble code, données et résultats.</p>
+  </div>
+  <div class="path-card">
+    <h3>Chemin relatif</h3>
+    <p>Chemin qui fonctionne à partir du dossier du projet.</p>
+  </div>
+  <div class="path-card">
+    <h3>Package</h3>
+    <p>Ensemble de fonctions à charger avec <code>library()</code>.</p>
+  </div>
+  <div class="path-card">
+    <h3>Importation</h3>
+    <p>Lecture d'un fichier dans un objet R.</p>
+  </div>
+  <div class="path-card">
+    <h3>Data frame</h3>
+    <p>Tableau de données utilisé dans l'analyse.</p>
+  </div>
+  <div class="path-card">
+    <h3>Facteur</h3>
+    <p>Variable catégorielle préparée pour l'analyse.</p>
+  </div>
+  <div class="path-card">
+    <h3>Valeur manquante</h3>
+    <p>Donnée absente codée <code>NA</code>.</p>
+  </div>
+  <div class="path-card">
+    <h3>Quarto</h3>
+    <p>Document qui combine texte, code, résultats et graphiques.</p>
+  </div>
+</div>
 
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.
-
-Vérifiez aussi les fichiers disponibles dans [les informations du module](informations.qmd), notamment les données publiques et les consignes liées au matériel ancien.
-
-## Capsule 1 - Installation et vérification de l'environnement
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 2 - Interface RStudio
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 3 - Projet R et organisation des fichiers
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 4 - Importation et inspection d'un CSV
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 5 - Traitement des données
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 6 - Graphique et rendu Quarto
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-Trace attendue : une correction courte et une liste de questions restantes.
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-Trace attendue : une idée utile, une définition ou une référence à retenir.
-
-## Trace finale
-
-Terminez le module en produisant le livrable court : Mini-rapport Quarto reproductible.
-
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
-
-## Mini-cas business
-
-Un premier rapport doit déterminer si les ventes diffèrent davantage selon la succursale, le canal principal ou la présence d'une campagne locale. Le but n'est pas encore de conclure causalement. Le but est de structurer une première exploration reproductible.
-
-## À retenir
-
-R sert à exécuter l'analyse, RStudio aide à organiser le travail et Quarto permet de rendre les résultats vérifiables dans un rapport.
-
-## Erreurs fréquentes
-
+::: {.callout-warning title="Erreurs fréquentes"}
 - Travailler sans projet R.
 - Utiliser un chemin absolu propre à un ordinateur.
 - Oublier de charger les packages nécessaires.
 - Interpréter `NA` comme une valeur numérique.
 - Modifier le CSV à la main sans garder de trace.
 - Copier un graphique dans un document sans conserver le code.
+:::
 
-## Lien avec l'ancien matériel
+::: {.callout-important title="Production finale"}
+Votre mini-rapport Quarto doit contenir :
 
-Cette semaine reprend la structure de l'ancienne séance 02 : installation, exploration de RStudio, importation, gestion des données, graphiques et exercice autonome.
+- une courte mise en contexte;
+- le code d'importation;
+- une inspection du tableau;
+- un diagnostic simple des valeurs manquantes;
+- un tableau descriptif;
+- un graphique;
+- deux constats d'affaires;
+- une question d'analyse pour la suite.
 
-L'ancien exercice basé sur `masculinity.csv` n'est pas publié dans ce site. Il est remplacé par `ventes_operations_quebec.csv`, qui permet de travailler les mêmes compétences techniques dans un contexte d'administration.
+Déposez une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, sans recopier tout le contenu.
+:::
 
-Les anciens PDF, fichiers PowerPoint et ressources externes ne sont pas copiés dans le site public.
+## Grille d'auto-vérification
+
+::: {.checklist-card}
+- [ ] J'ai ouvert RStudio.
+- [ ] J'ai utilisé un projet R.
+- [ ] J'ai importé le fichier CSV.
+- [ ] J'ai inspecté les données.
+- [ ] J'ai repéré les valeurs manquantes.
+- [ ] J'ai produit un tableau descriptif.
+- [ ] J'ai produit un graphique.
+- [ ] J'ai rendu un fichier Quarto.
+- [ ] J'ai formulé deux constats d'affaires.
+:::
+
+## Je suis bloqué·e
+
+Avant de demander de l'aide, faites ces vérifications dans l'ordre :
+
+1. vérifier que vous êtes dans le bon dossier de projet;
+2. vérifier le chemin du fichier `ventes_operations_quebec.csv`;
+3. relancer `library(tidyverse)` et les autres packages nécessaires;
+4. lire le message d'erreur, surtout le nom de l'objet ou du fichier manquant;
+5. comparer votre code avec [les démonstrations R](demonstrations.qmd);
+6. poser une question précise sur le forum, avec le code tenté et le message d'erreur complet.
+
+## Lectures et matériel du module
+
+Consultez [les lectures](lectures.qmd) de façon ciblée. Il ne s'agit pas de tout lire mécaniquement : notez une idée, une définition ou une ressource qui clarifie une étape du parcours.
+
+Cette semaine reprend la structure de l'ancienne séance 02 : installation, exploration de RStudio, importation, gestion des données, graphiques et exercice autonome. L'ancien exercice basé sur `masculinity.csv` n'est pas publié dans ce site. Il est remplacé par `ventes_operations_quebec.csv`, qui permet de travailler les mêmes compétences techniques dans un contexte d'administration.
+
+Les anciens PDF, fichiers PowerPoint et ressources externes privées ne sont pas copiés dans le site public.
 
 ## Pour aller plus loin
 
-L'atelier 01 prolonge cette séance. Il reprend l'importation, l'inspection et les graphiques dans un parcours plus complet de diagnostic descriptif.
+[L'atelier 01](../atelier-01-r/index.qmd) prolonge cette séance en réutilisant les mêmes gestes dans un diagnostic descriptif plus complet : importer, inspecter, résumer, visualiser et interpréter un tableau de données d'affaires.
