@@ -3832,17 +3832,109 @@ text-transform: uppercase;
 }
 .quick-facts {
 display: grid;
-grid-template-columns: repeat(4, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 0.9rem;
 margin-top: 1.1rem;
 }
 .fact-card {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+align-items: start;
+gap: 0.8rem;
+min-width: 0;
 min-height: 112px;
 padding: 1rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 10px 24px rgba(18, 50, 68, 0.06);
+}
+.fact-icon {
+position: relative;
+display: block;
+box-sizing: border-box;
+width: 2.15rem;
+height: 2.15rem;
+padding: 0;
+border: 1px solid #c9dde7;
+border-radius: 999px;
+background: #eef6f9;
+color: #0b4f6c;
+flex: 0 0 auto;
+line-height: 0;
+}
+.fact-icon::before,
+.fact-icon::after {
+content: "";
+position: absolute;
+box-sizing: border-box;
+color: currentColor;
+}
+.fact-clock::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 999px;
+transform: translate(-50%, -50%);
+}
+.fact-clock::after {
+left: 50%;
+top: 50%;
+width: 0.36rem;
+height: 0.46rem;
+border-left: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-0.02rem, -0.38rem);
+}
+.fact-tools::before {
+left: 50%;
+top: 50%;
+width: 1.15rem;
+height: 0.86rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-tools::after {
+left: 50%;
+top: 50%;
+width: 0.52rem;
+height: 0.38rem;
+border-right: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-65%, -52%) rotate(-45deg);
+}
+.fact-data::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+background:
+linear-gradient(currentColor, currentColor) 50% 0 / 1.7px 100% no-repeat,
+linear-gradient(currentColor, currentColor) 0 50% / 100% 1.7px no-repeat;
+transform: translate(-50%, -50%);
+}
+.fact-report::before {
+left: 50%;
+top: 50%;
+width: 0.95rem;
+height: 1.12rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-report::after {
+left: 50%;
+top: 50%;
+width: 0.48rem;
+height: 0.35rem;
+border-top: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-50%, -10%);
 }
 .fact-label {
 margin-bottom: 0.45rem;
@@ -3853,10 +3945,120 @@ letter-spacing: 0;
 text-transform: uppercase;
 }
 .fact-value {
+min-width: 0;
 color: #123244;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
+overflow-wrap: anywhere;
+word-break: normal;
+}
+.outcome-strip {
+display: grid;
+grid-template-columns: 1fr auto 1fr auto 1fr;
+align-items: stretch;
+gap: 0.75rem;
+margin: 1.15rem 0 1.4rem;
+}
+.outcome-item {
+padding: 0.9rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 20px rgba(18, 50, 68, 0.04);
+}
+.outcome-label {
+display: block;
+margin-bottom: 0.2rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.outcome-value {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.3;
+}
+.outcome-arrow {
+align-self: center;
+color: #7a1c24;
+font-size: 1.2rem;
+font-weight: 700;
+}
+.phase-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.phase-card {
+padding: 1.05rem 1.1rem;
+border: 1px solid #dce5ea;
+border-top: 4px solid #b5121b;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.phase-card h3 {
+margin: 0.35rem 0 0.45rem;
+color: #123244;
+font-size: 1.08rem;
+line-height: 1.25;
+}
+.phase-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.phase-label {
+display: inline-flex;
+align-items: center;
+min-height: 1.65rem;
+padding: 0.15rem 0.5rem;
+border-radius: 999px;
+background: #f8ebed;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+line-height: 1.2;
+}
+.workshop-agenda {
+display: grid;
+gap: 0.75rem;
+margin: 1.15rem 0 1.6rem;
+}
+.agenda-item {
+display: grid;
+grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 6px 18px rgba(18, 50, 68, 0.035);
+}
+.agenda-time {
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 700;
+line-height: 1.35;
+}
+.agenda-content h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.agenda-content p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
 }
 .path-grid,
 .learning-path {
@@ -3874,6 +4076,40 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
 }
+.interactive-path {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card {
+padding: 0;
+overflow: hidden;
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.path-card summary {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.65rem 0.85rem;
+min-height: 172px;
+padding: 1rem;
+cursor: pointer;
+list-style: none;
+}
+.path-card summary::-webkit-details-marker {
+display: none;
+}
+.path-card summary::marker {
+content: "";
+}
+.path-card summary:focus-visible {
+outline: 3px solid rgba(181, 18, 27, 0.25);
+outline-offset: -3px;
+}
+.path-card[open] summary {
+min-height: auto;
+border-bottom: 1px solid #e6edf1;
+background: #fbfdfe;
+}
 .path-card h3 {
 margin: 0.7rem 0 0.45rem;
 color: #123244;
@@ -3890,6 +4126,7 @@ line-height: 1.45;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+grid-row: span 4;
 width: 2rem;
 height: 2rem;
 border-radius: 999px;
@@ -3897,6 +4134,188 @@ background: #b5121b;
 color: #ffffff;
 font-size: 0.9rem;
 font-weight: 700;
+}
+.path-title {
+display: block;
+min-width: 0;
+color: #123244;
+font-size: 1.04rem;
+font-weight: 700;
+line-height: 1.25;
+overflow-wrap: anywhere;
+}
+.path-preview {
+display: block;
+min-width: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+overflow-wrap: anywhere;
+}
+.path-resource {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.22rem 0.35rem;
+min-width: 0;
+color: #5a6c78;
+font-size: 0.82rem;
+line-height: 1.35;
+overflow-wrap: anywhere;
+}
+.resource-separator {
+color: #8a98a3;
+}
+.path-toggle {
+display: inline-flex;
+justify-self: start;
+align-items: center;
+min-height: 1.9rem;
+padding: 0.2rem 0.55rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+color: #0b4f6c;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1;
+background: #f7fafc;
+}
+.path-card[open] .closed-label,
+.path-card .open-label {
+display: none;
+}
+.path-card[open] .open-label {
+display: inline;
+}
+.step-detail {
+padding: 1rem 1.1rem 1.15rem;
+}
+.step-detail p {
+margin: 0 0 0.7rem;
+}
+.step-detail p:last-child {
+margin-bottom: 0;
+}
+.step-label {
+display: inline-block;
+min-width: 5.2rem;
+margin-right: 0.35rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.ae-box {
+margin-top: 0.85rem;
+padding: 0.85rem 0.95rem;
+border: 1px solid #cfe3da;
+border-left: 4px solid #2f7d5c;
+border-radius: 8px;
+background: #f3faf6;
+}
+.ae-box + .ae-box {
+margin-top: 0.7rem;
+}
+.ae-title {
+color: #1f5f44;
+font-weight: 700;
+}
+.resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
+margin: 0.15rem 0.35rem 0.15rem 0;
+color: #0b5cad;
+font-weight: 600;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.summary-resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+padding: 0.1rem 0.35rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #f8fbfd;
+color: #0b5cad;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1.25;
+text-decoration: none;
+}
+.summary-resource-link:hover {
+border-color: #b8cbd6;
+background: #eef6f9;
+text-decoration: underline;
+text-underline-offset: 0.16em;
+}
+.resource-icon,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1rem;
+height: 1rem;
+flex: 0 0 auto;
+color: currentColor;
+border: 1px solid currentColor;
+border-radius: 3px;
+background: transparent;
+font-family: Arial, sans-serif;
+font-size: 0.68rem;
+font-weight: 800;
+line-height: 1;
+}
+.resource-icon::before,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon::before {
+display: inline-block;
+}
+.video-icon,
+.video-link::before {
+color: #8f1119;
+}
+.video-icon::before,
+.video-link::before {
+content: "▶";
+}
+.exercise-icon,
+.exercise-link::before {
+color: #2f7d5c;
+}
+.exercise-icon::before,
+.exercise-link::before {
+content: "✓";
+}
+.demo-icon,
+.demo-link::before {
+color: #0b4f6c;
+}
+.demo-icon::before,
+.demo-link::before {
+content: ">";
+}
+.reading-icon,
+.reading-link::before {
+color: #7a4d00;
+}
+.reading-icon::before,
+.reading-link::before {
+content: "L";
+}
+.info-icon,
+.info-link::before {
+color: #5a6c78;
+border-radius: 999px;
+}
+.info-icon::before,
+.info-link::before {
+content: "i";
 }
 .step-card {
 margin: 1.35rem 0;
@@ -3932,6 +4351,35 @@ background: #f8fbfd;
 .compact-box {
 margin-top: 1rem;
 }
+.production-box {
+border-left: 5px solid #b5121b;
+background: #fbfdfe;
+}
+.production-box h3 {
+margin: 0.2rem 0 0.45rem;
+color: #123244;
+font-size: 1.2rem;
+line-height: 1.25;
+}
+.production-flow {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+margin-top: 0.9rem;
+}
+.production-flow span {
+display: inline-flex;
+align-items: center;
+min-height: 1.85rem;
+padding: 0.25rem 0.65rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #ffffff;
+color: #123244;
+font-size: 0.86rem;
+font-weight: 700;
+line-height: 1.2;
+}
 .resource-grid {
 display: grid;
 grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3956,6 +4404,43 @@ margin-bottom: 0;
 color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
+}
+.resource-list {
+display: grid;
+gap: 0;
+margin: 1.1rem 0 1.75rem;
+border-top: 1px solid #dce5ea;
+}
+.resource-row {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 0.1rem;
+border-bottom: 1px solid #dce5ea;
+color: inherit;
+text-decoration: none;
+}
+.resource-row:hover .resource-row-title {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
+.resource-row-title {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.25;
+}
+.resource-row-text {
+display: block;
+margin-top: 0.15rem;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.resource-row-icon {
+margin-top: 0.15rem;
 }
 .deliverable-card p:last-child {
 margin-bottom: 0;
@@ -3988,11 +4473,20 @@ min-height: 132px;
 margin-top: 0;
 }
 @media (max-width: 992px) {
-.quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.outcome-strip {
+grid-template-columns: 1fr;
+}
+.outcome-arrow {
+display: none;
 }
 }
 @media (max-width: 640px) {
@@ -4012,15 +4506,28 @@ font-size: 1.55rem;
 }
 .quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
+.interactive-path .path-card[open] {
+grid-column: span 1;
+}
+.fact-card {
+min-height: auto;
+}
 .fact-card,
 .path-card {
 min-height: auto;
+}
+.path-card summary {
+min-height: auto;
+}
+.agenda-item {
+grid-template-columns: 1fr;
 }
 }
 </style>
@@ -4044,135 +4551,131 @@ min-height: auto;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../index.html">
 <span class="menu-text">Accueil</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html"> 
+    <a class="nav-link" href="../../plan-de-cours.html">
 <span class="menu-text">Plan de cours</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html"> 
+    <a class="nav-link" href="../../calendrier.html">
 <span class="menu-text">Calendrier</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../roadmap.html"> 
+    <a class="nav-link" href="../../roadmap.html">
 <span class="menu-text">Roadmap</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../migration-ancien-materiel.html"> 
-<span class="menu-text">Migration</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../installation.html"> 
+    <a class="nav-link" href="../../installation.html">
 <span class="menu-text">Installation</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Séance - Introduction</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - Séance - R et Quarto</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Module 03 - Atelier - Explorer un tableau</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 04 - Séance - Régression linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 05 - Séance - Régression non linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Module 06 - Atelier - Régression</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 07 - Préparation - Intra</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 08 - Séance - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 09 - Séance - Lissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 10 - Séance - Tendance et saisonnalité</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Module 11 - Atelier - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 12 - Séance - Variables externes</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 13 - Séance - Classification</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Module 14 - Atelier - Intégration</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html"> 
+    <a class="nav-link" href="../../evaluations/index.html">
 <span class="menu-text">Évaluations</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/principes-refonte.html">
  <span class="dropdown-text">Principes de refonte</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-module.html">
  <span class="dropdown-text">Gabarit de module</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html"> 
+    <a class="nav-link" href="../../donnees/index.html">
 <span class="menu-text">Données</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -4187,7 +4690,7 @@ min-height: auto;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-   
+
   <ul>
   <li><a href="#lectures---semaine-10" id="toc-lectures---semaine-10" class="nav-link active" data-scroll-target="#lectures---semaine-10">Lectures - Semaine 10</a>
   <ul class="collapse">
@@ -4195,7 +4698,6 @@ min-height: auto;
   <li><a href="#lectures-obligatoires" id="toc-lectures-obligatoires" class="nav-link" data-scroll-target="#lectures-obligatoires">Lectures obligatoires</a></li>
   <li><a href="#lectures-facultatives" id="toc-lectures-facultatives" class="nav-link" data-scroll-target="#lectures-facultatives">Lectures facultatives</a></li>
   <li><a href="#ressources-externes" id="toc-ressources-externes" class="nav-link" data-scroll-target="#ressources-externes">Ressources externes</a></li>
-  <li><a href="#lien-avec-lancien-matériel" id="toc-lien-avec-lancien-matériel" class="nav-link" data-scroll-target="#lien-avec-lancien-matériel">Lien avec l’ancien matériel</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4212,11 +4714,11 @@ min-height: auto;
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -4226,7 +4728,7 @@ min-height: auto;
 <h1>Lectures - Semaine 10</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Identifier les lectures qui soutiennent le module sans publier de documents protégés par droit d’auteur.</p>
+<p>Identifier les lectures qui soutiennent le module.</p>
 </section>
 <section id="lectures-obligatoires" class="level2">
 <h2 class="anchored" data-anchor-id="lectures-obligatoires">Lectures obligatoires</h2>
@@ -4239,11 +4741,6 @@ min-height: auto;
 <section id="ressources-externes" class="level2">
 <h2 class="anchored" data-anchor-id="ressources-externes">Ressources externes</h2>
 <p>TODO ajouter les liens externes validés, en précisant ce que l’étudiant doit y chercher.</p>
-</section>
-<section id="lien-avec-lancien-matériel" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-lancien-matériel">Lien avec l’ancien matériel</h2>
-<p>Source ancienne de référence : <code>MQT-2101-A25_Séance 10 _ Prévision des.zip</code>.</p>
-<p>Les PDF, PowerPoint et documents protégés restent dans les sources privées locales et ne sont pas publiés dans le site.</p>
 
 
 </section>
@@ -4261,7 +4758,7 @@ min-height: auto;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -4281,11 +4778,11 @@ min-height: auto;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -4361,7 +4858,7 @@ min-height: auto;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -4436,7 +4933,7 @@ min-height: auto;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -4464,7 +4961,7 @@ min-height: auto;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -4488,7 +4985,7 @@ min-height: auto;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -4528,7 +5025,7 @@ min-height: auto;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -4654,7 +5151,7 @@ min-height: auto;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>   
+</div>
     <div class="nav-footer-center">
        
     </div>

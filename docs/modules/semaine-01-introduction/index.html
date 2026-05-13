@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Semaine 01 - Introduction au cours et compétences statistiques – MQT-2101 : Analyse et modélisation des données</title>
+<title>Semaine 01 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3832,17 +3832,109 @@ text-transform: uppercase;
 }
 .quick-facts {
 display: grid;
-grid-template-columns: repeat(4, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 0.9rem;
 margin-top: 1.1rem;
 }
 .fact-card {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+align-items: start;
+gap: 0.8rem;
+min-width: 0;
 min-height: 112px;
 padding: 1rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 10px 24px rgba(18, 50, 68, 0.06);
+}
+.fact-icon {
+position: relative;
+display: block;
+box-sizing: border-box;
+width: 2.15rem;
+height: 2.15rem;
+padding: 0;
+border: 1px solid #c9dde7;
+border-radius: 999px;
+background: #eef6f9;
+color: #0b4f6c;
+flex: 0 0 auto;
+line-height: 0;
+}
+.fact-icon::before,
+.fact-icon::after {
+content: "";
+position: absolute;
+box-sizing: border-box;
+color: currentColor;
+}
+.fact-clock::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 999px;
+transform: translate(-50%, -50%);
+}
+.fact-clock::after {
+left: 50%;
+top: 50%;
+width: 0.36rem;
+height: 0.46rem;
+border-left: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-0.02rem, -0.38rem);
+}
+.fact-tools::before {
+left: 50%;
+top: 50%;
+width: 1.15rem;
+height: 0.86rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-tools::after {
+left: 50%;
+top: 50%;
+width: 0.52rem;
+height: 0.38rem;
+border-right: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-65%, -52%) rotate(-45deg);
+}
+.fact-data::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+background:
+linear-gradient(currentColor, currentColor) 50% 0 / 1.7px 100% no-repeat,
+linear-gradient(currentColor, currentColor) 0 50% / 100% 1.7px no-repeat;
+transform: translate(-50%, -50%);
+}
+.fact-report::before {
+left: 50%;
+top: 50%;
+width: 0.95rem;
+height: 1.12rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-report::after {
+left: 50%;
+top: 50%;
+width: 0.48rem;
+height: 0.35rem;
+border-top: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-50%, -10%);
 }
 .fact-label {
 margin-bottom: 0.45rem;
@@ -3853,10 +3945,120 @@ letter-spacing: 0;
 text-transform: uppercase;
 }
 .fact-value {
+min-width: 0;
 color: #123244;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
+overflow-wrap: anywhere;
+word-break: normal;
+}
+.outcome-strip {
+display: grid;
+grid-template-columns: 1fr auto 1fr auto 1fr;
+align-items: stretch;
+gap: 0.75rem;
+margin: 1.15rem 0 1.4rem;
+}
+.outcome-item {
+padding: 0.9rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 20px rgba(18, 50, 68, 0.04);
+}
+.outcome-label {
+display: block;
+margin-bottom: 0.2rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.outcome-value {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.3;
+}
+.outcome-arrow {
+align-self: center;
+color: #7a1c24;
+font-size: 1.2rem;
+font-weight: 700;
+}
+.phase-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.phase-card {
+padding: 1.05rem 1.1rem;
+border: 1px solid #dce5ea;
+border-top: 4px solid #b5121b;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.phase-card h3 {
+margin: 0.35rem 0 0.45rem;
+color: #123244;
+font-size: 1.08rem;
+line-height: 1.25;
+}
+.phase-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.phase-label {
+display: inline-flex;
+align-items: center;
+min-height: 1.65rem;
+padding: 0.15rem 0.5rem;
+border-radius: 999px;
+background: #f8ebed;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+line-height: 1.2;
+}
+.workshop-agenda {
+display: grid;
+gap: 0.75rem;
+margin: 1.15rem 0 1.6rem;
+}
+.agenda-item {
+display: grid;
+grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 6px 18px rgba(18, 50, 68, 0.035);
+}
+.agenda-time {
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 700;
+line-height: 1.35;
+}
+.agenda-content h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.agenda-content p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
 }
 .path-grid,
 .learning-path {
@@ -3874,6 +4076,40 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
 }
+.interactive-path {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card {
+padding: 0;
+overflow: hidden;
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.path-card summary {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.65rem 0.85rem;
+min-height: 172px;
+padding: 1rem;
+cursor: pointer;
+list-style: none;
+}
+.path-card summary::-webkit-details-marker {
+display: none;
+}
+.path-card summary::marker {
+content: "";
+}
+.path-card summary:focus-visible {
+outline: 3px solid rgba(181, 18, 27, 0.25);
+outline-offset: -3px;
+}
+.path-card[open] summary {
+min-height: auto;
+border-bottom: 1px solid #e6edf1;
+background: #fbfdfe;
+}
 .path-card h3 {
 margin: 0.7rem 0 0.45rem;
 color: #123244;
@@ -3890,6 +4126,7 @@ line-height: 1.45;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+grid-row: span 4;
 width: 2rem;
 height: 2rem;
 border-radius: 999px;
@@ -3897,6 +4134,188 @@ background: #b5121b;
 color: #ffffff;
 font-size: 0.9rem;
 font-weight: 700;
+}
+.path-title {
+display: block;
+min-width: 0;
+color: #123244;
+font-size: 1.04rem;
+font-weight: 700;
+line-height: 1.25;
+overflow-wrap: anywhere;
+}
+.path-preview {
+display: block;
+min-width: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+overflow-wrap: anywhere;
+}
+.path-resource {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.22rem 0.35rem;
+min-width: 0;
+color: #5a6c78;
+font-size: 0.82rem;
+line-height: 1.35;
+overflow-wrap: anywhere;
+}
+.resource-separator {
+color: #8a98a3;
+}
+.path-toggle {
+display: inline-flex;
+justify-self: start;
+align-items: center;
+min-height: 1.9rem;
+padding: 0.2rem 0.55rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+color: #0b4f6c;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1;
+background: #f7fafc;
+}
+.path-card[open] .closed-label,
+.path-card .open-label {
+display: none;
+}
+.path-card[open] .open-label {
+display: inline;
+}
+.step-detail {
+padding: 1rem 1.1rem 1.15rem;
+}
+.step-detail p {
+margin: 0 0 0.7rem;
+}
+.step-detail p:last-child {
+margin-bottom: 0;
+}
+.step-label {
+display: inline-block;
+min-width: 5.2rem;
+margin-right: 0.35rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.ae-box {
+margin-top: 0.85rem;
+padding: 0.85rem 0.95rem;
+border: 1px solid #cfe3da;
+border-left: 4px solid #2f7d5c;
+border-radius: 8px;
+background: #f3faf6;
+}
+.ae-box + .ae-box {
+margin-top: 0.7rem;
+}
+.ae-title {
+color: #1f5f44;
+font-weight: 700;
+}
+.resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
+margin: 0.15rem 0.35rem 0.15rem 0;
+color: #0b5cad;
+font-weight: 600;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.summary-resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+padding: 0.1rem 0.35rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #f8fbfd;
+color: #0b5cad;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1.25;
+text-decoration: none;
+}
+.summary-resource-link:hover {
+border-color: #b8cbd6;
+background: #eef6f9;
+text-decoration: underline;
+text-underline-offset: 0.16em;
+}
+.resource-icon,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1rem;
+height: 1rem;
+flex: 0 0 auto;
+color: currentColor;
+border: 1px solid currentColor;
+border-radius: 3px;
+background: transparent;
+font-family: Arial, sans-serif;
+font-size: 0.68rem;
+font-weight: 800;
+line-height: 1;
+}
+.resource-icon::before,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon::before {
+display: inline-block;
+}
+.video-icon,
+.video-link::before {
+color: #8f1119;
+}
+.video-icon::before,
+.video-link::before {
+content: "▶";
+}
+.exercise-icon,
+.exercise-link::before {
+color: #2f7d5c;
+}
+.exercise-icon::before,
+.exercise-link::before {
+content: "✓";
+}
+.demo-icon,
+.demo-link::before {
+color: #0b4f6c;
+}
+.demo-icon::before,
+.demo-link::before {
+content: ">";
+}
+.reading-icon,
+.reading-link::before {
+color: #7a4d00;
+}
+.reading-icon::before,
+.reading-link::before {
+content: "L";
+}
+.info-icon,
+.info-link::before {
+color: #5a6c78;
+border-radius: 999px;
+}
+.info-icon::before,
+.info-link::before {
+content: "i";
 }
 .step-card {
 margin: 1.35rem 0;
@@ -3932,6 +4351,35 @@ background: #f8fbfd;
 .compact-box {
 margin-top: 1rem;
 }
+.production-box {
+border-left: 5px solid #b5121b;
+background: #fbfdfe;
+}
+.production-box h3 {
+margin: 0.2rem 0 0.45rem;
+color: #123244;
+font-size: 1.2rem;
+line-height: 1.25;
+}
+.production-flow {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+margin-top: 0.9rem;
+}
+.production-flow span {
+display: inline-flex;
+align-items: center;
+min-height: 1.85rem;
+padding: 0.25rem 0.65rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #ffffff;
+color: #123244;
+font-size: 0.86rem;
+font-weight: 700;
+line-height: 1.2;
+}
 .resource-grid {
 display: grid;
 grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3956,6 +4404,43 @@ margin-bottom: 0;
 color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
+}
+.resource-list {
+display: grid;
+gap: 0;
+margin: 1.1rem 0 1.75rem;
+border-top: 1px solid #dce5ea;
+}
+.resource-row {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 0.1rem;
+border-bottom: 1px solid #dce5ea;
+color: inherit;
+text-decoration: none;
+}
+.resource-row:hover .resource-row-title {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
+.resource-row-title {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.25;
+}
+.resource-row-text {
+display: block;
+margin-top: 0.15rem;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.resource-row-icon {
+margin-top: 0.15rem;
 }
 .deliverable-card p:last-child {
 margin-bottom: 0;
@@ -3988,11 +4473,20 @@ min-height: 132px;
 margin-top: 0;
 }
 @media (max-width: 992px) {
-.quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.outcome-strip {
+grid-template-columns: 1fr;
+}
+.outcome-arrow {
+display: none;
 }
 }
 @media (max-width: 640px) {
@@ -4012,15 +4506,28 @@ font-size: 1.55rem;
 }
 .quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
+.interactive-path .path-card[open] {
+grid-column: span 1;
+}
+.fact-card {
+min-height: auto;
+}
 .fact-card,
 .path-card {
 min-height: auto;
+}
+.path-card summary {
+min-height: auto;
+}
+.agenda-item {
+grid-template-columns: 1fr;
 }
 }
 </style>
@@ -4044,135 +4551,131 @@ min-height: auto;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../index.html">
 <span class="menu-text">Accueil</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html"> 
+    <a class="nav-link" href="../../plan-de-cours.html">
 <span class="menu-text">Plan de cours</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html"> 
+    <a class="nav-link" href="../../calendrier.html">
 <span class="menu-text">Calendrier</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../roadmap.html"> 
+    <a class="nav-link" href="../../roadmap.html">
 <span class="menu-text">Roadmap</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../migration-ancien-materiel.html"> 
-<span class="menu-text">Migration</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../installation.html"> 
+    <a class="nav-link" href="../../installation.html">
 <span class="menu-text">Installation</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Séance - Introduction</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - Séance - R et Quarto</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Module 03 - Atelier - Explorer un tableau</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 04 - Séance - Régression linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 05 - Séance - Régression non linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Module 06 - Atelier - Régression</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 07 - Préparation - Intra</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 08 - Séance - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 09 - Séance - Lissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 10 - Séance - Tendance et saisonnalité</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Module 11 - Atelier - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 12 - Séance - Variables externes</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 13 - Séance - Classification</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Module 14 - Atelier - Intégration</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html"> 
+    <a class="nav-link" href="../../evaluations/index.html">
 <span class="menu-text">Évaluations</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/principes-refonte.html">
  <span class="dropdown-text">Principes de refonte</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-module.html">
  <span class="dropdown-text">Gabarit de module</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html"> 
+    <a class="nav-link" href="../../donnees/index.html">
 <span class="menu-text">Données</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -4187,31 +4690,15 @@ min-height: auto;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-   
+
   <ul>
-  <li><a href="#séance-01-introduction-au-cours-et-évaluation-des-compétences-statistiques" id="toc-séance-01-introduction-au-cours-et-évaluation-des-compétences-statistiques" class="nav-link active" data-scroll-target="#séance-01-introduction-au-cours-et-évaluation-des-compétences-statistiques">Séance 01 : Introduction au cours et évaluation des compétences statistiques</a>
-  <ul class="collapse">
-  <li><a href="#lets-eat-the-cake" id="toc-lets-eat-the-cake" class="nav-link" data-scroll-target="#lets-eat-the-cake">Let’s eat the cake</a></li>
-  <li><a href="#introduction-à-la-séance" id="toc-introduction-à-la-séance" class="nav-link" data-scroll-target="#introduction-à-la-séance">Introduction à la séance</a></li>
-  <li><a href="#utilité-pour-le-génie-et-ladministration" id="toc-utilité-pour-le-génie-et-ladministration" class="nav-link" data-scroll-target="#utilité-pour-le-génie-et-ladministration">Utilité pour le génie et l’administration</a></li>
-  <li><a href="#concepts-clés" id="toc-concepts-clés" class="nav-link" data-scroll-target="#concepts-clés">Concepts clés</a></li>
-  <li><a href="#préparer-votre-espace-de-travail" id="toc-préparer-votre-espace-de-travail" class="nav-link" data-scroll-target="#préparer-votre-espace-de-travail">Préparer votre espace de travail</a></li>
-  <li><a href="#capsule-1---organisation-du-cours" id="toc-capsule-1---organisation-du-cours" class="nav-link" data-scroll-target="#capsule-1---organisation-du-cours">Capsule 1 - Organisation du cours</a></li>
-  <li><a href="#capsule-2---modèles-mathématiques-et-statistiques" id="toc-capsule-2---modèles-mathématiques-et-statistiques" class="nav-link" data-scroll-target="#capsule-2---modèles-mathématiques-et-statistiques">Capsule 2 - Modèles mathématiques et statistiques</a></li>
-  <li><a href="#capsule-3---préparation-des-données" id="toc-capsule-3---préparation-des-données" class="nav-link" data-scroll-target="#capsule-3---préparation-des-données">Capsule 3 - Préparation des données</a></li>
-  <li><a href="#capsule-4---exploration-univariée" id="toc-capsule-4---exploration-univariée" class="nav-link" data-scroll-target="#capsule-4---exploration-univariée">Capsule 4 - Exploration univariée</a></li>
-  <li><a href="#capsule-5---exploration-bivariée" id="toc-capsule-5---exploration-bivariée" class="nav-link" data-scroll-target="#capsule-5---exploration-bivariée">Capsule 5 - Exploration bivariée</a></li>
-  <li><a href="#démonstrations-r" id="toc-démonstrations-r" class="nav-link" data-scroll-target="#démonstrations-r">Démonstrations R</a></li>
-  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a></li>
-  <li><a href="#correction-avec-solutions-cachées" id="toc-correction-avec-solutions-cachées" class="nav-link" data-scroll-target="#correction-avec-solutions-cachées">Correction avec solutions cachées</a></li>
-  <li><a href="#lectures-ciblées" id="toc-lectures-ciblées" class="nav-link" data-scroll-target="#lectures-ciblées">Lectures ciblées</a></li>
-  <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
-  <li><a href="#mini-cas-business" id="toc-mini-cas-business" class="nav-link" data-scroll-target="#mini-cas-business">Mini-cas business</a></li>
-  <li><a href="#à-retenir" id="toc-à-retenir" class="nav-link" data-scroll-target="#à-retenir">À retenir</a></li>
-  <li><a href="#erreurs-fréquentes" id="toc-erreurs-fréquentes" class="nav-link" data-scroll-target="#erreurs-fréquentes">Erreurs fréquentes</a></li>
-  <li><a href="#lien-avec-lancien-matériel" id="toc-lien-avec-lancien-matériel" class="nav-link" data-scroll-target="#lien-avec-lancien-matériel">Lien avec l’ancien matériel</a></li>
+  <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
+  <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
+  <li><a href="#production-finale" id="toc-production-finale" class="nav-link" data-scroll-target="#production-finale">Production finale</a></li>
+  <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
+  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
   <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4220,178 +4707,431 @@ min-height: auto;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Semaine 01 - Introduction au cours et compétences statistiques</h1>
+<h1 class="title">Semaine 01</h1>
+<p class="subtitle lead">Comprendre un tableau avant de modéliser</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
 
 
-<section id="séance-01-introduction-au-cours-et-évaluation-des-compétences-statistiques" class="level1">
-<h1>Séance 01 : Introduction au cours et évaluation des compétences statistiques</h1>
-<p>Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.</p>
-<p>Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.</p>
-<section id="lets-eat-the-cake" class="level2">
-<h2 class="anchored" data-anchor-id="lets-eat-the-cake">Let’s eat the cake</h2>
-<p>Objectif : comprendre l’organisation du cours, revoir les compétences statistiques de base et préparer une première démarche de traitement des données.</p>
-<p>Compétences développées :</p>
-<ul>
-<li>situer les objectifs du cours et les évaluations;</li>
-<li>reconnaître les principaux types de données;</li>
-<li>identifier les problèmes fréquents de préparation des données;</li>
-<li>distinguer analyse univariée, analyse bivariée et modélisation;</li>
-<li>produire un premier diagnostic statistique descriptif;</li>
-<li>nommer les acquis à consolider avant les séances de régression et de prévision.</li>
-</ul>
-<p>Application business : vérifier la qualité et la structure d’un tableau avant de l’utiliser pour une décision d’affaires.</p>
-<p>Résultat final attendu : une trace de portfolio qui résume les compétences statistiques à consolider, les variables clés d’un tableau et deux constats descriptifs prudents.</p>
-<p>Lien avec une décision d’affaires réelle : éviter de prendre une décision à partir d’un tableau mal compris, mal préparé ou décrit avec des indicateurs inadaptés.</p>
+<div class="learning-hero">
+<p class="hero-kicker">
+Séance autonome
+</p>
+<h2 class="anchored">
+Comprendre un tableau avant de modéliser
+</h2>
+<p>Observer, classer, décrire et interpréter prudemment un premier tableau de données. Cette semaine installe les repères du cours : ce qu’est un modèle, ce que représente une ligne, ce que mesure une variable, comment produire un premier résumé et comment éviter une interprétation trop rapide.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Durée estimée
+</div>
+<div class="fact-value">
+2 h à 2 h 30
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, Quarto, notes de cours
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Données
+</div>
+<div class="fact-value">
+birth_us.csv, safety_airlines.csv
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Production finale
+</div>
+<div class="fact-value">
+Trace de portfolio
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="on-passe-au-concret" class="level2">
+<h2 class="anchored" data-anchor-id="on-passe-au-concret">On passe au concret</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Une bonne analyse commence avant le modèle">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une bonne analyse commence avant le modèle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cette semaine sert à construire le réflexe le plus important du cours : comprendre les données avant de calculer ou de modéliser.</p>
+<p>Vous allez revoir les notions de base qui reviennent partout ensuite : modèle, observation, variable, type de variable, indicateur, graphique, comparaison et limite d’interprétation.</p>
+<p>Le résultat attendu est court, mais utile : une trace de portfolio qui montre que vous pouvez lire un tableau, produire un premier résumé et formuler deux constats descriptifs prudents.</p>
+</div>
+</div>
+<div class="outcome-strip" aria-label="Résultat attendu à la fin de la semaine">
+  <div class="outcome-item">
+    <span class="outcome-label">Départ</span>
+    <span class="outcome-value">un tableau brut</span>
+  </div>
+  <div class="outcome-arrow" aria-hidden="true">→</div>
+  <div class="outcome-item">
+    <span class="outcome-label">Méthode</span>
+    <span class="outcome-value">un modèle en tête</span>
+  </div>
+  <div class="outcome-arrow" aria-hidden="true">→</div>
+  <div class="outcome-item">
+    <span class="outcome-label">Arrivée</span>
+    <span class="outcome-value">un diagnostic descriptif</span>
+  </div>
+</div>
+<p>Le fil conducteur reste appliqué à des données utiles en administration : comprendre une structure de données, comparer des indicateurs, choisir une échelle pertinente et expliquer ce que les résultats permettent ou non de conclure.</p>
+<div class="deliverable-box compact-box">
+  <p class="card-kicker">À la fin de la semaine</p>
+  <p>
+    Vous devriez pouvoir expliquer le rôle d&#39;un modèle, nommer l&#39;unité
+    d&#39;observation, classer les variables, produire un tableau descriptif, créer
+    un graphique simple, comparer deux indicateurs et écrire une limite
+    d&#39;interprétation.
+  </p>
+</div>
 </section>
-<section id="introduction-à-la-séance" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-à-la-séance">Introduction à la séance</h2>
-<p>La première séance présente le cours et ses objectifs. Elle sert aussi de diagnostic de départ : les notions vues dans les cours préalables sont réactivées avant de passer aux modèles de régression et aux séries chronologiques.</p>
-<p>Au cours de cette séance, nous abordons :</p>
-<ul>
-<li>l’introduction à l’analyse des données;</li>
-<li>la typologie des données;</li>
-<li>les problèmes de préparation et de traitement;</li>
-<li>les bases de l’exploration univariée et bivariée;</li>
-<li>le rôle d’un quiz diagnostique de compétences statistiques.</li>
-</ul>
-<p>À la fin de la séance, vous devriez être en mesure de :</p>
-<ul>
-<li>comprendre les principaux problèmes liés à la préparation des données;</li>
-<li>préparer un plan d’action avant une analyse;</li>
-<li>résoudre des problèmes simples de traitement de données;</li>
-<li>lire un tableau statistique avec prudence.</li>
-</ul>
+<section id="votre-parcours" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action, trace attendue et AE associé.</p>
+<div class="path-grid interactive-path">
+  <details class="path-card" id="etape-1">
+    <summary>
+      <span class="path-number">1</span>
+      <span class="path-title">Comprendre le cours</span>
+      <span class="path-preview">Repérer la structure du cours, les ateliers et les attentes de travail autonome.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1---organisation-du-cours">Capsule 1</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Situer la semaine 01 dans la progression du cours.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-1---organisation-du-cours">Capsule 1</a> <a class="resource-link info-link" href="informations.html">Informations du module</a></p>
+      <p><span class="step-label">Action</span> Lire les attentes du module et noter ce qui devra être conservé dans votre trace de portfolio.</p>
+      <p><span class="step-label">Trace</span> Deux phrases : ce que cette séance prépare et ce que vous devrez produire.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.1 : situer la séance</p>
+        <p>Expliquez en deux phrases à quoi sert la semaine 01 dans la progression vers la régression, la prévision et les séries chronologiques.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-2">
+    <summary>
+      <span class="path-number">2</span>
+      <span class="path-title">Situer les modèles</span>
+      <span class="path-preview">Comprendre le rôle d&#39;un modèle et identifier les notions à consolider.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2---modèles-mathématiques-et-statistiques">Capsule 2</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4---modèles-et-diagnostic-de-compétences">Ex. 4</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Comprendre qu&#39;un modèle simplifie une situation réelle pour répondre à une question, puis revoir les notions nécessaires avant de modéliser.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-2---modèles-mathématiques-et-statistiques">Capsule 2</a> <a class="resource-link exercise-link" href="exercices.html#exercice-4---modèles-et-diagnostic-de-compétences">Exercice 4</a></p>
+      <p><span class="step-label">Action</span> Distinguer problème, données, modèle et interprétation, puis faire un court diagnostic personnel des notions à revoir.</p>
+      <p><span class="step-label">Trace</span> Une phrase sur le rôle d&#39;un modèle et une liste courte de deux acquis et de deux points à consolider.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.2 : expliquer le rôle d&#39;un modèle</p>
+        <p>Expliquez en une phrase ce qu&#39;un modèle mathématique ou statistique simplifie, puis nommez une notion statistique à revoir avant la semaine 02.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-3">
+    <summary>
+      <span class="path-number">3</span>
+      <span class="path-title">Reconnaître les variables</span>
+      <span class="path-preview">Distinguer variables numériques, catégorielles, dates, codes et unités.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3---typologie-des-données">Capsule 3</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1---lire-la-structure-dun-tableau">Ex. 1</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Comprendre que le type d&#39;une variable influence les calculs et les graphiques possibles.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-3---typologie-des-données">Capsule 3</a> <a class="resource-link exercise-link" href="exercices.html#exercice-1---lire-la-structure-dun-tableau">Exercice 1</a></p>
+      <p><span class="step-label">Action</span> Ouvrir <code>birth_us.csv</code>, lire la structure et classer les variables importantes.</p>
+      <p><span class="step-label">Trace</span> Un tableau court avec le nom de la variable, son type et son rôle possible dans une analyse.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.3 : classer les variables</p>
+        <p>Classez les principales variables de <code>birth_us.csv</code> selon leur type : numérique, catégorielle, date, code ou indicateur temporel.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-4">
+    <summary>
+      <span class="path-number">4</span>
+      <span class="path-title">Préparer le tableau</span>
+      <span class="path-preview">Vérifier l&#39;unité d&#39;observation, les noms, les formats et les transformations utiles.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4---préparation-des-données">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-1---lire-et-préparer-un-tableau">Démo 1</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Vérifier que le tableau est compréhensible avant de produire des résultats.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-4---préparation-des-données">Capsule 4</a> <a class="resource-link demo-link" href="demonstrations.html#préparation">Préparation R</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-1---lire-et-préparer-un-tableau">Démo 1</a></p>
+      <p><span class="step-label">Action</span> Reproduire le code qui crée une date et transforme le jour de la semaine en variable catégorielle.</p>
+      <p><span class="step-label">Trace</span> Le code exécuté et une phrase qui nomme l&#39;unité d&#39;observation.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.4 : nommer l&#39;unité d&#39;observation</p>
+        <p>Indiquez ce que représente une ligne de <code>birth_us.csv</code>, puis expliquez pourquoi le codage d&#39;un jour de semaine doit être interprété avec prudence.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-5">
+    <summary>
+      <span class="path-number">5</span>
+      <span class="path-title">Décrire une variable</span>
+      <span class="path-preview">Produire des indicateurs simples et un graphique univarié.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---exploration-univariée-et-bivariée">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-2---analyse-univariée">Démo 2</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2---produire-une-analyse-univariée">Ex. 2</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Résumer une variable numérique sans perdre le lien avec son sens.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---exploration-univariée-et-bivariée">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-2---analyse-univariée">Démo 2</a> <a class="resource-link exercise-link" href="exercices.html#exercice-2---produire-une-analyse-univariée">Exercice 2</a></p>
+      <p><span class="step-label">Action</span> Calculer minimum, moyenne, médiane et maximum, puis produire un histogramme.</p>
+      <p><span class="step-label">Trace</span> Un tableau descriptif, un graphique et une phrase d&#39;interprétation.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.5 : produire une analyse univariée</p>
+        <p>Résumez la variable <code>births</code> et écrivez un constat descriptif qui ne dépasse pas ce que les données montrent.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-6">
+    <summary>
+      <span class="path-number">6</span>
+      <span class="path-title">Comparer prudemment</span>
+      <span class="path-preview">Comparer deux groupes ou deux indicateurs sans oublier l&#39;échelle.</span>
+      <span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-3---analyse-bivariée">Démo 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-4---indicateurs-et-échelle-de-comparaison">Démo 4</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3---comparer-des-indicateurs">Ex. 3</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Distinguer une association descriptive d&#39;une explication causale.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link demo-link" href="demonstrations.html#démonstration-3---analyse-bivariée">Démo 3</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-4---indicateurs-et-échelle-de-comparaison">Démo 4</a> <a class="resource-link exercise-link" href="exercices.html#exercice-3---comparer-des-indicateurs">Exercice 3</a></p>
+      <p><span class="step-label">Action</span> Comparer les naissances selon le jour de la semaine, puis comparer un nombre brut d&#39;incidents à un taux indicatif.</p>
+      <p><span class="step-label">Trace</span> Deux constats descriptifs et une limite explicite.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.6 : comparer des indicateurs</p>
+        <p>À partir de <code>safety_airlines.csv</code>, expliquez pourquoi un nombre brut et un taux ne racontent pas exactement la même chose.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-7">
+    <summary>
+      <span class="path-number">7</span>
+      <span class="path-title">Consolider les réponses</span>
+      <span class="path-preview">Relire les exercices, corriger les erreurs et compléter les points faibles.</span>
+      <span class="path-resource"><a class="summary-resource-link exercise-link" href="exercices.html">Exercices</a><a class="summary-resource-link reading-link" href="lectures.html">Lectures</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Transformer les réponses isolées en une courte synthèse cohérente.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link exercise-link" href="exercices.html">Exercices</a> <a class="resource-link reading-link" href="lectures.html">Lectures</a></p>
+      <p><span class="step-label">Action</span> Comparer vos réponses aux indications disponibles, puis annoter les corrections nécessaires.</p>
+      <p><span class="step-label">Trace</span> Une liste de corrections et une question restante, si nécessaire.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.7 : formuler deux constats descriptifs</p>
+        <p>Rédigez deux constats descriptifs à partir des tableaux ou graphiques produits. Chaque constat doit nommer la variable utilisée.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-8">
+    <summary>
+      <span class="path-number">8</span>
+      <span class="path-title">Produire la trace</span>
+      <span class="path-preview">Assembler une page courte, structurée et vérifiable.</span>
+      <span class="path-resource"><a class="summary-resource-link exercise-link" href="exercices.html#livrable-court">Livrable</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Produire une trace finale qui montre ce que vous savez faire à la fin de la semaine.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link exercise-link" href="exercices.html#livrable-court">Livrable court</a> <a class="resource-link info-link" href="informations.html#livrable">Informations du module</a></p>
+      <p><span class="step-label">Action</span> Assembler le diagnostic de compétences, le classement des variables, le graphique, les constats et la limite.</p>
+      <p><span class="step-label">Trace</span> Une trace de portfolio d&#39;une page maximum.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 1.8 : nommer une limite d&#39;interprétation</p>
+        <p>Ajoutez une limite claire à votre trace finale : ce que votre résumé descriptif ne permet pas de conclure.</p>
+      </div>
+    </div>
+  </details>
+</div>
 </section>
-<section id="utilité-pour-le-génie-et-ladministration" class="level2">
-<h2 class="anchored" data-anchor-id="utilité-pour-le-génie-et-ladministration">Utilité pour le génie et l’administration</h2>
-<p>Le module doit être lu avec deux angles complémentaires.</p>
-<p>Pour les étudiant·es en génie, l’objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.</p>
-<p>Pour les étudiant·es en administration, l’objectif est de relier l’analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.</p>
-<p>L’IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l’autorisent, mais le raisonnement statistique, le code R et l’interprétation restent au centre du travail.</p>
-</section>
-<section id="concepts-clés" class="level2">
-<h2 class="anchored" data-anchor-id="concepts-clés">Concepts clés</h2>
-<ul>
-<li>Observation : ligne d’un tableau.</li>
-<li>Variable : caractéristique mesurée ou codée.</li>
-<li>Type de variable : numérique, catégorielle, date, texte.</li>
-<li>Préparation des données : correction des noms, formats, valeurs manquantes et unités.</li>
-<li>Analyse univariée : description d’une variable.</li>
-<li>Analyse bivariée : relation descriptive entre deux variables.</li>
-<li>Indicateur : résumé numérique utile pour comprendre une question.</li>
-<li>Limite : ce que les données ne permettent pas de conclure.</li>
-</ul>
-</section>
-<section id="préparer-votre-espace-de-travail" class="level2">
-<h2 class="anchored" data-anchor-id="préparer-votre-espace-de-travail">Préparer votre espace de travail</h2>
-<p>Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.</p>
-<p>Vérifiez aussi les fichiers disponibles dans <a href="../../modules/semaine-01-introduction/informations.html">les informations du module</a>, notamment les données publiques et les consignes liées au matériel ancien.</p>
-</section>
-<section id="capsule-1---organisation-du-cours" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-1---organisation-du-cours">Capsule 1 - Organisation du cours</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/semaine-01-introduction/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-2---modèles-mathématiques-et-statistiques" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-2---modèles-mathématiques-et-statistiques">Capsule 2 - Modèles mathématiques et statistiques</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/semaine-01-introduction/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-3---préparation-des-données" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-3---préparation-des-données">Capsule 3 - Préparation des données</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/semaine-01-introduction/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-4---exploration-univariée" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-4---exploration-univariée">Capsule 4 - Exploration univariée</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/semaine-01-introduction/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-5---exploration-bivariée" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-5---exploration-bivariée">Capsule 5 - Exploration bivariée</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/semaine-01-introduction/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="démonstrations-r" class="level2">
-<h2 class="anchored" data-anchor-id="démonstrations-r">Démonstrations R</h2>
-<p>Après les capsules, passez aux <a href="../../modules/semaine-01-introduction/demonstrations.html">démonstrations R</a>. Reproduisez le code dans l’ordre, sans seulement lire les résultats. L’objectif est de voir les gestes techniques attendus avant les exercices.</p>
-<p>Trace attendue : le code exécuté, un résultat observé et une phrase d’interprétation.</p>
-</section>
-<section id="exercices-dapplication" class="level2">
-<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
-<p>Faites ensuite <a href="../../modules/semaine-01-introduction/exercices.html">les exercices</a> sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.</p>
-<p>Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d’exécuter.</p>
-</section>
-<section id="correction-avec-solutions-cachées" class="level2">
-<h2 class="anchored" data-anchor-id="correction-avec-solutions-cachées">Correction avec solutions cachées</h2>
-<p>Une fois les exercices tentés, ouvrez les solutions cachées dans <a href="../../modules/semaine-01-introduction/exercices.html">la page d’exercices</a>. Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.</p>
-<p>Trace attendue : une correction courte et une liste de questions restantes.</p>
-</section>
-<section id="lectures-ciblées" class="level2">
-<h2 class="anchored" data-anchor-id="lectures-ciblées">Lectures ciblées</h2>
-<p>Consultez ensuite <a href="../../modules/semaine-01-introduction/lectures.html">les lectures</a>. Il ne s’agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu’ils clarifient par rapport aux capsules ou aux exercices.</p>
-<p>Trace attendue : une idée utile, une définition ou une référence à retenir.</p>
-</section>
-<section id="trace-finale" class="level2">
-<h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Terminez le module en produisant le livrable court : Trace de portfolio sur le diagnostic de départ.</p>
-<p>Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.</p>
-</section>
-<section id="mini-cas-business" class="level2">
-<h2 class="anchored" data-anchor-id="mini-cas-business">Mini-cas business</h2>
-<p>Une organisation doit produire rapidement un diagnostic à partir d’un tableau reçu. Avant de modéliser, elle doit répondre à quatre questions :</p>
-<ul>
-<li>Que représente une ligne?</li>
-<li>Quelles variables sont numériques ou catégorielles?</li>
-<li>Quelles transformations sont nécessaires?</li>
-<li>Quels constats sont descriptifs seulement?</li>
-</ul>
-<p>L’objectif n’est pas encore de recommander une action. L’objectif est de préparer une analyse fiable.</p>
-</section>
-<section id="à-retenir" class="level2">
-<h2 class="anchored" data-anchor-id="à-retenir">À retenir</h2>
-<p>Une analyse statistique sérieuse commence par la compréhension du tableau, la vérification des variables et une exploration descriptive prudente.</p>
-</section>
-<section id="erreurs-fréquentes" class="level2">
-<h2 class="anchored" data-anchor-id="erreurs-fréquentes">Erreurs fréquentes</h2>
+<section id="ressources-du-module" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
+<div class="resource-list">
+  <a class="resource-row" href="capsules.html">
+    <span class="resource-row-icon video-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Comprendre les repères du cours, les modèles et les notions statistiques de départ.</span></span>
+  </a>
+  <a class="resource-row" href="demonstrations.html">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Reproduire les premiers gestes : importer, préparer, résumer, visualiser et comparer.</span></span>
+  </a>
+  <a class="resource-row" href="exercices.html">
+    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Pratiquer la lecture d&#39;un tableau, l&#39;analyse descriptive, les modèles et le diagnostic de compétences.</span></span>
+  </a>
+  <a class="resource-row" href="lectures.html">
+    <span class="resource-row-icon reading-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Clarifier les notions qui restent fragiles après les capsules ou les exercices.</span></span>
+  </a>
+  <a class="resource-row" href="informations.html">
+    <span class="resource-row-icon info-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Informations du module</span><span class="resource-row-text">Retrouver les fichiers nécessaires, les consignes pratiques et les critères de réussite.</span></span>
+  </a>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Erreurs fréquentes à éviter">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Erreurs fréquentes à éviter
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Confondre le nom d’une variable et son sens statistique.</li>
 <li>Interpréter un code numérique comme une mesure continue.</li>
-<li>Comparer des volumes sans tenir compte de l’exposition ou de la taille.</li>
+<li>Comparer des volumes sans tenir compte de l’échelle ou de l’exposition.</li>
 <li>Passer directement à un modèle sans vérifier les données.</li>
-<li>Oublier de nommer les limites d’un constat descriptif.</li>
+<li>Écrire un constat causal à partir d’un graphique descriptif.</li>
 </ul>
+</div>
+</div>
 </section>
-<section id="lien-avec-lancien-matériel" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-lancien-matériel">Lien avec l’ancien matériel</h2>
-<p>Cette semaine reprend l’esprit de l’ancienne séance 01 : introduction au cours, diagnostic des compétences statistiques, préparation des données et exploration descriptive. Les fichiers <code>BirthUS.csv</code> et <code>SafetyAirlines.csv</code> proviennent de l’archive de la séance 01 et sont conservés dans un format directement utilisable avec R.</p>
-<p>Les fichiers PowerPoint, PDF de narration, lectures protégées et énoncés PDF d’origine ne sont pas publiés.</p>
+<section id="production-finale" class="level2">
+<h2 class="anchored" data-anchor-id="production-finale">Production finale</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objectif de la trace de portfolio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Objectif de la trace de portfolio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La trace finale sert à montrer que vous pouvez lire un tableau avec méthode. Elle doit être courte, structurée et vérifiable : l’objectif est de faire apparaître votre raisonnement, pas de recopier tout le contenu de la semaine.</p>
+</div>
+</div>
+<div class="deliverable-box production-box">
+  <p class="card-kicker">Ce que la trace doit démontrer</p>
+  <h3 class="anchored">Je peux comprendre un tableau avant de choisir une méthode.</h3>
+  <p>
+    Votre trace doit permettre de voir comment vous passez d&#39;un fichier de données
+    à quelques constats descriptifs prudents, avec une limite claire et un lien
+    explicite avec la logique de modélisation.
+  </p>
+  <div class="production-flow">
+    <span>Situer</span>
+    <span>Modéliser</span>
+    <span>Classer</span>
+    <span>Décrire</span>
+    <span>Comparer</span>
+    <span>Limiter</span>
+    <span>Synthétiser</span>
+  </div>
+</div>
+<p>Votre trace de portfolio doit contenir :</p>
+<ul>
+<li>une courte synthèse de votre diagnostic de compétences;</li>
+<li>une phrase expliquant le rôle d’un modèle mathématique ou statistique;</li>
+<li>l’unité d’observation du tableau utilisé;</li>
+<li>un classement de quelques variables par type;</li>
+<li>un tableau descriptif ou un résumé numérique;</li>
+<li>un graphique;</li>
+<li>deux constats descriptifs;</li>
+<li>une limite d’interprétation;</li>
+<li>une notion à revoir avant la semaine 02.</li>
+</ul>
+<p>La production sert à montrer ce que vous savez faire à la fin de la semaine. Elle n’a pas besoin d’être longue.</p>
+</section>
+<section id="auto-vérification" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<p>Avant de passer à la semaine suivante, je peux dire que :</p>
+<div class="checklist-box">
+<ul class="task-list">
+<li><label><input type="checkbox">J’ai compris la structure générale du cours.</label></li>
+<li><label><input type="checkbox">J’ai expliqué le rôle d’un modèle mathématique ou statistique.</label></li>
+<li><label><input type="checkbox">J’ai identifié les notions statistiques que je dois consolider.</label></li>
+<li><label><input type="checkbox">J’ai ouvert les fichiers de données du module.</label></li>
+<li><label><input type="checkbox">J’ai nommé l’unité d’observation d’un tableau.</label></li>
+<li><label><input type="checkbox">J’ai classé quelques variables par type.</label></li>
+<li><label><input type="checkbox">J’ai produit un tableau descriptif ou un résumé numérique.</label></li>
+<li><label><input type="checkbox">J’ai produit un graphique simple.</label></li>
+<li><label><input type="checkbox">J’ai comparé deux indicateurs avec prudence.</label></li>
+<li><label><input type="checkbox">J’ai formulé deux constats descriptifs.</label></li>
+<li><label><input type="checkbox">J’ai nommé une limite d’interprétation.</label></li>
+<li><label><input type="checkbox">J’ai préparé ma trace de portfolio.</label></li>
+</ul>
+</div>
+</section>
+<section id="je-suis-bloquée" class="level2">
+<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
+<div class="help-box">
+<p>Avant de demander de l’aide, vérifiez dans l’ordre :</p>
+<ol type="1">
+<li>le dossier où se trouvent les fichiers <code>birth_us.csv</code> et <code>safety_airlines.csv</code>;</li>
+<li>le chargement des packages avec <code>library(tidyverse)</code>, <code>library(janitor)</code>, <code>library(lubridate)</code> et <code>library(scales)</code>;</li>
+<li>le nom exact des variables utilisées, par exemple <code>births</code>, <code>day_of_week</code> ou <code>incidents_00_14</code>;</li>
+<li>le message d’erreur, surtout le nom de l’objet ou de la variable manquante;</li>
+<li>le code correspondant dans <a href="../../modules/semaine-01-introduction/demonstrations.html">les démonstrations R</a>;</li>
+<li>la précision de votre question sur le forum, avec le code tenté et le message d’erreur complet.</li>
+</ol>
+</div>
 </section>
 <section id="pour-aller-plus-loin" class="level2">
 <h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
-<p>La semaine 02 introduit R, RStudio et Quarto plus systématiquement. Elle transforme le travail préparatoire de cette séance en rapport reproductible.</p>
+<ul>
+<li>Refaire l’exercice 2 en modifiant le graphique.</li>
+<li>Comparer deux jours de la semaine en ajoutant une phrase sur les limites.</li>
+<li>Ajouter un indicateur descriptif pertinent à votre trace.</li>
+<li>Préparer <a href="../../modules/semaine-02-r-quarto/index.html">la semaine 02</a>, qui transforme ces gestes en mini-rapport Quarto reproductible.</li>
+</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -4406,7 +5146,7 @@ min-height: auto;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -4426,11 +5166,11 @@ min-height: auto;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -4506,7 +5246,7 @@ min-height: auto;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -4581,7 +5321,7 @@ min-height: auto;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -4609,7 +5349,7 @@ min-height: auto;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -4633,7 +5373,7 @@ min-height: auto;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -4673,7 +5413,7 @@ min-height: auto;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -4799,7 +5539,7 @@ min-height: auto;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>   
+</div>
     <div class="nav-footer-center">
        
     </div>

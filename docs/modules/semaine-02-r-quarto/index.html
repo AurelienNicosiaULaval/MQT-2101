@@ -3832,17 +3832,109 @@ text-transform: uppercase;
 }
 .quick-facts {
 display: grid;
-grid-template-columns: repeat(4, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 0.9rem;
 margin-top: 1.1rem;
 }
 .fact-card {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+align-items: start;
+gap: 0.8rem;
+min-width: 0;
 min-height: 112px;
 padding: 1rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 10px 24px rgba(18, 50, 68, 0.06);
+}
+.fact-icon {
+position: relative;
+display: block;
+box-sizing: border-box;
+width: 2.15rem;
+height: 2.15rem;
+padding: 0;
+border: 1px solid #c9dde7;
+border-radius: 999px;
+background: #eef6f9;
+color: #0b4f6c;
+flex: 0 0 auto;
+line-height: 0;
+}
+.fact-icon::before,
+.fact-icon::after {
+content: "";
+position: absolute;
+box-sizing: border-box;
+color: currentColor;
+}
+.fact-clock::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 999px;
+transform: translate(-50%, -50%);
+}
+.fact-clock::after {
+left: 50%;
+top: 50%;
+width: 0.36rem;
+height: 0.46rem;
+border-left: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-0.02rem, -0.38rem);
+}
+.fact-tools::before {
+left: 50%;
+top: 50%;
+width: 1.15rem;
+height: 0.86rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-tools::after {
+left: 50%;
+top: 50%;
+width: 0.52rem;
+height: 0.38rem;
+border-right: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-65%, -52%) rotate(-45deg);
+}
+.fact-data::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+background:
+linear-gradient(currentColor, currentColor) 50% 0 / 1.7px 100% no-repeat,
+linear-gradient(currentColor, currentColor) 0 50% / 100% 1.7px no-repeat;
+transform: translate(-50%, -50%);
+}
+.fact-report::before {
+left: 50%;
+top: 50%;
+width: 0.95rem;
+height: 1.12rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-report::after {
+left: 50%;
+top: 50%;
+width: 0.48rem;
+height: 0.35rem;
+border-top: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-50%, -10%);
 }
 .fact-label {
 margin-bottom: 0.45rem;
@@ -3853,10 +3945,120 @@ letter-spacing: 0;
 text-transform: uppercase;
 }
 .fact-value {
+min-width: 0;
 color: #123244;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
+overflow-wrap: anywhere;
+word-break: normal;
+}
+.outcome-strip {
+display: grid;
+grid-template-columns: 1fr auto 1fr auto 1fr;
+align-items: stretch;
+gap: 0.75rem;
+margin: 1.15rem 0 1.4rem;
+}
+.outcome-item {
+padding: 0.9rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 20px rgba(18, 50, 68, 0.04);
+}
+.outcome-label {
+display: block;
+margin-bottom: 0.2rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.outcome-value {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.3;
+}
+.outcome-arrow {
+align-self: center;
+color: #7a1c24;
+font-size: 1.2rem;
+font-weight: 700;
+}
+.phase-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.phase-card {
+padding: 1.05rem 1.1rem;
+border: 1px solid #dce5ea;
+border-top: 4px solid #b5121b;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.phase-card h3 {
+margin: 0.35rem 0 0.45rem;
+color: #123244;
+font-size: 1.08rem;
+line-height: 1.25;
+}
+.phase-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.phase-label {
+display: inline-flex;
+align-items: center;
+min-height: 1.65rem;
+padding: 0.15rem 0.5rem;
+border-radius: 999px;
+background: #f8ebed;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+line-height: 1.2;
+}
+.workshop-agenda {
+display: grid;
+gap: 0.75rem;
+margin: 1.15rem 0 1.6rem;
+}
+.agenda-item {
+display: grid;
+grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 6px 18px rgba(18, 50, 68, 0.035);
+}
+.agenda-time {
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 700;
+line-height: 1.35;
+}
+.agenda-content h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.agenda-content p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
 }
 .path-grid,
 .learning-path {
@@ -3874,6 +4076,40 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
 }
+.interactive-path {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card {
+padding: 0;
+overflow: hidden;
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.path-card summary {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.65rem 0.85rem;
+min-height: 172px;
+padding: 1rem;
+cursor: pointer;
+list-style: none;
+}
+.path-card summary::-webkit-details-marker {
+display: none;
+}
+.path-card summary::marker {
+content: "";
+}
+.path-card summary:focus-visible {
+outline: 3px solid rgba(181, 18, 27, 0.25);
+outline-offset: -3px;
+}
+.path-card[open] summary {
+min-height: auto;
+border-bottom: 1px solid #e6edf1;
+background: #fbfdfe;
+}
 .path-card h3 {
 margin: 0.7rem 0 0.45rem;
 color: #123244;
@@ -3890,6 +4126,7 @@ line-height: 1.45;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+grid-row: span 4;
 width: 2rem;
 height: 2rem;
 border-radius: 999px;
@@ -3897,6 +4134,188 @@ background: #b5121b;
 color: #ffffff;
 font-size: 0.9rem;
 font-weight: 700;
+}
+.path-title {
+display: block;
+min-width: 0;
+color: #123244;
+font-size: 1.04rem;
+font-weight: 700;
+line-height: 1.25;
+overflow-wrap: anywhere;
+}
+.path-preview {
+display: block;
+min-width: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+overflow-wrap: anywhere;
+}
+.path-resource {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.22rem 0.35rem;
+min-width: 0;
+color: #5a6c78;
+font-size: 0.82rem;
+line-height: 1.35;
+overflow-wrap: anywhere;
+}
+.resource-separator {
+color: #8a98a3;
+}
+.path-toggle {
+display: inline-flex;
+justify-self: start;
+align-items: center;
+min-height: 1.9rem;
+padding: 0.2rem 0.55rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+color: #0b4f6c;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1;
+background: #f7fafc;
+}
+.path-card[open] .closed-label,
+.path-card .open-label {
+display: none;
+}
+.path-card[open] .open-label {
+display: inline;
+}
+.step-detail {
+padding: 1rem 1.1rem 1.15rem;
+}
+.step-detail p {
+margin: 0 0 0.7rem;
+}
+.step-detail p:last-child {
+margin-bottom: 0;
+}
+.step-label {
+display: inline-block;
+min-width: 5.2rem;
+margin-right: 0.35rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.ae-box {
+margin-top: 0.85rem;
+padding: 0.85rem 0.95rem;
+border: 1px solid #cfe3da;
+border-left: 4px solid #2f7d5c;
+border-radius: 8px;
+background: #f3faf6;
+}
+.ae-box + .ae-box {
+margin-top: 0.7rem;
+}
+.ae-title {
+color: #1f5f44;
+font-weight: 700;
+}
+.resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
+margin: 0.15rem 0.35rem 0.15rem 0;
+color: #0b5cad;
+font-weight: 600;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.summary-resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+padding: 0.1rem 0.35rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #f8fbfd;
+color: #0b5cad;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1.25;
+text-decoration: none;
+}
+.summary-resource-link:hover {
+border-color: #b8cbd6;
+background: #eef6f9;
+text-decoration: underline;
+text-underline-offset: 0.16em;
+}
+.resource-icon,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1rem;
+height: 1rem;
+flex: 0 0 auto;
+color: currentColor;
+border: 1px solid currentColor;
+border-radius: 3px;
+background: transparent;
+font-family: Arial, sans-serif;
+font-size: 0.68rem;
+font-weight: 800;
+line-height: 1;
+}
+.resource-icon::before,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon::before {
+display: inline-block;
+}
+.video-icon,
+.video-link::before {
+color: #8f1119;
+}
+.video-icon::before,
+.video-link::before {
+content: "▶";
+}
+.exercise-icon,
+.exercise-link::before {
+color: #2f7d5c;
+}
+.exercise-icon::before,
+.exercise-link::before {
+content: "✓";
+}
+.demo-icon,
+.demo-link::before {
+color: #0b4f6c;
+}
+.demo-icon::before,
+.demo-link::before {
+content: ">";
+}
+.reading-icon,
+.reading-link::before {
+color: #7a4d00;
+}
+.reading-icon::before,
+.reading-link::before {
+content: "L";
+}
+.info-icon,
+.info-link::before {
+color: #5a6c78;
+border-radius: 999px;
+}
+.info-icon::before,
+.info-link::before {
+content: "i";
 }
 .step-card {
 margin: 1.35rem 0;
@@ -3932,6 +4351,35 @@ background: #f8fbfd;
 .compact-box {
 margin-top: 1rem;
 }
+.production-box {
+border-left: 5px solid #b5121b;
+background: #fbfdfe;
+}
+.production-box h3 {
+margin: 0.2rem 0 0.45rem;
+color: #123244;
+font-size: 1.2rem;
+line-height: 1.25;
+}
+.production-flow {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+margin-top: 0.9rem;
+}
+.production-flow span {
+display: inline-flex;
+align-items: center;
+min-height: 1.85rem;
+padding: 0.25rem 0.65rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #ffffff;
+color: #123244;
+font-size: 0.86rem;
+font-weight: 700;
+line-height: 1.2;
+}
 .resource-grid {
 display: grid;
 grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3956,6 +4404,43 @@ margin-bottom: 0;
 color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
+}
+.resource-list {
+display: grid;
+gap: 0;
+margin: 1.1rem 0 1.75rem;
+border-top: 1px solid #dce5ea;
+}
+.resource-row {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 0.1rem;
+border-bottom: 1px solid #dce5ea;
+color: inherit;
+text-decoration: none;
+}
+.resource-row:hover .resource-row-title {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
+.resource-row-title {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.25;
+}
+.resource-row-text {
+display: block;
+margin-top: 0.15rem;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.resource-row-icon {
+margin-top: 0.15rem;
 }
 .deliverable-card p:last-child {
 margin-bottom: 0;
@@ -3988,11 +4473,20 @@ min-height: 132px;
 margin-top: 0;
 }
 @media (max-width: 992px) {
-.quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.outcome-strip {
+grid-template-columns: 1fr;
+}
+.outcome-arrow {
+display: none;
 }
 }
 @media (max-width: 640px) {
@@ -4012,15 +4506,28 @@ font-size: 1.55rem;
 }
 .quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
+.interactive-path .path-card[open] {
+grid-column: span 1;
+}
+.fact-card {
+min-height: auto;
+}
 .fact-card,
 .path-card {
 min-height: auto;
+}
+.path-card summary {
+min-height: auto;
+}
+.agenda-item {
+grid-template-columns: 1fr;
 }
 }
 </style>
@@ -4044,135 +4551,131 @@ min-height: auto;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../index.html">
 <span class="menu-text">Accueil</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html"> 
+    <a class="nav-link" href="../../plan-de-cours.html">
 <span class="menu-text">Plan de cours</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html"> 
+    <a class="nav-link" href="../../calendrier.html">
 <span class="menu-text">Calendrier</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../roadmap.html"> 
+    <a class="nav-link" href="../../roadmap.html">
 <span class="menu-text">Roadmap</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../migration-ancien-materiel.html"> 
-<span class="menu-text">Migration</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../installation.html"> 
+    <a class="nav-link" href="../../installation.html">
 <span class="menu-text">Installation</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Séance - Introduction</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - Séance - R et Quarto</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Module 03 - Atelier - Explorer un tableau</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 04 - Séance - Régression linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 05 - Séance - Régression non linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Module 06 - Atelier - Régression</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 07 - Préparation - Intra</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 08 - Séance - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 09 - Séance - Lissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 10 - Séance - Tendance et saisonnalité</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Module 11 - Atelier - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 12 - Séance - Variables externes</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 13 - Séance - Classification</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Module 14 - Atelier - Intégration</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html"> 
+    <a class="nav-link" href="../../evaluations/index.html">
 <span class="menu-text">Évaluations</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/principes-refonte.html">
  <span class="dropdown-text">Principes de refonte</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-module.html">
  <span class="dropdown-text">Gabarit de module</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html"> 
+    <a class="nav-link" href="../../donnees/index.html">
 <span class="menu-text">Données</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -4187,11 +4690,10 @@ min-height: auto;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-   
+
   <ul>
-  <li><a href="#lets-eat-the-cake" id="toc-lets-eat-the-cake" class="nav-link active" data-scroll-target="#lets-eat-the-cake">Let’s eat the cake</a></li>
+  <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
   <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
-  <li><a href="#à-faire-dans-lordre" id="toc-à-faire-dans-lordre" class="nav-link" data-scroll-target="#à-faire-dans-lordre">À faire dans l’ordre</a></li>
   <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
   <li><a href="#production-finale" id="toc-production-finale" class="nav-link" data-scroll-target="#production-finale">Production finale</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
@@ -4213,11 +4715,11 @@ min-height: auto;
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -4233,6 +4735,10 @@ Premiers pas avec R, RStudio et Quarto
 <p>Importer, inspecter, résumer et visualiser un premier tableau de données. Cette semaine sert à installer les bases techniques nécessaires pour travailler de façon reproductible avec R. Le parcours vous guide depuis l’environnement de travail jusqu’à la production d’un mini-rapport Quarto.</p>
 <div class="quick-facts">
 <div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
 <div class="fact-label">
 Durée estimée
 </div>
@@ -4240,7 +4746,12 @@ Durée estimée
 2 h 30 à 3 h
 </div>
 </div>
+</div>
 <div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
 <div class="fact-label">
 Outils
 </div>
@@ -4248,7 +4759,12 @@ Outils
 R, RStudio, Quarto
 </div>
 </div>
+</div>
 <div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
 <div class="fact-label">
 Données
 </div>
@@ -4256,7 +4772,12 @@ Données
 ventes_operations_quebec.csv
 </div>
 </div>
+</div>
 <div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
 <div class="fact-label">
 Production finale
 </div>
@@ -4266,321 +4787,262 @@ Mini-rapport Quarto
 </div>
 </div>
 </div>
-<section id="lets-eat-the-cake" class="level2">
-<h2 class="anchored" data-anchor-id="lets-eat-the-cake">Let’s eat the cake</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="À quoi sert cette semaine?">
+</div>
+<section id="on-passe-au-concret" class="level2">
+<h2 class="anchored" data-anchor-id="on-passe-au-concret">On passe au concret</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="De votre premier CSV à une analyse reproductible">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-À quoi sert cette semaine?
+De votre premier CSV à une analyse reproductible
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Cette semaine vous apprend à passer d’un fichier de données à une première analyse reproductible. Ces gestes reviendront dans tout le cours : régression, prévision, séries chronologiques et évaluation de modèles.</p>
-<p>Objectif : prendre en main R, RStudio et Quarto pour importer, inspecter, préparer et visualiser un tableau de données.</p>
-<p>Compétences développées : vérifier l’environnement, reconnaître les zones de RStudio, utiliser un projet R, importer un CSV, inspecter un tableau, repérer les valeurs manquantes, produire un tableau descriptif, créer un graphique et rendre un document Quarto.</p>
-<p>Résultat attendu : un mini-rapport Quarto court, reproductible et appuyé par deux constats descriptifs.</p>
+<p>Cette semaine sert à franchir le premier vrai seuil du cours : partir d’un fichier de données et arriver à une page HTML courte, claire et reproductible.</p>
+<p>Vous allez apprendre les gestes qui reviendront partout ensuite : importer, inspecter, résumer, visualiser et expliquer ce que l’on observe.</p>
+<p>Ces gestes préparent les semaines sur la régression, la prévision, les séries chronologiques et l’évaluation de modèles. L’objectif n’est pas d’aller vite. L’objectif est de construire une méthode de travail fiable.</p>
 </div>
+</div>
+<div class="outcome-strip" aria-label="Résultat attendu à la fin de la semaine">
+  <div class="outcome-item">
+    <span class="outcome-label">Départ</span>
+    <span class="outcome-value">un fichier CSV</span>
+  </div>
+  <div class="outcome-arrow" aria-hidden="true">→</div>
+  <div class="outcome-item">
+    <span class="outcome-label">Méthode</span>
+    <span class="outcome-value">du code R vérifiable</span>
+  </div>
+  <div class="outcome-arrow" aria-hidden="true">→</div>
+  <div class="outcome-item">
+    <span class="outcome-label">Arrivée</span>
+    <span class="outcome-value">un mini-rapport Quarto</span>
+  </div>
 </div>
 <p>Le fil conducteur reste appliqué à des données en administration : ventes, opérations, clients, prévision et performance organisationnelle. Lorsque les consignes l’autorisent, l’IA peut servir d’outil de questionnement ou de vérification, mais le raisonnement statistique, le code R et l’interprétation restent au centre du travail.</p>
 <div class="deliverable-box compact-box">
-<p class="card-kicker">
-À la fin de la semaine
-</p>
-<p>
-Vous devriez pouvoir importer le fichier <code>ventes_operations_quebec.csv</code>, inspecter sa structure, repérer les valeurs manquantes, produire un résumé, créer un graphique et formuler deux constats descriptifs simples.
-</p>
+  <p class="card-kicker">À la fin de la semaine</p>
+  <p>
+    Vous devriez pouvoir importer le fichier <code>ventes_operations_quebec.csv</code>,
+    inspecter sa structure, repérer les valeurs manquantes, produire un résumé, créer
+    un graphique et formuler deux constats descriptifs simples.
+  </p>
 </div>
 </section>
 <section id="votre-parcours" class="level2">
 <h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
-<p>Revenez toujours à cette page pour garder le fil. Les pages spécialisées servent de ressources au bon moment.</p>
-<div class="path-grid">
-<div class="path-card">
-<div class="path-number">
-1
-</div>
-<section id="préparer-lenvironnement" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="préparer-lenvironnement">Préparer l’environnement</h3>
-<p>Vérifier que R, RStudio et les packages essentiels fonctionnent.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 1.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-2
-</div>
-<section id="explorer-rstudio" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="explorer-rstudio">Explorer RStudio</h3>
-<p>Repérer la console, l’éditeur, l’environnement, les fichiers et les graphiques.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 2.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-3
-</div>
-<section id="organiser-les-fichiers" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="organiser-les-fichiers">Organiser les fichiers</h3>
-<p>Utiliser un projet R et des chemins relatifs.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 3.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-4
-</div>
-<section id="importer-les-données" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="importer-les-données">Importer les données</h3>
-<p>Lire le fichier CSV et vérifier les dimensions du tableau.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-5
-</div>
-<section id="inspecter-le-tableau" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="inspecter-le-tableau">Inspecter le tableau</h3>
-<p>Identifier les lignes, les colonnes et les types de variables.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 1 et 2.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-6
-</div>
-<section id="résumer-les-variables" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="résumer-les-variables">Résumer les variables</h3>
-<p>Repérer les valeurs manquantes et produire un résumé descriptif.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 2 à 4.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-7
-</div>
-<section id="visualiser-les-données" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="visualiser-les-données">Visualiser les données</h3>
-<p>Créer un graphique simple avec un titre et des axes lisibles.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstration 5.</p>
-</section>
-</div>
-<div class="path-card">
-<div class="path-number">
-8
-</div>
-<section id="produire-le-mini-rapport" class="level3 unlisted">
-<h3 class="unlisted anchored" data-anchor-id="produire-le-mini-rapport">Produire le mini-rapport</h3>
-<p>Rassembler le code, les résultats et les constats dans Quarto.</p>
-<p>Ressource : <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, livrable court.</p>
-</section>
-</div>
-</div>
-</section>
-<section id="à-faire-dans-lordre" class="level2">
-<h2 class="anchored" data-anchor-id="à-faire-dans-lordre">À faire dans l’ordre</h2>
-<div class="step-list">
-<section id="étape-1-vérifier-lenvironnement" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-1-vérifier-lenvironnement">Étape 1 : Vérifier l’environnement</h3>
-<p>Objectif : s’assurer que R, RStudio, Quarto et les packages nécessaires fonctionnent.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 1, puis <a href="../../modules/semaine-02-r-quarto/informations.html">informations du module</a> pour retrouver les fichiers publics.</p>
-<p>Action à réaliser : ouvrir RStudio, exécuter une commande simple dans la console et charger <code>tidyverse</code>.</p>
-<p>Trace à conserver : une courte note indiquant que l’environnement fonctionne.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.1 : vérifier que R fonctionne">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.1 : vérifier que R fonctionne
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>. Notez le résultat obtenu.</p>
-</div>
-</div>
-</section>
-<section id="étape-2-comprendre-rstudio" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-2-comprendre-rstudio">Étape 2 : Comprendre RStudio</h3>
-<p>Objectif : reconnaître les principales zones de l’interface.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 2.</p>
-<p>Action à réaliser : identifier la console, l’éditeur, l’environnement, l’onglet Files et l’onglet Plots.</p>
-<p>Trace à conserver : une phrase expliquant le rôle de deux zones de RStudio.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.2 : identifier les zones de RStudio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.2 : identifier les zones de RStudio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers ou afficher un graphique.</p>
-</div>
-</div>
-</section>
-<section id="étape-3-utiliser-un-projet-r" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-3-utiliser-un-projet-r">Étape 3 : Utiliser un projet R</h3>
-<p>Objectif : comprendre pourquoi le projet R est la base de la reproductibilité.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 3.</p>
-<p>Action à réaliser : créer ou ouvrir un projet R, puis vérifier où se trouve le dossier <code>data</code>.</p>
-<p>Trace à conserver : le nom du projet et une phrase sur l’intérêt des chemins relatifs.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.3 : expliquer l&#39;utilité d&#39;un projet R">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.3 : expliquer l’utilité d’un projet R
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Expliquez en deux ou trois phrases pourquoi un projet R réduit les erreurs de chemins et facilite la reprise d’une analyse.</p>
-</div>
-</div>
-</section>
-<section id="étape-4-importer-les-données" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-4-importer-les-données">Étape 4 : Importer les données</h3>
-<p>Objectif : lire le fichier CSV dans R.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 4, puis <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, préparation et démonstration 1.</p>
-<p>Action à réaliser : exécuter le code d’importation et vérifier les dimensions du tableau.</p>
-<p>Trace à conserver : le code d’importation et le résultat de <code>glimpse()</code> ou de <code>dim()</code>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.4 : importer les données">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.4 : importer les données
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Importez le fichier <code>ventes_operations_quebec.csv</code>, puis indiquez le nombre de lignes et de colonnes du tableau.</p>
-</div>
-</div>
-</section>
-<section id="étape-5-inspecter-le-tableau" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-5-inspecter-le-tableau">Étape 5 : Inspecter le tableau</h3>
-<p>Objectif : comprendre la structure du tableau avant de calculer des résultats.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstration 1, et <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 1 et 2.</p>
-<p>Action à réaliser : identifier l’unité d’observation, les variables numériques, les variables catégorielles et les variables de date ou de période.</p>
-<p>Trace à conserver : une liste courte des variables importantes et de leur type.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.5 : inspecter les lignes, colonnes et types de variables">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.5 : inspecter les lignes, colonnes et types de variables
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.</p>
-</div>
-</div>
-</section>
-<section id="étape-6-repérer-les-valeurs-manquantes" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-6-repérer-les-valeurs-manquantes">Étape 6 : Repérer les valeurs manquantes</h3>
-<p>Objectif : produire un diagnostic simple des données absentes.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 5, <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 2 et 3, puis <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercice 3.</p>
-<p>Action à réaliser : utiliser <code>is.na()</code>, <code>summarise()</code> et <code>pivot_longer()</code> pour compter les valeurs manquantes.</p>
-<p>Trace à conserver : un petit tableau de diagnostic et une phrase d’interprétation.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.6 : repérer les valeurs manquantes">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.6 : repérer les valeurs manquantes
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.</p>
-</div>
-</div>
-</section>
-<section id="étape-7-résumer-et-visualiser" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-7-résumer-et-visualiser">Étape 7 : Résumer et visualiser</h3>
-<p>Objectif : produire un tableau descriptif et un graphique simple.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations R</a>, démonstrations 4 et 5, puis <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a>, exercices 4 et 5.</p>
-<p>Action à réaliser : résumer les ventes par succursale ou par canal principal, puis construire un graphique avec <code>ggplot()</code>.</p>
-<p>Trace à conserver : le code du tableau descriptif, le code du graphique et une phrase d’interprétation.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.7 : produire un tableau descriptif">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.7 : produire un tableau descriptif
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Produisez un tableau descriptif par succursale ou par canal principal, puis interprétez un résultat.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.8 : produire un graphique">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.8 : produire un graphique
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.</p>
-</div>
-</div>
-</section>
-<section id="étape-8-rendre-le-mini-rapport" class="level3 unlisted step-card">
-<h3 class="unlisted anchored" data-anchor-id="étape-8-rendre-le-mini-rapport">Étape 8 : Rendre le mini-rapport</h3>
-<p>Objectif : combiner texte, code, résultats et constats dans un fichier Quarto.</p>
-<p>Ressource à consulter : <a href="../../modules/semaine-02-r-quarto/capsules.html">capsules</a>, capsule 6, <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices</a> et <a href="../../modules/semaine-02-r-quarto/lectures.html">lectures</a>.</p>
-<p>Action à réaliser : intégrer les traces précédentes dans un fichier <code>.qmd</code>, puis rendre le document avec Render ou <code>quarto render</code>.</p>
-<p>Trace à conserver : le fichier HTML rendu et deux constats descriptifs.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="AE 2.9 : formuler deux constats descriptifs">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-AE 2.9 : formuler deux constats descriptifs
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée.</p>
-</div>
-</div>
-</section>
+<p>Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action, trace attendue et AE associé.</p>
+<div class="path-grid interactive-path">
+  <details class="path-card" id="etape-1">
+    <summary>
+      <span class="path-number">1</span>
+      <span class="path-title">Préparer l&#39;environnement</span>
+      <span class="path-preview">Vérifier que R, RStudio et les packages essentiels fonctionnent.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1---installer-r-rstudio-et-quarto">Capsule 1</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> S&#39;assurer que R, RStudio, Quarto et les packages nécessaires fonctionnent.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-1---installer-r-rstudio-et-quarto">Capsule 1</a> <a class="resource-link info-link" href="informations.html#fichiers-publics">Fichiers publics</a></p>
+      <p><span class="step-label">Action</span> Ouvrir RStudio, exécuter une commande simple dans la console et charger <code>tidyverse</code>.</p>
+      <p><span class="step-label">Trace</span> Une courte note indiquant que l&#39;environnement fonctionne.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.1 : vérifier que R fonctionne</p>
+        <p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>. Notez le résultat obtenu.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-2">
+    <summary>
+      <span class="path-number">2</span>
+      <span class="path-title">Explorer RStudio</span>
+      <span class="path-preview">Repérer la console, l&#39;éditeur, l&#39;environnement, les fichiers et les graphiques.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2---explorer-linterface-rstudio">Capsule 2</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Reconnaître les principales zones de l&#39;interface.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-2---explorer-linterface-rstudio">Capsule 2</a></p>
+      <p><span class="step-label">Action</span> Identifier la console, l&#39;éditeur, l&#39;environnement, l&#39;onglet Files et l&#39;onglet Plots.</p>
+      <p><span class="step-label">Trace</span> Une phrase expliquant le rôle de deux zones de RStudio.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.2 : identifier les zones de RStudio</p>
+        <p>Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers ou afficher un graphique.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-3">
+    <summary>
+      <span class="path-number">3</span>
+      <span class="path-title">Organiser les fichiers</span>
+      <span class="path-preview">Utiliser un projet R et des chemins relatifs.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3---créer-un-projet-r">Capsule 3</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Comprendre pourquoi le projet R est la base de la reproductibilité.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-3---créer-un-projet-r">Capsule 3</a></p>
+      <p><span class="step-label">Action</span> Créer ou ouvrir un projet R, puis vérifier où se trouve le dossier <code>data</code>.</p>
+      <p><span class="step-label">Trace</span> Le nom du projet et une phrase sur l&#39;intérêt des chemins relatifs.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.3 : expliquer l&#39;utilité d&#39;un projet R</p>
+        <p>Expliquez en deux ou trois phrases pourquoi un projet R réduit les erreurs de chemins et facilite la reprise d&#39;une analyse.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-4">
+    <summary>
+      <span class="path-number">4</span>
+      <span class="path-title">Importer les données</span>
+      <span class="path-preview">Lire le fichier CSV et vérifier les dimensions du tableau.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4---importer-et-inspecter-un-fichier-csv">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Lire le fichier CSV dans R.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-4---importer-et-inspecter-un-fichier-csv">Capsule 4</a> <a class="resource-link demo-link" href="demonstrations.html#préparation">Préparation R</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a></p>
+      <p><span class="step-label">Action</span> Exécuter le code d&#39;importation et vérifier les dimensions du tableau.</p>
+      <p><span class="step-label">Trace</span> Le code d&#39;importation et le résultat de <code>glimpse()</code> ou de <code>dim()</code>.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.4 : importer les données</p>
+        <p>Importez le fichier <code>ventes_operations_quebec.csv</code>, puis indiquez le nombre de lignes et de colonnes du tableau.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-5">
+    <summary>
+      <span class="path-number">5</span>
+      <span class="path-title">Inspecter le tableau</span>
+      <span class="path-preview">Identifier les lignes, les colonnes et les types de variables.</span>
+      <span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1---créer-le-projet-et-importer-les-données">Ex. 1</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2---identifier-les-types-de-variables">Ex. 2</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Comprendre la structure du tableau avant de calculer des résultats.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a> <a class="resource-link exercise-link" href="exercices.html#exercice-1---créer-le-projet-et-importer-les-données">Exercice 1</a> <a class="resource-link exercise-link" href="exercices.html#exercice-2---identifier-les-types-de-variables">Exercice 2</a></p>
+      <p><span class="step-label">Action</span> Identifier l&#39;unité d&#39;observation, les variables numériques, les variables catégorielles et les variables de date ou de période.</p>
+      <p><span class="step-label">Trace</span> Une liste courte des variables importantes et de leur type.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.5 : inspecter les lignes, colonnes et types de variables</p>
+        <p>Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-6">
+    <summary>
+      <span class="path-number">6</span>
+      <span class="path-title">Résumer les variables</span>
+      <span class="path-preview">Repérer les valeurs manquantes et produire un résumé descriptif.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---traiter-les-données">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes">Démo 3</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3---repérer-les-valeurs-manquantes">Ex. 3</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Produire un diagnostic simple des données absentes.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---traiter-les-données">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-2---factoriser-les-variables-catégorielles">Démo 2</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes">Démo 3</a> <a class="resource-link exercise-link" href="exercices.html#exercice-3---repérer-les-valeurs-manquantes">Exercice 3</a></p>
+      <p><span class="step-label">Action</span> Utiliser <code>is.na()</code>, <code>summarise()</code> et <code>pivot_longer()</code> pour compter les valeurs manquantes.</p>
+      <p><span class="step-label">Trace</span> Un petit tableau de diagnostic et une phrase d&#39;interprétation.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.6 : repérer les valeurs manquantes</p>
+        <p>Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-7">
+    <summary>
+      <span class="path-number">7</span>
+      <span class="path-title">Visualiser les données</span>
+      <span class="path-preview">Créer un tableau descriptif et un graphique simple.</span>
+      <span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-4---résumer-un-tableau">Démo 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-5---créer-un-graphique">Démo 5</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4---produire-un-tableau-descriptif">Ex. 4</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5---produire-un-graphique">Ex. 5</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Produire un tableau descriptif et un graphique simple.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link demo-link" href="demonstrations.html#démonstration-4---résumer-un-tableau">Démo 4</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-5---créer-un-graphique">Démo 5</a> <a class="resource-link exercise-link" href="exercices.html#exercice-4---produire-un-tableau-descriptif">Exercice 4</a> <a class="resource-link exercise-link" href="exercices.html#exercice-5---produire-un-graphique">Exercice 5</a></p>
+      <p><span class="step-label">Action</span> Résumer les ventes par succursale ou par canal principal, puis construire un graphique avec <code>ggplot()</code>.</p>
+      <p><span class="step-label">Trace</span> Le code du tableau descriptif, le code du graphique et une phrase d&#39;interprétation.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.7 : produire un tableau descriptif</p>
+        <p>Produisez un tableau descriptif par succursale ou par canal principal, puis interprétez un résultat.</p>
+      </div>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.8 : produire un graphique</p>
+        <p>Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-8">
+    <summary>
+      <span class="path-number">8</span>
+      <span class="path-title">Structurer le fichier QMD</span>
+      <span class="path-preview">Créer le document Quarto qui rassemble texte, code et résultats.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---créer-un-graphique-et-rendre-le-rapport">Capsule 6</a><a class="summary-resource-link reading-link" href="../../ressources/guide-quarto.html">Guide Quarto</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Construire un fichier Quarto lisible avant de produire la version HTML.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---créer-un-graphique-et-rendre-le-rapport">Capsule 6</a> <a class="resource-link reading-link" href="../../ressources/guide-quarto.html">Guide Quarto</a> <a class="resource-link exercise-link" href="exercices.html#livrable-court">Livrable court</a></p>
+      <p><span class="step-label">Action</span> Créer un fichier <code>.qmd</code> avec un titre, une courte introduction, des blocs de code R et des phrases d&#39;interprétation.</p>
+      <p><span class="step-label">Trace</span> Un fichier <code>.qmd</code> structuré qui contient les traces des étapes précédentes.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.9 : structurer le fichier QMD</p>
+        <p>Créez le squelette du mini-rapport Quarto : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-9">
+    <summary>
+      <span class="path-number">9</span>
+      <span class="path-title">Rendre le mini-rapport</span>
+      <span class="path-preview">Produire le HTML final et vérifier que le document se relit bien.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---créer-un-graphique-et-rendre-le-rapport">Capsule 6</a><a class="summary-resource-link exercise-link" href="exercices.html#livrable-court">Livrable</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Vérifier que le rapport est reproductible et compréhensible.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---créer-un-graphique-et-rendre-le-rapport">Capsule 6</a> <a class="resource-link exercise-link" href="exercices.html#livrable-court">Livrable court</a> <a class="resource-link reading-link" href="lectures.html">Lectures</a></p>
+      <p><span class="step-label">Action</span> Rendre le document avec Render ou <code>quarto render</code>, puis relire le HTML produit.</p>
+      <p><span class="step-label">Trace</span> Le fichier HTML rendu et deux constats descriptifs.</p>
+      <div class="ae-box">
+        <p class="ae-title">AE 2.10 : formuler deux constats descriptifs</p>
+        <p>À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée.</p>
+      </div>
+    </div>
+  </details>
 </div>
 </section>
 <section id="ressources-du-module" class="level2">
 <h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
-<div class="resource-grid">
-<section id="capsules" class="level3 unlisted resource-card">
-<h3 class="unlisted anchored" data-anchor-id="capsules">Capsules</h3>
-<p><a href="../../modules/semaine-02-r-quarto/capsules.html">Comprendre les gestes de base</a> avant de les reproduire dans R.</p>
-</section>
-<section id="démonstrations-r" class="level3 unlisted resource-card">
-<h3 class="unlisted anchored" data-anchor-id="démonstrations-r">Démonstrations R</h3>
-<p><a href="../../modules/semaine-02-r-quarto/demonstrations.html">Reproduire le code pas à pas</a> pour importer, inspecter, résumer et visualiser.</p>
-</section>
-<section id="exercices" class="level3 unlisted resource-card">
-<h3 class="unlisted anchored" data-anchor-id="exercices">Exercices</h3>
-<p><a href="../../modules/semaine-02-r-quarto/exercices.html">Pratiquer sans regarder la solution</a>, puis comparer votre démarche après une vraie tentative.</p>
-</section>
-<section id="lectures" class="level3 unlisted resource-card">
-<h3 class="unlisted anchored" data-anchor-id="lectures">Lectures</h3>
-<p><a href="../../modules/semaine-02-r-quarto/lectures.html">Clarifier les notions techniques</a> lorsque les capsules ou les exercices soulèvent une question.</p>
-</section>
-<section id="informations-du-module" class="level3 unlisted resource-card">
-<h3 class="unlisted anchored" data-anchor-id="informations-du-module">Informations du module</h3>
-<p><a href="../../modules/semaine-02-r-quarto/informations.html">Retrouver les fichiers nécessaires</a>, les consignes pratiques et les rappels sur le matériel ancien.</p>
-</section>
+<div class="resource-list">
+  <a class="resource-row" href="capsules.html">
+    <span class="resource-row-icon video-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Comprendre les gestes de base avant de les reproduire dans R.</span></span>
+  </a>
+  <a class="resource-row" href="demonstrations.html">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Reproduire le code pas à pas pour importer, inspecter, résumer et visualiser.</span></span>
+  </a>
+  <a class="resource-row" href="exercices.html">
+    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Pratiquer sans regarder la solution, puis comparer votre démarche après une vraie tentative.</span></span>
+  </a>
+  <a class="resource-row" href="lectures.html">
+    <span class="resource-row-icon reading-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Clarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.</span></span>
+  </a>
+  <a class="resource-row" href="informations.html">
+    <span class="resource-row-icon info-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Informations du module</span><span class="resource-row-text">Retrouver les fichiers nécessaires, les consignes pratiques et les critères de réussite.</span></span>
+  </a>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Erreurs fréquentes à éviter">
 <div class="callout-header d-flex align-content-center">
@@ -4602,24 +5064,40 @@ Erreurs fréquentes à éviter
 </ul>
 </div>
 </div>
-<p>Les anciens PDF, fichiers PowerPoint et ressources externes privées ne sont pas copiés dans le site public. L’ancien exercice basé sur <code>masculinity.csv</code> est remplacé par <code>ventes_operations_quebec.csv</code>, qui permet de travailler les mêmes compétences techniques avec un jeu de données adapté au cours.</p>
 </section>
 <section id="production-finale" class="level2">
 <h2 class="anchored" data-anchor-id="production-finale">Production finale</h2>
-<div class="callout callout-style-default callout-important callout-titled" title="Mini-rapport Quarto">
+<div class="callout callout-style-default callout-important callout-titled" title="Objectif du mini-rapport">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Mini-rapport Quarto
+Objectif du mini-rapport
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À la fin de la semaine, vous devez produire un mini-rapport Quarto court et reproductible.</p>
+<p>Le mini-rapport sert à montrer que vous pouvez transformer un fichier CSV en une première analyse reproductible. Il ne s’agit pas d’un long texte : le document doit rendre visibles les gestes essentiels du parcours, du code d’importation jusqu’aux constats descriptifs.</p>
 </div>
 </div>
-<div class="deliverable-box">
+<div class="deliverable-box production-box">
+  <p class="card-kicker">Ce que le rapport doit démontrer</p>
+  <h3 class="anchored">Je peux reprendre l&#39;analyse du début à la fin.</h3>
+  <p>
+    Une autre personne doit pouvoir ouvrir votre fichier Quarto, exécuter le code,
+    voir les mêmes résultats et comprendre vos deux constats descriptifs.
+  </p>
+  <div class="production-flow">
+    <span>Importer</span>
+    <span>Inspecter</span>
+    <span>Diagnostiquer</span>
+    <span>Résumer</span>
+    <span>Visualiser</span>
+    <span>Structurer le QMD</span>
+    <span>Rendre</span>
+    <span>Constater</span>
+  </div>
+</div>
 <p>Votre mini-rapport doit contenir :</p>
 <ul>
 <li>une courte introduction;</li>
@@ -4632,7 +5110,6 @@ Mini-rapport Quarto
 <li>une question que vous aimeriez approfondir.</li>
 </ul>
 <p>La production sert à montrer ce que vous savez faire à la fin de la semaine. Elle n’a pas besoin d’être longue.</p>
-</div>
 </section>
 <section id="auto-vérification" class="level2">
 <h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
@@ -4647,6 +5124,7 @@ Mini-rapport Quarto
 <li><label><input type="checkbox">J’ai repéré les valeurs manquantes.</label></li>
 <li><label><input type="checkbox">J’ai produit un tableau descriptif.</label></li>
 <li><label><input type="checkbox">J’ai produit un graphique.</label></li>
+<li><label><input type="checkbox">J’ai structuré un fichier Quarto.</label></li>
 <li><label><input type="checkbox">J’ai rendu un fichier Quarto.</label></li>
 <li><label><input type="checkbox">J’ai formulé deux constats descriptifs.</label></li>
 </ul>
@@ -4690,7 +5168,7 @@ Mini-rapport Quarto
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -4710,11 +5188,11 @@ Mini-rapport Quarto
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -4790,7 +5268,7 @@ Mini-rapport Quarto
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -4865,7 +5343,7 @@ Mini-rapport Quarto
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -4893,7 +5371,7 @@ Mini-rapport Quarto
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -4917,7 +5395,7 @@ Mini-rapport Quarto
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -4957,7 +5435,7 @@ Mini-rapport Quarto
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -5083,7 +5561,7 @@ Mini-rapport Quarto
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>   
+</div>
     <div class="nav-footer-center">
        
     </div>
