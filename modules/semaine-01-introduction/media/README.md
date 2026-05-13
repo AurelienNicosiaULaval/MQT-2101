@@ -6,6 +6,7 @@ Ce dossier sert à préparer les médias publics du module.
 
 - `videos/` : vidéos courtes intégrées dans les capsules.
 - `pdf/` : supports PDF générés à partir des contenus Quarto.
+- `qmd/` : sources Quarto des supports de capsule.
 - `narration/` : PDF de narration validés pour publication.
 
 ## Règles

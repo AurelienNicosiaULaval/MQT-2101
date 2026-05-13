@@ -1,0 +1,315 @@
+---
+title: "Semaine 01 - Comprendre un tableau avant de modéliser"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la séance
+
+::: {.keypoints}
+- Comprendre ce que représente une ligne dans un tableau de données.
+- Reconnaître les principaux types de variables.
+- Produire un premier résumé descriptif en R.
+- Interpréter un graphique ou un indicateur avec prudence.
+:::
+
+## Plan
+
+1. Situer le rôle d'un modèle
+2. Lire la structure d'un tableau
+3. Préparer les variables
+4. Décrire une variable
+5. Comparer des indicateurs
+
+## Activités de fin de capsule
+
+::: {.lead}
+Une activité est une courte tâche à faire immédiatement après une capsule. Elle
+sert à transformer l'écoute en action avant de passer à la suite.
+:::
+
+::: {.keypoints}
+- vérifier la compréhension du point central;
+- produire une trace courte pour le portfolio;
+- repérer ce qui reste à clarifier;
+- préparer les exercices, les démonstrations et les ateliers.
+:::
+
+## Partie 1: avant le modèle {.section-red}
+
+::: {.kicker}
+Point de départ
+:::
+
+## Pourquoi commencer par le tableau?
+
+::: {.lead}
+Avant de modéliser, il faut savoir ce que les données décrivent, comment elles ont été mesurées et quelles comparaisons sont raisonnables.
+:::
+
+::: {.example-box}
+Une ligne peut représenter une personne, une journée, une succursale, une transaction ou une période. Le sens d'une ligne détermine les résumés possibles.
+:::
+
+## Observation et variable
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Observation
+
+Une observation correspond à une unité étudiée dans le tableau.
+
+Exemples:
+
+- une journée;
+- une compagnie aérienne;
+- une succursale;
+- une transaction.
+:::
+
+::: {.column width="48%"}
+### Variable
+
+Une variable décrit une caractéristique observée.
+
+Exemples:
+
+- nombre de naissances;
+- jour de la semaine;
+- nombre d'incidents;
+- exposition au risque.
+:::
+
+::::
+
+## Types de variables
+
+::: {.note-box}
+- Une variable numérique permet des calculs comme une moyenne ou un écart.
+- Une variable catégorielle permet de comparer des groupes.
+- Une date ou une période permet d'étudier une évolution temporelle.
+- Un code numérique ne doit pas toujours être traité comme une quantité.
+:::
+
+## Préparation dans R
+
+```{r}
+#| label: setup-semaine-01-notes
+
+# Load libraries
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+# Locate data files
+birth_path <- if (file.exists("data/birth_us.csv")) {
+  "data/birth_us.csv"
+} else {
+  "modules/semaine-01-introduction/data/birth_us.csv"
+}
+
+safety_path <- if (file.exists("data/safety_airlines.csv")) {
+  "data/safety_airlines.csv"
+} else {
+  "modules/semaine-01-introduction/data/safety_airlines.csv"
+}
+
+# Import data
+birth_us <- read_csv(birth_path, show_col_types = FALSE)
+safety_airlines <- read_csv(safety_path, show_col_types = FALSE)
+```
+
+## Inspecter le tableau
+
+```{r}
+#| label: inspecter-birth-us
+
+glimpse(birth_us)
+```
+
+## Préparer les variables
+
+```{r}
+#| label: preparer-birth-us
+
+birth_prepare <- birth_us |>
+  mutate(
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi", "mardi", "mercredi", "jeudi",
+        "vendredi", "samedi", "dimanche"
+      )
+    )
+  )
+
+birth_prepare |>
+  select(date, jour_semaine, births) |>
+  slice_head(n = 6)
+```
+
+## Résumer une variable
+
+```{r}
+#| label: resume-naissances
+
+birth_prepare |>
+  summarise(
+    jours = n(),
+    naissances_min = min(births, na.rm = TRUE),
+    naissances_medianes = median(births, na.rm = TRUE),
+    naissances_moyennes = mean(births, na.rm = TRUE),
+    naissances_max = max(births, na.rm = TRUE)
+  ) |>
+  mutate(across(where(is.numeric), \(x) round(x, 1)))
+```
+
+## Visualiser une variable
+
+```{r}
+#| label: graphique-naissances
+#| fig-width: 9
+#| fig-height: 4.8
+#| out-width: "100%"
+
+birth_prepare |>
+  ggplot(aes(x = births)) +
+  geom_histogram(bins = 30, fill = "#E30513", color = "white") +
+  labs(
+    x = "Nombre de naissances",
+    y = "Nombre de jours"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Comparer des groupes
+
+```{r}
+#| label: naissance-jour-semaine
+#| fig-width: 9
+#| fig-height: 4.8
+#| out-width: "100%"
+
+birth_prepare |>
+  filter(!is.na(jour_semaine)) |>
+  ggplot(aes(x = jour_semaine, y = births)) +
+  geom_boxplot(fill = "#FFC103", color = "#000000") +
+  labs(
+    x = NULL,
+    y = "Nombre de naissances"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Interpréter prudemment
+
+::: {.note-box}
+- Le graphique décrit des écarts observés.
+- Il ne suffit pas à expliquer les causes de ces écarts.
+- Une interprétation doit nommer la variable utilisée et l'échelle de comparaison.
+:::
+
+## Comparer avec une échelle pertinente
+
+```{r}
+#| label: indicateur-safety
+
+safety_resume <- safety_airlines |>
+  mutate(
+    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
+    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
+  ) |>
+  arrange(desc(incidents_par_milliard))
+
+safety_resume |>
+  select(airline, incidents_00_14, incidents_par_milliard) |>
+  mutate(incidents_par_milliard = round(incidents_par_milliard, 3)) |>
+  slice_head(n = 6)
+```
+
+## Partie 2: synthèse {.section-gold}
+
+::: {.kicker}
+À retenir
+:::
+
+## Trois réflexes
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+Nommer l'unité d'observation avant de calculer.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+Adapter le résumé au type de variable.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+Écrire une limite d'interprétation.
+:::
+:::
+:::
+
+## Exercice court
+
+À partir de `birth_prepare`:
+
+1. nommer l'unité d'observation;
+2. classer `births`, `jour_semaine` et `date`;
+3. rédiger un constat descriptif;
+4. ajouter une limite d'interprétation.
+
+## Clôture {.closing-slide}
+
+::: {.kicker}
+MQT-2101
+:::
+
+## Questions?
+
+Faculté des sciences de l'administration
+
+Université Laval

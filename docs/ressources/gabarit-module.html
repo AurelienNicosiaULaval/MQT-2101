@@ -4014,6 +4014,56 @@ color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
 }
+.support-icons {
+align-items: center;
+display: flex;
+gap: 0.6rem;
+margin: 0.1rem 0 0.9rem;
+}
+.support-icon {
+align-items: center;
+background: #fff;
+border: 1px solid #d0d7de;
+border-radius: 6px;
+box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+display: inline-flex;
+font-size: 1.75rem;
+height: 2.8rem;
+justify-content: center;
+line-height: 1;
+text-decoration: none;
+transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+width: 2.8rem;
+}
+.support-icon:hover {
+box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+text-decoration: none;
+transform: translateY(-1px);
+}
+.support-icon:focus-visible {
+outline: 2px solid #0B4F6C;
+outline-offset: 2px;
+}
+.support-icon-html {
+background: #fff7ed;
+border-color: #fed7aa;
+color: #c2410c;
+}
+.support-icon-html:hover {
+background: #ffedd5;
+border-color: #fb923c;
+color: #9a3412;
+}
+.support-icon-pdf {
+background: #fff5f5;
+border-color: #fecaca;
+color: #b42318;
+}
+.support-icon-pdf:hover {
+background: #fee2e2;
+border-color: #f87171;
+color: #991b1b;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4655,6 +4705,10 @@ grid-template-columns: 1fr;
  <span class="dropdown-text">Gabarit de module</span></a>
   </li>
         <li>
+    <a class="dropdown-item" href="../ressources/gabarit-notes-cours.html">
+ <span class="dropdown-text">Gabarit de notes de cours</span></a>
+  </li>
+        <li>
     <a class="dropdown-item" href="../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
   </li>
@@ -4698,6 +4752,7 @@ grid-template-columns: 1fr;
   <li><a href="#structure-obligatoire-du-dossier" id="toc-structure-obligatoire-du-dossier" class="nav-link" data-scroll-target="#structure-obligatoire-du-dossier">Structure obligatoire du dossier</a></li>
   <li><a href="#index.qmd" id="toc-index.qmd" class="nav-link" data-scroll-target="#index.qmd"><code>index.qmd</code></a></li>
   <li><a href="#capsules.qmd" id="toc-capsules.qmd" class="nav-link" data-scroll-target="#capsules.qmd"><code>capsules.qmd</code></a></li>
+  <li><a href="#notes-cours.qmd" id="toc-notes-cours.qmd" class="nav-link" data-scroll-target="#notes-cours.qmd"><code>notes-cours.qmd</code></a></li>
   <li><a href="#demonstrations.qmd" id="toc-demonstrations.qmd" class="nav-link" data-scroll-target="#demonstrations.qmd"><code>demonstrations.qmd</code></a></li>
   <li><a href="#exercices.qmd" id="toc-exercices.qmd" class="nav-link" data-scroll-target="#exercices.qmd"><code>exercices.qmd</code></a></li>
   <li><a href="#lectures.qmd" id="toc-lectures.qmd" class="nav-link" data-scroll-target="#lectures.qmd"><code>lectures.qmd</code></a></li>
@@ -4746,7 +4801,7 @@ grid-template-columns: 1fr;
 <ol type="1">
 <li>comprendre l’objectif;</li>
 <li>regarder une capsule courte;</li>
-<li>faire une pause active;</li>
+<li>faire une activité;</li>
 <li>reproduire une démonstration R;</li>
 <li>faire un exercice;</li>
 <li>consulter la solution cachée seulement après une tentative;</li>
@@ -4759,6 +4814,7 @@ grid-template-columns: 1fr;
 <pre class="text"><code>modules/nom-du-module/
 ├── index.qmd
 ├── capsules.qmd
+├── notes-cours.qmd
 ├── demonstrations.qmd
 ├── exercices.qmd
 ├── lectures.qmd
@@ -4780,8 +4836,8 @@ grid-template-columns: 1fr;
 <li>un lien clair avec l’utilité du module pour le génie, l’administration ou les deux;</li>
 <li>les repères nécessaires avant les capsules;</li>
 <li>une étape narrative pour chaque capsule;</li>
-<li>une invitation explicite à utiliser les onglets <code>Vidéo</code>, <code>Support QMD/PDF</code> et <code>Narration PDF</code>;</li>
-<li>une pause active après chaque capsule;</li>
+<li>une invitation explicite à utiliser les onglets <code>Vidéo</code>, <code>Support</code> et <code>Narration</code>;</li>
+<li>une activité après chaque capsule;</li>
 <li>un passage vers les démonstrations R;</li>
 <li>un passage vers les exercices;</li>
 <li>une consigne de correction avec solutions cachées;</li>
@@ -4793,7 +4849,7 @@ grid-template-columns: 1fr;
 <li>comprendre l’objectif et le contexte;</li>
 <li>préparer son document de travail;</li>
 <li>suivre la capsule 1;</li>
-<li>faire la pause active de la capsule 1;</li>
+<li>faire l’activité de la capsule 1;</li>
 <li>poursuivre les capsules dans l’ordre;</li>
 <li>reproduire les démonstrations R;</li>
 <li>faire les exercices sans regarder les solutions;</li>
@@ -4805,31 +4861,71 @@ grid-template-columns: 1fr;
 <section id="capsules.qmd" class="level2">
 <h2 class="anchored" data-anchor-id="capsules.qmd"><code>capsules.qmd</code></h2>
 <p>Les PPT de l’ancien cours doivent être traduits en Quarto, puis découpés en capsules courtes.</p>
-<p>Chaque capsule doit contenir :</p>
+<p>La page <code>capsules.qmd</code> est une page de diffusion. Pour une capsule finalisée, elle doit afficher seulement :</p>
+<ul>
+<li>le titre de la capsule;</li>
+<li>le bloc à onglets <code>Vidéo</code>, <code>Support</code> et <code>Narration</code>;</li>
+<li>aucun texte de travail sous le bloc d’onglets.</li>
+</ul>
+<p>Le contenu pédagogique détaillé doit être placé dans le support Quarto de la capsule, par exemple <code>media/qmd/capsule-01-support.qmd</code>, puis rendu en HTML et en PDF. Ce support doit contenir :</p>
 <ul>
 <li>un objectif;</li>
 <li>les idées essentielles;</li>
 <li>un exemple simple;</li>
 <li>un lien avec une application en génie, en administration ou dans les deux domaines;</li>
-<li>un bloc à onglets;</li>
-<li>une pause active;</li>
+<li>une activité de fin de capsule;</li>
 <li>une transition vers un exercice ou une démonstration.</li>
 </ul>
-<p>Le bloc à onglets doit contenir :</p>
+<p>Le bloc à onglets doit conserver ce modèle :</p>
 <pre class="qmd"><code>::: {.panel-tabset}
 ### Vidéo
 
-TODO intégrer la vidéo courte de la capsule.
+::: {.callout-note title=&quot;Vidéo à intégrer&quot;}
+TODO intégrer ici la vidéo courte de la capsule.
+:::
 
-### Support QMD/PDF
+Emplacement prévu : `media/videos/capsule-XX.mp4` ou lien vidéo institutionnel.
 
-TODO intégrer le support PDF généré à partir du contenu Quarto.
+### Support
 
-### Narration PDF
+```{=html}
+&lt;div class=&quot;support-icons&quot; aria-label=&quot;Supports de la capsule XX&quot;&gt;
+  &lt;a class=&quot;support-icon support-icon-html&quot; href=&quot;media/qmd/capsule-XX-support.html&quot; aria-label=&quot;Ouvrir le support HTML&quot; title=&quot;HTML&quot;&gt;
+    &lt;i class=&quot;bi bi-filetype-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+  &lt;/a&gt;
+  &lt;a class=&quot;support-icon support-icon-pdf&quot; href=&quot;media/pdf/capsule-XX-support.pdf&quot; aria-label=&quot;Ouvrir le PDF&quot; title=&quot;PDF&quot;&gt;
+    &lt;i class=&quot;bi bi-filetype-pdf&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
 
-TODO intégrer la narration PDF validée pour publication.
+&lt;iframe
+  src=&quot;media/pdf/capsule-XX-support.pdf&quot;
+  title=&quot;Support PDF - Capsule XX&quot;
+  width=&quot;100%&quot;
+  height=&quot;640&quot;
+  style=&quot;border: 1px solid #d0d7de; border-radius: 6px;&quot;
+&gt;&lt;/iframe&gt;
+```
+
+### Narration
+
+TODO ajouter la narration PDF lorsque le fichier est validé pour publication.
+
+Emplacement prévu : `media/narration/capsule-XX-narration.pdf`.
 :::</code></pre>
 <p>Les PPT ne sont pas copiés tels quels. Ils servent de source pour reconstruire une version plus claire, plus concise et plus adaptée au parcours autonome.</p>
+</section>
+<section id="notes-cours.qmd" class="level2">
+<h2 class="anchored" data-anchor-id="notes-cours.qmd"><code>notes-cours.qmd</code></h2>
+<p>Cette page contient le support de notes de cours en diapositives Quarto <code>revealjs</code>.</p>
+<p>Toutes les notes de cours doivent utiliser le gabarit UL/FSA commun :</p>
+<ul>
+<li>thème : <code>../../assets/ulaval-reveal.scss</code>;</li>
+<li>logo : <code>../../assets/logos/ulaval/UL-FSA-C-d.png</code>;</li>
+<li>format : <code>revealjs</code>;</li>
+<li>option obligatoire : <code>embed-resources: true</code>.</li>
+</ul>
+<p>Les supports propres aux capsules peuvent être placés dans <code>media/qmd/</code>, par exemple <code>media/qmd/capsule-01-support.qmd</code>. Ils doivent reprendre le même gabarit UL/FSA, puis être rendus en HTML et en PDF pour l’onglet <code>Support</code>.</p>
 </section>
 <section id="demonstrations.qmd" class="level2">
 <h2 class="anchored" data-anchor-id="demonstrations.qmd"><code>demonstrations.qmd</code></h2>
@@ -4901,7 +4997,7 @@ TODO intégrer la narration PDF validée pour publication.
 <li>identifier le message pédagogique principal;</li>
 <li>supprimer les répétitions inutiles;</li>
 <li>convertir le contenu en texte Quarto;</li>
-<li>ajouter une pause active;</li>
+<li>ajouter une activité;</li>
 <li>ajouter ou adapter un exemple;</li>
 <li>relier le contenu à une décision, une interprétation ou une tâche d’analyse;</li>
 <li>prévoir un exercice immédiatement après.</li>

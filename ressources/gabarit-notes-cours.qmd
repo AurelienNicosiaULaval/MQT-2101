@@ -1,0 +1,230 @@
+---
+title: "Titre de la séance"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la séance
+
+::: {.keypoints}
+- Définir la notion principale de la séance.
+- Identifier les conditions d'application.
+- Interpréter un résultat statistique dans un contexte de données.
+- Reproduire une analyse courte en R.
+:::
+
+## Plan
+
+1. Mise en contexte
+2. Notions essentielles
+3. Exemple guidé en R
+4. Interprétation et limites
+5. Exercice court
+
+## Activités de fin de capsule
+
+::: {.lead}
+Une activité est une courte tâche à faire immédiatement après une capsule. Elle
+sert à transformer l'écoute en action avant de passer à la suite.
+:::
+
+::: {.keypoints}
+- vérifier la compréhension du point central;
+- produire une trace courte;
+- repérer ce qui reste à clarifier;
+- préparer les exercices, les démonstrations et les ateliers.
+:::
+
+## Partie 1: mise en contexte {.section-red}
+
+::: {.kicker}
+MQT-2101
+:::
+
+## Question directrice
+
+::: {.lead}
+Quelle décision ou quelle interprétation cette séance doit-elle aider à améliorer?
+:::
+
+::: {.example-box}
+Remplacer ce bloc par une situation concrète: gestion d'inventaire, prévision de la demande, qualité d'un procédé, performance d'un service ou autre contexte pertinent.
+:::
+
+## Notion clé
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Définition
+
+Énoncer la définition de façon concise. Préciser les hypothèses, les unités et les conditions d'utilisation.
+:::
+
+::: {.column width="48%"}
+### À surveiller
+
+- qualité des données;
+- valeurs manquantes;
+- extrapolation;
+- incertitude;
+- interprétation causale non justifiée.
+:::
+
+::::
+
+## Exemple de données
+
+```{r}
+#| label: data-preview
+#| echo: true
+
+# Load libraries
+library(tidyverse)
+
+# Import data
+ventes <- read_csv(
+  "../modules/atelier-01-r/data/ventes_pme_quebec.csv",
+  show_col_types = FALSE
+)
+
+# Inspect variables
+glimpse(ventes)
+```
+
+## Résumé numérique
+
+```{r}
+#| label: summary-table
+#| echo: true
+
+ventes_region <- ventes |>
+  group_by(region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_total = sum(clients, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+ventes_region
+```
+
+## Visualisation
+
+```{r}
+#| label: sales-plot
+#| echo: true
+#| fig-width: 9
+#| fig-height: 4.8
+#| out-width: "100%"
+
+ventes |>
+  mutate(mois = as.Date(mois)) |>
+  ggplot(aes(x = mois, y = ventes, colour = region)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::label_dollar(suffix = " $")) +
+  labs(
+    x = NULL,
+    y = "Ventes mensuelles",
+    colour = "Région"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  )
+```
+
+## Points d'interprétation
+
+::: {.note-box}
+- Décrire la tendance générale sans dépasser ce que les données permettent d'affirmer.
+- Comparer les régions avec prudence si les tailles ou les contextes diffèrent.
+- Identifier une vérification supplémentaire avant de conclure.
+:::
+
+## Partie 2: synthèse {.section-gold}
+
+::: {.kicker}
+À retenir
+:::
+
+## Résumé en trois idées
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+Idée essentielle liée à la définition.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+Idée essentielle liée au calcul ou au graphique.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+Idée essentielle liée à l'interprétation.
+:::
+:::
+:::
+
+## Exercice court
+
+À partir du tableau `ventes_region`:
+
+1. identifier la région ayant les ventes totales les plus élevées;
+2. expliquer pourquoi ce résultat ne suffit pas à conclure que cette région est la plus performante;
+3. proposer une mesure complémentaire.
+
+## Clôture {.closing-slide}
+
+::: {.kicker}
+MQT-2101
+:::
+
+## Questions?
+
+Faculté des sciences de l'administration
+
+Université Laval

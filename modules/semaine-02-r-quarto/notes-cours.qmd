@@ -1,0 +1,320 @@
+---
+title: "Semaine 02 - Premiers pas avec R, RStudio et Quarto"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la séance
+
+::: {.keypoints}
+- Vérifier que l'environnement R, RStudio et Quarto fonctionne.
+- Importer un fichier CSV avec un chemin reproductible.
+- Inspecter la structure d'un tableau.
+- Produire un résumé, un diagnostic et un graphique simples.
+:::
+
+## Plan
+
+1. Reproductibilité
+2. Projet R et chemins relatifs
+3. Importation
+4. Inspection et préparation
+5. Mini-rapport Quarto
+
+## Activités de fin de capsule
+
+::: {.lead}
+Une activité est une courte tâche à faire immédiatement après une capsule. Elle
+sert à transformer l'écoute en action avant de passer à la suite.
+:::
+
+::: {.keypoints}
+- vérifier la compréhension du point central;
+- produire une trace courte pour le portfolio ou le rapport;
+- repérer ce qui reste à clarifier;
+- préparer les exercices, les démonstrations et les ateliers.
+:::
+
+## Partie 1: flux de travail {.section-red}
+
+::: {.kicker}
+R, RStudio et Quarto
+:::
+
+## Pourquoi un flux reproductible?
+
+::: {.lead}
+Une analyse reproductible garde ensemble les données, le code, les résultats et l'interprétation.
+:::
+
+::: {.note-box}
+Le but n'est pas seulement d'obtenir un résultat. Le but est de pouvoir expliquer comment il a été obtenu et de le refaire sans ambiguïté.
+:::
+
+## Rôle des outils
+
+:::: {.columns}
+
+::: {.column width="32%"}
+### R
+
+Langage utilisé pour importer, transformer, résumer et visualiser les données.
+:::
+
+::: {.column width="32%"}
+### RStudio
+
+Interface de travail pour écrire le code, gérer les fichiers et consulter les objets.
+:::
+
+::: {.column width="32%"}
+### Quarto
+
+Format qui combine texte, code R, résultats et graphiques dans un rapport reproductible.
+:::
+
+::::
+
+## Structure minimale d'un projet
+
+```text
+projet/
+  data/
+    ventes_operations_quebec.csv
+  rapport.qmd
+  scripts/
+```
+
+::: {.example-box}
+Un chemin relatif comme `data/ventes_operations_quebec.csv` reste valide si le projet est déplacé avec sa structure.
+:::
+
+## Préparation dans R
+
+```{r}
+#| label: setup-semaine-02-notes
+
+# Load libraries
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+# Locate data file
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+# Import data
+ventes_operations <- read_csv(data_path, show_col_types = FALSE)
+```
+
+## Importer et inspecter
+
+```{r}
+#| label: inspecter-ventes-operations
+
+glimpse(ventes_operations)
+```
+
+## Préparer les variables
+
+```{r}
+#| label: preparer-ventes-operations
+
+ventes_preparees <- ventes_operations |>
+  mutate(
+    mois = ymd(mois),
+    succursale = factor(succursale),
+    region = factor(region),
+    campagne_locale = factor(campagne_locale),
+    canal_principal = factor(canal_principal)
+  )
+
+ventes_preparees |>
+  summarise(
+    nb_lignes = n(),
+    nb_succursales = n_distinct(succursale),
+    nb_regions = n_distinct(region),
+    nb_canaux = n_distinct(canal_principal),
+    mois_min = min(mois, na.rm = TRUE),
+    mois_max = max(mois, na.rm = TRUE)
+  )
+```
+
+## Diagnostiquer les valeurs manquantes
+
+```{r}
+#| label: diagnostic-valeurs-manquantes
+
+diagnostic_manquants <- ventes_preparees |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0)
+
+diagnostic_manquants
+```
+
+## Résumer par succursale
+
+```{r}
+#| label: resume-succursales
+
+currency_ca <- label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
+
+resume_succursales <- ventes_preparees |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+resume_succursales |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    panier_moyen = currency_ca(panier_moyen),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  )
+```
+
+## Visualiser les ventes
+
+```{r}
+#| label: graphique-ventes-succursales
+#| fig-width: 9
+#| fig-height: 4.8
+#| out-width: "100%"
+
+resume_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(x = ventes_totales, y = succursale)) +
+  geom_col(fill = "#E30513") +
+  scale_x_continuous(labels = currency_ca) +
+  labs(
+    x = "Ventes totales",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Structure du mini-rapport
+
+```qmd
+---
+title: "Mini-rapport"
+format:
+  html:
+    embed-resources: true
+---
+
+## Objectif
+
+## Importation
+
+## Inspection
+
+## Résumé
+
+## Graphique
+
+## Interprétation
+```
+
+## Partie 2: synthèse {.section-gold}
+
+::: {.kicker}
+À retenir
+:::
+
+## Trois réflexes
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+Travailler dans un projet.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+Utiliser des chemins relatifs.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+Garder texte, code et résultats ensemble.
+:::
+:::
+:::
+
+## Exercice court
+
+Créer un mini-rapport Quarto qui contient:
+
+1. le code d'importation;
+2. le résultat de `glimpse()`;
+3. un tableau descriptif;
+4. un graphique;
+5. deux constats descriptifs prudents.
+
+## Clôture {.closing-slide}
+
+::: {.kicker}
+MQT-2101
+:::
+
+## Questions?
+
+Faculté des sciences de l'administration
+
+Université Laval

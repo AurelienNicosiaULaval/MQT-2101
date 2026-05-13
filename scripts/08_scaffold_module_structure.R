@@ -269,6 +269,7 @@ normalize_blank_lines <- function(lines, max_blank = 1L) {
 
 capsule_media_tabset <- function(i) {
   capsule_id <- sprintf("%02d", i)
+  capsule_label <- paste0("capsule-", capsule_id)
   c(
     "",
     "::: {.panel-tabset}",
@@ -280,13 +281,28 @@ capsule_media_tabset <- function(i) {
     "",
     paste0("Emplacement prévu : `media/videos/capsule-", capsule_id, ".mp4` ou lien vidéo institutionnel."),
     "",
-    "### Support QMD/PDF",
+    "### Support",
     "",
-    paste0("TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule ", i, "."),
+    "```{=html}",
+    paste0("<div class=\"support-icons\" aria-label=\"Supports de la capsule ", i, "\">"),
+    paste0("  <a class=\"support-icon support-icon-html\" href=\"media/qmd/", capsule_label, "-support.html\" aria-label=\"Ouvrir le support HTML\" title=\"HTML\">"),
+    "    <i class=\"bi bi-filetype-html\" aria-hidden=\"true\"></i>",
+    "  </a>",
+    paste0("  <a class=\"support-icon support-icon-pdf\" href=\"media/pdf/", capsule_label, "-support.pdf\" aria-label=\"Ouvrir le PDF\" title=\"PDF\">"),
+    "    <i class=\"bi bi-filetype-pdf\" aria-hidden=\"true\"></i>",
+    "  </a>",
+    "</div>",
     "",
-    paste0("Emplacement prévu : `media/pdf/capsule-", capsule_id, "-support.pdf`."),
+    "<iframe",
+    paste0("  src=\"media/pdf/", capsule_label, "-support.pdf\""),
+    paste0("  title=\"Support PDF - Capsule ", i, "\""),
+    "  width=\"100%\"",
+    "  height=\"640\"",
+    "  style=\"border: 1px solid #d0d7de; border-radius: 6px;\"",
+    "></iframe>",
+    "```",
     "",
-    "### Narration PDF",
+    "### Narration",
     "",
     paste0("TODO ajouter la narration PDF de la capsule ", i, " lorsque le fichier est validé pour publication."),
     "",
@@ -356,11 +372,11 @@ narrated_capsule_steps <- function(spec) {
       "",
       paste0(
         "Poursuivez le parcours dans [les capsules](capsules.qmd). ",
-        "Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. ",
+        "Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles. ",
         "Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule."
       ),
       "",
-      "Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.",
+      "Après la capsule, faites immédiatement l'activité associée. Cette activité sert à vérifier la compréhension avant de continuer.",
       "",
       "Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.",
       ""
@@ -424,7 +440,9 @@ narrated_index_page <- function(spec, lines) {
     "",
     "Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.",
     "",
-    "Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.",
+    "Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.",
+    "",
+    "Le support de notes de cours est disponible dans [notes-cours.qmd](notes-cours.qmd). Il utilise le gabarit Quarto UL/FSA commun aux notes de cours du cours.",
     "",
     lets,
     "",
@@ -517,21 +535,7 @@ capsules_page <- function(spec) {
   capsule_lines <- unlist(lapply(seq_along(spec$capsules), function(i) {
     c(
       paste0("## Capsule ", i, " - ", spec$capsules[[i]]),
-      capsule_media_tabset(i),
-      "Durée cible : 5 à 8 minutes.",
-      "",
-      "Objectif : TODO traduire et synthétiser la portion correspondante du ou des PPT.",
-      "",
-      "À couvrir :",
-      "",
-      "- TODO idée principale;",
-      "- TODO exemple simple;",
-      "- TODO lien avec une décision ou une interprétation d'affaires.",
-      "",
-      "### Pause active",
-      "",
-      "TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.",
-      ""
+      capsule_media_tabset(i)
     )
   }))
 
@@ -541,7 +545,9 @@ capsules_page <- function(spec) {
     "",
     "## Rôle de cette page",
     "",
-    "Cette page reçoit la traduction des présentations PowerPoint en contenu Quarto. Les capsules doivent rester courtes, ciblées et suivies d'une pause active ou d'un exercice.",
+    "Cette page diffuse les médias de chaque capsule. Pour une capsule finalisée, elle contient seulement le titre de la capsule et les onglets `Vidéo`, `Support` et `Narration`.",
+    "",
+    "Le contenu pédagogique détaillé, incluant l'objectif, les idées essentielles et l'activité de fin de capsule, doit être placé dans le support Quarto de la capsule.",
     "",
     "Source ancienne :",
     "",
@@ -553,7 +559,7 @@ capsules_page <- function(spec) {
     "- résumer chaque section au lieu de copier les diapositives;",
     "- remplacer les exemples trop génériques par des contextes de gestion lorsque pertinent;",
     "- garder les notations utiles, mais expliciter leur interprétation;",
-    "- ajouter une transition vers les démonstrations R et les exercices.",
+    "- ajouter une transition vers les démonstrations R et les exercices dans le support de capsule.",
     ""
   )
 }
@@ -602,6 +608,148 @@ demonstrations_page <- function(spec) {
     "- les objets portent des noms explicites;",
     "- les graphiques ont des titres et des axes interprétables;",
     "- l'interprétation reste alignée avec la question d'affaires.",
+    ""
+  )
+}
+
+notes_cours_page <- function(spec) {
+  c(
+    "---",
+    paste0("title: \"", spec$label, " - ", spec$titre, "\""),
+    "subtitle: \"MQT-2101 - Analyse et modélisation des données\"",
+    "institute: \"Faculté des sciences de l'administration - Université Laval\"",
+    "lang: fr",
+    "format:",
+    "  revealjs:",
+    "    theme:",
+    "      - default",
+    "      - ../../assets/ulaval-reveal.scss",
+    "    width: 1600",
+    "    height: 900",
+    "    margin: 0.06",
+    "    center: false",
+    "    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png",
+    "    slide-number: c/t",
+    "    controls: true",
+    "    progress: true",
+    "    hash: true",
+    "    transition: fade",
+    "    code-copy: true",
+    "    code-overflow: wrap",
+    "    embed-resources: true",
+    "execute:",
+    "  warning: false",
+    "  message: false",
+    "editor: visual",
+    "---",
+    "",
+    "## Objectifs de la séance",
+    "",
+    "::: {.keypoints}",
+    "- TODO formuler le premier objectif d'apprentissage.",
+    "- TODO formuler le deuxième objectif d'apprentissage.",
+    "- TODO formuler le troisième objectif d'apprentissage.",
+    "- TODO relier les objectifs au livrable du module.",
+    ":::",
+    "",
+    "## Plan",
+    "",
+    "1. Mise en contexte",
+    "2. Notions essentielles",
+    "3. Exemple guidé en R",
+    "4. Interprétation",
+    "5. Activité",
+    "",
+    "## Activités de fin de capsule",
+    "",
+    "Une activité est une courte tâche à faire immédiatement après une capsule. Elle sert à transformer l'écoute en action avant de passer à la suite.",
+    "",
+    "- vérifier la compréhension du point central;",
+    "- produire une trace courte pour le portfolio ou le rapport;",
+    "- repérer ce qui reste à clarifier;",
+    "- préparer les exercices, les démonstrations et les ateliers.",
+    "",
+    paste0("## ", spec$label, ": mise en contexte {.section-red}"),
+    "",
+    "::: {.kicker}",
+    "MQT-2101",
+    ":::",
+    "",
+    "## Question directrice",
+    "",
+    "::: {.lead}",
+    "TODO formuler la question que cette séance aide à éclairer.",
+    ":::",
+    "",
+    "::: {.example-box}",
+    "TODO ajouter un exemple concret lié aux données ou au contexte du module.",
+    ":::",
+    "",
+    "## Exemple guidé en R",
+    "",
+    "```{r}",
+    "#| eval: false",
+    "",
+    "# Load libraries",
+    "library(tidyverse)",
+    "",
+    "# TODO importer les données publiques du module avec un chemin relatif.",
+    "```",
+    "",
+    "## Synthèse {.section-gold}",
+    "",
+    "::: {.kicker}",
+    "À retenir",
+    ":::",
+    "",
+    "## Trois idées essentielles",
+    "",
+    "::: {.metric-grid}",
+    "::: {.metric}",
+    "::: {.value}",
+    "1",
+    ":::",
+    "",
+    "::: {.label}",
+    "TODO idée essentielle.",
+    ":::",
+    ":::",
+    "",
+    "::: {.metric}",
+    "::: {.value}",
+    "2",
+    ":::",
+    "",
+    "::: {.label}",
+    "TODO idée essentielle.",
+    ":::",
+    ":::",
+    "",
+    "::: {.metric}",
+    "::: {.value}",
+    "3",
+    ":::",
+    "",
+    "::: {.label}",
+    "TODO idée essentielle.",
+    ":::",
+    ":::",
+    ":::",
+    "",
+    "## Activité",
+    "",
+    "TODO ajouter une question d'interprétation ou une micro-tâche en R.",
+    "",
+    "## Clôture {.closing-slide}",
+    "",
+    "::: {.kicker}",
+    "MQT-2101",
+    ":::",
+    "",
+    "## Questions?",
+    "",
+    "Faculté des sciences de l'administration  ",
+    "Université Laval",
     ""
   )
 }
@@ -709,6 +857,10 @@ informations_page <- function(spec) {
     "",
     data_lines,
     "",
+    "## Notes de cours",
+    "",
+    "- [Notes de cours](notes-cours.qmd) : support de diapositives Quarto produit avec le gabarit UL/FSA commun au cours.",
+    "",
     "## Fichiers privés utilisés comme source",
     "",
     paste0("- `", spec$source, "`"),
@@ -725,7 +877,7 @@ informations_page <- function(spec) {
     "",
     "1. Lire la page principale du module.",
     "2. Suivre les capsules dans l'ordre.",
-    "3. Faire la pause active après chaque capsule.",
+    "3. Faire l'activité après chaque capsule.",
     "4. Reproduire les démonstrations R.",
     "5. Faire les exercices avant d'ouvrir les solutions cachées.",
     "6. Consulter les lectures indiquées.",
@@ -801,20 +953,20 @@ append_hidden_solution_model <- function(spec) {
   invisible(TRUE)
 }
 
-append_capsule_pause_model <- function(spec) {
+append_capsule_activity_model <- function(spec) {
   path <- file.path(spec$dir, "capsules.qmd")
   if (!file.exists(path)) return(invisible(FALSE))
 
   lines <- readLines(path, warn = FALSE)
-  if (any(grepl("Pause active", lines, fixed = TRUE))) return(invisible(FALSE))
+  if (any(grepl("Règle de découpage des capsules", lines, fixed = TRUE))) return(invisible(FALSE))
 
   addition <- c(
     "",
     "## Règle de découpage des capsules",
     "",
-    "Chaque capsule doit être courte et suivie d'une pause active.",
+    "Chaque capsule doit être courte et suivie d'une activité.",
     "",
-    "### Pause active type",
+    "### Exemple d'activité",
     "",
     "TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.",
     ""
@@ -901,21 +1053,7 @@ ensure_capsule_sections <- function(spec) {
     c(
       "",
       paste0("## Capsule ", i, " - ", spec$capsules[[i]]),
-      capsule_media_tabset(i),
-      "Durée cible : 5 à 8 minutes.",
-      "",
-      "Objectif : TODO traduire et synthétiser la portion correspondante du ou des PPT.",
-      "",
-      "À couvrir :",
-      "",
-      "- TODO idée principale;",
-      "- TODO exemple simple;",
-      "- TODO lien avec une décision ou une interprétation d'affaires.",
-      "",
-      "### Pause active",
-      "",
-      "TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.",
-      ""
+      capsule_media_tabset(i)
     )
   }))
 
@@ -925,7 +1063,7 @@ ensure_capsule_sections <- function(spec) {
 }
 
 ensure_media_dirs <- function(spec) {
-  media_dirs <- file.path(spec$dir, "media", c("videos", "pdf", "narration"))
+  media_dirs <- file.path(spec$dir, "media", c("videos", "pdf", "qmd", "narration"))
   for (media_dir in media_dirs) {
     dir.create(media_dir, recursive = TRUE, showWarnings = FALSE)
     write_if_missing(file.path(media_dir, ".gitkeep"))
@@ -942,6 +1080,7 @@ ensure_media_dirs <- function(spec) {
       "",
       "- `videos/` : vidéos courtes intégrées dans les capsules.",
       "- `pdf/` : supports PDF générés à partir des contenus Quarto.",
+      "- `qmd/` : sources Quarto des supports de capsule.",
       "- `narration/` : PDF de narration validés pour publication.",
       "",
       "## Règles",
@@ -960,6 +1099,7 @@ for (spec in module_specs) {
   ensure_media_dirs(spec)
 
   write_qmd_if_missing(file.path(spec$dir, "capsules.qmd"), capsules_page(spec))
+  write_qmd_if_missing(file.path(spec$dir, "notes-cours.qmd"), notes_cours_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "demonstrations.qmd"), demonstrations_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "exercices.qmd"), exercices_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "lectures.qmd"), lectures_page(spec))
@@ -971,7 +1111,7 @@ for (spec in module_specs) {
   insert_capsule_tabsets(spec)
   upsert_media_info(spec)
   append_hidden_solution_model(spec)
-  append_capsule_pause_model(spec)
+  append_capsule_activity_model(spec)
 }
 
 message("Structure standard des modules créée ou complétée.")

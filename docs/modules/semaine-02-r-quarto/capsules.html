@@ -4014,6 +4014,56 @@ color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
 }
+.support-icons {
+align-items: center;
+display: flex;
+gap: 0.6rem;
+margin: 0.1rem 0 0.9rem;
+}
+.support-icon {
+align-items: center;
+background: #fff;
+border: 1px solid #d0d7de;
+border-radius: 6px;
+box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+display: inline-flex;
+font-size: 1.75rem;
+height: 2.8rem;
+justify-content: center;
+line-height: 1;
+text-decoration: none;
+transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+width: 2.8rem;
+}
+.support-icon:hover {
+box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+text-decoration: none;
+transform: translateY(-1px);
+}
+.support-icon:focus-visible {
+outline: 2px solid #0B4F6C;
+outline-offset: 2px;
+}
+.support-icon-html {
+background: #fff7ed;
+border-color: #fed7aa;
+color: #c2410c;
+}
+.support-icon-html:hover {
+background: #ffedd5;
+border-color: #fb923c;
+color: #9a3412;
+}
+.support-icon-pdf {
+background: #fff5f5;
+border-color: #fecaca;
+color: #b42318;
+}
+.support-icon-pdf:hover {
+background: #fee2e2;
+border-color: #f87171;
+color: #991b1b;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4655,6 +4705,10 @@ grid-template-columns: 1fr;
  <span class="dropdown-text">Gabarit de module</span></a>
   </li>
         <li>
+    <a class="dropdown-item" href="../../ressources/gabarit-notes-cours.html">
+ <span class="dropdown-text">Gabarit de notes de cours</span></a>
+  </li>
+        <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
   </li>
@@ -4703,7 +4757,7 @@ grid-template-columns: 1fr;
   <li><a href="#capsule-6---créer-un-graphique-et-rendre-le-rapport" id="toc-capsule-6---créer-un-graphique-et-rendre-le-rapport" class="nav-link" data-scroll-target="#capsule-6---créer-un-graphique-et-rendre-le-rapport">Capsule 6 - Créer un graphique et rendre le rapport</a></li>
   <li><a href="#règle-de-découpage-des-capsules" id="toc-règle-de-découpage-des-capsules" class="nav-link" data-scroll-target="#règle-de-découpage-des-capsules">Règle de découpage des capsules</a>
   <ul class="collapse">
-  <li><a href="#pause-active-type" id="toc-pause-active-type" class="nav-link" data-scroll-target="#pause-active-type">Pause active type</a></li>
+  <li><a href="#exemple-dactivité" id="toc-exemple-dactivité" class="nav-link" data-scroll-target="#exemple-dactivité">Exemple d’activité</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -4740,7 +4794,7 @@ grid-template-columns: 1fr;
 <section id="capsule-1---installer-r-rstudio-et-quarto" class="level2">
 <h2 class="anchored" data-anchor-id="capsule-1---installer-r-rstudio-et-quarto">Capsule 1 - Installer R, RStudio et Quarto</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Support QMD/PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Narration PDF</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Support</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Narration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="callout callout-style-default callout-note callout-titled" title="Vidéo à intégrer">
@@ -4759,8 +4813,8 @@ Vidéo à intégrer
 <p>Emplacement prévu : <code>media/videos/capsule-01.mp4</code> ou lien vidéo institutionnel.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.</p>
-<p>Emplacement prévu : <code>media/pdf/capsule-01-support.pdf</code>.</p>
+<p>Consulter le <a href="../../modules/semaine-02-r-quarto/notes-cours.html">support de notes de cours</a> associé à cette semaine.</p>
+<p>Pour produire un PDF, rendre le support avec Quarto ou utiliser l’impression PDF du navigateur.</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p>TODO ajouter la narration PDF de la capsule 1 lorsque le fichier est validé pour publication.</p>
@@ -4782,7 +4836,7 @@ Vidéo à intégrer
 <section id="capsule-2---explorer-linterface-rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="capsule-2---explorer-linterface-rstudio">Capsule 2 - Explorer l’interface RStudio</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Support QMD/PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Narration PDF</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Support</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Narration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="callout callout-style-default callout-note callout-titled" title="Vidéo à intégrer">
@@ -4801,8 +4855,8 @@ Vidéo à intégrer
 <p>Emplacement prévu : <code>media/videos/capsule-02.mp4</code> ou lien vidéo institutionnel.</p>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<p>TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.</p>
-<p>Emplacement prévu : <code>media/pdf/capsule-02-support.pdf</code>.</p>
+<p>Consulter le <a href="../../modules/semaine-02-r-quarto/notes-cours.html">support de notes de cours</a> associé à cette semaine.</p>
+<p>Pour produire un PDF, rendre le support avec Quarto ou utiliser l’impression PDF du navigateur.</p>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <p>TODO ajouter la narration PDF de la capsule 2 lorsque le fichier est validé pour publication.</p>
@@ -4827,7 +4881,7 @@ Vidéo à intégrer
 <section id="capsule-3---créer-un-projet-r" class="level2">
 <h2 class="anchored" data-anchor-id="capsule-3---créer-un-projet-r">Capsule 3 - Créer un projet R</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Support QMD/PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Narration PDF</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Support</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Narration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="callout callout-style-default callout-note callout-titled" title="Vidéo à intégrer">
@@ -4846,8 +4900,8 @@ Vidéo à intégrer
 <p>Emplacement prévu : <code>media/videos/capsule-03.mp4</code> ou lien vidéo institutionnel.</p>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<p>TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.</p>
-<p>Emplacement prévu : <code>media/pdf/capsule-03-support.pdf</code>.</p>
+<p>Consulter le <a href="../../modules/semaine-02-r-quarto/notes-cours.html">support de notes de cours</a> associé à cette semaine.</p>
+<p>Pour produire un PDF, rendre le support avec Quarto ou utiliser l’impression PDF du navigateur.</p>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <p>TODO ajouter la narration PDF de la capsule 3 lorsque le fichier est validé pour publication.</p>
@@ -4869,7 +4923,7 @@ Vidéo à intégrer
 <section id="capsule-4---importer-et-inspecter-un-fichier-csv" class="level2">
 <h2 class="anchored" data-anchor-id="capsule-4---importer-et-inspecter-un-fichier-csv">Capsule 4 - Importer et inspecter un fichier CSV</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Support QMD/PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Narration PDF</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Support</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Narration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="callout callout-style-default callout-note callout-titled" title="Vidéo à intégrer">
@@ -4888,8 +4942,8 @@ Vidéo à intégrer
 <p>Emplacement prévu : <code>media/videos/capsule-04.mp4</code> ou lien vidéo institutionnel.</p>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<p>TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.</p>
-<p>Emplacement prévu : <code>media/pdf/capsule-04-support.pdf</code>.</p>
+<p>Consulter le <a href="../../modules/semaine-02-r-quarto/notes-cours.html">support de notes de cours</a> associé à cette semaine.</p>
+<p>Pour produire un PDF, rendre le support avec Quarto ou utiliser l’impression PDF du navigateur.</p>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <p>TODO ajouter la narration PDF de la capsule 4 lorsque le fichier est validé pour publication.</p>
@@ -4912,7 +4966,7 @@ Vidéo à intégrer
 <section id="capsule-5---traiter-les-données" class="level2">
 <h2 class="anchored" data-anchor-id="capsule-5---traiter-les-données">Capsule 5 - Traiter les données</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Support QMD/PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Narration PDF</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Support</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Narration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="callout callout-style-default callout-note callout-titled" title="Vidéo à intégrer">
@@ -4931,8 +4985,8 @@ Vidéo à intégrer
 <p>Emplacement prévu : <code>media/videos/capsule-05.mp4</code> ou lien vidéo institutionnel.</p>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<p>TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 5.</p>
-<p>Emplacement prévu : <code>media/pdf/capsule-05-support.pdf</code>.</p>
+<p>Consulter le <a href="../../modules/semaine-02-r-quarto/notes-cours.html">support de notes de cours</a> associé à cette semaine.</p>
+<p>Pour produire un PDF, rendre le support avec Quarto ou utiliser l’impression PDF du navigateur.</p>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
 <p>TODO ajouter la narration PDF de la capsule 5 lorsque le fichier est validé pour publication.</p>
@@ -4954,7 +5008,7 @@ Vidéo à intégrer
 <section id="capsule-6---créer-un-graphique-et-rendre-le-rapport" class="level2">
 <h2 class="anchored" data-anchor-id="capsule-6---créer-un-graphique-et-rendre-le-rapport">Capsule 6 - Créer un graphique et rendre le rapport</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Support QMD/PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Narration PDF</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Vidéo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Support</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Narration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="callout callout-style-default callout-note callout-titled" title="Vidéo à intégrer">
@@ -4973,8 +5027,8 @@ Vidéo à intégrer
 <p>Emplacement prévu : <code>media/videos/capsule-06.mp4</code> ou lien vidéo institutionnel.</p>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<p>TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 6.</p>
-<p>Emplacement prévu : <code>media/pdf/capsule-06-support.pdf</code>.</p>
+<p>Consulter le <a href="../../modules/semaine-02-r-quarto/notes-cours.html">support de notes de cours</a> associé à cette semaine.</p>
+<p>Pour produire un PDF, rendre le support avec Quarto ou utiliser l’impression PDF du navigateur.</p>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
 <p>TODO ajouter la narration PDF de la capsule 6 lorsque le fichier est validé pour publication.</p>
@@ -4995,9 +5049,9 @@ Vidéo à intégrer
 </section>
 <section id="règle-de-découpage-des-capsules" class="level2">
 <h2 class="anchored" data-anchor-id="règle-de-découpage-des-capsules">Règle de découpage des capsules</h2>
-<p>Chaque capsule doit être courte et suivie d’une pause active.</p>
-<section id="pause-active-type" class="level3">
-<h3 class="anchored" data-anchor-id="pause-active-type">Pause active type</h3>
+<p>Chaque capsule doit être courte et suivie d’une activité.</p>
+<section id="exemple-dactivité" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-dactivité">Exemple d’activité</h3>
 <p>TODO ajouter une question d’interprétation, un court calcul ou une micro-tâche en R.</p>
 
 

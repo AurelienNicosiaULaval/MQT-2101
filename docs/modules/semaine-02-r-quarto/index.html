@@ -4014,6 +4014,56 @@ color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
 }
+.support-icons {
+align-items: center;
+display: flex;
+gap: 0.6rem;
+margin: 0.1rem 0 0.9rem;
+}
+.support-icon {
+align-items: center;
+background: #fff;
+border: 1px solid #d0d7de;
+border-radius: 6px;
+box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+display: inline-flex;
+font-size: 1.75rem;
+height: 2.8rem;
+justify-content: center;
+line-height: 1;
+text-decoration: none;
+transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+width: 2.8rem;
+}
+.support-icon:hover {
+box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+text-decoration: none;
+transform: translateY(-1px);
+}
+.support-icon:focus-visible {
+outline: 2px solid #0B4F6C;
+outline-offset: 2px;
+}
+.support-icon-html {
+background: #fff7ed;
+border-color: #fed7aa;
+color: #c2410c;
+}
+.support-icon-html:hover {
+background: #ffedd5;
+border-color: #fb923c;
+color: #9a3412;
+}
+.support-icon-pdf {
+background: #fff5f5;
+border-color: #fecaca;
+color: #b42318;
+}
+.support-icon-pdf:hover {
+background: #fee2e2;
+border-color: #f87171;
+color: #991b1b;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4655,6 +4705,10 @@ grid-template-columns: 1fr;
  <span class="dropdown-text">Gabarit de module</span></a>
   </li>
         <li>
+    <a class="dropdown-item" href="../../ressources/gabarit-notes-cours.html">
+ <span class="dropdown-text">Gabarit de notes de cours</span></a>
+  </li>
+        <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
   </li>
@@ -4833,7 +4887,20 @@ De votre premier CSV à une analyse reproductible
 </section>
 <section id="votre-parcours" class="level2">
 <h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
-<p>Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action, trace attendue et AE associé.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Notes de cours">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notes de cours
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le support de notes de cours est disponible dans <a href="../../modules/semaine-02-r-quarto/notes-cours.html">notes-cours.qmd</a>. Il utilise le gabarit Quarto UL/FSA commun aux notes de cours du cours.</p>
+</div>
+</div>
+<p>Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action, trace attendue et activité associée.</p>
 <div class="path-grid interactive-path">
   <details class="path-card" id="etape-1">
     <summary>
@@ -4849,7 +4916,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Ouvrir RStudio, exécuter une commande simple dans la console et charger <code>tidyverse</code>.</p>
       <p><span class="step-label">Trace</span> Une courte note indiquant que l&#39;environnement fonctionne.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.1 : vérifier que R fonctionne</p>
+        <p class="ae-title">Activité 2.1 - Vérifier que R fonctionne</p>
         <p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>. Notez le résultat obtenu.</p>
       </div>
     </div>
@@ -4869,7 +4936,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Identifier la console, l&#39;éditeur, l&#39;environnement, l&#39;onglet Files et l&#39;onglet Plots.</p>
       <p><span class="step-label">Trace</span> Une phrase expliquant le rôle de deux zones de RStudio.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.2 : identifier les zones de RStudio</p>
+        <p class="ae-title">Activité 2.2 - Identifier les zones de RStudio</p>
         <p>Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers ou afficher un graphique.</p>
       </div>
     </div>
@@ -4889,7 +4956,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Créer ou ouvrir un projet R, puis vérifier où se trouve le dossier <code>data</code>.</p>
       <p><span class="step-label">Trace</span> Le nom du projet et une phrase sur l&#39;intérêt des chemins relatifs.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.3 : expliquer l&#39;utilité d&#39;un projet R</p>
+        <p class="ae-title">Activité 2.3 - Expliquer l&#39;utilité d&#39;un projet R</p>
         <p>Expliquez en deux ou trois phrases pourquoi un projet R réduit les erreurs de chemins et facilite la reprise d&#39;une analyse.</p>
       </div>
     </div>
@@ -4909,7 +4976,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Exécuter le code d&#39;importation et vérifier les dimensions du tableau.</p>
       <p><span class="step-label">Trace</span> Le code d&#39;importation et le résultat de <code>glimpse()</code> ou de <code>dim()</code>.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.4 : importer les données</p>
+        <p class="ae-title">Activité 2.4 - Importer les données</p>
         <p>Importez le fichier <code>ventes_operations_quebec.csv</code>, puis indiquez le nombre de lignes et de colonnes du tableau.</p>
       </div>
     </div>
@@ -4929,7 +4996,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Identifier l&#39;unité d&#39;observation, les variables numériques, les variables catégorielles et les variables de date ou de période.</p>
       <p><span class="step-label">Trace</span> Une liste courte des variables importantes et de leur type.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.5 : inspecter les lignes, colonnes et types de variables</p>
+        <p class="ae-title">Activité 2.5 - Inspecter les lignes, colonnes et types de variables</p>
         <p>Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.</p>
       </div>
     </div>
@@ -4949,7 +5016,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Utiliser <code>is.na()</code>, <code>summarise()</code> et <code>pivot_longer()</code> pour compter les valeurs manquantes.</p>
       <p><span class="step-label">Trace</span> Un petit tableau de diagnostic et une phrase d&#39;interprétation.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.6 : repérer les valeurs manquantes</p>
+        <p class="ae-title">Activité 2.6 - Repérer les valeurs manquantes</p>
         <p>Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.</p>
       </div>
     </div>
@@ -4969,11 +5036,11 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Résumer les ventes par succursale ou par canal principal, puis construire un graphique avec <code>ggplot()</code>.</p>
       <p><span class="step-label">Trace</span> Le code du tableau descriptif, le code du graphique et une phrase d&#39;interprétation.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.7 : produire un tableau descriptif</p>
+        <p class="ae-title">Activité 2.7 - Produire un tableau descriptif</p>
         <p>Produisez un tableau descriptif par succursale ou par canal principal, puis interprétez un résultat.</p>
       </div>
       <div class="ae-box">
-        <p class="ae-title">AE 2.8 : produire un graphique</p>
+        <p class="ae-title">Activité 2.8 - Produire un graphique</p>
         <p>Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.</p>
       </div>
     </div>
@@ -4993,7 +5060,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Créer un fichier <code>.qmd</code> avec un titre, une courte introduction, des blocs de code R et des phrases d&#39;interprétation.</p>
       <p><span class="step-label">Trace</span> Un fichier <code>.qmd</code> structuré qui contient les traces des étapes précédentes.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.9 : structurer le fichier QMD</p>
+        <p class="ae-title">Activité 2.9 - Structurer le fichier QMD</p>
         <p>Créez le squelette du mini-rapport Quarto : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.</p>
       </div>
     </div>
@@ -5013,7 +5080,7 @@ De votre premier CSV à une analyse reproductible
       <p><span class="step-label">Action</span> Rendre le document avec Render ou <code>quarto render</code>, puis relire le HTML produit.</p>
       <p><span class="step-label">Trace</span> Le fichier HTML rendu et deux constats descriptifs.</p>
       <div class="ae-box">
-        <p class="ae-title">AE 2.10 : formuler deux constats descriptifs</p>
+        <p class="ae-title">Activité 2.10 - Formuler deux constats descriptifs</p>
         <p>À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée.</p>
       </div>
     </div>

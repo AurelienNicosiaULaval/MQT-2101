@@ -22,7 +22,7 @@ Chaque module doit guider l'étudiant dans un ordre clair :
 
 1. comprendre l'objectif;
 2. regarder une capsule courte;
-3. faire une pause active;
+3. faire une activité;
 4. reproduire une démonstration R;
 5. faire un exercice;
 6. consulter la solution cachée seulement après une tentative;
@@ -36,6 +36,7 @@ Chaque module doit contenir les fichiers suivants :
 modules/nom-du-module/
 ├── index.qmd
 ├── capsules.qmd
+├── notes-cours.qmd
 ├── demonstrations.qmd
 ├── exercices.qmd
 ├── lectures.qmd
@@ -60,8 +61,8 @@ Elle doit contenir :
 - un lien clair avec l'utilité du module pour le génie, l'administration ou les deux;
 - les repères nécessaires avant les capsules;
 - une étape narrative pour chaque capsule;
-- une invitation explicite à utiliser les onglets `Vidéo`, `Support QMD/PDF` et `Narration PDF`;
-- une pause active après chaque capsule;
+- une invitation explicite à utiliser les onglets `Vidéo`, `Support` et `Narration`;
+- une activité après chaque capsule;
 - un passage vers les démonstrations R;
 - un passage vers les exercices;
 - une consigne de correction avec solutions cachées;
@@ -73,7 +74,7 @@ Le parcours doit suivre la logique suivante, sans tableau :
 1. comprendre l'objectif et le contexte;
 2. préparer son document de travail;
 3. suivre la capsule 1;
-4. faire la pause active de la capsule 1;
+4. faire l'activité de la capsule 1;
 5. poursuivre les capsules dans l'ordre;
 6. reproduire les démonstrations R;
 7. faire les exercices sans regarder les solutions;
@@ -85,35 +86,76 @@ Le parcours doit suivre la logique suivante, sans tableau :
 
 Les PPT de l'ancien cours doivent être traduits en Quarto, puis découpés en capsules courtes.
 
-Chaque capsule doit contenir :
+La page `capsules.qmd` est une page de diffusion. Pour une capsule finalisée, elle doit afficher seulement :
+
+- le titre de la capsule;
+- le bloc à onglets `Vidéo`, `Support` et `Narration`;
+- aucun texte de travail sous le bloc d'onglets.
+
+Le contenu pédagogique détaillé doit être placé dans le support Quarto de la capsule, par exemple `media/qmd/capsule-01-support.qmd`, puis rendu en HTML et en PDF. Ce support doit contenir :
 
 - un objectif;
 - les idées essentielles;
 - un exemple simple;
 - un lien avec une application en génie, en administration ou dans les deux domaines;
-- un bloc à onglets;
-- une pause active;
+- une activité de fin de capsule;
 - une transition vers un exercice ou une démonstration.
 
-Le bloc à onglets doit contenir :
+Le bloc à onglets doit conserver ce modèle :
 
-```qmd
+````qmd
 ::: {.panel-tabset}
 ### Vidéo
 
-TODO intégrer la vidéo courte de la capsule.
-
-### Support QMD/PDF
-
-TODO intégrer le support PDF généré à partir du contenu Quarto.
-
-### Narration PDF
-
-TODO intégrer la narration PDF validée pour publication.
+::: {.callout-note title="Vidéo à intégrer"}
+TODO intégrer ici la vidéo courte de la capsule.
 :::
+
+Emplacement prévu : `media/videos/capsule-XX.mp4` ou lien vidéo institutionnel.
+
+### Support
+
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule XX">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-XX-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-XX-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+
+<iframe
+  src="media/pdf/capsule-XX-support.pdf"
+  title="Support PDF - Capsule XX"
+  width="100%"
+  height="640"
+  style="border: 1px solid #d0d7de; border-radius: 6px;"
+></iframe>
 ```
 
+### Narration
+
+TODO ajouter la narration PDF lorsque le fichier est validé pour publication.
+
+Emplacement prévu : `media/narration/capsule-XX-narration.pdf`.
+:::
+````
+
 Les PPT ne sont pas copiés tels quels. Ils servent de source pour reconstruire une version plus claire, plus concise et plus adaptée au parcours autonome.
+
+## `notes-cours.qmd`
+
+Cette page contient le support de notes de cours en diapositives Quarto `revealjs`.
+
+Toutes les notes de cours doivent utiliser le gabarit UL/FSA commun :
+
+- thème : `../../assets/ulaval-reveal.scss`;
+- logo : `../../assets/logos/ulaval/UL-FSA-C-d.png`;
+- format : `revealjs`;
+- option obligatoire : `embed-resources: true`.
+
+Les supports propres aux capsules peuvent être placés dans `media/qmd/`, par exemple `media/qmd/capsule-01-support.qmd`. Ils doivent reprendre le même gabarit UL/FSA, puis être rendus en HTML et en PDF pour l'onglet `Support`.
 
 ## `demonstrations.qmd`
 
@@ -185,7 +227,7 @@ Pour chaque présentation ancienne :
 1. identifier le message pédagogique principal;
 2. supprimer les répétitions inutiles;
 3. convertir le contenu en texte Quarto;
-4. ajouter une pause active;
+4. ajouter une activité;
 5. ajouter ou adapter un exemple;
 6. relier le contenu à une décision, une interprétation ou une tâche d'analyse;
 7. prévoir un exercice immédiatement après.
