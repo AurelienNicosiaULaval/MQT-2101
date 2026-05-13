@@ -1,129 +1,220 @@
 ---
-title: "Atelier 01 - Parcours autonome"
+title: "Atelier 01"
+subtitle: "Explorer un tableau avec RStudio"
 format:
   html:
     embed-resources: true
 ---
 
-# Atelier 01 - Explorer un tableau de données d'affaires
+::: {.learning-hero}
+<p class="hero-kicker">Atelier en classe</p>
+<h2>Explorer un tableau avec RStudio</h2>
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+Cet atelier n'est pas une séance autonome complète. Il sert à pratiquer en
+classe les gestes vus dans les deux premières semaines : ouvrir un projet,
+importer un fichier CSV, inspecter un tableau, produire quelques résumés,
+visualiser et écrire des constats descriptifs.
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+:::: {.quick-facts}
+::: {.fact-card}
+<div class="fact-icon fact-clock" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Avant</div>
+  <div class="fact-value">Préparation courte</div>
+</div>
+:::
 
-## Let’s eat the cake
+::: {.fact-card}
+<div class="fact-icon fact-tools" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Pendant</div>
+  <div class="fact-value">Travail accompagné dans RStudio</div>
+</div>
+:::
 
-Objectif : apprendre à explorer un tableau de données d'affaires avec R pour produire un premier diagnostic descriptif.
+::: {.fact-card}
+<div class="fact-icon fact-data" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Données</div>
+  <div class="fact-value">ventes_pme_quebec.csv</div>
+</div>
+:::
 
-Compétences développées :
+::: {.fact-card}
+<div class="fact-icon fact-report" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Après</div>
+  <div class="fact-value">Court rapport Quarto</div>
+</div>
+:::
+::::
+:::
 
-- importer un fichier CSV;
-- reconnaître l'unité d'observation et les variables;
-- repérer les valeurs manquantes;
-- calculer des indicateurs descriptifs;
-- produire des graphiques exploratoires;
-- formuler des constats utiles pour une décision d'affaires.
+## Avant l'atelier
 
-Application business : analyser un jeu de données pédagogique sur les ventes mensuelles de cinq succursales.
+L'objectif est simplement d'arriver en classe prêt·e à travailler. Il ne faut
+pas refaire toute la semaine 02 : il suffit de retrouver les gestes essentiels.
 
-Résultat final attendu : un court rapport Quarto qui présente trois constats, deux graphiques et une recommandation de prochaine analyse.
+```{=html}
+<div class="phase-grid">
+  <div class="phase-card">
+    <span class="phase-label">1</span>
+    <h3>Préparer RStudio</h3>
+    <p>Ouvrir ou créer un projet R pour l'atelier et vérifier que les packages de base se chargent.</p>
+  </div>
+  <div class="phase-card">
+    <span class="phase-label">2</span>
+    <h3>Repérer le fichier</h3>
+    <p>Vérifier que <code>ventes_pme_quebec.csv</code> est accessible dans le dossier de l'atelier.</p>
+  </div>
+  <div class="phase-card">
+    <span class="phase-label">3</span>
+    <h3>Démarrer le QMD</h3>
+    <p>Créer un document Quarto minimal avec une section d'importation et une section de résultats.</p>
+  </div>
+</div>
+```
 
-Lien avec une décision d'affaires réelle : apprendre à choisir si une analyse doit d'abord porter sur les ventes, la satisfaction, les ruptures de stock ou les délais de livraison.
+À revoir si nécessaire :
 
-## Mise en contexte
+- [guide Quarto](../../ressources/guide-quarto.html), pour créer et rendre un fichier `.qmd`;
+- [démonstrations de la semaine 02](../semaine-02-r-quarto/demonstrations.html), pour l'importation CSV et `glimpse()`;
+- [informations de l'atelier](informations.html), pour retrouver le fichier de données.
 
-TODO rédiger le contexte pédagogique du module et préciser pourquoi les notions sont utiles pour la suite du cours.
+::: {.callout-tip title="Préparation minimale"}
+Si vous arrivez avec RStudio ouvert, le fichier CSV accessible et un document
+Quarto créé, c'est suffisant pour commencer l'atelier.
+:::
 
-## Utilité pour le génie et l'administration
+## Pendant l'atelier
 
-Le module doit être lu avec deux angles complémentaires.
+Pendant la séance, l'important est de produire les éléments du rapport, pas de
+lire une longue page. Le guide détaillé est disponible au besoin, mais le fil de
+travail en classe est le suivant.
 
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
+```{=html}
+<div class="workshop-agenda">
+  <div class="agenda-item">
+    <div class="agenda-time">Départ</div>
+    <div class="agenda-content">
+      <h3>Importer le tableau</h3>
+      <p>Lire le fichier CSV, vérifier les dimensions et nommer l'unité d'observation.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 1</div>
+    <div class="agenda-content">
+      <h3>Inspecter les variables</h3>
+      <p>Repérer les variables de ventes, de clientèle, de marketing, d'opérations et de satisfaction.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 2</div>
+    <div class="agenda-content">
+      <h3>Vérifier les valeurs manquantes</h3>
+      <p>Produire un petit diagnostic et noter les précautions nécessaires.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 3</div>
+    <div class="agenda-content">
+      <h3>Construire un tableau synthèse</h3>
+      <p>Résumer les ventes, les clients, le panier moyen, la satisfaction et les ruptures par succursale.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 4</div>
+    <div class="agenda-content">
+      <h3>Créer deux graphiques</h3>
+      <p>Produire un graphique de comparaison et un graphique explorant une autre dimension du tableau.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Fin</div>
+    <div class="agenda-content">
+      <h3>Écrire les constats</h3>
+      <p>Rédiger trois constats descriptifs courts et une limite d'interprétation.</p>
+    </div>
+  </div>
+</div>
+```
 
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
+Ce qui doit être produit pendant l'atelier :
 
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
+::: {.checklist-box}
+- [ ] le code d'importation;
+- [ ] une inspection du tableau;
+- [ ] un diagnostic des valeurs manquantes;
+- [ ] un tableau synthèse par succursale;
+- [ ] deux graphiques;
+- [ ] trois constats descriptifs;
+- [ ] une limite d'interprétation.
+:::
 
-## Repères avant les capsules
+## Après l'atelier
 
-Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.
+Après la séance, il faut surtout nettoyer, vérifier et rendre. Cette partie ne
+demande pas une nouvelle analyse complète.
 
-## Préparer votre espace de travail
+::: {.callout-important title="À rendre"}
+Un court rapport Quarto reproductible. Le rapport doit montrer que vous êtes
+capable de passer d'un fichier CSV à une première exploration descriptive claire.
+:::
 
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.
+Le rapport doit contenir :
 
-Vérifiez aussi les fichiers disponibles dans [les informations du module](informations.qmd), notamment les données publiques et les consignes liées au matériel ancien.
+- une courte introduction;
+- le code d'importation;
+- une description du tableau;
+- le diagnostic des valeurs manquantes;
+- le tableau synthèse;
+- deux graphiques;
+- trois constats descriptifs;
+- une limite d'interprétation;
+- une question d'analyse pour la suite.
 
-Pour l'atelier, le [guide d'atelier](guide-atelier.qmd) donne le déroulement détaillé des manipulations à réaliser.
+Avant de déposer le fichier :
 
-## Capsule 1 - Rappel du diagnostic statistique
+::: {.checklist-box}
+- [ ] Le document Quarto se rend sans erreur.
+- [ ] Les tableaux et graphiques sont lisibles.
+- [ ] Les constats sont descriptifs, pas causaux.
+- [ ] La limite d'interprétation est explicite.
+- [ ] Le fichier final est court et propre.
+:::
 
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
+## Ressources utiles
 
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
+```{=html}
+<div class="resource-list">
+  <a class="resource-row" href="guide-atelier.html">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Guide d'atelier</span><span class="resource-row-text">Code complet et déroulement détaillé si vous devez reprendre une étape.</span></span>
+  </a>
+  <a class="resource-row" href="demonstrations.html">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Rappels techniques pour importer, résumer et visualiser.</span></span>
+  </a>
+  <a class="resource-row" href="exercices.html">
+    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Consignes courtes pour compléter ou reprendre la pratique.</span></span>
+  </a>
+</div>
+```
 
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
+## Je suis bloqué·e
 
-## Capsule 2 - Importation et inspection
+Vérifiez d'abord :
 
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
+1. le dossier du projet R;
+2. le chemin du fichier CSV;
+3. le chargement des packages avec `library(tidyverse)` et `library(janitor)`;
+4. le nom exact des variables;
+5. le message d'erreur complet;
+6. le code correspondant dans le guide d'atelier.
 
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
+## Pour la suite
 
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 3 - Indicateurs descriptifs
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 4 - Graphiques exploratoires
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support QMD/PDF` pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.
-
-Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-Trace attendue : une correction courte et une liste de questions restantes.
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-Trace attendue : une idée utile, une définition ou une référence à retenir.
-
-## Trace finale
-
-Terminez le module en produisant le livrable court : Court rapport Quarto d'exploration.
-
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
-
-## Lien avec l'ancien matériel
-
-Source ancienne de référence : `MQT-2101-A25_Atelier en classe 1 .zip`.
-
-Les fichiers privés, PowerPoint, PDF protégés, solutionnaires et archives ne sont pas publiés dans le site.
-
-## Pour aller plus loin
-
-TODO ajouter une ressource complémentaire ou une piste de consolidation.
+Cet atelier prépare la séance sur la régression linéaire. Après avoir décrit un
+tableau, on pourra commencer à se demander si deux variables semblent liées et
+comment mesurer cette relation avec un modèle.

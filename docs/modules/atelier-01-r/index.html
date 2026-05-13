@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Atelier 01 - Parcours autonome – MQT-2101 : Analyse et modélisation des données</title>
+<title>Atelier 01 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3832,17 +3832,109 @@ text-transform: uppercase;
 }
 .quick-facts {
 display: grid;
-grid-template-columns: repeat(4, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 0.9rem;
 margin-top: 1.1rem;
 }
 .fact-card {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+align-items: start;
+gap: 0.8rem;
+min-width: 0;
 min-height: 112px;
 padding: 1rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 10px 24px rgba(18, 50, 68, 0.06);
+}
+.fact-icon {
+position: relative;
+display: block;
+box-sizing: border-box;
+width: 2.15rem;
+height: 2.15rem;
+padding: 0;
+border: 1px solid #c9dde7;
+border-radius: 999px;
+background: #eef6f9;
+color: #0b4f6c;
+flex: 0 0 auto;
+line-height: 0;
+}
+.fact-icon::before,
+.fact-icon::after {
+content: "";
+position: absolute;
+box-sizing: border-box;
+color: currentColor;
+}
+.fact-clock::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 999px;
+transform: translate(-50%, -50%);
+}
+.fact-clock::after {
+left: 50%;
+top: 50%;
+width: 0.36rem;
+height: 0.46rem;
+border-left: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-0.02rem, -0.38rem);
+}
+.fact-tools::before {
+left: 50%;
+top: 50%;
+width: 1.15rem;
+height: 0.86rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-tools::after {
+left: 50%;
+top: 50%;
+width: 0.52rem;
+height: 0.38rem;
+border-right: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-65%, -52%) rotate(-45deg);
+}
+.fact-data::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+background:
+linear-gradient(currentColor, currentColor) 50% 0 / 1.7px 100% no-repeat,
+linear-gradient(currentColor, currentColor) 0 50% / 100% 1.7px no-repeat;
+transform: translate(-50%, -50%);
+}
+.fact-report::before {
+left: 50%;
+top: 50%;
+width: 0.95rem;
+height: 1.12rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-report::after {
+left: 50%;
+top: 50%;
+width: 0.48rem;
+height: 0.35rem;
+border-top: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-50%, -10%);
 }
 .fact-label {
 margin-bottom: 0.45rem;
@@ -3853,10 +3945,120 @@ letter-spacing: 0;
 text-transform: uppercase;
 }
 .fact-value {
+min-width: 0;
 color: #123244;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
+overflow-wrap: anywhere;
+word-break: normal;
+}
+.outcome-strip {
+display: grid;
+grid-template-columns: 1fr auto 1fr auto 1fr;
+align-items: stretch;
+gap: 0.75rem;
+margin: 1.15rem 0 1.4rem;
+}
+.outcome-item {
+padding: 0.9rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 20px rgba(18, 50, 68, 0.04);
+}
+.outcome-label {
+display: block;
+margin-bottom: 0.2rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.outcome-value {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.3;
+}
+.outcome-arrow {
+align-self: center;
+color: #7a1c24;
+font-size: 1.2rem;
+font-weight: 700;
+}
+.phase-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.phase-card {
+padding: 1.05rem 1.1rem;
+border: 1px solid #dce5ea;
+border-top: 4px solid #b5121b;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.phase-card h3 {
+margin: 0.35rem 0 0.45rem;
+color: #123244;
+font-size: 1.08rem;
+line-height: 1.25;
+}
+.phase-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.phase-label {
+display: inline-flex;
+align-items: center;
+min-height: 1.65rem;
+padding: 0.15rem 0.5rem;
+border-radius: 999px;
+background: #f8ebed;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+line-height: 1.2;
+}
+.workshop-agenda {
+display: grid;
+gap: 0.75rem;
+margin: 1.15rem 0 1.6rem;
+}
+.agenda-item {
+display: grid;
+grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 6px 18px rgba(18, 50, 68, 0.035);
+}
+.agenda-time {
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 700;
+line-height: 1.35;
+}
+.agenda-content h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.agenda-content p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
 }
 .path-grid,
 .learning-path {
@@ -3874,6 +4076,40 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
 }
+.interactive-path {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card {
+padding: 0;
+overflow: hidden;
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.path-card summary {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.65rem 0.85rem;
+min-height: 172px;
+padding: 1rem;
+cursor: pointer;
+list-style: none;
+}
+.path-card summary::-webkit-details-marker {
+display: none;
+}
+.path-card summary::marker {
+content: "";
+}
+.path-card summary:focus-visible {
+outline: 3px solid rgba(181, 18, 27, 0.25);
+outline-offset: -3px;
+}
+.path-card[open] summary {
+min-height: auto;
+border-bottom: 1px solid #e6edf1;
+background: #fbfdfe;
+}
 .path-card h3 {
 margin: 0.7rem 0 0.45rem;
 color: #123244;
@@ -3890,6 +4126,7 @@ line-height: 1.45;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+grid-row: span 4;
 width: 2rem;
 height: 2rem;
 border-radius: 999px;
@@ -3897,6 +4134,188 @@ background: #b5121b;
 color: #ffffff;
 font-size: 0.9rem;
 font-weight: 700;
+}
+.path-title {
+display: block;
+min-width: 0;
+color: #123244;
+font-size: 1.04rem;
+font-weight: 700;
+line-height: 1.25;
+overflow-wrap: anywhere;
+}
+.path-preview {
+display: block;
+min-width: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+overflow-wrap: anywhere;
+}
+.path-resource {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.22rem 0.35rem;
+min-width: 0;
+color: #5a6c78;
+font-size: 0.82rem;
+line-height: 1.35;
+overflow-wrap: anywhere;
+}
+.resource-separator {
+color: #8a98a3;
+}
+.path-toggle {
+display: inline-flex;
+justify-self: start;
+align-items: center;
+min-height: 1.9rem;
+padding: 0.2rem 0.55rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+color: #0b4f6c;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1;
+background: #f7fafc;
+}
+.path-card[open] .closed-label,
+.path-card .open-label {
+display: none;
+}
+.path-card[open] .open-label {
+display: inline;
+}
+.step-detail {
+padding: 1rem 1.1rem 1.15rem;
+}
+.step-detail p {
+margin: 0 0 0.7rem;
+}
+.step-detail p:last-child {
+margin-bottom: 0;
+}
+.step-label {
+display: inline-block;
+min-width: 5.2rem;
+margin-right: 0.35rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.ae-box {
+margin-top: 0.85rem;
+padding: 0.85rem 0.95rem;
+border: 1px solid #cfe3da;
+border-left: 4px solid #2f7d5c;
+border-radius: 8px;
+background: #f3faf6;
+}
+.ae-box + .ae-box {
+margin-top: 0.7rem;
+}
+.ae-title {
+color: #1f5f44;
+font-weight: 700;
+}
+.resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
+margin: 0.15rem 0.35rem 0.15rem 0;
+color: #0b5cad;
+font-weight: 600;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.summary-resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+padding: 0.1rem 0.35rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #f8fbfd;
+color: #0b5cad;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1.25;
+text-decoration: none;
+}
+.summary-resource-link:hover {
+border-color: #b8cbd6;
+background: #eef6f9;
+text-decoration: underline;
+text-underline-offset: 0.16em;
+}
+.resource-icon,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1rem;
+height: 1rem;
+flex: 0 0 auto;
+color: currentColor;
+border: 1px solid currentColor;
+border-radius: 3px;
+background: transparent;
+font-family: Arial, sans-serif;
+font-size: 0.68rem;
+font-weight: 800;
+line-height: 1;
+}
+.resource-icon::before,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon::before {
+display: inline-block;
+}
+.video-icon,
+.video-link::before {
+color: #8f1119;
+}
+.video-icon::before,
+.video-link::before {
+content: "▶";
+}
+.exercise-icon,
+.exercise-link::before {
+color: #2f7d5c;
+}
+.exercise-icon::before,
+.exercise-link::before {
+content: "✓";
+}
+.demo-icon,
+.demo-link::before {
+color: #0b4f6c;
+}
+.demo-icon::before,
+.demo-link::before {
+content: ">";
+}
+.reading-icon,
+.reading-link::before {
+color: #7a4d00;
+}
+.reading-icon::before,
+.reading-link::before {
+content: "L";
+}
+.info-icon,
+.info-link::before {
+color: #5a6c78;
+border-radius: 999px;
+}
+.info-icon::before,
+.info-link::before {
+content: "i";
 }
 .step-card {
 margin: 1.35rem 0;
@@ -3932,6 +4351,35 @@ background: #f8fbfd;
 .compact-box {
 margin-top: 1rem;
 }
+.production-box {
+border-left: 5px solid #b5121b;
+background: #fbfdfe;
+}
+.production-box h3 {
+margin: 0.2rem 0 0.45rem;
+color: #123244;
+font-size: 1.2rem;
+line-height: 1.25;
+}
+.production-flow {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+margin-top: 0.9rem;
+}
+.production-flow span {
+display: inline-flex;
+align-items: center;
+min-height: 1.85rem;
+padding: 0.25rem 0.65rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #ffffff;
+color: #123244;
+font-size: 0.86rem;
+font-weight: 700;
+line-height: 1.2;
+}
 .resource-grid {
 display: grid;
 grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3956,6 +4404,43 @@ margin-bottom: 0;
 color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
+}
+.resource-list {
+display: grid;
+gap: 0;
+margin: 1.1rem 0 1.75rem;
+border-top: 1px solid #dce5ea;
+}
+.resource-row {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 0.1rem;
+border-bottom: 1px solid #dce5ea;
+color: inherit;
+text-decoration: none;
+}
+.resource-row:hover .resource-row-title {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
+.resource-row-title {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.25;
+}
+.resource-row-text {
+display: block;
+margin-top: 0.15rem;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.resource-row-icon {
+margin-top: 0.15rem;
 }
 .deliverable-card p:last-child {
 margin-bottom: 0;
@@ -3988,11 +4473,20 @@ min-height: 132px;
 margin-top: 0;
 }
 @media (max-width: 992px) {
-.quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.outcome-strip {
+grid-template-columns: 1fr;
+}
+.outcome-arrow {
+display: none;
 }
 }
 @media (max-width: 640px) {
@@ -4012,15 +4506,28 @@ font-size: 1.55rem;
 }
 .quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
+.interactive-path .path-card[open] {
+grid-column: span 1;
+}
+.fact-card {
+min-height: auto;
+}
 .fact-card,
 .path-card {
 min-height: auto;
+}
+.path-card summary {
+min-height: auto;
+}
+.agenda-item {
+grid-template-columns: 1fr;
 }
 }
 </style>
@@ -4058,10 +4565,6 @@ min-height: auto;
   <li class="nav-item">
     <a class="nav-link" href="../../roadmap.html"> 
 <span class="menu-text">Roadmap</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../migration-ancien-materiel.html"> 
-<span class="menu-text">Migration</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../installation.html"> 
@@ -4189,25 +4692,12 @@ min-height: auto;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#atelier-01---explorer-un-tableau-de-données-daffaires" id="toc-atelier-01---explorer-un-tableau-de-données-daffaires" class="nav-link active" data-scroll-target="#atelier-01---explorer-un-tableau-de-données-daffaires">Atelier 01 - Explorer un tableau de données d’affaires</a>
-  <ul class="collapse">
-  <li><a href="#lets-eat-the-cake" id="toc-lets-eat-the-cake" class="nav-link" data-scroll-target="#lets-eat-the-cake">Let’s eat the cake</a></li>
-  <li><a href="#mise-en-contexte" id="toc-mise-en-contexte" class="nav-link" data-scroll-target="#mise-en-contexte">Mise en contexte</a></li>
-  <li><a href="#utilité-pour-le-génie-et-ladministration" id="toc-utilité-pour-le-génie-et-ladministration" class="nav-link" data-scroll-target="#utilité-pour-le-génie-et-ladministration">Utilité pour le génie et l’administration</a></li>
-  <li><a href="#repères-avant-les-capsules" id="toc-repères-avant-les-capsules" class="nav-link" data-scroll-target="#repères-avant-les-capsules">Repères avant les capsules</a></li>
-  <li><a href="#préparer-votre-espace-de-travail" id="toc-préparer-votre-espace-de-travail" class="nav-link" data-scroll-target="#préparer-votre-espace-de-travail">Préparer votre espace de travail</a></li>
-  <li><a href="#capsule-1---rappel-du-diagnostic-statistique" id="toc-capsule-1---rappel-du-diagnostic-statistique" class="nav-link" data-scroll-target="#capsule-1---rappel-du-diagnostic-statistique">Capsule 1 - Rappel du diagnostic statistique</a></li>
-  <li><a href="#capsule-2---importation-et-inspection" id="toc-capsule-2---importation-et-inspection" class="nav-link" data-scroll-target="#capsule-2---importation-et-inspection">Capsule 2 - Importation et inspection</a></li>
-  <li><a href="#capsule-3---indicateurs-descriptifs" id="toc-capsule-3---indicateurs-descriptifs" class="nav-link" data-scroll-target="#capsule-3---indicateurs-descriptifs">Capsule 3 - Indicateurs descriptifs</a></li>
-  <li><a href="#capsule-4---graphiques-exploratoires" id="toc-capsule-4---graphiques-exploratoires" class="nav-link" data-scroll-target="#capsule-4---graphiques-exploratoires">Capsule 4 - Graphiques exploratoires</a></li>
-  <li><a href="#démonstrations-r" id="toc-démonstrations-r" class="nav-link" data-scroll-target="#démonstrations-r">Démonstrations R</a></li>
-  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a></li>
-  <li><a href="#correction-avec-solutions-cachées" id="toc-correction-avec-solutions-cachées" class="nav-link" data-scroll-target="#correction-avec-solutions-cachées">Correction avec solutions cachées</a></li>
-  <li><a href="#lectures-ciblées" id="toc-lectures-ciblées" class="nav-link" data-scroll-target="#lectures-ciblées">Lectures ciblées</a></li>
-  <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
-  <li><a href="#lien-avec-lancien-matériel" id="toc-lien-avec-lancien-matériel" class="nav-link" data-scroll-target="#lien-avec-lancien-matériel">Lien avec l’ancien matériel</a></li>
-  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
-  </ul></li>
+  <li><a href="#avant-latelier" id="toc-avant-latelier" class="nav-link active" data-scroll-target="#avant-latelier">Avant l’atelier</a></li>
+  <li><a href="#pendant-latelier" id="toc-pendant-latelier" class="nav-link" data-scroll-target="#pendant-latelier">Pendant l’atelier</a></li>
+  <li><a href="#après-latelier" id="toc-après-latelier" class="nav-link" data-scroll-target="#après-latelier">Après l’atelier</a></li>
+  <li><a href="#ressources-utiles" id="toc-ressources-utiles" class="nav-link" data-scroll-target="#ressources-utiles">Ressources utiles</a></li>
+  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
+  <li><a href="#pour-la-suite" id="toc-pour-la-suite" class="nav-link" data-scroll-target="#pour-la-suite">Pour la suite</a></li>
   </ul>
 </nav>
     </div>
@@ -4216,7 +4706,8 @@ min-height: auto;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Atelier 01 - Parcours autonome</h1>
+<h1 class="title">Atelier 01</h1>
+<p class="subtitle lead">Explorer un tableau avec RStudio</p>
 </div>
 
 
@@ -4233,107 +4724,242 @@ min-height: auto;
 </header>
 
 
-<section id="atelier-01---explorer-un-tableau-de-données-daffaires" class="level1">
-<h1>Atelier 01 - Explorer un tableau de données d’affaires</h1>
-<p>Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.</p>
-<p>Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une pause active, une mise en pratique en R, des exercices, une correction, puis une trace finale.</p>
-<section id="lets-eat-the-cake" class="level2">
-<h2 class="anchored" data-anchor-id="lets-eat-the-cake">Let’s eat the cake</h2>
-<p>Objectif : apprendre à explorer un tableau de données d’affaires avec R pour produire un premier diagnostic descriptif.</p>
-<p>Compétences développées :</p>
+<div class="learning-hero">
+<p class="hero-kicker">
+Atelier en classe
+</p>
+<h2 class="anchored">
+Explorer un tableau avec RStudio
+</h2>
+<p>Cet atelier n’est pas une séance autonome complète. Il sert à pratiquer en classe les gestes vus dans les deux premières semaines : ouvrir un projet, importer un fichier CSV, inspecter un tableau, produire quelques résumés, visualiser et écrire des constats descriptifs.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Avant
+</div>
+<div class="fact-value">
+Préparation courte
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Pendant
+</div>
+<div class="fact-value">
+Travail accompagné dans RStudio
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Données
+</div>
+<div class="fact-value">
+ventes_pme_quebec.csv
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Après
+</div>
+<div class="fact-value">
+Court rapport Quarto
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="avant-latelier" class="level2">
+<h2 class="anchored" data-anchor-id="avant-latelier">Avant l’atelier</h2>
+<p>L’objectif est simplement d’arriver en classe prêt·e à travailler. Il ne faut pas refaire toute la semaine 02 : il suffit de retrouver les gestes essentiels.</p>
+<div class="phase-grid">
+  <div class="phase-card">
+    <span class="phase-label">1</span>
+    <h3 class="anchored">Préparer RStudio</h3>
+    <p>Ouvrir ou créer un projet R pour l&#39;atelier et vérifier que les packages de base se chargent.</p>
+  </div>
+  <div class="phase-card">
+    <span class="phase-label">2</span>
+    <h3 class="anchored">Repérer le fichier</h3>
+    <p>Vérifier que <code>ventes_pme_quebec.csv</code> est accessible dans le dossier de l&#39;atelier.</p>
+  </div>
+  <div class="phase-card">
+    <span class="phase-label">3</span>
+    <h3 class="anchored">Démarrer le QMD</h3>
+    <p>Créer un document Quarto minimal avec une section d&#39;importation et une section de résultats.</p>
+  </div>
+</div>
+<p>À revoir si nécessaire :</p>
 <ul>
-<li>importer un fichier CSV;</li>
-<li>reconnaître l’unité d’observation et les variables;</li>
-<li>repérer les valeurs manquantes;</li>
-<li>calculer des indicateurs descriptifs;</li>
-<li>produire des graphiques exploratoires;</li>
-<li>formuler des constats utiles pour une décision d’affaires.</li>
+<li><a href="../../ressources/guide-quarto.html">guide Quarto</a>, pour créer et rendre un fichier <code>.qmd</code>;</li>
+<li><a href="../semaine-02-r-quarto/demonstrations.html">démonstrations de la semaine 02</a>, pour l’importation CSV et <code>glimpse()</code>;</li>
+<li><a href="informations.html">informations de l’atelier</a>, pour retrouver le fichier de données.</li>
 </ul>
-<p>Application business : analyser un jeu de données pédagogique sur les ventes mensuelles de cinq succursales.</p>
-<p>Résultat final attendu : un court rapport Quarto qui présente trois constats, deux graphiques et une recommandation de prochaine analyse.</p>
-<p>Lien avec une décision d’affaires réelle : apprendre à choisir si une analyse doit d’abord porter sur les ventes, la satisfaction, les ruptures de stock ou les délais de livraison.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Préparation minimale">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Préparation minimale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si vous arrivez avec RStudio ouvert, le fichier CSV accessible et un document Quarto créé, c’est suffisant pour commencer l’atelier.</p>
+</div>
+</div>
 </section>
-<section id="mise-en-contexte" class="level2">
-<h2 class="anchored" data-anchor-id="mise-en-contexte">Mise en contexte</h2>
-<p>TODO rédiger le contexte pédagogique du module et préciser pourquoi les notions sont utiles pour la suite du cours.</p>
+<section id="pendant-latelier" class="level2">
+<h2 class="anchored" data-anchor-id="pendant-latelier">Pendant l’atelier</h2>
+<p>Pendant la séance, l’important est de produire les éléments du rapport, pas de lire une longue page. Le guide détaillé est disponible au besoin, mais le fil de travail en classe est le suivant.</p>
+<div class="workshop-agenda">
+  <div class="agenda-item">
+    <div class="agenda-time">Départ</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Importer le tableau</h3>
+      <p>Lire le fichier CSV, vérifier les dimensions et nommer l&#39;unité d&#39;observation.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 1</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Inspecter les variables</h3>
+      <p>Repérer les variables de ventes, de clientèle, de marketing, d&#39;opérations et de satisfaction.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 2</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Vérifier les valeurs manquantes</h3>
+      <p>Produire un petit diagnostic et noter les précautions nécessaires.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 3</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Construire un tableau synthèse</h3>
+      <p>Résumer les ventes, les clients, le panier moyen, la satisfaction et les ruptures par succursale.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Étape 4</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Créer deux graphiques</h3>
+      <p>Produire un graphique de comparaison et un graphique explorant une autre dimension du tableau.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">Fin</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Écrire les constats</h3>
+      <p>Rédiger trois constats descriptifs courts et une limite d&#39;interprétation.</p>
+    </div>
+  </div>
+</div>
+<p>Ce qui doit être produit pendant l’atelier :</p>
+<div class="checklist-box">
+<ul class="task-list">
+<li><label><input type="checkbox">le code d’importation;</label></li>
+<li><label><input type="checkbox">une inspection du tableau;</label></li>
+<li><label><input type="checkbox">un diagnostic des valeurs manquantes;</label></li>
+<li><label><input type="checkbox">un tableau synthèse par succursale;</label></li>
+<li><label><input type="checkbox">deux graphiques;</label></li>
+<li><label><input type="checkbox">trois constats descriptifs;</label></li>
+<li><label><input type="checkbox">une limite d’interprétation.</label></li>
+</ul>
+</div>
 </section>
-<section id="utilité-pour-le-génie-et-ladministration" class="level2">
-<h2 class="anchored" data-anchor-id="utilité-pour-le-génie-et-ladministration">Utilité pour le génie et l’administration</h2>
-<p>Le module doit être lu avec deux angles complémentaires.</p>
-<p>Pour les étudiant·es en génie, l’objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.</p>
-<p>Pour les étudiant·es en administration, l’objectif est de relier l’analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.</p>
-<p>L’IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l’autorisent, mais le raisonnement statistique, le code R et l’interprétation restent au centre du travail.</p>
+<section id="après-latelier" class="level2">
+<h2 class="anchored" data-anchor-id="après-latelier">Après l’atelier</h2>
+<p>Après la séance, il faut surtout nettoyer, vérifier et rendre. Cette partie ne demande pas une nouvelle analyse complète.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="À rendre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+À rendre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un court rapport Quarto reproductible. Le rapport doit montrer que vous êtes capable de passer d’un fichier CSV à une première exploration descriptive claire.</p>
+</div>
+</div>
+<p>Le rapport doit contenir :</p>
+<ul>
+<li>une courte introduction;</li>
+<li>le code d’importation;</li>
+<li>une description du tableau;</li>
+<li>le diagnostic des valeurs manquantes;</li>
+<li>le tableau synthèse;</li>
+<li>deux graphiques;</li>
+<li>trois constats descriptifs;</li>
+<li>une limite d’interprétation;</li>
+<li>une question d’analyse pour la suite.</li>
+</ul>
+<p>Avant de déposer le fichier :</p>
+<div class="checklist-box">
+<ul class="task-list">
+<li><label><input type="checkbox">Le document Quarto se rend sans erreur.</label></li>
+<li><label><input type="checkbox">Les tableaux et graphiques sont lisibles.</label></li>
+<li><label><input type="checkbox">Les constats sont descriptifs, pas causaux.</label></li>
+<li><label><input type="checkbox">La limite d’interprétation est explicite.</label></li>
+<li><label><input type="checkbox">Le fichier final est court et propre.</label></li>
+</ul>
+</div>
 </section>
-<section id="repères-avant-les-capsules" class="level2">
-<h2 class="anchored" data-anchor-id="repères-avant-les-capsules">Repères avant les capsules</h2>
-<p>Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.</p>
+<section id="ressources-utiles" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-utiles">Ressources utiles</h2>
+<div class="resource-list">
+  <a class="resource-row" href="guide-atelier.html">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Guide d&#39;atelier</span><span class="resource-row-text">Code complet et déroulement détaillé si vous devez reprendre une étape.</span></span>
+  </a>
+  <a class="resource-row" href="demonstrations.html">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Rappels techniques pour importer, résumer et visualiser.</span></span>
+  </a>
+  <a class="resource-row" href="exercices.html">
+    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Consignes courtes pour compléter ou reprendre la pratique.</span></span>
+  </a>
+</div>
 </section>
-<section id="préparer-votre-espace-de-travail" class="level2">
-<h2 class="anchored" data-anchor-id="préparer-votre-espace-de-travail">Préparer votre espace de travail</h2>
-<p>Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace de portfolio ou du livrable du module.</p>
-<p>Vérifiez aussi les fichiers disponibles dans <a href="../../modules/atelier-01-r/informations.html">les informations du module</a>, notamment les données publiques et les consignes liées au matériel ancien.</p>
-<p>Pour l’atelier, le <a href="../../modules/atelier-01-r/guide-atelier.html">guide d’atelier</a> donne le déroulement détaillé des manipulations à réaliser.</p>
+<section id="je-suis-bloquée" class="level2">
+<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
+<p>Vérifiez d’abord :</p>
+<ol type="1">
+<li>le dossier du projet R;</li>
+<li>le chemin du fichier CSV;</li>
+<li>le chargement des packages avec <code>library(tidyverse)</code> et <code>library(janitor)</code>;</li>
+<li>le nom exact des variables;</li>
+<li>le message d’erreur complet;</li>
+<li>le code correspondant dans le guide d’atelier.</li>
+</ol>
 </section>
-<section id="capsule-1---rappel-du-diagnostic-statistique" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-1---rappel-du-diagnostic-statistique">Capsule 1 - Rappel du diagnostic statistique</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/atelier-01-r/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-2---importation-et-inspection" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-2---importation-et-inspection">Capsule 2 - Importation et inspection</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/atelier-01-r/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-3---indicateurs-descriptifs" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-3---indicateurs-descriptifs">Capsule 3 - Indicateurs descriptifs</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/atelier-01-r/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="capsule-4---graphiques-exploratoires" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-4---graphiques-exploratoires">Capsule 4 - Graphiques exploratoires</h2>
-<p>Poursuivez le parcours dans <a href="../../modules/atelier-01-r/capsules.html">les capsules</a>. Commencez par l’onglet <code>Vidéo</code>, puis utilisez l’onglet <code>Support QMD/PDF</code> pour revoir les idées essentielles. Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule.</p>
-<p>Après la capsule, faites immédiatement la pause active associée. Cette pause sert à vérifier la compréhension avant de continuer.</p>
-<p>Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.</p>
-</section>
-<section id="démonstrations-r" class="level2">
-<h2 class="anchored" data-anchor-id="démonstrations-r">Démonstrations R</h2>
-<p>Après les capsules, passez aux <a href="../../modules/atelier-01-r/demonstrations.html">démonstrations R</a>. Reproduisez le code dans l’ordre, sans seulement lire les résultats. L’objectif est de voir les gestes techniques attendus avant les exercices.</p>
-<p>Trace attendue : le code exécuté, un résultat observé et une phrase d’interprétation.</p>
-</section>
-<section id="exercices-dapplication" class="level2">
-<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
-<p>Faites ensuite <a href="../../modules/atelier-01-r/exercices.html">les exercices</a> sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.</p>
-<p>Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d’exécuter.</p>
-</section>
-<section id="correction-avec-solutions-cachées" class="level2">
-<h2 class="anchored" data-anchor-id="correction-avec-solutions-cachées">Correction avec solutions cachées</h2>
-<p>Une fois les exercices tentés, ouvrez les solutions cachées dans <a href="../../modules/atelier-01-r/exercices.html">la page d’exercices</a>. Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.</p>
-<p>Trace attendue : une correction courte et une liste de questions restantes.</p>
-</section>
-<section id="lectures-ciblées" class="level2">
-<h2 class="anchored" data-anchor-id="lectures-ciblées">Lectures ciblées</h2>
-<p>Consultez ensuite <a href="../../modules/atelier-01-r/lectures.html">les lectures</a>. Il ne s’agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu’ils clarifient par rapport aux capsules ou aux exercices.</p>
-<p>Trace attendue : une idée utile, une définition ou une référence à retenir.</p>
-</section>
-<section id="trace-finale" class="level2">
-<h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Terminez le module en produisant le livrable court : Court rapport Quarto d’exploration.</p>
-<p>Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.</p>
-</section>
-<section id="lien-avec-lancien-matériel" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-lancien-matériel">Lien avec l’ancien matériel</h2>
-<p>Source ancienne de référence : <code>MQT-2101-A25_Atelier en classe 1 .zip</code>.</p>
-<p>Les fichiers privés, PowerPoint, PDF protégés, solutionnaires et archives ne sont pas publiés dans le site.</p>
-</section>
-<section id="pour-aller-plus-loin" class="level2">
-<h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
-<p>TODO ajouter une ressource complémentaire ou une piste de consolidation.</p>
+<section id="pour-la-suite" class="level2">
+<h2 class="anchored" data-anchor-id="pour-la-suite">Pour la suite</h2>
+<p>Cet atelier prépare la séance sur la régression linéaire. Après avoir décrit un tableau, on pourra commencer à se demander si deux variables semblent liées et comment mesurer cette relation avec un modèle.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

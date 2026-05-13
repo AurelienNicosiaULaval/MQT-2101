@@ -3867,17 +3867,109 @@ text-transform: uppercase;
 }
 .quick-facts {
 display: grid;
-grid-template-columns: repeat(4, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 0.9rem;
 margin-top: 1.1rem;
 }
 .fact-card {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+align-items: start;
+gap: 0.8rem;
+min-width: 0;
 min-height: 112px;
 padding: 1rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 10px 24px rgba(18, 50, 68, 0.06);
+}
+.fact-icon {
+position: relative;
+display: block;
+box-sizing: border-box;
+width: 2.15rem;
+height: 2.15rem;
+padding: 0;
+border: 1px solid #c9dde7;
+border-radius: 999px;
+background: #eef6f9;
+color: #0b4f6c;
+flex: 0 0 auto;
+line-height: 0;
+}
+.fact-icon::before,
+.fact-icon::after {
+content: "";
+position: absolute;
+box-sizing: border-box;
+color: currentColor;
+}
+.fact-clock::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 999px;
+transform: translate(-50%, -50%);
+}
+.fact-clock::after {
+left: 50%;
+top: 50%;
+width: 0.36rem;
+height: 0.46rem;
+border-left: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-0.02rem, -0.38rem);
+}
+.fact-tools::before {
+left: 50%;
+top: 50%;
+width: 1.15rem;
+height: 0.86rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-tools::after {
+left: 50%;
+top: 50%;
+width: 0.52rem;
+height: 0.38rem;
+border-right: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-65%, -52%) rotate(-45deg);
+}
+.fact-data::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+background:
+linear-gradient(currentColor, currentColor) 50% 0 / 1.7px 100% no-repeat,
+linear-gradient(currentColor, currentColor) 0 50% / 100% 1.7px no-repeat;
+transform: translate(-50%, -50%);
+}
+.fact-report::before {
+left: 50%;
+top: 50%;
+width: 0.95rem;
+height: 1.12rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-report::after {
+left: 50%;
+top: 50%;
+width: 0.48rem;
+height: 0.35rem;
+border-top: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-50%, -10%);
 }
 .fact-label {
 margin-bottom: 0.45rem;
@@ -3888,10 +3980,120 @@ letter-spacing: 0;
 text-transform: uppercase;
 }
 .fact-value {
+min-width: 0;
 color: #123244;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
+overflow-wrap: anywhere;
+word-break: normal;
+}
+.outcome-strip {
+display: grid;
+grid-template-columns: 1fr auto 1fr auto 1fr;
+align-items: stretch;
+gap: 0.75rem;
+margin: 1.15rem 0 1.4rem;
+}
+.outcome-item {
+padding: 0.9rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 20px rgba(18, 50, 68, 0.04);
+}
+.outcome-label {
+display: block;
+margin-bottom: 0.2rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.outcome-value {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.3;
+}
+.outcome-arrow {
+align-self: center;
+color: #7a1c24;
+font-size: 1.2rem;
+font-weight: 700;
+}
+.phase-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.phase-card {
+padding: 1.05rem 1.1rem;
+border: 1px solid #dce5ea;
+border-top: 4px solid #b5121b;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.phase-card h3 {
+margin: 0.35rem 0 0.45rem;
+color: #123244;
+font-size: 1.08rem;
+line-height: 1.25;
+}
+.phase-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.phase-label {
+display: inline-flex;
+align-items: center;
+min-height: 1.65rem;
+padding: 0.15rem 0.5rem;
+border-radius: 999px;
+background: #f8ebed;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+line-height: 1.2;
+}
+.workshop-agenda {
+display: grid;
+gap: 0.75rem;
+margin: 1.15rem 0 1.6rem;
+}
+.agenda-item {
+display: grid;
+grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 6px 18px rgba(18, 50, 68, 0.035);
+}
+.agenda-time {
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 700;
+line-height: 1.35;
+}
+.agenda-content h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.agenda-content p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
 }
 .path-grid,
 .learning-path {
@@ -3909,6 +4111,40 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
 }
+.interactive-path {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card {
+padding: 0;
+overflow: hidden;
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.path-card summary {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.65rem 0.85rem;
+min-height: 172px;
+padding: 1rem;
+cursor: pointer;
+list-style: none;
+}
+.path-card summary::-webkit-details-marker {
+display: none;
+}
+.path-card summary::marker {
+content: "";
+}
+.path-card summary:focus-visible {
+outline: 3px solid rgba(181, 18, 27, 0.25);
+outline-offset: -3px;
+}
+.path-card[open] summary {
+min-height: auto;
+border-bottom: 1px solid #e6edf1;
+background: #fbfdfe;
+}
 .path-card h3 {
 margin: 0.7rem 0 0.45rem;
 color: #123244;
@@ -3925,6 +4161,7 @@ line-height: 1.45;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+grid-row: span 4;
 width: 2rem;
 height: 2rem;
 border-radius: 999px;
@@ -3932,6 +4169,188 @@ background: #b5121b;
 color: #ffffff;
 font-size: 0.9rem;
 font-weight: 700;
+}
+.path-title {
+display: block;
+min-width: 0;
+color: #123244;
+font-size: 1.04rem;
+font-weight: 700;
+line-height: 1.25;
+overflow-wrap: anywhere;
+}
+.path-preview {
+display: block;
+min-width: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+overflow-wrap: anywhere;
+}
+.path-resource {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.22rem 0.35rem;
+min-width: 0;
+color: #5a6c78;
+font-size: 0.82rem;
+line-height: 1.35;
+overflow-wrap: anywhere;
+}
+.resource-separator {
+color: #8a98a3;
+}
+.path-toggle {
+display: inline-flex;
+justify-self: start;
+align-items: center;
+min-height: 1.9rem;
+padding: 0.2rem 0.55rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+color: #0b4f6c;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1;
+background: #f7fafc;
+}
+.path-card[open] .closed-label,
+.path-card .open-label {
+display: none;
+}
+.path-card[open] .open-label {
+display: inline;
+}
+.step-detail {
+padding: 1rem 1.1rem 1.15rem;
+}
+.step-detail p {
+margin: 0 0 0.7rem;
+}
+.step-detail p:last-child {
+margin-bottom: 0;
+}
+.step-label {
+display: inline-block;
+min-width: 5.2rem;
+margin-right: 0.35rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.ae-box {
+margin-top: 0.85rem;
+padding: 0.85rem 0.95rem;
+border: 1px solid #cfe3da;
+border-left: 4px solid #2f7d5c;
+border-radius: 8px;
+background: #f3faf6;
+}
+.ae-box + .ae-box {
+margin-top: 0.7rem;
+}
+.ae-title {
+color: #1f5f44;
+font-weight: 700;
+}
+.resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
+margin: 0.15rem 0.35rem 0.15rem 0;
+color: #0b5cad;
+font-weight: 600;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.summary-resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+padding: 0.1rem 0.35rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #f8fbfd;
+color: #0b5cad;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1.25;
+text-decoration: none;
+}
+.summary-resource-link:hover {
+border-color: #b8cbd6;
+background: #eef6f9;
+text-decoration: underline;
+text-underline-offset: 0.16em;
+}
+.resource-icon,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1rem;
+height: 1rem;
+flex: 0 0 auto;
+color: currentColor;
+border: 1px solid currentColor;
+border-radius: 3px;
+background: transparent;
+font-family: Arial, sans-serif;
+font-size: 0.68rem;
+font-weight: 800;
+line-height: 1;
+}
+.resource-icon::before,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon::before {
+display: inline-block;
+}
+.video-icon,
+.video-link::before {
+color: #8f1119;
+}
+.video-icon::before,
+.video-link::before {
+content: "▶";
+}
+.exercise-icon,
+.exercise-link::before {
+color: #2f7d5c;
+}
+.exercise-icon::before,
+.exercise-link::before {
+content: "✓";
+}
+.demo-icon,
+.demo-link::before {
+color: #0b4f6c;
+}
+.demo-icon::before,
+.demo-link::before {
+content: ">";
+}
+.reading-icon,
+.reading-link::before {
+color: #7a4d00;
+}
+.reading-icon::before,
+.reading-link::before {
+content: "L";
+}
+.info-icon,
+.info-link::before {
+color: #5a6c78;
+border-radius: 999px;
+}
+.info-icon::before,
+.info-link::before {
+content: "i";
 }
 .step-card {
 margin: 1.35rem 0;
@@ -3967,6 +4386,35 @@ background: #f8fbfd;
 .compact-box {
 margin-top: 1rem;
 }
+.production-box {
+border-left: 5px solid #b5121b;
+background: #fbfdfe;
+}
+.production-box h3 {
+margin: 0.2rem 0 0.45rem;
+color: #123244;
+font-size: 1.2rem;
+line-height: 1.25;
+}
+.production-flow {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+margin-top: 0.9rem;
+}
+.production-flow span {
+display: inline-flex;
+align-items: center;
+min-height: 1.85rem;
+padding: 0.25rem 0.65rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #ffffff;
+color: #123244;
+font-size: 0.86rem;
+font-weight: 700;
+line-height: 1.2;
+}
 .resource-grid {
 display: grid;
 grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3991,6 +4439,43 @@ margin-bottom: 0;
 color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
+}
+.resource-list {
+display: grid;
+gap: 0;
+margin: 1.1rem 0 1.75rem;
+border-top: 1px solid #dce5ea;
+}
+.resource-row {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 0.1rem;
+border-bottom: 1px solid #dce5ea;
+color: inherit;
+text-decoration: none;
+}
+.resource-row:hover .resource-row-title {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
+.resource-row-title {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.25;
+}
+.resource-row-text {
+display: block;
+margin-top: 0.15rem;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.resource-row-icon {
+margin-top: 0.15rem;
 }
 .deliverable-card p:last-child {
 margin-bottom: 0;
@@ -4023,11 +4508,20 @@ min-height: 132px;
 margin-top: 0;
 }
 @media (max-width: 992px) {
-.quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.outcome-strip {
+grid-template-columns: 1fr;
+}
+.outcome-arrow {
+display: none;
 }
 }
 @media (max-width: 640px) {
@@ -4047,15 +4541,28 @@ font-size: 1.55rem;
 }
 .quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
+.interactive-path .path-card[open] {
+grid-column: span 1;
+}
+.fact-card {
+min-height: auto;
+}
 .fact-card,
 .path-card {
 min-height: auto;
+}
+.path-card summary {
+min-height: auto;
+}
+.agenda-item {
+grid-template-columns: 1fr;
 }
 }
 </style>
@@ -4093,10 +4600,6 @@ min-height: auto;
   <li class="nav-item">
     <a class="nav-link" href="../../roadmap.html"> 
 <span class="menu-text">Roadmap</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../migration-ancien-materiel.html"> 
-<span class="menu-text">Migration</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../installation.html"> 
@@ -4228,9 +4731,11 @@ min-height: auto;
   <ul class="collapse">
   <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#préparation" id="toc-préparation" class="nav-link" data-scroll-target="#préparation">Préparation</a></li>
-  <li><a href="#démonstration-1---importer-ou-préparer-les-données" id="toc-démonstration-1---importer-ou-préparer-les-données" class="nav-link" data-scroll-target="#démonstration-1---importer-ou-préparer-les-données">Démonstration 1 - Importer ou préparer les données</a></li>
-  <li><a href="#démonstration-2---produire-un-résultat-intermédiaire" id="toc-démonstration-2---produire-un-résultat-intermédiaire" class="nav-link" data-scroll-target="#démonstration-2---produire-un-résultat-intermédiaire">Démonstration 2 - Produire un résultat intermédiaire</a></li>
-  <li><a href="#démonstration-3---interpréter-pour-une-décision" id="toc-démonstration-3---interpréter-pour-une-décision" class="nav-link" data-scroll-target="#démonstration-3---interpréter-pour-une-décision">Démonstration 3 - Interpréter pour une décision</a></li>
+  <li><a href="#démonstration-1---importer-et-inspecter" id="toc-démonstration-1---importer-et-inspecter" class="nav-link" data-scroll-target="#démonstration-1---importer-et-inspecter">Démonstration 1 - Importer et inspecter</a></li>
+  <li><a href="#démonstration-2---repérer-les-valeurs-manquantes" id="toc-démonstration-2---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#démonstration-2---repérer-les-valeurs-manquantes">Démonstration 2 - Repérer les valeurs manquantes</a></li>
+  <li><a href="#démonstration-3---résumer-par-succursale" id="toc-démonstration-3---résumer-par-succursale" class="nav-link" data-scroll-target="#démonstration-3---résumer-par-succursale">Démonstration 3 - Résumer par succursale</a></li>
+  <li><a href="#démonstration-4---visualiser-les-ventes" id="toc-démonstration-4---visualiser-les-ventes" class="nav-link" data-scroll-target="#démonstration-4---visualiser-les-ventes">Démonstration 4 - Visualiser les ventes</a></li>
+  <li><a href="#démonstration-5---explorer-une-relation-descriptive" id="toc-démonstration-5---explorer-une-relation-descriptive" class="nav-link" data-scroll-target="#démonstration-5---explorer-une-relation-descriptive">Démonstration 5 - Explorer une relation descriptive</a></li>
   <li><a href="#à-vérifier" id="toc-à-vérifier" class="nav-link" data-scroll-target="#à-vérifier">À vérifier</a></li>
   </ul></li>
   </ul>
@@ -4262,32 +4767,129 @@ min-height: auto;
 <h1>Démonstrations R - Atelier 01</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.</p>
+<p>Cette page regroupe les gestes R principaux de l’atelier : importer les données, inspecter le tableau, vérifier les valeurs manquantes, produire un tableau synthèse et créer deux graphiques.</p>
 </section>
 <section id="préparation" class="level2">
 <h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> charger les packages propres au module.</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="démonstration-1---importer-ou-préparer-les-données" class="level2">
-<h2 class="anchored" data-anchor-id="démonstration-1---importer-ou-préparer-les-données">Démonstration 1 - Importer ou préparer les données</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> lire le ou les fichiers de données du module.</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;data/ventes_pme_quebec.csv&quot;</span>)) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/ventes_pme_quebec.csv&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-01-r/data/ventes_pme_quebec.csv&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>currency_ca <span class="ot">&lt;-</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">prefix =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">suffix =</span> <span class="st">&quot; $&quot;</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">big.mark =</span> <span class="st">&quot; &quot;</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="démonstration-2---produire-un-résultat-intermédiaire" class="level2">
-<h2 class="anchored" data-anchor-id="démonstration-2---produire-un-résultat-intermédiaire">Démonstration 2 - Produire un résultat intermédiaire</h2>
+<section id="démonstration-1---importer-et-inspecter" class="level2">
+<h2 class="anchored" data-anchor-id="démonstration-1---importer-et-inspecter">Démonstration 1 - Importer et inspecter</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> calculer un résumé, ajuster un modèle ou produire un diagnostic.</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois =</span> <span class="fu">as.Date</span>(mois),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">campagne_locale =</span> <span class="fu">factor</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      campagne_locale,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>À vérifier :</p>
+<ul>
+<li>nombre de lignes;</li>
+<li>nombre de colonnes;</li>
+<li>unité d’observation;</li>
+<li>variables numériques;</li>
+<li>variables catégorielles.</li>
+</ul>
+</section>
+<section id="démonstration-2---repérer-les-valeurs-manquantes" class="level2">
+<h2 class="anchored" data-anchor-id="démonstration-2---repérer-les-valeurs-manquantes">Démonstration 2 - Repérer les valeurs manquantes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;valeurs_manquantes&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(valeurs_manquantes <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(valeurs_manquantes))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Interprétation attendue : nommer les variables touchées et expliquer pourquoi des valeurs manquantes peuvent influencer un résumé descriptif.</p>
+</section>
+<section id="démonstration-3---résumer-par-succursale" class="level2">
+<h2 class="anchored" data-anchor-id="démonstration-3---résumer-par-succursale">Démonstration 3 - Résumer par succursale</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale, region) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ventes_totales))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="sc">|&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">currency_ca</span>(ventes_totales),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">currency_ca</span>(panier_moyen),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">round</span>(satisfaction_moyenne, <span class="dv">1</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">round</span>(delai_moyen, <span class="dv">1</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="démonstration-3---interpréter-pour-une-décision" class="level2">
-<h2 class="anchored" data-anchor-id="démonstration-3---interpréter-pour-une-décision">Démonstration 3 - Interpréter pour une décision</h2>
-<p>TODO formuler ce que le résultat permet de dire, ce qu’il ne permet pas de dire, et la décision qu’il peut éclairer.</p>
+<section id="démonstration-4---visualiser-les-ventes" class="level2">
+<h2 class="anchored" data-anchor-id="démonstration-4---visualiser-les-ventes">Démonstration 4 - Visualiser les ventes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">succursale =</span> <span class="fu">fct_reorder</span>(succursale, ventes_totales)) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ventes_totales, succursale)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#0B4F6C&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> currency_ca) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Ventes annuelles par succursale&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Ventes&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="démonstration-5---explorer-une-relation-descriptive" class="level2">
+<h2 class="anchored" data-anchor-id="démonstration-5---explorer-une-relation-descriptive">Démonstration 5 - Explorer une relation descriptive</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ruptures_stock, satisfaction, <span class="at">color =</span> succursale)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.4</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;#1F2933&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Satisfaction client et ruptures de stock&quot;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Nombre de ruptures de stock&quot;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Satisfaction moyenne sur 10&quot;</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Succursale&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ce graphique suggère une relation descriptive possible. Il ne permet pas, à lui seul, de conclure à une relation causale.</p>
 </section>
 <section id="à-vérifier" class="level2">
 <h2 class="anchored" data-anchor-id="à-vérifier">À vérifier</h2>
@@ -4296,7 +4898,7 @@ min-height: auto;
 <li>les chemins sont relatifs au projet;</li>
 <li>les objets portent des noms explicites;</li>
 <li>les graphiques ont des titres et des axes interprétables;</li>
-<li>l’interprétation reste alignée avec la question d’affaires.</li>
+<li>l’interprétation reste descriptive.</li>
 </ul>
 
 

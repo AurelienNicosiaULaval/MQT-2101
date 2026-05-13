@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Guide autonome - Atelier 01 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Guide en classe - Atelier 01 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3867,17 +3867,109 @@ text-transform: uppercase;
 }
 .quick-facts {
 display: grid;
-grid-template-columns: repeat(4, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 0.9rem;
 margin-top: 1.1rem;
 }
 .fact-card {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+align-items: start;
+gap: 0.8rem;
+min-width: 0;
 min-height: 112px;
 padding: 1rem;
 border: 1px solid #dce5ea;
 border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 10px 24px rgba(18, 50, 68, 0.06);
+}
+.fact-icon {
+position: relative;
+display: block;
+box-sizing: border-box;
+width: 2.15rem;
+height: 2.15rem;
+padding: 0;
+border: 1px solid #c9dde7;
+border-radius: 999px;
+background: #eef6f9;
+color: #0b4f6c;
+flex: 0 0 auto;
+line-height: 0;
+}
+.fact-icon::before,
+.fact-icon::after {
+content: "";
+position: absolute;
+box-sizing: border-box;
+color: currentColor;
+}
+.fact-clock::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 999px;
+transform: translate(-50%, -50%);
+}
+.fact-clock::after {
+left: 50%;
+top: 50%;
+width: 0.36rem;
+height: 0.46rem;
+border-left: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-0.02rem, -0.38rem);
+}
+.fact-tools::before {
+left: 50%;
+top: 50%;
+width: 1.15rem;
+height: 0.86rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-tools::after {
+left: 50%;
+top: 50%;
+width: 0.52rem;
+height: 0.38rem;
+border-right: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-65%, -52%) rotate(-45deg);
+}
+.fact-data::before {
+left: 50%;
+top: 50%;
+width: 1.05rem;
+height: 1.05rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+background:
+linear-gradient(currentColor, currentColor) 50% 0 / 1.7px 100% no-repeat,
+linear-gradient(currentColor, currentColor) 0 50% / 100% 1.7px no-repeat;
+transform: translate(-50%, -50%);
+}
+.fact-report::before {
+left: 50%;
+top: 50%;
+width: 0.95rem;
+height: 1.12rem;
+border: 1.7px solid currentColor;
+border-radius: 2px;
+transform: translate(-50%, -50%);
+}
+.fact-report::after {
+left: 50%;
+top: 50%;
+width: 0.48rem;
+height: 0.35rem;
+border-top: 1.7px solid currentColor;
+border-bottom: 1.7px solid currentColor;
+transform: translate(-50%, -10%);
 }
 .fact-label {
 margin-bottom: 0.45rem;
@@ -3888,10 +3980,120 @@ letter-spacing: 0;
 text-transform: uppercase;
 }
 .fact-value {
+min-width: 0;
 color: #123244;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.3;
+overflow-wrap: anywhere;
+word-break: normal;
+}
+.outcome-strip {
+display: grid;
+grid-template-columns: 1fr auto 1fr auto 1fr;
+align-items: stretch;
+gap: 0.75rem;
+margin: 1.15rem 0 1.4rem;
+}
+.outcome-item {
+padding: 0.9rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 20px rgba(18, 50, 68, 0.04);
+}
+.outcome-label {
+display: block;
+margin-bottom: 0.2rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.outcome-value {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.3;
+}
+.outcome-arrow {
+align-self: center;
+color: #7a1c24;
+font-size: 1.2rem;
+font-weight: 700;
+}
+.phase-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.75rem;
+}
+.phase-card {
+padding: 1.05rem 1.1rem;
+border: 1px solid #dce5ea;
+border-top: 4px solid #b5121b;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.phase-card h3 {
+margin: 0.35rem 0 0.45rem;
+color: #123244;
+font-size: 1.08rem;
+line-height: 1.25;
+}
+.phase-card p {
+margin-bottom: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.phase-label {
+display: inline-flex;
+align-items: center;
+min-height: 1.65rem;
+padding: 0.15rem 0.5rem;
+border-radius: 999px;
+background: #f8ebed;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+line-height: 1.2;
+}
+.workshop-agenda {
+display: grid;
+gap: 0.75rem;
+margin: 1.15rem 0 1.6rem;
+}
+.agenda-item {
+display: grid;
+grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 6px 18px rgba(18, 50, 68, 0.035);
+}
+.agenda-time {
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 700;
+line-height: 1.35;
+}
+.agenda-content h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1rem;
+line-height: 1.25;
+}
+.agenda-content p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
 }
 .path-grid,
 .learning-path {
@@ -3909,6 +4111,40 @@ border-radius: 8px;
 background: #ffffff;
 box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
 }
+.interactive-path {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card {
+padding: 0;
+overflow: hidden;
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.path-card summary {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.65rem 0.85rem;
+min-height: 172px;
+padding: 1rem;
+cursor: pointer;
+list-style: none;
+}
+.path-card summary::-webkit-details-marker {
+display: none;
+}
+.path-card summary::marker {
+content: "";
+}
+.path-card summary:focus-visible {
+outline: 3px solid rgba(181, 18, 27, 0.25);
+outline-offset: -3px;
+}
+.path-card[open] summary {
+min-height: auto;
+border-bottom: 1px solid #e6edf1;
+background: #fbfdfe;
+}
 .path-card h3 {
 margin: 0.7rem 0 0.45rem;
 color: #123244;
@@ -3925,6 +4161,7 @@ line-height: 1.45;
 display: inline-flex;
 align-items: center;
 justify-content: center;
+grid-row: span 4;
 width: 2rem;
 height: 2rem;
 border-radius: 999px;
@@ -3932,6 +4169,188 @@ background: #b5121b;
 color: #ffffff;
 font-size: 0.9rem;
 font-weight: 700;
+}
+.path-title {
+display: block;
+min-width: 0;
+color: #123244;
+font-size: 1.04rem;
+font-weight: 700;
+line-height: 1.25;
+overflow-wrap: anywhere;
+}
+.path-preview {
+display: block;
+min-width: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+overflow-wrap: anywhere;
+}
+.path-resource {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.22rem 0.35rem;
+min-width: 0;
+color: #5a6c78;
+font-size: 0.82rem;
+line-height: 1.35;
+overflow-wrap: anywhere;
+}
+.resource-separator {
+color: #8a98a3;
+}
+.path-toggle {
+display: inline-flex;
+justify-self: start;
+align-items: center;
+min-height: 1.9rem;
+padding: 0.2rem 0.55rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+color: #0b4f6c;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1;
+background: #f7fafc;
+}
+.path-card[open] .closed-label,
+.path-card .open-label {
+display: none;
+}
+.path-card[open] .open-label {
+display: inline;
+}
+.step-detail {
+padding: 1rem 1.1rem 1.15rem;
+}
+.step-detail p {
+margin: 0 0 0.7rem;
+}
+.step-detail p:last-child {
+margin-bottom: 0;
+}
+.step-label {
+display: inline-block;
+min-width: 5.2rem;
+margin-right: 0.35rem;
+color: #7a1c24;
+font-size: 0.78rem;
+font-weight: 700;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.ae-box {
+margin-top: 0.85rem;
+padding: 0.85rem 0.95rem;
+border: 1px solid #cfe3da;
+border-left: 4px solid #2f7d5c;
+border-radius: 8px;
+background: #f3faf6;
+}
+.ae-box + .ae-box {
+margin-top: 0.7rem;
+}
+.ae-title {
+color: #1f5f44;
+font-weight: 700;
+}
+.resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
+margin: 0.15rem 0.35rem 0.15rem 0;
+color: #0b5cad;
+font-weight: 600;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.summary-resource-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+padding: 0.1rem 0.35rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #f8fbfd;
+color: #0b5cad;
+font-size: 0.8rem;
+font-weight: 700;
+line-height: 1.25;
+text-decoration: none;
+}
+.summary-resource-link:hover {
+border-color: #b8cbd6;
+background: #eef6f9;
+text-decoration: underline;
+text-underline-offset: 0.16em;
+}
+.resource-icon,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1rem;
+height: 1rem;
+flex: 0 0 auto;
+color: currentColor;
+border: 1px solid currentColor;
+border-radius: 3px;
+background: transparent;
+font-family: Arial, sans-serif;
+font-size: 0.68rem;
+font-weight: 800;
+line-height: 1;
+}
+.resource-icon::before,
+.resource-link::before,
+.summary-resource-link::before,
+.resource-row-icon::before {
+display: inline-block;
+}
+.video-icon,
+.video-link::before {
+color: #8f1119;
+}
+.video-icon::before,
+.video-link::before {
+content: "▶";
+}
+.exercise-icon,
+.exercise-link::before {
+color: #2f7d5c;
+}
+.exercise-icon::before,
+.exercise-link::before {
+content: "✓";
+}
+.demo-icon,
+.demo-link::before {
+color: #0b4f6c;
+}
+.demo-icon::before,
+.demo-link::before {
+content: ">";
+}
+.reading-icon,
+.reading-link::before {
+color: #7a4d00;
+}
+.reading-icon::before,
+.reading-link::before {
+content: "L";
+}
+.info-icon,
+.info-link::before {
+color: #5a6c78;
+border-radius: 999px;
+}
+.info-icon::before,
+.info-link::before {
+content: "i";
 }
 .step-card {
 margin: 1.35rem 0;
@@ -3967,6 +4386,35 @@ background: #f8fbfd;
 .compact-box {
 margin-top: 1rem;
 }
+.production-box {
+border-left: 5px solid #b5121b;
+background: #fbfdfe;
+}
+.production-box h3 {
+margin: 0.2rem 0 0.45rem;
+color: #123244;
+font-size: 1.2rem;
+line-height: 1.25;
+}
+.production-flow {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+margin-top: 0.9rem;
+}
+.production-flow span {
+display: inline-flex;
+align-items: center;
+min-height: 1.85rem;
+padding: 0.25rem 0.65rem;
+border: 1px solid #d9e2e8;
+border-radius: 999px;
+background: #ffffff;
+color: #123244;
+font-size: 0.86rem;
+font-weight: 700;
+line-height: 1.2;
+}
 .resource-grid {
 display: grid;
 grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3991,6 +4439,43 @@ margin-bottom: 0;
 color: #40515c;
 font-size: 0.94rem;
 line-height: 1.45;
+}
+.resource-list {
+display: grid;
+gap: 0;
+margin: 1.1rem 0 1.75rem;
+border-top: 1px solid #dce5ea;
+}
+.resource-row {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.85rem;
+align-items: start;
+padding: 0.95rem 0.1rem;
+border-bottom: 1px solid #dce5ea;
+color: inherit;
+text-decoration: none;
+}
+.resource-row:hover .resource-row-title {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
+.resource-row-title {
+display: block;
+color: #123244;
+font-weight: 700;
+line-height: 1.25;
+}
+.resource-row-text {
+display: block;
+margin-top: 0.15rem;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.resource-row-icon {
+margin-top: 0.15rem;
 }
 .deliverable-card p:last-child {
 margin-bottom: 0;
@@ -4023,11 +4508,20 @@ min-height: 132px;
 margin-top: 0;
 }
 @media (max-width: 992px) {
-.quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.outcome-strip {
+grid-template-columns: 1fr;
+}
+.outcome-arrow {
+display: none;
 }
 }
 @media (max-width: 640px) {
@@ -4047,15 +4541,28 @@ font-size: 1.55rem;
 }
 .quick-facts,
 .path-grid,
+.phase-grid,
 .resource-grid,
 .learning-path,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
 }
+.interactive-path .path-card[open] {
+grid-column: span 1;
+}
+.fact-card {
+min-height: auto;
+}
 .fact-card,
 .path-card {
 min-height: auto;
+}
+.path-card summary {
+min-height: auto;
+}
+.agenda-item {
+grid-template-columns: 1fr;
 }
 }
 </style>
@@ -4093,10 +4600,6 @@ min-height: auto;
   <li class="nav-item">
     <a class="nav-link" href="../../roadmap.html"> 
 <span class="menu-text">Roadmap</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../migration-ancien-materiel.html"> 
-<span class="menu-text">Migration</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../installation.html"> 
@@ -4224,7 +4727,7 @@ min-height: auto;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#guide-autonome---atelier-01" id="toc-guide-autonome---atelier-01" class="nav-link active" data-scroll-target="#guide-autonome---atelier-01">Guide autonome - Atelier 01</a>
+  <li><a href="#guide-en-classe---atelier-01" id="toc-guide-en-classe---atelier-01" class="nav-link active" data-scroll-target="#guide-en-classe---atelier-01">Guide en classe - Atelier 01</a>
   <ul class="collapse">
   <li><a href="#objectif-du-parcours" id="toc-objectif-du-parcours" class="nav-link" data-scroll-target="#objectif-du-parcours">Objectif du parcours</a></li>
   <li><a href="#ce-que-vous-allez-construire" id="toc-ce-que-vous-allez-construire" class="nav-link" data-scroll-target="#ce-que-vous-allez-construire">Ce que vous allez construire</a></li>
@@ -4251,7 +4754,7 @@ min-height: auto;
   <li><a href="#démonstration-5---satisfaction-et-ruptures-de-stock" id="toc-démonstration-5---satisfaction-et-ruptures-de-stock" class="nav-link" data-scroll-target="#démonstration-5---satisfaction-et-ruptures-de-stock">Démonstration 5 - Satisfaction et ruptures de stock</a></li>
   </ul></li>
   <li><a href="#épisode-6---passer-du-résultat-au-constat" id="toc-épisode-6---passer-du-résultat-au-constat" class="nav-link" data-scroll-target="#épisode-6---passer-du-résultat-au-constat">Épisode 6 - Passer du résultat au constat</a></li>
-  <li><a href="#épisode-7---recommander-une-prochaine-analyse" id="toc-épisode-7---recommander-une-prochaine-analyse" class="nav-link" data-scroll-target="#épisode-7---recommander-une-prochaine-analyse">Épisode 7 - Recommander une prochaine analyse</a>
+  <li><a href="#épisode-7---préparer-une-prochaine-analyse" id="toc-épisode-7---préparer-une-prochaine-analyse" class="nav-link" data-scroll-target="#épisode-7---préparer-une-prochaine-analyse">Épisode 7 - Préparer une prochaine analyse</a>
   <ul class="collapse">
   <li><a href="#démonstration-6---comparer-les-saisons" id="toc-démonstration-6---comparer-les-saisons" class="nav-link" data-scroll-target="#démonstration-6---comparer-les-saisons">Démonstration 6 - Comparer les saisons</a></li>
   </ul></li>
@@ -4267,7 +4770,7 @@ min-height: auto;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Guide autonome - Atelier 01</h1>
+<h1 class="title">Guide en classe - Atelier 01</h1>
 </div>
 
 
@@ -4284,8 +4787,8 @@ min-height: auto;
 </header>
 
 
-<section id="guide-autonome---atelier-01" class="level1">
-<h1>Guide autonome - Atelier 01</h1>
+<section id="guide-en-classe---atelier-01" class="level1">
+<h1>Guide en classe - Atelier 01</h1>
 <div class="callout callout-style-default callout-note callout-titled" title="Place dans la progression">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -4296,12 +4799,12 @@ Place dans la progression
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Cet atelier se fait après la semaine 01 et la semaine 02. La semaine 01 installe la logique décisionnelle; cet atelier vous fait pratiquer cette logique dans un rapport Quarto.</p>
+<p>Cet atelier se fait après la semaine 01 et la semaine 02. Il sert à pratiquer dans RStudio les gestes de base : importer, inspecter, résumer, visualiser et interpréter prudemment.</p>
 </div>
 </div>
 <section id="objectif-du-parcours" class="level2">
 <h2 class="anchored" data-anchor-id="objectif-du-parcours">Objectif du parcours</h2>
-<p>Cet atelier est un parcours guidé pour apprendre à explorer un tableau de données d’affaires dans R et à produire un court rapport Quarto.</p>
+<p>Cet atelier est un parcours guidé pour apprendre à explorer un tableau de ventes mensuelles dans R et à produire un court rapport Quarto.</p>
 <p>Question centrale :</p>
 <blockquote class="blockquote">
 <p>Qu’est-ce qu’un tableau de ventes mensuelles permet de dire, et que ne permet-il pas encore de conclure?</p>
@@ -4312,13 +4815,13 @@ Place dans la progression
 <h2 class="anchored" data-anchor-id="ce-que-vous-allez-construire">Ce que vous allez construire</h2>
 <p>À la fin du parcours, vous aurez un mini-rapport Quarto contenant :</p>
 <ul>
-<li>une question d’affaires reformulée;</li>
+<li>une question d’analyse reformulée;</li>
 <li>une description du tableau;</li>
 <li>un diagnostic des valeurs manquantes;</li>
 <li>un tableau synthèse par succursale;</li>
 <li>deux visualisations;</li>
 <li>trois constats;</li>
-<li>une recommandation de prochaine analyse.</li>
+<li>une question de prochaine analyse.</li>
 </ul>
 </section>
 <section id="organisation-du-parcours" class="level2">
@@ -4367,20 +4870,20 @@ Place dans la progression
 </section>
 <section id="épisode-1---entrer-dans-la-question" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-1---entrer-dans-la-question">Épisode 1 - Entrer dans la question</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Capsule vidéo 1 - La question centrale">
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - La question centrale">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Capsule vidéo 1 - La question centrale
+Repère - La question centrale
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À insérer : une courte vidéo de 3 à 5 minutes qui présente la question centrale, le jeu de données et la différence entre exploration descriptive et modélisation.</p>
+<p>La première étape consiste à transformer une question générale en question descriptive assez précise pour être traitée dans un tableau.</p>
 </div>
 </div>
-<p>Une question d’affaires est souvent trop générale pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.</p>
+<p>Une question générale est souvent trop large pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.</p>
 <p>Question de départ :</p>
 <blockquote class="blockquote">
 <p>Qu’est-ce que les données de ventes mensuelles révèlent sur la performance des succursales?</p>
@@ -4399,7 +4902,7 @@ Capsule vidéo 1 - La question centrale
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dans votre rapport, écrivez en deux phrases ce que la question d’affaires demande et ce que le diagnostic descriptif peut réellement fournir.</p>
+<p>Dans votre rapport, écrivez en deux phrases ce que la question demande et ce que le diagnostic descriptif peut réellement fournir.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Pause diagnostic">
@@ -4418,17 +4921,17 @@ Pause diagnostic
 </section>
 <section id="épisode-2---importer-les-données" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-2---importer-les-données">Épisode 2 - Importer les données</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Capsule vidéo 2 - Un tableau, une unité d&#39;observation">
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Un tableau, une unité d&#39;observation">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Capsule vidéo 2 - Un tableau, une unité d’observation
+Repère - Un tableau, une unité d’observation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À insérer : une vidéo courte sur les notions d’observation, de variable, de type de variable et de chemin relatif dans un projet R.</p>
+<p>Avant de calculer, vérifiez ce que représente une ligne, ce que mesure chaque variable et où se trouve le fichier dans le projet R.</p>
 </div>
 </div>
 <section id="démonstration-1---charger-le-fichier" class="level3">
@@ -4479,7 +4982,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ajoutez à votre rapport une phrase qui décrit l’unité d’observation et une phrase qui nomme trois variables utiles pour une décision d’affaires.</p>
+<p>Ajoutez à votre rapport une phrase qui décrit l’unité d’observation et une phrase qui nomme trois variables utiles pour l’analyse.</p>
 </div>
 </div>
 </section>
@@ -4493,17 +4996,17 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </section>
 <section id="épisode-3---vérifier-la-qualité-minimale" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-3---vérifier-la-qualité-minimale">Épisode 3 - Vérifier la qualité minimale</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Capsule vidéo 3 - Pourquoi vérifier les valeurs manquantes?">
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Pourquoi vérifier les valeurs manquantes?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Capsule vidéo 3 - Pourquoi vérifier les valeurs manquantes?
+Repère - Pourquoi vérifier les valeurs manquantes?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À insérer : une vidéo courte qui explique pourquoi un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes.</p>
+<p>Un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes. Les valeurs manquantes doivent être repérées et signalées.</p>
 </div>
 </div>
 <section id="démonstration-2---repérer-les-valeurs-manquantes" class="level3">
@@ -4558,17 +5061,17 @@ Pause diagnostic
 </section>
 <section id="épisode-4---construire-les-premiers-indicateurs" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-4---construire-les-premiers-indicateurs">Épisode 4 - Construire les premiers indicateurs</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Capsule vidéo 4 - Du tableau brut aux indicateurs">
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Du tableau brut aux indicateurs">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Capsule vidéo 4 - Du tableau brut aux indicateurs
+Repère - Du tableau brut aux indicateurs
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À insérer : une vidéo sur le passage des variables brutes aux indicateurs utiles pour une décision d’affaires : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.</p>
+<p>Les variables brutes deviennent utiles lorsqu’elles sont transformées en indicateurs interprétables : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.</p>
 </div>
 </div>
 <section id="démonstration-3---résumer-par-succursale" class="level3">
@@ -4607,13 +5110,13 @@ Capsule vidéo 4 - Du tableau brut aux indicateurs
 #   ruptures_stock &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 4 - Lire le tableau de façon décisionnelle">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 4 - Lire le tableau de façon analytique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-À vous 4 - Lire le tableau de façon décisionnelle
+À vous 4 - Lire le tableau de façon analytique
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -4629,22 +5132,22 @@ Capsule vidéo 4 - Du tableau brut aux indicateurs
 </section>
 <section id="trace-portfolio-1" class="level3">
 <h3 class="anchored" data-anchor-id="trace-portfolio-1">Trace portfolio</h3>
-<p>Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui aident vraiment la décision.</p>
+<p>Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui éclairent le mieux la comparaison.</p>
 </section>
 </section>
 <section id="épisode-5---visualiser-pour-comparer" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-5---visualiser-pour-comparer">Épisode 5 - Visualiser pour comparer</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Capsule vidéo 5 - Un graphique doit porter un message">
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Un graphique doit porter un message">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Capsule vidéo 5 - Un graphique doit porter un message
+Repère - Un graphique doit porter un message
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À insérer : une vidéo courte sur le choix d’un graphique simple, le titre, les axes et le message d’affaires.</p>
+<p>Un graphique utile répond à une question simple. Le titre, les axes et les unités doivent aider à lire le résultat sans ambiguïté.</p>
 </div>
 </div>
 <section id="démonstration-4---comparer-les-ventes-annuelles" class="level3">
@@ -4728,24 +5231,24 @@ Pause diagnostic
 </section>
 <section id="épisode-6---passer-du-résultat-au-constat" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-6---passer-du-résultat-au-constat">Épisode 6 - Passer du résultat au constat</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Capsule vidéo 6 - Écrire un constat utile">
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Écrire un constat utile">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Capsule vidéo 6 - Écrire un constat utile
+Repère - Écrire un constat utile
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>À insérer : une vidéo courte qui montre comment passer d’un tableau ou d’un graphique à une phrase interprétable dans un contexte d’affaires.</p>
+<p>Un constat doit rester descriptif : il nomme un résultat observé, une comparaison et une limite possible.</p>
 </div>
 </div>
 <p>Un bon constat contient trois éléments :</p>
 <ul>
 <li>un résultat observé;</li>
 <li>une comparaison;</li>
-<li>une implication d’affaires.</li>
+<li>une interprétation prudente.</li>
 </ul>
 <p>Exemple :</p>
 <blockquote class="blockquote">
@@ -4770,9 +5273,9 @@ Capsule vidéo 6 - Écrire un constat utile
 </div>
 </div>
 </section>
-<section id="épisode-7---recommander-une-prochaine-analyse" class="level2">
-<h2 class="anchored" data-anchor-id="épisode-7---recommander-une-prochaine-analyse">Épisode 7 - Recommander une prochaine analyse</h2>
-<p>Votre diagnostic doit finir par une recommandation courte. Choisissez une seule priorité.</p>
+<section id="épisode-7---préparer-une-prochaine-analyse" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-7---préparer-une-prochaine-analyse">Épisode 7 - Préparer une prochaine analyse</h2>
+<p>Votre diagnostic doit finir par une question de prochaine analyse. Choisissez une seule priorité.</p>
 <p>Options possibles :</p>
 <ul>
 <li>analyser l’effet des dépenses marketing;</li>
@@ -4805,13 +5308,13 @@ Capsule vidéo 6 - Écrire un constat utile
 3 reguliere 4 456 151 $                     7.6             77</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 7 - Formuler la recommandation">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 7 - Formuler la prochaine analyse">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-À vous 7 - Formuler la recommandation
+À vous 7 - Formuler la prochaine analyse
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -4819,7 +5322,7 @@ Capsule vidéo 6 - Écrire un constat utile
 <ol type="1">
 <li>Les données suggèrent que…</li>
 <li>La prochaine analyse devrait vérifier…</li>
-<li>Cette analyse aiderait à décider…</li>
+<li>Cette analyse permettrait de mieux comprendre…</li>
 </ol>
 </div>
 </div>
@@ -4829,14 +5332,14 @@ Capsule vidéo 6 - Écrire un constat utile
 <h2 class="anchored" data-anchor-id="livrable-final">Livrable final</h2>
 <p>Votre fichier Quarto doit contenir les sections suivantes :</p>
 <ol type="1">
-<li>Question d’affaires.</li>
+<li>Question d’analyse.</li>
 <li>Description du tableau.</li>
 <li>Diagnostic des valeurs manquantes.</li>
 <li>Tableau synthèse par succursale.</li>
 <li>Graphique 1 : ventes par succursale.</li>
 <li>Graphique 2 : indicateur opérationnel ou satisfaction.</li>
 <li>Trois constats.</li>
-<li>Recommandation de prochaine analyse.</li>
+<li>Question de prochaine analyse.</li>
 </ol>
 </section>
 <section id="grille-formative" class="level2">
@@ -4854,7 +5357,7 @@ Capsule vidéo 6 - Écrire un constat utile
 </thead>
 <tbody>
 <tr class="odd">
-<td>Question d’affaires</td>
+<td>Question d’analyse</td>
 <td>La question centrale est reformulée clairement</td>
 </tr>
 <tr class="even">
@@ -4879,7 +5382,7 @@ Capsule vidéo 6 - Écrire un constat utile
 </tr>
 <tr class="odd">
 <td>Interprétation</td>
-<td>Les constats sont liés à une décision d’affaires</td>
+<td>Les constats sont descriptifs et leurs limites sont explicites</td>
 </tr>
 <tr class="even">
 <td>Reproductibilité</td>
@@ -4892,12 +5395,12 @@ Capsule vidéo 6 - Écrire un constat utile
 <h2 class="anchored" data-anchor-id="fin-du-parcours">Fin du parcours</h2>
 <p>Vous avez maintenant une première version du raisonnement qui sera utilisé tout au long du cours :</p>
 <ol type="1">
-<li>comprendre la décision;</li>
+<li>comprendre la question;</li>
 <li>inspecter les données;</li>
 <li>produire des indicateurs;</li>
 <li>visualiser;</li>
 <li>interpréter;</li>
-<li>recommander la prochaine analyse.</li>
+<li>préparer la prochaine analyse.</li>
 </ol>
 <p>La suite du cours ajoutera progressivement des modèles statistiques pour expliquer, prévoir et décider avec plus de rigueur.</p>
 

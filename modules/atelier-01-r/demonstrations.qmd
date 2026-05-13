@@ -9,7 +9,9 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Cette page regroupe les gestes R principaux de l'atelier : importer les données,
+inspecter le tableau, vérifier les valeurs manquantes, produire un tableau
+synthèse et créer deux graphiques.
 
 ## Préparation
 
@@ -17,27 +19,133 @@ Regrouper les démonstrations reproductibles en R associées au module. Cette pa
 #| eval: false
 library(tidyverse)
 library(janitor)
-
-# TODO charger les packages propres au module.
+library(scales)
 ```
-
-## Démonstration 1 - Importer ou préparer les données
 
 ```{r}
 #| eval: false
-# TODO lire le ou les fichiers de données du module.
+data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
+  "data/ventes_pme_quebec.csv"
+} else {
+  "modules/atelier-01-r/data/ventes_pme_quebec.csv"
+}
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+## Démonstration 1 - Importer et inspecter
 
 ```{r}
 #| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names() |>
+  mutate(
+    mois = as.Date(mois),
+    campagne_locale = factor(
+      campagne_locale,
+      levels = c(0, 1),
+      labels = c("non", "oui")
+    )
+  )
+
+glimpse(ventes)
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+À vérifier :
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+- nombre de lignes;
+- nombre de colonnes;
+- unité d'observation;
+- variables numériques;
+- variables catégorielles.
+
+## Démonstration 2 - Repérer les valeurs manquantes
+
+```{r}
+#| eval: false
+diagnostic_manquants <- ventes |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0) |>
+  arrange(desc(valeurs_manquantes))
+
+diagnostic_manquants
+```
+
+Interprétation attendue : nommer les variables touchées et expliquer pourquoi
+des valeurs manquantes peuvent influencer un résumé descriptif.
+
+## Démonstration 3 - Résumer par succursale
+
+```{r}
+#| eval: false
+synthese_succursales <- ventes |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
+    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+synthese_succursales |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    panier_moyen = currency_ca(panier_moyen),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1),
+    delai_moyen = round(delai_moyen, 1)
+  )
+```
+
+## Démonstration 4 - Visualiser les ventes
+
+```{r}
+#| eval: false
+synthese_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(ventes_totales, succursale)) +
+  geom_col(fill = "#0B4F6C") +
+  scale_x_continuous(labels = currency_ca) +
+  labs(
+    title = "Ventes annuelles par succursale",
+    x = "Ventes",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+## Démonstration 5 - Explorer une relation descriptive
+
+```{r}
+#| eval: false
+ventes |>
+  ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +
+  geom_point(size = 2.4, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1F2933") +
+  labs(
+    title = "Satisfaction client et ruptures de stock",
+    x = "Nombre de ruptures de stock",
+    y = "Satisfaction moyenne sur 10",
+    color = "Succursale"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Ce graphique suggère une relation descriptive possible. Il ne permet pas, à lui
+seul, de conclure à une relation causale.
 
 ## À vérifier
 
@@ -45,5 +153,4 @@ TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire
 - les chemins sont relatifs au projet;
 - les objets portent des noms explicites;
 - les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
-
+- l'interprétation reste descriptive.

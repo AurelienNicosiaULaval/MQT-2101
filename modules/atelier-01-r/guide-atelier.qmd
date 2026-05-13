@@ -1,19 +1,19 @@
 ---
-title: "Guide autonome - Atelier 01"
+title: "Guide en classe - Atelier 01"
 format:
   html:
     embed-resources: true
 ---
 
-# Guide autonome - Atelier 01
+# Guide en classe - Atelier 01
 
 ::: {.callout-note title="Place dans la progression"}
-Cet atelier se fait après la semaine 01 et la semaine 02. La semaine 01 installe la logique décisionnelle; cet atelier vous fait pratiquer cette logique dans un rapport Quarto.
+Cet atelier se fait après la semaine 01 et la semaine 02. Il sert à pratiquer dans RStudio les gestes de base : importer, inspecter, résumer, visualiser et interpréter prudemment.
 :::
 
 ## Objectif du parcours
 
-Cet atelier est un parcours guidé pour apprendre à explorer un tableau de données d'affaires dans R et à produire un court rapport Quarto.
+Cet atelier est un parcours guidé pour apprendre à explorer un tableau de ventes mensuelles dans R et à produire un court rapport Quarto.
 
 Question centrale :
 
@@ -25,13 +25,13 @@ L'objectif n'est pas encore de prouver une relation causale. L'objectif est de t
 
 À la fin du parcours, vous aurez un mini-rapport Quarto contenant :
 
-- une question d'affaires reformulée;
+- une question d'analyse reformulée;
 - une description du tableau;
 - un diagnostic des valeurs manquantes;
 - un tableau synthèse par succursale;
 - deux visualisations;
 - trois constats;
-- une recommandation de prochaine analyse.
+- une question de prochaine analyse.
 
 ## Organisation du parcours
 
@@ -76,11 +76,11 @@ currency_ca <- scales::label_dollar(
 
 ## Épisode 1 - Entrer dans la question
 
-::: {.callout-note title="Capsule vidéo 1 - La question centrale"}
-À insérer : une courte vidéo de 3 à 5 minutes qui présente la question centrale, le jeu de données et la différence entre exploration descriptive et modélisation.
+::: {.callout-note title="Repère - La question centrale"}
+La première étape consiste à transformer une question générale en question descriptive assez précise pour être traitée dans un tableau.
 :::
 
-Une question d'affaires est souvent trop générale pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.
+Une question générale est souvent trop large pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.
 
 Question de départ :
 
@@ -91,7 +91,7 @@ Question analytique :
 > Quels indicateurs descriptifs permettent de repérer les succursales ou les dimensions opérationnelles qui méritent une analyse plus poussée?
 
 ::: {.callout-tip title="À vous 1 - Reformuler la question"}
-Dans votre rapport, écrivez en deux phrases ce que la question d'affaires demande et ce que le diagnostic descriptif peut réellement fournir.
+Dans votre rapport, écrivez en deux phrases ce que la question demande et ce que le diagnostic descriptif peut réellement fournir.
 :::
 
 ::: {.callout-important title="Pause diagnostic"}
@@ -100,8 +100,8 @@ Dans votre rapport, écrivez en deux phrases ce que la question d'affaires deman
 
 ## Épisode 2 - Importer les données
 
-::: {.callout-note title="Capsule vidéo 2 - Un tableau, une unité d'observation"}
-À insérer : une vidéo courte sur les notions d'observation, de variable, de type de variable et de chemin relatif dans un projet R.
+::: {.callout-note title="Repère - Un tableau, une unité d'observation"}
+Avant de calculer, vérifiez ce que représente une ligne, ce que mesure chaque variable et où se trouve le fichier dans le projet R.
 :::
 
 ### Démonstration 1 - Charger le fichier
@@ -126,7 +126,7 @@ Ce que vous devez remarquer :
 - d'autres décrivent le marketing, les opérations et la satisfaction.
 
 ::: {.callout-tip title="À vous 2 - Décrire le tableau"}
-Ajoutez à votre rapport une phrase qui décrit l'unité d'observation et une phrase qui nomme trois variables utiles pour une décision d'affaires.
+Ajoutez à votre rapport une phrase qui décrit l'unité d'observation et une phrase qui nomme trois variables utiles pour l'analyse.
 :::
 
 ### Trace portfolio
@@ -137,8 +137,8 @@ Phrase à adapter :
 
 ## Épisode 3 - Vérifier la qualité minimale
 
-::: {.callout-note title="Capsule vidéo 3 - Pourquoi vérifier les valeurs manquantes?"}
-À insérer : une vidéo courte qui explique pourquoi un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes.
+::: {.callout-note title="Repère - Pourquoi vérifier les valeurs manquantes?"}
+Un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes. Les valeurs manquantes doivent être repérées et signalées.
 :::
 
 ### Démonstration 2 - Repérer les valeurs manquantes
@@ -168,8 +168,8 @@ Si une variable contient des valeurs manquantes, il ne faut pas l'ignorer. Pour 
 
 ## Épisode 4 - Construire les premiers indicateurs
 
-::: {.callout-note title="Capsule vidéo 4 - Du tableau brut aux indicateurs"}
-À insérer : une vidéo sur le passage des variables brutes aux indicateurs utiles pour une décision d'affaires : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.
+::: {.callout-note title="Repère - Du tableau brut aux indicateurs"}
+Les variables brutes deviennent utiles lorsqu'elles sont transformées en indicateurs interprétables : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.
 :::
 
 ### Démonstration 3 - Résumer par succursale
@@ -198,7 +198,7 @@ synthese_succursales |>
   )
 ```
 
-::: {.callout-tip title="À vous 4 - Lire le tableau de façon décisionnelle"}
+::: {.callout-tip title="À vous 4 - Lire le tableau de façon analytique"}
 Répondez à ces questions dans votre rapport :
 
 - Quelle succursale génère le plus de ventes?
@@ -209,12 +209,12 @@ Répondez à ces questions dans votre rapport :
 
 ### Trace portfolio
 
-Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui aident vraiment la décision.
+Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui éclairent le mieux la comparaison.
 
 ## Épisode 5 - Visualiser pour comparer
 
-::: {.callout-note title="Capsule vidéo 5 - Un graphique doit porter un message"}
-À insérer : une vidéo courte sur le choix d'un graphique simple, le titre, les axes et le message d'affaires.
+::: {.callout-note title="Repère - Un graphique doit porter un message"}
+Un graphique utile répond à une question simple. Le titre, les axes et les unités doivent aider à lire le résultat sans ambiguïté.
 :::
 
 ### Démonstration 4 - Comparer les ventes annuelles
@@ -271,15 +271,15 @@ Ce graphique ne prouve pas que les ruptures causent une baisse de satisfaction. 
 
 ## Épisode 6 - Passer du résultat au constat
 
-::: {.callout-note title="Capsule vidéo 6 - Écrire un constat utile"}
-À insérer : une vidéo courte qui montre comment passer d'un tableau ou d'un graphique à une phrase interprétable dans un contexte d'affaires.
+::: {.callout-note title="Repère - Écrire un constat utile"}
+Un constat doit rester descriptif : il nomme un résultat observé, une comparaison et une limite possible.
 :::
 
 Un bon constat contient trois éléments :
 
 - un résultat observé;
 - une comparaison;
-- une implication d'affaires.
+- une interprétation prudente.
 
 Exemple :
 
@@ -293,9 +293,9 @@ Dans votre rapport, écrivez :
 3. un constat sur une analyse à prioriser.
 :::
 
-## Épisode 7 - Recommander une prochaine analyse
+## Épisode 7 - Préparer une prochaine analyse
 
-Votre diagnostic doit finir par une recommandation courte. Choisissez une seule priorité.
+Votre diagnostic doit finir par une question de prochaine analyse. Choisissez une seule priorité.
 
 Options possibles :
 
@@ -323,49 +323,49 @@ ventes |>
   )
 ```
 
-::: {.callout-tip title="À vous 7 - Formuler la recommandation"}
+::: {.callout-tip title="À vous 7 - Formuler la prochaine analyse"}
 Écrivez trois phrases :
 
 1. Les données suggèrent que...
 2. La prochaine analyse devrait vérifier...
-3. Cette analyse aiderait à décider...
+3. Cette analyse permettrait de mieux comprendre...
 :::
 
 ## Livrable final
 
 Votre fichier Quarto doit contenir les sections suivantes :
 
-1. Question d'affaires.
+1. Question d'analyse.
 2. Description du tableau.
 3. Diagnostic des valeurs manquantes.
 4. Tableau synthèse par succursale.
 5. Graphique 1 : ventes par succursale.
 6. Graphique 2 : indicateur opérationnel ou satisfaction.
 7. Trois constats.
-8. Recommandation de prochaine analyse.
+8. Question de prochaine analyse.
 
 ## Grille formative
 
 | Critère | Attendu |
 |---|---|
-| Question d'affaires | La question centrale est reformulée clairement |
+| Question d'analyse | La question centrale est reformulée clairement |
 | Importation | Le fichier CSV est importé avec un chemin relatif |
 | Inspection | L'unité d'observation et les variables sont décrites |
 | Qualité des données | Les valeurs manquantes sont repérées et commentées |
 | Indicateurs | Les indicateurs sont calculés par succursale |
 | Graphiques | Les graphiques ont un titre, des axes clairs et un message |
-| Interprétation | Les constats sont liés à une décision d'affaires |
+| Interprétation | Les constats sont descriptifs et leurs limites sont explicites |
 | Reproductibilité | Le document Quarto se rend sans modification |
 
 ## Fin du parcours
 
 Vous avez maintenant une première version du raisonnement qui sera utilisé tout au long du cours :
 
-1. comprendre la décision;
+1. comprendre la question;
 2. inspecter les données;
 3. produire des indicateurs;
 4. visualiser;
 5. interpréter;
-6. recommander la prochaine analyse.
+6. préparer la prochaine analyse.
 
 La suite du cours ajoutera progressivement des modèles statistiques pour expliquer, prévoir et décider avec plus de rigueur.
