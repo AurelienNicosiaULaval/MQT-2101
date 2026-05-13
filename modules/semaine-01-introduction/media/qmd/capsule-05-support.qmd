@@ -1,0 +1,267 @@
+---
+title: "Capsule 5 - Exploration univariée"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Résumer une variable numérique avec quelques indicateurs simples.
+- Distinguer ce que la moyenne et la médiane montrent.
+- Construire un histogramme pour observer la distribution.
+- Écrire un constat descriptif sans dépasser ce que la base permet de dire.
+:::
+
+## Pourquoi décrire une variable?
+
+::: {.lead}
+Avant de comparer ou de modéliser, il faut comprendre chaque variable importante
+prise séparément.
+:::
+
+::: {.note-box}
+Une analyse univariée répond à une première question simple : quelles valeurs
+observe-t-on pour une variable donnée?
+:::
+
+## De la base préparée à l'analyse
+
+::: {.lead}
+À cette étape, la base a déjà été lue, comprise et préparée.
+:::
+
+::: {.keypoints}
+- une ligne correspond à une journée;
+- `date` situe l'observation dans le temps;
+- `jour_semaine` décrit une catégorie;
+- `births` donne le nombre de naissances observées.
+:::
+
+## La variable `births`
+
+::: {.lead}
+`births` est une variable numérique.
+:::
+
+| Question | Réponse attendue |
+|---|---|
+| Que mesure la variable? | un nombre de naissances |
+| Pour quelle unité? | une journée |
+| Quelle échelle? | un dénombrement |
+| Peut-on faire une moyenne? | oui, avec interprétation prudente |
+
+## Résumer une variable numérique
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+min
+:::
+
+::: {.label}
+plus petite valeur observée
+:::
+:::
+
+::: {.metric}
+::: {.value}
+moy.
+:::
+
+::: {.label}
+niveau moyen observé
+:::
+:::
+
+::: {.metric}
+::: {.value}
+méd.
+:::
+
+::: {.label}
+valeur centrale robuste
+:::
+:::
+
+::: {.metric}
+::: {.value}
+max
+:::
+
+::: {.label}
+plus grande valeur observée
+:::
+:::
+:::
+
+## Minimum, moyenne, médiane et maximum
+
+```{r}
+#| eval: false
+birth_prepare |>
+  summarise(
+    jours = n(),
+    naissances_min = min(births, na.rm = TRUE),
+    naissances_moyennes = mean(births, na.rm = TRUE),
+    naissances_medianes = median(births, na.rm = TRUE),
+    naissances_max = max(births, na.rm = TRUE)
+  )
+```
+
+::: {.note-box}
+Ces indicateurs décrivent la variable. Ils ne disent pas encore pourquoi les
+naissances varient d'une journée à l'autre.
+:::
+
+## Moyenne et médiane
+
+::: {.lead}
+La moyenne utilise toutes les valeurs. La médiane coupe les observations en deux
+groupes de même taille.
+:::
+
+::: {.example-box}
+Quand la moyenne et la médiane sont proches, cela suggère un centre assez
+stable. Quand elles sont très différentes, il faut regarder la distribution
+avant d'interpréter.
+:::
+
+## Tableau descriptif minimal
+
+```{r}
+#| eval: false
+resume_births <- birth_prepare |>
+  summarise(
+    jours = n(),
+    minimum = min(births, na.rm = TRUE),
+    moyenne = mean(births, na.rm = TRUE),
+    mediane = median(births, na.rm = TRUE),
+    maximum = max(births, na.rm = TRUE)
+  )
+
+resume_births
+```
+
+::: {.note-box}
+Un tableau descriptif est utile s'il reste lié au sens de la variable et à
+l'unité d'observation.
+:::
+
+## Histogramme : voir la distribution
+
+```{r}
+#| eval: false
+birth_prepare |>
+  ggplot(aes(births)) +
+  geom_histogram(bins = 30, fill = "#2A9D8F", color = "white") +
+  labs(
+    title = "Distribution quotidienne du nombre de naissances",
+    x = "Nombre de naissances",
+    y = "Nombre de jours"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+::: {.note-box}
+L'histogramme montre la forme générale : concentration des valeurs, asymétrie
+possible et valeurs inhabituelles.
+:::
+
+## Classes de l'histogramme
+
+::: {.lead}
+Un histogramme regroupe les valeurs numériques en classes.
+:::
+
+::: {.keypoints}
+- Trop peu de classes peuvent cacher des détails.
+- Trop de classes peuvent créer du bruit visuel.
+- Le choix doit aider à voir la structure générale.
+:::
+
+::: {.note-box}
+Changer `bins` ne change pas la base. Cela change la manière de regarder la
+distribution.
+:::
+
+## Valeurs inhabituelles
+
+::: {.lead}
+Une valeur très petite ou très grande mérite d'être examinée avant d'être
+expliquée.
+:::
+
+::: {.note-box}
+Repérer une valeur inhabituelle ne suffit pas pour conclure à une erreur, à une
+cause particulière ou à un phénomène exceptionnel.
+:::
+
+## Écrire un constat prudent
+
+::: {.example-box}
+Phrase acceptable : la variable `births` décrit un nombre quotidien de
+naissances et ses valeurs se concentrent autour d'un niveau central visible dans
+le tableau descriptif et l'histogramme.
+:::
+
+::: {.note-box}
+Évitez les explications causales à cette étape. On décrit ce qui est observé
+dans la base.
+:::
+
+## Lien avec la suite
+
+::: {.lead}
+Après avoir décrit une variable, on peut comparer cette variable selon une autre
+variable.
+:::
+
+::: {.keypoints}
+- `births` seule : analyse univariée;
+- `births` selon `jour_semaine` : comparaison entre groupes;
+- la comparaison demande une interprétation encore plus prudente.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Une analyse univariée décrit une variable à la fois.
+- Le tableau descriptif et le graphique se complètent.
+- La moyenne et la médiane n'ont pas exactement le même rôle.
+- Un constat descriptif ne doit pas devenir une explication causale.
+:::
+
+## Activité 1.5
+
+::: {.lead}
+Produisez une courte analyse univariée de `births`.
+:::
+
+::: {.note-box}
+Incluez un tableau avec le minimum, la moyenne, la médiane et le maximum, un
+histogramme, une phrase descriptive prudente et une limite d'interprétation.
+:::

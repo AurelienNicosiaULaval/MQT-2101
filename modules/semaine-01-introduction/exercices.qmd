@@ -57,9 +57,30 @@ birth_us |>
   )
 ```
 
-## Exercice 3 - Comparer des indicateurs
+## Exercice 3 - Comparer des groupes et des indicateurs
 
-Fichier : `safety_airlines.csv`.
+Fichiers : `birth_us.csv` et `safety_airlines.csv`.
+
+Première comparaison : comparer les naissances selon le jour de la semaine.
+
+```{r}
+#| eval: false
+birth_us |>
+  mutate(
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi", "mardi", "mercredi", "jeudi",
+        "vendredi", "samedi", "dimanche"
+      )
+    )
+  ) |>
+  ggplot(aes(jour_semaine, births)) +
+  geom_boxplot()
+```
+
+Deuxième comparaison : comparer un nombre brut à un taux indicatif.
 
 ```{r}
 #| eval: false
@@ -79,6 +100,7 @@ safety_airlines |>
 
 À faire :
 
+- écrire un constat descriptif sur les naissances selon le jour de la semaine;
 - comparer le nombre brut d'incidents et le taux indicatif;
 - expliquer pourquoi l'échelle de comparaison change l'interprétation;
 - écrire une limite de l'analyse.
@@ -94,22 +116,46 @@ Répondre en quelques lignes :
 - quelle compétence R sera nécessaire dès la semaine 02;
 - quelle erreur d'interprétation faut-il éviter.
 
+## Consolidation des réponses
+
+Avant de préparer la trace finale, relisez les exercices 1 à 3.
+
+À vérifier :
+
+- les variables sont nommées avec leur nom exact;
+- l'unité d'observation est claire;
+- les tableaux et graphiques répondent à la question posée;
+- les constats restent descriptifs;
+- les limites d'interprétation sont explicites.
+
+À produire :
+
+- deux constats descriptifs révisés;
+- une correction à faire avant la trace finale;
+- une question restante, si un point demeure fragile.
+
 ## Livrable court
 
-Remettre une première trace de portfolio d'une page maximum avec :
+Remettre une première trace de portfolio d'une page maximum.
+
+Ordre suggéré :
 
 - une synthèse du diagnostic de compétences;
 - une phrase expliquant le rôle d'un modèle mathématique ou statistique;
 - un tableau de variables classées par type;
-- un graphique;
+- un tableau descriptif et un graphique produits avec R;
 - deux constats descriptifs;
-- une limite d'interprétation.
+- une limite d'interprétation;
+- une notion à revoir avant la semaine 02.
+
+Le livrable doit être court. Il sert à montrer votre démarche, pas à recopier toutes les réponses des exercices.
 
 ## Conseils de vérification
 
 Avant de considérer l'exercice terminé, vérifiez que votre réponse :
 
 - nomme les variables utilisées;
+- inclut une sortie ou un graphique produit avec R;
 - distingue clairement description et interprétation;
 - ne formule pas de conclusion causale;
 - inclut une limite lorsque vous comparez deux indicateurs.

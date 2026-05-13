@@ -1,0 +1,339 @@
+---
+title: "Capsule 2 - Modèles mathématiques et statistiques"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Comprendre qu'un modèle simplifie une situation réelle pour répondre à une question.
+- Distinguer quelques grandes familles de modèles.
+- Relier un problème, des données, un modèle et une interprétation.
+- Identifier les notions statistiques à consolider avant la suite.
+:::
+
+## Pourquoi parler de modèles avant R?
+
+::: {.lead}
+R permet de calculer rapidement. Mais avant de calculer, il faut savoir quel
+problème on veut éclairer et ce que les données représentent.
+:::
+
+::: {.note-box}
+Un modèle n'est pas seulement une formule. C'est une façon organisée de relier
+une question, des variables, des hypothèses et une interprétation.
+:::
+
+## Un modèle simplifie la réalité
+
+::: {.lead}
+Un modèle est une représentation volontairement simplifiée d'une situation
+réelle.
+:::
+
+::: {.keypoints}
+- il conserve les éléments jugés importants;
+- il laisse de côté des détails moins utiles pour la question posée;
+- il permet de comparer, prévoir, expliquer ou décider;
+- il doit rester assez simple pour être compris et utilisé.
+:::
+
+## Trois formes de modèles
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+I
+:::
+
+::: {.label}
+Iconique : une maquette ou une représentation matérielle.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+A
+:::
+
+::: {.label}
+Analogique : un système qui imite un comportement par analogie.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+S
+:::
+
+::: {.label}
+Symbolique : des variables, des paramètres et des relations mathématiques.
+:::
+:::
+:::
+
+## Deux distinctions utiles
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Statique ou dynamique
+
+Un modèle statique décrit une situation à une étape donnée.
+
+Un modèle dynamique décrit une évolution dans le temps.
+:::
+
+::: {.column width="48%"}
+### Déterministe ou stochastique
+
+Un modèle déterministe suppose des entrées connues avec certitude.
+
+Un modèle stochastique inclut explicitement de l'incertitude.
+:::
+
+::::
+
+## Les phases de modélisation
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+Identifier le problème.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+Formuler le modèle.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+Choisir une méthode de solution.
+:::
+:::
+:::
+
+## Valider avant de conclure
+
+::: {.lead}
+Un modèle doit être confronté aux données, au contexte et au jugement des
+personnes qui connaissent le domaine.
+:::
+
+::: {.keypoints}
+- les résultats sont-ils plausibles?
+- changent-ils fortement si les paramètres changent un peu?
+- sont-ils cohérents avec les valeurs extrêmes?
+- répondent-ils vraiment à la question initiale?
+:::
+
+## Formuler le problème avant de calculer
+
+::: {.example-box}
+Question floue : "Est-ce que les ventes vont bien?"
+
+Question modélisable : "Quelles succursales ont une baisse de ventes par
+rapport à la même période l'an dernier, en tenant compte du volume habituel?"
+:::
+
+::: {.note-box}
+La deuxième formulation indique mieux les observations, les variables, la
+comparaison et l'interprétation attendue.
+:::
+
+## Les composantes d'un modèle
+
+::: {.keypoints}
+- un horizon temporel;
+- des variables ou des décisions à étudier;
+- des critères d'évaluation;
+- des paramètres numériques;
+- des relations entre les variables;
+- des hypothèses qui limitent l'interprétation.
+:::
+
+## Exemple en gestion
+
+::: {.lead}
+Une entreprise veut prévoir la demande hebdomadaire pour ajuster ses stocks.
+:::
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Ce que le modèle utilise
+
+- ventes passées;
+- semaines et saisons;
+- promotions;
+- ruptures de stock;
+- contexte opérationnel.
+:::
+
+::: {.column width="48%"}
+### Ce que le modèle produit
+
+- une prévision;
+- une erreur attendue;
+- un risque de manquer de stock;
+- une décision à discuter.
+:::
+
+::::
+
+## Les modèles prédictifs du cours
+
+::: {.note-box}
+Dans ce cours, les modèles prédictifs serviront surtout à relier des données à
+une décision ou à une anticipation.
+:::
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Régression
+
+Relier une variable réponse à une ou plusieurs variables explicatives.
+:::
+
+::: {.column width="48%"}
+### Séries chronologiques
+
+Étudier une variable observée dans le temps pour décrire ou prévoir son
+évolution.
+:::
+
+::::
+
+## Ce qu'un modèle permet
+
+::: {.keypoints}
+- structurer une question;
+- rendre explicites les hypothèses;
+- comparer des scénarios;
+- produire une prévision ou une estimation;
+- soutenir une décision.
+:::
+
+::: {.note-box}
+Un modèle ne prouve pas automatiquement une cause. Il produit un résultat à
+interpréter dans un contexte.
+:::
+
+## Notions à consolider
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+Observation, variable et unité d'analyse.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+Moyenne, médiane, écart type et fréquences.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+Graphiques descriptifs et limites d'interprétation.
+:::
+:::
+:::
+
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+Un modèle simplifie pour répondre à une question.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+Le problème vient avant le calcul.
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+Une conclusion dépend des hypothèses et de la validation.
+:::
+:::
+:::
+
+## Activité 1.2
+
+::: {.lead}
+En une phrase, expliquez ce qu'un modèle mathématique ou statistique simplifie.
+:::
+
+::: {.note-box}
+Ajoutez ensuite un mini-diagnostic personnel : deux notions que vous maîtrisez
+déjà et deux notions que vous devez consolider avant la semaine 02.
+:::
