@@ -3,25 +3,524 @@ title: "Données"
 format:
   html:
     embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
-# Données
+Cette page rassemble les jeux de données utilisés dans le cours. Pour chaque base, vous trouverez un lien de téléchargement, un court résumé, un aperçu interactif du tableau et une description des variables.
 
-## Objectif
+```{r}
+#| label: setup-donnees
+#| include: false
 
-Documenter les jeux de données utilisés dans le cours.
+library(DT)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(readr)
+library(stringr)
+library(tibble)
+library(tidyr)
 
-## Organisation
+locate_project_root <- function(start = getwd()) {
+  path <- normalizePath(start, winslash = "/", mustWork = TRUE)
 
-- `brutes/` : fichiers sources non modifiés.
-- `preparees/` : données nettoyées prêtes pour les exercices.
-- `simulees/` : données créées pour les démonstrations et mini-cas.
+  repeat {
+    if (file.exists(file.path(path, "_quarto.yml"))) {
+      return(path)
+    }
 
-## Règles
+    parent <- dirname(path)
 
-- Ne pas publier de données confidentielles.
-- Documenter l'origine de chaque fichier.
-- Conserver les scripts de préparation dans `scripts/`.
+    if (identical(parent, path)) {
+      stop("Impossible de trouver le fichier _quarto.yml du projet.")
+    }
 
-TODO: Ajouter un dictionnaire de données pour chaque jeu de données officiel.
+    path <- parent
+  }
+}
 
+project_root <- locate_project_root()
+project_file <- function(path) file.path(project_root, path)
+
+dataset_catalog <- tibble::tribble(
+  ~id, ~title, ~path, ~module, ~description, ~usage, ~source, ~license,
+  "birth_us",
+  "Naissances quotidiennes aux États-Unis",
+  "modules/semaine-01-introduction/data/birth_us.csv",
+  "Module 01 - Introduction",
+  "Observations quotidiennes de naissances aux États-Unis.",
+  "Revoir la notion d'observation, classer des variables, produire des mesures descriptives et préparer un premier tableau.",
+  "Archive locale du cours MQT-2101-A25, selon modules/semaine-01-introduction/data/README.md.",
+  "Licence externe non documentée dans le dépôt.",
+  "safety_airlines",
+  "Sécurité aérienne par compagnie",
+  "modules/semaine-01-introduction/data/safety_airlines.csv",
+  "Module 01 - Introduction",
+  "Données descriptives par compagnie aérienne, avec trafic hebdomadaire, incidents, accidents mortels et décès sur deux périodes.",
+  "Comparer des indicateurs bruts et des échelles de référence, puis discuter l'interprétation prudente d'un tableau.",
+  "Archive locale du cours MQT-2101-A25, selon modules/semaine-01-introduction/data/README.md.",
+  "Licence externe non documentée dans le dépôt.",
+  "ventes_operations_quebec",
+  "Ventes et opérations de succursales québécoises",
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv",
+  "Module 02 - R et Quarto",
+  "Jeu de données simulé où chaque ligne représente une succursale pour un mois.",
+  "Pratiquer l'importation, l'inspection, la factorisation, le repérage des valeurs manquantes, les tableaux descriptifs et les graphiques avec R.",
+  "Données générées par scripts/06_prepare_weeks_01_02_data.R.",
+  "Données simulées pour le cours.",
+  "ventes_pme_quebec",
+  "Ventes mensuelles d'une PME québécoise fictive",
+  "modules/atelier-01-r/data/ventes_pme_quebec.csv",
+  "Module 03 - Atelier R",
+  "Jeu de données simulé sur les ventes mensuelles d'une PME québécoise fictive dans cinq succursales.",
+  "Explorer un tableau d'affaires, produire des synthèses descriptives et relier les variables opérationnelles aux ventes.",
+  "Données générées par scripts/04_create_atelier_01_data.R.",
+  "Données simulées pour le cours."
+)
+
+read_course_dataset <- function(path) {
+  readr::read_csv(
+    file = project_file(path),
+    show_col_types = FALSE,
+    guess_max = 10000
+  )
+}
+
+datasets <- dataset_catalog |>
+  mutate(data = purrr::map(path, read_course_dataset))
+
+dataset_meta <- function(dataset_id) {
+  datasets |>
+    filter(.data$id == dataset_id) |>
+    slice(1)
+}
+
+dataset_data <- function(dataset_id) {
+  dataset_meta(dataset_id)$data[[1]]
+}
+
+format_integer_fr <- function(x) {
+  format(x, big.mark = " ", decimal.mark = ",", scientific = FALSE, trim = TRUE)
+}
+
+dataset_facts <- function(dataset_id) {
+  meta <- dataset_meta(dataset_id)
+  data <- meta$data[[1]]
+
+  tibble(
+    information = c(
+      "Module",
+      "Observations",
+      "Variables",
+      "Valeurs manquantes",
+      "Utilisation dans le cours"
+    ),
+    valeur = c(
+      meta$module,
+      format_integer_fr(nrow(data)),
+      format_integer_fr(ncol(data)),
+      format_integer_fr(sum(is.na(data))),
+      meta$usage
+    )
+  )
+}
+
+dataset_profile <- function(dataset_id) {
+  data <- dataset_data(dataset_id)
+
+  tibble(
+    variable = names(data),
+    type = purrr::map_chr(data, ~ class(.x)[1]),
+    valeurs_manquantes = purrr::map_int(data, ~ sum(is.na(.x))),
+    proportion_manquante = purrr::map_chr(
+      data,
+      ~ paste0(round(100 * mean(is.na(.x)), 1), " %")
+    ),
+    valeurs_distinctes = purrr::map_int(data, ~ dplyr::n_distinct(.x, na.rm = TRUE)),
+    exemple = purrr::map_chr(data, function(x) {
+      values <- x[!is.na(x)]
+
+      if (length(values) == 0) {
+        return("NA")
+      }
+
+      stringr::str_trunc(as.character(values[[1]]), width = 60)
+    })
+  )
+}
+
+datatable_language_fr <- list(
+  search = "Rechercher :",
+  lengthMenu = "Afficher _MENU_ lignes",
+  info = "Lignes _START_ à _END_ sur _TOTAL_",
+  infoEmpty = "Aucune ligne disponible",
+  infoFiltered = "(filtré à partir de _MAX_ lignes)",
+  zeroRecords = "Aucune ligne correspondante",
+  paginate = list(
+    previous = "Précédent",
+    `next` = "Suivant"
+  )
+)
+
+dataset_table <- function(dataset_id) {
+  DT::datatable(
+    dataset_data(dataset_id),
+    rownames = FALSE,
+    filter = "top",
+    class = "compact stripe hover",
+    options = list(
+      pageLength = 8,
+      scrollX = TRUE,
+      autoWidth = TRUE,
+      language = datatable_language_fr
+    )
+  )
+}
+
+download_href <- function(dataset_id) {
+  paste0("../", dataset_meta(dataset_id)$path)
+}
+
+download_link <- function(dataset_id) {
+  meta <- dataset_meta(dataset_id)
+  file_name <- basename(meta$path)
+
+  paste0(
+    "<p class=\"dataset-download-wrap\"><a class=\"dataset-download\" href=\"",
+    download_href(dataset_id),
+    "\" download>Télécharger ",
+    file_name,
+    "</a></p>"
+  )
+}
+
+dataset_cards <- function() {
+  cards <- purrr::pmap_chr(
+    datasets,
+    function(id, title, path, module, description, usage, source, license, data) {
+      paste0(
+        "<article class=\"dataset-card\">",
+        "<p class=\"dataset-module\">", module, "</p>",
+        "<h2>", title, "</h2>",
+        "<p>", description, "</p>",
+        "<p class=\"dataset-meta\">",
+        format_integer_fr(nrow(data)), " observations · ",
+        format_integer_fr(ncol(data)), " variables",
+        "</p>",
+        "<a class=\"dataset-download\" href=\"../", path, "\" download>",
+        "Télécharger le CSV</a>",
+        "</article>"
+      )
+    }
+  )
+
+  paste0("<div class=\"dataset-grid\">", paste(cards, collapse = "\n"), "</div>")
+}
+
+plot_numeric_overview <- function(dataset_id) {
+  data <- dataset_data(dataset_id)
+  numeric_data <- data |>
+    select(where(is.numeric))
+
+  if (ncol(numeric_data) == 0) {
+    return(
+      ggplot() +
+        annotate("text", x = 0, y = 0, label = "Aucune variable numérique détectée.") +
+        theme_void()
+    )
+  }
+
+  selected_variables <- names(numeric_data)[seq_len(min(6, ncol(numeric_data)))]
+
+  plot_data <- numeric_data |>
+    select(all_of(selected_variables)) |>
+    pivot_longer(
+      cols = everything(),
+      names_to = "variable",
+      values_to = "valeur"
+    ) |>
+    filter(!is.na(.data$valeur))
+
+  ggplot(plot_data, aes(x = .data$valeur)) +
+    geom_histogram(bins = 20, colour = "white", fill = "#0B4F6C") +
+    facet_wrap(vars(.data$variable), scales = "free") +
+    labs(x = NULL, y = "Nombre d'observations") +
+    theme_minimal(base_size = 11) +
+    theme(panel.grid.minor = element_blank())
+}
+
+planned_datasets <- tibble::tribble(
+  ~module, ~dossier, ~statut,
+  "Module 04 - Régression linéaire", "modules/semaine-03-regression-lineaire/data/", "À choisir et documenter",
+  "Module 05 - Régression non linéaire", "modules/semaine-04-regression-nonlineaire/data/", "À choisir et documenter",
+  "Module 06 - Atelier régression", "modules/atelier-02-regression/data/", "À choisir et documenter",
+  "Module 07 - Préparation intra", "modules/semaine-05-preparation-intra/data/", "À choisir et documenter",
+  "Module 08 - Séries chronologiques", "modules/semaine-06-series-chronologiques-intro/data/", "À choisir et documenter",
+  "Module 09 - Lissage", "modules/semaine-07-lissage/data/", "À choisir et documenter",
+  "Module 10 - Tendance et saisonnalité", "modules/semaine-08-tendance-saisonnalite/data/", "À choisir et documenter",
+  "Module 11 - Atelier séries chronologiques", "modules/atelier-03-series-chronologiques/data/", "À choisir et documenter",
+  "Module 12 - Variables externes et autocorrélation", "modules/semaine-09-variables-externes-autocorrelation/data/", "À choisir et documenter",
+  "Module 13 - Classification et modèles avancés", "modules/semaine-10-classification-modeles-avances/data/", "À choisir et documenter",
+  "Module 14 - Atelier d'intégration", "modules/atelier-04-recapitulation/data/", "À choisir et documenter"
+)
+
+# Notes internes pour la préparation du cours:
+# - modules/*/data/ contient les fichiers publiés avec les modules du cours;
+# - donnees/brutes/, donnees/preparees/ et donnees/simulees/ restent utiles
+#   pour le suivi de production, mais ne sont pas présentés aux étudiant·es;
+# - ne pas publier de données confidentielles ou nominatives;
+# - documenter l'origine, la licence et les transformations dans les README;
+# - les jeux de données à venir sont conservés dans planned_datasets.
+```
+
+```{css}
+.dataset-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin: 1.5rem 0 2rem;
+}
+
+.dataset-card {
+  border: 1px solid #d6dee6;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.dataset-card h2 {
+  font-size: 1.12rem;
+  margin-top: 0.2rem;
+}
+
+.dataset-module,
+.dataset-meta {
+  color: #52616f;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.dataset-download {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  background: #0B4F6C;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dataset-download:hover {
+  color: #ffffff;
+  background: #083c52;
+  text-decoration: none;
+}
+
+.dataset-download-wrap {
+  margin: 0.75rem 0 1rem;
+}
+```
+
+## Jeux de données disponibles
+
+```{r}
+#| label: cartes-jeux-donnees
+#| results: asis
+
+cat(dataset_cards())
+```
+
+## Naissances quotidiennes aux États-Unis
+
+Observations quotidiennes de naissances aux États-Unis. Ce fichier est utilisé pour revoir la notion d'observation, distinguer les types de variables et produire de premières descriptions numériques.
+
+```{r}
+#| label: telecharger-birth-us
+#| results: asis
+
+cat(download_link("birth_us"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-birth-us
+
+dataset_facts("birth_us") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-birth-us
+
+dataset_table("birth_us")
+```
+
+### Variables
+
+```{r}
+#| label: profil-birth-us
+#| tbl-cap: "Profil des variables de birth_us.csv"
+
+dataset_profile("birth_us") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-birth-us
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("birth_us")
+```
+
+## Sécurité aérienne par compagnie
+
+Données descriptives par compagnie aérienne. Le fichier sert à discuter la différence entre un nombre brut et un indicateur rapporté à une échelle d'exposition.
+
+```{r}
+#| label: telecharger-safety-airlines
+#| results: asis
+
+cat(download_link("safety_airlines"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-safety-airlines
+
+dataset_facts("safety_airlines") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-safety-airlines
+
+dataset_table("safety_airlines")
+```
+
+### Variables
+
+```{r}
+#| label: profil-safety-airlines
+#| tbl-cap: "Profil des variables de safety_airlines.csv"
+
+dataset_profile("safety_airlines") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-safety-airlines
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("safety_airlines")
+```
+
+## Ventes et opérations de succursales québécoises
+
+Jeu de données simulé où chaque ligne représente une succursale pour un mois. Le fichier est utilisé pour pratiquer l'importation, l'inspection, le nettoyage de base, les tableaux descriptifs et les graphiques avec R.
+
+```{r}
+#| label: telecharger-ventes-operations-quebec
+#| results: asis
+
+cat(download_link("ventes_operations_quebec"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-ventes-operations-quebec
+
+dataset_facts("ventes_operations_quebec") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-ventes-operations-quebec
+
+dataset_table("ventes_operations_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-ventes-operations-quebec
+#| tbl-cap: "Profil des variables de ventes_operations_quebec.csv"
+
+dataset_profile("ventes_operations_quebec") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-ventes-operations-quebec
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("ventes_operations_quebec")
+```
+
+## Ventes mensuelles d'une PME québécoise fictive
+
+Jeu de données simulé sur les ventes mensuelles d'une PME québécoise fictive dans cinq succursales. Le fichier sert de mini-cas d'affaires pour explorer un tableau, construire des indicateurs et formuler des constats descriptifs.
+
+```{r}
+#| label: telecharger-ventes-pme-quebec
+#| results: asis
+
+cat(download_link("ventes_pme_quebec"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-ventes-pme-quebec
+
+dataset_facts("ventes_pme_quebec") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-ventes-pme-quebec
+
+dataset_table("ventes_pme_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-ventes-pme-quebec
+#| tbl-cap: "Profil des variables de ventes_pme_quebec.csv"
+
+dataset_profile("ventes_pme_quebec") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-ventes-pme-quebec
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("ventes_pme_quebec")
+```

@@ -5,6 +5,8 @@ required_packages <- c(
   "quarto",
   "readr",
   "readxl",
+  "DT",
+  "knitr",
   "janitor",
   "lubridate",
   "broom",
