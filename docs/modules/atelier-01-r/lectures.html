@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4946,12 +5001,9 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#lectures---atelier-01" id="toc-lectures---atelier-01" class="nav-link active" data-scroll-target="#lectures---atelier-01">Lectures - Atelier 01</a>
-  <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#à-revoir-avant-latelier" id="toc-à-revoir-avant-latelier" class="nav-link" data-scroll-target="#à-revoir-avant-latelier">À revoir avant l’atelier</a></li>
   <li><a href="#à-revoir-après-latelier" id="toc-à-revoir-après-latelier" class="nav-link" data-scroll-target="#à-revoir-après-latelier">À revoir après l’atelier</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4977,8 +5029,6 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="lectures---atelier-01" class="level1">
-<h1>Lectures - Atelier 01</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Les lectures servent seulement d’appui. L’essentiel de l’atelier se fait dans RStudio, avec le fichier de données et le rapport Quarto.</p>
@@ -5000,7 +5050,6 @@ grid-template-columns: 1fr;
 <p>Relisez les notions qui ont posé problème pendant la séance, puis complétez le rapport Quarto avant la remise.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -4295,6 +4295,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4981,9 +5036,7 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#exercices---semaine-02" id="toc-exercices---semaine-02" class="nav-link active" data-scroll-target="#exercices---semaine-02">Exercices - Semaine 02</a>
-  <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#exercice-1---créer-le-projet-et-importer-les-données" id="toc-exercice-1---créer-le-projet-et-importer-les-données" class="nav-link" data-scroll-target="#exercice-1---créer-le-projet-et-importer-les-données">Exercice 1 - Créer le projet et importer les données</a></li>
   <li><a href="#exercice-2---identifier-les-types-de-variables" id="toc-exercice-2---identifier-les-types-de-variables" class="nav-link" data-scroll-target="#exercice-2---identifier-les-types-de-variables">Exercice 2 - Identifier les types de variables</a></li>
   <li><a href="#exercice-3---repérer-les-valeurs-manquantes" id="toc-exercice-3---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#exercice-3---repérer-les-valeurs-manquantes">Exercice 3 - Repérer les valeurs manquantes</a></li>
@@ -4991,7 +5044,6 @@ grid-template-columns: 1fr;
   <li><a href="#exercice-5---produire-un-graphique" id="toc-exercice-5---produire-un-graphique" class="nav-link" data-scroll-target="#exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</a></li>
   <li><a href="#livrable-court" id="toc-livrable-court" class="nav-link" data-scroll-target="#livrable-court">Livrable court</a></li>
   <li><a href="#modèle-de-solution-cachée-à-utiliser" id="toc-modèle-de-solution-cachée-à-utiliser" class="nav-link" data-scroll-target="#modèle-de-solution-cachée-à-utiliser">Modèle de solution cachée à utiliser</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -5017,15 +5069,13 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="exercices---semaine-02" class="level1">
-<h1>Exercices - Semaine 02</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Créer un premier rapport Quarto reproductible à partir d’un tableau de données d’affaires.</p>
 </section>
 <section id="exercice-1---créer-le-projet-et-importer-les-données" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---créer-le-projet-et-importer-les-données">Exercice 1 - Créer le projet et importer les données</h2>
-<p>Fichier : <code>ventes_operations_quebec.csv</code>.</p>
+<p>Fichier : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
@@ -5168,7 +5218,6 @@ grid-template-columns: 1fr;
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

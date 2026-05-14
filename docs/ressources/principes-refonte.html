@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4946,9 +5001,7 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#principes-de-refonte" id="toc-principes-de-refonte" class="nav-link active" data-scroll-target="#principes-de-refonte">Principes de refonte</a>
-  <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#publics-cibles" id="toc-publics-cibles" class="nav-link" data-scroll-target="#publics-cibles">Publics cibles</a></li>
   <li><a href="#place-de-lia" id="toc-place-de-lia" class="nav-link" data-scroll-target="#place-de-lia">Place de l’IA</a></li>
   <li><a href="#vidéos-et-capsules" id="toc-vidéos-et-capsules" class="nav-link" data-scroll-target="#vidéos-et-capsules">Vidéos et capsules</a></li>
@@ -4958,7 +5011,6 @@ grid-template-columns: 1fr;
   <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
   <li><a href="#feuille-de-référence" id="toc-feuille-de-référence" class="nav-link" data-scroll-target="#feuille-de-référence">Feuille de référence</a></li>
   <li><a href="#critères-pour-accepter-un-module" id="toc-critères-pour-accepter-un-module" class="nav-link" data-scroll-target="#critères-pour-accepter-un-module">Critères pour accepter un module</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4984,8 +5036,6 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="principes-de-refonte" class="level1">
-<h1>Principes de refonte</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Cette page fixe les principes pédagogiques à respecter pendant la refonte de MQT-2101. Elle sert de référence pour transformer l’ancien matériel en modules autonomes, plus accessibles et plus utiles pour les étudiant·es.</p>
@@ -5112,7 +5162,6 @@ grid-template-columns: 1fr;
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

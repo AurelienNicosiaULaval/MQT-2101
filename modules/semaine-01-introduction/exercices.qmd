@@ -5,115 +5,70 @@ format:
     embed-resources: true
 ---
 
-# Exercices - Semaine 01
-
 ## Objectif
 
-Ces exercices servent à préparer la première trace de portfolio de la séance 01, à situer le rôle des modèles et à diagnostiquer les notions statistiques à consolider.
+Ces exercices préparent la première trace de portfolio. Ils portent sur la lecture d'une base, les variables, les statistiques descriptives et les limites d'interprétation. Aucun code n'est attendu dans cette séance.
 
-## Exercice 1 - Lire la structure d'un tableau
+## Exercice 1 - Lire la structure d'une base
 
-Fichier : `birth_us.csv`.
+Base : <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.
 
-```{r}
-#| eval: false
-library(tidyverse)
-library(janitor)
+À partir de la page Données et des démonstrations statistiques, préparez un court tableau avec quatre colonnes :
 
-birth_us <- readr::read_csv(
-  "modules/semaine-01-introduction/data/birth_us.csv",
-  show_col_types = FALSE
-) |>
-  clean_names()
+| Nom de variable | Type de variable | Rôle possible | Précaution d'interprétation |
+|---|---|---|---|
+| `year` |  |  |  |
+| `month` |  |  |  |
+| `date_of_month` |  |  |  |
+| `day_of_week` |  |  |  |
+| `births` |  |  |  |
 
-glimpse(birth_us)
-```
+À vérifier dans votre réponse :
 
-À faire :
+- l'unité d'observation est nommée clairement;
+- `births` est reconnu comme une variable numérique;
+- `day_of_week` est reconnu comme un code de catégorie;
+- les variables liées au temps sont identifiées.
 
-- nommer l'unité d'observation;
-- classer les variables par type;
-- repérer les variables qui décrivent le temps;
-- écrire un indicateur descriptif pertinent.
+## Exercice 2 - Lire une analyse univariée
 
-## Exercice 2 - Produire une analyse univariée
+Variable : `births` dans <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.
 
-À partir de `birth_us.csv`, produire :
+À partir du tableau descriptif et de l'histogramme présentés dans les démonstrations statistiques :
 
-- le minimum du nombre de naissances;
-- la moyenne;
-- la médiane;
-- le maximum;
-- un histogramme.
+- recopiez les quatre repères utiles : minimum, moyenne, médiane et maximum;
+- décrivez en une phrase ce que l'histogramme montre;
+- expliquez en une phrase pourquoi la moyenne et la médiane ne jouent pas exactement le même rôle;
+- ajoutez une limite d'interprétation.
 
-```{r}
-#| eval: false
-birth_us |>
-  summarise(
-    minimum = min(births, na.rm = TRUE),
-    moyenne = mean(births, na.rm = TRUE),
-    mediane = median(births, na.rm = TRUE),
-    maximum = max(births, na.rm = TRUE)
-  )
-```
+Réponse attendue : un court paragraphe descriptif. Il doit décrire la variable sans expliquer les causes des variations observées.
 
 ## Exercice 3 - Comparer des groupes et des indicateurs
 
-Fichiers : `birth_us.csv` et `safety_airlines.csv`.
+Bases : <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a> et <a class="data-link" href="../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>.
 
-Première comparaison : comparer les naissances selon le jour de la semaine.
+Partie A : comparer les naissances selon le jour de la semaine.
 
-```{r}
-#| eval: false
-birth_us |>
-  mutate(
-    jour_semaine = factor(
-      day_of_week,
-      levels = 1:7,
-      labels = c(
-        "lundi", "mardi", "mercredi", "jeudi",
-        "vendredi", "samedi", "dimanche"
-      )
-    )
-  ) |>
-  ggplot(aes(jour_semaine, births)) +
-  geom_boxplot()
-```
+- Nommez la variable numérique comparée.
+- Nommez la variable qui définit les groupes.
+- Écrivez un constat descriptif prudent.
+- Expliquez pourquoi le graphique ne suffit pas à démontrer une cause.
 
-Deuxième comparaison : comparer un nombre brut à un taux indicatif.
+Partie B : comparer un nombre brut à un taux indicatif.
 
-```{r}
-#| eval: false
-safety_airlines <- readr::read_csv(
-  "modules/semaine-01-introduction/data/safety_airlines.csv",
-  show_col_types = FALSE
-) |>
-  clean_names()
-
-safety_airlines |>
-  mutate(
-    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
-    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
-  ) |>
-  select(airline, incidents_00_14, incidents_par_milliard)
-```
-
-À faire :
-
-- écrire un constat descriptif sur les naissances selon le jour de la semaine;
-- comparer le nombre brut d'incidents et le taux indicatif;
-- expliquer pourquoi l'échelle de comparaison change l'interprétation;
-- écrire une limite de l'analyse.
+- Expliquez ce que mesure `incidents_00_14`.
+- Expliquez pourquoi un taux indicatif peut être plus comparable qu'un nombre brut.
+- Indiquez une limite du taux indicatif.
 
 ## Exercice 4 - Modèles et diagnostic de compétences
 
-Répondre en quelques lignes :
+Répondez en quelques lignes :
 
 - ce qu'un modèle mathématique ou statistique simplifie;
 - pourquoi la formulation du problème vient avant le calcul;
 - quelle notion statistique est la plus claire pour vous;
 - quelle notion doit être revue;
-- quelle compétence R sera nécessaire dès la semaine 02;
+- quelle compétence de lecture des données sera utile dès la semaine 02;
 - quelle erreur d'interprétation faut-il éviter.
 
 ## Consolidation des réponses
@@ -128,9 +83,7 @@ Avant de préparer la trace finale, relisez les exercices 1 à 3.
 - les constats restent descriptifs;
 - les limites d'interprétation sont explicites.
 
-Si un point demeure fragile, consultez les lectures ciblées du module avant de
-réviser votre réponse. Les exercices facultatifs proposés dans la page
-[Lectures](lectures.qmd) peuvent aussi servir de pratique supplémentaire.
+Si un point demeure fragile, consultez les lectures ciblées du module avant de réviser votre réponse. Les exercices facultatifs proposés dans la page [Lectures](lectures.qmd) peuvent aussi servir de pratique supplémentaire.
 
 À produire :
 
@@ -147,7 +100,7 @@ Ordre suggéré :
 - une synthèse du diagnostic de compétences;
 - une phrase expliquant le rôle d'un modèle mathématique ou statistique;
 - un tableau de variables classées par type;
-- un tableau descriptif et un graphique produits avec R;
+- un tableau descriptif et un graphique tirés des démonstrations statistiques;
 - deux constats descriptifs;
 - une limite d'interprétation;
 - une notion à revoir avant la semaine 02.
@@ -159,7 +112,7 @@ Le livrable doit être court. Il sert à montrer votre démarche, pas à recopie
 Avant de considérer l'exercice terminé, vérifiez que votre réponse :
 
 - nomme les variables utilisées;
-- inclut une sortie ou un graphique produit avec R;
+- s'appuie sur un tableau ou un graphique précis;
 - distingue clairement description et interprétation;
 - ne formule pas de conclusion causale;
 - inclut une limite lorsque vous comparez deux indicateurs.

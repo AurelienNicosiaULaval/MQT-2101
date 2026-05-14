@@ -4295,6 +4295,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4981,15 +5036,12 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#démonstrations-r---semaine-07" id="toc-démonstrations-r---semaine-07" class="nav-link active" data-scroll-target="#démonstrations-r---semaine-07">Démonstrations R - Semaine 07</a>
-  <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#préparation" id="toc-préparation" class="nav-link" data-scroll-target="#préparation">Préparation</a></li>
   <li><a href="#démonstration-1---importer-ou-préparer-les-données" id="toc-démonstration-1---importer-ou-préparer-les-données" class="nav-link" data-scroll-target="#démonstration-1---importer-ou-préparer-les-données">Démonstration 1 - Importer ou préparer les données</a></li>
   <li><a href="#démonstration-2---produire-un-résultat-intermédiaire" id="toc-démonstration-2---produire-un-résultat-intermédiaire" class="nav-link" data-scroll-target="#démonstration-2---produire-un-résultat-intermédiaire">Démonstration 2 - Produire un résultat intermédiaire</a></li>
   <li><a href="#démonstration-3---interpréter-pour-une-décision" id="toc-démonstration-3---interpréter-pour-une-décision" class="nav-link" data-scroll-target="#démonstration-3---interpréter-pour-une-décision">Démonstration 3 - Interpréter pour une décision</a></li>
   <li><a href="#à-vérifier" id="toc-à-vérifier" class="nav-link" data-scroll-target="#à-vérifier">À vérifier</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -5015,8 +5067,6 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="démonstrations-r---semaine-07" class="level1">
-<h1>Démonstrations R - Semaine 07</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.</p>
@@ -5057,7 +5107,6 @@ grid-template-columns: 1fr;
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

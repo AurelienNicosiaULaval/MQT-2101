@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4946,9 +5001,7 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#atelier-04---atelier-intégrateur-et-récapitulation" id="toc-atelier-04---atelier-intégrateur-et-récapitulation" class="nav-link active" data-scroll-target="#atelier-04---atelier-intégrateur-et-récapitulation">Atelier 04 - Atelier intégrateur et récapitulation</a>
-  <ul class="collapse">
-  <li><a href="#lets-eat-the-cake" id="toc-lets-eat-the-cake" class="nav-link" data-scroll-target="#lets-eat-the-cake">Let’s eat the cake</a></li>
+  <li><a href="#lets-eat-the-cake" id="toc-lets-eat-the-cake" class="nav-link active" data-scroll-target="#lets-eat-the-cake">Let’s eat the cake</a></li>
   <li><a href="#mise-en-contexte" id="toc-mise-en-contexte" class="nav-link" data-scroll-target="#mise-en-contexte">Mise en contexte</a></li>
   <li><a href="#utilité-pour-le-génie-et-ladministration" id="toc-utilité-pour-le-génie-et-ladministration" class="nav-link" data-scroll-target="#utilité-pour-le-génie-et-ladministration">Utilité pour le génie et l’administration</a></li>
   <li><a href="#repères-avant-les-capsules" id="toc-repères-avant-les-capsules" class="nav-link" data-scroll-target="#repères-avant-les-capsules">Repères avant les capsules</a></li>
@@ -4964,7 +5017,6 @@ grid-template-columns: 1fr;
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
   <li><a href="#mini-cas-business" id="toc-mini-cas-business" class="nav-link" data-scroll-target="#mini-cas-business">Mini-cas business</a></li>
   <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4990,8 +5042,6 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="atelier-04---atelier-intégrateur-et-récapitulation" class="level1">
-<h1>Atelier 04 - Atelier intégrateur et récapitulation</h1>
 <p>Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.</p>
 <p>Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.</p>
 <section id="lets-eat-the-cake" class="level2">
@@ -5080,7 +5130,6 @@ grid-template-columns: 1fr;
 <p>TODO ajouter une ressource complémentaire ou une piste de consolidation.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

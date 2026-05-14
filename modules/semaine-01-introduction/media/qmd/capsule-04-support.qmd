@@ -48,7 +48,7 @@ La préparation consiste à rendre explicites les formats, les unités et les
 codes pour éviter des calculs corrects sur des variables mal interprétées.
 :::
 
-## Point de départ : `birth_us.csv`
+## Point de départ : <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>
 
 ::: {.lead}
 Dans cette base, une ligne correspond à une journée d'observation.
@@ -78,22 +78,20 @@ Une transformation doit toujours répondre à un besoin d'analyse.
 ## Vérifier les noms et la structure
 
 ::: {.lead}
-Avant de transformer, il faut lire la structure de la base.
+Avant de transformer, il faut lire la structure de la base et vérifier le sens
+des colonnes.
 :::
 
-```{r}
-#| eval: false
-#| echo: true
-library(tidyverse)
-library(lubridate)
-
-birth_us <- read_csv("modules/semaine-01-introduction/data/birth_us.csv")
-
-glimpse(birth_us)
-```
+| Variable | Question à se poser |
+|---|---|
+| `year` | Est-ce bien l'année de la journée observée? |
+| `month` | Est-ce bien le mois, codé de 1 à 12? |
+| `date_of_month` | Est-ce bien le jour dans le mois? |
+| `day_of_week` | Est-ce un code ou une quantité? |
+| `births` | Est-ce un nombre quotidien de naissances? |
 
 ::: {.note-box}
-La question n'est pas seulement : est-ce que R a lu le fichier? Il faut aussi
+La question n'est pas seulement : est-ce que la base est ouverte? Il faut aussi
 vérifier ce que chaque colonne représente.
 :::
 
@@ -103,14 +101,9 @@ vérifier ce que chaque colonne représente.
 Les colonnes `year`, `month` et `date_of_month` décrivent ensemble une date.
 :::
 
-```{r}
-#| eval: false
-#| echo: true
-birth_prepare <- birth_us |>
-  mutate(
-    date = make_date(year, month, date_of_month)
-  )
-```
+| Avant | Après | Gain d'interprétation |
+|---|---|---|
+| `year = 2000`, `month = 1`, `date_of_month = 1` | `2000-01-01` | la journée devient un repère temporel complet |
 
 ::: {.example-box}
 Une vraie date permet de trier les observations, de construire une série
@@ -123,21 +116,15 @@ chronologique et de vérifier les périodes couvertes.
 `day_of_week` contient des nombres, mais ces nombres identifient des jours.
 :::
 
-```{r}
-#| eval: false
-#| echo: true
-birth_prepare <- birth_prepare |>
-  mutate(
-    jour_semaine = factor(
-      day_of_week,
-      levels = 1:7,
-      labels = c(
-        "lundi", "mardi", "mercredi", "jeudi",
-        "vendredi", "samedi", "dimanche"
-      )
-    )
-  )
-```
+| Code | Libellé |
+|---|---|
+| 1 | lundi |
+| 2 | mardi |
+| 3 | mercredi |
+| 4 | jeudi |
+| 5 | vendredi |
+| 6 | samedi |
+| 7 | dimanche |
 
 ::: {.note-box}
 Après cette transformation, le jour de la semaine devient une catégorie
@@ -150,15 +137,11 @@ interprétable plutôt qu'un nombre à moyenner.
 Une première vérification cherche les valeurs absentes ou impossibles.
 :::
 
-```{r}
-#| eval: false
-#| echo: true
-birth_prepare |>
-  summarise(
-    valeurs_manquantes = sum(is.na(births)),
-    jours_codes_inattendus = sum(!day_of_week %in% 1:7)
-  )
-```
+| Vérification | Pourquoi? |
+|---|---|
+| Valeurs manquantes dans `births` | éviter un résumé calculé sur une information absente |
+| Codes de jour hors de 1 à 7 | repérer un codage impossible |
+| Mois hors de 1 à 12 | repérer une date impossible |
 
 ::: {.note-box}
 Cette vérification ne remplace pas un nettoyage complet. Elle signale les
@@ -171,13 +154,11 @@ points à examiner avant de produire des résumés.
 Une base quotidienne devrait avoir une seule observation par date.
 :::
 
-```{r}
-#| eval: false
-#| echo: true
-birth_prepare |>
-  count(date) |>
-  filter(n > 1)
-```
+| Vérification | Question |
+|---|---|
+| Une seule ligne par date | Est-ce que chaque journée apparaît une seule fois? |
+| Période couverte | Est-ce que le début et la fin de la base sont cohérents? |
+| Ordre temporel | Est-ce que les journées peuvent être replacées dans l'ordre? |
 
 ::: {.example-box}
 Si une date apparaît deux fois, il faut comprendre pourquoi avant de calculer
@@ -197,29 +178,18 @@ une moyenne ou de produire une série temporelle.
 Une transformation documentée peut être relue, corrigée et reproduite.
 :::
 
-## Code R minimal
-
-```{r}
-#| eval: false
-#| echo: true
-birth_prepare <- birth_us |>
-  mutate(
-    date = make_date(year, month, date_of_month),
-    jour_semaine = factor(
-      day_of_week,
-      levels = 1:7,
-      labels = c(
-        "lundi", "mardi", "mercredi", "jeudi",
-        "vendredi", "samedi", "dimanche"
-      )
-    )
-  )
-```
+## Résumé des transformations
 
 ::: {.note-box}
-Ce code prépare seulement ce qui est nécessaire pour la suite immédiate :
-résumer les naissances et comparer les jours de la semaine.
+La préparation nécessaire ici reste minimale : créer une date complète,
+transformer le code de jour en catégorie et documenter ces choix.
 :::
+
+| Transformation | But |
+|---|---|
+| `year` + `month` + `date_of_month` → `date` | situer les observations dans le temps |
+| `day_of_week` → `jour_semaine` | comparer des catégories lisibles |
+| conserver `births` | garder le nombre quotidien de naissances |
 
 ## Ce que la préparation permet
 
@@ -271,7 +241,7 @@ Préparez mentalement la base avant de résumer `births`.
 :::
 
 ::: {.keypoints}
-Indiquez ce que représente une ligne de `birth_us.csv`, expliquez pourquoi
+Indiquez ce que représente une ligne de <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>, expliquez pourquoi
 `day_of_week` doit être traité comme une catégorie et nommez une vérification à
 faire avant de produire un résumé descriptif.
 :::

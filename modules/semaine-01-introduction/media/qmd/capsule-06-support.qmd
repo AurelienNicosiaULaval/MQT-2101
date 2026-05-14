@@ -27,6 +27,49 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-capsule-06
+#| include: false
+
+library(tidyverse)
+library(lubridate)
+
+birth_path <- if (file.exists("data/birth_us.csv")) {
+  "data/birth_us.csv"
+} else if (file.exists("../../data/birth_us.csv")) {
+  "../../data/birth_us.csv"
+} else {
+  "modules/semaine-01-introduction/data/birth_us.csv"
+}
+
+safety_path <- if (file.exists("data/safety_airlines.csv")) {
+  "data/safety_airlines.csv"
+} else if (file.exists("../../data/safety_airlines.csv")) {
+  "../../data/safety_airlines.csv"
+} else {
+  "modules/semaine-01-introduction/data/safety_airlines.csv"
+}
+
+birth_prepare <- readr::read_csv(birth_path, show_col_types = FALSE) |>
+  mutate(
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi", "mardi", "mercredi", "jeudi",
+        "vendredi", "samedi", "dimanche"
+      )
+    )
+  )
+
+safety_resume <- readr::read_csv(safety_path, show_col_types = FALSE) |>
+  mutate(
+    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
+    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
+  )
+```
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
@@ -110,21 +153,24 @@ comparaison entre groupes
 :::
 :::
 
-## Code R minimal
+## Graphique de comparaison
 
 ```{r}
-#| eval: false
-#| echo: true
+#| label: capsule-06-boxplot
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.4
+#| out-width: "100%"
+
 birth_prepare |>
   filter(!is.na(jour_semaine)) |>
-  ggplot(aes(jour_semaine, births)) +
-  geom_boxplot(fill = "#E9C46A", color = "#1F2933") +
+  ggplot(aes(x = jour_semaine, y = births)) +
+  geom_boxplot(fill = "#E9C46A", color = "#1F2933", outlier.alpha = 0.45) +
   labs(
-    title = "Naissances selon le jour de la semaine",
     x = NULL,
-    y = "Nombre de naissances"
+    y = "Nombre de naissances par jour"
   ) +
-  theme_minimal(base_size = 12)
+  theme_minimal(base_size = 15)
 ```
 
 ## Lire les écarts
@@ -142,7 +188,7 @@ pourquoi cet écart existe.
 ## Nombre brut et échelle
 
 ::: {.lead}
-Dans `safety_airlines.csv`, les compagnies n'ont pas toutes la même taille ni la
+Dans <a class="data-link" href="../../../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>, les compagnies n'ont pas toutes la même taille ni la
 même exposition.
 :::
 
@@ -164,19 +210,13 @@ Un taux indicatif ramène les incidents à une échelle commune. Il facilite la
 comparaison, mais il dépend aussi de la manière dont l'exposition est calculée.
 :::
 
-## Code R minimal
+## Construire un taux : la logique
 
-```{r}
-#| eval: false
-#| echo: true
-safety_resume <- safety_airlines |>
-  mutate(
-    exposition_00_14_milliards =
-      avail_seat_km_per_week * 52 * 15 / 1e9,
-    incidents_par_milliard =
-      incidents_00_14 / exposition_00_14_milliards
-  )
-```
+| Étape | Rôle |
+|---|---|
+| Nombre d'incidents | volume observé |
+| Exposition approximée | taille ou volume d'activité |
+| Incidents / exposition | indicateur ramené à une échelle commune |
 
 ::: {.note-box}
 Ce taux est un indicateur descriptif pour comparer l'ordre de grandeur. Il ne
@@ -186,15 +226,18 @@ constitue pas à lui seul une évaluation complète de la sécurité.
 ## Comparer deux classements
 
 ```{r}
-#| eval: false
-#| echo: true
+#| label: capsule-06-safety-table
+#| echo: false
+
 safety_resume |>
-  select(
-    airline,
-    incidents_00_14,
-    incidents_par_milliard
+  transmute(
+    Compagnie = airline,
+    `Incidents 2000-2014` = incidents_00_14,
+    `Taux indicatif` = round(incidents_par_milliard, 3)
   ) |>
-  arrange(desc(incidents_par_milliard))
+  arrange(desc(`Taux indicatif`)) |>
+  slice_head(n = 6) |>
+  knitr::kable()
 ```
 
 ::: {.note-box}
@@ -245,7 +288,7 @@ Produisez deux constats descriptifs et une limite.
 
 ::: {.keypoints}
 Comparez `births` selon `jour_semaine`, puis comparez `incidents_00_14` au taux
-indicatif dans `safety_airlines.csv`. Terminez par une limite qui précise ce que
+indicatif dans <a class="data-link" href="../../../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>. Terminez par une limite qui précise ce que
 ces comparaisons ne permettent pas de conclure.
 :::
 

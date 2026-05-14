@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4946,13 +5001,10 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#plan-de-cours" id="toc-plan-de-cours" class="nav-link active" data-scroll-target="#plan-de-cours">Plan de cours</a>
-  <ul class="collapse">
-  <li><a href="#description-provisoire" id="toc-description-provisoire" class="nav-link" data-scroll-target="#description-provisoire">Description provisoire</a></li>
+  <li><a href="#description-provisoire" id="toc-description-provisoire" class="nav-link active" data-scroll-target="#description-provisoire">Description provisoire</a></li>
   <li><a href="#objectif-général" id="toc-objectif-général" class="nav-link" data-scroll-target="#objectif-général">Objectif général</a></li>
   <li><a href="#objectifs-spécifiques" id="toc-objectifs-spécifiques" class="nav-link" data-scroll-target="#objectifs-spécifiques">Objectifs spécifiques</a></li>
   <li><a href="#évaluations" id="toc-évaluations" class="nav-link" data-scroll-target="#évaluations">Évaluations</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4978,8 +5030,6 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="plan-de-cours" class="level1">
-<h1>Plan de cours</h1>
 <section id="description-provisoire" class="level2">
 <h2 class="anchored" data-anchor-id="description-provisoire">Description provisoire</h2>
 <p>Ce cours présente des méthodes d’analyse et de modélisation des données utilisées en appui à la prise de décision d’affaires. Les thèmes principaux sont l’exploration de données, la régression, la prévision, les séries chronologiques et les modèles pour résultats binaires.</p>
@@ -5005,7 +5055,6 @@ grid-template-columns: 1fr;
 <p>TODO: Remplacer cette version par le plan officiel lorsque les dates, pondérations et modalités de la session seront confirmées.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4946,9 +5001,7 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#capsules---atelier-02" id="toc-capsules---atelier-02" class="nav-link active" data-scroll-target="#capsules---atelier-02">Capsules - Atelier 02</a>
-  <ul class="collapse">
-  <li><a href="#rôle-de-cette-page" id="toc-rôle-de-cette-page" class="nav-link" data-scroll-target="#rôle-de-cette-page">Rôle de cette page</a></li>
+  <li><a href="#rôle-de-cette-page" id="toc-rôle-de-cette-page" class="nav-link active" data-scroll-target="#rôle-de-cette-page">Rôle de cette page</a></li>
   <li><a href="#capsule-1---question-daffaires-et-variable-reponse" id="toc-capsule-1---question-daffaires-et-variable-reponse" class="nav-link" data-scroll-target="#capsule-1---question-daffaires-et-variable-reponse">Capsule 1 - Question d’affaires et variable reponse</a>
   <ul class="collapse">
   <li><a href="#activité" id="toc-activité" class="nav-link" data-scroll-target="#activité">Activité</a></li>
@@ -4966,7 +5019,6 @@ grid-template-columns: 1fr;
   <li><a href="#activité-3" id="toc-activité-3" class="nav-link" data-scroll-target="#activité-3">Activité</a></li>
   </ul></li>
   <li><a href="#à-compléter" id="toc-à-compléter" class="nav-link" data-scroll-target="#à-compléter">À compléter</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4992,8 +5044,6 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="capsules---atelier-02" class="level1">
-<h1>Capsules - Atelier 02</h1>
 <section id="rôle-de-cette-page" class="level2">
 <h2 class="anchored" data-anchor-id="rôle-de-cette-page">Rôle de cette page</h2>
 <p>Cette page organise les capsules du module. Les capsules doivent rester courtes, ciblées et suivies d’une activité ou d’un exercice.</p>
@@ -5183,7 +5233,6 @@ grid-template-columns: 1fr;
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

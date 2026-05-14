@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4946,16 +5001,13 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#exercices---atelier-01" id="toc-exercices---atelier-01" class="nav-link active" data-scroll-target="#exercices---atelier-01">Exercices - Atelier 01</a>
-  <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#exercice-1---décrire-le-tableau" id="toc-exercice-1---décrire-le-tableau" class="nav-link" data-scroll-target="#exercice-1---décrire-le-tableau">Exercice 1 - Décrire le tableau</a></li>
   <li><a href="#exercice-2---diagnostiquer-les-valeurs-manquantes" id="toc-exercice-2---diagnostiquer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#exercice-2---diagnostiquer-les-valeurs-manquantes">Exercice 2 - Diagnostiquer les valeurs manquantes</a></li>
   <li><a href="#exercice-3---résumer-par-succursale" id="toc-exercice-3---résumer-par-succursale" class="nav-link" data-scroll-target="#exercice-3---résumer-par-succursale">Exercice 3 - Résumer par succursale</a></li>
   <li><a href="#exercice-4---produire-deux-graphiques" id="toc-exercice-4---produire-deux-graphiques" class="nav-link" data-scroll-target="#exercice-4---produire-deux-graphiques">Exercice 4 - Produire deux graphiques</a></li>
   <li><a href="#exercice-5---préparer-la-suite" id="toc-exercice-5---préparer-la-suite" class="nav-link" data-scroll-target="#exercice-5---préparer-la-suite">Exercice 5 - Préparer la suite</a></li>
   <li><a href="#livrable-court" id="toc-livrable-court" class="nav-link" data-scroll-target="#livrable-court">Livrable court</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4981,15 +5033,13 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="exercices---atelier-01" class="level1">
-<h1>Exercices - Atelier 01</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Ces exercices accompagnent le travail en classe. Ils servent à produire les éléments du court rapport Quarto à rendre.</p>
 </section>
 <section id="exercice-1---décrire-le-tableau" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---décrire-le-tableau">Exercice 1 - Décrire le tableau</h2>
-<p>À partir de <code>ventes_pme_quebec.csv</code> :</p>
+<p>À partir de <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a> :</p>
 <ul>
 <li>importez le fichier;</li>
 <li>indiquez le nombre de lignes et de colonnes;</li>
@@ -5065,7 +5115,6 @@ grid-template-columns: 1fr;
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -4260,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -5023,7 +5078,7 @@ R, RStudio, Quarto
 Données
 </div>
 <div class="fact-value">
-ventes_operations_quebec.csv
+<a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>
 </div>
 </div>
 </div>
@@ -5079,7 +5134,7 @@ Mini-rapport Quarto
 <div class="deliverable-box compact-box">
   <p class="card-kicker">À la fin de la semaine</p>
   <p>
-    Vous devriez pouvoir importer le fichier <code>ventes_operations_quebec.csv</code>,
+    Vous devriez pouvoir importer le fichier <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>,
     inspecter sa structure, repérer les valeurs manquantes, produire un résumé, créer
     un graphique et formuler deux constats descriptifs simples.
   </p>
@@ -5177,7 +5232,7 @@ Mini-rapport Quarto
       <p><span class="step-label">Trace</span> Le code d&#39;importation et le résultat de <code>glimpse()</code> ou de <code>dim()</code>.</p>
       <div class="ae-box">
         <p class="ae-title">Activité 2.4 - Importer les données</p>
-        <p>Importez le fichier <code>ventes_operations_quebec.csv</code>, puis indiquez le nombre de lignes et de colonnes du tableau.</p>
+        <p>Importez le fichier <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>, puis indiquez le nombre de lignes et de colonnes du tableau.</p>
       </div>
     </div>
   </details>
@@ -5399,7 +5454,7 @@ Mini-rapport Quarto
 <p>Avant de demander de l’aide, vérifiez dans l’ordre :</p>
 <ol type="1">
 <li>le dossier du projet;</li>
-<li>le chemin du fichier <code>ventes_operations_quebec.csv</code>;</li>
+<li>le chemin du fichier <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>;</li>
 <li>le chargement des packages avec <code>library(tidyverse)</code>;</li>
 <li>le message d’erreur, surtout le nom de l’objet ou du fichier manquant;</li>
 <li>le code correspondant dans <a href="../../modules/semaine-02-r-quarto/demonstrations.html">les démonstrations R</a>;</li>

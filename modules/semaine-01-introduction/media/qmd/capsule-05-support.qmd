@@ -27,6 +27,45 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-capsule-05
+#| include: false
+
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+birth_path <- if (file.exists("data/birth_us.csv")) {
+  "data/birth_us.csv"
+} else if (file.exists("../../data/birth_us.csv")) {
+  "../../data/birth_us.csv"
+} else {
+  "modules/semaine-01-introduction/data/birth_us.csv"
+}
+
+birth_prepare <- readr::read_csv(birth_path, show_col_types = FALSE) |>
+  mutate(
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi", "mardi", "mercredi", "jeudi",
+        "vendredi", "samedi", "dimanche"
+      )
+    )
+  )
+
+birth_summary <- birth_prepare |>
+  summarise(
+    `Nombre de jours` = n(),
+    Minimum = min(births, na.rm = TRUE),
+    Moyenne = round(mean(births, na.rm = TRUE), 1),
+    Médiane = median(births, na.rm = TRUE),
+    Maximum = max(births, na.rm = TRUE)
+  )
+```
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
@@ -121,16 +160,11 @@ plus grande valeur observée
 ## Minimum, moyenne, médiane et maximum
 
 ```{r}
-#| eval: false
-#| echo: true
-birth_prepare |>
-  summarise(
-    jours = n(),
-    naissances_min = min(births, na.rm = TRUE),
-    naissances_moyennes = mean(births, na.rm = TRUE),
-    naissances_medianes = median(births, na.rm = TRUE),
-    naissances_max = max(births, na.rm = TRUE)
-  )
+#| label: capsule-05-resume
+#| echo: false
+
+birth_summary |>
+  knitr::kable()
 ```
 
 ::: {.note-box}
@@ -153,20 +187,12 @@ avant d'interpréter.
 
 ## Tableau descriptif minimal
 
-```{r}
-#| eval: false
-#| echo: true
-resume_births <- birth_prepare |>
-  summarise(
-    jours = n(),
-    minimum = min(births, na.rm = TRUE),
-    moyenne = mean(births, na.rm = TRUE),
-    mediane = median(births, na.rm = TRUE),
-    maximum = max(births, na.rm = TRUE)
-  )
-
-resume_births
-```
+| Élément du tableau | Lecture à faire |
+|---|---|
+| minimum et maximum | étendue des valeurs observées |
+| moyenne | niveau moyen observé |
+| médiane | valeur centrale moins sensible aux extrêmes |
+| nombre de jours | taille de la base résumée |
 
 ::: {.note-box}
 Un tableau descriptif est utile s'il reste lié au sens de la variable et à
@@ -176,17 +202,27 @@ l'unité d'observation.
 ## Histogramme : voir la distribution
 
 ```{r}
-#| eval: false
-#| echo: true
+#| label: capsule-05-histogramme
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.4
+#| out-width: "100%"
+
 birth_prepare |>
   ggplot(aes(births)) +
   geom_histogram(bins = 30, fill = "#2A9D8F", color = "white") +
+  geom_vline(
+    data = birth_summary,
+    aes(xintercept = Médiane),
+    color = "#1F2933",
+    linewidth = 1.1
+  ) +
+  scale_x_continuous(labels = label_number(big.mark = " ", decimal.mark = ",")) +
   labs(
-    title = "Distribution quotidienne du nombre de naissances",
     x = "Nombre de naissances",
     y = "Nombre de jours"
   ) +
-  theme_minimal(base_size = 12)
+  theme_minimal(base_size = 15)
 ```
 
 ::: {.note-box}

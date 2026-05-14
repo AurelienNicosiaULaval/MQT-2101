@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
-
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-}
-pre.numberSource { margin-left: 3em; padding-left: 4px; }
-div.sourceCode
-{ }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -4295,6 +4260,61 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.data-link {
+display: inline-flex;
+align-items: center;
+gap: 0.28rem;
+color: #0b5cad;
+font-weight: 700;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.data-link::before {
+content: "";
+display: inline-block;
+flex: 0 0 auto;
+width: 1.05rem;
+height: 0.92rem;
+border: 1.7px solid currentColor;
+border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+background:
+linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+opacity: 0.95;
+transform: translateY(0.06rem);
+}
+.data-link:hover {
+color: #074a78;
+}
+.callout.callout-important {
+border-left-color: #2f7d5c;
+}
+.callout.callout-important .callout-icon-container {
+color: #2f7d5c;
+}
+.callout.callout-important .callout-title-container {
+color: #1f5f44;
+}
+.callout.callout-important.callout-style-default > .callout-header {
+background-color: #f3faf6;
+}
+.callout.callout-warning {
+border-left-color: #b7791f;
+}
+.callout.callout-warning .callout-icon-container,
+.callout.callout-warning .callout-title-container {
+color: #7a4d00;
+}
+.callout.callout-warning.callout-style-default > .callout-header {
+background-color: #fff8e6;
+}
+.callout.callout-caution {
+border-left-color: #b5121b;
+}
+.callout.callout-caution .callout-icon-container,
+.callout.callout-caution .callout-title-container {
+color: #8f1119;
+}
 .phase-label {
 display: inline-flex;
 align-items: center;
@@ -4981,17 +5001,14 @@ grid-template-columns: 1fr;
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#exercices---semaine-01" id="toc-exercices---semaine-01" class="nav-link active" data-scroll-target="#exercices---semaine-01">Exercices - Semaine 01</a>
-  <ul class="collapse">
-  <li><a href="#objectif" id="toc-objectif" class="nav-link" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#exercice-1---lire-la-structure-dun-tableau" id="toc-exercice-1---lire-la-structure-dun-tableau" class="nav-link" data-scroll-target="#exercice-1---lire-la-structure-dun-tableau">Exercice 1 - Lire la structure d’un tableau</a></li>
-  <li><a href="#exercice-2---produire-une-analyse-univariée" id="toc-exercice-2---produire-une-analyse-univariée" class="nav-link" data-scroll-target="#exercice-2---produire-une-analyse-univariée">Exercice 2 - Produire une analyse univariée</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#exercice-1---lire-la-structure-dune-base" id="toc-exercice-1---lire-la-structure-dune-base" class="nav-link" data-scroll-target="#exercice-1---lire-la-structure-dune-base">Exercice 1 - Lire la structure d’une base</a></li>
+  <li><a href="#exercice-2---lire-une-analyse-univariée" id="toc-exercice-2---lire-une-analyse-univariée" class="nav-link" data-scroll-target="#exercice-2---lire-une-analyse-univariée">Exercice 2 - Lire une analyse univariée</a></li>
   <li><a href="#exercice-3---comparer-des-groupes-et-des-indicateurs" id="toc-exercice-3---comparer-des-groupes-et-des-indicateurs" class="nav-link" data-scroll-target="#exercice-3---comparer-des-groupes-et-des-indicateurs">Exercice 3 - Comparer des groupes et des indicateurs</a></li>
   <li><a href="#exercice-4---modèles-et-diagnostic-de-compétences" id="toc-exercice-4---modèles-et-diagnostic-de-compétences" class="nav-link" data-scroll-target="#exercice-4---modèles-et-diagnostic-de-compétences">Exercice 4 - Modèles et diagnostic de compétences</a></li>
   <li><a href="#consolidation-des-réponses" id="toc-consolidation-des-réponses" class="nav-link" data-scroll-target="#consolidation-des-réponses">Consolidation des réponses</a></li>
   <li><a href="#livrable-court" id="toc-livrable-court" class="nav-link" data-scroll-target="#livrable-court">Livrable court</a></li>
   <li><a href="#conseils-de-vérification" id="toc-conseils-de-vérification" class="nav-link" data-scroll-target="#conseils-de-vérification">Conseils de vérification</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -5017,106 +5034,108 @@ grid-template-columns: 1fr;
 </header>
 
 
-<section id="exercices---semaine-01" class="level1">
-<h1>Exercices - Semaine 01</h1>
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Ces exercices servent à préparer la première trace de portfolio de la séance 01, à situer le rôle des modèles et à diagnostiquer les notions statistiques à consolider.</p>
+<p>Ces exercices préparent la première trace de portfolio. Ils portent sur la lecture d’une base, les variables, les statistiques descriptives et les limites d’interprétation. Aucun code n’est attendu dans cette séance.</p>
 </section>
-<section id="exercice-1---lire-la-structure-dun-tableau" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-1---lire-la-structure-dun-tableau">Exercice 1 - Lire la structure d’un tableau</h2>
-<p>Fichier : <code>birth_us.csv</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>birth_us <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-01-introduction/data/birth_us.csv&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(birth_us)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>À faire :</p>
+<section id="exercice-1---lire-la-structure-dune-base" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-1---lire-la-structure-dune-base">Exercice 1 - Lire la structure d’une base</h2>
+<p>Base : <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.</p>
+<p>À partir de la page Données et des démonstrations statistiques, préparez un court tableau avec quatre colonnes :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nom de variable</th>
+<th>Type de variable</th>
+<th>Rôle possible</th>
+<th>Précaution d’interprétation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>year</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>month</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>date_of_month</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>day_of_week</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>births</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>À vérifier dans votre réponse :</p>
 <ul>
-<li>nommer l’unité d’observation;</li>
-<li>classer les variables par type;</li>
-<li>repérer les variables qui décrivent le temps;</li>
-<li>écrire un indicateur descriptif pertinent.</li>
+<li>l’unité d’observation est nommée clairement;</li>
+<li><code>births</code> est reconnu comme une variable numérique;</li>
+<li><code>day_of_week</code> est reconnu comme un code de catégorie;</li>
+<li>les variables liées au temps sont identifiées.</li>
 </ul>
 </section>
-<section id="exercice-2---produire-une-analyse-univariée" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-2---produire-une-analyse-univariée">Exercice 2 - Produire une analyse univariée</h2>
-<p>À partir de <code>birth_us.csv</code>, produire :</p>
+<section id="exercice-2---lire-une-analyse-univariée" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-2---lire-une-analyse-univariée">Exercice 2 - Lire une analyse univariée</h2>
+<p>Variable : <code>births</code> dans <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.</p>
+<p>À partir du tableau descriptif et de l’histogramme présentés dans les démonstrations statistiques :</p>
 <ul>
-<li>le minimum du nombre de naissances;</li>
-<li>la moyenne;</li>
-<li>la médiane;</li>
-<li>le maximum;</li>
-<li>un histogramme.</li>
+<li>recopiez les quatre repères utiles : minimum, moyenne, médiane et maximum;</li>
+<li>décrivez en une phrase ce que l’histogramme montre;</li>
+<li>expliquez en une phrase pourquoi la moyenne et la médiane ne jouent pas exactement le même rôle;</li>
+<li>ajoutez une limite d’interprétation.</li>
 </ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>birth_us <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(births, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">moyenne =</span> <span class="fu">mean</span>(births, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediane =</span> <span class="fu">median</span>(births, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">maximum =</span> <span class="fu">max</span>(births, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p>Réponse attendue : un court paragraphe descriptif. Il doit décrire la variable sans expliquer les causes des variations observées.</p>
 </section>
 <section id="exercice-3---comparer-des-groupes-et-des-indicateurs" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---comparer-des-groupes-et-des-indicateurs">Exercice 3 - Comparer des groupes et des indicateurs</h2>
-<p>Fichiers : <code>birth_us.csv</code> et <code>safety_airlines.csv</code>.</p>
-<p>Première comparaison : comparer les naissances selon le jour de la semaine.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>birth_us <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">jour_semaine =</span> <span class="fu">factor</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      day_of_week,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lundi&quot;</span>, <span class="st">&quot;mardi&quot;</span>, <span class="st">&quot;mercredi&quot;</span>, <span class="st">&quot;jeudi&quot;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;vendredi&quot;</span>, <span class="st">&quot;samedi&quot;</span>, <span class="st">&quot;dimanche&quot;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(jour_semaine, births)) <span class="sc">+</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Deuxième comparaison : comparer un nombre brut à un taux indicatif.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>safety_airlines <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-01-introduction/data/safety_airlines.csv&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>safety_airlines <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">exposition_00_14_milliards =</span> avail_seat_km_per_week <span class="sc">*</span> <span class="dv">52</span> <span class="sc">*</span> <span class="dv">15</span> <span class="sc">/</span> <span class="fl">1e9</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">incidents_par_milliard =</span> incidents_00_14 <span class="sc">/</span> exposition_00_14_milliards</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(airline, incidents_00_14, incidents_par_milliard)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>À faire :</p>
+<p>Bases : <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a> et <a class="data-link" href="../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>.</p>
+<p>Partie A : comparer les naissances selon le jour de la semaine.</p>
 <ul>
-<li>écrire un constat descriptif sur les naissances selon le jour de la semaine;</li>
-<li>comparer le nombre brut d’incidents et le taux indicatif;</li>
-<li>expliquer pourquoi l’échelle de comparaison change l’interprétation;</li>
-<li>écrire une limite de l’analyse.</li>
+<li>Nommez la variable numérique comparée.</li>
+<li>Nommez la variable qui définit les groupes.</li>
+<li>Écrivez un constat descriptif prudent.</li>
+<li>Expliquez pourquoi le graphique ne suffit pas à démontrer une cause.</li>
+</ul>
+<p>Partie B : comparer un nombre brut à un taux indicatif.</p>
+<ul>
+<li>Expliquez ce que mesure <code>incidents_00_14</code>.</li>
+<li>Expliquez pourquoi un taux indicatif peut être plus comparable qu’un nombre brut.</li>
+<li>Indiquez une limite du taux indicatif.</li>
 </ul>
 </section>
 <section id="exercice-4---modèles-et-diagnostic-de-compétences" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---modèles-et-diagnostic-de-compétences">Exercice 4 - Modèles et diagnostic de compétences</h2>
-<p>Répondre en quelques lignes :</p>
+<p>Répondez en quelques lignes :</p>
 <ul>
 <li>ce qu’un modèle mathématique ou statistique simplifie;</li>
 <li>pourquoi la formulation du problème vient avant le calcul;</li>
 <li>quelle notion statistique est la plus claire pour vous;</li>
 <li>quelle notion doit être revue;</li>
-<li>quelle compétence R sera nécessaire dès la semaine 02;</li>
+<li>quelle compétence de lecture des données sera utile dès la semaine 02;</li>
 <li>quelle erreur d’interprétation faut-il éviter.</li>
 </ul>
 </section>
@@ -5147,7 +5166,7 @@ grid-template-columns: 1fr;
 <li>une synthèse du diagnostic de compétences;</li>
 <li>une phrase expliquant le rôle d’un modèle mathématique ou statistique;</li>
 <li>un tableau de variables classées par type;</li>
-<li>un tableau descriptif et un graphique produits avec R;</li>
+<li>un tableau descriptif et un graphique tirés des démonstrations statistiques;</li>
 <li>deux constats descriptifs;</li>
 <li>une limite d’interprétation;</li>
 <li>une notion à revoir avant la semaine 02.</li>
@@ -5159,14 +5178,13 @@ grid-template-columns: 1fr;
 <p>Avant de considérer l’exercice terminé, vérifiez que votre réponse :</p>
 <ul>
 <li>nomme les variables utilisées;</li>
-<li>inclut une sortie ou un graphique produit avec R;</li>
+<li>s’appuie sur un tableau ou un graphique précis;</li>
 <li>distingue clairement description et interprétation;</li>
 <li>ne formule pas de conclusion causale;</li>
 <li>inclut une limite lorsque vous comparez deux indicateurs.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

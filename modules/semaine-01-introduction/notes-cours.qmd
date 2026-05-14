@@ -183,7 +183,7 @@ Un modèle peut être techniquement correct et répondre à la mauvaise question
 Point de départ
 :::
 
-## Une ligne de `birth_us.csv`
+## Une ligne de <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>
 
 ::: {.lead}
 Dans cette base, une ligne correspond à une journée d'observation.
@@ -344,31 +344,16 @@ Rendre la base interprétable
 :::
 :::
 
-## Code minimal de préparation
-
-```{r}
-#| label: code-preparation
-#| eval: false
-#| echo: true
-
-birth_prepare <- birth_us |>
-  mutate(
-    date = make_date(year, month, date_of_month),
-    jour_semaine = factor(
-      day_of_week,
-      levels = 1:7,
-      labels = c(
-        "lundi", "mardi", "mercredi", "jeudi",
-        "vendredi", "samedi", "dimanche"
-      )
-    )
-  )
-```
+## Deux transformations utiles
 
 ::: {.visual-note}
-On ne modifie pas au hasard. On crée des variables plus utiles pour répondre aux
-questions de la semaine.
+On ne modifie pas au hasard. On rend plus lisible ce qui est déjà dans la base.
 :::
+
+| Dans la base brute | Transformation utile | Pourquoi? |
+|---|---|---|
+| `year`, `month`, `date_of_month` | une variable `date` | situer chaque journée dans le temps |
+| `day_of_week` codé 1 à 7 | une catégorie `jour_semaine` | comparer des jours plutôt que moyenner des codes |
 
 ## Vérifications rapides
 
@@ -555,7 +540,7 @@ les dispersions et les valeurs plus extrêmes.
 ## Nombre brut ou taux?
 
 ::: {.lead}
-Dans `safety_airlines.csv`, un nombre brut d'incidents ne tient pas compte de la
+Dans <a class="data-link" href="../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>, un nombre brut d'incidents ne tient pas compte de la
 taille des compagnies ni de leur volume d'activité.
 :::
 

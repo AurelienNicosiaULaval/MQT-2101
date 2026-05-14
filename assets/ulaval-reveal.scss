@@ -30,6 +30,8 @@ $presentation-font-size-root: 38px !default;
   --ul-grey-500: #969696;
   --ul-grey-700: #5f5f5f;
   --ul-grey-800: #4d4d4d;
+  --ul-blue: #0b4f6c;
+  --ul-green: #2f7d5c;
 }
 
 .reveal {
@@ -88,6 +90,30 @@ $presentation-font-size-root: 38px !default;
 
 .reveal a {
   color: var(--ul-red);
+}
+
+.reveal .data-link {
+  align-items: center;
+  color: var(--ul-blue);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.22rem;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+
+.reveal .data-link::before {
+  background:
+    linear-gradient(currentColor, currentColor) 0 34% / 100% 1.4px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 67% / 100% 1.4px no-repeat;
+  border: 1.6px solid currentColor;
+  border-radius: 48% 48% 18% 18% / 34% 34% 20% 20%;
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.62em;
+  transform: translateY(0.03em);
+  width: 0.72em;
 }
 
 .reveal .slide-number {
@@ -227,7 +253,7 @@ $presentation-font-size-root: 38px !default;
 .reveal .keypoints,
 .reveal .note-box,
 .reveal .example-box {
-  border-left: 0.18rem solid var(--ul-red);
+  border-left: 0.18rem solid var(--ul-blue);
   background: var(--ul-grey-50);
   padding: 0.55rem 0.7rem;
 }
@@ -240,6 +266,11 @@ $presentation-font-size-root: 38px !default;
 
 .reveal .example-box {
   border-left-color: var(--ul-gold);
+}
+
+.reveal .note-box {
+  border-left-color: var(--ul-green);
+  background: #f3faf6;
 }
 
 .reveal .metric-grid {
@@ -433,8 +464,8 @@ $presentation-font-size-root: 38px !default;
 }
 
 .reveal .self-check {
-  border-left: 0.18rem solid var(--ul-red);
-  background: var(--ul-grey-50);
+  border-left: 0.18rem solid var(--ul-green);
+  background: #f3faf6;
   font-size: 0.86em;
   line-height: 1.22;
   margin-top: 0.6rem;

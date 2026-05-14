@@ -1,23 +1,18 @@
 ---
-title: "Démonstrations R - Semaine 01"
+title: "Démonstrations statistiques - Semaine 01"
 format:
   html:
     embed-resources: true
 ---
 
-# Démonstrations R - Semaine 01
-
 ## Objectif
 
-Reproduire les premiers gestes d'analyse descriptive avec R : importer un tableau, vérifier les variables, produire des indicateurs simples et interpréter les résultats avec prudence.
-
-Ces démonstrations accompagnent le parcours de la semaine 01. Elles ne remplacent pas les exercices : elles montrent d'abord comment raisonner avec le code.
-
-## Préparation
+Ces démonstrations montrent comment lire des résultats descriptifs sans encore écrire de code. L'objectif est de comprendre ce qu'un tableau ou un graphique permet de dire, et ce qu'il ne permet pas de dire.
 
 ```{r}
 #| label: setup-semaine-01-demonstrations
 #| include: false
+
 library(tidyverse)
 library(janitor)
 library(lubridate)
@@ -41,13 +36,6 @@ birth_us <- readr::read_csv(birth_path, show_col_types = FALSE) |>
 safety_airlines <- readr::read_csv(safety_path, show_col_types = FALSE) |>
   clean_names()
 
-number_fr <- scales::label_number(big.mark = " ", decimal.mark = ",")
-```
-
-## Démonstration 1 - Lire et préparer un tableau
-
-```{r}
-#| label: preparation-birth-us
 birth_prepare <- birth_us |>
   mutate(
     date = make_date(year, month, date_of_month),
@@ -66,40 +54,114 @@ birth_prepare <- birth_us |>
     )
   )
 
-birth_prepare |>
-  select(date, jour_semaine, births) |>
+birth_summary <- birth_prepare |>
+  summarise(
+    `Nombre de jours` = n(),
+    Minimum = min(births, na.rm = TRUE),
+    Moyenne = mean(births, na.rm = TRUE),
+    Médiane = median(births, na.rm = TRUE),
+    Maximum = max(births, na.rm = TRUE)
+  ) |>
+  mutate(across(where(is.numeric), \(x) round(x, 1)))
+
+birth_by_day <- birth_prepare |>
+  filter(!is.na(jour_semaine)) |>
+  group_by(jour_semaine) |>
+  summarise(
+    `Nombre de jours` = n(),
+    Moyenne = round(mean(births, na.rm = TRUE), 1),
+    Médiane = median(births, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+safety_resume <- safety_airlines |>
+  mutate(
+    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
+    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
+  )
+
+safety_top_raw <- safety_resume |>
+  arrange(desc(incidents_00_14)) |>
+  transmute(
+    Compagnie = airline,
+    `Incidents 2000-2014` = incidents_00_14,
+    `Taux indicatif` = round(incidents_par_milliard, 3)
+  ) |>
+  slice_head(n = 6)
+
+safety_top_rate <- safety_resume |>
+  arrange(desc(incidents_par_milliard)) |>
+  transmute(
+    Compagnie = airline,
+    `Incidents 2000-2014` = incidents_00_14,
+    `Taux indicatif` = round(incidents_par_milliard, 3)
+  ) |>
   slice_head(n = 6)
 ```
 
-À observer :
+## Démonstration 1 - Lire la structure d'une base
 
-- l'unité d'observation;
-- le type de chaque variable;
-- les variables qui peuvent être utilisées pour une analyse temporelle;
-- les limites d'un codage numérique du jour de la semaine.
+Base utilisée : <a class="data-link" href="../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.
 
-## Démonstration 2 - Analyse univariée
+La première question n'est pas : quelle méthode utiliser? La première question est : que représente une ligne?
+
+Dans cette base, une ligne correspond à une journée d'observation. Les colonnes décrivent des morceaux de date, un code de jour et un nombre quotidien de naissances.
 
 ```{r}
-#| label: resume-birth-us
-birth_prepare |>
-  summarise(
-    jours = n(),
-    naissances_min = min(births, na.rm = TRUE),
-    naissances_moyennes = mean(births, na.rm = TRUE),
-    naissances_medianes = median(births, na.rm = TRUE),
-    naissances_max = max(births, na.rm = TRUE)
-  ) |>
-  mutate(across(where(is.numeric), \(x) round(x, 1)))
+#| label: demo1-apercu
+#| echo: false
+
+birth_us |>
+  slice_head(n = 6) |>
+  knitr::kable()
 ```
 
+Ce qu'il faut lire avant de calculer :
+
+- `year`, `month` et `date_of_month` forment ensemble une date;
+- `day_of_week` est un code, pas une quantité à moyenner;
+- `births` est une variable numérique, car elle compte des naissances;
+- l'unité d'observation est la journée, pas une personne ni une naissance individuelle.
+
+Un bon réflexe consiste à écrire une phrase simple : chaque ligne décrit une journée et indique le nombre de naissances observées ce jour-là.
+
+## Démonstration 2 - Décrire une variable numérique
+
+Variable étudiée : `births`.
+
+Le tableau descriptif résume une seule variable. Il ne remplace pas le graphique : il donne des repères numériques.
+
 ```{r}
-#| label: graphique-birth-us
+#| label: demo2-resume
+#| echo: false
+
+birth_summary |>
+  knitr::kable()
+```
+
+Lecture guidée :
+
+- le minimum et le maximum donnent l'étendue des valeurs observées;
+- la moyenne donne un niveau moyen;
+- la médiane donne une valeur centrale moins sensible aux journées très basses ou très hautes;
+- ces nombres décrivent la base, mais n'expliquent pas les causes des variations.
+
+```{r}
+#| label: demo2-histogramme
+#| echo: false
 #| fig-width: 8
 #| fig-height: 4.8
+
 birth_prepare |>
   ggplot(aes(births)) +
   geom_histogram(bins = 30, fill = "#2A9D8F", color = "white") +
+  geom_vline(
+    data = birth_summary,
+    aes(xintercept = Médiane),
+    color = "#1F2933",
+    linewidth = 1
+  ) +
+  scale_x_continuous(labels = label_number(big.mark = " ", decimal.mark = ",")) +
   labs(
     title = "Distribution quotidienne du nombre de naissances",
     x = "Nombre de naissances",
@@ -108,16 +170,32 @@ birth_prepare |>
   theme_minimal(base_size = 12)
 ```
 
-## Démonstration 3 - Analyse bivariée
+La ligne verticale indique la médiane. L'histogramme montre où les journées se concentrent et où se situent les valeurs moins fréquentes.
+
+Constat acceptable : dans cette base, la variable `births` varie fortement selon les journées, mais la plupart des valeurs se concentrent autour d'un niveau central visible dans le tableau et l'histogramme.
+
+## Démonstration 3 - Comparer des groupes
+
+Comparer ne veut pas dire expliquer. Ici, on décrit comment `births` varie selon le jour de la semaine.
 
 ```{r}
-#| label: naissance-jour-semaine
+#| label: demo3-tableau-jours
+#| echo: false
+
+birth_by_day |>
+  knitr::kable()
+```
+
+```{r}
+#| label: demo3-boxplot
+#| echo: false
 #| fig-width: 8
 #| fig-height: 4.8
+
 birth_prepare |>
   filter(!is.na(jour_semaine)) |>
   ggplot(aes(jour_semaine, births)) +
-  geom_boxplot(fill = "#E9C46A", color = "#1F2933") +
+  geom_boxplot(fill = "#E9C46A", color = "#1F2933", outlier.alpha = 0.45) +
   labs(
     title = "Naissances selon le jour de la semaine",
     x = NULL,
@@ -126,37 +204,58 @@ birth_prepare |>
   theme_minimal(base_size = 12)
 ```
 
-::: {.callout-important title="Interprétation prudente"}
-Le graphique décrit des écarts. Il ne suffit pas à expliquer les causes de ces écarts.
-:::
+Lecture guidée :
 
-## Démonstration 4 - Indicateurs et échelle de comparaison
+- le tableau donne un résumé par groupe;
+- le boxplot montre la médiane, la dispersion et les valeurs plus extrêmes;
+- les fins de semaine semblent différentes des jours de semaine;
+- le graphique ne permet pas, à lui seul, d'expliquer pourquoi ces écarts existent.
 
-Le fichier `safety_airlines.csv` permet de rappeler qu'un indicateur doit être comparé à une échelle pertinente.
+Constat prudent : dans cette base, les naissances observées sont généralement plus faibles le samedi et le dimanche que pendant plusieurs jours de semaine. Ce constat reste descriptif.
+
+## Démonstration 4 - Comparer un nombre brut et un taux
+
+Base utilisée : <a class="data-link" href="../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>.
+
+Un nombre brut est parfois utile, mais il peut être trompeur lorsque les unités comparées n'ont pas la même taille ou la même exposition.
+
+Tableau classé selon le nombre brut d'incidents :
 
 ```{r}
-#| label: safety-indicateurs
-safety_resume <- safety_airlines |>
-  mutate(
-    exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
-    incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
-  ) |>
-  arrange(desc(incidents_par_milliard))
+#| label: demo4-brut
+#| echo: false
 
-safety_resume |>
-  select(
-    airline,
-    avail_seat_km_per_week,
-    incidents_00_14,
-    incidents_par_milliard
-  ) |>
-  mutate(
-    avail_seat_km_per_week = number_fr(avail_seat_km_per_week),
-    incidents_par_milliard = round(incidents_par_milliard, 3)
-  ) |>
-  slice_head(n = 8)
+safety_top_raw |>
+  knitr::kable()
 ```
+
+Tableau classé selon un taux indicatif par milliard de sièges-kilomètres :
+
+```{r}
+#| label: demo4-taux
+#| echo: false
+
+safety_top_rate |>
+  knitr::kable()
+```
+
+Lecture guidée :
+
+- le premier tableau favorise les compagnies qui ont beaucoup d'activité, car elles ont plus d'occasions d'observer des incidents;
+- le deuxième tableau ramène les incidents à une échelle commune;
+- le taux est indicatif, car il repose sur une approximation de l'exposition;
+- changer l'échelle peut changer l'ordre de comparaison.
+
+Constat prudent : le nombre brut et le taux ne répondent pas exactement à la même question. Le nombre brut décrit un volume d'incidents; le taux cherche à comparer des compagnies sur une échelle plus comparable.
 
 ## Synthèse
 
-Avant de choisir une méthode statistique, il faut comprendre ce que représente une ligne, reconnaître les types de variables, vérifier les formats et choisir des indicateurs adaptés à l'échelle de comparaison.
+Avant de choisir une méthode statistique, il faut :
+
+- nommer l'unité d'observation;
+- reconnaître le type des variables;
+- choisir un indicateur adapté;
+- regarder un graphique;
+- écrire une limite d'interprétation.
+
+La semaine 1 sert à consolider ce raisonnement. La programmation viendra ensuite, quand le raisonnement statistique de base sera plus clair.
