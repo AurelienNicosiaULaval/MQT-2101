@@ -83,6 +83,7 @@ Avant de transformer, il faut lire la structure de la base.
 
 ```{r}
 #| eval: false
+#| echo: true
 library(tidyverse)
 library(lubridate)
 
@@ -104,6 +105,7 @@ Les colonnes `year`, `month` et `date_of_month` décrivent ensemble une date.
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare <- birth_us |>
   mutate(
     date = make_date(year, month, date_of_month)
@@ -123,6 +125,7 @@ chronologique et de vérifier les périodes couvertes.
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare <- birth_prepare |>
   mutate(
     jour_semaine = factor(
@@ -149,6 +152,7 @@ Une première vérification cherche les valeurs absentes ou impossibles.
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare |>
   summarise(
     valeurs_manquantes = sum(is.na(births)),
@@ -169,6 +173,7 @@ Une base quotidienne devrait avoir une seule observation par date.
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare |>
   count(date) |>
   filter(n > 1)
@@ -196,6 +201,7 @@ Une transformation documentée peut être relue, corrigée et reproduite.
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare <- birth_us |>
   mutate(
     date = make_date(year, month, date_of_month),
@@ -258,14 +264,21 @@ Produire des résumés plus faciles à interpréter.
 - Toute transformation doit pouvoir être expliquée.
 :::
 
-## Activité 1.4
+## Production autonome 1.4
 
 ::: {.lead}
 Préparez mentalement la base avant de résumer `births`.
 :::
 
-::: {.note-box}
+::: {.keypoints}
 Indiquez ce que représente une ligne de `birth_us.csv`, expliquez pourquoi
 `day_of_week` doit être traité comme une catégorie et nommez une vérification à
 faire avant de produire un résumé descriptif.
+:::
+
+::: {.self-check}
+Auto-vérification : votre réponse est complète si elle relie une ligne à une
+journée, transforme le code de jour en catégorie lisible et nomme au moins une
+vérification concrète, par exemple les valeurs manquantes ou les codes
+inattendus.
 :::

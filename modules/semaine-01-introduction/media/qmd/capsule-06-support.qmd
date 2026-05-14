@@ -114,6 +114,7 @@ comparaison entre groupes
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare |>
   filter(!is.na(jour_semaine)) |>
   ggplot(aes(jour_semaine, births)) +
@@ -167,6 +168,7 @@ comparaison, mais il dépend aussi de la manière dont l'exposition est calculé
 
 ```{r}
 #| eval: false
+#| echo: true
 safety_resume <- safety_airlines |>
   mutate(
     exposition_00_14_milliards =
@@ -185,6 +187,7 @@ constitue pas à lui seul une évaluation complète de la sécurité.
 
 ```{r}
 #| eval: false
+#| echo: true
 safety_resume |>
   select(
     airline,
@@ -234,14 +237,20 @@ mais il ne résume pas tous les facteurs liés à la sécurité aérienne.
 - Une comparaison descriptive ne prouve pas une cause.
 :::
 
-## Activité 1.6
+## Production autonome 1.6
 
 ::: {.lead}
 Produisez deux constats descriptifs et une limite.
 :::
 
-::: {.note-box}
+::: {.keypoints}
 Comparez `births` selon `jour_semaine`, puis comparez `incidents_00_14` au taux
 indicatif dans `safety_airlines.csv`. Terminez par une limite qui précise ce que
 ces comparaisons ne permettent pas de conclure.
+:::
+
+::: {.self-check}
+Auto-vérification : le travail est complet si chaque constat nomme les variables
+comparées, précise l'échelle utilisée et évite de transformer une comparaison
+descriptive en conclusion causale.
 :::

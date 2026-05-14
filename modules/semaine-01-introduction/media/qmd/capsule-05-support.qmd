@@ -122,6 +122,7 @@ plus grande valeur observée
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare |>
   summarise(
     jours = n(),
@@ -154,6 +155,7 @@ avant d'interpréter.
 
 ```{r}
 #| eval: false
+#| echo: true
 resume_births <- birth_prepare |>
   summarise(
     jours = n(),
@@ -175,6 +177,7 @@ l'unité d'observation.
 
 ```{r}
 #| eval: false
+#| echo: true
 birth_prepare |>
   ggplot(aes(births)) +
   geom_histogram(bins = 30, fill = "#2A9D8F", color = "white") +
@@ -255,13 +258,19 @@ variable.
 - Un constat descriptif ne doit pas devenir une explication causale.
 :::
 
-## Activité 1.5
+## Production autonome 1.5
 
 ::: {.lead}
 Produisez une courte analyse univariée de `births`.
 :::
 
-::: {.note-box}
+::: {.keypoints}
 Incluez un tableau avec le minimum, la moyenne, la médiane et le maximum, un
 histogramme, une phrase descriptive prudente et une limite d'interprétation.
+:::
+
+::: {.self-check}
+Auto-vérification : l'analyse est complète si le tableau et l'histogramme
+décrivent la même variable, si la phrase reste descriptive et si la limite évite
+d'expliquer les causes des variations observées.
 :::

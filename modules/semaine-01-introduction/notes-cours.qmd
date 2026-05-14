@@ -1,5 +1,5 @@
 ---
-title: "Semaine 01 - Comprendre un tableau avant de modéliser"
+title: "Semaine 01 - Comprendre une base avant de modéliser"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
@@ -27,105 +27,14 @@ execute:
 editor: visual
 ---
 
-## Objectifs de la séance
-
-::: {.keypoints}
-- Comprendre ce que représente une ligne dans un tableau de données.
-- Reconnaître les principaux types de variables.
-- Produire un premier résumé descriptif en R.
-- Interpréter un graphique ou un indicateur avec prudence.
-:::
-
-## Plan
-
-1. Situer le rôle d'un modèle
-2. Lire la structure d'un tableau
-3. Préparer les variables
-4. Décrire une variable
-5. Comparer des indicateurs
-
-## Activités de fin de capsule
-
-::: {.lead}
-Une activité est une courte tâche à faire immédiatement après une capsule. Elle
-sert à transformer l'écoute en action avant de passer à la suite.
-:::
-
-::: {.keypoints}
-- vérifier la compréhension du point central;
-- produire une trace courte pour le portfolio;
-- repérer ce qui reste à clarifier;
-- préparer les exercices, les démonstrations et les ateliers.
-:::
-
-## Partie 1: avant le modèle {.section-red}
-
-::: {.kicker}
-Point de départ
-:::
-
-## Pourquoi commencer par le tableau?
-
-::: {.lead}
-Avant de modéliser, il faut savoir ce que les données décrivent, comment elles ont été mesurées et quelles comparaisons sont raisonnables.
-:::
-
-::: {.example-box}
-Une ligne peut représenter une personne, une journée, une succursale, une transaction ou une période. Le sens d'une ligne détermine les résumés possibles.
-:::
-
-## Observation et variable
-
-:::: {.columns}
-
-::: {.column width="48%"}
-### Observation
-
-Une observation correspond à une unité étudiée dans le tableau.
-
-Exemples:
-
-- une journée;
-- une compagnie aérienne;
-- une succursale;
-- une transaction.
-:::
-
-::: {.column width="48%"}
-### Variable
-
-Une variable décrit une caractéristique observée.
-
-Exemples:
-
-- nombre de naissances;
-- jour de la semaine;
-- nombre d'incidents;
-- exposition au risque.
-:::
-
-::::
-
-## Types de variables
-
-::: {.note-box}
-- Une variable numérique permet des calculs comme une moyenne ou un écart.
-- Une variable catégorielle permet de comparer des groupes.
-- Une date ou une période permet d'étudier une évolution temporelle.
-- Un code numérique ne doit pas toujours être traité comme une quantité.
-:::
-
-## Préparation dans R
-
 ```{r}
 #| label: setup-semaine-01-notes
+#| include: false
 
-# Load libraries
 library(tidyverse)
 library(lubridate)
 library(scales)
 
-# Locate data files
 birth_path <- if (file.exists("data/birth_us.csv")) {
   "data/birth_us.csv"
 } else {
@@ -138,23 +47,8 @@ safety_path <- if (file.exists("data/safety_airlines.csv")) {
   "modules/semaine-01-introduction/data/safety_airlines.csv"
 }
 
-# Import data
 birth_us <- read_csv(birth_path, show_col_types = FALSE)
 safety_airlines <- read_csv(safety_path, show_col_types = FALSE)
-```
-
-## Inspecter le tableau
-
-```{r}
-#| label: inspecter-birth-us
-
-glimpse(birth_us)
-```
-
-## Préparer les variables
-
-```{r}
-#| label: preparer-birth-us
 
 birth_prepare <- birth_us |>
   mutate(
@@ -169,97 +63,30 @@ birth_prepare <- birth_us |>
     )
   )
 
-birth_prepare |>
-  select(date, jour_semaine, births) |>
-  slice_head(n = 6)
-```
-
-## Résumer une variable
-
-```{r}
-#| label: resume-naissances
-
-birth_prepare |>
+birth_summary <- birth_prepare |>
   summarise(
     jours = n(),
-    naissances_min = min(births, na.rm = TRUE),
-    naissances_medianes = median(births, na.rm = TRUE),
-    naissances_moyennes = mean(births, na.rm = TRUE),
-    naissances_max = max(births, na.rm = TRUE)
+    minimum = min(births, na.rm = TRUE),
+    moyenne = mean(births, na.rm = TRUE),
+    mediane = median(births, na.rm = TRUE),
+    maximum = max(births, na.rm = TRUE)
   ) |>
   mutate(across(where(is.numeric), \(x) round(x, 1)))
-```
-
-## Visualiser une variable
-
-```{r}
-#| label: graphique-naissances
-#| fig-width: 9
-#| fig-height: 4.8
-#| out-width: "100%"
-
-birth_prepare |>
-  ggplot(aes(x = births)) +
-  geom_histogram(bins = 30, fill = "#E30513", color = "white") +
-  labs(
-    x = "Nombre de naissances",
-    y = "Nombre de jours"
-  ) +
-  theme_minimal(base_size = 14)
-```
-
-## Comparer des groupes
-
-```{r}
-#| label: naissance-jour-semaine
-#| fig-width: 9
-#| fig-height: 4.8
-#| out-width: "100%"
-
-birth_prepare |>
-  filter(!is.na(jour_semaine)) |>
-  ggplot(aes(x = jour_semaine, y = births)) +
-  geom_boxplot(fill = "#FFC103", color = "#000000") +
-  labs(
-    x = NULL,
-    y = "Nombre de naissances"
-  ) +
-  theme_minimal(base_size = 14)
-```
-
-## Interpréter prudemment
-
-::: {.note-box}
-- Le graphique décrit des écarts observés.
-- Il ne suffit pas à expliquer les causes de ces écarts.
-- Une interprétation doit nommer la variable utilisée et l'échelle de comparaison.
-:::
-
-## Comparer avec une échelle pertinente
-
-```{r}
-#| label: indicateur-safety
 
 safety_resume <- safety_airlines |>
   mutate(
     exposition_00_14_milliards = avail_seat_km_per_week * 52 * 15 / 1e9,
     incidents_par_milliard = incidents_00_14 / exposition_00_14_milliards
-  ) |>
-  arrange(desc(incidents_par_milliard))
-
-safety_resume |>
-  select(airline, incidents_00_14, incidents_par_milliard) |>
-  mutate(incidents_par_milliard = round(incidents_par_milliard, 3)) |>
-  slice_head(n = 6)
+  )
 ```
 
-## Partie 2: synthèse {.section-gold}
+## Objectifs de la séance
 
-::: {.kicker}
-À retenir
+::: {.lead}
+Cette première séance installe un réflexe simple : avant de modéliser, il faut
+savoir ce qu'une base décrit, comment les variables sont codées et ce que les
+résumés permettent réellement de conclure.
 :::
-
-## Trois réflexes
 
 ::: {.metric-grid}
 ::: {.metric}
@@ -268,7 +95,7 @@ safety_resume |>
 :::
 
 ::: {.label}
-Nommer l'unité d'observation avant de calculer.
+nommer l'unité d'observation
 :::
 :::
 
@@ -278,7 +105,7 @@ Nommer l'unité d'observation avant de calculer.
 :::
 
 ::: {.label}
-Adapter le résumé au type de variable.
+classer les variables
 :::
 :::
 
@@ -288,28 +115,608 @@ Adapter le résumé au type de variable.
 :::
 
 ::: {.label}
-Écrire une limite d'interprétation.
+décrire et comparer prudemment
 :::
 :::
 :::
 
-## Exercice court
+## Le fil conducteur
 
-À partir de `birth_prepare`:
+::: {.journey}
+::: {.journey-step}
+<span class="num">Départ</span>
+<span class="text">ouvrir la base</span>
+:::
 
-1. nommer l'unité d'observation;
-2. classer `births`, `jour_semaine` et `date`;
-3. rédiger un constat descriptif;
-4. ajouter une limite d'interprétation.
+::: {.journey-step}
+<span class="num">Lire</span>
+<span class="text">une ligne = quoi?</span>
+:::
 
-## Clôture {.closing-slide}
+::: {.journey-step}
+<span class="num">Préparer</span>
+<span class="text">rendre les variables interprétables</span>
+:::
+
+::: {.journey-step}
+<span class="num">Décrire</span>
+<span class="text">résumer une variable</span>
+:::
+
+::: {.journey-step}
+<span class="num">Comparer</span>
+<span class="text">changer l'échelle avec prudence</span>
+:::
+
+::: {.journey-step}
+<span class="num">Trace</span>
+<span class="text">garder une preuve courte</span>
+:::
+:::
+
+::: {.visual-note}
+La trace de portfolio ne doit pas tout recopier. Elle doit montrer que vous avez
+compris le passage de la base brute à un constat descriptif défendable.
+:::
+
+## Pourquoi commencer par la base?
+
+::: {.question-line}
+Un modèle peut être techniquement correct et répondre à la mauvaise question.
+:::
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Avant le calcul</span>
+<span class="text">Que représente une ligne? Quelle variable mesure quoi? Quelle comparaison est raisonnable?</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Après le calcul</span>
+<span class="text">Le résultat décrit-il la base, une association, une prévision ou une cause?</span>
+:::
+:::
+
+## Partie 1 : lire la base {.section-red}
+
+::: {.kicker}
+Point de départ
+:::
+
+## Une ligne de `birth_us.csv`
+
+::: {.lead}
+Dans cette base, une ligne correspond à une journée d'observation.
+:::
+
+::: {.data-strip}
+::: {.data-field}
+<span class="name">year</span>
+<span class="value">2000</span>
+:::
+
+::: {.data-field}
+<span class="name">month</span>
+<span class="value">1</span>
+:::
+
+::: {.data-field}
+<span class="name">date_of_month</span>
+<span class="value">1</span>
+:::
+
+::: {.data-field}
+<span class="name">day_of_week</span>
+<span class="value">6</span>
+:::
+
+::: {.data-field}
+<span class="name">births</span>
+<span class="value">9083</span>
+:::
+:::
+
+::: {.visual-note}
+La même ligne contient des morceaux de date, un code de jour et un nombre de
+naissances. Ces colonnes ne se résument pas toutes de la même façon.
+:::
+
+## Observation et variable
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Observation</span>
+<span class="text">L'unité décrite par une ligne. Ici : une journée.</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Variable</span>
+<span class="text">Une caractéristique décrite par une colonne. Ici : année, mois, jour, code de semaine, naissances.</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Unité de mesure</span>
+<span class="text">Ce que les valeurs mesurent. Ici, `births` est un nombre quotidien de naissances.</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Rôle possible</span>
+<span class="text">Une variable peut servir à décrire, à grouper, à comparer ou à situer dans le temps.</span>
+:::
+:::
+
+## Lire quelques lignes
+
+```{r}
+#| label: apercu-birth-us
+#| echo: false
+
+birth_us |>
+  slice_head(n = 5) |>
+  knitr::kable()
+```
+
+::: {.visual-note}
+L'objectif n'est pas encore de calculer. L'objectif est de comprendre la
+structure de la base.
+:::
+
+## Types de variables
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Numérique</span>
+<span class="text">Une quantité ou une mesure. Exemple : `births`.</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Catégorielle</span>
+<span class="text">Des groupes ou modalités. Exemple : jour de la semaine.</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Date</span>
+<span class="text">Un repère temporel complet. Exemple : 2000-01-01.</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Code</span>
+<span class="text">Un nombre qui identifie une catégorie. Exemple : `day_of_week`.</span>
+:::
+:::
+
+## Quand un nombre n'est pas une quantité
+
+::: {.lead}
+`day_of_week` contient des nombres de 1 à 7. Pourtant, la moyenne de ces codes
+n'a pas de sens utile.
+:::
+
+::: {.statement-grid}
+::: {.statement-card .warning}
+<span class="tag">À éviter</span>
+<span class="text">La moyenne de `day_of_week` est 4, donc le jour moyen est jeudi.</span>
+:::
+
+::: {.statement-card .acceptable}
+<span class="tag">À faire</span>
+<span class="text">Transformer le code en catégorie : lundi, mardi, mercredi, etc.</span>
+:::
+:::
+
+## Partie 2 : préparer sans trahir {.section-gold}
+
+::: {.kicker}
+Rendre la base interprétable
+:::
+
+## Préparer, c'est rendre explicite
+
+::: {.journey}
+::: {.journey-step}
+<span class="num">Avant</span>
+<span class="text">`year`, `month`, `date_of_month`</span>
+:::
+
+::: {.journey-step}
+<span class="num">Après</span>
+<span class="text">une vraie variable `date`</span>
+:::
+
+::: {.journey-step}
+<span class="num">Avant</span>
+<span class="text">`day_of_week` = 1 à 7</span>
+:::
+
+::: {.journey-step}
+<span class="num">Après</span>
+<span class="text">`jour_semaine` = catégorie lisible</span>
+:::
+
+::: {.journey-step}
+<span class="num">Avant</span>
+<span class="text">variables brutes</span>
+:::
+
+::: {.journey-step}
+<span class="num">Après</span>
+<span class="text">base prête à résumer</span>
+:::
+:::
+
+## Code minimal de préparation
+
+```{r}
+#| label: code-preparation
+#| eval: false
+#| echo: true
+
+birth_prepare <- birth_us |>
+  mutate(
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week,
+      levels = 1:7,
+      labels = c(
+        "lundi", "mardi", "mercredi", "jeudi",
+        "vendredi", "samedi", "dimanche"
+      )
+    )
+  )
+```
+
+::: {.visual-note}
+On ne modifie pas au hasard. On crée des variables plus utiles pour répondre aux
+questions de la semaine.
+:::
+
+## Vérifications rapides
+
+```{r}
+#| label: controles-preparation
+#| echo: false
+
+birth_prepare |>
+  summarise(
+    Lignes = n(),
+    `Dates distinctes` = n_distinct(date),
+    `Valeurs manquantes` = sum(is.na(births)),
+    `Codes inattendus` = sum(!day_of_week %in% 1:7)
+  ) |>
+  knitr::kable()
+```
+
+::: {.visual-note}
+Ces vérifications ne prouvent pas que la base est parfaite. Elles évitent de
+résumer une variable mal lue ou mal codée.
+:::
+
+## Partie 3 : décrire une variable {.section-red}
+
+::: {.kicker}
+Analyse univariée
+:::
+
+## La question devient plus précise
+
+::: {.question-line}
+Que peut-on dire du nombre quotidien de naissances observé dans la base?
+:::
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Variable étudiée</span>
+<span class="text">`births`</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Unité d'observation</span>
+<span class="text">une journée</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Résumés utiles</span>
+<span class="text">minimum, moyenne, médiane, maximum</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Graphique utile</span>
+<span class="text">histogramme de la distribution</span>
+:::
+:::
+
+## Résumé numérique
+
+```{r}
+#| label: resume-naissances
+#| echo: false
+
+birth_summary |>
+  knitr::kable()
+```
+
+::: {.visual-note}
+La moyenne donne un niveau moyen. La médiane donne une valeur centrale moins
+sensible aux valeurs très petites ou très grandes.
+:::
+
+## Histogramme de `births`
+
+```{r}
+#| label: graphique-naissances
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.8
+#| out-width: "100%"
+
+birth_prepare |>
+  ggplot(aes(x = births)) +
+  geom_histogram(bins = 30, fill = "#e30513", color = "white") +
+  geom_vline(
+    data = birth_summary,
+    aes(xintercept = mediane),
+    color = "#000000",
+    linewidth = 1.1
+  ) +
+  scale_x_continuous(
+    labels = label_number(big.mark = " ", decimal.mark = ","),
+    expand = expansion(mult = c(0.03, 0.08))
+  ) +
+  labs(
+    x = "Nombre de naissances par jour",
+    y = "Nombre de jours"
+  ) +
+  theme_minimal(base_size = 16) +
+  theme(plot.margin = margin(5.5, 24, 5.5, 5.5))
+```
+
+::: {.visual-note}
+La ligne noire marque la médiane. Le graphique aide à voir la concentration des
+valeurs et les journées plus inhabituelles.
+:::
+
+## Écrire un constat prudent
+
+::: {.statement-grid}
+::: {.statement-card .acceptable}
+<span class="tag">Acceptable</span>
+<span class="text">Dans cette base, `births` décrit un nombre quotidien de naissances. Le tableau et l'histogramme résument les valeurs observées sans expliquer leurs causes.</span>
+:::
+
+::: {.statement-card .warning}
+<span class="tag">Trop fort</span>
+<span class="text">Le graphique prouve pourquoi certains jours ont moins de naissances.</span>
+:::
+:::
+
+::: {.visual-note}
+Au module 1, on apprend surtout à décrire et à limiter l'interprétation.
+:::
+
+## Partie 4 : comparer prudemment {.section-gold}
+
+::: {.kicker}
+Analyse bivariée descriptive
+:::
+
+## Comparer, c'est changer la question
+
+::: {.question-line}
+Les naissances observées semblent-elles varier selon le jour de la semaine?
+:::
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Variable numérique</span>
+<span class="text">`births`</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Variable de groupe</span>
+<span class="text">`jour_semaine`</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Graphique</span>
+<span class="text">boxplots côte à côte</span>
+:::
+
+::: {.concept-card}
+<span class="tag">Limite</span>
+<span class="text">un écart visible n'est pas une explication causale</span>
+:::
+:::
+
+## `births` selon le jour
+
+```{r}
+#| label: naissance-jour-semaine
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.8
+#| out-width: "100%"
+
+birth_prepare |>
+  filter(!is.na(jour_semaine)) |>
+  ggplot(aes(x = jour_semaine, y = births)) +
+  geom_boxplot(fill = "#ffc103", color = "#000000", outlier.alpha = 0.45) +
+  labs(
+    x = NULL,
+    y = "Nombre de naissances par jour"
+  ) +
+  theme_minimal(base_size = 16)
+```
+
+::: {.visual-note}
+Le boxplot compare les distributions. Il attire l'attention sur les centres,
+les dispersions et les valeurs plus extrêmes.
+:::
+
+## Nombre brut ou taux?
+
+::: {.lead}
+Dans `safety_airlines.csv`, un nombre brut d'incidents ne tient pas compte de la
+taille des compagnies ni de leur volume d'activité.
+:::
+
+```{r}
+#| label: safety-table
+#| echo: false
+
+safety_resume |>
+  transmute(
+    airline,
+    incidents_00_14,
+    incidents_par_milliard = round(incidents_par_milliard, 3)
+  ) |>
+  arrange(desc(incidents_par_milliard)) |>
+  slice_head(n = 5) |>
+  knitr::kable()
+```
+
+## Même base, deux lectures
+
+```{r}
+#| label: graphique-safety
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.8
+#| out-width: "100%"
+
+safety_plot <- safety_resume |>
+  slice_max(incidents_00_14, n = 8, with_ties = FALSE) |>
+  transmute(
+    airline,
+    incidents = incidents_00_14,
+    taux = incidents_par_milliard
+  ) |>
+  pivot_longer(
+    cols = c(incidents, taux),
+    names_to = "indicateur",
+    values_to = "valeur"
+  ) |>
+  mutate(indicateur = recode(
+    indicateur,
+    incidents = "Nombre brut",
+    taux = "Taux indicatif"
+  ))
+
+safety_plot |>
+  ggplot(aes(x = reorder(airline, valeur), y = valeur)) +
+  geom_col(fill = "#0b4f6c") +
+  coord_flip() +
+  facet_wrap(~ indicateur, scales = "free_x") +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 15)
+```
+
+::: {.visual-note}
+Changer d'échelle peut changer l'histoire racontée par les données. C'est
+exactement pour cela qu'il faut nommer l'indicateur utilisé.
+:::
+
+## Partie 5 : produire une trace {.section-grey}
+
+::: {.kicker}
+Portfolio
+:::
+
+## Ce que la trace doit montrer
+
+::: {.check-grid}
+::: {.check-card}
+<span class="tag">1. Base</span>
+<span class="text">Je sais dire ce que représente une ligne.</span>
+:::
+
+::: {.check-card}
+<span class="tag">2. Variables</span>
+<span class="text">Je sais classer quelques variables et nommer une précaution.</span>
+:::
+
+::: {.check-card}
+<span class="tag">3. Résumé</span>
+<span class="text">Je sais produire un tableau descriptif et un graphique.</span>
+:::
+
+::: {.check-card}
+<span class="tag">4. Interprétation</span>
+<span class="text">Je sais écrire deux constats descriptifs et une limite.</span>
+:::
+:::
+
+## Exemple de limite utile
+
+::: {.statement-card .acceptable}
+<span class="tag">Phrase utilisable</span>
+<span class="text">Ces résultats décrivent les valeurs observées dans la base. Ils ne permettent pas, à eux seuls, d'expliquer les causes des différences observées ni de généraliser à un autre contexte.</span>
+:::
+
+::: {.visual-note}
+Une limite n'affaiblit pas l'analyse. Elle montre que l'interprétation est
+maîtrisée.
+:::
+
+## Trois réflexes à garder
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+
+::: {.label}
+nommer l'unité avant de calculer
+:::
+:::
+
+::: {.metric}
+::: {.value}
+2
+:::
+
+::: {.label}
+adapter le résumé au type de variable
+:::
+:::
+
+::: {.metric}
+::: {.value}
+3
+:::
+
+::: {.label}
+écrire ce que le résultat ne permet pas de conclure
+:::
+:::
+:::
+
+## Production autonome
+
+::: {.lead}
+À partir de vos exercices, préparez une trace de portfolio d'une page maximum.
+La trace doit pouvoir être comprise sans explication orale.
+:::
+
+::: {.keypoints}
+- une phrase sur le rôle d'un modèle;
+- un classement de quelques variables;
+- un tableau descriptif et un graphique;
+- deux constats descriptifs;
+- une limite d'interprétation.
+:::
+
+::: {.self-check}
+Auto-vérification : la trace est suffisante si une autre personne peut nommer
+la base utilisée, comprendre ce que représente une ligne, voir le résultat
+produit et repérer clairement ce que l'analyse ne permet pas de conclure.
+:::
+
+## À conserver {.closing-slide}
 
 ::: {.kicker}
 MQT-2101
 :::
 
-## Questions?
-
-Faculté des sciences de l'administration
-
-Université Laval
+Avant de passer au module suivant, gardez une version stable de votre trace et
+notez une notion à consolider dans vos propres mots.

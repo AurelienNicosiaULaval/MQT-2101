@@ -17,7 +17,7 @@ $presentation-heading-font: "Overpass", "Source Sans 3", "Source Sans Pro", Aria
 $presentation-heading-color: $ul-black !default;
 $presentation-heading-text-transform: none !default;
 $presentation-heading-letter-spacing: 0 !default;
-$presentation-font-size-root: 32px !default;
+$presentation-font-size-root: 38px !default;
 
 /*-- scss:rules --*/
 :root {
@@ -42,7 +42,7 @@ $presentation-font-size-root: 32px !default;
 
 .reveal .slides section {
   box-sizing: border-box;
-  padding: 1.05rem 1.15rem 1.45rem;
+  padding: 0.85rem 1rem 1.25rem;
 }
 
 .reveal h1,
@@ -54,23 +54,23 @@ $presentation-font-size-root: 32px !default;
 }
 
 .reveal h1 {
-  font-size: 2.25em;
+  font-size: 2.05em;
 }
 
 .reveal h2 {
   color: var(--ul-red);
-  font-size: 1.55em;
-  margin-bottom: 0.55em;
+  font-size: 1.42em;
+  margin-bottom: 0.45em;
 }
 
 .reveal h3 {
-  font-size: 0.95em;
+  font-size: 0.9em;
   margin-bottom: 0.35em;
 }
 
 .reveal p,
 .reveal li {
-  line-height: 1.32;
+  line-height: 1.24;
 }
 
 .reveal ul,
@@ -129,7 +129,7 @@ $presentation-font-size-root: 32px !default;
 .reveal #title-slide h1,
 .reveal #title-slide .title {
   color: var(--ul-red);
-  font-size: 2.35em;
+  font-size: 2.15em;
   max-width: 72%;
 }
 
@@ -154,7 +154,7 @@ $presentation-font-size-root: 32px !default;
   background: var(--ul-white);
   color: var(--ul-black);
   min-height: 100%;
-  padding: 1.35rem;
+  padding: 1.35rem 1.35rem 1.35rem 2.2rem;
 }
 
 .reveal .section-red::after,
@@ -162,11 +162,7 @@ $presentation-font-size-root: 32px !default;
 .reveal .section-grey::after,
 .reveal .closing-slide::after {
   content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0.42rem;
+  display: none;
 }
 
 .reveal .section-red::after,
@@ -215,17 +211,17 @@ $presentation-font-size-root: 32px !default;
 }
 
 .reveal .lead {
-  font-size: 1.05em;
-  line-height: 1.22;
-  max-width: 78%;
+  font-size: 1.04em;
+  line-height: 1.18;
+  max-width: 82%;
 }
 
 .reveal .compact {
-  font-size: 0.78em;
+  font-size: 0.9em;
 }
 
 .reveal .small {
-  font-size: 0.66em;
+  font-size: 0.78em;
 }
 
 .reveal .keypoints,
@@ -234,6 +230,12 @@ $presentation-font-size-root: 32px !default;
   border-left: 0.18rem solid var(--ul-red);
   background: var(--ul-grey-50);
   padding: 0.55rem 0.7rem;
+}
+
+.reveal .keypoints li,
+.reveal .note-box li,
+.reveal .example-box li {
+  margin-top: 0.18em;
 }
 
 .reveal .example-box {
@@ -263,13 +265,13 @@ $presentation-font-size-root: 32px !default;
 
 .reveal .metric .label {
   color: var(--ul-grey-700);
-  font-size: 0.54em;
+  font-size: 0.76em;
   margin-top: 0.2rem;
 }
 
 .reveal table {
   border-collapse: collapse;
-  font-size: 0.62em;
+  font-size: 0.78em;
   width: 100%;
 }
 
@@ -290,7 +292,9 @@ $presentation-font-size-root: 32px !default;
 }
 
 .reveal pre code {
-  max-height: 470px;
+  font-size: 0.76em;
+  line-height: 1.18;
+  max-height: 500px;
 }
 
 .reveal div.sourceCode {
@@ -309,6 +313,138 @@ $presentation-font-size-root: 32px !default;
   gap: 0.9rem;
 }
 
+.reveal .journey {
+  align-items: stretch;
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: 0.75rem;
+}
+
+.reveal .journey-step,
+.reveal .concept-card,
+.reveal .check-card,
+.reveal .data-field,
+.reveal .statement-card {
+  border: 1px solid var(--ul-grey-200);
+  border-radius: 7px;
+  background: var(--ul-white);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+}
+
+.reveal .journey-step {
+  min-height: 4.3rem;
+  padding: 0.55rem 0.45rem;
+}
+
+.reveal .journey-step .num,
+.reveal .concept-card .tag,
+.reveal .check-card .tag,
+.reveal .statement-card .tag {
+  color: var(--ul-red);
+  display: block;
+  font-family: "Overpass", "Source Sans 3", Arial, sans-serif;
+  font-size: 0.58em;
+  font-weight: 700;
+  margin-bottom: 0.18rem;
+  text-transform: uppercase;
+}
+
+.reveal .journey-step .text,
+.reveal .concept-card .text,
+.reveal .check-card .text,
+.reveal .statement-card .text {
+  color: var(--ul-black);
+  display: block;
+  font-size: 0.84em;
+  line-height: 1.18;
+}
+
+.reveal .concept-grid,
+.reveal .check-grid,
+.reveal .statement-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0.7rem;
+}
+
+.reveal .concept-card,
+.reveal .check-card,
+.reveal .statement-card {
+  padding: 0.65rem 0.75rem;
+}
+
+.reveal .concept-card.accent,
+.reveal .statement-card.acceptable {
+  border-top: 0.18rem solid var(--ul-red);
+}
+
+.reveal .statement-card.warning {
+  border-top: 0.18rem solid var(--ul-gold);
+}
+
+.reveal .data-strip {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 0.75rem;
+}
+
+.reveal .data-field {
+  padding: 0.5rem;
+}
+
+.reveal .data-field .name {
+  color: #4b5ca8;
+  display: block;
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.72em;
+  margin-bottom: 0.18rem;
+}
+
+.reveal .data-field .value {
+  color: var(--ul-black);
+  display: block;
+  font-size: 0.9em;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.reveal .visual-note {
+  border-left: 0.18rem solid var(--ul-gold);
+  color: var(--ul-grey-800);
+  font-size: 0.84em;
+  line-height: 1.2;
+  margin-top: 0.55rem;
+  padding-left: 0.55rem;
+}
+
+.reveal .question-line {
+  color: var(--ul-black);
+  font-size: 1.45em;
+  line-height: 1.12;
+  margin-top: 0.4rem;
+  max-width: 82%;
+}
+
+.reveal .small-table table {
+  font-size: 0.72em;
+}
+
+.reveal .self-check {
+  border-left: 0.18rem solid var(--ul-red);
+  background: var(--ul-grey-50);
+  font-size: 0.86em;
+  line-height: 1.22;
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.75rem;
+}
+
+.reveal .self-check li + li {
+  margin-top: 0.12em;
+}
+
 .reveal .inverse {
   background: var(--ul-grey-800);
   color: var(--ul-white);
@@ -324,7 +460,12 @@ $presentation-font-size-root: 32px !default;
 }
 
 @media (max-width: 900px) {
-  .reveal .metric-grid {
+  .reveal .metric-grid,
+  .reveal .journey,
+  .reveal .concept-grid,
+  .reveal .check-grid,
+  .reveal .statement-grid,
+  .reveal .data-strip {
     grid-template-columns: 1fr;
   }
 
@@ -336,5 +477,25 @@ $presentation-font-size-root: 32px !default;
   .reveal .section-grey h2,
   .reveal .closing-slide h2 {
     max-width: 100%;
+  }
+}
+
+@media print {
+  .reveal .metric-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .reveal .journey {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .reveal .concept-grid,
+  .reveal .check-grid,
+  .reveal .statement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reveal .data-strip {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
