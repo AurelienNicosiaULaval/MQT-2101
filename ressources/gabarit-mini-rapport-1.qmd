@@ -1,0 +1,107 @@
+---
+title: "Gabarit du mini-rapport 1"
+format:
+  html:
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+Ce gabarit sert au mini-rapport 1 : préparation des données, exploration, visualisation, interprétation et régression.
+
+Remplacer les passages entre crochets par le contenu de votre équipe.
+
+## Identification
+
+- Équipe :
+- Membres :
+- Jeu de données :
+- Date :
+
+## Question d'analyse
+
+[Formuler la question que votre analyse vise à éclairer.]
+
+## Données
+
+Décrire :
+
+- l'origine du jeu de données;
+- la licence ou les conditions d'utilisation;
+- l'unité d'observation;
+- les variables principales;
+- les limites connues du jeu de données.
+
+## Importation
+
+```{r}
+#| eval: false
+
+library(tidyverse)
+
+donnees_brutes <- read_csv("chemin/vers/votre_fichier.csv")
+```
+
+## Préparation
+
+```{r}
+#| eval: false
+
+donnees <- donnees_brutes |>
+  janitor::clean_names()
+```
+
+Décrire les transformations importantes.
+
+## Exploration descriptive
+
+Présenter un tableau ou quelques statistiques descriptives utiles.
+
+```{r}
+#| eval: false
+
+donnees |>
+  summarise(
+    n = n()
+  )
+```
+
+## Visualisation
+
+Présenter au moins une visualisation pertinente.
+
+```{r}
+#| eval: false
+
+ggplot(donnees, aes(x = variable_x, y = variable_y)) +
+  geom_point()
+```
+
+## Régression
+
+Ajuster un modèle de régression adapté à votre question.
+
+```{r}
+#| eval: false
+
+modele <- lm(variable_y ~ variable_x, data = donnees)
+
+summary(modele)
+```
+
+## Interprétation
+
+Interpréter les résultats en langage clair.
+
+## Recommandation ou conclusion
+
+Formuler une courte conclusion liée à la question de départ.
+
+## Limites
+
+Nommer au moins deux limites de l'analyse.
+
+## Déclaration d'usage de l'IA
+
+Si l'IA a été utilisée de façon significative, compléter la déclaration prévue dans [Déclaration d'usage de l'IA](declaration-ia.qmd).

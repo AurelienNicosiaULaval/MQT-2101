@@ -12,7 +12,7 @@ d'interprétation.
 
 Les lectures de consolidation ne doivent donc pas ajouter une nouvelle matière
 lourde. Elles servent à revenir rapidement aux définitions et aux gestes qui
-soutiennent la trace de portfolio.
+soutiennent la trace finale.
 
 ## Sources consultées
 

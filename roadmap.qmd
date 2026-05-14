@@ -27,133 +27,213 @@ Le résultat visé est un site Quarto publiable, maintenable et directement util
 - Le code doit être en R et les documents doivent être en Quarto.
 - Les données confidentielles ou nominatives ne doivent jamais être publiées.
 
-## Vue d'ensemble
+## État factuel au 14 mai 2026
 
-| Phase | Priorité | Résultat attendu |
+Constats vérifiés dans le dépôt local :
+
+- Le dépôt Git est initialisé.
+- Le remote `origin` pointe vers `git@github.com:AurelienNicosiaULaval/MQT-2101.git`.
+- Le site Quarto est configuré avec `output-dir: docs`.
+- La roadmap est déjà dans la navigation du site.
+- `anciens_documents/sources_privees/` est ignoré par Git.
+- Les dossiers locaux `donnees/brutes/`, `donnees/preparees/` et `donnees/simulees/` sont ignorés sauf leurs fichiers `.gitkeep`.
+- Les fichiers `modules/**/solutions.qmd` sont exclus du rendu Quarto.
+- Le calendrier cible la session d'automne 2026 et reste organisé par semaine, sans dates précises.
+- Le plan de cours décrit maintenant la structure d'évaluation retenue.
+- Les pages d'évaluation indiquent les pondérations, les modalités générales et les règles IA.
+- Les mini-rapports 1 et 2 ont des pages dédiées.
+- La page `ressources/ia.qmd` documente la politique IA du cours.
+- Les données publiques actuellement présentes dans les modules sont `birth_us.csv`, `safety_airlines.csv`, `ventes_operations_quebec.csv` et `ventes_pme_quebec.csv`.
+
+Les nombres suivants comptent seulement les marqueurs explicites `TODO` ou `À préciser` dans les fichiers des modules. Ils servent à repérer les priorités, pas à mesurer la qualité pédagogique.
+
+| Parcours | Marqueurs restants | État de travail |
 |---|---:|---|
-| 0. Stabiliser le dépôt et le site | Très haute | Site Quarto publié et structure propre |
-| 1. Cartographier l'ancien matériel | Très haute | Inventaire exploitable sans copier tel quel |
-| 2. Définir la progression pédagogique | Très haute | Plan hebdomadaire final avec objectifs et livrables |
-| 3. Construire les données du cours | Haute | Jeux de données propres, documentés et reproductibles |
-| 4. Rédiger les semaines | Haute | Notes, capsules, exercices et mini-cas |
-| 5. Développer les ateliers | Haute | Ateliers guidés et cas appliqués |
-| 6. Refaire les évaluations | Haute | Évaluations cohérentes avec les compétences |
-| 7. Produire les ressources transversales | Moyenne | Guides R, Quarto, statistiques, modélisation et feuille de référence |
-| 8. Tester, publier et améliorer | Continue | Site fiable, clair et prêt pour l'enseignement |
+| Semaine 01 - Module - Introduction | 12 | Parcours avancé, médias et narrations à compléter |
+| Semaine 02 - Module - R et Quarto | 18 | Parcours commencé, capsules et lectures à compléter |
+| Semaine 03 - Atelier 01 - Explorer un tableau | 0 | Premier atelier utilisable comme base de référence |
+| Semaine 04 - Module - Régression linéaire | 34 | Structure en place, contenu à rédiger |
+| Semaine 05 - Module - Régression non linéaire | 34 | Structure en place, contenu à rédiger |
+| Semaine 06 - Atelier 02 - Régression | 49 | Structure en place, cas et données à décider |
+| Semaine 07 - Préparation intra | 34 | Structure en place, lien avec l'évaluation à décider |
+| Semaine 08 - Module - Séries chronologiques | 34 | Structure en place, données et démonstrations à décider |
+| Semaine 10 - Module - Lissage | 34 | Structure en place, données et démonstrations à décider |
+| Semaine 11 - Module - Tendance et saisonnalité | 34 | Structure en place, données et démonstrations à décider |
+| Semaine 12 - Atelier 03 - Séries chronologiques | 49 | Structure en place, cas et données à décider |
+| Semaine 13 - Module - Variables externes | 34 | Structure en place, données et scénario à décider |
+| Semaine 14 - Module - Classification | 34 | Structure en place, cas et données à décider |
+| Semaine 15 - Atelier 04 - Intégration | 49 | Structure en place, cas intégrateur à décider |
+
+## Vue d'ensemble mise à jour
+
+| Phase | Statut au 14 mai 2026 | Prochaine décision ou action |
+|---|---|---|
+| 0. Stabiliser le dépôt et le site | Presque terminé | Vérifier GitHub Pages et refaire un rendu complet avant publication |
+| 1. Cartographier l'ancien matériel | Terminé pour la relance | Utiliser l'inventaire comme source d'inspiration sans publier les archives privées |
+| 2. Définir la progression pédagogique | Partiellement terminé | Finaliser les objectifs détaillés et les traces par module ou atelier |
+| 3. Construire les données du cours | Commencé | Choisir les jeux de données officiels par bloc |
+| 4. Rédiger les semaines | Commencé | Prioriser le bloc régression après les décisions pédagogiques |
+| 5. Développer les ateliers | Commencé | Valider le format de l'atelier 1, puis décliner les ateliers 2 à 4 |
+| 6. Refaire les évaluations | Structure décidée | Rédiger les grilles détaillées et les consignes finales |
+| 7. Produire les ressources transversales | Commencé | Compléter les aide-mémoire et les gabarits utiles aux premiers modules |
+| 8. Tester, publier et améliorer | Continu | Rendre, vérifier les liens et tester les données avant chaque publication |
+
+## Décisions prises
+
+Ces décisions servent maintenant de cadre pour développer les modules.
+
+| Décision | Choix retenu |
+|---|---|
+| Session de référence | Automne 2026 |
+| Calendrier | Progression par semaine, sans dates affichées dans le site |
+| Séquence | Même séquence hebdomadaire que la structure actuelle |
+| Évaluations sommatives | Mini-rapport 1, examen intra, mini-rapport 2, examen final |
+| Pondération | 15 %, 30 %, 15 %, 40 % |
+| Questionnaires | Conservés comme exercices formatifs non évalués |
+| Mini-rapports | Équipes flexibles de 2 à 3 |
+| Mini-rapport 1 | Données, préparation, exploration, visualisation, interprétation et régression |
+| Mini-rapport 2 | Séries chronologiques, prévision et ouverture vers classification ou modèles avancés |
+| Données des mini-rapports | Choisies par les équipes, avec validation par l'enseignant |
+| Examens | Individuels, en personne |
+| Politique IA | IA non permise aux examens, permise et déclarée dans les mini-rapports, permise dans le travail personnel et les exercices |
+| GPT du cours | Un GPT personnalisé MQT-2101 jouera le rôle de tuteur lorsque le site sera stabilisé |
+| Gabarits | Des gabarits Quarto sont prévus pour les deux mini-rapports |
+
+## Décisions à préciser plus tard
+
+- Procédure de validation des jeux de données choisis par les équipes.
+- Dates officielles de remise.
+- Durée et ressources permises pour les examens en personne.
+- Grilles détaillées des mini-rapports et des examens.
+- Instructions finales du GPT personnalisé MQT-2101.
 
 ## Phase 0 - Stabiliser le dépôt et le site
 
-Statut : en cours.
+Statut : presque terminé.
 
-À faire :
+Fait :
 
-- Initialiser le dépôt Git.
-- Créer le dépôt GitHub.
-- Publier le site avec GitHub Pages depuis `docs/`.
-- Vérifier que `anciens_documents/sources_privees/` est ignoré par Git.
-- Vérifier que les solutionnaires ne sont pas rendus dans `docs/`.
-- Ajouter cette roadmap dans la navigation du site.
+- Dépôt Git initialisé.
+- Remote GitHub configuré en SSH.
+- Site Quarto configuré avec rendu dans `docs/`.
+- Roadmap ajoutée à la navigation.
+- Sources privées ignorées par Git.
+- Solutionnaires exclus du rendu public.
+
+Reste à faire :
+
+- Confirmer que GitHub Pages publie bien depuis `docs/`.
+- Refaire un rendu complet après chaque série de modifications.
+- Vérifier que les fichiers privés ne sont pas suivis avant publication.
 
 Critère de réussite : le site est accessible en ligne et aucune archive privée n'est publiée.
 
 ## Phase 1 - Cartographier l'ancien matériel
 
-Statut : commencé.
+Statut : terminé pour la relance du développement.
 
-À faire :
+Fait :
 
-- Extraire localement les ZIP dans `anciens_documents/sources_privees/extraits/`.
-- Faire une table de correspondance entre ancien matériel et nouvelle structure.
-- Identifier les contenus réutilisables comme inspiration : thèmes, jeux de données, exercices, évaluations.
-- Identifier les contenus à remplacer : exemples trop génériques, données peu contextualisées, consignes désuètes.
-- Repérer les fichiers nominatifs ou sensibles et les exclure de toute publication.
+- Inventaire agrégé disponible dans `anciens_documents/inventaire_archives.csv`.
+- Correspondance ancien matériel et nouvelle structure disponible dans `anciens_documents/correspondance_ancienne_nouvelle_structure.md`.
+- Stratégie de migration documentée dans `migration-ancien-materiel.qmd`.
+- Archives privées conservées hors publication.
 
-Livrable : un fichier `anciens_documents/correspondance_ancienne_nouvelle_structure.md`.
+Reste à faire pendant la rédaction :
 
-État actuel :
-
-- Le matériel pédagogique non sensible a été extrait localement.
-- Les archives d'examen sont ignorées par défaut.
-- Un inventaire agrégé est disponible dans `anciens_documents/inventaire_archives.csv`.
-- La page `migration-ancien-materiel.qmd` documente la stratégie de réutilisation.
+- Consulter l'ancien matériel uniquement comme source d'inspiration.
+- Remplacer les exemples trop génériques.
+- Exclure tout fichier nominatif, sensible ou privé.
 
 ## Phase 2 - Définir la progression pédagogique
 
-Statut : à faire.
+Statut : partiellement terminé.
 
-À faire :
+Fait :
 
-- Finaliser les objectifs d'apprentissage par semaine.
-- Définir le livrable court de chaque semaine.
-- Harmoniser les sections `Let’s eat the cake`.
-- Vérifier que chaque module parle aux deux publics : génie et administration.
-- Ajouter des exercices d'application après les capsules.
-- Clarifier la place de l'IA comme outil de questionnement, de vérification et d'interprétation critique.
-- Clarifier les liens entre semaines, ateliers et évaluations.
-- Définir les compétences évaluées dans les questionnaires, l'intra et le final.
+- Calendrier hebdomadaire structuré dans `calendrier.qmd`.
+- Les modules et ateliers sont présents dans la navigation.
+- Principes pédagogiques documentés dans `ressources/principes-refonte.qmd`.
+- Politique IA documentée dans `ressources/ia.qmd`.
+- Structure d'évaluation alignée avec le calendrier.
 
-Livrable : une version finalisée de `plan-de-cours.qmd` et `calendrier.qmd`.
+Reste à décider :
+
+- Objectifs d'apprentissage finaux par module ou atelier.
+- Trace finale ou livrable court de chaque module ou atelier.
+- Compétences évaluées dans chaque mini-rapport, examen et atelier.
+- Lien précis entre capsules, exercices, ateliers et évaluations.
+
+Livrables attendus :
+
+- `plan-de-cours.qmd` révisé selon la structure officielle.
+- `calendrier.qmd` révisé sans dates.
+- Tableau d'alignement objectifs, modules, ateliers et évaluations.
 
 ## Phase 3 - Construire les données du cours
 
-Statut : à faire.
+Statut : commencé.
 
-À faire :
+Fait :
 
-- Choisir les jeux de données officiels du cours.
-- Prioriser des données canadiennes ou québécoises lorsque pertinent.
-- Examiner les jeux de données déjà utilisés dans STT-1100 lorsque l'accès est possible.
-- Créer des jeux de données simulés lorsque les données réelles posent des enjeux de confidentialité.
-- Écrire les scripts de préparation dans `scripts/`.
-- Documenter chaque jeu de données dans `donnees/README.md`.
+- Dossiers de données créés dans les modules.
+- Données publiques présentes pour les modules 01, 02 et l'atelier 01.
+- Scripts de préparation et de scaffolding présents dans `scripts/`.
+
+Reste à décider :
+
+- Données officielles du bloc régression.
+- Données officielles du bloc séries chronologiques et prévision.
+- Données officielles du bloc classification.
+- Niveau d'usage de données réelles publiques comparé aux données simulées réalistes.
+- Format des dictionnaires de variables.
+
+Reste à faire :
+
+- Documenter l'origine, la licence et l'usage pédagogique de chaque fichier.
 - Ajouter un dictionnaire de variables pour chaque jeu de données important.
-
-Livrables :
-
-- Données préparées dans `donnees/preparees/`.
-- Données simulées dans `donnees/simulees/`.
-- Scripts reproductibles dans `scripts/`.
-- Dictionnaires de données.
+- Écrire ou compléter les scripts reproductibles de préparation.
 
 ## Phase 4 - Rédiger les semaines
 
-Statut : à faire.
+Statut : commencé.
+
+Priorité immédiate :
+
+1. Stabiliser les modules 01 et 02.
+2. Utiliser l'atelier 01, associé à la semaine 3, comme gabarit pédagogique.
+3. Développer le bloc régression : modules 04, 05, 06 et 07.
+4. Développer ensuite le bloc prévision : modules 08 à 12.
+5. Terminer par classification et intégration : modules 13 et 14.
 
 À faire pour chaque semaine :
 
-- Rédiger la mise en contexte business.
+- Rédiger la mise en contexte.
 - Compléter les concepts clés.
-- Écrire plusieurs capsules courtes.
-- Ajouter des exercices d'application au fil du parcours.
-- Prévoir au moins une activité utile aux étudiant·es en génie et une activité utile aux étudiant·es en administration lorsque le thème s'y prête.
-- Développer un mini-cas business.
-- Ajouter les erreurs fréquentes.
-- Définir une trace de portfolio ou un livrable court.
-- Ajouter les références ou ressources pertinentes.
+- Ajouter les démonstrations R reproductibles.
+- Ajouter les exercices d'application après les capsules.
+- Définir la trace finale.
+- Ajouter les lectures ciblées.
+- Vérifier que l'utilité décisionnelle est explicite.
 
-Ordre recommandé :
-
-1. Semaine 01 : diagnostic statistique et décision.
-2. Semaine 02 : R, Quarto et reproductibilité.
-3. Semaine 03 : régression linéaire.
-4. Semaine 04 : transformations et non-linéarité.
-5. Semaine 05 : préparation intra.
-6. Semaine 06 : séries chronologiques.
-7. Semaine 07 : lissage.
-8. Semaine 08 : tendance et saisonnalité.
-9. Semaine 09 : variables externes et autocorrélation.
-10. Semaine 10 : classification et modèles avancés.
+Critère de réussite : chaque module peut être suivi de façon autonome par un·e étudiant·e et mène à un livrable court interprétable.
 
 ## Phase 5 - Développer les ateliers
 
-Statut : à faire.
+Statut : commencé.
 
-À faire :
+Fait :
 
-- Atelier 01 : explorer un tableau de données d'affaires.
-- Atelier 02 : étude de cas de régression.
-- Atelier 03 : prévision de ventes ou de demande.
-- Atelier 04 : cas intégrateur de fin de session.
+- Atelier 01 sans marqueur `TODO` explicite.
+- Structure commune des ateliers 02 à 04 déjà en place.
+
+Reste à décider :
+
+- Atelier 02 : jeu de données et scénario de régression.
+- Atelier 03 : jeu de données et scénario de prévision.
+- Atelier 04 : cas intégrateur final.
+- Degré de guidage attendu dans les consignes.
+- Grille formative commune ou grille spécifique par atelier.
 
 Chaque atelier doit contenir :
 
@@ -166,25 +246,33 @@ Chaque atelier doit contenir :
 
 ## Phase 6 - Refaire les évaluations
 
-Statut : à faire.
+Statut : structure décidée.
 
-À faire :
+Fait :
 
-- Définir la pondération officielle.
-- Rédiger le questionnaire sur la régression.
-- Rédiger l'examen intra sur la régression.
-- Rédiger le questionnaire sur les séries chronologiques.
-- Rédiger l'examen final sur la prévision.
+- Pondérations générales fixées.
+- Mini-rapports en équipe de 2 à 3 retenus.
+- Examens individuels en personne retenus.
+- Questionnaires conservés comme exercices formatifs.
+- Politique IA intégrée aux évaluations.
+- Pages des deux mini-rapports créées.
+
+Reste à faire :
+
+- Rédiger les consignes détaillées du mini-rapport 1.
+- Rédiger les consignes détaillées du mini-rapport 2.
+- Rédiger les versions finales des questionnaires formatifs.
+- Rédiger les plans détaillés de l'examen intra et de l'examen final.
 - Créer les grilles d'évaluation dans `evaluations/grilles/`.
-- Vérifier l'alignement entre objectifs, ateliers et évaluations.
+- Définir la procédure de validation des jeux de données.
 
 Critère de réussite : chaque évaluation mesure une compétence explicitement travaillée dans les semaines ou ateliers.
 
 ## Phase 7 - Produire les ressources transversales
 
-Statut : à faire.
+Statut : commencé.
 
-À faire :
+Reste à faire :
 
 - Compléter l'aide-mémoire R.
 - Compléter l'aide-mémoire statistique.
@@ -193,14 +281,15 @@ Statut : à faire.
 - Compléter le guide Quarto.
 - Compléter le guide RStudio.
 - Ajouter une page de dépannage pour les erreurs fréquentes en R.
+- Finaliser les gabarits Quarto des mini-rapports.
 
-Livrable : une section `ressources/` utilisable pendant tout le cours.
+Priorité : compléter d'abord les ressources qui seront utilisées dans les modules 01 à 06.
 
 ## Phase 8 - Tester, publier et améliorer
 
 Statut : continu.
 
-À faire :
+À faire de façon récurrente :
 
 - Rendre le site avec `quarto render` avant chaque publication.
 - Vérifier les liens internes.
@@ -220,14 +309,31 @@ quarto::quarto_render(".")
 source("scripts/99_render_site.R")
 ```
 
+## Plan de travail recommandé
+
+| Rang | Travail | Résultat attendu |
+|---:|---|---|
+| 1 | Finaliser les objectifs et traces par module | Alignement clair entre modules et évaluations |
+| 2 | Choisir les données du bloc régression | Données et dictionnaire prêts pour les modules 04 à 06 |
+| 3 | Finaliser les modules 01 et 02 | Début de session publiable |
+| 4 | Finaliser l'atelier 01 comme modèle | Gabarit de qualité pour les ateliers suivants |
+| 5 | Développer les modules 04 à 07 | Bloc régression cohérent jusqu'à l'intra et au mini-rapport 1 |
+| 6 | Choisir les données du bloc prévision | Données prêtes pour les modules 08 à 12 |
+| 7 | Développer les modules 08 à 12 | Bloc séries chronologiques cohérent |
+| 8 | Développer classification et intégration | Fin de session alignée sur l'examen final et le mini-rapport 2 |
+
 ## Checklist avant la session
 
-- Le calendrier officiel est ajouté.
+- Le calendrier officiel est confirmé.
 - Le plan de cours est finalisé.
+- La politique d'IA est explicitée.
+- Les pondérations et modalités d'évaluation sont finalisées.
+- Les gabarits des deux mini-rapports sont prêts.
+- Les données de régression sont prêtes et documentées.
 - Les semaines 01 à 05 sont complètes.
 - Les ateliers 01 et 02 sont complets.
 - L'examen intra est prêt.
-- Les données de régression sont prêtes et documentées.
+- Les données de prévision sont prêtes et documentées.
 - Les semaines 06 à 10 sont complètes ou suffisamment avancées.
 - Les ateliers 03 et 04 sont complets.
 - L'examen final est prêt.

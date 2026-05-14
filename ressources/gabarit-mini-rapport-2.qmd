@@ -1,0 +1,95 @@
+---
+title: "Gabarit du mini-rapport 2"
+format:
+  html:
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+Ce gabarit sert au mini-rapport 2 : séries chronologiques, prévision, validation et ouverture vers la classification ou les modèles avancés.
+
+Remplacer les passages entre crochets par le contenu de votre équipe.
+
+## Identification
+
+- Équipe :
+- Membres :
+- Jeu de données :
+- Date :
+
+## Question d'analyse
+
+[Formuler la question que votre analyse vise à éclairer.]
+
+## Données
+
+Décrire :
+
+- l'origine du jeu de données;
+- la licence ou les conditions d'utilisation;
+- l'unité d'observation;
+- la fréquence temporelle, si applicable;
+- les variables principales;
+- les limites connues du jeu de données.
+
+## Importation et préparation
+
+```{r}
+#| eval: false
+
+library(tidyverse)
+
+donnees_brutes <- read_csv("chemin/vers/votre_fichier.csv")
+
+donnees <- donnees_brutes |>
+  janitor::clean_names()
+```
+
+## Exploration temporelle ou prédictive
+
+Décrire la structure du problème : temps, horizon, cible ou variable à prévoir.
+
+```{r}
+#| eval: false
+
+ggplot(donnees, aes(x = date, y = valeur)) +
+  geom_line()
+```
+
+## Méthode
+
+Présenter la méthode utilisée : prévision, classification ou comparaison de modèles.
+
+```{r}
+#| eval: false
+
+# Ajouter ici le code de modélisation.
+```
+
+## Validation
+
+Présenter une mesure d'erreur, une validation temporelle ou une mesure de performance adaptée.
+
+```{r}
+#| eval: false
+
+# Ajouter ici le code de validation.
+```
+
+## Interprétation
+
+Interpréter les résultats en langage clair.
+
+## Recommandation ou conclusion
+
+Formuler une courte conclusion liée à la question de départ.
+
+## Limites
+
+Nommer au moins deux limites de l'analyse.
+
+## Déclaration d'usage de l'IA
+
+Si l'IA a été utilisée de façon significative, compléter la déclaration prévue dans [Déclaration d'usage de l'IA](declaration-ia.qmd).
