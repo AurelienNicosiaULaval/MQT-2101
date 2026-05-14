@@ -301,12 +301,6 @@ capsule_media_tabset <- function(i) {
     "  style=\"border: 1px solid #d0d7de; border-radius: 6px;\"",
     "></iframe>",
     "```",
-    "",
-    "### Narration",
-    "",
-    paste0("TODO ajouter la narration PDF de la capsule ", i, " lorsque le fichier est validé pour publication."),
-    "",
-    paste0("Emplacement prévu : `media/narration/capsule-", capsule_id, "-narration.pdf`."),
     ":::",
     ""
   )
@@ -365,15 +359,14 @@ fallback_lets_eat_the_cake <- function(spec) {
   )
 }
 
-narrated_capsule_steps <- function(spec) {
+capsule_steps <- function(spec) {
   unlist(lapply(seq_along(spec$capsules), function(i) {
     c(
       paste0("## Capsule ", i, " - ", spec$capsules[[i]]),
       "",
       paste0(
         "Poursuivez le parcours dans [les capsules](capsules.qmd). ",
-        "Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles. ",
-        "Si une narration PDF est disponible, consultez-la ensuite pour retrouver le texte détaillé de la capsule."
+        "Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles."
       ),
       "",
       "Après la capsule, faites immédiatement l'activité associée. Cette activité sert à vérifier la compréhension avant de continuer.",
@@ -399,7 +392,7 @@ audience_section <- function(spec) {
   )
 }
 
-narrated_index_page <- function(spec, lines) {
+index_page_with_path <- function(spec, lines) {
   h1 <- grep("^# ", lines)[1]
   header <- if (!is.na(h1)) lines[seq_len(h1)] else c(yaml(spec$titre), paste0("# ", spec$label))
 
@@ -464,7 +457,7 @@ narrated_index_page <- function(spec, lines) {
     "Vérifiez aussi les fichiers disponibles dans [les informations du module](informations.qmd), notamment les données publiques et les consignes liées au matériel ancien.",
     atelier_guide,
     "",
-    narrated_capsule_steps(spec),
+    capsule_steps(spec),
     "## Démonstrations R",
     "",
     "Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.",
@@ -521,12 +514,12 @@ narrated_index_page <- function(spec, lines) {
   c(header, body)
 }
 
-rewrite_index_as_narrated_path <- function(spec) {
+rewrite_index_as_path <- function(spec) {
   path <- file.path(spec$dir, "index.qmd")
   if (!file.exists(path)) return(invisible(FALSE))
 
   lines <- readLines(path, warn = FALSE)
-  new_lines <- narrated_index_page(spec, lines)
+  new_lines <- index_page_with_path(spec, lines)
   writeLines(normalize_blank_lines(new_lines), path, useBytes = TRUE)
   invisible(TRUE)
 }
@@ -545,7 +538,7 @@ capsules_page <- function(spec) {
     "",
     "## Rôle de cette page",
     "",
-    "Cette page diffuse les médias de chaque capsule. Pour une capsule finalisée, elle contient seulement le titre de la capsule et les onglets `Vidéo`, `Support` et `Narration`.",
+    "Cette page diffuse les médias de chaque capsule. Pour une capsule finalisée, elle contient seulement le titre de la capsule et les onglets `Vidéo` et `Support`.",
     "",
     "Le contenu pédagogique détaillé, incluant l'objectif, les idées essentielles et l'activité de fin de capsule, doit être placé dans le support Quarto de la capsule.",
     "",
@@ -871,7 +864,6 @@ informations_page <- function(spec) {
     "",
     "- `media/videos/` : vidéos courtes intégrées dans l'onglet `Vidéo`.",
     "- `media/pdf/` : supports PDF générés à partir des contenus Quarto.",
-    "- `media/narration/` : narrations PDF validées pour publication.",
     "",
     "## Consignes de travail autonome",
     "",
@@ -1021,7 +1013,6 @@ upsert_media_info <- function(spec) {
     "",
     "- `media/videos/` : vidéos courtes intégrées dans l'onglet `Vidéo`.",
     "- `media/pdf/` : supports PDF générés à partir des contenus Quarto.",
-    "- `media/narration/` : narrations PDF validées pour publication.",
     ""
   )
 
@@ -1063,7 +1054,7 @@ ensure_capsule_sections <- function(spec) {
 }
 
 ensure_media_dirs <- function(spec) {
-  media_dirs <- file.path(spec$dir, "media", c("videos", "pdf", "qmd", "narration"))
+  media_dirs <- file.path(spec$dir, "media", c("videos", "pdf", "qmd"))
   for (media_dir in media_dirs) {
     dir.create(media_dir, recursive = TRUE, showWarnings = FALSE)
     write_if_missing(file.path(media_dir, ".gitkeep"))
@@ -1081,13 +1072,12 @@ ensure_media_dirs <- function(spec) {
       "- `videos/` : vidéos courtes intégrées dans les capsules.",
       "- `pdf/` : supports PDF générés à partir des contenus Quarto.",
       "- `qmd/` : sources Quarto des supports de capsule.",
-      "- `narration/` : PDF de narration validés pour publication.",
       "",
       "## Règles",
       "",
       "- ne pas publier de documents privés ou protégés sans validation;",
       "- privilégier des vidéos courtes;",
-      "- garder le même numéro de capsule entre vidéo, support et narration;",
+      "- garder le même numéro de capsule entre vidéo et support;",
       "- documenter toute source ancienne utilisée."
     )
   )
@@ -1106,7 +1096,7 @@ for (spec in module_specs) {
   write_qmd_if_missing(file.path(spec$dir, "informations.qmd"), informations_page(spec))
   write_qmd_if_missing(file.path(spec$dir, "data", "README.md"), data_readme(spec))
 
-  rewrite_index_as_narrated_path(spec)
+  rewrite_index_as_path(spec)
   ensure_capsule_sections(spec)
   insert_capsule_tabsets(spec)
   upsert_media_info(spec)

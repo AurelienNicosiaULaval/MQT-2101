@@ -16,7 +16,7 @@ Le dossier `sources_privees/` est ignoré par Git afin d'éviter la publication 
 | `MQT-2101-A25_Examen intra à la maison.zip` | Archives privées d'examen |
 | `MQT-2101-A25_Préparation à l'examen.zip` | Préparation à l'examen |
 | `MQT-2101-A25_Solutionnaires séances.zip` | Solutionnaires anciens |
-| `MQT-2101-A25_Séance 01 _  Introduction.zip` | Présentations, narrations, lectures, exercice et données de la séance 01 |
+| `MQT-2101-A25_Séance 01 _  Introduction.zip` | Présentations, lectures, exercice et données de la séance 01 |
 | `MQT-2101-A25_Séance 02 _  Introduction.zip` | Présentations et données |
 | `MQT-2101-A25_Séance 03 _ Régression.zip` | Régression |
 | `MQT-2101-A25_Séance 04_ Régression non.zip` | Régression non linéaire |
