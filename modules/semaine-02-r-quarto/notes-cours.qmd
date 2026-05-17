@@ -27,124 +27,125 @@ execute:
 editor: visual
 ---
 
-## Objectifs de la séance
-
-::: {.keypoints}
-- Vérifier que l'environnement R, RStudio et Quarto fonctionne.
-- Importer un fichier CSV avec un chemin reproductible.
-- Inspecter la structure d'un tableau.
-- Produire un résumé, un diagnostic et un graphique simples.
-:::
-
-## Plan
-
-1. Reproductibilité
-2. Projet R et chemins relatifs
-3. Importation
-4. Inspection et préparation
-5. Mini-rapport Quarto
-
-## Activités de fin de capsule
-
-::: {.lead}
-Une activité est une courte tâche à faire immédiatement après une capsule. Elle
-sert à transformer l'écoute en action avant de passer à la suite.
-:::
-
-::: {.keypoints}
-- vérifier la compréhension du point central;
-- préparer un élément utile pour la trace finale ou le rapport;
-- repérer ce qui reste à clarifier;
-- préparer les exercices, les démonstrations et les ateliers.
-:::
-
-## Partie 1: flux de travail {.section-red}
-
-::: {.kicker}
-R, RStudio et Quarto
-:::
-
-## Pourquoi un flux reproductible?
-
-::: {.lead}
-Une analyse reproductible garde ensemble les données, le code, les résultats et l'interprétation.
-:::
-
-::: {.note-box}
-Le but n'est pas seulement d'obtenir un résultat. Le but est de pouvoir expliquer comment il a été obtenu et de le refaire sans ambiguïté.
-:::
-
-## Rôle des outils
-
-:::: {.columns}
-
-::: {.column width="32%"}
-### R
-
-Langage utilisé pour importer, transformer, résumer et visualiser les données.
-:::
-
-::: {.column width="32%"}
-### RStudio
-
-Interface de travail pour écrire le code, gérer les fichiers et consulter les objets.
-:::
-
-::: {.column width="32%"}
-### Quarto
-
-Format qui combine texte, code R, résultats et graphiques dans un rapport reproductible.
-:::
-
-::::
-
-## Structure minimale d'un projet
-
-```text
-projet/
-  data/
-    ventes_operations_quebec.csv
-  rapport.qmd
-  scripts/
-```
-
-::: {.example-box}
-Un chemin relatif comme `data/ventes_operations_quebec.csv` reste valide si le projet est déplacé avec sa structure.
-:::
-
-## Préparation dans R
-
 ```{r}
 #| label: setup-semaine-02-notes
+#| include: false
 
-# Load libraries
 library(tidyverse)
+library(janitor)
 library(lubridate)
 library(scales)
 
-# Locate data file
 data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
   "data/ventes_operations_quebec.csv"
 } else {
   "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
 }
 
-# Import data
-ventes_operations <- read_csv(data_path, show_col_types = FALSE)
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
+
+ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
 ```
 
-## Importer et inspecter
+## Objectifs de la séance
+
+::: {.keypoints}
+- Préparer un environnement de travail dans RStudio.
+- Organiser une analyse dans un projet reproductible.
+- Importer et inspecter un fichier CSV.
+- Diagnostiquer les valeurs manquantes.
+- Produire un tableau, un graphique et une trace finale Quarto.
+:::
+
+## Le fil conducteur
+
+::: {.lead}
+La semaine 02 transforme la lecture descriptive de la semaine 01 en démarche
+reproductible.
+:::
+
+::: {.note-box}
+Le résultat attendu est un mini-rapport Quarto individuel qui montre le code,
+les résultats et deux constats descriptifs.
+:::
+
+## Les six capsules
+
+| Capsule | Geste principal | Trace préparée |
+|---|---|---|
+| 1 | Préparer l'environnement | note de vérification |
+| 2 | Se repérer dans RStudio | rôle de deux zones |
+| 3 | Organiser un projet | justification des chemins relatifs |
+| 4 | Importer et inspecter | code, dimensions, unité d'observation |
+| 5 | Résumer et diagnostiquer | valeurs manquantes et tableau descriptif |
+| 6 | Produire le rapport | HTML, constats et question finale |
+
+## De la donnée au rapport
+
+```{=html}
+<div class="outcome-strip" aria-label="Flux de travail de la semaine 02">
+  <div class="outcome-item">
+    <span class="outcome-label">Départ</span>
+    <span class="outcome-value">CSV</span>
+  </div>
+  <div class="outcome-arrow" aria-hidden="true">→</div>
+  <div class="outcome-item">
+    <span class="outcome-label">Méthode</span>
+    <span class="outcome-value">code R</span>
+  </div>
+  <div class="outcome-arrow" aria-hidden="true">→</div>
+  <div class="outcome-item">
+    <span class="outcome-label">Arrivée</span>
+    <span class="outcome-value">QMD rendu</span>
+  </div>
+</div>
+```
+
+## Projet minimal
+
+```text
+projet-semaine-02/
+  data/
+    ventes_operations_quebec.csv
+  rapport_semaine_02.qmd
+```
+
+::: {.note-box}
+Un projet garde ensemble les données, le code, les résultats et
+l'interprétation.
+:::
+
+## Importer le tableau
 
 ```{r}
-#| label: inspecter-ventes-operations
+#| label: importer-semaine-02-notes
+
+ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
 
 glimpse(ventes_operations)
 ```
 
+## Inspecter avant de calculer
+
+::: {.keypoints}
+- Que représente une ligne?
+- Quelles variables sont numériques?
+- Quelles variables sont catégorielles?
+- Quelle variable décrit la période?
+- Quels indicateurs semblent utiles pour une décision?
+:::
+
 ## Préparer les variables
 
 ```{r}
-#| label: preparer-ventes-operations
+#| label: preparer-semaine-02-notes
 
 ventes_preparees <- ventes_operations |>
   mutate(
@@ -169,7 +170,7 @@ ventes_preparees |>
 ## Diagnostiquer les valeurs manquantes
 
 ```{r}
-#| label: diagnostic-valeurs-manquantes
+#| label: diagnostic-manquants-semaine-02-notes
 
 diagnostic_manquants <- ventes_preparees |>
   summarise(across(everything(), \(x) sum(is.na(x)))) |>
@@ -183,17 +184,15 @@ diagnostic_manquants <- ventes_preparees |>
 diagnostic_manquants
 ```
 
+::: {.note-box}
+Une valeur manquante doit être signalée avant d'interpréter un résumé ou un
+graphique.
+:::
+
 ## Résumer par succursale
 
 ```{r}
-#| label: resume-succursales
-
-currency_ca <- label_dollar(
-  prefix = "",
-  suffix = " $",
-  big.mark = " ",
-  decimal.mark = ","
-)
+#| label: resume-semaine-02-notes
 
 resume_succursales <- ventes_preparees |>
   group_by(succursale, region) |>
@@ -211,13 +210,14 @@ resume_succursales |>
     ventes_totales = currency_ca(ventes_totales),
     panier_moyen = currency_ca(panier_moyen),
     satisfaction_moyenne = round(satisfaction_moyenne, 1)
-  )
+  ) |>
+  knitr::kable()
 ```
 
-## Visualiser les ventes
+## Visualiser un résultat
 
 ```{r}
-#| label: graphique-ventes-succursales
+#| label: graphique-semaine-02-notes
 #| fig-width: 9
 #| fig-height: 4.8
 #| out-width: "100%"
@@ -225,45 +225,62 @@ resume_succursales |>
 resume_succursales |>
   mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
   ggplot(aes(x = ventes_totales, y = succursale)) +
-  geom_col(fill = "#E30513") +
+  geom_col(fill = "#0B4F6C") +
   scale_x_continuous(labels = currency_ca) +
   labs(
-    x = "Ventes totales",
+    title = "Ventes totales par succursale",
+    x = "Ventes",
     y = NULL
   ) +
   theme_minimal(base_size = 14)
 ```
 
-## Structure du mini-rapport
+## Structure de la trace finale
 
 ```qmd
 ---
-title: "Mini-rapport"
+title: "Mini-rapport - Semaine 02"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
+## Introduction
 
 ## Importation
 
-## Inspection
+## Inspection et diagnostic
 
-## Résumé
+## Résumé descriptif
 
 ## Graphique
 
-## Interprétation
+## Constats
 ```
 
-## Partie 2: synthèse {.section-gold}
+## Ce que la trace doit démontrer
 
-::: {.kicker}
-À retenir
+::: {.keypoints}
+- Le fichier CSV est importé avec un chemin reproductible.
+- Le tableau est décrit avant les calculs.
+- Les valeurs manquantes sont signalées.
+- Le tableau descriptif et le graphique sont produits par le code.
+- Les constats restent descriptifs.
 :::
 
-## Trois réflexes
+## Deux constats et une question
+
+::: {.lead}
+Le rapport se termine par deux constats descriptifs et une question pour la
+suite.
+:::
+
+::: {.example-box}
+Question possible : quelles variables pourraient aider à expliquer les écarts de
+ventes entre succursales?
+:::
+
+## À retenir
 
 ::: {.metric-grid}
 ::: {.metric}
@@ -272,7 +289,7 @@ format:
 :::
 
 ::: {.label}
-Travailler dans un projet.
+Un projet organise le travail.
 :::
 :::
 
@@ -282,7 +299,7 @@ Travailler dans un projet.
 :::
 
 ::: {.label}
-Utiliser des chemins relatifs.
+Le code rend l'analyse vérifiable.
 :::
 :::
 
@@ -292,20 +309,10 @@ Utiliser des chemins relatifs.
 :::
 
 ::: {.label}
-Garder texte, code et résultats ensemble.
+Quarto garde ensemble texte, code et résultats.
 :::
 :::
 :::
-
-## Exercice court
-
-Créer un mini-rapport Quarto qui contient:
-
-1. le code d'importation;
-2. le résultat de `glimpse()`;
-3. un tableau descriptif;
-4. un graphique;
-5. deux constats descriptifs prudents.
 
 ## Clôture {.closing-slide}
 

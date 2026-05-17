@@ -1,0 +1,196 @@
+---
+title: "Capsule 5 - Résumer et diagnostiquer les données"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup-capsule-05-semaine-02
+#| include: false
+
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)
+
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else if (file.exists("../../data/ventes_operations_quebec.csv")) {
+  "../../data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
+```
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Préparer les types de variables utiles.
+- Repérer les valeurs manquantes.
+- Produire un tableau descriptif par groupe.
+- Interpréter un diagnostic sans masquer les limites.
+:::
+
+## Préparer avant de résumer
+
+::: {.lead}
+Un résumé est plus fiable lorsque les types de variables sont explicites.
+:::
+
+```{r}
+#| label: capsule-05-preparer
+
+ventes_preparees <- ventes_operations |>
+  mutate(
+    mois = ymd(mois),
+    succursale = factor(succursale),
+    region = factor(region),
+    campagne_locale = factor(campagne_locale),
+    canal_principal = factor(canal_principal)
+  )
+```
+
+## Vérifier la structure préparée
+
+```{r}
+#| label: capsule-05-verifier
+
+ventes_preparees |>
+  summarise(
+    nb_lignes = n(),
+    nb_succursales = n_distinct(succursale),
+    nb_regions = n_distinct(region),
+    nb_canaux = n_distinct(canal_principal),
+    mois_min = min(mois, na.rm = TRUE),
+    mois_max = max(mois, na.rm = TRUE)
+  )
+```
+
+## Pourquoi diagnostiquer les valeurs manquantes?
+
+::: {.lead}
+Une valeur manquante peut modifier une moyenne, un total, un graphique ou une
+conclusion descriptive.
+:::
+
+::: {.note-box}
+Pour cette semaine, on ne cherche pas encore à imputer les valeurs. On apprend
+à les repérer et à les signaler.
+:::
+
+## Compter les valeurs manquantes
+
+```{r}
+#| label: capsule-05-manquants
+
+diagnostic_manquants <- ventes_preparees |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0)
+
+diagnostic_manquants
+```
+
+## Interpréter le diagnostic
+
+::: {.keypoints}
+- Nommer les variables incomplètes.
+- Dire quels indicateurs peuvent être touchés.
+- Utiliser `na.rm = TRUE` seulement si la décision est signalée.
+- Éviter d'ignorer les valeurs manquantes dans le texte.
+:::
+
+## Résumer par succursale
+
+```{r}
+#| label: capsule-05-resume
+
+resume_succursales <- ventes_preparees |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+
+resume_succursales |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    panier_moyen = currency_ca(panier_moyen),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  ) |>
+  knitr::kable()
+```
+
+## Lire un tableau descriptif
+
+::: {.lead}
+Un tableau descriptif sert à comparer quelques indicateurs, pas à tout
+commenter.
+:::
+
+::: {.keypoints}
+- Repérer la succursale avec les ventes les plus élevées.
+- Comparer le panier moyen et la satisfaction.
+- Vérifier si un même groupe ressort pour tous les indicateurs.
+- Formuler une limite de comparaison.
+:::
+
+## Activité 2.5
+
+::: {.callout-tip title="Diagnostiquer et résumer"}
+Dans votre trace, ajoutez :
+
+- un tableau de diagnostic des valeurs manquantes;
+- un tableau descriptif par succursale ou par canal;
+- une phrase qui explique une précaution d'interprétation.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Préparer les variables aide à éviter des erreurs de calcul.
+- Les valeurs manquantes doivent être signalées.
+- Un tableau descriptif doit être lié à une question.
+- Une interprétation prudente nomme aussi une limite.
+:::

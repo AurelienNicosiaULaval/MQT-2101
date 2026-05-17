@@ -1,0 +1,164 @@
+---
+title: "Capsule 1 - Préparer son environnement de travail"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Comprendre le rôle de R, RStudio et Quarto dans le cours.
+- Vérifier que l'environnement de travail fonctionne.
+- Charger les packages de base utilisés dans les premières semaines.
+- Produire une courte trace indiquant que le poste de travail est prêt.
+:::
+
+## Pourquoi commencer par l'environnement?
+
+::: {.lead}
+Une analyse reproductible commence avant le premier calcul : il faut savoir où
+se trouvent les fichiers, quel outil exécute le code et comment refaire le
+résultat.
+:::
+
+::: {.note-box}
+Le but de cette capsule est simple : éviter que les premiers problèmes soient
+des problèmes d'installation, de dossier ou de package manquant.
+:::
+
+## Trois outils, trois rôles
+
+:::: {.columns}
+
+::: {.column width="32%"}
+### R
+
+Langage qui exécute les commandes statistiques et produit les objets.
+:::
+
+::: {.column width="32%"}
+### RStudio
+
+Interface pour écrire, organiser, exécuter et inspecter le travail.
+:::
+
+::: {.column width="32%"}
+### Quarto
+
+Format qui rassemble texte, code, tableaux, graphiques et interprétation.
+:::
+
+::::
+
+## Ce que vous devez vérifier
+
+::: {.keypoints}
+- RStudio s'ouvre correctement.
+- La console accepte une commande simple.
+- Le package `tidyverse` se charge.
+- Quarto est accessible depuis RStudio.
+- Vous savez retrouver le dossier de travail.
+:::
+
+## Test minimal dans la console
+
+```r
+1 + 1
+```
+
+::: {.note-box}
+Si la console retourne `2`, R exécute correctement une commande simple.
+:::
+
+## Charger les packages de base
+
+```r
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)
+```
+
+::: {.note-box}
+Si un package n'est pas installé, il faut l'installer une fois avec
+`install.packages("nom_du_package")`, puis refaire `library()`.
+:::
+
+## Packages utilisés cette semaine
+
+| Package | Rôle dans le module |
+|---|---|
+| `tidyverse` | importer, transformer, résumer et visualiser |
+| `janitor` | nettoyer les noms de variables |
+| `lubridate` | manipuler les dates |
+| `scales` | afficher des montants et des nombres lisibles |
+
+## Reproductibilité : l'idée centrale
+
+::: {.lead}
+Un résultat est reproductible si une autre personne peut reprendre les mêmes
+fichiers et le même code pour obtenir les mêmes résultats.
+:::
+
+::: {.keypoints}
+- les données restent dans le projet;
+- le code est conservé dans un fichier;
+- les résultats sont générés par le code;
+- l'interprétation indique ce que les résultats montrent.
+:::
+
+## Erreur fréquente
+
+::: {.example-box}
+Erreur fréquente : obtenir un graphique en cliquant ou en copiant un résultat,
+mais ne pas garder le code qui l'a produit.
+:::
+
+::: {.note-box}
+Dans ce cours, le code est une partie de la preuve. Il doit pouvoir être relu et
+réexécuté.
+:::
+
+## Activité 2.1
+
+::: {.callout-tip title="Vérifier que l'environnement fonctionne"}
+Dans la console, exécutez `1 + 1`, puis chargez `tidyverse`.
+
+Dans votre trace, notez :
+
+- le résultat obtenu;
+- un package chargé correctement;
+- une question ou un problème à régler, s'il y en a un.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- R calcule.
+- RStudio organise le travail.
+- Quarto produit le rapport reproductible.
+- La trace attendue est une courte note indiquant que l'environnement est prêt.
+:::

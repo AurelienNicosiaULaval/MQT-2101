@@ -1,0 +1,224 @@
+---
+title: "Capsule 6 - Produire un mini-rapport Quarto"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup-capsule-06-semaine-02
+#| include: false
+
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)
+
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else if (file.exists("../../data/ventes_operations_quebec.csv")) {
+  "../../data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
+
+ventes_preparees <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names() |>
+  mutate(
+    mois = ymd(mois),
+    succursale = factor(succursale),
+    region = factor(region),
+    campagne_locale = factor(campagne_locale),
+    canal_principal = factor(canal_principal)
+  )
+
+resume_succursales <- ventes_preparees |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_totales))
+```
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Créer un graphique simple avec `ggplot2`.
+- Structurer un mini-rapport Quarto.
+- Rendre le document en HTML.
+- Formuler deux constats descriptifs et une question à approfondir.
+:::
+
+## Le rôle du mini-rapport
+
+::: {.lead}
+La trace finale de la semaine 02 montre que vous pouvez reprendre l'analyse du
+début à la fin.
+:::
+
+::: {.note-box}
+Le mini-rapport n'est pas long. Il doit surtout être clair, reproductible et
+lisible.
+:::
+
+## Créer un graphique
+
+```{r}
+#| label: capsule-06-graphique
+#| fig-width: 9
+#| fig-height: 4.8
+#| out-width: "100%"
+
+resume_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(x = ventes_totales, y = succursale)) +
+  geom_col(fill = "#0B4F6C") +
+  scale_x_continuous(labels = currency_ca) +
+  labs(
+    title = "Ventes totales par succursale",
+    x = "Ventes",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Un graphique doit être lisible
+
+::: {.keypoints}
+- Le titre indique ce qui est comparé.
+- Les axes indiquent les unités.
+- Les catégories sont lisibles.
+- Le graphique répond à une question simple.
+:::
+
+## Structure minimale du QMD
+
+```qmd
+---
+title: "Mini-rapport - Semaine 02"
+format:
+  html:
+    embed-resources: true
+---
+
+## Introduction
+
+## Importation
+
+## Inspection et diagnostic
+
+## Résumé descriptif
+
+## Graphique
+
+## Constats
+```
+
+## Ce que le rapport doit contenir
+
+::: {.keypoints}
+- une courte introduction;
+- le code d'importation;
+- une inspection du tableau;
+- un diagnostic des valeurs manquantes;
+- un tableau descriptif;
+- un graphique;
+- deux constats descriptifs;
+- une question à approfondir.
+:::
+
+## Rendre le document
+
+::: {.lead}
+Dans RStudio, utilisez le bouton Render pour produire la page HTML.
+:::
+
+```bash
+quarto render rapport_semaine_02.qmd
+```
+
+::: {.note-box}
+Après le rendu, ouvrez le HTML et vérifiez que le texte, les tableaux, le
+graphique et les constats apparaissent correctement.
+:::
+
+## Écrire un constat descriptif
+
+::: {.example-box}
+Constat descriptif acceptable : la succursale qui présente les ventes totales
+les plus élevées n'est pas nécessairement celle qui présente le panier moyen le
+plus élevé.
+:::
+
+::: {.callout-warning title="À éviter"}
+Éviter les conclusions causales comme : "la campagne locale cause les ventes
+plus élevées", si l'analyse ne permet qu'une description.
+:::
+
+## Question à approfondir
+
+::: {.lead}
+La dernière phrase du rapport peut ouvrir vers une analyse future.
+:::
+
+::: {.example-box}
+Question possible : la relation entre les dépenses marketing et les ventes
+reste-t-elle visible lorsqu'on compare les succursales et les mois?
+:::
+
+## Activité 2.6
+
+::: {.callout-tip title="Finaliser la trace finale"}
+Produisez le mini-rapport Quarto et vérifiez qu'il se rend sans erreur.
+
+Avant de considérer le fichier terminé, relisez :
+
+- le code d'importation;
+- le diagnostic;
+- le tableau;
+- le graphique;
+- les deux constats;
+- la question à approfondir.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Le rapport doit pouvoir être rendu à nouveau.
+- Le code et les résultats doivent rester ensemble.
+- Les constats doivent être descriptifs et prudents.
+- La question finale prépare les analyses plus avancées.
+:::

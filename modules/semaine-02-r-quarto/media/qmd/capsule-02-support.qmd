@@ -1,0 +1,168 @@
+---
+title: "Capsule 2 - Se repérer dans RStudio"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Reconnaître les principales zones de RStudio.
+- Comprendre quoi écrire, quoi exécuter et quoi inspecter.
+- Repérer les fichiers et les graphiques produits.
+- Produire une phrase sur le rôle de deux zones de RStudio.
+:::
+
+## RStudio comme poste de travail
+
+::: {.lead}
+RStudio rassemble plusieurs outils dans la même interface. Chaque zone répond à
+un besoin différent.
+:::
+
+::: {.note-box}
+Apprendre l'interface réduit les erreurs : on sait où écrire le rapport, où
+exécuter une commande et où chercher un fichier.
+:::
+
+## Les zones essentielles
+
+| Zone | À quoi elle sert |
+|---|---|
+| Source | écrire les scripts et fichiers `.qmd` |
+| Console | exécuter rapidement des commandes |
+| Environment | voir les objets créés |
+| Files | naviguer dans les fichiers du projet |
+| Plots | afficher les graphiques |
+| Help | consulter l'aide des fonctions |
+| Viewer | voir certains documents et sorties HTML |
+
+## Source : écrire le travail
+
+::: {.lead}
+La zone Source sert à écrire ce que l'on veut garder.
+:::
+
+::: {.keypoints}
+- code R dans un script ou un bloc Quarto;
+- texte d'interprétation;
+- structure du rapport;
+- commentaires utiles pour comprendre les étapes.
+:::
+
+## Console : tester rapidement
+
+::: {.lead}
+La console sert à exécuter des commandes ponctuelles.
+:::
+
+::: {.note-box}
+Une commande testée dans la console doit être copiée dans le fichier `.qmd` si
+elle fait partie de l'analyse finale.
+:::
+
+## Environment : suivre les objets
+
+::: {.lead}
+L'onglet Environment montre les objets créés en mémoire.
+:::
+
+::: {.keypoints}
+- tableaux importés;
+- résumés intermédiaires;
+- vecteurs ou paramètres;
+- objets créés par le code.
+:::
+
+## Files : rester dans le bon dossier
+
+::: {.lead}
+L'onglet Files sert à vérifier que les fichiers sont dans le bon projet.
+:::
+
+::: {.example-box}
+Si le fichier CSV est dans `data/`, le code doit pouvoir le lire avec un chemin
+relatif comme `data/ventes_operations_quebec.csv`.
+:::
+
+## Plots et Viewer
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Plots
+
+Affiche les graphiques générés par R.
+:::
+
+::: {.column width="48%"}
+### Viewer
+
+Affiche certains résultats HTML, documents et aperçus.
+:::
+
+::::
+
+::: {.note-box}
+Un graphique affiché n'est pas suffisant. Le code qui le produit doit rester
+dans le rapport.
+:::
+
+## Help : chercher une fonction
+
+```r
+?read_csv
+?ggplot
+```
+
+::: {.note-box}
+L'aide intégrée est utile pour vérifier les arguments d'une fonction et lire un
+exemple minimal.
+:::
+
+## Activité 2.2
+
+::: {.callout-tip title="Identifier les zones de RStudio"}
+Associez chaque zone de RStudio à une action :
+
+- écrire le rapport;
+- exécuter du code;
+- voir les objets;
+- trouver les fichiers;
+- afficher un graphique.
+
+Dans votre trace, écrivez une phrase expliquant le rôle de deux zones utiles.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Le rapport s'écrit dans Source.
+- Les commandes rapides se testent dans Console.
+- Les objets se vérifient dans Environment.
+- Les fichiers se repèrent dans Files.
+- Les graphiques se vérifient dans Plots.
+:::

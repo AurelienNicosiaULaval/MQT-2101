@@ -9,6 +9,8 @@ format:
 
 Créer un premier rapport Quarto reproductible à partir d'un tableau de données d'affaires.
 
+Chaque exercice produit un élément de la trace finale courte. L'objectif n'est pas de faire cinq productions séparées, mais de construire progressivement le mini-rapport Quarto de la semaine 02.
+
 ## Exercice 1 - Créer le projet et importer les données
 
 Fichier : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.
@@ -18,8 +20,14 @@ Fichier : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-suc
 library(tidyverse)
 library(janitor)
 
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
 ventes_operations <- readr::read_csv(
-  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv",
+  data_path,
   show_col_types = FALSE
 ) |>
   clean_names()
@@ -120,9 +128,9 @@ ventes_operations |>
 - vérifier les axes;
 - écrire un constat descriptif.
 
-## Livrable court
+## Trace finale courte
 
-Remettre un mini-rapport Quarto contenant :
+Produire un mini-rapport Quarto contenant :
 
 - une courte introduction;
 - le code d'importation;
@@ -140,10 +148,10 @@ Les solutions doivent rester cachées par défaut pour encourager une vraie tent
 ::: {.callout-tip collapse="true"}
 ### Solution
 
-TODO ajouter la solution de l'exercice ici.
+La solution détaillée sera ajoutée dans le fichier de solution hors rendu public après la séance.
 
 ```{r}
 #| eval: false
-# Code R de solution à compléter.
+# Les solutions publiques ne sont pas affichées dans cette page.
 ```
 :::

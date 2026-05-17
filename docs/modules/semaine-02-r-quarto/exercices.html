@@ -5058,7 +5058,7 @@ grid-template-columns: 1fr;
   <li><a href="#exercice-3---repérer-les-valeurs-manquantes" id="toc-exercice-3---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#exercice-3---repérer-les-valeurs-manquantes">Exercice 3 - Repérer les valeurs manquantes</a></li>
   <li><a href="#exercice-4---produire-un-tableau-descriptif" id="toc-exercice-4---produire-un-tableau-descriptif" class="nav-link" data-scroll-target="#exercice-4---produire-un-tableau-descriptif">Exercice 4 - Produire un tableau descriptif</a></li>
   <li><a href="#exercice-5---produire-un-graphique" id="toc-exercice-5---produire-un-graphique" class="nav-link" data-scroll-target="#exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</a></li>
-  <li><a href="#livrable-court" id="toc-livrable-court" class="nav-link" data-scroll-target="#livrable-court">Livrable court</a></li>
+  <li><a href="#trace-finale-courte" id="toc-trace-finale-courte" class="nav-link" data-scroll-target="#trace-finale-courte">Trace finale courte</a></li>
   <li><a href="#modèle-de-solution-cachée-à-utiliser" id="toc-modèle-de-solution-cachée-à-utiliser" class="nav-link" data-scroll-target="#modèle-de-solution-cachée-à-utiliser">Modèle de solution cachée à utiliser</a></li>
   </ul>
 </nav>
@@ -5088,6 +5088,7 @@ grid-template-columns: 1fr;
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Créer un premier rapport Quarto reproductible à partir d’un tableau de données d’affaires.</p>
+<p>Chaque exercice produit un élément de la trace finale courte. L’objectif n’est pas de faire cinq productions séparées, mais de construire progressivement le mini-rapport Quarto de la semaine 02.</p>
 </section>
 <section id="exercice-1---créer-le-projet-et-importer-les-données" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---créer-le-projet-et-importer-les-données">Exercice 1 - Créer le projet et importer les données</h2>
@@ -5096,13 +5097,19 @@ grid-template-columns: 1fr;
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ventes_operations <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;data/ventes_operations_quebec.csv&quot;</span>)) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/ventes_operations_quebec.csv&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes_operations)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ventes_operations <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  data_path,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes_operations)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>À faire :</p>
 <ul>
@@ -5196,9 +5203,9 @@ grid-template-columns: 1fr;
 <li>écrire un constat descriptif.</li>
 </ul>
 </section>
-<section id="livrable-court" class="level2">
-<h2 class="anchored" data-anchor-id="livrable-court">Livrable court</h2>
-<p>Remettre un mini-rapport Quarto contenant :</p>
+<section id="trace-finale-courte" class="level2">
+<h2 class="anchored" data-anchor-id="trace-finale-courte">Trace finale courte</h2>
+<p>Produire un mini-rapport Quarto contenant :</p>
 <ul>
 <li>une courte introduction;</li>
 <li>le code d’importation;</li>
@@ -5225,9 +5232,9 @@ grid-template-columns: 1fr;
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO ajouter la solution de l’exercice ici.</p>
+<p>La solution détaillée sera ajoutée dans le fichier de solution hors rendu public après la séance.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code R de solution à compléter.</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Les solutions publiques ne sont pas affichées dans cette page.</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>

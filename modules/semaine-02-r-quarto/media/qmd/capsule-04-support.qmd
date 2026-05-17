@@ -1,0 +1,164 @@
+---
+title: "Capsule 4 - Importer et inspecter un tableau"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup-capsule-04
+#| include: false
+
+library(tidyverse)
+library(janitor)
+
+data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
+  "data/ventes_operations_quebec.csv"
+} else if (file.exists("../../data/ventes_operations_quebec.csv")) {
+  "../../data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+  clean_names()
+```
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Importer un fichier CSV dans R.
+- Nettoyer les noms de variables.
+- Inspecter les dimensions et les types de colonnes.
+- Produire le code d'importation et une courte description du tableau.
+:::
+
+## Avant de calculer
+
+::: {.lead}
+La première question est : que contient le tableau?
+:::
+
+::: {.note-box}
+Importer un fichier n'est pas seulement le charger dans R. Il faut vérifier ce
+qui a été lu : nombre de lignes, colonnes, types et unité d'observation.
+:::
+
+## Importer le fichier
+
+```{r}
+#| label: capsule-04-importer
+#| eval: false
+
+library(tidyverse)
+library(janitor)
+
+ventes_operations <- readr::read_csv(
+  "data/ventes_operations_quebec.csv",
+  show_col_types = FALSE
+) |>
+  clean_names()
+```
+
+## Pourquoi `clean_names()`?
+
+::: {.lead}
+Des noms de variables réguliers rendent le code plus simple à écrire et à relire.
+:::
+
+::: {.keypoints}
+- noms en minuscules;
+- espaces remplacés par `_`;
+- accents et caractères spéciaux évités;
+- code plus stable dans les blocs suivants.
+:::
+
+## Inspecter avec `glimpse()`
+
+```{r}
+#| label: capsule-04-glimpse
+
+glimpse(ventes_operations)
+```
+
+::: {.note-box}
+`glimpse()` permet de voir rapidement les colonnes, les types de variables et
+quelques valeurs.
+:::
+
+## Dimensions du tableau
+
+```{r}
+#| label: capsule-04-dimensions
+
+dim(ventes_operations)
+```
+
+::: {.keypoints}
+- La première valeur est le nombre de lignes.
+- La deuxième valeur est le nombre de colonnes.
+- Ces deux informations doivent apparaître dans la trace finale.
+:::
+
+## Unité d'observation
+
+::: {.lead}
+Dans ce fichier, une ligne correspond à une observation mensuelle pour une
+succursale.
+:::
+
+::: {.note-box}
+Nommer l'unité d'observation évite de confondre une ligne avec une vente, un
+client ou une succursale complète.
+:::
+
+## Types de variables à repérer
+
+| Type | Exemples dans le tableau |
+|---|---|
+| Date ou période | `mois` |
+| Catégorie | `succursale`, `region`, `canal_principal` |
+| Numérique | `clients`, `panier_moyen`, `ventes`, `satisfaction` |
+| Indicateur | `campagne_locale` |
+
+## Activité 2.4
+
+::: {.callout-tip title="Importer et décrire le tableau"}
+Importez `ventes_operations_quebec.csv`, puis indiquez :
+
+- le code d'importation;
+- le nombre de lignes;
+- le nombre de colonnes;
+- ce que représente une ligne.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Le code d'importation doit être conservé dans le QMD.
+- `clean_names()` facilite le travail.
+- `glimpse()` aide à inspecter la structure.
+- L'unité d'observation doit être nommée avant les analyses.
+:::
