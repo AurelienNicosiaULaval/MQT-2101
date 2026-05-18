@@ -1,50 +1,180 @@
 ---
 title: "Évaluations"
+body-classes: page-evaluations
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<section class="eval-hero" aria-labelledby="eval-title">
+  <div class="eval-hero__content">
+    <h1 id="eval-title">Évaluations</h1>
+    <p>
+      Les évaluations combinent deux mini-rapports reproductibles en équipe et deux examens individuels
+      en personne. Les mini-rapports développent la pratique; les examens vérifient la maîtrise personnelle.
+    </p>
+    <div class="install-actions" aria-label="Accès rapides aux évaluations">
+      <a class="home-action home-action--primary" href="#evaluations-sommatives">Voir les évaluations</a>
+      <a class="home-action" href="../ressources/declaration-ia.html">Déclaration IA</a>
+      <a class="home-action" href="../calendrier.html">Calendrier</a>
+    </div>
+  </div>
+  <div class="eval-scoreboard" aria-label="Synthèse des pondérations">
+    <div>
+      <span class="eval-scoreboard__value">30 %</span>
+      <span class="eval-scoreboard__label">Mini-rapports</span>
+    </div>
+    <div>
+      <span class="eval-scoreboard__value">70 %</span>
+      <span class="eval-scoreboard__label">Examens</span>
+    </div>
+    <div>
+      <span class="eval-scoreboard__value">2</span>
+      <span class="eval-scoreboard__label">Questionnaires formatifs</span>
+    </div>
+  </div>
+</section>
 
-Regrouper les évaluations du cours et leurs consignes de préparation.
+<section class="eval-section" id="evaluations-sommatives" aria-labelledby="summative-title">
+  <div class="eval-section__header">
+    <h2 id="summative-title">Évaluations sommatives</h2>
+    <p>Chaque bloc mène vers une page de consignes plus détaillée.</p>
+  </div>
+  <div class="eval-assessment-board">
+    <article class="eval-card eval-card--report">
+      <div class="eval-card__topline">
+        <span>15 %</span>
+        <span>Équipe de 2 à 3</span>
+      </div>
+      <h3>Mini-rapport 1</h3>
+      <p>Analyse reproductible allant de la préparation des données à une première modélisation par régression.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Après la semaine de relâche</dd></div>
+        <div><dt>IA</dt><dd>Permise avec déclaration</dd></div>
+      </dl>
+      <a href="mini-rapport-1.html">Consignes du mini-rapport 1</a>
+    </article>
 
-## Évaluations prévues
+    <article class="eval-card eval-card--exam">
+      <div class="eval-card__topline">
+        <span>30 %</span>
+        <span>Individuel</span>
+      </div>
+      <h3>Examen intra</h3>
+      <p>Évaluation individuelle sur les données, l'exploration, la visualisation, la régression et l'interprétation.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Bloc régression</dd></div>
+        <div><dt>IA</dt><dd>Non permise</dd></div>
+      </dl>
+      <a href="examen-intra.html">Consignes de l'examen intra</a>
+    </article>
 
-| Évaluation | Type | Moment de référence | Pondération | IA |
-|---|---|---|---:|---|
-| [Mini-rapport 1](mini-rapport-1.qmd) | Équipe de 2 à 3 | Après la semaine de relâche | 15 % | Permise, déclarée |
-| [Examen intra](examen-intra.qmd) | Individuel, en personne | Bloc régression | 30 % | Non permise |
-| [Mini-rapport 2](mini-rapport-2.qmd) | Équipe de 2 à 3 | Après l'examen final, selon le calendrier officiel | 15 % | Permise, déclarée |
-| [Examen final](examen-final.qmd) | Individuel, en personne | Fin de session | 40 % | Non permise |
+    <article class="eval-card eval-card--report">
+      <div class="eval-card__topline">
+        <span>15 %</span>
+        <span>Équipe de 2 à 3</span>
+      </div>
+      <h3>Mini-rapport 2</h3>
+      <p>Analyse reproductible portant sur la prévision, les séries chronologiques ou une ouverture vers la classification.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Selon le calendrier officiel</dd></div>
+        <div><dt>IA</dt><dd>Permise avec déclaration</dd></div>
+      </dl>
+      <a href="mini-rapport-2.html">Consignes du mini-rapport 2</a>
+    </article>
 
-## Exercices formatifs
+    <article class="eval-card eval-card--exam">
+      <div class="eval-card__topline">
+        <span>40 %</span>
+        <span>Individuel</span>
+      </div>
+      <h3>Examen final</h3>
+      <p>Évaluation individuelle sur la prévision, les séries chronologiques, la validation, la classification et l'interprétation.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Fin de session</dd></div>
+        <div><dt>IA</dt><dd>Non permise</dd></div>
+      </dl>
+      <a href="examen-final.html">Consignes de l'examen final</a>
+    </article>
+  </div>
+</section>
 
-Les questionnaires sont conservés comme outils de pratique non évalués.
+<section class="eval-section eval-prep" aria-labelledby="prep-title">
+  <div>
+    <h2 id="prep-title">Pratique formative</h2>
+    <p>
+      Les questionnaires ne sont pas évalués. Ils servent à repérer les notions à consolider avant les examens.
+    </p>
+  </div>
+  <div class="eval-prep__links">
+    <a href="questionnaire-regression.html">
+      <span>Régression</span>
+      <p>Vérifier l'interprétation, les diagnostics et les sorties R avant l'intra.</p>
+    </a>
+    <a href="questionnaire-series-chronologiques.html">
+      <span>Séries chronologiques</span>
+      <p>Réviser tendance, saisonnalité, horizon et mesures d'erreur avant le final.</p>
+    </a>
+  </div>
+</section>
 
-| Exercice formatif | Rôle | IA |
-|---|---|---|
-| [Questionnaire formatif sur la régression](questionnaire-regression.qmd) | Vérifier la compréhension avant l'intra | Permise |
-| [Questionnaire formatif sur les séries chronologiques](questionnaire-series-chronologiques.qmd) | Vérifier la compréhension avant le final | Permise |
+<section class="eval-section" aria-labelledby="reports-title">
+  <div class="eval-section__header">
+    <h2 id="reports-title">Produire un mini-rapport solide</h2>
+    <p>La trace finale doit montrer une démarche compréhensible, reproductible et défendable.</p>
+  </div>
+  <ol class="eval-report-flow">
+    <li>
+      <span>01</span>
+      <h3>Choisir une question</h3>
+      <p>Définir une question d'analyse liée à un contexte d'affaires ou d'organisation.</p>
+    </li>
+    <li>
+      <span>02</span>
+      <h3>Valider les données</h3>
+      <p>Faire approuver le jeu de données avant de construire l'analyse.</p>
+    </li>
+    <li>
+      <span>03</span>
+      <h3>Analyser dans Quarto</h3>
+      <p>Présenter le code, les graphiques, les résultats et l'interprétation dans un document reproductible.</p>
+    </li>
+    <li>
+      <span>04</span>
+      <h3>Déclarer l'IA</h3>
+      <p>Documenter l'usage de l'IA lorsque l'aide influence le code, l'analyse, l'interprétation ou le texte.</p>
+    </li>
+  </ol>
+  <div class="eval-template-strip" aria-label="Gabarits des mini-rapports">
+    <a href="../ressources/gabarit-mini-rapport-1.html">Gabarit mini-rapport 1</a>
+    <a href="../ressources/gabarit-mini-rapport-2.html">Gabarit mini-rapport 2</a>
+  </div>
+</section>
 
-## Mini-rapports
-
-Les mini-rapports sont remis en équipe de 2 à 3 personnes. Chaque équipe choisit son jeu de données, mais ce choix doit être validé par l'enseignant avant l'analyse. La procédure de validation sera précisée plus tard.
-
-Chaque mini-rapport doit être remis avec :
-
-- le fichier source `.qmd`;
-- le rendu final, idéalement en HTML;
-- les fichiers de données nécessaires si le jeu de données n'est pas accessible publiquement;
-- une déclaration d'usage de l'IA lorsque l'IA a influencé le code, l'analyse, l'interprétation ou le texte.
-
-## Politique IA
-
-La page [IA et apprentissage](../ressources/ia.qmd) décrit les statuts d'utilisation de l'IA dans le cours.
-
-Résumé :
-
-- IA non permise aux examens individuels en personne;
-- IA permise, déclarée dans les mini-rapports;
-- IA permise dans les exercices, questionnaires formatifs et travaux personnels;
-- utilisation du [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) attendue pour les activités du cours.
+<section class="eval-section eval-ai" aria-labelledby="ai-title">
+  <div>
+    <h2 id="ai-title">Règles d'utilisation de l'IA</h2>
+    <p>
+      Les règles détaillées sont décrites dans la page
+      <a href="../ressources/ia.html">IA et apprentissage</a>. Pour les activités liées au cours,
+      utilisez le <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini" target="_blank" rel="noopener">GPT du cours</a>.
+    </p>
+  </div>
+  <div class="eval-ai__rules" aria-label="Résumé des règles IA">
+    <article>
+      <span>Examens</span>
+      <p>IA non permise pendant les examens individuels en personne.</p>
+    </article>
+    <article>
+      <span>Mini-rapports</span>
+      <p>IA permise, mais déclarée lorsque son usage influence le livrable.</p>
+    </article>
+    <article>
+      <span>Travail personnel</span>
+      <p>IA permise comme outil d'apprentissage, avec responsabilité de comprendre et vérifier.</p>
+    </article>
+  </div>
+</section>
+```

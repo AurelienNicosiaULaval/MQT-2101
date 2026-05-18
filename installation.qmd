@@ -1,41 +1,170 @@
 ---
 title: "Installation"
+body-classes: page-installation
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Logiciels requis
+```{=html}
+<section class="install-hero" aria-labelledby="install-title">
+  <div class="install-hero__content">
+    <h1 id="install-title">Installer l'environnement de travail</h1>
+    <p>
+      L'objectif est simple : ouvrir un projet, exécuter du code R, produire des graphiques
+      et rendre un document Quarto sans friction technique.
+    </p>
+    <div class="install-actions" aria-label="Accès rapides">
+      <a class="home-action home-action--primary" href="#verification">Vérifier l'installation</a>
+      <a class="home-action" href="ressources/guide-rstudio.html">Guide RStudio</a>
+      <a class="home-action" href="ressources/guide-quarto.html">Guide Quarto</a>
+    </div>
+  </div>
+  <div class="install-check-panel" aria-label="Parcours d'installation">
+    <div><span>01</span><p>Installer R</p></div>
+    <div><span>02</span><p>Choisir RStudio ou Positron</p></div>
+    <div><span>03</span><p>Installer Quarto</p></div>
+    <div><span>04</span><p>Installer Git</p></div>
+    <div><span>05</span><p>Vérifier les packages</p></div>
+  </div>
+</section>
 
-- R
-- RStudio ou Positron
-- Quarto
-- Git
+<section class="install-section" aria-labelledby="tools-title">
+  <div class="install-section__header">
+    <h2 id="tools-title">Les outils à avoir sur son ordinateur</h2>
+    <p>Installez les logiciels dans cet ordre. Les liens pointent vers les pages officielles.</p>
+  </div>
+  <div class="install-tool-grid">
+    <article class="install-tool">
+      <span class="install-tool__mark">R</span>
+      <h3>R</h3>
+      <p>Le moteur statistique utilisé pour importer, transformer, visualiser et modéliser les données.</p>
+      <a href="https://cran.r-project.org/" target="_blank" rel="noopener">Télécharger R</a>
+    </article>
+    <article class="install-tool">
+      <span class="install-tool__mark">IDE</span>
+      <h3>RStudio ou Positron</h3>
+      <p>L'interface de travail pour écrire du code, gérer les fichiers et exécuter les analyses.</p>
+      <div class="install-tool__links">
+        <a href="https://posit.co/downloads/" target="_blank" rel="noopener">RStudio</a>
+        <a href="https://positron.posit.co/download.html" target="_blank" rel="noopener">Positron</a>
+      </div>
+    </article>
+    <article class="install-tool">
+      <span class="install-tool__mark">Q</span>
+      <h3>Quarto</h3>
+      <p>Le système de rédaction reproductible utilisé pour combiner texte, code, tableaux et graphiques.</p>
+      <a href="https://quarto.org/docs/get-started/" target="_blank" rel="noopener">Installer Quarto</a>
+    </article>
+    <article class="install-tool">
+      <span class="install-tool__mark">Git</span>
+      <h3>Git</h3>
+      <p>L'outil de suivi des versions utilisé pour travailler proprement avec les fichiers du cours.</p>
+      <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Télécharger Git</a>
+    </article>
+  </div>
+</section>
 
-TODO: Ajouter les liens institutionnels et les consignes propres aux laboratoires de la FSA.
+<section class="install-section install-runway" aria-labelledby="runway-title">
+  <div class="install-section__header">
+    <h2 id="runway-title">Ordre recommandé</h2>
+    <p>Suivez la séquence ci-dessous avant le premier atelier. Elle évite la plupart des problèmes classiques.</p>
+  </div>
+  <ol class="install-steps">
+    <li>
+      <span>01</span>
+      <div>
+        <h3>Installer R en premier</h3>
+        <p>R doit être installé avant l'environnement de développement pour être détecté correctement.</p>
+      </div>
+    </li>
+    <li>
+      <span>02</span>
+      <div>
+        <h3>Installer RStudio ou Positron</h3>
+        <p>Un seul des deux suffit. RStudio est le choix le plus classique; Positron est une option moderne compatible avec R.</p>
+      </div>
+    </li>
+    <li>
+      <span>03</span>
+      <div>
+        <h3>Installer Quarto</h3>
+        <p>Après l'installation, redémarrez l'environnement de développement pour que Quarto soit reconnu.</p>
+      </div>
+    </li>
+    <li>
+      <span>04</span>
+      <div>
+        <h3>Installer Git</h3>
+        <p>Git facilite le suivi des changements et l'utilisation des projets reproductibles.</p>
+      </div>
+    </li>
+    <li>
+      <span>05</span>
+      <div>
+        <h3>Installer les packages du cours</h3>
+        <p>À partir de la racine du projet, exécutez le script d'installation fourni avec le site.</p>
+      </div>
+    </li>
+  </ol>
+</section>
 
-## Packages R
+<section class="install-section install-code-section" aria-labelledby="packages-title">
+  <div>
+    <h2 id="packages-title">Packages R du cours</h2>
+    <p>
+      Le dépôt contient un script qui vérifie les packages nécessaires et installe ceux qui manquent.
+      Lancez-le depuis la racine du projet.
+    </p>
+  </div>
+  <div class="install-code-card" aria-label="Commande d'installation des packages R">
+    <span>Console R</span>
+    <pre><code>source("scripts/00_install_packages.R")</code></pre>
+  </div>
+</section>
 
-Les packages du cours peuvent être installés avec le script suivant :
-
-```r
-source("scripts/00_install_packages.R")
-```
-
-## Vérification rapide
-
-```{r}
-#| eval: false
-library(tidyverse)
+<section class="install-section" id="verification" aria-labelledby="verification-title">
+  <div class="install-section__header">
+    <h2 id="verification-title">Vérification rapide</h2>
+    <p>Si ce code s'exécute et produit un graphique, l'environnement de base est prêt pour le cours.</p>
+  </div>
+  <div class="install-code-card install-code-card--wide" aria-label="Code R de vérification">
+    <span>Test minimal</span>
+    <pre><code>library(tidyverse)
 
 tibble(
   mois = c("janvier", "février", "mars"),
   ventes = c(125000, 131000, 128500)
-) |>
+) |&gt;
   ggplot(aes(mois, ventes, group = 1)) +
   geom_line() +
-  geom_point()
+  geom_point()</code></pre>
+  </div>
+</section>
+
+<section class="install-section install-troubleshooting" aria-labelledby="troubleshooting-title">
+  <div>
+    <h2 id="troubleshooting-title">Dépannage express</h2>
+    <p>Les messages d'erreur d'installation sont souvent causés par l'ordre d'installation, le dossier de travail ou un redémarrage oublié.</p>
+  </div>
+  <div class="install-troubleshooting__list">
+    <article>
+      <h3>R n'est pas détecté</h3>
+      <p>Installez R, puis redémarrez RStudio ou Positron. Si le problème persiste, vérifiez que l'application utilise bien la version de R installée.</p>
+    </article>
+    <article>
+      <h3>Quarto n'est pas trouvé</h3>
+      <p>Redémarrez l'environnement de développement et exécutez <code>quarto check</code> dans un terminal.</p>
+    </article>
+    <article>
+      <h3>Le script est introuvable</h3>
+      <p>Ouvrez le projet à sa racine avant d'exécuter <code>source("scripts/00_install_packages.R")</code>.</p>
+    </article>
+    <article>
+      <h3>Un package ne compile pas sous Windows</h3>
+      <p>Si R demande des outils de compilation, consultez la page officielle <a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank" rel="noopener">Rtools</a>.</p>
+    </article>
+  </div>
+</section>
 ```
-
-TODO: Ajouter une section de dépannage pour l'installation de Quarto, Rtools et les problèmes de chemins d'accès.
-

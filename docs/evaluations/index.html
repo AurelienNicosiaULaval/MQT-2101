@@ -4014,6 +4014,985 @@ display: block;
 width: min(180px, 42vw);
 height: auto;
 }
+body.page-home main.content > header.quarto-title-block,
+body.page-plan main.content > header.quarto-title-block,
+body.page-calendar main.content > header.quarto-title-block,
+body.page-installation main.content > header.quarto-title-block,
+body.page-evaluations main.content > header.quarto-title-block {
+display: none;
+}
+.home-hero {
+display: grid;
+grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+gap: clamp(1.5rem, 4vw, 3rem);
+align-items: center;
+margin: 1rem 0 2rem;
+padding: clamp(1.25rem, 4vw, 2.8rem) 0 clamp(1.3rem, 4vw, 2.6rem);
+border-bottom: 1px solid #d8e4ea;
+}
+.home-label {
+margin: 0 0 0.45rem;
+color: #7a1c24;
+font-size: 0.82rem;
+font-weight: 800;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.home-hero h2,
+.plan-hero h2 {
+max-width: 820px;
+margin: 0 0 0.9rem;
+color: #123244;
+font-size: clamp(2.05rem, 4.4vw, 4rem);
+line-height: 1.04;
+}
+.home-hero__lead,
+.plan-hero p {
+max-width: 780px;
+margin: 0;
+color: #40515c;
+font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+line-height: 1.62;
+}
+.home-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 0.65rem;
+margin-top: 1.45rem;
+}
+.home-action {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-height: 2.75rem;
+padding: 0.58rem 0.95rem;
+border: 1px solid #c8d8e0;
+border-radius: 7px;
+background: #ffffff;
+color: #0b4f6c;
+font-weight: 800;
+line-height: 1.15;
+text-decoration: none;
+}
+.home-action:hover,
+.home-action:focus-visible {
+border-color: #0b4f6c;
+color: #083d53;
+text-decoration: none;
+}
+.home-action--primary {
+border-color: #0b4f6c;
+background: #0b4f6c;
+color: #ffffff;
+}
+.home-action--primary:hover,
+.home-action--primary:focus-visible {
+background: #083d53;
+color: #ffffff;
+}
+.home-hero__visual {
+position: relative;
+min-height: 260px;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #f5f9fb;
+overflow: hidden;
+}
+.home-hero__visual img {
+position: absolute;
+left: 50%;
+top: 50%;
+z-index: 2;
+width: min(210px, 58%);
+height: auto;
+transform: translate(-50%, -50%);
+}
+.home-hero__mini-grid {
+position: absolute;
+inset: 1rem;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 0.65rem;
+opacity: 0.78;
+}
+.home-hero__mini-grid span {
+min-height: 3.2rem;
+border: 1px solid #d5e1e8;
+border-radius: 7px;
+background: #ffffff;
+}
+.home-hero__mini-grid span:nth-child(3n) {
+border-color: #e3ccd0;
+background: #fff8f8;
+}
+.home-snapshot {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 0.8rem;
+margin: 0 0 2.3rem;
+}
+.home-snapshot > div,
+.plan-hero__panel > div {
+min-width: 0;
+padding: 0.95rem 1rem;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #ffffff;
+}
+.home-snapshot__label,
+.plan-hero__label {
+display: block;
+margin-bottom: 0.28rem;
+color: #657684;
+font-size: 0.78rem;
+font-weight: 800;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.home-snapshot__value,
+.plan-hero__value {
+display: block;
+color: #123244;
+font-size: 1.02rem;
+font-weight: 800;
+line-height: 1.25;
+}
+.home-section,
+.plan-section {
+margin: 2.4rem 0;
+}
+.home-section__header,
+.plan-section__header {
+max-width: 850px;
+margin-bottom: 1.05rem;
+}
+.home-section h2,
+.plan-section h2 {
+margin: 0 0 0.45rem;
+color: #123244;
+font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+line-height: 1.12;
+}
+.home-section__header p,
+.plan-section__header p,
+.home-two-column p,
+.plan-main-objective p,
+.plan-note,
+.plan-ai p {
+color: #40515c;
+line-height: 1.58;
+}
+.home-link-grid {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 1rem;
+}
+.home-link-card {
+display: grid;
+grid-template-rows: auto auto 1fr;
+gap: 0.45rem;
+min-height: 178px;
+padding: 1rem;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #ffffff;
+color: inherit;
+text-decoration: none;
+box-shadow: 0 10px 26px rgba(18, 50, 68, 0.05);
+}
+.home-link-card:hover,
+.home-link-card:focus-visible {
+border-color: #0b4f6c;
+color: inherit;
+text-decoration: none;
+transform: translateY(-1px);
+}
+.home-link-card__icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 2.35rem;
+height: 2.35rem;
+border-radius: 7px;
+background: #eef6f9;
+color: #0b4f6c;
+font-size: 0.78rem;
+font-weight: 900;
+line-height: 1;
+}
+.home-link-card__title {
+color: #123244;
+font-size: 1.05rem;
+font-weight: 800;
+line-height: 1.22;
+}
+.home-link-card__text {
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.42;
+}
+.home-path {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 0;
+border-top: 1px solid #d8e4ea;
+border-bottom: 1px solid #d8e4ea;
+}
+.home-path__step {
+min-width: 0;
+padding: 1.1rem 1rem;
+border-right: 1px solid #d8e4ea;
+}
+.home-path__step:last-child {
+border-right: 0;
+}
+.home-path__number {
+display: block;
+margin-bottom: 0.75rem;
+color: #b5121b;
+font-size: 0.86rem;
+font-weight: 900;
+}
+.home-path__step h3 {
+margin: 0 0 0.42rem;
+color: #123244;
+font-size: 1.1rem;
+line-height: 1.22;
+}
+.home-path__step p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.home-two-column,
+.plan-ai {
+display: grid;
+grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
+gap: clamp(1.2rem, 3vw, 2.2rem);
+align-items: start;
+padding-top: 1.4rem;
+border-top: 1px solid #d8e4ea;
+}
+.home-output-list,
+.ai-rule-list {
+display: grid;
+gap: 0.75rem;
+}
+.home-output-list > div,
+.ai-rule-list > div {
+padding: 0.9rem 1rem;
+border-left: 4px solid #0b4f6c;
+background: #f6fafc;
+}
+.home-output-list span,
+.ai-rule-list span {
+display: block;
+margin-bottom: 0.2rem;
+color: #123244;
+font-weight: 800;
+}
+.home-output-list p,
+.ai-rule-list p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.42;
+}
+.plan-hero {
+display: grid;
+grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+gap: clamp(1.4rem, 4vw, 3rem);
+align-items: start;
+margin: 1rem 0 2.2rem;
+padding: clamp(1.25rem, 4vw, 2.8rem) 0 clamp(1.2rem, 3vw, 2.2rem);
+border-bottom: 1px solid #d8e4ea;
+}
+.plan-hero__panel {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 0.75rem;
+}
+.plan-theme-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 0.7rem;
+}
+.plan-theme-grid div {
+min-height: 3.25rem;
+padding: 0.85rem 1rem;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #ffffff;
+color: #123244;
+font-weight: 800;
+line-height: 1.25;
+}
+.plan-objectives {
+display: grid;
+grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1.15fr);
+gap: clamp(1.2rem, 3vw, 2rem);
+align-items: start;
+}
+.plan-main-objective {
+padding: 1.15rem 1.2rem;
+border-left: 5px solid #b5121b;
+background: #fff8f8;
+}
+.plan-objective-list {
+display: grid;
+gap: 0.65rem;
+}
+.plan-objective-list div {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.75rem;
+align-items: start;
+min-height: 3rem;
+padding: 0.72rem 0;
+border-bottom: 1px solid #d8e4ea;
+color: #123244;
+font-weight: 700;
+line-height: 1.36;
+}
+.plan-objective-list span {
+color: #0b4f6c;
+font-weight: 900;
+}
+.assessment-grid {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 1rem;
+}
+.assessment-card {
+min-height: 180px;
+padding: 1rem;
+border: 1px solid #d8e4ea;
+border-top: 5px solid #0b4f6c;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 10px 26px rgba(18, 50, 68, 0.05);
+}
+.assessment-card--exam {
+border-top-color: #b5121b;
+}
+.assessment-card__weight {
+display: block;
+margin-bottom: 0.85rem;
+color: #123244;
+font-size: 2rem;
+font-weight: 900;
+line-height: 1;
+}
+.assessment-card h3 {
+margin: 0 0 0.45rem;
+color: #123244;
+font-size: 1.1rem;
+line-height: 1.22;
+}
+.assessment-card p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.44;
+}
+.plan-note {
+margin: 1rem 0 0;
+}
+.calendar-flow {
+--calendar-border: #d8e4ea;
+margin: 1rem 0 3rem;
+}
+.calendar-flow__header {
+margin-bottom: clamp(1.1rem, 3vw, 2rem);
+padding-bottom: 1rem;
+border-bottom: 1px solid var(--calendar-border);
+}
+.calendar-flow__header h1 {
+max-width: 760px;
+margin: 0;
+color: #123244;
+font-size: clamp(2.25rem, 5vw, 4.8rem);
+font-weight: 900;
+line-height: 0.98;
+}
+.calendar-blocks {
+display: grid;
+gap: 0;
+}
+.calendar-block {
+--block-color: #0b4f6c;
+display: grid;
+grid-template-columns: minmax(170px, 0.34fr) minmax(0, 1fr);
+gap: clamp(1rem, 3vw, 2.25rem);
+padding: clamp(1.25rem, 3vw, 2rem) 0;
+border-bottom: 1px solid var(--calendar-border);
+}
+.calendar-block:first-child {
+border-top: 1px solid var(--calendar-border);
+}
+.calendar-block--accent {
+--block-color: #b5121b;
+}
+.calendar-block--cool {
+--block-color: #2a9d8f;
+}
+.calendar-block--final {
+--block-color: #123244;
+}
+.calendar-block__header {
+position: sticky;
+top: 5.3rem;
+align-self: start;
+padding-left: 1rem;
+border-left: 5px solid var(--block-color);
+}
+.calendar-block__header span {
+display: block;
+margin-bottom: 0.38rem;
+color: var(--block-color);
+font-size: 0.82rem;
+font-weight: 900;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.calendar-block__header h2 {
+margin: 0;
+color: #123244;
+font-size: clamp(1.35rem, 2.5vw, 2rem);
+font-weight: 900;
+line-height: 1.08;
+}
+.calendar-weeks {
+display: grid;
+gap: 0;
+margin: 0;
+padding: 0;
+list-style: none;
+}
+.calendar-weeks li {
+display: grid;
+grid-template-columns: 3.2rem minmax(0, 1fr);
+gap: 0.18rem 1rem;
+align-items: start;
+min-height: 4.4rem;
+padding: 0.95rem 0;
+border-bottom: 1px solid #e5eef2;
+}
+.calendar-weeks li:last-child {
+border-bottom: 0;
+}
+.calendar-week__number {
+grid-row: 1 / span 4;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 2.65rem;
+height: 2.65rem;
+border: 1px solid color-mix(in srgb, var(--block-color) 34%, #ffffff);
+border-radius: 8px;
+background: color-mix(in srgb, var(--block-color) 9%, #ffffff);
+color: var(--block-color);
+font-size: 1rem;
+font-weight: 900;
+line-height: 1;
+}
+.calendar-weeks a,
+.calendar-week__plain {
+grid-column: 2;
+width: fit-content;
+color: #123244;
+font-size: 1.05rem;
+font-weight: 800;
+line-height: 1.25;
+text-decoration: none;
+}
+.calendar-weeks a + a {
+margin-top: 0.18rem;
+color: #0b4f6c;
+font-size: 0.93rem;
+font-weight: 800;
+}
+.calendar-weeks a:hover,
+.calendar-weeks a:focus-visible {
+color: var(--block-color);
+text-decoration: underline;
+text-underline-offset: 0.18rem;
+}
+.install-hero,
+.eval-hero {
+display: grid;
+grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+gap: clamp(1.4rem, 4vw, 3rem);
+align-items: stretch;
+margin: 1rem 0 2.25rem;
+padding: clamp(1.35rem, 4vw, 2.9rem) 0 clamp(1.25rem, 3vw, 2.25rem);
+border-bottom: 1px solid #d8e4ea;
+}
+.install-hero h1,
+.eval-hero h1 {
+max-width: 860px;
+margin: 0 0 0.95rem;
+color: #123244;
+font-size: clamp(2.2rem, 5vw, 4.55rem);
+font-weight: 900;
+line-height: 0.98;
+}
+.install-hero__content p,
+.eval-hero__content p {
+max-width: 780px;
+margin: 0;
+color: #40515c;
+font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+line-height: 1.62;
+}
+.install-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 0.65rem;
+margin-top: 1.35rem;
+}
+.install-check-panel,
+.eval-scoreboard {
+display: grid;
+align-self: stretch;
+min-width: 0;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #f7fbfd;
+box-shadow: 0 14px 34px rgba(18, 50, 68, 0.06);
+overflow: hidden;
+}
+.install-check-panel > div {
+display: grid;
+grid-template-columns: auto minmax(0, 1fr);
+gap: 0.8rem;
+align-items: center;
+min-height: 4rem;
+padding: 0.85rem 1rem;
+border-bottom: 1px solid #d8e4ea;
+}
+.install-check-panel > div:last-child {
+border-bottom: 0;
+}
+.install-check-panel span {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 2.2rem;
+height: 2.2rem;
+border-radius: 8px;
+background: #0b4f6c;
+color: #ffffff;
+font-size: 0.86rem;
+font-weight: 900;
+}
+.install-check-panel p {
+margin: 0;
+color: #123244;
+font-weight: 800;
+line-height: 1.28;
+}
+.install-section,
+.eval-section {
+margin: 2.5rem 0;
+scroll-margin-top: 6rem;
+}
+.install-section__header,
+.eval-section__header {
+max-width: 850px;
+margin-bottom: 1.05rem;
+}
+.install-section h2,
+.eval-section h2 {
+margin: 0 0 0.45rem;
+color: #123244;
+font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+font-weight: 900;
+line-height: 1.12;
+}
+.install-section__header p,
+.eval-section__header p,
+.install-code-section p,
+.install-troubleshooting > div > p,
+.eval-prep > div > p,
+.eval-ai > div > p {
+color: #40515c;
+line-height: 1.58;
+}
+.install-tool-grid {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 1rem;
+}
+.install-tool {
+display: grid;
+grid-template-rows: auto auto 1fr auto;
+gap: 0.55rem;
+min-height: 242px;
+min-width: 0;
+padding: 1rem;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 10px 26px rgba(18, 50, 68, 0.05);
+}
+.install-tool__mark {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 2.55rem;
+height: 2.55rem;
+border-radius: 8px;
+background: #eef6f9;
+color: #0b4f6c;
+font-size: 0.78rem;
+font-weight: 900;
+line-height: 1;
+}
+.install-tool:nth-child(2) .install-tool__mark {
+background: #fff8f8;
+color: #b5121b;
+}
+.install-tool:nth-child(3) .install-tool__mark {
+background: #f3faf6;
+color: #2f7d5c;
+}
+.install-tool h3,
+.eval-card h3,
+.eval-report-flow h3,
+.install-troubleshooting h3 {
+margin: 0;
+color: #123244;
+font-size: 1.08rem;
+font-weight: 900;
+line-height: 1.22;
+}
+.install-tool p,
+.eval-card p,
+.eval-report-flow p,
+.install-troubleshooting p,
+.eval-prep__links p,
+.eval-ai__rules p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.install-tool a,
+.install-tool__links a,
+.eval-card > a,
+.eval-template-strip a,
+.eval-prep__links a {
+color: #0b5cad;
+font-weight: 800;
+text-decoration-thickness: 0.08em;
+text-underline-offset: 0.18em;
+}
+.install-tool__links {
+display: flex;
+flex-wrap: wrap;
+gap: 0.55rem;
+}
+.install-runway {
+padding-top: 1.35rem;
+border-top: 1px solid #d8e4ea;
+}
+.install-steps {
+display: grid;
+gap: 0;
+margin: 0;
+padding: 0;
+list-style: none;
+border-top: 1px solid #d8e4ea;
+}
+.install-steps li {
+display: grid;
+grid-template-columns: 3.2rem minmax(0, 1fr);
+gap: 1rem;
+align-items: start;
+padding: 1rem 0;
+border-bottom: 1px solid #d8e4ea;
+}
+.install-steps span,
+.eval-report-flow span {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 2.55rem;
+height: 2.55rem;
+border: 1px solid #cfe0e8;
+border-radius: 8px;
+background: #eef6f9;
+color: #0b4f6c;
+font-weight: 900;
+line-height: 1;
+}
+.install-steps h3 {
+margin: 0 0 0.25rem;
+color: #123244;
+font-size: 1.05rem;
+font-weight: 900;
+line-height: 1.25;
+}
+.install-steps p {
+margin: 0;
+color: #40515c;
+line-height: 1.48;
+}
+.install-code-section,
+.install-troubleshooting,
+.eval-prep,
+.eval-ai {
+display: grid;
+grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+gap: clamp(1.2rem, 3vw, 2.2rem);
+align-items: start;
+padding-top: 1.35rem;
+border-top: 1px solid #d8e4ea;
+}
+.install-code-section > *,
+.install-troubleshooting > *,
+.eval-prep > *,
+.eval-ai > * {
+min-width: 0;
+}
+.install-code-card {
+min-width: 0;
+border: 1px solid #1f3f52;
+border-radius: 8px;
+background: #123244;
+color: #ffffff;
+box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+overflow: hidden;
+}
+.install-code-card span {
+display: block;
+padding: 0.65rem 0.85rem;
+border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+color: #d9edf5;
+font-size: 0.78rem;
+font-weight: 900;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.install-code-card pre {
+margin: 0;
+padding: 1rem;
+background: transparent;
+color: #ffffff;
+white-space: pre-wrap;
+}
+.install-code-card code {
+color: #ffffff;
+font-size: 0.92rem;
+}
+.install-code-card--wide {
+max-width: 880px;
+}
+.install-troubleshooting__list {
+display: grid;
+gap: 0.75rem;
+}
+.install-troubleshooting article {
+min-width: 0;
+padding: 0.9rem 1rem;
+border-left: 4px solid #0b4f6c;
+background: #f6fafc;
+}
+.install-troubleshooting article:nth-child(2) {
+border-left-color: #2f7d5c;
+}
+.install-troubleshooting article:nth-child(3) {
+border-left-color: #b5121b;
+}
+.install-troubleshooting h3 {
+margin-bottom: 0.25rem;
+font-size: 1rem;
+}
+.eval-scoreboard {
+grid-template-columns: 1fr;
+}
+.eval-scoreboard > div {
+min-width: 0;
+padding: 1rem 1.05rem;
+border-bottom: 1px solid #d8e4ea;
+}
+.eval-scoreboard > div:last-child {
+border-bottom: 0;
+}
+.eval-scoreboard__value {
+display: block;
+margin-bottom: 0.22rem;
+color: #123244;
+font-size: clamp(2rem, 4vw, 3rem);
+font-weight: 900;
+line-height: 1;
+}
+.eval-scoreboard__label {
+display: block;
+color: #657684;
+font-size: 0.82rem;
+font-weight: 900;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.eval-assessment-board {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 1rem;
+}
+.eval-card {
+display: grid;
+grid-template-rows: auto auto 1fr auto auto;
+gap: 0.75rem;
+min-width: 0;
+min-height: 314px;
+padding: 1rem;
+border: 1px solid #d8e4ea;
+border-top: 5px solid #0b4f6c;
+border-radius: 8px;
+background: #ffffff;
+box-shadow: 0 10px 26px rgba(18, 50, 68, 0.05);
+}
+.eval-card--exam {
+border-top-color: #b5121b;
+}
+.eval-card__topline {
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+align-items: center;
+justify-content: space-between;
+}
+.eval-card__topline span:first-child {
+color: #123244;
+font-size: 2.1rem;
+font-weight: 900;
+line-height: 1;
+}
+.eval-card__topline span:last-child {
+color: #657684;
+font-size: 0.78rem;
+font-weight: 900;
+letter-spacing: 0;
+text-transform: uppercase;
+}
+.eval-card dl {
+display: grid;
+gap: 0.45rem;
+margin: 0;
+padding-top: 0.7rem;
+border-top: 1px solid #e5eef2;
+}
+.eval-card dl div {
+display: grid;
+gap: 0.15rem;
+}
+.eval-card dt {
+color: #657684;
+font-size: 0.76rem;
+font-weight: 900;
+letter-spacing: 0;
+line-height: 1.2;
+text-transform: uppercase;
+}
+.eval-card dd {
+margin: 0;
+color: #123244;
+font-weight: 800;
+line-height: 1.28;
+}
+.eval-prep__links {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 0.75rem;
+}
+.eval-prep__links a {
+display: grid;
+gap: 0.35rem;
+min-width: 0;
+min-height: 142px;
+padding: 1rem;
+border: 1px solid #d8e4ea;
+border-radius: 8px;
+background: #ffffff;
+color: inherit;
+text-decoration: none;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.04);
+}
+.eval-prep__links a:hover,
+.eval-prep__links a:focus-visible {
+border-color: #0b4f6c;
+color: inherit;
+text-decoration: none;
+}
+.eval-prep__links span,
+.eval-ai__rules span {
+color: #123244;
+font-weight: 900;
+line-height: 1.2;
+}
+.eval-report-flow {
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 0;
+margin: 0;
+padding: 0;
+list-style: none;
+border-top: 1px solid #d8e4ea;
+border-bottom: 1px solid #d8e4ea;
+}
+.eval-report-flow li {
+min-width: 0;
+padding: 1rem;
+border-right: 1px solid #d8e4ea;
+}
+.eval-report-flow li:last-child {
+border-right: 0;
+}
+.eval-report-flow h3 {
+margin: 0.8rem 0 0.35rem;
+}
+.eval-template-strip {
+display: flex;
+flex-wrap: wrap;
+gap: 0.65rem;
+margin-top: 1rem;
+}
+.eval-template-strip a {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-height: 2.55rem;
+padding: 0.45rem 0.8rem;
+border: 1px solid #c8d8e0;
+border-radius: 7px;
+background: #ffffff;
+color: #0b4f6c;
+text-decoration: none;
+}
+.eval-template-strip a:hover,
+.eval-template-strip a:focus-visible {
+border-color: #0b4f6c;
+color: #083d53;
+}
+.eval-ai__rules {
+display: grid;
+gap: 0.75rem;
+}
+.eval-ai__rules article {
+min-width: 0;
+padding: 0.9rem 1rem;
+border-left: 4px solid #0b4f6c;
+background: #f6fafc;
+}
+.eval-ai__rules article:nth-child(2) {
+border-left-color: #2f7d5c;
+}
+.eval-ai__rules article:nth-child(3) {
+border-left-color: #b5121b;
+}
 .learning-hero,
 .hero-learning {
 margin: 1rem 0 1.75rem;
@@ -4876,8 +5855,36 @@ transform: translateY(0);
 .path-grid,
 .phase-grid,
 .resource-grid,
-.learning-path {
+.learning-path,
+.home-link-grid,
+.home-path,
+.assessment-grid,
+.install-tool-grid,
+.eval-report-flow {
 grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.home-hero,
+.plan-hero,
+.home-two-column,
+.plan-objectives,
+.plan-ai,
+.calendar-block,
+.install-hero,
+.eval-hero,
+.install-code-section,
+.install-troubleshooting,
+.eval-prep,
+.eval-ai {
+grid-template-columns: minmax(0, 1fr);
+}
+.home-hero__visual {
+min-height: 220px;
+}
+.eval-report-flow li:nth-child(2n) {
+border-right: 0;
+}
+.calendar-block__header {
+position: static;
 }
 .interactive-path .path-card[open] {
 grid-column: span 2;
@@ -4909,9 +5916,94 @@ font-size: 1.55rem;
 .phase-grid,
 .resource-grid,
 .learning-path,
+.home-snapshot,
+.home-link-grid,
+.home-path,
+.plan-hero__panel,
+.plan-theme-grid,
+.assessment-grid,
+.install-tool-grid,
+.eval-assessment-board,
+.eval-prep__links,
+.eval-report-flow,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
+}
+.home-hero,
+.install-hero,
+.eval-hero {
+gap: 1.15rem;
+margin-top: 0.25rem;
+}
+.calendar-flow {
+margin-top: 0.2rem;
+}
+.calendar-flow__header h1 {
+font-size: 2.35rem;
+}
+.calendar-block {
+gap: 0.85rem;
+padding: 1.2rem 0;
+}
+.calendar-weeks li {
+grid-template-columns: 2.75rem minmax(0, 1fr);
+min-height: 3.8rem;
+padding: 0.8rem 0;
+}
+.calendar-week__number {
+width: 2.35rem;
+height: 2.35rem;
+}
+.calendar-weeks a,
+.calendar-week__plain {
+font-size: 1rem;
+}
+.home-hero h2,
+.plan-hero h2,
+.install-hero h1,
+.eval-hero h1 {
+font-size: 2rem;
+line-height: 1.08;
+}
+.home-hero__visual {
+min-height: 190px;
+}
+.home-hero__visual img {
+width: min(150px, 52%);
+}
+.home-hero__mini-grid {
+inset: 0.7rem;
+gap: 0.45rem;
+}
+.home-path {
+border-bottom: 0;
+}
+.home-path__step {
+border-right: 0;
+border-bottom: 1px solid #d8e4ea;
+padding-inline: 0;
+}
+.home-link-card,
+.assessment-card,
+.install-tool,
+.eval-card,
+.eval-prep__links a {
+min-height: auto;
+}
+.install-check-panel > div {
+min-height: 3.5rem;
+}
+.install-steps li {
+grid-template-columns: 2.75rem minmax(0, 1fr);
+}
+.eval-report-flow {
+border-bottom: 0;
+}
+.eval-report-flow li {
+border-right: 0;
+border-bottom: 1px solid #d8e4ea;
+padding-inline: 0;
 }
 .interactive-path .path-card[open] {
 grid-column: span 1;
@@ -4932,13 +6024,14 @@ grid-template-columns: 1fr;
 .course-gpt-widget {
 right: 0.9rem;
 bottom: 0.9rem;
+justify-content: center;
+width: 2.95rem;
 min-height: 2.85rem;
 padding: 0.5rem 0.68rem;
 }
-.course-gpt-widget__label {
-max-width: 7.8rem;
-overflow: hidden;
-text-overflow: ellipsis;
+.course-gpt-widget__label,
+.course-gpt-widget__hint {
+display: none;
 }
 }
 @media print {
@@ -4949,7 +6042,7 @@ display: none;
 </style>
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed page-evaluations fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -5135,19 +6228,7 @@ display: none;
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#évaluations-prévues" id="toc-évaluations-prévues" class="nav-link" data-scroll-target="#évaluations-prévues">Évaluations prévues</a></li>
-  <li><a href="#exercices-formatifs" id="toc-exercices-formatifs" class="nav-link" data-scroll-target="#exercices-formatifs">Exercices formatifs</a></li>
-  <li><a href="#mini-rapports" id="toc-mini-rapports" class="nav-link" data-scroll-target="#mini-rapports">Mini-rapports</a></li>
-  <li><a href="#politique-ia" id="toc-politique-ia" class="nav-link" data-scroll-target="#politique-ia">Politique IA</a></li>
-  </ul>
-</nav>
-    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -5170,103 +6251,177 @@ display: none;
 </header>
 
 
-<section id="objectif" class="level2">
-<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Regrouper les évaluations du cours et leurs consignes de préparation.</p>
+<section class="eval-hero" aria-labelledby="eval-title">
+  <div class="eval-hero__content">
+    <h1 id="eval-title">Évaluations</h1>
+    <p>
+      Les évaluations combinent deux mini-rapports reproductibles en équipe et deux examens individuels
+      en personne. Les mini-rapports développent la pratique; les examens vérifient la maîtrise personnelle.
+    </p>
+    <div class="install-actions" aria-label="Accès rapides aux évaluations">
+      <a class="home-action home-action--primary" href="#evaluations-sommatives">Voir les évaluations</a>
+      <a class="home-action" href="../ressources/declaration-ia.html">Déclaration IA</a>
+      <a class="home-action" href="../calendrier.html">Calendrier</a>
+    </div>
+  </div>
+  <div class="eval-scoreboard" aria-label="Synthèse des pondérations">
+    <div>
+      <span class="eval-scoreboard__value">30 %</span>
+      <span class="eval-scoreboard__label">Mini-rapports</span>
+    </div>
+    <div>
+      <span class="eval-scoreboard__value">70 %</span>
+      <span class="eval-scoreboard__label">Examens</span>
+    </div>
+    <div>
+      <span class="eval-scoreboard__value">2</span>
+      <span class="eval-scoreboard__label">Questionnaires formatifs</span>
+    </div>
+  </div>
 </section>
-<section id="évaluations-prévues" class="level2">
-<h2 class="anchored" data-anchor-id="évaluations-prévues">Évaluations prévues</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Évaluation</th>
-<th>Type</th>
-<th>Moment de référence</th>
-<th style="text-align: right;">Pondération</th>
-<th>IA</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../evaluations/mini-rapport-1.html">Mini-rapport 1</a></td>
-<td>Équipe de 2 à 3</td>
-<td>Après la semaine de relâche</td>
-<td style="text-align: right;">15 %</td>
-<td>Permise, déclarée</td>
-</tr>
-<tr class="even">
-<td><a href="../evaluations/examen-intra.html">Examen intra</a></td>
-<td>Individuel, en personne</td>
-<td>Bloc régression</td>
-<td style="text-align: right;">30 %</td>
-<td>Non permise</td>
-</tr>
-<tr class="odd">
-<td><a href="../evaluations/mini-rapport-2.html">Mini-rapport 2</a></td>
-<td>Équipe de 2 à 3</td>
-<td>Après l’examen final, selon le calendrier officiel</td>
-<td style="text-align: right;">15 %</td>
-<td>Permise, déclarée</td>
-</tr>
-<tr class="even">
-<td><a href="../evaluations/examen-final.html">Examen final</a></td>
-<td>Individuel, en personne</td>
-<td>Fin de session</td>
-<td style="text-align: right;">40 %</td>
-<td>Non permise</td>
-</tr>
-</tbody>
-</table>
+
+<section class="eval-section" id="evaluations-sommatives" aria-labelledby="summative-title">
+  <div class="eval-section__header">
+    <h2 id="summative-title" class="anchored">Évaluations sommatives</h2>
+    <p>Chaque bloc mène vers une page de consignes plus détaillée.</p>
+  </div>
+  <div class="eval-assessment-board">
+    <article class="eval-card eval-card--report">
+      <div class="eval-card__topline">
+        <span>15 %</span>
+        <span>Équipe de 2 à 3</span>
+      </div>
+      <h3 class="anchored">Mini-rapport 1</h3>
+      <p>Analyse reproductible allant de la préparation des données à une première modélisation par régression.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Après la semaine de relâche</dd></div>
+        <div><dt>IA</dt><dd>Permise avec déclaration</dd></div>
+      </dl>
+      <a href="mini-rapport-1.html">Consignes du mini-rapport 1</a>
+    </article>
+
+    <article class="eval-card eval-card--exam">
+      <div class="eval-card__topline">
+        <span>30 %</span>
+        <span>Individuel</span>
+      </div>
+      <h3 class="anchored">Examen intra</h3>
+      <p>Évaluation individuelle sur les données, l&#39;exploration, la visualisation, la régression et l&#39;interprétation.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Bloc régression</dd></div>
+        <div><dt>IA</dt><dd>Non permise</dd></div>
+      </dl>
+      <a href="examen-intra.html">Consignes de l&#39;examen intra</a>
+    </article>
+
+    <article class="eval-card eval-card--report">
+      <div class="eval-card__topline">
+        <span>15 %</span>
+        <span>Équipe de 2 à 3</span>
+      </div>
+      <h3 class="anchored">Mini-rapport 2</h3>
+      <p>Analyse reproductible portant sur la prévision, les séries chronologiques ou une ouverture vers la classification.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Selon le calendrier officiel</dd></div>
+        <div><dt>IA</dt><dd>Permise avec déclaration</dd></div>
+      </dl>
+      <a href="mini-rapport-2.html">Consignes du mini-rapport 2</a>
+    </article>
+
+    <article class="eval-card eval-card--exam">
+      <div class="eval-card__topline">
+        <span>40 %</span>
+        <span>Individuel</span>
+      </div>
+      <h3 class="anchored">Examen final</h3>
+      <p>Évaluation individuelle sur la prévision, les séries chronologiques, la validation, la classification et l&#39;interprétation.</p>
+      <dl>
+        <div><dt>Moment</dt><dd>Fin de session</dd></div>
+        <div><dt>IA</dt><dd>Non permise</dd></div>
+      </dl>
+      <a href="examen-final.html">Consignes de l&#39;examen final</a>
+    </article>
+  </div>
 </section>
-<section id="exercices-formatifs" class="level2">
-<h2 class="anchored" data-anchor-id="exercices-formatifs">Exercices formatifs</h2>
-<p>Les questionnaires sont conservés comme outils de pratique non évalués.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Exercice formatif</th>
-<th>Rôle</th>
-<th>IA</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../evaluations/questionnaire-regression.html">Questionnaire formatif sur la régression</a></td>
-<td>Vérifier la compréhension avant l’intra</td>
-<td>Permise</td>
-</tr>
-<tr class="even">
-<td><a href="../evaluations/questionnaire-series-chronologiques.html">Questionnaire formatif sur les séries chronologiques</a></td>
-<td>Vérifier la compréhension avant le final</td>
-<td>Permise</td>
-</tr>
-</tbody>
-</table>
+
+<section class="eval-section eval-prep" aria-labelledby="prep-title">
+  <div>
+    <h2 id="prep-title" class="anchored">Pratique formative</h2>
+    <p>
+      Les questionnaires ne sont pas évalués. Ils servent à repérer les notions à consolider avant les examens.
+    </p>
+  </div>
+  <div class="eval-prep__links">
+    <a href="questionnaire-regression.html">
+      <span>Régression</span>
+      <p>Vérifier l&#39;interprétation, les diagnostics et les sorties R avant l&#39;intra.</p>
+    </a>
+    <a href="questionnaire-series-chronologiques.html">
+      <span>Séries chronologiques</span>
+      <p>Réviser tendance, saisonnalité, horizon et mesures d&#39;erreur avant le final.</p>
+    </a>
+  </div>
 </section>
-<section id="mini-rapports" class="level2">
-<h2 class="anchored" data-anchor-id="mini-rapports">Mini-rapports</h2>
-<p>Les mini-rapports sont remis en équipe de 2 à 3 personnes. Chaque équipe choisit son jeu de données, mais ce choix doit être validé par l’enseignant avant l’analyse. La procédure de validation sera précisée plus tard.</p>
-<p>Chaque mini-rapport doit être remis avec :</p>
-<ul>
-<li>le fichier source <code>.qmd</code>;</li>
-<li>le rendu final, idéalement en HTML;</li>
-<li>les fichiers de données nécessaires si le jeu de données n’est pas accessible publiquement;</li>
-<li>une déclaration d’usage de l’IA lorsque l’IA a influencé le code, l’analyse, l’interprétation ou le texte.</li>
-</ul>
+
+<section class="eval-section" aria-labelledby="reports-title">
+  <div class="eval-section__header">
+    <h2 id="reports-title" class="anchored">Produire un mini-rapport solide</h2>
+    <p>La trace finale doit montrer une démarche compréhensible, reproductible et défendable.</p>
+  </div>
+  <ol class="eval-report-flow">
+    <li>
+      <span>01</span>
+      <h3 class="anchored">Choisir une question</h3>
+      <p>Définir une question d&#39;analyse liée à un contexte d&#39;affaires ou d&#39;organisation.</p>
+    </li>
+    <li>
+      <span>02</span>
+      <h3 class="anchored">Valider les données</h3>
+      <p>Faire approuver le jeu de données avant de construire l&#39;analyse.</p>
+    </li>
+    <li>
+      <span>03</span>
+      <h3 class="anchored">Analyser dans Quarto</h3>
+      <p>Présenter le code, les graphiques, les résultats et l&#39;interprétation dans un document reproductible.</p>
+    </li>
+    <li>
+      <span>04</span>
+      <h3 class="anchored">Déclarer l&#39;IA</h3>
+      <p>Documenter l&#39;usage de l&#39;IA lorsque l&#39;aide influence le code, l&#39;analyse, l&#39;interprétation ou le texte.</p>
+    </li>
+  </ol>
+  <div class="eval-template-strip" aria-label="Gabarits des mini-rapports">
+    <a href="../ressources/gabarit-mini-rapport-1.html">Gabarit mini-rapport 1</a>
+    <a href="../ressources/gabarit-mini-rapport-2.html">Gabarit mini-rapport 2</a>
+  </div>
 </section>
-<section id="politique-ia" class="level2">
-<h2 class="anchored" data-anchor-id="politique-ia">Politique IA</h2>
-<p>La page <a href="../ressources/ia.html">IA et apprentissage</a> décrit les statuts d’utilisation de l’IA dans le cours.</p>
-<p>Résumé :</p>
-<ul>
-<li>IA non permise aux examens individuels en personne;</li>
-<li>IA permise, déclarée dans les mini-rapports;</li>
-<li>IA permise dans les exercices, questionnaires formatifs et travaux personnels;</li>
-<li>utilisation du <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">GPT du cours</a> attendue pour les activités du cours.</li>
-</ul>
+
+<section class="eval-section eval-ai" aria-labelledby="ai-title">
+  <div>
+    <h2 id="ai-title" class="anchored">Règles d&#39;utilisation de l&#39;IA</h2>
+    <p>
+      Les règles détaillées sont décrites dans la page
+      <a href="../ressources/ia.html">IA et apprentissage</a>. Pour les activités liées au cours,
+      utilisez le <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini" target="_blank" rel="noopener">GPT du cours</a>.
+    </p>
+  </div>
+  <div class="eval-ai__rules" aria-label="Résumé des règles IA">
+    <article>
+      <span>Examens</span>
+      <p>IA non permise pendant les examens individuels en personne.</p>
+    </article>
+    <article>
+      <span>Mini-rapports</span>
+      <p>IA permise, mais déclarée lorsque son usage influence le livrable.</p>
+    </article>
+    <article>
+      <span>Travail personnel</span>
+      <p>IA permise comme outil d&#39;apprentissage, avec responsabilité de comprendre et vérifier.</p>
+    </article>
+  </div>
+</section>
 
 
-</section>
 
 </main> <!-- /main -->
 <a class="course-gpt-widget" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini" target="_blank" rel="noopener" aria-label="Ouvrir l&#39;assistant IA du cours dans un nouvel onglet">

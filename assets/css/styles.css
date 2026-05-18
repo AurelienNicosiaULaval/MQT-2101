@@ -21,7 +21,9 @@
 
 body.page-home main.content > header.quarto-title-block,
 body.page-plan main.content > header.quarto-title-block,
-body.page-calendar main.content > header.quarto-title-block {
+body.page-calendar main.content > header.quarto-title-block,
+body.page-installation main.content > header.quarto-title-block,
+body.page-evaluations main.content > header.quarto-title-block {
   display: none;
 }
 
@@ -595,6 +597,550 @@ body.page-calendar main.content > header.quarto-title-block {
   color: var(--block-color);
   text-decoration: underline;
   text-underline-offset: 0.18rem;
+}
+
+.install-hero,
+.eval-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+  gap: clamp(1.4rem, 4vw, 3rem);
+  align-items: stretch;
+  margin: 1rem 0 2.25rem;
+  padding: clamp(1.35rem, 4vw, 2.9rem) 0 clamp(1.25rem, 3vw, 2.25rem);
+  border-bottom: 1px solid #d8e4ea;
+}
+
+.install-hero h1,
+.eval-hero h1 {
+  max-width: 860px;
+  margin: 0 0 0.95rem;
+  color: #123244;
+  font-size: clamp(2.2rem, 5vw, 4.55rem);
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.install-hero__content p,
+.eval-hero__content p {
+  max-width: 780px;
+  margin: 0;
+  color: #40515c;
+  font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+  line-height: 1.62;
+}
+
+.install-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+}
+
+.install-check-panel,
+.eval-scoreboard {
+  display: grid;
+  align-self: stretch;
+  min-width: 0;
+  border: 1px solid #d8e4ea;
+  border-radius: 8px;
+  background: #f7fbfd;
+  box-shadow: 0 14px 34px rgba(18, 50, 68, 0.06);
+  overflow: hidden;
+}
+
+.install-check-panel > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+  min-height: 4rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #d8e4ea;
+}
+
+.install-check-panel > div:last-child {
+  border-bottom: 0;
+}
+
+.install-check-panel span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 8px;
+  background: #0b4f6c;
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.install-check-panel p {
+  margin: 0;
+  color: #123244;
+  font-weight: 800;
+  line-height: 1.28;
+}
+
+.install-section,
+.eval-section {
+  margin: 2.5rem 0;
+  scroll-margin-top: 6rem;
+}
+
+.install-section__header,
+.eval-section__header {
+  max-width: 850px;
+  margin-bottom: 1.05rem;
+}
+
+.install-section h2,
+.eval-section h2 {
+  margin: 0 0 0.45rem;
+  color: #123244;
+  font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+  font-weight: 900;
+  line-height: 1.12;
+}
+
+.install-section__header p,
+.eval-section__header p,
+.install-code-section p,
+.install-troubleshooting > div > p,
+.eval-prep > div > p,
+.eval-ai > div > p {
+  color: #40515c;
+  line-height: 1.58;
+}
+
+.install-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.install-tool {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 0.55rem;
+  min-height: 242px;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #d8e4ea;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(18, 50, 68, 0.05);
+}
+
+.install-tool__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border-radius: 8px;
+  background: #eef6f9;
+  color: #0b4f6c;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.install-tool:nth-child(2) .install-tool__mark {
+  background: #fff8f8;
+  color: #b5121b;
+}
+
+.install-tool:nth-child(3) .install-tool__mark {
+  background: #f3faf6;
+  color: #2f7d5c;
+}
+
+.install-tool h3,
+.eval-card h3,
+.eval-report-flow h3,
+.install-troubleshooting h3 {
+  margin: 0;
+  color: #123244;
+  font-size: 1.08rem;
+  font-weight: 900;
+  line-height: 1.22;
+}
+
+.install-tool p,
+.eval-card p,
+.eval-report-flow p,
+.install-troubleshooting p,
+.eval-prep__links p,
+.eval-ai__rules p {
+  margin: 0;
+  color: #40515c;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.install-tool a,
+.install-tool__links a,
+.eval-card > a,
+.eval-template-strip a,
+.eval-prep__links a {
+  color: #0b5cad;
+  font-weight: 800;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.install-tool__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.install-runway {
+  padding-top: 1.35rem;
+  border-top: 1px solid #d8e4ea;
+}
+
+.install-steps {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #d8e4ea;
+}
+
+.install-steps li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem 0;
+  border-bottom: 1px solid #d8e4ea;
+}
+
+.install-steps span,
+.eval-report-flow span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border: 1px solid #cfe0e8;
+  border-radius: 8px;
+  background: #eef6f9;
+  color: #0b4f6c;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.install-steps h3 {
+  margin: 0 0 0.25rem;
+  color: #123244;
+  font-size: 1.05rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.install-steps p {
+  margin: 0;
+  color: #40515c;
+  line-height: 1.48;
+}
+
+.install-code-section,
+.install-troubleshooting,
+.eval-prep,
+.eval-ai {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  gap: clamp(1.2rem, 3vw, 2.2rem);
+  align-items: start;
+  padding-top: 1.35rem;
+  border-top: 1px solid #d8e4ea;
+}
+
+.install-code-section > *,
+.install-troubleshooting > *,
+.eval-prep > *,
+.eval-ai > * {
+  min-width: 0;
+}
+
+.install-code-card {
+  min-width: 0;
+  border: 1px solid #1f3f52;
+  border-radius: 8px;
+  background: #123244;
+  color: #ffffff;
+  box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+  overflow: hidden;
+}
+
+.install-code-card span {
+  display: block;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: #d9edf5;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.install-code-card pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  color: #ffffff;
+  white-space: pre-wrap;
+}
+
+.install-code-card code {
+  color: #ffffff;
+  font-size: 0.92rem;
+}
+
+.install-code-card--wide {
+  max-width: 880px;
+}
+
+.install-troubleshooting__list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.install-troubleshooting article {
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid #0b4f6c;
+  background: #f6fafc;
+}
+
+.install-troubleshooting article:nth-child(2) {
+  border-left-color: #2f7d5c;
+}
+
+.install-troubleshooting article:nth-child(3) {
+  border-left-color: #b5121b;
+}
+
+.install-troubleshooting h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.eval-scoreboard {
+  grid-template-columns: 1fr;
+}
+
+.eval-scoreboard > div {
+  min-width: 0;
+  padding: 1rem 1.05rem;
+  border-bottom: 1px solid #d8e4ea;
+}
+
+.eval-scoreboard > div:last-child {
+  border-bottom: 0;
+}
+
+.eval-scoreboard__value {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: #123244;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.eval-scoreboard__label {
+  display: block;
+  color: #657684;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.eval-assessment-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.eval-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 0.75rem;
+  min-width: 0;
+  min-height: 314px;
+  padding: 1rem;
+  border: 1px solid #d8e4ea;
+  border-top: 5px solid #0b4f6c;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(18, 50, 68, 0.05);
+}
+
+.eval-card--exam {
+  border-top-color: #b5121b;
+}
+
+.eval-card__topline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eval-card__topline span:first-child {
+  color: #123244;
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.eval-card__topline span:last-child {
+  color: #657684;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.eval-card dl {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid #e5eef2;
+}
+
+.eval-card dl div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.eval-card dt {
+  color: #657684;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.eval-card dd {
+  margin: 0;
+  color: #123244;
+  font-weight: 800;
+  line-height: 1.28;
+}
+
+.eval-prep__links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.eval-prep__links a {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  min-height: 142px;
+  padding: 1rem;
+  border: 1px solid #d8e4ea;
+  border-radius: 8px;
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(18, 50, 68, 0.04);
+}
+
+.eval-prep__links a:hover,
+.eval-prep__links a:focus-visible {
+  border-color: #0b4f6c;
+  color: inherit;
+  text-decoration: none;
+}
+
+.eval-prep__links span,
+.eval-ai__rules span {
+  color: #123244;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.eval-report-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #d8e4ea;
+  border-bottom: 1px solid #d8e4ea;
+}
+
+.eval-report-flow li {
+  min-width: 0;
+  padding: 1rem;
+  border-right: 1px solid #d8e4ea;
+}
+
+.eval-report-flow li:last-child {
+  border-right: 0;
+}
+
+.eval-report-flow h3 {
+  margin: 0.8rem 0 0.35rem;
+}
+
+.eval-template-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.eval-template-strip a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.55rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid #c8d8e0;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #0b4f6c;
+  text-decoration: none;
+}
+
+.eval-template-strip a:hover,
+.eval-template-strip a:focus-visible {
+  border-color: #0b4f6c;
+  color: #083d53;
+}
+
+.eval-ai__rules {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.eval-ai__rules article {
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid #0b4f6c;
+  background: #f6fafc;
+}
+
+.eval-ai__rules article:nth-child(2) {
+  border-left-color: #2f7d5c;
+}
+
+.eval-ai__rules article:nth-child(3) {
+  border-left-color: #b5121b;
 }
 
 .learning-hero,
@@ -1590,7 +2136,9 @@ body.page-calendar main.content > header.quarto-title-block {
   .learning-path,
   .home-link-grid,
   .home-path,
-  .assessment-grid {
+  .assessment-grid,
+  .install-tool-grid,
+  .eval-report-flow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1599,12 +2147,22 @@ body.page-calendar main.content > header.quarto-title-block {
   .home-two-column,
   .plan-objectives,
   .plan-ai,
-  .calendar-block {
-    grid-template-columns: 1fr;
+  .calendar-block,
+  .install-hero,
+  .eval-hero,
+  .install-code-section,
+  .install-troubleshooting,
+  .eval-prep,
+  .eval-ai {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .home-hero__visual {
     min-height: 220px;
+  }
+
+  .eval-report-flow li:nth-child(2n) {
+    border-right: 0;
   }
 
   .calendar-block__header {
@@ -1646,18 +2204,24 @@ body.page-calendar main.content > header.quarto-title-block {
   .phase-grid,
   .resource-grid,
   .learning-path,
-  .home-snapshot,
-  .home-link-grid,
-  .home-path,
-  .plan-hero__panel,
-  .plan-theme-grid,
-  .assessment-grid,
-  .checklist-box ul,
-  .checklist-card ul {
+    .home-snapshot,
+    .home-link-grid,
+    .home-path,
+    .plan-hero__panel,
+    .plan-theme-grid,
+    .assessment-grid,
+    .install-tool-grid,
+    .eval-assessment-board,
+    .eval-prep__links,
+    .eval-report-flow,
+    .checklist-box ul,
+    .checklist-card ul {
     grid-template-columns: 1fr;
   }
 
-  .home-hero {
+  .home-hero,
+  .install-hero,
+  .eval-hero {
     gap: 1.15rem;
     margin-top: 0.25rem;
   }
@@ -1692,7 +2256,9 @@ body.page-calendar main.content > header.quarto-title-block {
   }
 
   .home-hero h2,
-  .plan-hero h2 {
+  .plan-hero h2,
+  .install-hero h1,
+  .eval-hero h1 {
     font-size: 2rem;
     line-height: 1.08;
   }
@@ -1721,8 +2287,29 @@ body.page-calendar main.content > header.quarto-title-block {
   }
 
   .home-link-card,
-  .assessment-card {
+  .assessment-card,
+  .install-tool,
+  .eval-card,
+  .eval-prep__links a {
     min-height: auto;
+  }
+
+  .install-check-panel > div {
+    min-height: 3.5rem;
+  }
+
+  .install-steps li {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+  }
+
+  .eval-report-flow {
+    border-bottom: 0;
+  }
+
+  .eval-report-flow li {
+    border-right: 0;
+    border-bottom: 1px solid #d8e4ea;
+    padding-inline: 0;
   }
 
   .interactive-path .path-card[open] {
