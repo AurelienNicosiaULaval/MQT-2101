@@ -7,33 +7,46 @@ format:
 
 ## Objectif
 
-Cette page regroupe les gestes R principaux de l'atelier : importer les données,
-inspecter le tableau, créer un dictionnaire rapide, vérifier les valeurs
-manquantes, produire un tableau synthèse, créer des graphiques et choisir une
-priorité de prochaine analyse.
+Cette page montre la démarche complète utilisée dans l'atelier 01. Elle ne sert
+pas seulement à copier du code : elle explique ce que chaque bloc fait, ce qu'il
+faut observer dans la sortie et ce qui peut être repris dans la trace finale.
 
-Elle sert de référence rapide pour retrouver le code vu en classe. Le parcours
-complet, avec les explications, les pauses diagnostic et les moments « À vous »,
-se trouve dans le [guide complet de l'atelier](guide-atelier.html).
+Le parcours principal reste le [guide complet de l'atelier](guide-atelier.html).
+Cette page sert d'appui pendant ou après la séance, surtout lorsqu'il faut revoir
+une démonstration précise.
 
 ::: {.callout-note title="Comment utiliser cette page"}
-Pendant l'atelier, suivez d'abord le guide complet. Revenez ici seulement pour
-retrouver un bloc de code précis ou comparer votre code avec la démonstration.
-Les exercices indiquent ensuite ce qui doit être produit dans votre propre trace
-finale.
+Lisez d'abord l'objectif de la démonstration, puis exécutez le bloc de code dans
+votre propre fichier Quarto. Après la sortie, vérifiez les éléments à observer et
+gardez seulement les résultats utiles pour votre trace finale.
 :::
+
+## Vue d'ensemble
+
+| Démonstration | Question traitée | Résultat attendu |
+|---|---|---|
+| 1 | Est-ce que les données sont importées correctement? | Tableau lisible dans R |
+| 2 | Que représente chaque variable importante? | Dictionnaire rapide |
+| 3 | Quelles variables sont incomplètes? | Diagnostic des valeurs manquantes |
+| 4 | Pourquoi `na.rm = TRUE` change certains calculs? | Comparaison avec et sans valeurs manquantes |
+| 5 | Comment comparer les succursales? | Tableau synthèse |
+| 6 | Comment visualiser les ventes? | Graphique de comparaison |
+| 7 | Comment explorer une relation descriptive? | Nuage de points interprétable |
+| 8 | Quelle priorité recommander pour la suite? | Résultat descriptif appuyant une priorité |
 
 ## Préparation
 
+Avant de commencer, on charge les packages nécessaires et on définit deux objets
+qui seront réutilisés dans les démonstrations.
+
 ```{r}
-#| eval: false
+#| label: setup-demonstrations-atelier-01
+#| message: false
+#| warning: false
 library(tidyverse)
 library(janitor)
 library(scales)
-```
 
-```{r}
-#| eval: false
 data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
   "data/ventes_pme_quebec.csv"
 } else {
@@ -48,10 +61,23 @@ currency_ca <- scales::label_dollar(
 )
 ```
 
+À retenir :
+
+- `data_path` permet de retrouver le fichier selon l'endroit où le document est
+  rendu;
+- `currency_ca` servira à afficher les montants dans un format lisible;
+- les packages sont chargés explicitement pour que le document soit
+  reproductible.
+
 ## Démonstration 1 - Importer et inspecter
 
+Objectif : lire le fichier CSV, nettoyer les noms de colonnes et vérifier que
+les variables importantes ont un type utile pour l'analyse.
+
 ```{r}
-#| eval: false
+#| label: demo-importer-inspecter-atelier-01
+#| message: false
+#| warning: false
 ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
   clean_names() |>
   mutate(
@@ -66,18 +92,32 @@ ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
 glimpse(ventes)
 ```
 
-À vérifier :
+À observer :
 
-- nombre de lignes;
-- nombre de colonnes;
-- unité d'observation;
-- variables numériques;
-- variables catégorielles.
+- chaque ligne représente une succursale pour un mois;
+- `mois` est une date, ce qui permettra des analyses temporelles plus tard;
+- `campagne_locale` est rendue lisible avec les valeurs `non` et `oui`;
+- les variables de ventes, clients, satisfaction et opérations sont numériques.
+
+À reprendre dans la trace finale :
+
+> Le tableau contient des observations mensuelles par succursale. Il permet de
+> comparer des indicateurs commerciaux, opérationnels et de satisfaction.
+
+::: {.callout-warning title="Erreur fréquente"}
+Si R indique que le fichier est introuvable, le problème vient presque toujours
+du dossier de travail ou du chemin vers le fichier CSV. Vérifiez que le fichier
+est bien dans le dossier `data` de l'atelier ou utilisez le chemin proposé dans
+le guide.
+:::
 
 ## Démonstration 2 - Construire un dictionnaire rapide
 
+Objectif : produire un petit tableau qui décrit les variables. Ce dictionnaire
+aide à comprendre les données avant de calculer des indicateurs.
+
 ```{r}
-#| eval: false
+#| label: demo-dictionnaire-variables-atelier-01
 dictionnaire_variables <- tibble(
   variable = names(ventes),
   type = map_chr(ventes, \(x) class(x)[1]),
@@ -93,13 +133,29 @@ dictionnaire_variables <- tibble(
   })
 )
 
-dictionnaire_variables
+dictionnaire_variables |>
+  knitr::kable()
 ```
+
+À observer :
+
+- le dictionnaire donne une vue rapide des variables disponibles;
+- la colonne `type` indique comment R interprète chaque variable;
+- la colonne `valeurs_manquantes` signale les variables à traiter avec prudence;
+- la colonne `exemple` aide à comprendre le contenu sans ouvrir tout le tableau.
+
+À reprendre dans la trace finale :
+
+Choisissez cinq variables utiles pour la direction, puis nommez leur rôle :
+performance commerciale, clientèle, marketing, opérations ou satisfaction.
 
 ## Démonstration 3 - Repérer les valeurs manquantes
 
+Objectif : identifier les variables incomplètes avant de calculer des moyennes
+ou des tableaux synthèses.
+
 ```{r}
-#| eval: false
+#| label: demo-valeurs-manquantes-atelier-01
 diagnostic_manquants <- ventes |>
   summarise(across(everything(), \(x) sum(is.na(x)))) |>
   pivot_longer(
@@ -110,29 +166,61 @@ diagnostic_manquants <- ventes |>
   filter(valeurs_manquantes > 0) |>
   arrange(desc(valeurs_manquantes))
 
-diagnostic_manquants
+diagnostic_manquants |>
+  knitr::kable()
 ```
 
-Interprétation attendue : nommer les variables touchées et expliquer pourquoi
-des valeurs manquantes peuvent influencer un résumé descriptif.
+À observer :
+
+- seules les variables ayant au moins une valeur manquante apparaissent;
+- une variable incomplète peut rendre certains résumés impossibles si on ne
+  précise pas comment traiter les valeurs manquantes;
+- ce diagnostic doit être mentionné dans le rapport, même si le problème semble
+  petit.
+
+Phrase possible :
+
+> Certaines variables contiennent des valeurs manquantes. Les indicateurs qui
+> utilisent ces variables doivent donc être calculés et interprétés avec prudence.
 
 ## Démonstration 4 - Voir l'effet de `na.rm = TRUE`
 
+Objectif : comprendre pourquoi certaines moyennes deviennent manquantes lorsque
+les données contiennent des valeurs `NA`.
+
 ```{r}
-#| eval: false
-ventes |>
+#| label: demo-na-rm-atelier-01
+comparaison_na_rm <- ventes |>
   summarise(
     satisfaction_sans_na_rm = mean(satisfaction),
     satisfaction_avec_na_rm = mean(satisfaction, na.rm = TRUE),
     delai_sans_na_rm = mean(delai_livraison_jours),
     delai_avec_na_rm = mean(delai_livraison_jours, na.rm = TRUE)
   )
+
+comparaison_na_rm |>
+  knitr::kable(digits = 2)
 ```
+
+À observer :
+
+- sans `na.rm = TRUE`, une moyenne peut devenir `NA`;
+- avec `na.rm = TRUE`, R calcule la moyenne à partir des valeurs observées;
+- cette correction n'efface pas le problème de données manquantes, elle permet
+  seulement de calculer un résumé sur les observations disponibles.
+
+::: {.callout-important title="Point d'interprétation"}
+Utiliser `na.rm = TRUE` est acceptable ici, mais il faut le signaler. Un résumé
+calculé sur les valeurs observées n'est pas exactement la même chose qu'un
+résumé calculé sur toutes les observations prévues.
+:::
 
 ## Démonstration 5 - Résumer par succursale
 
+Objectif : passer du tableau mensuel à une comparaison lisible des succursales.
+
 ```{r}
-#| eval: false
+#| label: demo-synthese-succursales-atelier-01
 synthese_succursales <- ventes |>
   group_by(succursale, region) |>
   summarise(
@@ -152,17 +240,37 @@ synthese_succursales |>
     panier_moyen = currency_ca(panier_moyen),
     satisfaction_moyenne = round(satisfaction_moyenne, 1),
     delai_moyen = round(delai_moyen, 1)
-  )
+  ) |>
+  knitr::kable()
 ```
+
+À observer :
+
+- les ventes totales comparent le volume d'affaires;
+- le panier moyen compare la valeur moyenne des transactions;
+- la satisfaction et les ruptures de stock ajoutent une dimension
+  opérationnelle;
+- la succursale avec les ventes les plus élevées n'est pas nécessairement la
+  meilleure selon tous les indicateurs.
+
+À reprendre dans la trace finale :
+
+Choisissez deux ou trois résultats qui ressortent du tableau. Il n'est pas utile
+de commenter toutes les colonnes.
 
 ## Démonstration 6 - Visualiser les ventes
 
+Objectif : produire un graphique simple qui compare les ventes annuelles par
+succursale.
+
 ```{r}
-#| eval: false
+#| label: demo-graphique-ventes-atelier-01
+#| fig-width: 8
+#| fig-height: 4.8
 synthese_succursales |>
   mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
   ggplot(aes(ventes_totales, succursale)) +
-  geom_col(fill = "#0B4F6C") +
+  geom_col(fill = "#2A9D8F") +
   scale_x_continuous(labels = currency_ca) +
   labs(
     title = "Ventes annuelles par succursale",
@@ -172,10 +280,28 @@ synthese_succursales |>
   theme_minimal(base_size = 12)
 ```
 
+À observer :
+
+- les succursales sont ordonnées selon les ventes totales;
+- l'axe horizontal est formaté en dollars;
+- le graphique répond à une question précise : quelles succursales contribuent
+  le plus aux ventes annuelles?
+
+Phrase possible :
+
+> Le graphique montre que les ventes annuelles varient entre les succursales.
+> Cette comparaison décrit le volume d'affaires, mais ne suffit pas à expliquer
+> les causes des écarts.
+
 ## Démonstration 7 - Explorer une relation descriptive
 
+Objectif : examiner si deux variables semblent évoluer ensemble, sans conclure à
+une relation causale.
+
 ```{r}
-#| eval: false
+#| label: demo-relation-ruptures-satisfaction-atelier-01
+#| fig-width: 8
+#| fig-height: 5
 ventes |>
   ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +
   geom_point(size = 2.4, alpha = 0.8) +
@@ -189,16 +315,30 @@ ventes |>
   theme_minimal(base_size = 12)
 ```
 
-Ce graphique suggère une relation descriptive possible. Il ne permet pas, à lui
-seul, de conclure à une relation causale.
+À observer :
+
+- chaque point représente une observation mensuelle pour une succursale;
+- la droite aide à voir une tendance descriptive générale;
+- les couleurs permettent de repérer les succursales, mais elles ne remplacent
+  pas une analyse plus formelle.
+
+::: {.callout-caution title="Limite importante"}
+Ce graphique ne prouve pas que les ruptures de stock causent une baisse de
+satisfaction. Il suggère seulement une relation descriptive à examiner plus
+sérieusement.
+:::
 
 ## Démonstration 8 - Choisir une priorité de prochaine analyse
 
-Option marketing :
+Objectif : transformer l'exploration en recommandation prudente. La direction
+hésite entre trois priorités : marketing, opérations ou saisonnalité. On produit
+un petit résultat descriptif pour éclairer ce choix.
+
+### Option A - Marketing
 
 ```{r}
-#| eval: false
-ventes |>
+#| label: demo-priorite-marketing-atelier-01
+priorite_marketing <- ventes |>
   group_by(campagne_locale) |>
   summarise(
     observations = n(),
@@ -212,13 +352,20 @@ ventes |>
     depenses_marketing_moyennes = currency_ca(depenses_marketing_moyennes),
     panier_moyen = currency_ca(panier_moyen)
   )
+
+priorite_marketing |>
+  knitr::kable()
 ```
 
-Option opérations :
+Ce résultat aide à formuler une question de suite sur les campagnes locales. Il
+ne démontre pas l'effet du marketing, parce que les mois avec campagne peuvent
+différer des autres mois pour plusieurs raisons.
+
+### Option B - Opérations
 
 ```{r}
-#| eval: false
-ventes |>
+#| label: demo-priorite-operations-atelier-01
+priorite_operations <- ventes |>
   group_by(succursale) |>
   summarise(
     ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
@@ -231,13 +378,20 @@ ventes |>
     delai_moyen = round(delai_moyen, 1),
     satisfaction_moyenne = round(satisfaction_moyenne, 1)
   )
+
+priorite_operations |>
+  knitr::kable()
 ```
 
-Option saisons :
+Ce résultat aide à repérer les succursales où les enjeux opérationnels semblent
+plus présents. Il ne dit pas encore si ces enjeux expliquent les ventes ou la
+satisfaction.
+
+### Option C - Saisons
 
 ```{r}
-#| eval: false
-ventes |>
+#| label: demo-priorite-saison-atelier-01
+priorite_saison <- ventes |>
   group_by(saison) |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
@@ -249,13 +403,31 @@ ventes |>
     ventes_totales = currency_ca(ventes_totales),
     satisfaction_moyenne = round(satisfaction_moyenne, 1)
   )
+
+priorite_saison |>
+  knitr::kable()
 ```
 
-## À vérifier
+Ce résultat aide à décider si les prochaines analyses devraient distinguer les
+périodes de l'année. Il reste descriptif : il ne sépare pas encore les effets de
+succursale, de saison, de marketing ou d'opérations.
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste descriptive;
-- la priorité de prochaine analyse s'appuie sur un résultat observé.
+## Synthèse pour la trace finale
+
+À la fin de ces démonstrations, votre propre trace finale devrait contenir :
+
+- une phrase sur l'unité d'observation;
+- un dictionnaire rapide des variables clés;
+- un diagnostic des valeurs manquantes;
+- un tableau synthèse par succursale;
+- un graphique des ventes;
+- un deuxième graphique descriptif;
+- trois constats prudents;
+- une recommandation de prochaine analyse;
+- une limite d'interprétation.
+
+::: {.callout-tip title="Phrase de recommandation à adapter"}
+La prochaine analyse devrait prioriser [marketing, opérations ou saisonnalité],
+car le diagnostic descriptif montre que [résultat observé]. Cette conclusion
+reste préliminaire, car [limite à nommer].
+:::
