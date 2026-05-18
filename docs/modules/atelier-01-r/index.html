@@ -5378,6 +5378,46 @@ display: grid;
 gap: 0.75rem;
 margin: 1.15rem 0 1.6rem;
 }
+.workshop-launch {
+display: grid;
+grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.6rem;
+}
+.workshop-link-card {
+display: block;
+min-height: 184px;
+padding: 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+color: inherit;
+text-decoration: none;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.workshop-link-card-primary {
+border-color: #9acde2;
+background: #eaf6fb;
+box-shadow: 0 12px 28px rgba(42, 157, 143, 0.12);
+}
+.workshop-link-card h3 {
+margin: 0.75rem 0 0.35rem;
+color: #123244;
+font-size: 1.05rem;
+line-height: 1.25;
+}
+.workshop-link-card p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.workshop-link-card:hover h3,
+.workshop-link-card:focus-visible h3 {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
 .agenda-item {
 display: grid;
 grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
@@ -6324,7 +6364,8 @@ margin-bottom: 0;
 .home-path,
 .assessment-grid,
 .install-tool-grid,
-.eval-report-flow {
+.eval-report-flow,
+.workshop-launch {
 grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .home-hero,
@@ -6360,6 +6401,9 @@ border-right: 0;
 position: static;
 }
 .interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.workshop-link-card-primary {
 grid-column: span 2;
 }
 .outcome-strip {
@@ -6401,10 +6445,14 @@ font-size: 1.55rem;
 .eval-assessment-board,
 .eval-prep__links,
 .eval-report-flow,
+.workshop-launch,
 .resource-template-flow,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
+}
+.workshop-link-card-primary {
+grid-column: auto;
 }
 .home-hero,
 .install-hero,
@@ -6905,7 +6953,25 @@ Trace finale en QMD
 </section>
 <section id="pendant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="pendant-latelier">Pendant l’atelier</h2>
-<p>Pendant la séance, l’important est de produire les éléments du rapport, pas de lire une longue page. Le guide détaillé est disponible au besoin, mais le fil de travail en classe est le suivant.</p>
+<p>Pendant la séance, l’important est de produire les éléments du rapport, pas de lire une longue page de façon passive. Le guide complet est le fil principal de l’atelier : il contient les démonstrations, les moments « À vous », les pauses diagnostic et les éléments à conserver dans la trace finale.</p>
+<div class="workshop-launch">
+  <a class="workshop-link-card workshop-link-card-primary" href="guide-atelier.html">
+    <span class="phase-label">À ouvrir en classe</span>
+    <h3 class="anchored">Guide complet de l&#39;atelier</h3>
+    <p>Suivre ce parcours pendant la séance. Les démonstrations sont intégrées directement dans le guide, puis reprises par des tâches à faire dans le rapport.</p>
+  </a>
+  <a class="workshop-link-card" href="demonstrations.html">
+    <span class="phase-label">Référence de code</span>
+    <h3 class="anchored">Démonstrations R</h3>
+    <p>Retrouver rapidement le code des démonstrations sans relire tout le guide.</p>
+  </a>
+  <a class="workshop-link-card" href="exercices.html">
+    <span class="phase-label">Pratique ciblée</span>
+    <h3 class="anchored">Exercices</h3>
+    <p>Faire les points de pratique associés aux moments « À vous » du guide. Ce n&#39;est pas un parcours séparé.</p>
+  </a>
+</div>
+<p>Le fil de travail en classe est le suivant.</p>
 <div class="workshop-agenda">
   <div class="agenda-item">
     <div class="agenda-time">Départ</div>
@@ -6970,6 +7036,19 @@ Trace finale en QMD
 <li><label><input type="checkbox">une limite d’interprétation.</label></li>
 <li><label><input type="checkbox">une recommandation de prochaine analyse.</label></li>
 </ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Lien entre guide, démonstrations et exercices">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Lien entre guide, démonstrations et exercices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le guide complet est la page à suivre pendant l’atelier. Les démonstrations montrent une démarche complète; les exercices reprennent les parties à produire dans votre propre trace finale. Autrement dit, on regarde une démonstration, on fait le point « À vous » correspondant, puis on garde le résultat utile dans le rapport Quarto.</p>
+</div>
 </div>
 </section>
 <section id="après-latelier" class="level2">
