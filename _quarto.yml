@@ -3,6 +3,9 @@ project:
   output-dir: docs
   resources:
     - .nojekyll
+    - assets/images/mqt-2101-logo.svg
+    - assets/images/mqt-2101-logo.png
+    - assets/images/mqt-2101-logo-512.png
     - modules/semaine-01-introduction/data/birth_us.csv
     - modules/semaine-01-introduction/data/safety_airlines.csv
     - modules/semaine-01-introduction/media/pdf/capsule-01-support.pdf
@@ -36,9 +39,14 @@ project:
 
 website:
   title: "MQT-2101 : Analyse et modélisation des données"
+  site-url: "https://aureliennicosiaulaval.github.io/MQT-2101/"
+  favicon: assets/images/mqt-2101-logo.png
+  image: assets/images/mqt-2101-logo.png
   search: true
   page-navigation: true
   navbar:
+    logo: assets/images/mqt-2101-logo.svg
+    logo-alt: "Logo MQT-2101"
     background: "#0B4F6C"
     foreground: "#FFFFFF"
     left:
@@ -90,6 +98,8 @@ website:
             text: "Ressources - Accueil"
           - href: ressources/lectures.qmd
             text: "Lectures et ressources"
+          - href: https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini
+            text: "GPT du cours"
           - href: ressources/ia.qmd
             text: "IA et apprentissage"
           - href: ressources/declaration-ia.qmd
@@ -129,6 +139,8 @@ format:
     toc-depth: 3
     code-copy: true
     code-overflow: wrap
+    include-after-body:
+      - assets/includes/gpt-assistant-widget.html
     embed-resources: true
 
 execute:

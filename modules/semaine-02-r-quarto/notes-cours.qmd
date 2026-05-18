@@ -75,15 +75,20 @@ Le résultat attendu est un mini-rapport Quarto individuel qui montre le code,
 les résultats et deux constats descriptifs.
 :::
 
+::: {.note-box}
+Ces notes donnent la vue d'ensemble. La page des démonstrations reprend les
+mêmes gestes avec le code complet, les sorties et leur interprétation.
+:::
+
 ## Les six capsules
 
-| Capsule | Geste principal | Trace préparée |
+| Capsule | Geste principal | Trace finale préparée |
 |---|---|---|
 | 1 | Préparer l'environnement | note de vérification |
 | 2 | Se repérer dans RStudio | rôle de deux zones |
 | 3 | Organiser un projet | justification des chemins relatifs |
 | 4 | Importer et inspecter | code, dimensions, unité d'observation |
-| 5 | Résumer et diagnostiquer | valeurs manquantes et tableau descriptif |
+| 5 | Résumer et diagnostiquer | diagnostic et tableau descriptif |
 | 6 | Produire le rapport | HTML, constats et question finale |
 
 ## De la donnée au rapport
@@ -121,6 +126,20 @@ Un projet garde ensemble les données, le code, les résultats et
 l'interprétation.
 :::
 
+## Pourquoi cette structure suffit
+
+::: {.keypoints}
+- Le dossier `data/` contient les fichiers importés.
+- Le fichier `.qmd` contient le texte, le code et les résultats.
+- Les chemins relatifs évitent de dépendre d'un ordinateur précis.
+- Le rapport HTML peut être régénéré à partir du même code.
+:::
+
+::: {.note-box}
+Une analyse reproductible ne repose pas sur des clics invisibles. Elle repose
+sur des fichiers organisés et sur du code que l'on peut relire.
+:::
+
 ## Importer le tableau
 
 ```{r}
@@ -131,6 +150,20 @@ ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
 
 glimpse(ventes_operations)
 ```
+
+## Lire la sortie de `glimpse()`
+
+::: {.keypoints}
+- `Rows` indique le nombre d'observations.
+- `Columns` indique le nombre de variables.
+- Le type de chaque variable aide à prévoir les opérations possibles.
+- Les premières valeurs servent à reconnaître le contenu réel du tableau.
+:::
+
+::: {.note-box}
+La première question à poser est toujours la même : que représente une ligne du
+tableau?
+:::
 
 ## Inspecter avant de calculer
 
@@ -167,6 +200,20 @@ ventes_preparees |>
   )
 ```
 
+## Pourquoi préparer les variables
+
+::: {.keypoints}
+- Une date doit être reconnue comme une date pour être triée et filtrée.
+- Une variable catégorielle sert à former des groupes.
+- Une variable numérique sert aux calculs comme les sommes et les moyennes.
+- Une transformation écrite dans le code reste vérifiable.
+:::
+
+::: {.note-box}
+Préparer les variables ne veut pas dire changer les données au hasard. Cela veut
+dire rendre explicite la façon dont chaque colonne sera utilisée.
+:::
+
 ## Diagnostiquer les valeurs manquantes
 
 ```{r}
@@ -187,6 +234,20 @@ diagnostic_manquants
 ::: {.note-box}
 Une valeur manquante doit être signalée avant d'interpréter un résumé ou un
 graphique.
+:::
+
+## Interpréter le diagnostic
+
+::: {.keypoints}
+- Le diagnostic indique quelles variables sont incomplètes.
+- Il indique combien de valeurs sont absentes.
+- Il ne dit pas automatiquement quoi supprimer ou corriger.
+- Il oblige à ajouter une précaution dans l'interprétation.
+:::
+
+::: {.note-box}
+Dans ce module, le bon réflexe est de signaler les valeurs manquantes et de
+rester prudent. Les stratégies de traitement plus avancées viendront plus tard.
 :::
 
 ## Résumer par succursale
@@ -214,6 +275,19 @@ resume_succursales |>
   knitr::kable()
 ```
 
+## Lire le tableau descriptif
+
+::: {.keypoints}
+- `ventes_totales` compare le volume observé par succursale.
+- `clients_totaux` aide à interpréter les écarts de ventes.
+- `panier_moyen` décrit la valeur moyenne des achats.
+- `satisfaction_moyenne` doit être lue avec le diagnostic des valeurs manquantes.
+:::
+
+::: {.note-box}
+Un tableau descriptif résume. Il ne démontre pas une cause.
+:::
+
 ## Visualiser un résultat
 
 ```{r}
@@ -234,6 +308,20 @@ resume_succursales |>
   ) +
   theme_minimal(base_size = 14)
 ```
+
+## Lire le graphique
+
+::: {.keypoints}
+- Chaque barre représente une succursale.
+- La longueur de la barre représente les ventes totales.
+- L'ordre des barres facilite la comparaison.
+- Le graphique doit mener à un constat descriptif, pas à une conclusion causale.
+:::
+
+::: {.note-box}
+Le graphique aide à voir une structure. Le texte du rapport doit ensuite dire
+ce qui est visible, avec prudence.
+:::
 
 ## Structure de la trace finale
 
@@ -266,6 +354,16 @@ format:
 - Les valeurs manquantes sont signalées.
 - Le tableau descriptif et le graphique sont produits par le code.
 - Les constats restent descriptifs.
+:::
+
+## Avant de finaliser
+
+::: {.keypoints}
+- Le fichier `.qmd` se rend sans erreur.
+- Les packages nécessaires sont chargés dans le document.
+- Les données sont importées avec un chemin relatif.
+- Chaque tableau et chaque graphique provient du code visible.
+- Les constats ne vont pas plus loin que les résultats produits.
 :::
 
 ## Deux constats et une question

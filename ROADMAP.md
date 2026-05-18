@@ -28,7 +28,7 @@ La version détaillée et datée est dans `roadmap.qmd`.
 7. Pondération : 15 %, 30 %, 15 %, 40 %.
 8. Autoriser l'IA dans les mini-rapports avec déclaration.
 9. Interdire l'IA pendant les examens.
-10. Créer un GPT personnalisé MQT-2101 à utiliser comme tuteur lorsque le site sera stabilisé.
+10. Utiliser le GPT du cours comme tuteur pédagogique : https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini
 
 ## Décisions à préciser plus tard
 
@@ -36,7 +36,7 @@ La version détaillée et datée est dans `roadmap.qmd`.
 2. Dates officielles de remise.
 3. Durée et ressources permises pour les examens en personne.
 4. Grilles détaillées des mini-rapports et des examens.
-5. Instructions finales du GPT personnalisé MQT-2101.
+5. Maintien des instructions et de la base de connaissances du GPT du cours.
 
 ## Phases
 
