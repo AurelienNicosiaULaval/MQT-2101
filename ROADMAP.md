@@ -2,13 +2,15 @@
 
 Cette roadmap résume les prochaines étapes pour refaire le cours autour d'un site Quarto appliqué, orienté administration, décision d'affaires et R.
 
-La version détaillée et datée est dans `roadmap.qmd`.
+Cette page est une note interne de développement. Elle n'est pas destinée aux étudiantes et étudiants et n'est pas publiée dans la navigation du site de cours.
+
+Les outils Git et GitHub servent au développement, à la sauvegarde et à la publication du site par l'enseignant. Ils ne font pas partie des outils demandés aux étudiantes et étudiants dans le cours.
 
 ## État au 14 mai 2026
 
 - Le dépôt Git est initialisé et relié à GitHub par SSH.
 - Le site Quarto rend dans `docs/`.
-- La roadmap est dans la navigation.
+- La roadmap publique a été retirée de la navigation étudiante.
 - Les sources privées et les données locales sensibles sont ignorées par Git.
 - Les solutionnaires sont exclus du rendu public.
 - La cartographie de l'ancien matériel est disponible.

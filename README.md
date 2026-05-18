@@ -2,6 +2,8 @@
 
 Ce dépôt contient le squelette du site Quarto du cours MQT-2101. Le cours est orienté vers l'analyse appliquée des données, la modélisation, la prévision et la prise de décision en administration.
 
+Ce README est une documentation interne de développement. Les commandes Git et GitHub Pages ci-dessous servent à l'enseignant pour maintenir et publier le site. Elles ne font pas partie des consignes destinées aux étudiantes et étudiants.
+
 ## Objectif du dépôt
 
 Préparer une structure claire et maintenable pour développer progressivement :
