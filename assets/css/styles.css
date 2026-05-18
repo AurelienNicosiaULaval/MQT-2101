@@ -20,7 +20,8 @@
 }
 
 body.page-home main.content > header.quarto-title-block,
-body.page-plan main.content > header.quarto-title-block {
+body.page-plan main.content > header.quarto-title-block,
+body.page-calendar main.content > header.quarto-title-block {
   display: none;
 }
 
@@ -455,6 +456,145 @@ body.page-plan main.content > header.quarto-title-block {
 
 .plan-note {
   margin: 1rem 0 0;
+}
+
+.calendar-flow {
+  --calendar-border: #d8e4ea;
+  margin: 1rem 0 3rem;
+}
+
+.calendar-flow__header {
+  margin-bottom: clamp(1.1rem, 3vw, 2rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--calendar-border);
+}
+
+.calendar-flow__header h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #123244;
+  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.calendar-blocks {
+  display: grid;
+  gap: 0;
+}
+
+.calendar-block {
+  --block-color: #0b4f6c;
+  display: grid;
+  grid-template-columns: minmax(170px, 0.34fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.25rem);
+  padding: clamp(1.25rem, 3vw, 2rem) 0;
+  border-bottom: 1px solid var(--calendar-border);
+}
+
+.calendar-block:first-child {
+  border-top: 1px solid var(--calendar-border);
+}
+
+.calendar-block--accent {
+  --block-color: #b5121b;
+}
+
+.calendar-block--cool {
+  --block-color: #2a9d8f;
+}
+
+.calendar-block--final {
+  --block-color: #123244;
+}
+
+.calendar-block__header {
+  position: sticky;
+  top: 5.3rem;
+  align-self: start;
+  padding-left: 1rem;
+  border-left: 5px solid var(--block-color);
+}
+
+.calendar-block__header span {
+  display: block;
+  margin-bottom: 0.38rem;
+  color: var(--block-color);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.calendar-block__header h2 {
+  margin: 0;
+  color: #123244;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-weight: 900;
+  line-height: 1.08;
+}
+
+.calendar-weeks {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calendar-weeks li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 0.18rem 1rem;
+  align-items: start;
+  min-height: 4.4rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid #e5eef2;
+}
+
+.calendar-weeks li:last-child {
+  border-bottom: 0;
+}
+
+.calendar-week__number {
+  grid-row: 1 / span 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 1px solid color-mix(in srgb, var(--block-color) 34%, #ffffff);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--block-color) 9%, #ffffff);
+  color: var(--block-color);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.calendar-weeks a,
+.calendar-week__plain {
+  grid-column: 2;
+  width: fit-content;
+  color: #123244;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.calendar-weeks a + a {
+  margin-top: 0.18rem;
+  color: #0b4f6c;
+  font-size: 0.93rem;
+  font-weight: 800;
+}
+
+.calendar-weeks a:hover,
+.calendar-weeks a:focus-visible {
+  color: var(--block-color);
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
 }
 
 .learning-hero,
@@ -1458,12 +1598,17 @@ body.page-plan main.content > header.quarto-title-block {
   .plan-hero,
   .home-two-column,
   .plan-objectives,
-  .plan-ai {
+  .plan-ai,
+  .calendar-block {
     grid-template-columns: 1fr;
   }
 
   .home-hero__visual {
     min-height: 220px;
+  }
+
+  .calendar-block__header {
+    position: static;
   }
 
   .interactive-path .path-card[open] {
@@ -1515,6 +1660,35 @@ body.page-plan main.content > header.quarto-title-block {
   .home-hero {
     gap: 1.15rem;
     margin-top: 0.25rem;
+  }
+
+  .calendar-flow {
+    margin-top: 0.2rem;
+  }
+
+  .calendar-flow__header h1 {
+    font-size: 2.35rem;
+  }
+
+  .calendar-block {
+    gap: 0.85rem;
+    padding: 1.2rem 0;
+  }
+
+  .calendar-weeks li {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    min-height: 3.8rem;
+    padding: 0.8rem 0;
+  }
+
+  .calendar-week__number {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .calendar-weeks a,
+  .calendar-week__plain {
+    font-size: 1rem;
   }
 
   .home-hero h2,

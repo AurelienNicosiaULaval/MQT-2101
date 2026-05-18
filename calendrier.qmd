@@ -1,35 +1,124 @@
 ---
 title: "Calendrier"
+body-classes: page-calendar
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-Ce calendrier présente la progression de référence du cours pour la session d'automne 2026. Les dates précises ne sont pas affichées afin de garder le site réutilisable. Les échéances officielles seront indiquées dans le plan de cours institutionnel.
+```{=html}
+<section class="calendar-flow" aria-labelledby="calendar-title">
+  <header class="calendar-flow__header">
+    <h1 id="calendar-title">Calendrier</h1>
+  </header>
 
-## Calendrier par semaine de cours
+  <div class="calendar-blocks" aria-label="Déroulement par blocs">
+    <article class="calendar-block">
+      <header class="calendar-block__header">
+        <span>Bloc 1</span>
+        <h2>Lire, décrire, explorer</h2>
+      </header>
+      <ol class="calendar-weeks">
+        <li>
+          <span class="calendar-week__number">01</span>
+          <a href="modules/semaine-01-introduction/index.html">Introduction</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">02</span>
+          <a href="modules/semaine-02-r-quarto/index.html">R et Quarto</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">03</span>
+          <a href="modules/atelier-01-r/index.html">Atelier 01 - Explorer un tableau</a>
+        </li>
+      </ol>
+    </article>
 
-Le site distingue deux types de semaines. Les modules introduisent ou structurent les notions. Les ateliers servent à mettre ces notions en pratique dans un cas guidé. L'atelier 01 est associé à la semaine 3.
+    <article class="calendar-block calendar-block--accent">
+      <header class="calendar-block__header">
+        <span>Bloc 2</span>
+        <h2>Modéliser par régression</h2>
+      </header>
+      <ol class="calendar-weeks" start="4">
+        <li>
+          <span class="calendar-week__number">04</span>
+          <a href="modules/semaine-03-regression-lineaire/index.html">Régression linéaire</a>
+          <a href="evaluations/questionnaire-regression.html">Questionnaire formatif</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">05</span>
+          <a href="modules/semaine-04-regression-nonlineaire/index.html">Régression non linéaire</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">06</span>
+          <a href="modules/atelier-02-regression/index.html">Atelier 02 - Régression</a>
+          <a href="evaluations/mini-rapport-1.html">Mini-rapport 1</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">07</span>
+          <a href="modules/semaine-05-preparation-intra/index.html">Préparation intra</a>
+          <a href="evaluations/examen-intra.html">Examen intra</a>
+        </li>
+      </ol>
+    </article>
 
-### Bloc 1 - Lire, décrire et explorer des données
+    <article class="calendar-block calendar-block--cool">
+      <header class="calendar-block__header">
+        <span>Bloc 3</span>
+        <h2>Prévoir des séries chronologiques</h2>
+      </header>
+      <ol class="calendar-weeks" start="8">
+        <li>
+          <span class="calendar-week__number">08</span>
+          <a href="modules/semaine-06-series-chronologiques-intro/index.html">Séries chronologiques</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">09</span>
+          <span class="calendar-week__plain">Relâche</span>
+        </li>
+        <li>
+          <span class="calendar-week__number">10</span>
+          <a href="modules/semaine-07-lissage/index.html">Lissage</a>
+          <a href="evaluations/questionnaire-series-chronologiques.html">Questionnaire formatif</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">11</span>
+          <a href="modules/semaine-08-tendance-saisonnalite/index.html">Tendance et saisonnalité</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">12</span>
+          <a href="modules/atelier-03-series-chronologiques/index.html">Atelier 03 - Séries chronologiques</a>
+          <a href="evaluations/mini-rapport-2.html">Mini-rapport 2</a>
+        </li>
+      </ol>
+    </article>
 
-Les semaines 1 à 3 forment le premier bloc du cours. L'objectif est de passer d'une lecture intuitive d'un tableau à une première exploration reproductible dans R et Quarto. La trace de synthèse du bloc est produite dans l'atelier 01, sous forme de court rapport Quarto individuel.
-
-| Semaine | Type | Ce qu'on fait | Évaluation ou trace | Lien |
-|---|---|---|---|---|
-| Semaine 1 | Module théorique | Introduction au cours, objectifs, quiz diagnostique et évaluation des compétences statistiques. | Trace finale de départ | [Semaine 01 - Module - Introduction](modules/semaine-01-introduction/index.qmd) |
-| Semaine 2 | Module théorique | Introduction à l'analyse et au traitement des données avec R, RStudio et Quarto. | Mini-rapport formatif | [Semaine 02 - Module - R et Quarto](modules/semaine-02-r-quarto/index.qmd) |
-| Semaine 3 | Atelier | Atelier R : explorer un tableau de données et produire de premières synthèses. | Trace finale d'atelier | [Semaine 03 - Atelier 01 - Explorer un tableau](modules/atelier-01-r/index.qmd) |
-| Semaine 4 | Module théorique | Régression linéaire pour expliquer une variable d'intérêt. | Questionnaire formatif sur la régression | [Semaine 04 - Module - Régression linéaire](modules/semaine-03-regression-lineaire/index.qmd)<br>[Questionnaire formatif](evaluations/questionnaire-regression.qmd) |
-| Semaine 5 | Module théorique | Régression non linéaire, transformations et interprétation. | Préparation du mini-rapport 1 | [Semaine 05 - Module - Régression non linéaire](modules/semaine-04-regression-nonlineaire/index.qmd) |
-| Semaine 6 | Atelier | Atelier de régression : étude de cas appliquée et interprétation de résultats. | Mini-rapport 1 en préparation | [Semaine 06 - Atelier 02 - Régression](modules/atelier-02-regression/index.qmd)<br>[Mini-rapport 1](evaluations/mini-rapport-1.qmd) |
-| Semaine 7 | Préparation | Préparation à l'examen intra et consolidation des notions de régression. | Examen intra individuel en personne | [Semaine 07 - Préparation intra](modules/semaine-05-preparation-intra/index.qmd)<br>[Examen intra](evaluations/examen-intra.qmd) |
-| Semaine 8 | Module théorique | Introduction à la prévision et aux séries chronologiques. | Démarrage du bloc prévision | [Semaine 08 - Module - Séries chronologiques](modules/semaine-06-series-chronologiques-intro/index.qmd) |
-| Semaine 9 | Pause pédagogique | Semaine de relâche, consolidation et finalisation du mini-rapport 1. | Remise du mini-rapport 1 après la relâche | [Mini-rapport 1](evaluations/mini-rapport-1.qmd) |
-| Semaine 10 | Module théorique | Méthodes de lissage pour la prévision à court terme. | Questionnaire formatif sur les séries chronologiques | [Semaine 10 - Module - Lissage](modules/semaine-07-lissage/index.qmd)<br>[Questionnaire formatif](evaluations/questionnaire-series-chronologiques.qmd) |
-| Semaine 11 | Module théorique | Modèles avec tendance et saisonnalité. | Préparation du mini-rapport 2 | [Semaine 11 - Module - Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.qmd) |
-| Semaine 12 | Atelier | Atelier de séries chronologiques : prévision des ventes, de la demande ou d'une mesure opérationnelle. | Mini-rapport 2 en préparation | [Semaine 12 - Atelier 03 - Séries chronologiques](modules/atelier-03-series-chronologiques/index.qmd)<br>[Mini-rapport 2](evaluations/mini-rapport-2.qmd) |
-| Semaine 13 | Module théorique | Prévision avec variables externes, autocorrélation et interprétation. | Validation des choix de prévision | [Semaine 13 - Module - Variables externes](modules/semaine-09-variables-externes-autocorrelation/index.qmd) |
-| Semaine 14 | Module théorique | Résultats binaires, classification et modèles avancés. | Ouverture classification pour le mini-rapport 2 | [Semaine 14 - Module - Classification](modules/semaine-10-classification-modeles-avances/index.qmd) |
-| Semaine 15 | Atelier et récapitulation | Atelier intégrateur, récapitulation et préparation à l'examen final. | Préparation finale | [Semaine 15 - Atelier 04 - Intégration](modules/atelier-04-recapitulation/index.qmd)<br>[Examen final](evaluations/examen-final.qmd) |
-| Semaine 16 | Évaluation | Examen final individuel en personne. | Remise du mini-rapport 2 après l'examen final, selon le calendrier officiel | [Examen final](evaluations/examen-final.qmd)<br>[Mini-rapport 2](evaluations/mini-rapport-2.qmd) |
+    <article class="calendar-block calendar-block--final">
+      <header class="calendar-block__header">
+        <span>Bloc 4</span>
+        <h2>Valider, classifier, intégrer</h2>
+      </header>
+      <ol class="calendar-weeks" start="13">
+        <li>
+          <span class="calendar-week__number">13</span>
+          <a href="modules/semaine-09-variables-externes-autocorrelation/index.html">Variables externes</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">14</span>
+          <a href="modules/semaine-10-classification-modeles-avances/index.html">Classification</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">15</span>
+          <a href="modules/atelier-04-recapitulation/index.html">Atelier 04 - Intégration</a>
+        </li>
+        <li>
+          <span class="calendar-week__number">16</span>
+          <a href="evaluations/examen-final.html">Examen final</a>
+          <a href="evaluations/mini-rapport-2.html">Mini-rapport 2</a>
+        </li>
+      </ol>
+    </article>
+  </div>
+</section>
+```
