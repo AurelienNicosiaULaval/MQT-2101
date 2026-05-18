@@ -1,0 +1,320 @@
+---
+title: "Guide enseignant - Atelier 01"
+subtitle: "Explorer un tableau avec RStudio"
+lang: fr
+format:
+  html:
+    embed-resources: true
+---
+
+::: {.callout-important title="Document interne"}
+Ce document est destiné à la personne qui accompagne les étudiantes et étudiants
+pendant l'atelier. Il n'est pas rendu dans le site étudiant.
+:::
+
+## Intention pédagogique
+
+L'atelier 01 sert de pont entre les deux premiers modules et la suite du cours.
+Les étudiantes et étudiants doivent passer d'une première familiarisation avec R
+et Quarto à une pratique accompagnée d'analyse descriptive.
+
+Objectif central :
+
+> Amener chaque personne à produire une trace Quarto courte, reproductible et
+> interprétée prudemment à partir du fichier `ventes_pme_quebec.csv`.
+
+Ce n'est pas un atelier de performance technique. Le but est de stabiliser une
+méthode de travail :
+
+1. importer;
+2. inspecter;
+3. construire un dictionnaire rapide des variables;
+4. diagnostiquer les données;
+5. résumer;
+6. visualiser;
+7. formuler des constats descriptifs;
+8. recommander une priorité de prochaine analyse;
+9. nommer une limite.
+
+## Avant la séance
+
+À vérifier avant l'arrivée des étudiants :
+
+- le site du cours est accessible;
+- la page de l'atelier 01 est accessible;
+- le fichier `ventes_pme_quebec.csv` est disponible depuis la page Données;
+- le guide Quarto et les démonstrations de la semaine 02 sont faciles à retrouver;
+- RStudio ou Positron est disponible sur les postes utilisés;
+- les packages `tidyverse` et `janitor` sont installés ou installables rapidement.
+
+Message à donner en ouverture :
+
+> Aujourd'hui, l'objectif n'est pas de tout comprendre du premier coup. L'objectif
+> est de produire une petite analyse complète, du fichier CSV jusqu'aux constats,
+> en gardant une trace reproductible dans Quarto.
+
+## Déroulement suggéré
+
+Durée indicative : 2 h 30 à 3 h.
+
+| Moment | Durée | Intention | Production attendue |
+|---|---:|---|---|
+| Mise en route | 10 min | Ouvrir l'environnement et le QMD | Projet ouvert, QMD créé |
+| Importation | 10 min | Lire le CSV et vérifier le tableau | Code d'importation, dimensions |
+| Inspection | 15 min | Nommer l'unité d'observation et les variables | Courte description du tableau |
+| Dictionnaire | 15 min | Classer les variables et leurs rôles | Tableau de variables clés |
+| Diagnostic | 15 min | Repérer les valeurs manquantes | Tableau de valeurs manquantes |
+| Résumé | 20 min | Produire un tableau par succursale | Tableau synthèse |
+| Visualisation | 20 min | Produire deux graphiques | Graphiques lisibles |
+| Enquête guidée | 25 min | Choisir marketing, opérations ou saisons | Priorité appuyée par un résultat |
+| Interprétation | 20 min | Rédiger trois constats et une limite | Texte court dans le QMD |
+| Mise en commun | 10 min | Comparer les priorités proposées | Recommandation ajustée |
+| Clôture | 10 min | Vérifier le rendu Quarto | HTML rendu ou erreur identifiée |
+
+## Points de passage à surveiller
+
+### 1. Le projet et les chemins
+
+Signes que la personne est bloquée :
+
+- le fichier n'est pas trouvé;
+- le code fonctionne seulement avec un chemin propre à son ordinateur;
+- le QMD ne se rend pas parce que le chemin change entre la console et Quarto.
+
+Relance utile :
+
+> Où se trouve ton fichier CSV par rapport au fichier `.qmd`?
+
+Correction minimale :
+
+```r
+library(tidyverse)
+library(janitor)
+
+ventes <- readr::read_csv("data/ventes_pme_quebec.csv", show_col_types = FALSE) |>
+  janitor::clean_names() |>
+  mutate(
+    mois = as.Date(mois),
+    campagne_locale = factor(
+      campagne_locale,
+      levels = c(0, 1),
+      labels = c("non", "oui")
+    )
+  )
+```
+
+Si le fichier est utilisé directement depuis le dépôt du cours pendant une
+démonstration, le chemin peut être adapté localement. Pour une remise étudiante,
+privilégier un dossier `data/` dans le projet de travail.
+
+### 2. L'unité d'observation
+
+Réponse attendue :
+
+> Une ligne représente une succursale pour un mois donné.
+
+Relance utile :
+
+> Si deux lignes ont la même succursale, qu'est-ce qui change entre elles?
+
+### 3. Le dictionnaire rapide
+
+Le dictionnaire sert à ralentir le passage au calcul. Les étudiants doivent
+comprendre ce que les colonnes représentent avant de produire des graphiques.
+
+Code de référence :
+
+```r
+dictionnaire_variables <- tibble(
+  variable = names(ventes),
+  type = map_chr(ventes, \(x) class(x)[1]),
+  valeurs_manquantes = map_int(ventes, \(x) sum(is.na(x))),
+  exemple = map_chr(ventes, \(x) {
+    valeurs_observees <- x[!is.na(x)]
+
+    if (length(valeurs_observees) == 0) {
+      NA_character_
+    } else {
+      as.character(valeurs_observees[[1]])
+    }
+  })
+)
+```
+
+Relances utiles :
+
+- Cette variable mesure-t-elle une performance, une caractéristique de
+  succursale ou un contexte?
+- Est-ce une variable numérique ou catégorielle?
+- Quelle variable serait utile pour une décision de gestion?
+
+### 4. Les valeurs manquantes
+
+Le but n'est pas de faire une imputation. Le but est de signaler les variables
+touchées et de protéger les résumés.
+
+Code de référence :
+
+```r
+ventes |>
+  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "valeurs_manquantes"
+  ) |>
+  filter(valeurs_manquantes > 0)
+```
+
+Phrase attendue :
+
+> Les valeurs manquantes peuvent modifier certains indicateurs, surtout les
+> moyennes. Les résultats doivent donc être interprétés avec prudence.
+
+Point à faire observer :
+
+```r
+ventes |>
+  summarise(
+    satisfaction_sans_na_rm = mean(satisfaction),
+    satisfaction_avec_na_rm = mean(satisfaction, na.rm = TRUE)
+  )
+```
+
+La version sans `na.rm = TRUE` devient manquante si la variable contient au
+moins une valeur manquante.
+
+### 5. Le tableau synthèse
+
+Code de référence :
+
+```r
+resume_succursales <- ventes |>
+  group_by(succursale, region) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    clients_totaux = sum(clients, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    delai_livraison_moyen = mean(delai_livraison_jours, na.rm = TRUE),
+    ruptures_stock_totales = sum(ruptures_stock, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+resume_succursales
+```
+
+Relances utiles :
+
+- Quelle succursale a les ventes totales les plus élevées?
+- Est-ce aussi celle qui a la meilleure satisfaction?
+- Quel indicateur doit être lu avec prudence?
+
+### 6. Les graphiques
+
+Graphique obligatoire :
+
+```r
+resume_succursales |>
+  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
+  ggplot(aes(ventes_totales, succursale)) +
+  geom_col(fill = "#0B4F6C") +
+  labs(
+    title = "Ventes totales par succursale",
+    x = "Ventes totales",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Graphique exploratoire possible :
+
+```r
+ventes |>
+  ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +
+  geom_point(size = 2.4, alpha = 0.8) +
+  labs(
+    title = "Satisfaction et ruptures de stock",
+    x = "Ruptures de stock",
+    y = "Satisfaction",
+    color = "Succursale"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Relance importante :
+
+> Est-ce que ton graphique décrit une tendance observée ou démontre une cause?
+
+### 7. L'enquête guidée
+
+Le bloc d'enquête donne de la densité à l'atelier. Les étudiants choisissent une
+priorité, mais ils doivent l'appuyer par un résultat descriptif.
+
+Trois routes possibles :
+
+| Route | Production attendue | Point de vigilance |
+|---|---|---|
+| Marketing | Comparaison selon campagne locale ou dépenses marketing | Ne pas conclure à un effet causal |
+| Opérations | Ruptures, délais et satisfaction par succursale | Ne pas réduire la performance aux ventes |
+| Saisons | Ventes, satisfaction et ruptures par saison | Tenir compte du nombre d'observations |
+
+Phrase attendue :
+
+> La prochaine analyse devrait prioriser [route], parce que [résultat observé].
+> Ce résultat reste descriptif; il faudrait ensuite vérifier [limite ou variable
+> de contrôle].
+
+## Critères de réussite pendant l'atelier
+
+Une trace acceptable à la fin de la séance contient :
+
+- le code d'importation;
+- une phrase sur l'unité d'observation;
+- un diagnostic des valeurs manquantes;
+- un dictionnaire rapide des variables clés;
+- un tableau synthèse;
+- deux graphiques;
+- trois constats descriptifs;
+- une limite d'interprétation;
+- une recommandation de prochaine analyse.
+
+Il n'est pas nécessaire que le texte soit parfait. Il faut surtout que la
+démarche soit visible, reproductible et statistiquement prudente.
+
+## Erreurs fréquentes
+
+| Problème | Intervention courte |
+|---|---|
+| Le fichier n'est pas trouvé | Revenir au dossier du projet et au chemin relatif |
+| Le QMD ne se rend pas | Exécuter le document depuis une session propre |
+| Les packages ne sont pas chargés | Ajouter les `library()` au début du QMD |
+| Une variable est mal nommée | Utiliser `names(ventes)` ou `glimpse(ventes)` |
+| Les valeurs manquantes sont ignorées | Ajouter `na.rm = TRUE` et commenter la limite |
+| Le constat devient causal | Reformuler avec "les données montrent" ou "on observe" |
+| Le graphique est décoratif | Demander quelle comparaison il sert à appuyer |
+
+## Questions de relance
+
+- Que représente une ligne du tableau?
+- Quelle variable veux-tu comparer?
+- Quel indicateur répond le mieux à ta question?
+- Ton résultat décrit-il une observation ou propose-t-il une explication?
+- Quelle limite doit être mentionnée pour éviter une interprétation trop forte?
+- Si tu devais prolonger l'analyse avec une régression, quelle variable voudrais-tu expliquer?
+- Quelle priorité recommanderais-tu à la direction, et sur quel résultat observé t'appuies-tu?
+
+## Clôture suggérée
+
+À la fin, demander aux étudiants de noter dans leur QMD :
+
+1. un résultat descriptif dont ils sont confiants;
+2. une limite qu'ils comprennent bien;
+3. une priorité de prochaine analyse qu'ils peuvent défendre.
+
+Message de fermeture :
+
+> Vous venez de faire le cycle complet d'une première analyse : importer,
+> inspecter, diagnostiquer, résumer, visualiser et interpréter. La prochaine
+> étape du cours consistera à passer d'une description prudente à une relation
+> statistique modélisée.

@@ -1,0 +1,67 @@
+<script>
+(() => {
+  const copyText = async (text) => {
+    const clipboard = typeof navigator !== "undefined" ? navigator.clipboard : null;
+
+    if (clipboard && window.isSecureContext) {
+      await clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  };
+
+  const enhanceCard = (card) => {
+    if (card.querySelector(".course-copy-button")) return;
+
+    const code = card.querySelector("pre code");
+    if (!code) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "course-copy-button";
+    button.textContent = "Copier";
+    button.setAttribute("aria-label", "Copier le contenu du bloc");
+
+    button.addEventListener("click", async () => {
+      const originalLabel = button.textContent;
+      try {
+        await copyText(code.textContent.trimEnd());
+        button.textContent = "Copié";
+        button.classList.add("course-copy-button--done");
+      } catch {
+        button.textContent = "Erreur";
+        button.classList.add("course-copy-button--error");
+      }
+
+      window.setTimeout(() => {
+        button.textContent = originalLabel;
+        button.classList.remove("course-copy-button--done", "course-copy-button--error");
+      }, 1800);
+    });
+
+    card.appendChild(button);
+  };
+
+  const enhanceCards = () => {
+    document
+      .querySelectorAll(".resource-code-card, .install-code-card")
+      .forEach(enhanceCard);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceCards);
+  } else {
+    enhanceCards();
+  }
+})();
+</script>

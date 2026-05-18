@@ -13,7 +13,8 @@ format:
 Cet atelier n'est pas une séance autonome complète. Il sert à pratiquer en
 classe les gestes vus dans les deux premières semaines : ouvrir un projet,
 importer un fichier CSV, inspecter un tableau, produire quelques résumés,
-visualiser et écrire des constats descriptifs.
+visualiser, écrire des constats descriptifs et choisir une priorité de prochaine
+analyse.
 
 :::: {.quick-facts}
 ::: {.fact-card}
@@ -28,7 +29,7 @@ visualiser et écrire des constats descriptifs.
 <div class="fact-icon fact-tools" aria-hidden="true"></div>
 <div>
   <div class="fact-label">Pendant</div>
-  <div class="fact-value">Travail accompagné dans RStudio</div>
+  <div class="fact-value">2 h 30 à 3 h dans RStudio</div>
 </div>
 :::
 
@@ -75,6 +76,47 @@ pas refaire toute la semaine 02 : il suffit de retrouver les gestes essentiels.
 </div>
 ```
 
+::: {.callout-note title="Préparation à faire avant d'arriver"}
+Avant l'atelier, vérifiez surtout que vous pouvez reprendre les gestes de base
+du module 02 sans repartir de zéro. L'atelier est supervisé : il est normal de
+poser des questions, mais vous gagnerez du temps si les éléments suivants sont
+déjà prêts.
+:::
+
+::: {.checklist-box}
+- [ ] RStudio ou Positron ouvre sans problème.
+- [ ] Les packages `tidyverse` et `janitor` se chargent.
+- [ ] Vous savez où se trouve votre dossier de travail.
+- [ ] Vous savez créer ou ouvrir un fichier `.qmd`.
+- [ ] Vous savez exécuter un bloc de code dans Quarto.
+- [ ] Vous savez importer un fichier CSV avec `readr::read_csv()`.
+- [ ] Vous savez utiliser `glimpse()` ou `dim()` pour inspecter un tableau.
+- [ ] Vous avez relu les exercices 3 à 5 de la semaine 02.
+:::
+
+Ce qui doit être maîtrisé avant l'atelier :
+
+```{=html}
+<div class="resource-list">
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-4">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Importer</span><span class="resource-row-text">Lire un CSV et vérifier que le tableau apparaît dans l'environnement.</span></span>
+  </a>
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-5">
+    <span class="resource-row-icon reading-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Inspecter</span><span class="resource-row-text">Nommer l'unité d'observation et reconnaître les types de variables.</span></span>
+  </a>
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-6">
+    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Diagnostiquer</span><span class="resource-row-text">Repérer les valeurs manquantes et expliquer pourquoi elles comptent.</span></span>
+  </a>
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-7">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Résumer et visualiser</span><span class="resource-row-text">Produire un tableau descriptif, un graphique et une phrase prudente.</span></span>
+  </a>
+</div>
+```
+
 À revoir si nécessaire :
 
 - [guide Quarto](../../ressources/guide-quarto.html), pour créer et rendre un fichier `.qmd`;
@@ -83,6 +125,21 @@ pas refaire toute la semaine 02 : il suffit de retrouver les gestes essentiels.
 ::: {.callout-tip title="Préparation minimale"}
 Si vous arrivez avec RStudio ouvert, le fichier CSV accessible et un document
 Quarto créé, c'est suffisant pour commencer l'atelier.
+:::
+
+::: {.callout-important title="Ce qui sera accompagné en classe"}
+Les comparaisons plus exploratoires, par exemple satisfaction et ruptures de
+stock, ventes et dépenses marketing ou ventes selon la saison, seront travaillées
+pendant l'atelier avec accompagnement. Vous n'avez pas besoin de maîtriser ces
+analyses avant d'arriver. L'objectif est d'apprendre à passer d'un résultat à un
+constat descriptif prudent.
+:::
+
+::: {.callout-note title="Pourquoi ce bloc?"}
+L'atelier commence par des gestes simples : inspecter les variables, vérifier les
+types, regarder l'effet des valeurs manquantes et produire des graphiques
+lisibles. Ces gestes servent ensuite une question de gestion : quelle priorité
+d'analyse recommander à la direction?
 :::
 
 ## Pendant l'atelier
@@ -103,8 +160,8 @@ travail en classe est le suivant.
   <div class="agenda-item">
     <div class="agenda-time">Étape 1</div>
     <div class="agenda-content">
-      <h3>Inspecter les variables</h3>
-      <p>Repérer les variables de ventes, de clientèle, de marketing, d'opérations et de satisfaction.</p>
+      <h3>Construire le dictionnaire</h3>
+      <p>Repérer les types, les exemples de valeurs et les variables utiles pour la décision.</p>
     </div>
   </div>
   <div class="agenda-item">
@@ -129,10 +186,17 @@ travail en classe est le suivant.
     </div>
   </div>
   <div class="agenda-item">
+    <div class="agenda-time">Étape 5</div>
+    <div class="agenda-content">
+      <h3>Choisir une priorité</h3>
+      <p>Comparer marketing, opérations ou saisonnalité et formuler une recommandation prudente.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
     <div class="agenda-time">Fin</div>
     <div class="agenda-content">
-      <h3>Écrire les constats</h3>
-      <p>Rédiger trois constats descriptifs courts et une limite d'interprétation.</p>
+      <h3>Mettre en commun</h3>
+      <p>Présenter une priorité, un résultat descriptif, une limite et une question pour la suite.</p>
     </div>
   </div>
 </div>
@@ -143,11 +207,13 @@ Ce qui doit être produit pendant l'atelier :
 ::: {.checklist-box}
 - [ ] le code d'importation;
 - [ ] une inspection du tableau;
+- [ ] un dictionnaire rapide de variables clés;
 - [ ] un diagnostic des valeurs manquantes;
 - [ ] un tableau synthèse par succursale;
 - [ ] deux graphiques;
 - [ ] trois constats descriptifs;
 - [ ] une limite d'interprétation.
+- [ ] une recommandation de prochaine analyse.
 :::
 
 ## Après l'atelier
@@ -165,12 +231,13 @@ Le rapport doit contenir :
 - une courte introduction;
 - le code d'importation;
 - une description du tableau;
+- un dictionnaire rapide des variables clés;
 - le diagnostic des valeurs manquantes;
 - le tableau synthèse;
 - deux graphiques;
 - trois constats descriptifs;
 - une limite d'interprétation;
-- une question d'analyse pour la suite.
+- une recommandation de prochaine analyse.
 
 Avant de considérer le fichier terminé :
 

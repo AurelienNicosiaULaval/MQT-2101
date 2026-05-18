@@ -4022,6 +4022,49 @@ body.page-evaluations main.content > header.quarto-title-block,
 body.page-resource main.content > header.quarto-title-block {
 display: none;
 }
+main.content .code-copy-outer-scaffold {
+position: relative;
+margin: 1rem 0;
+border: 1px solid #bddbe8;
+border-radius: 8px;
+background: #eef8fc;
+box-shadow: 0 12px 28px rgba(11, 79, 108, 0.08);
+overflow: hidden;
+}
+main.content .code-copy-outer-scaffold div.sourceCode {
+margin: 0;
+border: 0;
+background: transparent;
+}
+main.content .code-copy-outer-scaffold pre.sourceCode {
+margin: 0;
+padding: 1rem;
+padding-top: 1.2rem;
+border: 0;
+background: transparent;
+color: #123244;
+}
+main.content .code-copy-outer-scaffold code.sourceCode,
+main.content .code-copy-outer-scaffold pre.sourceCode code {
+background: transparent;
+}
+main.content .code-copy-button {
+position: absolute;
+top: 0.45rem;
+right: 0.55rem;
+min-width: 2.25rem;
+min-height: 2rem;
+border: 1px solid #9cc9dc;
+border-radius: 7px;
+background: rgba(255, 255, 255, 0.94);
+color: #0b4f6c;
+box-shadow: 0 8px 18px rgba(11, 79, 108, 0.12);
+}
+main.content .code-copy-button:hover,
+main.content .code-copy-button:focus-visible {
+border-color: #0b4f6c;
+background: #ffffff;
+}
 .home-hero {
 display: grid;
 grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
@@ -4759,19 +4802,23 @@ border-top: 1px solid #d8e4ea;
 min-width: 0;
 }
 .install-code-card {
+position: relative;
 min-width: 0;
-border: 1px solid #1f3f52;
+border: 1px solid #bddbe8;
 border-radius: 8px;
-background: #123244;
-color: #ffffff;
-box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+background: #eef8fc;
+color: #123244;
+box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.install-code-card span {
+.install-code-card > span {
 display: block;
+min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
-border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-color: #d9edf5;
+padding-right: 5.6rem;
+border-bottom: 1px solid #cfe4ee;
+background: #dff1f8;
+color: #0b4f6c;
 font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
@@ -4781,11 +4828,11 @@ text-transform: uppercase;
 margin: 0;
 padding: 1rem;
 background: transparent;
-color: #ffffff;
+color: #123244;
 white-space: pre-wrap;
 }
 .install-code-card code {
-color: #ffffff;
+color: #123244;
 font-size: 0.92rem;
 }
 .install-code-card--wide {
@@ -6109,19 +6156,23 @@ color: var(--resource-muted);
 line-height: 1.48;
 }
 .resource-code-card {
+position: relative;
 min-width: 0;
-border: 1px solid #1f3f52;
+border: 1px solid #bddbe8;
 border-radius: 8px;
-background: #123244;
-color: #ffffff;
-box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+background: #eef8fc;
+color: var(--resource-ink);
+box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.resource-code-card span {
+.resource-code-card > span {
 display: block;
+min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
-border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-color: #d9edf5;
+padding-right: 5.6rem;
+border-bottom: 1px solid #cfe4ee;
+background: #dff1f8;
+color: var(--resource-blue);
 font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
@@ -6131,24 +6182,60 @@ text-transform: uppercase;
 margin: 0;
 padding: 1rem;
 background: transparent;
-color: #ffffff;
+color: var(--resource-ink);
 white-space: pre-wrap;
 }
 .resource-code-card code {
-color: #ffffff;
+color: var(--resource-ink);
 font-size: 0.9rem;
 }
 .resource-code-card--light {
-border-color: var(--resource-line);
-background: #f8fbfd;
+border-color: #bddbe8;
+background: #eef8fc;
 color: var(--resource-ink);
 }
-.resource-code-card--light span {
-border-bottom-color: var(--resource-line);
-color: #657684;
+.resource-code-card--light > span {
+border-bottom-color: #cfe4ee;
+background: #dff1f8;
+color: var(--resource-blue);
 }
 .resource-code-card--light code {
 color: var(--resource-ink);
+}
+.course-copy-button {
+position: absolute;
+top: 0.45rem;
+right: 0.55rem;
+z-index: 3;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-width: 4.4rem;
+min-height: 2rem;
+padding: 0.3rem 0.65rem;
+border: 1px solid #9cc9dc;
+border-radius: 7px;
+background: rgba(255, 255, 255, 0.95);
+color: #0b4f6c;
+box-shadow: 0 8px 18px rgba(11, 79, 108, 0.12);
+font-size: 0.78rem;
+font-weight: 900;
+line-height: 1;
+cursor: pointer;
+}
+.course-copy-button:hover,
+.course-copy-button:focus-visible {
+border-color: #0b4f6c;
+background: #ffffff;
+outline: none;
+}
+.course-copy-button--done {
+border-color: #2a9d8f;
+color: #176b62;
+}
+.course-copy-button--error {
+border-color: #b24b54;
+color: #7a1c24;
 }
 .resource-template-flow {
 display: grid;
@@ -6651,7 +6738,7 @@ Atelier en classe
 <h2 class="anchored">
 Explorer un tableau avec RStudio
 </h2>
-<p>Cet atelier n’est pas une séance autonome complète. Il sert à pratiquer en classe les gestes vus dans les deux premières semaines : ouvrir un projet, importer un fichier CSV, inspecter un tableau, produire quelques résumés, visualiser et écrire des constats descriptifs.</p>
+<p>Cet atelier n’est pas une séance autonome complète. Il sert à pratiquer en classe les gestes vus dans les deux premières semaines : ouvrir un projet, importer un fichier CSV, inspecter un tableau, produire quelques résumés, visualiser, écrire des constats descriptifs et choisir une priorité de prochaine analyse.</p>
 <div class="quick-facts">
 <div class="fact-card">
 <div class="fact-icon fact-clock" aria-hidden="true">
@@ -6675,7 +6762,7 @@ Préparation courte
 Pendant
 </div>
 <div class="fact-value">
-Travail accompagné dans RStudio
+2 h 30 à 3 h dans RStudio
 </div>
 </div>
 </div>
@@ -6727,6 +6814,50 @@ Trace finale en QMD
     <p>Créer un document Quarto minimal avec une section d&#39;importation et une section de résultats.</p>
   </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled" title="Préparation à faire avant d&#39;arriver">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Préparation à faire avant d’arriver
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avant l’atelier, vérifiez surtout que vous pouvez reprendre les gestes de base du module 02 sans repartir de zéro. L’atelier est supervisé : il est normal de poser des questions, mais vous gagnerez du temps si les éléments suivants sont déjà prêts.</p>
+</div>
+</div>
+<div class="checklist-box">
+<ul class="task-list">
+<li><label><input type="checkbox">RStudio ou Positron ouvre sans problème.</label></li>
+<li><label><input type="checkbox">Les packages <code>tidyverse</code> et <code>janitor</code> se chargent.</label></li>
+<li><label><input type="checkbox">Vous savez où se trouve votre dossier de travail.</label></li>
+<li><label><input type="checkbox">Vous savez créer ou ouvrir un fichier <code>.qmd</code>.</label></li>
+<li><label><input type="checkbox">Vous savez exécuter un bloc de code dans Quarto.</label></li>
+<li><label><input type="checkbox">Vous savez importer un fichier CSV avec <code>readr::read_csv()</code>.</label></li>
+<li><label><input type="checkbox">Vous savez utiliser <code>glimpse()</code> ou <code>dim()</code> pour inspecter un tableau.</label></li>
+<li><label><input type="checkbox">Vous avez relu les exercices 3 à 5 de la semaine 02.</label></li>
+</ul>
+</div>
+<p>Ce qui doit être maîtrisé avant l’atelier :</p>
+<div class="resource-list">
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-4">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Importer</span><span class="resource-row-text">Lire un CSV et vérifier que le tableau apparaît dans l&#39;environnement.</span></span>
+  </a>
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-5">
+    <span class="resource-row-icon reading-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Inspecter</span><span class="resource-row-text">Nommer l&#39;unité d&#39;observation et reconnaître les types de variables.</span></span>
+  </a>
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-6">
+    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Diagnostiquer</span><span class="resource-row-text">Repérer les valeurs manquantes et expliquer pourquoi elles comptent.</span></span>
+  </a>
+  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-7">
+    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
+    <span><span class="resource-row-title">Résumer et visualiser</span><span class="resource-row-text">Produire un tableau descriptif, un graphique et une phrase prudente.</span></span>
+  </a>
+</div>
 <p>À revoir si nécessaire :</p>
 <ul>
 <li><a href="../../ressources/guide-quarto.html">guide Quarto</a>, pour créer et rendre un fichier <code>.qmd</code>;</li>
@@ -6745,6 +6876,32 @@ Trace finale en QMD
 <p>Si vous arrivez avec RStudio ouvert, le fichier CSV accessible et un document Quarto créé, c’est suffisant pour commencer l’atelier.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-important callout-titled" title="Ce qui sera accompagné en classe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Ce qui sera accompagné en classe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les comparaisons plus exploratoires, par exemple satisfaction et ruptures de stock, ventes et dépenses marketing ou ventes selon la saison, seront travaillées pendant l’atelier avec accompagnement. Vous n’avez pas besoin de maîtriser ces analyses avant d’arriver. L’objectif est d’apprendre à passer d’un résultat à un constat descriptif prudent.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi ce bloc?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pourquoi ce bloc?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’atelier commence par des gestes simples : inspecter les variables, vérifier les types, regarder l’effet des valeurs manquantes et produire des graphiques lisibles. Ces gestes servent ensuite une question de gestion : quelle priorité d’analyse recommander à la direction?</p>
+</div>
+</div>
 </section>
 <section id="pendant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="pendant-latelier">Pendant l’atelier</h2>
@@ -6760,8 +6917,8 @@ Trace finale en QMD
   <div class="agenda-item">
     <div class="agenda-time">Étape 1</div>
     <div class="agenda-content">
-      <h3 class="anchored">Inspecter les variables</h3>
-      <p>Repérer les variables de ventes, de clientèle, de marketing, d&#39;opérations et de satisfaction.</p>
+      <h3 class="anchored">Construire le dictionnaire</h3>
+      <p>Repérer les types, les exemples de valeurs et les variables utiles pour la décision.</p>
     </div>
   </div>
   <div class="agenda-item">
@@ -6786,10 +6943,17 @@ Trace finale en QMD
     </div>
   </div>
   <div class="agenda-item">
+    <div class="agenda-time">Étape 5</div>
+    <div class="agenda-content">
+      <h3 class="anchored">Choisir une priorité</h3>
+      <p>Comparer marketing, opérations ou saisonnalité et formuler une recommandation prudente.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
     <div class="agenda-time">Fin</div>
     <div class="agenda-content">
-      <h3 class="anchored">Écrire les constats</h3>
-      <p>Rédiger trois constats descriptifs courts et une limite d&#39;interprétation.</p>
+      <h3 class="anchored">Mettre en commun</h3>
+      <p>Présenter une priorité, un résultat descriptif, une limite et une question pour la suite.</p>
     </div>
   </div>
 </div>
@@ -6798,11 +6962,13 @@ Trace finale en QMD
 <ul class="task-list">
 <li><label><input type="checkbox">le code d’importation;</label></li>
 <li><label><input type="checkbox">une inspection du tableau;</label></li>
+<li><label><input type="checkbox">un dictionnaire rapide de variables clés;</label></li>
 <li><label><input type="checkbox">un diagnostic des valeurs manquantes;</label></li>
 <li><label><input type="checkbox">un tableau synthèse par succursale;</label></li>
 <li><label><input type="checkbox">deux graphiques;</label></li>
 <li><label><input type="checkbox">trois constats descriptifs;</label></li>
 <li><label><input type="checkbox">une limite d’interprétation.</label></li>
+<li><label><input type="checkbox">une recommandation de prochaine analyse.</label></li>
 </ul>
 </div>
 </section>
@@ -6827,12 +6993,13 @@ Trace finale en QMD
 <li>une courte introduction;</li>
 <li>le code d’importation;</li>
 <li>une description du tableau;</li>
+<li>un dictionnaire rapide des variables clés;</li>
 <li>le diagnostic des valeurs manquantes;</li>
 <li>le tableau synthèse;</li>
 <li>deux graphiques;</li>
 <li>trois constats descriptifs;</li>
 <li>une limite d’interprétation;</li>
-<li>une question d’analyse pour la suite.</li>
+<li>une recommandation de prochaine analyse.</li>
 </ul>
 <p>Avant de considérer le fichier terminé :</p>
 <div class="checklist-box">
@@ -6905,6 +7072,73 @@ Trace finale en QMD
   <span class="course-gpt-widget__label">Assistant IA</span>
   <span class="course-gpt-widget__hint">Ouvrir le GPT du cours</span>
 </a>
+<script>
+(() => {
+  const copyText = async (text) => {
+    const clipboard = typeof navigator !== "undefined" ? navigator.clipboard : null;
+
+    if (clipboard && window.isSecureContext) {
+      await clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  };
+
+  const enhanceCard = (card) => {
+    if (card.querySelector(".course-copy-button")) return;
+
+    const code = card.querySelector("pre code");
+    if (!code) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "course-copy-button";
+    button.textContent = "Copier";
+    button.setAttribute("aria-label", "Copier le contenu du bloc");
+
+    button.addEventListener("click", async () => {
+      const originalLabel = button.textContent;
+      try {
+        await copyText(code.textContent.trimEnd());
+        button.textContent = "Copié";
+        button.classList.add("course-copy-button--done");
+      } catch {
+        button.textContent = "Erreur";
+        button.classList.add("course-copy-button--error");
+      }
+
+      window.setTimeout(() => {
+        button.textContent = originalLabel;
+        button.classList.remove("course-copy-button--done", "course-copy-button--error");
+      }, 1800);
+    });
+
+    card.appendChild(button);
+  };
+
+  const enhanceCards = () => {
+    document
+      .querySelectorAll(".resource-code-card, .install-code-card")
+      .forEach(enhanceCard);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceCards);
+  } else {
+    enhanceCards();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

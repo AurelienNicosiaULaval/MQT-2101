@@ -4057,6 +4057,49 @@ body.page-evaluations main.content > header.quarto-title-block,
 body.page-resource main.content > header.quarto-title-block {
 display: none;
 }
+main.content .code-copy-outer-scaffold {
+position: relative;
+margin: 1rem 0;
+border: 1px solid #bddbe8;
+border-radius: 8px;
+background: #eef8fc;
+box-shadow: 0 12px 28px rgba(11, 79, 108, 0.08);
+overflow: hidden;
+}
+main.content .code-copy-outer-scaffold div.sourceCode {
+margin: 0;
+border: 0;
+background: transparent;
+}
+main.content .code-copy-outer-scaffold pre.sourceCode {
+margin: 0;
+padding: 1rem;
+padding-top: 1.2rem;
+border: 0;
+background: transparent;
+color: #123244;
+}
+main.content .code-copy-outer-scaffold code.sourceCode,
+main.content .code-copy-outer-scaffold pre.sourceCode code {
+background: transparent;
+}
+main.content .code-copy-button {
+position: absolute;
+top: 0.45rem;
+right: 0.55rem;
+min-width: 2.25rem;
+min-height: 2rem;
+border: 1px solid #9cc9dc;
+border-radius: 7px;
+background: rgba(255, 255, 255, 0.94);
+color: #0b4f6c;
+box-shadow: 0 8px 18px rgba(11, 79, 108, 0.12);
+}
+main.content .code-copy-button:hover,
+main.content .code-copy-button:focus-visible {
+border-color: #0b4f6c;
+background: #ffffff;
+}
 .home-hero {
 display: grid;
 grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
@@ -4794,19 +4837,23 @@ border-top: 1px solid #d8e4ea;
 min-width: 0;
 }
 .install-code-card {
+position: relative;
 min-width: 0;
-border: 1px solid #1f3f52;
+border: 1px solid #bddbe8;
 border-radius: 8px;
-background: #123244;
-color: #ffffff;
-box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+background: #eef8fc;
+color: #123244;
+box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.install-code-card span {
+.install-code-card > span {
 display: block;
+min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
-border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-color: #d9edf5;
+padding-right: 5.6rem;
+border-bottom: 1px solid #cfe4ee;
+background: #dff1f8;
+color: #0b4f6c;
 font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
@@ -4816,11 +4863,11 @@ text-transform: uppercase;
 margin: 0;
 padding: 1rem;
 background: transparent;
-color: #ffffff;
+color: #123244;
 white-space: pre-wrap;
 }
 .install-code-card code {
-color: #ffffff;
+color: #123244;
 font-size: 0.92rem;
 }
 .install-code-card--wide {
@@ -6144,19 +6191,23 @@ color: var(--resource-muted);
 line-height: 1.48;
 }
 .resource-code-card {
+position: relative;
 min-width: 0;
-border: 1px solid #1f3f52;
+border: 1px solid #bddbe8;
 border-radius: 8px;
-background: #123244;
-color: #ffffff;
-box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+background: #eef8fc;
+color: var(--resource-ink);
+box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.resource-code-card span {
+.resource-code-card > span {
 display: block;
+min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
-border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-color: #d9edf5;
+padding-right: 5.6rem;
+border-bottom: 1px solid #cfe4ee;
+background: #dff1f8;
+color: var(--resource-blue);
 font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
@@ -6166,24 +6217,60 @@ text-transform: uppercase;
 margin: 0;
 padding: 1rem;
 background: transparent;
-color: #ffffff;
+color: var(--resource-ink);
 white-space: pre-wrap;
 }
 .resource-code-card code {
-color: #ffffff;
+color: var(--resource-ink);
 font-size: 0.9rem;
 }
 .resource-code-card--light {
-border-color: var(--resource-line);
-background: #f8fbfd;
+border-color: #bddbe8;
+background: #eef8fc;
 color: var(--resource-ink);
 }
-.resource-code-card--light span {
-border-bottom-color: var(--resource-line);
-color: #657684;
+.resource-code-card--light > span {
+border-bottom-color: #cfe4ee;
+background: #dff1f8;
+color: var(--resource-blue);
 }
 .resource-code-card--light code {
 color: var(--resource-ink);
+}
+.course-copy-button {
+position: absolute;
+top: 0.45rem;
+right: 0.55rem;
+z-index: 3;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-width: 4.4rem;
+min-height: 2rem;
+padding: 0.3rem 0.65rem;
+border: 1px solid #9cc9dc;
+border-radius: 7px;
+background: rgba(255, 255, 255, 0.95);
+color: #0b4f6c;
+box-shadow: 0 8px 18px rgba(11, 79, 108, 0.12);
+font-size: 0.78rem;
+font-weight: 900;
+line-height: 1;
+cursor: pointer;
+}
+.course-copy-button:hover,
+.course-copy-button:focus-visible {
+border-color: #0b4f6c;
+background: #ffffff;
+outline: none;
+}
+.course-copy-button--done {
+border-color: #2a9d8f;
+color: #176b62;
+}
+.course-copy-button--error {
+border-color: #b24b54;
+color: #7a1c24;
 }
 .resource-template-flow {
 display: grid;
@@ -6657,26 +6744,36 @@ display: none;
   <li><a href="#démonstration-1---charger-le-fichier" id="toc-démonstration-1---charger-le-fichier" class="nav-link" data-scroll-target="#démonstration-1---charger-le-fichier">Démonstration 1 - Charger le fichier</a></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
   </ul></li>
-  <li><a href="#épisode-3---vérifier-la-qualité-minimale" id="toc-épisode-3---vérifier-la-qualité-minimale" class="nav-link" data-scroll-target="#épisode-3---vérifier-la-qualité-minimale">Épisode 3 - Vérifier la qualité minimale</a>
+  <li><a href="#épisode-3---construire-un-dictionnaire-rapide" id="toc-épisode-3---construire-un-dictionnaire-rapide" class="nav-link" data-scroll-target="#épisode-3---construire-un-dictionnaire-rapide">Épisode 3 - Construire un dictionnaire rapide</a>
   <ul class="collapse">
-  <li><a href="#démonstration-2---repérer-les-valeurs-manquantes" id="toc-démonstration-2---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#démonstration-2---repérer-les-valeurs-manquantes">Démonstration 2 - Repérer les valeurs manquantes</a></li>
-  </ul></li>
-  <li><a href="#épisode-4---construire-les-premiers-indicateurs" id="toc-épisode-4---construire-les-premiers-indicateurs" class="nav-link" data-scroll-target="#épisode-4---construire-les-premiers-indicateurs">Épisode 4 - Construire les premiers indicateurs</a>
-  <ul class="collapse">
-  <li><a href="#démonstration-3---résumer-par-succursale" id="toc-démonstration-3---résumer-par-succursale" class="nav-link" data-scroll-target="#démonstration-3---résumer-par-succursale">Démonstration 3 - Résumer par succursale</a></li>
+  <li><a href="#démonstration-2---décrire-les-variables" id="toc-démonstration-2---décrire-les-variables" class="nav-link" data-scroll-target="#démonstration-2---décrire-les-variables">Démonstration 2 - Décrire les variables</a></li>
   <li><a href="#trace-finale-1" id="toc-trace-finale-1" class="nav-link" data-scroll-target="#trace-finale-1">Trace finale</a></li>
   </ul></li>
-  <li><a href="#épisode-5---visualiser-pour-comparer" id="toc-épisode-5---visualiser-pour-comparer" class="nav-link" data-scroll-target="#épisode-5---visualiser-pour-comparer">Épisode 5 - Visualiser pour comparer</a>
+  <li><a href="#épisode-4---vérifier-la-qualité-minimale" id="toc-épisode-4---vérifier-la-qualité-minimale" class="nav-link" data-scroll-target="#épisode-4---vérifier-la-qualité-minimale">Épisode 4 - Vérifier la qualité minimale</a>
   <ul class="collapse">
-  <li><a href="#démonstration-4---comparer-les-ventes-annuelles" id="toc-démonstration-4---comparer-les-ventes-annuelles" class="nav-link" data-scroll-target="#démonstration-4---comparer-les-ventes-annuelles">Démonstration 4 - Comparer les ventes annuelles</a></li>
-  <li><a href="#démonstration-5---satisfaction-et-ruptures-de-stock" id="toc-démonstration-5---satisfaction-et-ruptures-de-stock" class="nav-link" data-scroll-target="#démonstration-5---satisfaction-et-ruptures-de-stock">Démonstration 5 - Satisfaction et ruptures de stock</a></li>
+  <li><a href="#démonstration-3---repérer-les-valeurs-manquantes" id="toc-démonstration-3---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#démonstration-3---repérer-les-valeurs-manquantes">Démonstration 3 - Repérer les valeurs manquantes</a></li>
+  <li><a href="#démonstration-4---voir-leffet-de-na.rm-true" id="toc-démonstration-4---voir-leffet-de-na.rm-true" class="nav-link" data-scroll-target="#démonstration-4---voir-leffet-de-na.rm-true">Démonstration 4 - Voir l’effet de <code>na.rm = TRUE</code></a></li>
   </ul></li>
-  <li><a href="#épisode-6---passer-du-résultat-au-constat" id="toc-épisode-6---passer-du-résultat-au-constat" class="nav-link" data-scroll-target="#épisode-6---passer-du-résultat-au-constat">Épisode 6 - Passer du résultat au constat</a></li>
-  <li><a href="#épisode-7---préparer-une-prochaine-analyse" id="toc-épisode-7---préparer-une-prochaine-analyse" class="nav-link" data-scroll-target="#épisode-7---préparer-une-prochaine-analyse">Épisode 7 - Préparer une prochaine analyse</a>
+  <li><a href="#épisode-5---construire-les-premiers-indicateurs" id="toc-épisode-5---construire-les-premiers-indicateurs" class="nav-link" data-scroll-target="#épisode-5---construire-les-premiers-indicateurs">Épisode 5 - Construire les premiers indicateurs</a>
   <ul class="collapse">
-  <li><a href="#démonstration-6---comparer-les-saisons" id="toc-démonstration-6---comparer-les-saisons" class="nav-link" data-scroll-target="#démonstration-6---comparer-les-saisons">Démonstration 6 - Comparer les saisons</a></li>
-  </ul></li>
+  <li><a href="#démonstration-5---résumer-par-succursale" id="toc-démonstration-5---résumer-par-succursale" class="nav-link" data-scroll-target="#démonstration-5---résumer-par-succursale">Démonstration 5 - Résumer par succursale</a></li>
   <li><a href="#trace-finale-2" id="toc-trace-finale-2" class="nav-link" data-scroll-target="#trace-finale-2">Trace finale</a></li>
+  </ul></li>
+  <li><a href="#épisode-6---visualiser-pour-comparer" id="toc-épisode-6---visualiser-pour-comparer" class="nav-link" data-scroll-target="#épisode-6---visualiser-pour-comparer">Épisode 6 - Visualiser pour comparer</a>
+  <ul class="collapse">
+  <li><a href="#démonstration-6---comparer-les-ventes-annuelles" id="toc-démonstration-6---comparer-les-ventes-annuelles" class="nav-link" data-scroll-target="#démonstration-6---comparer-les-ventes-annuelles">Démonstration 6 - Comparer les ventes annuelles</a></li>
+  <li><a href="#démonstration-7---satisfaction-et-ruptures-de-stock" id="toc-démonstration-7---satisfaction-et-ruptures-de-stock" class="nav-link" data-scroll-target="#démonstration-7---satisfaction-et-ruptures-de-stock">Démonstration 7 - Satisfaction et ruptures de stock</a></li>
+  </ul></li>
+  <li><a href="#épisode-7---enquête-guidée-pour-la-direction" id="toc-épisode-7---enquête-guidée-pour-la-direction" class="nav-link" data-scroll-target="#épisode-7---enquête-guidée-pour-la-direction">Épisode 7 - Enquête guidée pour la direction</a>
+  <ul class="collapse">
+  <li><a href="#option-a---marketing" id="toc-option-a---marketing" class="nav-link" data-scroll-target="#option-a---marketing">Option A - Marketing</a></li>
+  <li><a href="#option-b---opérations" id="toc-option-b---opérations" class="nav-link" data-scroll-target="#option-b---opérations">Option B - Opérations</a></li>
+  <li><a href="#option-c---saisons" id="toc-option-c---saisons" class="nav-link" data-scroll-target="#option-c---saisons">Option C - Saisons</a></li>
+  </ul></li>
+  <li><a href="#épisode-8---passer-du-résultat-au-constat" id="toc-épisode-8---passer-du-résultat-au-constat" class="nav-link" data-scroll-target="#épisode-8---passer-du-résultat-au-constat">Épisode 8 - Passer du résultat au constat</a></li>
+  <li><a href="#épisode-9---préparer-la-mise-en-commun" id="toc-épisode-9---préparer-la-mise-en-commun" class="nav-link" data-scroll-target="#épisode-9---préparer-la-mise-en-commun">Épisode 9 - Préparer la mise en commun</a></li>
+  <li><a href="#épisode-10---mise-en-commun" id="toc-épisode-10---mise-en-commun" class="nav-link" data-scroll-target="#épisode-10---mise-en-commun">Épisode 10 - Mise en commun</a></li>
+  <li><a href="#trace-finale-3" id="toc-trace-finale-3" class="nav-link" data-scroll-target="#trace-finale-3">Trace finale</a></li>
   <li><a href="#grille-formative" id="toc-grille-formative" class="nav-link" data-scroll-target="#grille-formative">Grille formative</a></li>
   <li><a href="#auto-vérification-assistée-par-ia" id="toc-auto-vérification-assistée-par-ia" class="nav-link" data-scroll-target="#auto-vérification-assistée-par-ia">Auto-vérification assistée par IA</a></li>
   <li><a href="#fin-du-parcours" id="toc-fin-du-parcours" class="nav-link" data-scroll-target="#fin-du-parcours">Fin du parcours</a></li>
@@ -6733,11 +6830,12 @@ display: none;
 <ul>
 <li>une question d’analyse reformulée;</li>
 <li>une description du tableau;</li>
+<li>un dictionnaire rapide des variables clés;</li>
 <li>un diagnostic des valeurs manquantes;</li>
 <li>un tableau synthèse par succursale;</li>
 <li>deux visualisations;</li>
 <li>trois constats;</li>
-<li>une question de prochaine analyse.</li>
+<li>une recommandation de prochaine analyse.</li>
 </ul>
 </section>
 <section id="organisation-du-parcours" class="level2">
@@ -6777,12 +6875,30 @@ display: none;
 </tr>
 </tbody>
 </table>
-<p>Temps estimé : 2 h à 3 h.</p>
+<p>Temps estimé : 2 h 30 à 3 h en classe, avec finalisation possible après la séance.</p>
 </section>
 <section id="données-et-préparation" class="level2">
 <h2 class="anchored" data-anchor-id="données-et-préparation">Données et préparation</h2>
 <p>Fichier : <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.</p>
 <p><a href="data/ventes_pme_quebec.csv">Télécharger le fichier CSV</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;data/ventes_pme_quebec.csv&quot;</span>)) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/ventes_pme_quebec.csv&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-01-r/data/ventes_pme_quebec.csv&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>currency_ca <span class="ot">&lt;-</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">prefix =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">suffix =</span> <span class="st">&quot; $&quot;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">big.mark =</span> <span class="st">&quot; &quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="épisode-1---entrer-dans-la-question" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-1---entrer-dans-la-question">Épisode 1 - Entrer dans la question</h2>
@@ -6853,13 +6969,18 @@ display: none;
 <section id="démonstration-1---charger-le-fichier" class="level3">
 <h3 class="anchored" data-anchor-id="démonstration-1---charger-le-fichier">Démonstration 1 - Charger le fichier</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ventes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois =</span> <span class="fu">as.Date</span>(mois),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">campagne_locale =</span> <span class="fu">factor</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      campagne_locale,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 60
 Columns: 15
@@ -6869,7 +6990,7 @@ $ saison                &lt;chr&gt; &quot;moyenne&quot;, &quot;moyenne&quot;, &q
 $ succursale            &lt;chr&gt; &quot;Gatineau&quot;, &quot;Montréal&quot;, &quot;Québec&quot;, &quot;Sherbrooke&quot;, …
 $ region                &lt;chr&gt; &quot;Outaouais&quot;, &quot;Montréal&quot;, &quot;Capitale-Nationale&quot;, &quot;…
 $ surface_m2            &lt;dbl&gt; 410, 520, 460, 390, 360, 410, 520, 460, 390, 360…
-$ campagne_locale       &lt;dbl&gt; 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, …
+$ campagne_locale       &lt;fct&gt; oui, oui, non, non, oui, non, non, oui, non, non…
 $ depenses_marketing    &lt;dbl&gt; 4799, 5755, 5646, 2367, 7671, 4771, 3070, 5029, …
 $ clients               &lt;dbl&gt; 2188, 2568, 2280, 2013, 1967, 2100, 2468, 2417, …
 $ panier_moyen          &lt;dbl&gt; 59.35, 65.66, 62.41, 59.69, 54.91, 55.02, 64.23,…
@@ -6885,6 +7006,8 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <li>le tableau a 60 lignes;</li>
 <li>le tableau a 15 colonnes;</li>
 <li>chaque ligne représente une succursale pour un mois;</li>
+<li><code>mois</code> est traité comme une date;</li>
+<li><code>campagne_locale</code> est une variable catégorielle rendue lisible;</li>
 <li>certaines variables décrivent les ventes;</li>
 <li>d’autres décrivent le marketing, les opérations et la satisfaction.</li>
 </ul>
@@ -6910,8 +7033,170 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </blockquote>
 </section>
 </section>
-<section id="épisode-3---vérifier-la-qualité-minimale" class="level2">
-<h2 class="anchored" data-anchor-id="épisode-3---vérifier-la-qualité-minimale">Épisode 3 - Vérifier la qualité minimale</h2>
+<section id="épisode-3---construire-un-dictionnaire-rapide" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-3---construire-un-dictionnaire-rapide">Épisode 3 - Construire un dictionnaire rapide</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Construire un dictionnaire rapide">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère - Construire un dictionnaire rapide
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avant de résumer les ventes, il faut nommer les variables importantes. Un petit dictionnaire de variables aide à vérifier les types, les valeurs manquantes et les exemples de valeurs observées.</p>
+</div>
+</div>
+<section id="démonstration-2---décrire-les-variables" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-2---décrire-les-variables">Démonstration 2 - Décrire les variables</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dictionnaire_variables <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">names</span>(ventes),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">map_chr</span>(ventes, \(x) <span class="fu">class</span>(x)[<span class="dv">1</span>]),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">valeurs_manquantes =</span> <span class="fu">map_int</span>(ventes, \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x))),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">exemple =</span> <span class="fu">map_chr</span>(ventes, \(x) {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    valeurs_observees <span class="ot">&lt;-</span> x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(valeurs_observees) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NA_character_</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>(valeurs_observees[[<span class="dv">1</span>]])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>dictionnaire_variables <span class="sc">|&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: right;">valeurs_manquantes</th>
+<th style="text-align: left;">exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mois</td>
+<td style="text-align: left;">Date</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2025-01-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mois_label</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">janvier</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">saison</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">moyenne</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">succursale</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Gatineau</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Outaouais</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">surface_m2</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">410</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">campagne_locale</td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">oui</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">depenses_marketing</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">4799</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">clients</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">panier_moyen</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">59.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ventes</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">129858</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">delai_livraison_jours</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ruptures_stock</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">satisfaction</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">7.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">taux_retour</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0.076</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 3 - Choisir les variables clés">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>À vous 3 - Choisir les variables clés
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans votre rapport, choisissez cinq variables utiles pour la direction. Pour chacune, indiquez son rôle : performance commerciale, clientèle, marketing, opérations ou satisfaction.</p>
+</div>
+</div>
+</section>
+<section id="trace-finale-1" class="level3">
+<h3 class="anchored" data-anchor-id="trace-finale-1">Trace finale</h3>
+<p>Phrase à adapter :</p>
+<blockquote class="blockquote">
+<p>Les variables les plus utiles pour un premier diagnostic sont les ventes, les clients, le panier moyen, les ruptures de stock et la satisfaction. Elles permettent de comparer les succursales selon le volume commercial, l’expérience client et certains enjeux opérationnels.</p>
+</blockquote>
+</section>
+</section>
+<section id="épisode-4---vérifier-la-qualité-minimale" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-4---vérifier-la-qualité-minimale">Épisode 4 - Vérifier la qualité minimale</h2>
 <div class="callout callout-style-default callout-note callout-titled" title="Repère - Pourquoi vérifier les valeurs manquantes?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -6925,35 +7210,88 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <p>Un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes. Les valeurs manquantes doivent être repérées et signalées.</p>
 </div>
 </div>
-<section id="démonstration-2---repérer-les-valeurs-manquantes" class="level3">
-<h3 class="anchored" data-anchor-id="démonstration-2---repérer-les-valeurs-manquantes">Démonstration 2 - Repérer les valeurs manquantes</h3>
+<section id="démonstration-3---repérer-les-valeurs-manquantes" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-3---repérer-les-valeurs-manquantes">Démonstration 3 - Repérer les valeurs manquantes</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;valeurs_manquantes&quot;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(valeurs_manquantes <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(valeurs_manquantes))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  variable              valeurs_manquantes
-  &lt;chr&gt;                              &lt;int&gt;
-1 satisfaction                           3
-2 delai_livraison_jours                  2</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;valeurs_manquantes&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(valeurs_manquantes <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(valeurs_manquantes))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: right;">valeurs_manquantes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">satisfaction</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">delai_livraison_jours</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 3 - Interpréter la qualité des données">
+</section>
+<section id="démonstration-4---voir-leffet-de-na.rm-true" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-4---voir-leffet-de-na.rm-true">Démonstration 4 - Voir l’effet de <code>na.rm = TRUE</code></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_sans_na_rm =</span> <span class="fu">mean</span>(satisfaction),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_avec_na_rm =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_sans_na_rm =</span> <span class="fu">mean</span>(delai_livraison_jours),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_avec_na_rm =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">satisfaction_sans_na_rm</th>
+<th style="text-align: right;">satisfaction_avec_na_rm</th>
+<th style="text-align: right;">delai_sans_na_rm</th>
+<th style="text-align: right;">delai_avec_na_rm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">7.647368</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">2.675862</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 4 - Interpréter la qualité des données">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 3 - Interpréter la qualité des données
+<span class="screen-reader-only">Astuce</span>À vous 4 - Interpréter la qualité des données
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -6975,8 +7313,8 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </section>
 </section>
-<section id="épisode-4---construire-les-premiers-indicateurs" class="level2">
-<h2 class="anchored" data-anchor-id="épisode-4---construire-les-premiers-indicateurs">Épisode 4 - Construire les premiers indicateurs</h2>
+<section id="épisode-5---construire-les-premiers-indicateurs" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-5---construire-les-premiers-indicateurs">Épisode 5 - Construire les premiers indicateurs</h2>
 <div class="callout callout-style-default callout-note callout-titled" title="Repère - Du tableau brut aux indicateurs">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -6990,49 +7328,116 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <p>Les variables brutes deviennent utiles lorsqu’elles sont transformées en indicateurs interprétables : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.</p>
 </div>
 </div>
-<section id="démonstration-3---résumer-par-succursale" class="level3">
-<h3 class="anchored" data-anchor-id="démonstration-3---résumer-par-succursale">Démonstration 3 - Résumer par succursale</h3>
+<section id="démonstration-5---résumer-par-succursale" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-5---résumer-par-succursale">Démonstration 5 - Résumer par succursale</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale, region) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ventes_totales))</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="sc">|&gt;</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">currency_ca</span>(ventes_totales),</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">currency_ca</span>(panier_moyen),</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">round</span>(satisfaction_moyenne, <span class="dv">1</span>),</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">round</span>(delai_moyen, <span class="dv">1</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 8
-  succursale     region             ventes_totales clients_totaux panier_moyen
-  &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;       
-1 Montréal       Montréal           1 923 795 $             31351 61,27 $     
-2 Québec         Capitale-Nationale 1 740 846 $             27586 63,02 $     
-3 Sherbrooke     Estrie             1 453 016 $             23858 60,82 $     
-4 Gatineau       Outaouais          1 442 128 $             24166 59,59 $     
-5 Trois-Rivières Mauricie           1 403 919 $             22334 62,92 $     
-# ℹ 3 more variables: satisfaction_moyenne &lt;dbl&gt;, delai_moyen &lt;dbl&gt;,
-#   ruptures_stock &lt;dbl&gt;</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale, region) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ventes_totales))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">currency_ca</span>(ventes_totales),</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">currency_ca</span>(panier_moyen),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">round</span>(satisfaction_moyenne, <span class="dv">1</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">round</span>(delai_moyen, <span class="dv">1</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">succursale</th>
+<th style="text-align: left;">region</th>
+<th style="text-align: left;">ventes_totales</th>
+<th style="text-align: right;">clients_totaux</th>
+<th style="text-align: left;">panier_moyen</th>
+<th style="text-align: right;">satisfaction_moyenne</th>
+<th style="text-align: right;">delai_moyen</th>
+<th style="text-align: right;">ruptures_stock</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Montréal</td>
+<td style="text-align: left;">Montréal</td>
+<td style="text-align: left;">1 923 795 $</td>
+<td style="text-align: right;">31351</td>
+<td style="text-align: left;">61,27 $</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Québec</td>
+<td style="text-align: left;">Capitale-Nationale</td>
+<td style="text-align: left;">1 740 846 $</td>
+<td style="text-align: right;">27586</td>
+<td style="text-align: left;">63,02 $</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sherbrooke</td>
+<td style="text-align: left;">Estrie</td>
+<td style="text-align: left;">1 453 016 $</td>
+<td style="text-align: right;">23858</td>
+<td style="text-align: left;">60,82 $</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gatineau</td>
+<td style="text-align: left;">Outaouais</td>
+<td style="text-align: left;">1 442 128 $</td>
+<td style="text-align: right;">24166</td>
+<td style="text-align: left;">59,59 $</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trois-Rivières</td>
+<td style="text-align: left;">Mauricie</td>
+<td style="text-align: left;">1 403 919 $</td>
+<td style="text-align: right;">22334</td>
+<td style="text-align: left;">62,92 $</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">29</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 4 - Lire le tableau de façon analytique">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 5 - Lire le tableau de façon analytique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 4 - Lire le tableau de façon analytique
+<span class="screen-reader-only">Astuce</span>À vous 5 - Lire le tableau de façon analytique
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -7046,13 +7451,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 </section>
-<section id="trace-finale-1" class="level3">
-<h3 class="anchored" data-anchor-id="trace-finale-1">Trace finale</h3>
+<section id="trace-finale-2" class="level3">
+<h3 class="anchored" data-anchor-id="trace-finale-2">Trace finale</h3>
 <p>Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui éclairent le mieux la comparaison.</p>
 </section>
 </section>
-<section id="épisode-5---visualiser-pour-comparer" class="level2">
-<h2 class="anchored" data-anchor-id="épisode-5---visualiser-pour-comparer">Épisode 5 - Visualiser pour comparer</h2>
+<section id="épisode-6---visualiser-pour-comparer" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-6---visualiser-pour-comparer">Épisode 6 - Visualiser pour comparer</h2>
 <div class="callout callout-style-default callout-note callout-titled" title="Repère - Un graphique doit porter un message">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7066,20 +7471,20 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <p>Un graphique utile répond à une question simple. Le titre, les axes et les unités doivent aider à lire le résultat sans ambiguïté.</p>
 </div>
 </div>
-<section id="démonstration-4---comparer-les-ventes-annuelles" class="level3">
-<h3 class="anchored" data-anchor-id="démonstration-4---comparer-les-ventes-annuelles">Démonstration 4 - Comparer les ventes annuelles</h3>
+<section id="démonstration-6---comparer-les-ventes-annuelles" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-6---comparer-les-ventes-annuelles">Démonstration 6 - Comparer les ventes annuelles</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">succursale =</span> <span class="fu">fct_reorder</span>(succursale, ventes_totales)) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ventes_totales, succursale)) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#2A9D8F&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> currency_ca) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Ventes annuelles par succursale&quot;</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Ventes&quot;</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>synthese_succursales <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">succursale =</span> <span class="fu">fct_reorder</span>(succursale, ventes_totales)) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ventes_totales, succursale)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#2A9D8F&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> currency_ca) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Ventes annuelles par succursale&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Ventes&quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -7089,13 +7494,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 <p>Ce graphique répond à une question simple : quelles succursales contribuent le plus au chiffre d’affaires?</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 5 - Ajouter un deuxième graphique">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 6 - Ajouter un deuxième graphique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 5 - Ajouter un deuxième graphique
+<span class="screen-reader-only">Astuce</span>À vous 6 - Ajouter un deuxième graphique
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -7108,20 +7513,20 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 </section>
-<section id="démonstration-5---satisfaction-et-ruptures-de-stock" class="level3">
-<h3 class="anchored" data-anchor-id="démonstration-5---satisfaction-et-ruptures-de-stock">Démonstration 5 - Satisfaction et ruptures de stock</h3>
+<section id="démonstration-7---satisfaction-et-ruptures-de-stock" class="level3">
+<h3 class="anchored" data-anchor-id="démonstration-7---satisfaction-et-ruptures-de-stock">Démonstration 7 - Satisfaction et ruptures de stock</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ruptures_stock, satisfaction, <span class="at">color =</span> succursale)) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.4</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;#1F2933&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Satisfaction client et ruptures de stock&quot;</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Nombre de ruptures de stock&quot;</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Satisfaction moyenne sur 10&quot;</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Succursale&quot;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ruptures_stock, satisfaction, <span class="at">color =</span> succursale)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.4</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;#1F2933&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Satisfaction client et ruptures de stock&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Nombre de ruptures de stock&quot;</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Satisfaction moyenne sur 10&quot;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Succursale&quot;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -7145,8 +7550,226 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </section>
 </section>
-<section id="épisode-6---passer-du-résultat-au-constat" class="level2">
-<h2 class="anchored" data-anchor-id="épisode-6---passer-du-résultat-au-constat">Épisode 6 - Passer du résultat au constat</h2>
+<section id="épisode-7---enquête-guidée-pour-la-direction" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-7---enquête-guidée-pour-la-direction">Épisode 7 - Enquête guidée pour la direction</h2>
+<p>La direction hésite entre trois priorités : mieux comprendre le marketing, réduire les problèmes opérationnels ou examiner les saisons. Choisissez une priorité et produisez une preuve descriptive.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère - Une priorité, une preuve, une limite">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère - Une priorité, une preuve, une limite
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une recommandation préliminaire doit rester prudente. Elle doit nommer un résultat observé, expliquer pourquoi il mérite une analyse plus poussée et dire ce que l’analyse descriptive ne prouve pas.</p>
+</div>
+</div>
+<section id="option-a---marketing" class="level3">
+<h3 class="anchored" data-anchor-id="option-a---marketing">Option A - Marketing</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>priorite_marketing <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(campagne_locale) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_moyennes =</span> <span class="fu">mean</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">depenses_marketing_moyennes =</span> <span class="fu">mean</span>(depenses_marketing, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_moyennes =</span> <span class="fu">currency_ca</span>(ventes_moyennes),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">depenses_marketing_moyennes =</span> <span class="fu">currency_ca</span>(depenses_marketing_moyennes),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">currency_ca</span>(panier_moyen)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>priorite_marketing <span class="sc">|&gt;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 32%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">campagne_locale</th>
+<th style="text-align: right;">observations</th>
+<th style="text-align: left;">ventes_moyennes</th>
+<th style="text-align: left;">depenses_marketing_moyennes</th>
+<th style="text-align: left;">panier_moyen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">non</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: left;">129 813 $</td>
+<td style="text-align: left;">3 706,06 $</td>
+<td style="text-align: left;">61,70 $</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">oui</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">137 102 $</td>
+<td style="text-align: left;">5 230,50 $</td>
+<td style="text-align: left;">61,26 $</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="option-b---opérations" class="level3">
+<h3 class="anchored" data-anchor-id="option-b---opérations">Option B - Opérations</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>priorite_operations <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ruptures_stock)) <span class="sc">|&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">round</span>(delai_moyen, <span class="dv">1</span>),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">round</span>(satisfaction_moyenne, <span class="dv">1</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>priorite_operations <span class="sc">|&gt;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">succursale</th>
+<th style="text-align: right;">ruptures_stock</th>
+<th style="text-align: right;">delai_moyen</th>
+<th style="text-align: right;">satisfaction_moyenne</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Trois-Rivières</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">7.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gatineau</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">7.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sherbrooke</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">7.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Montréal</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">7.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Québec</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">7.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="option-c---saisons" class="level3">
+<h3 class="anchored" data-anchor-id="option-c---saisons">Option C - Saisons</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>priorite_saison <span class="ot">&lt;-</span> ventes <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(saison) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">currency_ca</span>(ventes_totales),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">round</span>(satisfaction_moyenne, <span class="dv">1</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>priorite_saison <span class="sc">|&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">saison</th>
+<th style="text-align: left;">ventes_totales</th>
+<th style="text-align: right;">satisfaction_moyenne</th>
+<th style="text-align: right;">ruptures_stock</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">haute</td>
+<td style="text-align: left;">1 541 747 $</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">moyenne</td>
+<td style="text-align: left;">1 965 806 $</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reguliere</td>
+<td style="text-align: left;">4 456 151 $</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">77</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 7 - Choisir une priorité">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>À vous 7 - Choisir une priorité
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Choisissez une seule option. Ajoutez dans votre rapport le tableau ou le graphique qui appuie votre choix, puis écrivez une phrase qui commence par : « La prochaine analyse devrait prioriser… ».</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Pause diagnostic">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Pause diagnostic
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une priorité d’analyse n’est pas une décision finale. Elle indique seulement où concentrer la prochaine analyse statistique.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="épisode-8---passer-du-résultat-au-constat" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-8---passer-du-résultat-au-constat">Épisode 8 - Passer du résultat au constat</h2>
 <div class="callout callout-style-default callout-note callout-titled" title="Repère - Écrire un constat utile">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7170,13 +7793,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <blockquote class="blockquote">
 <p>Montréal génère les ventes les plus élevées, mais cette information doit être mise en relation avec le nombre de clients et le panier moyen. Le diagnostic doit donc distinguer volume d’achalandage et valeur moyenne des transactions.</p>
 </blockquote>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 6 - Écrire vos trois constats">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 8 - Écrire vos trois constats">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 6 - Écrire vos trois constats
+<span class="screen-reader-only">Astuce</span>À vous 8 - Écrire vos trois constats
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -7189,9 +7812,9 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 </section>
-<section id="épisode-7---préparer-une-prochaine-analyse" class="level2">
-<h2 class="anchored" data-anchor-id="épisode-7---préparer-une-prochaine-analyse">Épisode 7 - Préparer une prochaine analyse</h2>
-<p>Votre diagnostic doit finir par une question de prochaine analyse. Choisissez une seule priorité.</p>
+<section id="épisode-9---préparer-la-mise-en-commun" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-9---préparer-la-mise-en-commun">Épisode 9 - Préparer la mise en commun</h2>
+<p>Votre diagnostic doit finir par une recommandation de prochaine analyse. Choisissez une seule priorité.</p>
 <p>Options possibles :</p>
 <ul>
 <li>analyser l’effet des dépenses marketing;</li>
@@ -7200,37 +7823,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <li>comparer les succursales à clientèle comparable;</li>
 <li>analyser les périodes de haute saison séparément.</li>
 </ul>
-<section id="démonstration-6---comparer-les-saisons" class="level3">
-<h3 class="anchored" data-anchor-id="démonstration-6---comparer-les-saisons">Démonstration 6 - Comparer les saisons</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(saison) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">currency_ca</span>(ventes_totales),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">round</span>(satisfaction_moyenne, <span class="dv">1</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  saison    ventes_totales satisfaction_moyenne ruptures_stock
-  &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;          &lt;dbl&gt;
-1 haute     1 541 747 $                     7.6             27
-2 moyenne   1 965 806 $                     7.8             29
-3 reguliere 4 456 151 $                     7.6             77</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 7 - Formuler la prochaine analyse">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 9 - Formuler la prochaine analyse">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 7 - Formuler la prochaine analyse
+<span class="screen-reader-only">Astuce</span>À vous 9 - Formuler la prochaine analyse
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -7243,19 +7842,31 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 </section>
+<section id="épisode-10---mise-en-commun" class="level2">
+<h2 class="anchored" data-anchor-id="épisode-10---mise-en-commun">Épisode 10 - Mise en commun</h2>
+<p>En équipe ou en petits groupes, comparez les priorités proposées.</p>
+<p>Chaque groupe présente en une minute :</p>
+<ol type="1">
+<li>la priorité choisie;</li>
+<li>le résultat descriptif qui appuie cette priorité;</li>
+<li>une limite d’interprétation;</li>
+<li>une question à vérifier avec un modèle plus tard.</li>
+</ol>
+<p>Après la mise en commun, ajustez votre recommandation si un autre groupe a repéré une limite ou un indicateur plus convaincant.</p>
 </section>
-<section id="trace-finale-2" class="level2">
-<h2 class="anchored" data-anchor-id="trace-finale-2">Trace finale</h2>
+<section id="trace-finale-3" class="level2">
+<h2 class="anchored" data-anchor-id="trace-finale-3">Trace finale</h2>
 <p>Votre trace finale prend la forme d’un fichier Quarto court. Elle doit contenir les sections suivantes :</p>
 <ol type="1">
 <li>Question d’analyse.</li>
 <li>Description du tableau.</li>
+<li>Dictionnaire rapide des variables clés.</li>
 <li>Diagnostic des valeurs manquantes.</li>
 <li>Tableau synthèse par succursale.</li>
 <li>Graphique 1 : ventes par succursale.</li>
 <li>Graphique 2 : indicateur opérationnel ou satisfaction.</li>
 <li>Trois constats.</li>
-<li>Question de prochaine analyse.</li>
+<li>Recommandation de prochaine analyse.</li>
 </ol>
 </section>
 <section id="grille-formative" class="level2">
@@ -7285,20 +7896,28 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td>L’unité d’observation et les variables sont décrites</td>
 </tr>
 <tr class="even">
+<td>Dictionnaire</td>
+<td>Les variables clés sont nommées et classées</td>
+</tr>
+<tr class="odd">
 <td>Qualité des données</td>
 <td>Les valeurs manquantes sont repérées et commentées</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Indicateurs</td>
 <td>Les indicateurs sont calculés par succursale</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Graphiques</td>
 <td>Les graphiques ont un titre, des axes clairs et un message</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Interprétation</td>
 <td>Les constats sont descriptifs et leurs limites sont explicites</td>
+</tr>
+<tr class="odd">
+<td>Priorité</td>
+<td>La recommandation de prochaine analyse s’appuie sur un résultat</td>
 </tr>
 <tr class="even">
 <td>Reproductibilité</td>
@@ -7338,6 +7957,73 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
   <span class="course-gpt-widget__label">Assistant IA</span>
   <span class="course-gpt-widget__hint">Ouvrir le GPT du cours</span>
 </a>
+<script>
+(() => {
+  const copyText = async (text) => {
+    const clipboard = typeof navigator !== "undefined" ? navigator.clipboard : null;
+
+    if (clipboard && window.isSecureContext) {
+      await clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  };
+
+  const enhanceCard = (card) => {
+    if (card.querySelector(".course-copy-button")) return;
+
+    const code = card.querySelector("pre code");
+    if (!code) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "course-copy-button";
+    button.textContent = "Copier";
+    button.setAttribute("aria-label", "Copier le contenu du bloc");
+
+    button.addEventListener("click", async () => {
+      const originalLabel = button.textContent;
+      try {
+        await copyText(code.textContent.trimEnd());
+        button.textContent = "Copié";
+        button.classList.add("course-copy-button--done");
+      } catch {
+        button.textContent = "Erreur";
+        button.classList.add("course-copy-button--error");
+      }
+
+      window.setTimeout(() => {
+        button.textContent = originalLabel;
+        button.classList.remove("course-copy-button--done", "course-copy-button--error");
+      }, 1800);
+    });
+
+    card.appendChild(button);
+  };
+
+  const enhanceCards = () => {
+    document
+      .querySelectorAll(".resource-code-card, .install-code-card")
+      .forEach(enhanceCard);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceCards);
+  } else {
+    enhanceCards();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -8,8 +8,9 @@ format:
 ## Objectif
 
 Cette page regroupe les gestes R principaux de l'atelier : importer les données,
-inspecter le tableau, vérifier les valeurs manquantes, produire un tableau
-synthèse et créer deux graphiques.
+inspecter le tableau, créer un dictionnaire rapide, vérifier les valeurs
+manquantes, produire un tableau synthèse, créer des graphiques et choisir une
+priorité de prochaine analyse.
 
 ## Préparation
 
@@ -62,7 +63,29 @@ glimpse(ventes)
 - variables numériques;
 - variables catégorielles.
 
-## Démonstration 2 - Repérer les valeurs manquantes
+## Démonstration 2 - Construire un dictionnaire rapide
+
+```{r}
+#| eval: false
+dictionnaire_variables <- tibble(
+  variable = names(ventes),
+  type = map_chr(ventes, \(x) class(x)[1]),
+  valeurs_manquantes = map_int(ventes, \(x) sum(is.na(x))),
+  exemple = map_chr(ventes, \(x) {
+    valeurs_observees <- x[!is.na(x)]
+
+    if (length(valeurs_observees) == 0) {
+      NA_character_
+    } else {
+      as.character(valeurs_observees[[1]])
+    }
+  })
+)
+
+dictionnaire_variables
+```
+
+## Démonstration 3 - Repérer les valeurs manquantes
 
 ```{r}
 #| eval: false
@@ -82,7 +105,20 @@ diagnostic_manquants
 Interprétation attendue : nommer les variables touchées et expliquer pourquoi
 des valeurs manquantes peuvent influencer un résumé descriptif.
 
-## Démonstration 3 - Résumer par succursale
+## Démonstration 4 - Voir l'effet de `na.rm = TRUE`
+
+```{r}
+#| eval: false
+ventes |>
+  summarise(
+    satisfaction_sans_na_rm = mean(satisfaction),
+    satisfaction_avec_na_rm = mean(satisfaction, na.rm = TRUE),
+    delai_sans_na_rm = mean(delai_livraison_jours),
+    delai_avec_na_rm = mean(delai_livraison_jours, na.rm = TRUE)
+  )
+```
+
+## Démonstration 5 - Résumer par succursale
 
 ```{r}
 #| eval: false
@@ -108,7 +144,7 @@ synthese_succursales |>
   )
 ```
 
-## Démonstration 4 - Visualiser les ventes
+## Démonstration 6 - Visualiser les ventes
 
 ```{r}
 #| eval: false
@@ -125,7 +161,7 @@ synthese_succursales |>
   theme_minimal(base_size = 12)
 ```
 
-## Démonstration 5 - Explorer une relation descriptive
+## Démonstration 7 - Explorer une relation descriptive
 
 ```{r}
 #| eval: false
@@ -145,10 +181,70 @@ ventes |>
 Ce graphique suggère une relation descriptive possible. Il ne permet pas, à lui
 seul, de conclure à une relation causale.
 
+## Démonstration 8 - Choisir une priorité de prochaine analyse
+
+Option marketing :
+
+```{r}
+#| eval: false
+ventes |>
+  group_by(campagne_locale) |>
+  summarise(
+    observations = n(),
+    ventes_moyennes = mean(ventes, na.rm = TRUE),
+    depenses_marketing_moyennes = mean(depenses_marketing, na.rm = TRUE),
+    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(
+    ventes_moyennes = currency_ca(ventes_moyennes),
+    depenses_marketing_moyennes = currency_ca(depenses_marketing_moyennes),
+    panier_moyen = currency_ca(panier_moyen)
+  )
+```
+
+Option opérations :
+
+```{r}
+#| eval: false
+ventes |>
+  group_by(succursale) |>
+  summarise(
+    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
+    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ruptures_stock)) |>
+  mutate(
+    delai_moyen = round(delai_moyen, 1),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  )
+```
+
+Option saisons :
+
+```{r}
+#| eval: false
+ventes |>
+  group_by(saison) |>
+  summarise(
+    ventes_totales = sum(ventes, na.rm = TRUE),
+    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(
+    ventes_totales = currency_ca(ventes_totales),
+    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  )
+```
+
 ## À vérifier
 
 - le code s'exécute du début à la fin;
 - les chemins sont relatifs au projet;
 - les objets portent des noms explicites;
 - les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste descriptive.
+- l'interprétation reste descriptive;
+- la priorité de prochaine analyse s'appuie sur un résultat observé.

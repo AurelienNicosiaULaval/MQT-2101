@@ -4022,6 +4022,49 @@ body.page-evaluations main.content > header.quarto-title-block,
 body.page-resource main.content > header.quarto-title-block {
 display: none;
 }
+main.content .code-copy-outer-scaffold {
+position: relative;
+margin: 1rem 0;
+border: 1px solid #bddbe8;
+border-radius: 8px;
+background: #eef8fc;
+box-shadow: 0 12px 28px rgba(11, 79, 108, 0.08);
+overflow: hidden;
+}
+main.content .code-copy-outer-scaffold div.sourceCode {
+margin: 0;
+border: 0;
+background: transparent;
+}
+main.content .code-copy-outer-scaffold pre.sourceCode {
+margin: 0;
+padding: 1rem;
+padding-top: 1.2rem;
+border: 0;
+background: transparent;
+color: #123244;
+}
+main.content .code-copy-outer-scaffold code.sourceCode,
+main.content .code-copy-outer-scaffold pre.sourceCode code {
+background: transparent;
+}
+main.content .code-copy-button {
+position: absolute;
+top: 0.45rem;
+right: 0.55rem;
+min-width: 2.25rem;
+min-height: 2rem;
+border: 1px solid #9cc9dc;
+border-radius: 7px;
+background: rgba(255, 255, 255, 0.94);
+color: #0b4f6c;
+box-shadow: 0 8px 18px rgba(11, 79, 108, 0.12);
+}
+main.content .code-copy-button:hover,
+main.content .code-copy-button:focus-visible {
+border-color: #0b4f6c;
+background: #ffffff;
+}
 .home-hero {
 display: grid;
 grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
@@ -4759,19 +4802,23 @@ border-top: 1px solid #d8e4ea;
 min-width: 0;
 }
 .install-code-card {
+position: relative;
 min-width: 0;
-border: 1px solid #1f3f52;
+border: 1px solid #bddbe8;
 border-radius: 8px;
-background: #123244;
-color: #ffffff;
-box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+background: #eef8fc;
+color: #123244;
+box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.install-code-card span {
+.install-code-card > span {
 display: block;
+min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
-border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-color: #d9edf5;
+padding-right: 5.6rem;
+border-bottom: 1px solid #cfe4ee;
+background: #dff1f8;
+color: #0b4f6c;
 font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
@@ -4781,11 +4828,11 @@ text-transform: uppercase;
 margin: 0;
 padding: 1rem;
 background: transparent;
-color: #ffffff;
+color: #123244;
 white-space: pre-wrap;
 }
 .install-code-card code {
-color: #ffffff;
+color: #123244;
 font-size: 0.92rem;
 }
 .install-code-card--wide {
@@ -6109,19 +6156,23 @@ color: var(--resource-muted);
 line-height: 1.48;
 }
 .resource-code-card {
+position: relative;
 min-width: 0;
-border: 1px solid #1f3f52;
+border: 1px solid #bddbe8;
 border-radius: 8px;
-background: #123244;
-color: #ffffff;
-box-shadow: 0 14px 34px rgba(18, 50, 68, 0.12);
+background: #eef8fc;
+color: var(--resource-ink);
+box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.resource-code-card span {
+.resource-code-card > span {
 display: block;
+min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
-border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-color: #d9edf5;
+padding-right: 5.6rem;
+border-bottom: 1px solid #cfe4ee;
+background: #dff1f8;
+color: var(--resource-blue);
 font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
@@ -6131,24 +6182,60 @@ text-transform: uppercase;
 margin: 0;
 padding: 1rem;
 background: transparent;
-color: #ffffff;
+color: var(--resource-ink);
 white-space: pre-wrap;
 }
 .resource-code-card code {
-color: #ffffff;
+color: var(--resource-ink);
 font-size: 0.9rem;
 }
 .resource-code-card--light {
-border-color: var(--resource-line);
-background: #f8fbfd;
+border-color: #bddbe8;
+background: #eef8fc;
 color: var(--resource-ink);
 }
-.resource-code-card--light span {
-border-bottom-color: var(--resource-line);
-color: #657684;
+.resource-code-card--light > span {
+border-bottom-color: #cfe4ee;
+background: #dff1f8;
+color: var(--resource-blue);
 }
 .resource-code-card--light code {
 color: var(--resource-ink);
+}
+.course-copy-button {
+position: absolute;
+top: 0.45rem;
+right: 0.55rem;
+z-index: 3;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-width: 4.4rem;
+min-height: 2rem;
+padding: 0.3rem 0.65rem;
+border: 1px solid #9cc9dc;
+border-radius: 7px;
+background: rgba(255, 255, 255, 0.95);
+color: #0b4f6c;
+box-shadow: 0 8px 18px rgba(11, 79, 108, 0.12);
+font-size: 0.78rem;
+font-weight: 900;
+line-height: 1;
+cursor: pointer;
+}
+.course-copy-button:hover,
+.course-copy-button:focus-visible {
+border-color: #0b4f6c;
+background: #ffffff;
+outline: none;
+}
+.course-copy-button--done {
+border-color: #2a9d8f;
+color: #176b62;
+}
+.course-copy-button--error {
+border-color: #b24b54;
+color: #7a1c24;
 }
 .resource-template-flow {
 display: grid;
@@ -6839,6 +6926,73 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
   <span class="course-gpt-widget__label">Assistant IA</span>
   <span class="course-gpt-widget__hint">Ouvrir le GPT du cours</span>
 </a>
+<script>
+(() => {
+  const copyText = async (text) => {
+    const clipboard = typeof navigator !== "undefined" ? navigator.clipboard : null;
+
+    if (clipboard && window.isSecureContext) {
+      await clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  };
+
+  const enhanceCard = (card) => {
+    if (card.querySelector(".course-copy-button")) return;
+
+    const code = card.querySelector("pre code");
+    if (!code) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "course-copy-button";
+    button.textContent = "Copier";
+    button.setAttribute("aria-label", "Copier le contenu du bloc");
+
+    button.addEventListener("click", async () => {
+      const originalLabel = button.textContent;
+      try {
+        await copyText(code.textContent.trimEnd());
+        button.textContent = "Copié";
+        button.classList.add("course-copy-button--done");
+      } catch {
+        button.textContent = "Erreur";
+        button.classList.add("course-copy-button--error");
+      }
+
+      window.setTimeout(() => {
+        button.textContent = originalLabel;
+        button.classList.remove("course-copy-button--done", "course-copy-button--error");
+      }, 1800);
+    });
+
+    card.appendChild(button);
+  };
+
+  const enhanceCards = () => {
+    document
+      .querySelectorAll(".resource-code-card, .install-code-card")
+      .forEach(enhanceCard);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceCards);
+  } else {
+    enhanceCards();
+  }
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
