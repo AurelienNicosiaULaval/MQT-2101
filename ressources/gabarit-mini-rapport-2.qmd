@@ -1,5 +1,98 @@
 ---
 title: "Gabarit du mini-rapport 2"
+body-classes: page-resource
+format:
+  html:
+    embed-resources: true
+    toc: false
+execute:
+  warning: false
+  message: false
+---
+
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="mr2-title">
+    <div>
+      <h1 id="mr2-title">Gabarit du mini-rapport 2</h1>
+      <p>
+        Ce gabarit soutient une analyse reproductible centrée sur les séries chronologiques,
+        la prévision, la validation et l'interprétation des résultats.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#structure">Structure attendue</a>
+        <a class="home-action" href="#modele-qmd">Modèle .qmd</a>
+        <a class="home-action" href="declaration-ia.html">Déclaration IA</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Mini-rapport 2">
+      <div><span>01</span><p>Question et horizon</p></div>
+      <div><span>02</span><p>Structure temporelle ou prédictive</p></div>
+      <div><span>03</span><p>Méthode et validation</p></div>
+      <div><span>04</span><p>Interprétation et limites</p></div>
+    </div>
+  </section>
+
+  <section class="resource-section" id="structure" aria-labelledby="structure-title">
+    <div class="resource-section__header">
+      <h2 id="structure-title">Structure attendue</h2>
+      <p>Le mini-rapport doit expliquer ce qui est prévu, comment la performance est évaluée et ce que la prévision permet de décider.</p>
+    </div>
+    <ol class="resource-template-flow">
+      <li>
+        <span>01</span>
+        <h3>Question</h3>
+        <p>Définir la cible, l'horizon et la décision à soutenir.</p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Données</h3>
+        <p>Présenter la fréquence, la période couverte, les variables et les limites.</p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Validation</h3>
+        <p>Comparer le modèle à des données non utilisées de la même manière.</p>
+      </li>
+      <li>
+        <span>04</span>
+        <h3>Conclusion</h3>
+        <p>Relier la performance et la prévision à une décision prudente.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="workflow-title">
+    <div>
+      <h2 id="workflow-title">Flux de travail recommandé</h2>
+      <p>Pour une série temporelle, l'ordre des observations fait partie de l'information. La validation doit donc respecter le temps.</p>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Définir l'horizon</h3>
+        <p>Préciser si la prévision porte sur une semaine, un mois, un trimestre ou une autre période.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Visualiser la série</h3>
+        <p>Regarder tendance, saisonnalité, rupture possible et valeurs atypiques avant de modéliser.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Valider avec prudence</h3>
+        <p>Utiliser une période de validation plus récente lorsque la structure temporelle l'exige.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section" id="modele-qmd" aria-labelledby="qmd-title">
+    <div class="resource-section__header">
+      <h2 id="qmd-title">Modèle .qmd</h2>
+      <p>Ce modèle peut être adapté à une analyse de prévision ou à une autre démarche prédictive indiquée dans la consigne.</p>
+    </div>
+    <div class="resource-code-card resource-code-card--light" aria-label="Gabarit Quarto du mini-rapport 2">
+      <span>mini-rapport-2.qmd</span>
+      <pre><code>---
+title: "Mini-rapport 2"
+author: "Équipe : à compléter"
 format:
   html:
     embed-resources: true
@@ -7,10 +100,6 @@ execute:
   warning: false
   message: false
 ---
-
-Ce gabarit sert au mini-rapport 2 : séries chronologiques, prévision, validation et ouverture vers la classification ou les modèles avancés.
-
-Remplacer les passages entre crochets par le contenu de votre équipe.
 
 ## Identification
 
@@ -21,62 +110,61 @@ Remplacer les passages entre crochets par le contenu de votre équipe.
 
 ## Question d'analyse
 
-[Formuler la question que votre analyse vise à éclairer.]
+Formuler la cible à prévoir, l'horizon et la décision que l'analyse doit éclairer.
 
 ## Données
 
-Décrire :
+Décrire l'origine du jeu de données, l'unité d'observation, la fréquence temporelle,
+les variables principales et les limites connues.
 
-- l'origine du jeu de données;
-- la licence ou les conditions d'utilisation;
-- l'unité d'observation;
-- la fréquence temporelle, si applicable;
-- les variables principales;
-- les limites connues du jeu de données.
-
-## Importation et préparation
-
-```{r}
-#| eval: false
-
+&#96;&#96;&#96;{r}
+# Load libraries
 library(tidyverse)
+library(janitor)
 
-donnees_brutes <- read_csv("chemin/vers/votre_fichier.csv")
+# Import data
+donnees_brutes &lt;- read_csv("data/votre_fichier.csv", show_col_types = FALSE)
 
-donnees <- donnees_brutes |>
-  janitor::clean_names()
-```
+# Clean data
+donnees &lt;- donnees_brutes |&gt;
+  clean_names()
 
-## Exploration temporelle ou prédictive
+glimpse(donnees)
+&#96;&#96;&#96;
 
-Décrire la structure du problème : temps, horizon, cible ou variable à prévoir.
+## Exploration temporelle
 
-```{r}
-#| eval: false
+Décrire la structure temporelle : période couverte, fréquence, tendance, saisonnalité et valeurs atypiques.
 
-ggplot(donnees, aes(x = date, y = valeur)) +
-  geom_line()
-```
+&#96;&#96;&#96;{r}
+donnees |&gt;
+  ggplot(aes(x = date, y = valeur)) +
+  geom_line() +
+  labs(
+    title = "Évolution de la valeur dans le temps",
+    x = NULL,
+    y = "Valeur"
+  ) +
+  theme_minimal()
+&#96;&#96;&#96;
 
 ## Méthode
 
-Présenter la méthode utilisée : prévision, classification ou comparaison de modèles.
+Présenter la méthode utilisée et justifier le choix.
 
-```{r}
-#| eval: false
-
-# Ajouter ici le code de modélisation.
-```
+&#96;&#96;&#96;{r}
+# Exemple minimal à adapter selon la méthode choisie
+donnees_modele &lt;- donnees |&gt;
+  arrange(date)
+&#96;&#96;&#96;
 
 ## Validation
 
 Présenter une mesure d'erreur, une validation temporelle ou une mesure de performance adaptée.
 
-```{r}
-#| eval: false
-
-# Ajouter ici le code de validation.
-```
+&#96;&#96;&#96;{r}
+# Ajouter le code de validation utilisé par l'équipe
+&#96;&#96;&#96;
 
 ## Interprétation
 
@@ -84,7 +172,7 @@ Interpréter les résultats en langage clair.
 
 ## Recommandation ou conclusion
 
-Formuler une courte conclusion liée à la question de départ.
+Relier la conclusion à la question de départ et à l'horizon de décision.
 
 ## Limites
 
@@ -92,4 +180,23 @@ Nommer au moins deux limites de l'analyse.
 
 ## Déclaration d'usage de l'IA
 
-Si l'IA a été utilisée de façon significative, compléter la déclaration prévue dans [Déclaration d'usage de l'IA](declaration-ia.qmd).
+Compléter cette section si l'IA a influencé significativement le livrable.</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="check-title">
+    <div class="resource-section__header">
+      <h2 id="check-title">Vérification finale</h2>
+      <p>Avant la remise, chaque élément ci-dessous devrait être vérifié par l'équipe.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card"><h3>L'horizon est clair</h3><p>La cible et la période de prévision sont précisées.</p></article>
+      <article class="resource-card"><h3>La série est visualisée</h3><p>Tendance, saisonnalité et valeurs atypiques sont examinées.</p></article>
+      <article class="resource-card"><h3>La validation est cohérente</h3><p>La mesure d'erreur ou de performance correspond à la question.</p></article>
+      <article class="resource-card"><h3>La conclusion est prudente</h3><p>La recommandation tient compte des limites et de l'incertitude.</p></article>
+      <article class="resource-card"><h3>Le rapport se rend</h3><p>Le fichier HTML final est produit sans erreur.</p></article>
+      <article class="resource-card"><h3>L'IA est déclarée</h3><p>La déclaration est complétée si l'aide reçue a influencé le livrable.</p></article>
+    </div>
+  </section>
+</div>
+```

@@ -1,30 +1,200 @@
 ---
 title: "Aide-mémoire R"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="r-title">
+    <div>
+      <h1 id="r-title">Aide-mémoire R</h1>
+      <p>
+        Les patrons ci-dessous couvrent les opérations les plus fréquentes du cours :
+        importer, inspecter, transformer, résumer, visualiser et ajuster un modèle simple.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#importer">Importer</a>
+        <a class="home-action" href="#transformer">Transformer</a>
+        <a class="home-action" href="#modeliser">Modéliser</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Verbes essentiels">
+      <div><span>read</span><p>Importer et inspecter</p></div>
+      <div><span>dplyr</span><p>Filtrer, créer, grouper et résumer</p></div>
+      <div><span>ggplot</span><p>Visualiser les distributions et relations</p></div>
+      <div><span>lm</span><p>Ajuster et interpréter un premier modèle</p></div>
+    </div>
+  </section>
 
-Fournir les commandes R les plus utiles pour le cours.
-
-## Importer
-
-```{r}
-#| eval: false
+  <section class="resource-section resource-split" id="importer" aria-labelledby="import-title">
+    <div>
+      <h2 id="import-title">Importer et inspecter</h2>
+      <p>Commencez par lire le fichier, nettoyer les noms de colonnes et vérifier la structure du tableau.</p>
+    </div>
+    <div class="resource-code-card" aria-label="Code R pour importer des données">
+      <span>Importer</span>
+      <pre><code># Load libraries
 library(tidyverse)
+library(janitor)
 
-donnees <- readr::read_csv("donnees/preparees/fichier.csv")
+# Import data
+donnees &lt;- read_csv("data/fichier.csv", show_col_types = FALSE) |&gt;
+  clean_names()
+
+# Inspect data
+glimpse(donnees)
+summary(donnees)</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" id="transformer" aria-labelledby="transform-title">
+    <div class="resource-section__header">
+      <h2 id="transform-title">Transformer un tableau</h2>
+      <p>Les verbes suivants suffisent pour la majorité des préparations de données du cours.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card">
+        <h3>Filtrer des lignes</h3>
+        <div class="resource-code-card resource-code-card--light">
+          <span>filter()</span>
+          <pre><code>donnees_filtrees &lt;- donnees |&gt;
+  filter(!is.na(ventes), region == "Quebec")</code></pre>
+        </div>
+      </article>
+      <article class="resource-card">
+        <h3>Créer des variables</h3>
+        <div class="resource-code-card resource-code-card--light">
+          <span>mutate()</span>
+          <pre><code>donnees_calculees &lt;- donnees |&gt;
+  mutate(
+    marge = revenus - couts,
+    taux_marge = marge / revenus
+  )</code></pre>
+        </div>
+      </article>
+      <article class="resource-card">
+        <h3>Choisir des colonnes</h3>
+        <div class="resource-code-card resource-code-card--light">
+          <span>select()</span>
+          <pre><code>donnees_courtes &lt;- donnees |&gt;
+  select(date, region, revenus, couts)</code></pre>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="summary-title">
+    <div>
+      <h2 id="summary-title">Résumer et comparer</h2>
+      <p>
+        Un résumé doit indiquer la taille du groupe et utiliser <code>na.rm = TRUE</code>
+        lorsque des valeurs manquantes sont possibles.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Code R pour résumer par groupe">
+      <span>group_by() et summarise()</span>
+      <pre><code>resume_region &lt;- donnees |&gt;
+  group_by(region) |&gt;
+  summarise(
+    n = n(),
+    revenus_moyens = mean(revenus, na.rm = TRUE),
+    revenus_medians = median(revenus, na.rm = TRUE),
+    ecart_type = sd(revenus, na.rm = TRUE),
+    .groups = "drop"
+  ) |&gt;
+  arrange(desc(revenus_moyens))
+
+resume_region</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="plots-title">
+    <div class="resource-section__header">
+      <h2 id="plots-title">Visualiser</h2>
+      <p>Un graphique doit servir une question précise : distribution, comparaison, évolution ou relation.</p>
+    </div>
+    <div class="resource-card-grid resource-card-grid--two">
+      <article class="resource-card">
+        <h3>Distribution</h3>
+        <div class="resource-code-card resource-code-card--light">
+          <span>Histogramme</span>
+          <pre><code>donnees |&gt;
+  ggplot(aes(x = revenus)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution des revenus",
+    x = "Revenus",
+    y = "Nombre d'observations"
+  ) +
+  theme_minimal()</code></pre>
+        </div>
+      </article>
+      <article class="resource-card">
+        <h3>Relation</h3>
+        <div class="resource-code-card resource-code-card--light">
+          <span>Nuage de points</span>
+          <pre><code>donnees |&gt;
+  ggplot(aes(x = publicite, y = ventes)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relation entre publicité et ventes",
+    x = "Dépenses publicitaires",
+    y = "Ventes"
+  ) +
+  theme_minimal()</code></pre>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section resource-split" id="modeliser" aria-labelledby="model-title">
+    <div>
+      <h2 id="model-title">Modéliser simplement</h2>
+      <p>
+        Le modèle linéaire sert à décrire une association moyenne entre une variable réponse
+        et une ou plusieurs variables explicatives. Il ne prouve pas automatiquement une relation causale.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Code R pour ajuster une régression linéaire">
+      <span>Régression linéaire</span>
+      <pre><code># Load libraries
+library(tidyverse)
+library(broom)
+
+# Fit model
+modele &lt;- lm(ventes ~ publicite + prix, data = donnees)
+
+# Model outputs
+tidy(modele)
+glance(modele)
+augment(modele)</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="errors-title">
+    <div class="resource-section__header">
+      <h2 id="errors-title">Erreurs fréquentes</h2>
+      <p>La correction minimale est souvent très simple si on lit le message d'erreur attentivement.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card resource-card--accent">
+        <h3>Variable mal nommée</h3>
+        <p>Utilisez <code>names(donnees)</code> ou <code>glimpse(donnees)</code> pour vérifier le nom exact.</p>
+      </article>
+      <article class="resource-card resource-card--ok">
+        <h3>Package non chargé</h3>
+        <p>Ajoutez la ligne <code>library(package)</code> au début du script ou du document.</p>
+      </article>
+      <article class="resource-card resource-card--warn">
+        <h3>Valeurs manquantes</h3>
+        <p>Décidez si elles doivent être retirées, imputées ou simplement ignorées dans certains calculs.</p>
+      </article>
+    </div>
+  </section>
+</div>
 ```
-
-## Résumer
-
-```{r}
-#| eval: false
-donnees |>
-  summarise(across(where(is.numeric), mean, na.rm = TRUE))
-```
-
-TODO: Ajouter les verbes `filter()`, `mutate()`, `group_by()` et `summarise()`.
-

@@ -1,27 +1,109 @@
 ---
 title: "Ressources"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="resources-title">
+    <div>
+      <h1 id="resources-title">Ressources du cours</h1>
+      <p>
+        Cette page rassemble les guides, aide-mémoire et gabarits utiles pendant les ateliers,
+        les mini-rapports et le travail personnel.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="feuille-reference.html">Feuille de référence</a>
+        <a class="home-action" href="aide-memoire-r.html">Aide-mémoire R</a>
+        <a class="home-action" href="ia.html">IA et apprentissage</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Repères principaux">
+      <div><span>01</span><p>Comprendre les règles du cours</p></div>
+      <div><span>02</span><p>Travailler dans R et Quarto</p></div>
+      <div><span>03</span><p>Analyser et interpréter</p></div>
+      <div><span>04</span><p>Préparer les mini-rapports</p></div>
+    </div>
+  </section>
 
-Regrouper les guides et aide-mémoires transversaux du cours.
+  <section class="resource-section" aria-labelledby="hub-title">
+    <div class="resource-section__header">
+      <h2 id="hub-title">Choisir la bonne ressource</h2>
+      <p>Les liens ci-dessous mènent directement aux pages étudiantes du site.</p>
+    </div>
+    <div class="resource-hub-grid">
+      <article class="resource-hub-card">
+        <h3>Comprendre le cours</h3>
+        <p>Repères généraux, lectures, règles d'utilisation de l'IA et déclaration à inclure au besoin.</p>
+        <div class="resource-link-list">
+          <a href="lectures.html"><span>Lectures et ressources</span><span>Lectures obligatoires, lectures facultatives et ressources externes.</span></a>
+          <a href="ia.html"><span>IA et apprentissage</span><span>Usages permis, usages interdits et responsabilités.</span></a>
+          <a href="declaration-ia.html"><span>Déclaration IA</span><span>Modèle à utiliser lorsque l'IA influence un livrable.</span></a>
+        </div>
+      </article>
 
-## Guides disponibles
+      <article class="resource-hub-card">
+        <h3>Travailler avec R et Quarto</h3>
+        <p>Guides pratiques pour ouvrir un projet, exécuter du code et produire un rapport reproductible.</p>
+        <div class="resource-link-list">
+          <a href="guide-rstudio.html"><span>Guide RStudio ou Positron</span><span>Ouvrir un projet, lancer du code et lire les erreurs courantes.</span></a>
+          <a href="guide-quarto.html"><span>Guide Quarto</span><span>Créer un fichier .qmd, gérer les chemins et rendre un rapport HTML.</span></a>
+          <a href="aide-memoire-r.html"><span>Aide-mémoire R</span><span>Importer, transformer, résumer, visualiser et modéliser.</span></a>
+        </div>
+      </article>
 
-- [Lectures et ressources](lectures.qmd).
-- [IA et apprentissage](ia.qmd).
-- [Déclaration d'usage de l'IA](declaration-ia.qmd).
-- [Principes de refonte](principes-refonte.qmd).
-- [Gabarit de module](gabarit-module.qmd).
-- [Gabarit de notes de cours](gabarit-notes-cours.qmd).
-- [Gabarit du mini-rapport 1](gabarit-mini-rapport-1.qmd).
-- [Gabarit du mini-rapport 2](gabarit-mini-rapport-2.qmd).
-- [Feuille de référence](feuille-reference.qmd).
-- [Aide-mémoire R](aide-memoire-r.qmd).
-- [Aide-mémoire statistique](aide-memoire-stat.qmd).
-- [Aide-mémoire modélisation](aide-memoire-modelisation.qmd).
-- [Guide Quarto](guide-quarto.qmd).
-- [Guide RStudio](guide-rstudio.qmd).
+      <article class="resource-hub-card">
+        <h3>Analyser et interpréter</h3>
+        <p>Repères pour passer d'un tableau de données à une conclusion prudente et utile.</p>
+        <div class="resource-link-list">
+          <a href="feuille-reference.html"><span>Feuille de référence</span><span>Questions, commandes et phrases d'interprétation à garder sous la main.</span></a>
+          <a href="aide-memoire-stat.html"><span>Aide-mémoire statistique</span><span>Moyenne, dispersion, corrélation, régression, résidus et incertitude.</span></a>
+          <a href="aide-memoire-modelisation.html"><span>Aide-mémoire modélisation</span><span>Démarche commune pour régression, prévision et classification.</span></a>
+        </div>
+      </article>
+
+      <article class="resource-hub-card">
+        <h3>Remettre un travail</h3>
+        <p>Gabarits et listes de vérification pour produire une trace courte, claire et reproductible.</p>
+        <div class="resource-link-list">
+          <a href="gabarit-mini-rapport-1.html"><span>Gabarit mini-rapport 1</span><span>Préparation, exploration, visualisation, régression et interprétation.</span></a>
+          <a href="gabarit-mini-rapport-2.html"><span>Gabarit mini-rapport 2</span><span>Séries chronologiques, prévision, validation et interprétation.</span></a>
+          <a href="declaration-ia.html"><span>Déclaration IA</span><span>Section à compléter si une aide significative a été utilisée.</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="gpt-title">
+    <div>
+      <h2 id="gpt-title">GPT du cours</h2>
+      <p>
+        Pour les activités liées au cours, utilisez le GPT du cours. Il sert de tuteur pour comprendre,
+        déboguer, vérifier et réfléchir. Il ne remplace pas le travail personnel.
+      </p>
+      <div class="resource-actions">
+        <a class="home-action home-action--primary" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini" target="_blank" rel="noopener">Ouvrir le GPT du cours</a>
+        <a class="home-action" href="ia.html">Voir les règles IA</a>
+      </div>
+    </div>
+    <div class="resource-compact-list" aria-label="Bon usage du GPT">
+      <article class="resource-compact">
+        <h3>Demander une explication</h3>
+        <p>Par exemple : expliquer une sortie R, une hypothèse de modèle ou une erreur dans un code.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Vérifier une tentative</h3>
+        <p>Fournir son propre code ou son interprétation, puis demander une rétroaction ciblée.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Rester responsable</h3>
+        <p>Comprendre, vérifier, modifier et défendre tout contenu utilisé dans un travail remis.</p>
+      </article>
+    </div>
+  </section>
+</div>
+```

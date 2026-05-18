@@ -1,22 +1,164 @@
 ---
 title: "Aide-mémoire statistique"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="stat-title">
+    <div>
+      <h1 id="stat-title">Aide-mémoire statistique</h1>
+      <p>
+        Cette page résume les notions à mobiliser avant d'interpréter un tableau,
+        un graphique, une régression ou une prévision.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#decrire">Décrire</a>
+        <a class="home-action" href="#associer">Associer</a>
+        <a class="home-action" href="#incertitude">Incertitude</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Repères statistiques">
+      <div><span>01</span><p>Décrire avant de modéliser</p></div>
+      <div><span>02</span><p>Distinguer association et causalité</p></div>
+      <div><span>03</span><p>Vérifier les résidus et les limites</p></div>
+      <div><span>04</span><p>Interpréter pour une décision</p></div>
+    </div>
+  </section>
 
-Rappeler les notions statistiques essentielles utilisées dans le cours.
+  <section class="resource-section" id="decrire" aria-labelledby="describe-title">
+    <div class="resource-section__header">
+      <h2 id="describe-title">Décrire une variable</h2>
+      <p>Les statistiques descriptives résument les données observées. Elles ne suffisent pas à expliquer une cause.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card">
+        <h3>Moyenne</h3>
+        <p>Valeur moyenne observée. Elle est sensible aux valeurs extrêmes.</p>
+        <div class="resource-code-card resource-code-card--light">
+          <span>R</span>
+          <pre><code>mean(variable, na.rm = TRUE)</code></pre>
+        </div>
+      </article>
+      <article class="resource-card">
+        <h3>Médiane</h3>
+        <p>Valeur qui sépare les observations en deux groupes de même taille. Elle est plus robuste aux valeurs extrêmes.</p>
+        <div class="resource-code-card resource-code-card--light">
+          <span>R</span>
+          <pre><code>median(variable, na.rm = TRUE)</code></pre>
+        </div>
+      </article>
+      <article class="resource-card">
+        <h3>Écart-type</h3>
+        <p>Mesure de dispersion autour de la moyenne. Son unité est la même que celle de la variable.</p>
+        <div class="resource-code-card resource-code-card--light">
+          <span>R</span>
+          <pre><code>sd(variable, na.rm = TRUE)</code></pre>
+        </div>
+      </article>
+    </div>
+  </section>
 
-## Notions à compléter
+  <section class="resource-section resource-split" id="associer" aria-labelledby="association-title">
+    <div>
+      <h2 id="association-title">Association, prédiction et causalité</h2>
+      <p>
+        Une analyse peut décrire une relation ou améliorer une prédiction sans démontrer une relation causale.
+        La conclusion doit donc correspondre au plan d'analyse et aux données disponibles.
+      </p>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Description</h3>
+        <p>Dire ce qui est observé dans les données : moyenne, distribution, tendance ou différence entre groupes.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Association</h3>
+        <p>Décrire comment deux variables varient ensemble, sans conclure automatiquement à une cause.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Prédiction</h3>
+        <p>Évaluer si un modèle améliore la capacité à prévoir une valeur future ou inconnue.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Causalité</h3>
+        <p>Exige un raisonnement supplémentaire sur le plan d'étude, les variables confondantes et l'identification.</p>
+      </article>
+    </div>
+  </section>
 
-- Moyenne, médiane et écart-type.
-- Corrélation.
-- Régression.
-- Résidus.
-- Incertitude.
-- Erreur de prévision.
+  <section class="resource-section" aria-labelledby="regression-title">
+    <div class="resource-section__header">
+      <h2 id="regression-title">Lire une régression</h2>
+      <p>Une sortie de régression doit être traduite en unités concrètes.</p>
+    </div>
+    <ol class="resource-template-flow">
+      <li>
+        <span>01</span>
+        <h3>Signe</h3>
+        <p>Le coefficient est-il positif, négatif ou près de zéro?</p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Unité</h3>
+        <p>Quelle variation de la variable réponse correspond à une unité de la variable explicative?</p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Incertitude</h3>
+        <p>L'estimation est-elle précise ou très incertaine?</p>
+      </li>
+      <li>
+        <span>04</span>
+        <h3>Limites</h3>
+        <p>Quelles hypothèses ou particularités des données limitent l'interprétation?</p>
+      </li>
+    </ol>
+  </section>
 
-TODO: Ajouter les définitions, les formules et des exemples d'interprétation.
+  <section class="resource-section resource-split" id="incertitude" aria-labelledby="uncertainty-title">
+    <div>
+      <h2 id="uncertainty-title">Résidus, erreur et incertitude</h2>
+      <p>
+        Un modèle utile n'est pas seulement un modèle qui produit une valeur ajustée. Il doit aussi être vérifié :
+        qualité des résidus, performance de prédiction, stabilité et interprétation prudente.
+      </p>
+    </div>
+    <div class="resource-card-grid resource-card-grid--two">
+      <article class="resource-card resource-card--accent">
+        <h3>Résidu</h3>
+        <p>Différence entre une valeur observée et la valeur ajustée par le modèle.</p>
+      </article>
+      <article class="resource-card resource-card--ok">
+        <h3>Erreur de prévision</h3>
+        <p>Différence entre une valeur observée et une valeur prévue pour une période ou observation non utilisée de la même manière.</p>
+      </article>
+      <article class="resource-card resource-card--warn">
+        <h3>Intervalle</h3>
+        <p>Rappel visuel ou numérique que l'estimation n'est pas une valeur certaine.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Diagnostic</h3>
+        <p>Vérification graphique ou numérique pour repérer une structure non modélisée.</p>
+      </article>
+    </div>
+  </section>
 
+  <section class="resource-section resource-split" aria-labelledby="phrases-title">
+    <div>
+      <h2 id="phrases-title">Phrases utiles</h2>
+      <p>Une bonne interprétation indique le résultat, son contexte et sa limite.</p>
+    </div>
+    <div class="resource-code-card resource-code-card--light" aria-label="Phrases d'interprétation">
+      <span>Interprétation</span>
+      <pre><code>Dans ces données, une augmentation de [x] est associée à une variation moyenne de [y].
+Cette relation est utile pour [décision], mais elle ne suffit pas à établir une cause.
+Le résultat doit être interprété avec prudence parce que [limite principale].</code></pre>
+    </div>
+  </section>
+</div>
+```

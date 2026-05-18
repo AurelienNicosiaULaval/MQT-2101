@@ -1,170 +1,196 @@
 ---
 title: "Feuille de référence"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="reference-title">
+    <div>
+      <h1 id="reference-title">Feuille de référence</h1>
+      <p>
+        Une page à garder ouverte pendant les ateliers et les mini-rapports :
+        questions à poser, code R minimal, interprétation et vérifications finales.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#questions">Questions</a>
+        <a class="home-action" href="#code">Code R</a>
+        <a class="home-action" href="#rapport">Mini-rapport</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Ce que cette feuille aide à faire">
+      <div><span>Lire</span><p>Comprendre ce que représente une ligne du tableau</p></div>
+      <div><span>Coder</span><p>Importer, nettoyer, résumer et visualiser</p></div>
+      <div><span>Dire</span><p>Interpréter sans dépasser les données</p></div>
+      <div><span>Vérifier</span><p>Relire avant de remettre une trace finale</p></div>
+    </div>
+  </section>
 
-Cette feuille rassemble les repères les plus utiles pour les exercices, les ateliers et les livrables courts du cours.
+  <section class="resource-section" id="questions" aria-labelledby="questions-title">
+    <div class="resource-section__header">
+      <h2 id="questions-title">Avant d'analyser</h2>
+      <p>Ces questions viennent avant le code. Elles évitent de modéliser une question mal définie.</p>
+    </div>
+    <div class="resource-card-grid resource-card-grid--two">
+      <article class="resource-card resource-card--accent">
+        <h3>Données</h3>
+        <ul>
+          <li>Que représente une ligne du tableau?</li>
+          <li>Quelle est l'origine du jeu de données?</li>
+          <li>Quelles variables sont numériques, catégorielles ou temporelles?</li>
+          <li>Quelles valeurs sont manquantes ou suspectes?</li>
+        </ul>
+      </article>
+      <article class="resource-card resource-card--ok">
+        <h3>Question</h3>
+        <ul>
+          <li>Quelle variable faut-il expliquer, prévoir ou comparer?</li>
+          <li>Quelle décision l'analyse doit-elle éclairer?</li>
+          <li>La conclusion sera-t-elle descriptive, prédictive ou causale?</li>
+          <li>Quelle limite doit être nommée dès le départ?</li>
+        </ul>
+      </article>
+    </div>
+  </section>
 
-## Avant d'analyser
-
-Questions à poser avant le code :
-
-- Que représente une ligne du tableau?
-- Quelle est la variable à expliquer, prévoir ou comparer?
-- Quelles variables sont numériques, catégorielles ou temporelles?
-- Quelles valeurs manquent?
-- Quelle décision ou interprétation doit être éclairée?
-- Quelle limite doit être mentionnée?
-
-## Importer et inspecter
-
-```{r}
-#| eval: false
+  <section class="resource-section resource-split" id="code" aria-labelledby="code-title">
+    <div>
+      <h2 id="code-title">Patron R minimal</h2>
+      <p>
+        Ce code donne la structure générale. Remplacez les noms de fichiers et de variables
+        par ceux de votre analyse.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Patron R minimal">
+      <span>Analyse courte</span>
+      <pre><code># Load libraries
 library(tidyverse)
 library(janitor)
+library(broom)
 
-donnees <- readr::read_csv("data/fichier.csv", show_col_types = FALSE) |>
+# Import data
+donnees &lt;- read_csv("data/fichier.csv", show_col_types = FALSE) |&gt;
   clean_names()
 
+# Inspect data
 glimpse(donnees)
-summary(donnees)
-```
 
-## Résumer
-
-```{r}
-#| eval: false
-donnees |>
+# Summarise
+donnees |&gt;
   summarise(
     n = n(),
     moyenne = mean(variable, na.rm = TRUE),
     mediane = median(variable, na.rm = TRUE),
     ecart_type = sd(variable, na.rm = TRUE)
   )
-```
 
-## Comparer des groupes
-
-```{r}
-#| eval: false
-donnees |>
-  group_by(groupe) |>
-  summarise(
-    n = n(),
-    moyenne = mean(variable, na.rm = TRUE),
-    .groups = "drop"
-  )
-```
-
-## Visualiser
-
-```{r}
-#| eval: false
-donnees |>
-  ggplot(aes(x = variable)) +
-  geom_histogram(bins = 30) +
-  labs(
-    title = "Distribution de la variable",
-    x = "Variable",
-    y = "Nombre d'observations"
-  ) +
-  theme_minimal()
-```
-
-```{r}
-#| eval: false
-donnees |>
-  ggplot(aes(x = x, y = y)) +
+# Visualise
+donnees |&gt;
+  ggplot(aes(x = variable_x, y = variable_y)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    title = "Relation entre deux variables",
-    x = "Variable explicative",
-    y = "Variable réponse"
-  ) +
   theme_minimal()
+
+# Model
+modele &lt;- lm(variable_y ~ variable_x, data = donnees)
+
+tidy(modele)
+glance(modele)</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="interpret-title">
+    <div class="resource-section__header">
+      <h2 id="interpret-title">Interpréter un résultat</h2>
+      <p>Une interprétation utile suit une structure courte et explicite.</p>
+    </div>
+    <ol class="resource-template-flow">
+      <li>
+        <span>01</span>
+        <h3>Résultat</h3>
+        <p>Nommer le résultat principal sans jargon inutile.</p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Contexte</h3>
+        <p>Dire ce que le résultat signifie dans la situation étudiée.</p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Décision</h3>
+        <p>Expliquer ce que le résultat suggère pour l'action ou la comparaison.</p>
+      </li>
+      <li>
+        <span>04</span>
+        <h3>Limite</h3>
+        <p>Indiquer pourquoi la conclusion doit rester prudente.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="ai-title">
+    <div>
+      <h2 id="ai-title">Utiliser l'IA avec prudence</h2>
+      <p>
+        Lorsque les consignes l'autorisent, l'IA peut aider à comprendre, déboguer et vérifier.
+        Elle ne remplace pas la compréhension ni la responsabilité de l'équipe.
+      </p>
+      <div class="resource-actions">
+        <a class="home-action home-action--primary" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini" target="_blank" rel="noopener">Ouvrir le GPT du cours</a>
+        <a class="home-action" href="ia.html">Règles IA</a>
+      </div>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Bonne demande</h3>
+        <p>Voici mon code et mon erreur. Peux-tu expliquer la cause probable et proposer une correction minimale?</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Bonne vérification</h3>
+        <p>Voici mon interprétation. Peux-tu indiquer ce qui est imprécis, trop fort ou non appuyé par les données?</p>
+      </article>
+      <article class="resource-compact">
+        <h3>À éviter</h3>
+        <p>Demander une conclusion complète sans fournir sa propre tentative ni vérifier les résultats.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section" id="rapport" aria-labelledby="report-title">
+    <div class="resource-section__header">
+      <h2 id="report-title">Avant de remettre un mini-rapport</h2>
+      <p>La trace finale doit être compréhensible, reproductible et défendable.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card">
+        <h3>Question et données</h3>
+        <p>La question, la source des données, l'unité d'observation et les variables principales sont indiquées.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Code reproductible</h3>
+        <p>Le document se rend sans erreur, les bibliothèques sont chargées et les chemins fonctionnent.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Interprétation prudente</h3>
+        <p>La conclusion distingue description, association, prédiction et causalité.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Limites</h3>
+        <p>Au moins une limite importante des données, de la méthode ou de l'interprétation est nommée.</p>
+      </article>
+      <article class="resource-card">
+        <h3>IA déclarée</h3>
+        <p>Si l'IA a influencé le livrable, la déclaration est complète et honnête.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Résultat final</h3>
+        <p>Les tableaux, graphiques et conclusions correspondent à la question de départ.</p>
+      </article>
+    </div>
+  </section>
+</div>
 ```
-
-## Modéliser
-
-```{r}
-#| eval: false
-library(broom)
-
-modele <- lm(y ~ x, data = donnees)
-
-broom::tidy(modele)
-broom::glance(modele)
-```
-
-Questions d'interprétation :
-
-- Quel est le signe du coefficient?
-- Quelle est son unité?
-- Quelle variation moyenne représente-t-il?
-- Le résultat est-il descriptif ou causal?
-- Quelles limites doivent être mentionnées?
-
-## Prévoir
-
-```{r}
-#| eval: false
-donnees_temps |>
-  ggplot(aes(x = date, y = valeur)) +
-  geom_line() +
-  labs(
-    title = "Évolution dans le temps",
-    x = NULL,
-    y = "Valeur"
-  ) +
-  theme_minimal()
-```
-
-Questions à poser :
-
-- La série contient-elle une tendance?
-- Y a-t-il une saisonnalité?
-- La dernière période ressemble-t-elle aux périodes précédentes?
-- La prévision sert-elle à une décision de court ou de moyen terme?
-
-## Utiliser l'IA avec prudence
-
-Consulter la page [IA et apprentissage](ia.qmd) pour les règles détaillées. Le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) doit être utilisé pour les activités liées au cours.
-
-Questions utiles à poser à l'IA, lorsque la consigne l'autorise :
-
-- Peux-tu expliquer ce code R ligne par ligne?
-- Quelles limites d'interprétation devrais-je mentionner?
-- Quelles erreurs fréquentes vois-tu dans cette conclusion?
-- Comment reformuler ce résultat pour un public non technique?
-
-À ne pas faire :
-
-- remettre une réponse produite sans vérification;
-- demander une conclusion sans regarder les données;
-- ignorer le code R;
-- utiliser l'IA pour contourner les consignes d'évaluation.
-
-## Phrase d'interprétation type
-
-Structure recommandée :
-
-1. Le résultat indique que...
-2. Dans ce contexte, cela signifie que...
-3. Pour la décision, cela suggère...
-4. Toutefois, il faut être prudent parce que...
-
-## Mini-rapport Quarto
-
-Un livrable court devrait contenir :
-
-- la question analysée;
-- les données utilisées;
-- le code R minimal;
-- un tableau ou un graphique;
-- une interprétation;
-- une limite.

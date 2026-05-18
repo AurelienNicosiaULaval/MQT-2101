@@ -1,5 +1,98 @@
 ---
 title: "Gabarit du mini-rapport 1"
+body-classes: page-resource
+format:
+  html:
+    embed-resources: true
+    toc: false
+execute:
+  warning: false
+  message: false
+---
+
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="mr1-title">
+    <div>
+      <h1 id="mr1-title">Gabarit du mini-rapport 1</h1>
+      <p>
+        Ce gabarit soutient une analyse reproductible centrée sur la préparation des données,
+        l'exploration, la visualisation, la régression et l'interprétation.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#structure">Structure attendue</a>
+        <a class="home-action" href="#modele-qmd">Modèle .qmd</a>
+        <a class="home-action" href="declaration-ia.html">Déclaration IA</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Mini-rapport 1">
+      <div><span>01</span><p>Question et données</p></div>
+      <div><span>02</span><p>Préparation et exploration</p></div>
+      <div><span>03</span><p>Visualisation et régression</p></div>
+      <div><span>04</span><p>Interprétation et limites</p></div>
+    </div>
+  </section>
+
+  <section class="resource-section" id="structure" aria-labelledby="structure-title">
+    <div class="resource-section__header">
+      <h2 id="structure-title">Structure attendue</h2>
+      <p>Le mini-rapport doit montrer une démarche courte, claire et défendable.</p>
+    </div>
+    <ol class="resource-template-flow">
+      <li>
+        <span>01</span>
+        <h3>Question</h3>
+        <p>Définir ce que l'analyse cherche à éclairer.</p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Données</h3>
+        <p>Présenter la source, l'unité d'observation, les variables et les limites.</p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Analyse</h3>
+        <p>Préparer, explorer, visualiser et ajuster une régression pertinente.</p>
+      </li>
+      <li>
+        <span>04</span>
+        <h3>Conclusion</h3>
+        <p>Interpréter avec prudence et nommer les limites.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="workflow-title">
+    <div>
+      <h2 id="workflow-title">Flux de travail recommandé</h2>
+      <p>Travaillez dans Quarto dès le début pour éviter de reconstruire le rapport à la fin.</p>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Choisir une question précise</h3>
+        <p>La question doit pouvoir être étudiée avec les variables disponibles.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Nettoyer seulement ce qui est nécessaire</h3>
+        <p>Documentez les transformations importantes et leur justification.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Interpréter en unités réelles</h3>
+        <p>Les coefficients de régression doivent être traduits dans le contexte du problème.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section" id="modele-qmd" aria-labelledby="qmd-title">
+    <div class="resource-section__header">
+      <h2 id="qmd-title">Modèle .qmd</h2>
+      <p>Ce modèle peut être adapté au jeu de données de votre équipe.</p>
+    </div>
+    <div class="resource-code-card resource-code-card--light" aria-label="Gabarit Quarto du mini-rapport 1">
+      <span>mini-rapport-1.qmd</span>
+      <pre><code>---
+title: "Mini-rapport 1"
+author: "Équipe : à compléter"
 format:
   html:
     embed-resources: true
@@ -7,10 +100,6 @@ execute:
   warning: false
   message: false
 ---
-
-Ce gabarit sert au mini-rapport 1 : préparation des données, exploration, visualisation, interprétation et régression.
-
-Remplacer les passages entre crochets par le contenu de votre équipe.
 
 ## Identification
 
@@ -21,82 +110,81 @@ Remplacer les passages entre crochets par le contenu de votre équipe.
 
 ## Question d'analyse
 
-[Formuler la question que votre analyse vise à éclairer.]
+Formuler la question que l'analyse vise à éclairer.
 
 ## Données
 
-Décrire :
+Décrire l'origine du jeu de données, l'unité d'observation, les variables principales,
+les conditions d'utilisation et les limites connues.
 
-- l'origine du jeu de données;
-- la licence ou les conditions d'utilisation;
-- l'unité d'observation;
-- les variables principales;
-- les limites connues du jeu de données.
-
-## Importation
-
-```{r}
-#| eval: false
-
+&#96;&#96;&#96;{r}
+# Load libraries
 library(tidyverse)
+library(janitor)
+library(broom)
 
-donnees_brutes <- read_csv("chemin/vers/votre_fichier.csv")
-```
+# Import data
+donnees_brutes &lt;- read_csv("data/votre_fichier.csv", show_col_types = FALSE)
+
+# Clean data
+donnees &lt;- donnees_brutes |&gt;
+  clean_names()
+
+glimpse(donnees)
+&#96;&#96;&#96;
 
 ## Préparation
 
-```{r}
-#| eval: false
-
-donnees <- donnees_brutes |>
-  janitor::clean_names()
-```
-
 Décrire les transformations importantes.
+
+&#96;&#96;&#96;{r}
+donnees_analyse &lt;- donnees |&gt;
+  filter(!is.na(variable_y), !is.na(variable_x))
+&#96;&#96;&#96;
 
 ## Exploration descriptive
 
-Présenter un tableau ou quelques statistiques descriptives utiles.
-
-```{r}
-#| eval: false
-
-donnees |>
+&#96;&#96;&#96;{r}
+donnees_analyse |&gt;
   summarise(
-    n = n()
+    n = n(),
+    moyenne_y = mean(variable_y, na.rm = TRUE),
+    mediane_y = median(variable_y, na.rm = TRUE),
+    ecart_type_y = sd(variable_y, na.rm = TRUE)
   )
-```
+&#96;&#96;&#96;
 
 ## Visualisation
 
-Présenter au moins une visualisation pertinente.
-
-```{r}
-#| eval: false
-
-ggplot(donnees, aes(x = variable_x, y = variable_y)) +
-  geom_point()
-```
+&#96;&#96;&#96;{r}
+donnees_analyse |&gt;
+  ggplot(aes(x = variable_x, y = variable_y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relation entre variable_x et variable_y",
+    x = "Variable explicative",
+    y = "Variable réponse"
+  ) +
+  theme_minimal()
+&#96;&#96;&#96;
 
 ## Régression
 
-Ajuster un modèle de régression adapté à votre question.
+&#96;&#96;&#96;{r}
+modele &lt;- lm(variable_y ~ variable_x, data = donnees_analyse)
 
-```{r}
-#| eval: false
-
-modele <- lm(variable_y ~ variable_x, data = donnees)
-
-summary(modele)
-```
+tidy(modele)
+glance(modele)
+&#96;&#96;&#96;
 
 ## Interprétation
 
-Interpréter les résultats en langage clair.
+Interpréter le résultat principal en langage clair.
 
 ## Recommandation ou conclusion
 
-Formuler une courte conclusion liée à la question de départ.
+Relier la conclusion à la question de départ.
 
 ## Limites
 
@@ -104,4 +192,23 @@ Nommer au moins deux limites de l'analyse.
 
 ## Déclaration d'usage de l'IA
 
-Si l'IA a été utilisée de façon significative, compléter la déclaration prévue dans [Déclaration d'usage de l'IA](declaration-ia.qmd).
+Compléter cette section si l'IA a influencé significativement le livrable.</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="check-title">
+    <div class="resource-section__header">
+      <h2 id="check-title">Vérification finale</h2>
+      <p>Avant la remise, chaque élément ci-dessous devrait être vérifié par l'équipe.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card"><h3>Le rapport se rend</h3><p>Le fichier HTML final est produit sans erreur.</p></article>
+      <article class="resource-card"><h3>La question est claire</h3><p>La conclusion répond à la question annoncée.</p></article>
+      <article class="resource-card"><h3>Le code est minimal</h3><p>Le rapport contient le code nécessaire, sans blocs inutiles.</p></article>
+      <article class="resource-card"><h3>La régression est interprétée</h3><p>Les coefficients importants sont expliqués en unités concrètes.</p></article>
+      <article class="resource-card"><h3>Les limites sont présentes</h3><p>Les limites des données et de la méthode sont nommées.</p></article>
+      <article class="resource-card"><h3>L'IA est déclarée</h3><p>La déclaration est complétée si l'aide reçue a influencé le livrable.</p></article>
+    </div>
+  </section>
+</div>
+```

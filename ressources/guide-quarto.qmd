@@ -1,34 +1,168 @@
 ---
 title: "Guide Quarto"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="quarto-title">
+    <div>
+      <h1 id="quarto-title">Produire un rapport Quarto</h1>
+      <p>
+        Quarto permet de combiner texte, code R, tableaux, graphiques et interprétation dans un même document.
+        C'est le format recommandé pour les mini-rapports.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#structure">Structure minimale</a>
+        <a class="home-action" href="gabarit-mini-rapport-1.html">Mini-rapport 1</a>
+        <a class="home-action" href="gabarit-mini-rapport-2.html">Mini-rapport 2</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Étapes Quarto">
+      <div><span>01</span><p>Créer un fichier .qmd</p></div>
+      <div><span>02</span><p>Écrire texte et code dans le même document</p></div>
+      <div><span>03</span><p>Rendre le document en HTML</p></div>
+      <div><span>04</span><p>Vérifier le résultat final</p></div>
+    </div>
+  </section>
 
-Aider les étudiant·es à produire des rapports reproductibles avec Quarto.
+  <section class="resource-section resource-split" id="structure" aria-labelledby="structure-title">
+    <div>
+      <h2 id="structure-title">Structure minimale</h2>
+      <p>
+        Le bloc YAML placé au début du fichier règle le titre, le format de sortie et les options de rendu.
+        Pour les remises, l'option <code>embed-resources: true</code> garde les ressources intégrées au fichier HTML.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Fichier Quarto minimal">
+      <span>rapport.qmd</span>
+      <pre><code>---
+title: "Analyse de cas"
+format:
+  html:
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
 
-## Structure minimale
+# Question
 
-```r
-writeLines(
-  c(
-    "---",
-    'title: "Analyse de cas"',
-    "format:",
-    "  html:",
-    "    embed-resources: true",
-    "---"
-  ),
-  "rapport.qmd"
-)
+Écrire ici la question d'analyse.
+
+&#96;&#96;&#96;{r}
+# Load libraries
+library(tidyverse)
+&#96;&#96;&#96;</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="blocks-title">
+    <div class="resource-section__header">
+      <h2 id="blocks-title">Blocs essentiels d'un mini-rapport</h2>
+      <p>Un document clair montre la démarche sans cacher les choix importants.</p>
+    </div>
+    <ol class="resource-template-flow">
+      <li>
+        <span>01</span>
+        <h3>Question</h3>
+        <p>Formuler ce que l'analyse cherche à éclairer.</p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Données</h3>
+        <p>Décrire l'origine, l'unité d'observation, les variables et les limites.</p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Code et résultats</h3>
+        <p>Montrer le code minimal nécessaire et les sorties utiles.</p>
+      </li>
+      <li>
+        <span>04</span>
+        <h3>Interprétation</h3>
+        <p>Relier les résultats à la question et indiquer les limites.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="chunks-title">
+    <div>
+      <h2 id="chunks-title">Blocs de code R</h2>
+      <p>
+        Un bloc de code doit être reproductible : il charge les packages nécessaires,
+        utilise des objets créés dans le document et produit un résultat vérifiable.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Bloc de code R Quarto">
+      <span>Bloc R</span>
+      <pre><code>```{r}
+# Load libraries
+library(tidyverse)
+
+# Import data
+ventes &lt;- read_csv("data/ventes.csv", show_col_types = FALSE)
+
+# Explore
+ventes |&gt;
+  summarise(
+    n = n(),
+    ventes_moyennes = mean(ventes, na.rm = TRUE)
+  )
+```</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="paths-title">
+    <div class="resource-section__header">
+      <h2 id="paths-title">Chemins de fichiers</h2>
+      <p>Un chemin doit être écrit relativement au dossier du document ou au dossier de travail ouvert.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card resource-card--ok">
+        <h3>Bon réflexe</h3>
+        <p>Placer les données dans un dossier clair, par exemple <code>data/</code>, puis utiliser un chemin court comme <code>data/ventes.csv</code>.</p>
+      </article>
+      <article class="resource-card resource-card--accent">
+        <h3>À vérifier</h3>
+        <p>Le nom du fichier, les accents, les majuscules, l'extension <code>.csv</code> et l'emplacement exact du document.</p>
+      </article>
+      <article class="resource-card resource-card--warn">
+        <h3>À éviter</h3>
+        <p>Les chemins propres à un seul ordinateur, difficiles à reproduire par une autre personne de l'équipe.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="render-title">
+    <div>
+      <h2 id="render-title">Rendre et vérifier</h2>
+      <p>
+        Le rendu doit être relancé avant la remise. Un rapport est prêt seulement si le HTML final s'ouvre
+        et que les tableaux, graphiques, résultats et interprétations sont cohérents.
+      </p>
+      <div class="resource-pill-row">
+        <a href="https://quarto.org/docs/get-started/" target="_blank" rel="noopener">Documentation officielle Quarto</a>
+      </div>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Erreur de YAML</h3>
+        <p>Vérifiez les deux lignes <code>---</code>, l'indentation et les deux-points.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Objet introuvable</h3>
+        <p>Relancez le document depuis le début. Le rendu part d'une session propre.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Figure absente</h3>
+        <p>Vérifiez que le bloc produit bien un graphique et qu'aucune erreur n'arrive avant la figure.</p>
+      </article>
+    </div>
+  </section>
+</div>
 ```
-
-## Rendu
-
-```r
-quarto::quarto_render("rapport.qmd")
-```
-
-TODO: Ajouter des consignes sur les figures, tableaux et chemins relatifs.

@@ -1,21 +1,160 @@
 ---
-title: "Guide RStudio"
+title: "Guide RStudio ou Positron"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="rstudio-title">
+    <div>
+      <h1 id="rstudio-title">Travailler dans RStudio ou Positron</h1>
+      <p>
+        Le but est de garder un environnement de travail propre : fichiers au bon endroit,
+        code facile à relancer et erreurs plus faciles à comprendre.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#routine">Routine de travail</a>
+        <a class="home-action" href="guide-quarto.html">Guide Quarto</a>
+        <a class="home-action" href="aide-memoire-r.html">Aide-mémoire R</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Ce qu'il faut savoir faire">
+      <div><span>01</span><p>Ouvrir le bon dossier de travail</p></div>
+      <div><span>02</span><p>Exécuter un script R</p></div>
+      <div><span>03</span><p>Installer et charger des packages</p></div>
+      <div><span>04</span><p>Lire les messages d'erreur</p></div>
+    </div>
+  </section>
 
-Fournir un repère rapide pour travailler dans RStudio ou Positron.
+  <section class="resource-section" id="routine" aria-labelledby="routine-title">
+    <div class="resource-section__header">
+      <h2 id="routine-title">Routine de travail</h2>
+      <p>Cette séquence évite la majorité des problèmes de chemins, de fichiers introuvables et de code non reproductible.</p>
+    </div>
+    <ol class="resource-steps">
+      <li>
+        <span>01</span>
+        <div>
+          <h3>Ouvrir le dossier du cours</h3>
+          <p>Ouvrez le dossier qui contient les fichiers du cours avant de lancer votre script ou votre document Quarto.</p>
+        </div>
+      </li>
+      <li>
+        <span>02</span>
+        <div>
+          <h3>Créer un fichier de travail</h3>
+          <p>Utilisez un script <code>.R</code> pour explorer ou un fichier <code>.qmd</code> pour produire une trace reproductible.</p>
+        </div>
+      </li>
+      <li>
+        <span>03</span>
+        <div>
+          <h3>Exécuter le code du haut vers le bas</h3>
+          <p>Relancez les bibliothèques, l'importation, le nettoyage, les graphiques et les modèles dans l'ordre.</p>
+        </div>
+      </li>
+      <li>
+        <span>04</span>
+        <div>
+          <h3>Vérifier les objets créés</h3>
+          <p>Après une importation ou une transformation, inspectez les données avec <code>glimpse()</code>, <code>count()</code> ou <code>summary()</code>.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
 
-## À compléter
+  <section class="resource-section resource-split" aria-labelledby="packages-title">
+    <div>
+      <h2 id="packages-title">Packages</h2>
+      <p>
+        Un package doit être installé une seule fois sur l'ordinateur, puis chargé à chaque nouvelle session.
+        Les scripts et rapports doivent toujours charger explicitement les bibliothèques utilisées.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Code R pour les packages">
+      <span>Console R</span>
+      <pre><code>install.packages("tidyverse")
+install.packages("janitor")
 
-- Ouvrir un projet.
-- Installer des packages.
-- Exécuter un script.
-- Rendre un document Quarto.
-- Lire les messages d'erreur fréquents.
+library(tidyverse)
+library(janitor)</code></pre>
+    </div>
+  </section>
 
-TODO: Ajouter des captures d'écran institutionnelles si elles sont disponibles.
+  <section class="resource-section resource-split" aria-labelledby="minimal-title">
+    <div>
+      <h2 id="minimal-title">Script minimal</h2>
+      <p>
+        Un bon script garde toujours les mêmes blocs : bibliothèques, importation, inspection,
+        préparation, analyse et interprétation.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Script R minimal">
+      <span>Fichier analyse.R</span>
+      <pre><code># Load libraries
+library(tidyverse)
+library(janitor)
 
+# Import data
+donnees &lt;- read_csv("data/fichier.csv", show_col_types = FALSE) |&gt;
+  clean_names()
+
+# Inspect data
+glimpse(donnees)
+
+# Summarise
+donnees |&gt;
+  summarise(
+    n = n(),
+    moyenne = mean(variable, na.rm = TRUE)
+  )</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="errors-title">
+    <div class="resource-section__header">
+      <h2 id="errors-title">Lire une erreur sans paniquer</h2>
+      <p>Une erreur donne souvent l'indice exact du problème. Commencez par la première ligne du message.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card resource-card--accent">
+        <h3><code>object not found</code></h3>
+        <p>Un objet n'existe pas dans la session. Relancez les blocs précédents ou vérifiez l'orthographe du nom.</p>
+      </article>
+      <article class="resource-card resource-card--ok">
+        <h3><code>could not find function</code></h3>
+        <p>Le package qui contient la fonction n'est pas chargé. Ajoutez ou relancez <code>library(nom_du_package)</code>.</p>
+      </article>
+      <article class="resource-card resource-card--warn">
+        <h3><code>file does not exist</code></h3>
+        <p>Le chemin vers le fichier est incorrect ou le dossier de travail n'est pas le bon.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section resource-split" aria-labelledby="check-title">
+    <div>
+      <h2 id="check-title">Avant de demander de l'aide</h2>
+      <p>Une demande claire accélère beaucoup le dépannage.</p>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Inclure le message d'erreur complet</h3>
+        <p>Copiez le texte exact de l'erreur, sans reformulation.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Montrer le code minimal</h3>
+        <p>Incluez seulement les lignes nécessaires pour reproduire le problème.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Décrire le résultat attendu</h3>
+        <p>Expliquez ce que le code devait produire : tableau, graphique, modèle ou rendu Quarto.</p>
+      </article>
+    </div>
+  </section>
+</div>
+```

@@ -1,22 +1,193 @@
 ---
 title: "Aide-mémoire modélisation"
+body-classes: page-resource
 format:
   html:
     embed-resources: true
+    toc: false
 ---
 
-## Objectif
+```{=html}
+<div class="resource-page">
+  <section class="resource-hero" aria-labelledby="modelisation-title">
+    <div>
+      <h1 id="modelisation-title">Aide-mémoire modélisation</h1>
+      <p>
+        Un modèle sert à éclairer une question. La méthode vient après la compréhension des données,
+        de la variable réponse, du contexte et de la décision à soutenir.
+      </p>
+      <div class="resource-actions" aria-label="Accès rapides">
+        <a class="home-action home-action--primary" href="#demarche">Démarche</a>
+        <a class="home-action" href="#choisir">Choisir le modèle</a>
+        <a class="home-action" href="#valider">Valider</a>
+      </div>
+    </div>
+    <div class="resource-panel" aria-label="Démarche de modélisation">
+      <div><span>01</span><p>Définir la question et la décision</p></div>
+      <div><span>02</span><p>Préparer les données et la variable réponse</p></div>
+      <div><span>03</span><p>Ajuster un modèle adapté</p></div>
+      <div><span>04</span><p>Valider, interpréter et communiquer</p></div>
+    </div>
+  </section>
 
-Structurer le raisonnement de modélisation pour les analyses du cours.
+  <section class="resource-section" id="demarche" aria-labelledby="workflow-title">
+    <div class="resource-section__header">
+      <h2 id="workflow-title">Démarche commune</h2>
+      <p>Cette séquence s'applique aux régressions, aux prévisions et aux modèles pour résultats binaires.</p>
+    </div>
+    <ol class="resource-steps">
+      <li>
+        <span>01</span>
+        <div>
+          <h3>Formuler la question</h3>
+          <p>Décrire ce qu'il faut expliquer, prévoir ou comparer, et pourquoi cette question est utile.</p>
+        </div>
+      </li>
+      <li>
+        <span>02</span>
+        <div>
+          <h3>Identifier la variable réponse</h3>
+          <p>Préciser l'unité, l'échelle, la fréquence temporelle et les valeurs possibles.</p>
+        </div>
+      </li>
+      <li>
+        <span>03</span>
+        <div>
+          <h3>Préparer les variables utiles</h3>
+          <p>Nettoyer, transformer, coder les catégories et vérifier les valeurs manquantes.</p>
+        </div>
+      </li>
+      <li>
+        <span>04</span>
+        <div>
+          <h3>Ajuster un modèle</h3>
+          <p>Choisir une méthode cohérente avec la réponse, les données et la question.</p>
+        </div>
+      </li>
+      <li>
+        <span>05</span>
+        <div>
+          <h3>Valider</h3>
+          <p>Examiner les diagnostics, la performance et les limites avant de conclure.</p>
+        </div>
+      </li>
+      <li>
+        <span>06</span>
+        <div>
+          <h3>Communiquer</h3>
+          <p>Relier le résultat à la décision et dire ce que le modèle ne permet pas d'affirmer.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
 
-## Canevas
+  <section class="resource-section" id="choisir" aria-labelledby="choose-title">
+    <div class="resource-section__header">
+      <h2 id="choose-title">Choisir le bon type de modèle</h2>
+      <p>Le choix dépend d'abord de la variable réponse et du type de question.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card resource-card--accent">
+        <h3>Régression</h3>
+        <p>Variable réponse numérique, comme ventes, coûts, temps d'attente, satisfaction ou quantité produite.</p>
+        <div class="resource-pill-row">
+          <span>Association</span>
+          <span>Interprétation</span>
+          <span>Prédiction</span>
+        </div>
+      </article>
+      <article class="resource-card resource-card--ok">
+        <h3>Séries chronologiques</h3>
+        <p>Données ordonnées dans le temps, avec tendance, saisonnalité, autocorrélation ou horizon de prévision.</p>
+        <div class="resource-pill-row">
+          <span>Temps</span>
+          <span>Prévision</span>
+          <span>Validation temporelle</span>
+        </div>
+      </article>
+      <article class="resource-card resource-card--warn">
+        <h3>Classification</h3>
+        <p>Variable réponse catégorielle ou binaire, comme achat oui/non, défaut oui/non ou départ client oui/non.</p>
+        <div class="resource-pill-row">
+          <span>Probabilité</span>
+          <span>Seuil</span>
+          <span>Performance</span>
+        </div>
+      </article>
+    </div>
+  </section>
 
-1. Définir la décision.
-2. Identifier la variable réponse.
-3. Choisir les variables explicatives ou temporelles.
-4. Ajuster le modèle.
-5. Diagnostiquer les limites.
-6. Communiquer la recommandation.
+  <section class="resource-section resource-split" id="valider" aria-labelledby="validate-title">
+    <div>
+      <h2 id="validate-title">Valider avant d'interpréter</h2>
+      <p>
+        La validation dépend du modèle, mais l'idée générale reste la même : vérifier si le modèle
+        est suffisamment fiable pour soutenir la conclusion proposée.
+      </p>
+    </div>
+    <div class="resource-compact-list">
+      <article class="resource-compact">
+        <h3>Régression</h3>
+        <p>Regarder les résidus, les valeurs atypiques, la forme de la relation et la cohérence des coefficients.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Prévision</h3>
+        <p>Comparer les prévisions à des observations gardées pour validation et choisir une mesure d'erreur adaptée.</p>
+      </article>
+      <article class="resource-compact">
+        <h3>Classification</h3>
+        <p>Examiner la matrice de confusion, la sensibilité, la spécificité ou une autre mesure cohérente avec la décision.</p>
+      </article>
+    </div>
+  </section>
 
-TODO: Ajouter des exemples pour la régression, la prévision et la classification.
+  <section class="resource-section resource-split" aria-labelledby="code-title">
+    <div>
+      <h2 id="code-title">Patron R général</h2>
+      <p>
+        Ce patron ne remplace pas le choix méthodologique. Il donne seulement une structure reproductible
+        pour garder l'analyse lisible.
+      </p>
+    </div>
+    <div class="resource-code-card" aria-label="Patron R de modélisation">
+      <span>Structure</span>
+      <pre><code># Load libraries
+library(tidyverse)
+library(broom)
 
+# Prepare data
+donnees_modelisation &lt;- donnees |&gt;
+  filter(!is.na(y), !is.na(x1), !is.na(x2))
+
+# Fit model
+modele &lt;- lm(y ~ x1 + x2, data = donnees_modelisation)
+
+# Validate and interpret
+tidy(modele)
+glance(modele)
+augment(modele)</code></pre>
+    </div>
+  </section>
+
+  <section class="resource-section" aria-labelledby="communication-title">
+    <div class="resource-section__header">
+      <h2 id="communication-title">Conclusion prudente</h2>
+      <p>Une conclusion de modélisation doit rester alignée sur la qualité des données et la méthode utilisée.</p>
+    </div>
+    <div class="resource-card-grid">
+      <article class="resource-card">
+        <h3>Ce que le modèle indique</h3>
+        <p>Présenter le résultat principal en unités compréhensibles.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Ce que cela suggère</h3>
+        <p>Relier le résultat à une décision, une comparaison ou une action possible.</p>
+      </article>
+      <article class="resource-card">
+        <h3>Ce qu'il faut vérifier</h3>
+        <p>Nommer les limites, hypothèses, données manquantes ou risques d'interprétation.</p>
+      </article>
+    </div>
+  </section>
+</div>
+```
