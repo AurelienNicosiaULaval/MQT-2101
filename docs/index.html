@@ -5378,6 +5378,46 @@ display: grid;
 gap: 0.75rem;
 margin: 1.15rem 0 1.6rem;
 }
+.workshop-launch {
+display: grid;
+grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr));
+gap: 1rem;
+margin: 1.25rem 0 1.6rem;
+}
+.workshop-link-card {
+display: block;
+min-height: 184px;
+padding: 1rem;
+border: 1px solid #dce5ea;
+border-radius: 8px;
+background: #ffffff;
+color: inherit;
+text-decoration: none;
+box-shadow: 0 8px 22px rgba(18, 50, 68, 0.05);
+}
+.workshop-link-card-primary {
+border-color: #9acde2;
+background: #eaf6fb;
+box-shadow: 0 12px 28px rgba(42, 157, 143, 0.12);
+}
+.workshop-link-card h3 {
+margin: 0.75rem 0 0.35rem;
+color: #123244;
+font-size: 1.05rem;
+line-height: 1.25;
+}
+.workshop-link-card p {
+margin: 0;
+color: #40515c;
+font-size: 0.94rem;
+line-height: 1.45;
+}
+.workshop-link-card:hover h3,
+.workshop-link-card:focus-visible h3 {
+color: #0b5cad;
+text-decoration: underline;
+text-underline-offset: 0.18em;
+}
 .agenda-item {
 display: grid;
 grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
@@ -6324,7 +6364,8 @@ margin-bottom: 0;
 .home-path,
 .assessment-grid,
 .install-tool-grid,
-.eval-report-flow {
+.eval-report-flow,
+.workshop-launch {
 grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .home-hero,
@@ -6360,6 +6401,9 @@ border-right: 0;
 position: static;
 }
 .interactive-path .path-card[open] {
+grid-column: span 2;
+}
+.workshop-link-card-primary {
 grid-column: span 2;
 }
 .outcome-strip {
@@ -6401,10 +6445,14 @@ font-size: 1.55rem;
 .eval-assessment-board,
 .eval-prep__links,
 .eval-report-flow,
+.workshop-launch,
 .resource-template-flow,
 .checklist-box ul,
 .checklist-card ul {
 grid-template-columns: 1fr;
+}
+.workshop-link-card-primary {
+grid-column: auto;
 }
 .home-hero,
 .install-hero,
@@ -6578,50 +6626,6 @@ display: none;
     <a class="dropdown-item" href="./modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-03-regression-lineaire/index.html">
- <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-04-regression-nonlineaire/index.html">
- <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/atelier-02-regression/index.html">
- <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-05-preparation-intra/index.html">
- <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-06-series-chronologiques-intro/index.html">
- <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-07-lissage/index.html">
- <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-08-tendance-saisonnalite/index.html">
- <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/atelier-03-series-chronologiques/index.html">
- <span class="dropdown-text">Atelier 03 - Séries chronologiques</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-09-variables-externes-autocorrelation/index.html">
- <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/semaine-10-classification-modeles-avances/index.html">
- <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./modules/atelier-04-recapitulation/index.html">
- <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -6752,7 +6756,7 @@ display: none;
 <section class="home-snapshot" aria-label="Repères rapides">
   <div>
     <span class="home-snapshot__label">Session</span>
-    <span class="home-snapshot__value">Automne 2026</span>
+    <span class="home-snapshot__value">À confirmer</span>
   </div>
   <div>
     <span class="home-snapshot__label">Outils</span>
