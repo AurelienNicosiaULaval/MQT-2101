@@ -1,134 +1,131 @@
 ---
-title: "Semaine 03 - Régression linéaire pour expliquer une variable d'affaires"
+title: "Module 03"
+subtitle: "Régression linéaire et interprétation"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.learning-hero}
+<p class="hero-kicker">Séance autonome</p>
+<h2>Régression linéaire et interprétation</h2>
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+Comprendre, ajuster et interpréter une droite de régression dans un contexte
+d'affaires. Le module part d'une question simple: lorsqu'un indicateur augmente,
+que peut-on dire de la valeur moyenne d'un autre indicateur?
 
-## Let’s eat the cake
+:::: {.quick-facts}
+::: {.fact-card}
+<div class="fact-icon fact-clock" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Durée estimée</div>
+  <div class="fact-value">2 h 30 à 3 h</div>
+</div>
+:::
 
-Objectif : utiliser la régression linéaire pour expliquer une variable quantitative.
+::: {.fact-card}
+<div class="fact-icon fact-tools" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Outils</div>
+  <div class="fact-value">R, graphiques, modèle linéaire</div>
+</div>
+:::
 
-Compétences développées :
-- Ajuster un modèle linéaire simple.
-- Interpréter une pente et une ordonnée à l'origine.
-- Relier les résultats à une décision de gestion.
+::: {.fact-card}
+<div class="fact-icon fact-data" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Données</div>
+  <div class="fact-value"><a class="data-link" href="../../donnees/#campagnes-marketing-québécoises-fictives">campagnes_marketing_quebec.csv</a></div>
+</div>
+:::
 
-Application business : expliquer le chiffre d'affaires selon l'investissement marketing.
+::: {.fact-card}
+<div class="fact-icon fact-report" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Trace finale</div>
+  <div class="fact-value">Interprétation d'un modèle</div>
+</div>
+:::
+::::
+:::
 
-Résultat final attendu : une interprétation de modèle claire et utile pour la décision.
+## On passe au concret
 
-Lien avec une décision d'affaires réelle : estimer l'effet moyen d'une hausse de budget marketing sur les ventes.
+::: {.callout-note title="La question du module"}
+Une organisation observe plusieurs campagnes marketing régionales et veut
+savoir si les ventes moyennes augmentent lorsque le budget marketing augmente.
 
-## Mise en contexte
+La régression linéaire permet de résumer cette relation par une droite. Elle ne
+prouve pas automatiquement qu'un budget plus élevé cause des ventes plus élevées.
+Elle aide à quantifier une association moyenne, à vérifier si le modèle est
+raisonnable et à formuler une interprétation prudente.
+:::
 
-Une entreprise analyse les ventes mensuelles de ses campagnes numériques au Canada et veut quantifier la relation entre budget publicitaire et revenus.
+À la fin du module, vous devriez pouvoir :
 
-TODO: Ajouter un jeu de données de campagnes marketing.
+- distinguer variable réponse et variable explicative;
+- lire un nuage de points avant d'ajuster un modèle;
+- ajuster une régression linéaire simple avec `lm()`;
+- interpréter une pente, une ordonnée à l'origine et un coefficient de détermination;
+- utiliser les résidus pour vérifier si la droite résume correctement les données;
+- expliquer ce que le modèle permet de dire, et ce qu'il ne permet pas de conclure.
 
-## Utilité pour le génie et l'administration
+## Parcours recommandé
 
-Le module doit être lu avec deux angles complémentaires.
+```{=html}
+<div class="workshop-launch" aria-label="Parcours du module">
+  <a class="workshop-link-card workshop-link-card-primary" href="capsules.html">
+    <span class="phase-label">1</span>
+    <h3>Capsules</h3>
+    <p>Construire l'intuition: relation, droite, résidus et qualité d'ajustement.</p>
+  </a>
+  <a class="workshop-link-card" href="demonstrations.html">
+    <span class="phase-label">2</span>
+    <h3>Démonstrations R</h3>
+    <p>Reproduire une analyse complète avec le fichier de campagnes marketing.</p>
+  </a>
+  <a class="workshop-link-card" href="exercices.html">
+    <span class="phase-label">3</span>
+    <h3>Exercices</h3>
+    <p>Pratiquer l'interprétation, le code, les diagnostics et la prudence statistique.</p>
+  </a>
+</div>
+```
 
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
+## Avant de commencer
 
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
+Téléchargez ou repérez le fichier
+[`campagnes_marketing_quebec.csv`](data/campagnes_marketing_quebec.csv).
+Chaque ligne représente une combinaison mois-région pour une campagne fictive.
 
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
+Variables centrales :
 
-## Concepts clés
-
-- Variable réponse et variable explicative.
-- Droite de régression.
-- Résidus.
-- Coefficient de détermination.
-- Interprétation des coefficients.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Relation entre deux variables d'affaires
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 2 - Modèle linéaire simple
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 3 - Interprétation des coefficients
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 4 - Qualité d'ajustement et résidus
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-Trace attendue : une correction courte et une liste de questions restantes.
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-Trace attendue : une idée utile, une définition ou une référence à retenir.
+- `ventes` : variable réponse;
+- `budget_marketing` : variable explicative principale;
+- `visites_site`, `rabais`, `region`, `canal` : variables utiles pour contextualiser;
+- `satisfaction` : indicateur complémentaire à ne pas confondre avec les ventes.
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Interprétation courte d'un modèle linéaire.
+Votre trace finale doit tenir en quelques paragraphes. Elle doit inclure :
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+1. la question d'analyse;
+2. le graphique de relation entre budget marketing et ventes;
+3. l'équation interprétée du modèle;
+4. une phrase sur la pente;
+5. une phrase sur la qualité d'ajustement;
+6. une limite claire sur l'interprétation causale.
 
-## Mini-cas business
+::: {.callout-tip title="Phrase cible"}
+Une bonne conclusion ressemble à ceci : « Dans ces données, les ventes moyennes
+sont plus élevées lorsque le budget marketing est plus élevé. Le modèle estime
+l'association moyenne, mais il ne suffit pas à prouver que le budget cause
+l'augmentation des ventes. »
+:::
 
-Budget marketing et ventes : faut-il augmenter l'investissement?
+## Ressources du module
 
-## À retenir
-
-La régression linéaire aide à quantifier une relation moyenne, mais l'interprétation dépend de la qualité du contexte et des données.
-
-## Erreurs fréquentes
-
-- Lire la pente sans unité.
-- Confondre association et causalité.
-- Négliger les points atypiques.
-
-## Pour aller plus loin
-
-TODO: Ajouter une lecture sur la communication des coefficients à un public non technique.
+- [Capsules](capsules.qmd)
+- [Démonstrations R](demonstrations.qmd)
+- [Exercices](exercices.qmd)
+- [Lectures](lectures.qmd)

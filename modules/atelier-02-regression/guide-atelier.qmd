@@ -1,24 +1,265 @@
 ---
-title: "Guide atelier 02"
+title: "Guide en classe - Atelier 02"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
+::: {.callout-note title="Place dans la progression"}
+Cet atelier se fait après le module 03. Il sert à passer d'une régression
+linéaire simple à une mini-analyse appliquée : question d'affaires, exploration,
+modèle, diagnostic et recommandation.
+:::
 
-Structurer une analyse de régression appliquée.
+## Objectif du parcours
 
-## Consignes
+Question centrale :
 
-TODO: Ajouter les étapes détaillées de l'étude de cas.
+> Quels facteurs sont associés aux ventes mensuelles des succursales, et quelle
+> piste d'action peut-on recommander prudemment?
+
+L'objectif n'est pas de trouver une formule magique. L'objectif est de produire
+une analyse claire qui montre ce que le modèle estime, ce que les données
+suggèrent et ce qu'il faut encore vérifier.
+
+## Ce que vous allez construire
+
+À la fin de l'atelier, vous aurez une mini-analyse Quarto contenant :
+
+- une question d'affaires reformulée;
+- une description du tableau;
+- un graphique exploratoire;
+- un modèle simple;
+- un modèle enrichi;
+- un diagnostic des résidus;
+- une recommandation prudente;
+- une limite explicite.
+
+## Données et préparation
+
+Fichier : <a class="data-link" href="../../donnees/#performance-de-succursales-québécoises-fictives">performance_succursales_quebec.csv</a>.
+
+[Télécharger le fichier CSV](data/performance_succursales_quebec.csv)
 
 ```{r}
-#| eval: false
+#| label: setup-atelier-02-guide
 library(tidyverse)
-library(broom)
 
-modele <- lm(indicateur_affaires ~ x1 + x2, data = donnees_atelier)
-broom::tidy(modele)
+data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
+  "data/performance_succursales_quebec.csv"
+} else {
+  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+}
+
+performance <- read_csv(data_path, show_col_types = FALSE)
 ```
 
+## Étape 1 - Comprendre la question
+
+Avant de coder, écrivez une phrase qui relie l'analyse à une décision.
+
+::: {.callout-tip title="Trace à conserver"}
+Nous voulons comprendre quels facteurs sont associés aux ventes mensuelles des
+succursales afin de prioriser une piste d'amélioration à tester.
+:::
+
+Variables à repérer :
+
+- `ventes` : variable réponse;
+- `achalandage` : volume de clients ou clientes;
+- `depenses_marketing` : effort marketing mensuel;
+- `heures_personnel` : capacité opérationnelle;
+- `ruptures_stock` : contrainte opérationnelle;
+- `campagne_locale` : indicateur d'action locale.
+
+## Étape 2 - Inspecter le tableau
+
+```{r}
+#| label: inspecter-atelier-02-guide
+glimpse(performance)
+```
+
+```{r}
+#| label: resume-succursales-guide
+performance |>
+  group_by(succursale) |>
+  summarise(
+    ventes_moyennes = mean(ventes),
+    achalandage_moyen = mean(achalandage),
+    depenses_moyennes = mean(depenses_marketing),
+    ruptures_moyennes = mean(ruptures_stock),
+    .groups = "drop"
+  ) |>
+  arrange(desc(ventes_moyennes))
+```
+
+::: {.callout-note title="Pause diagnostic"}
+Quelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela
+semble cohérent avec l'achalandage moyen?
+:::
+
+## Étape 3 - Visualiser avant de modéliser
+
+```{r}
+#| label: graphique-exploration-guide
+#| fig-width: 8
+#| fig-height: 5
+ggplot(performance, aes(x = achalandage, y = ventes)) +
+  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
+  labs(
+    title = "Ventes selon l'achalandage",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Succursale"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+::: {.callout-tip title="Trace à conserver"}
+Le nuage de points suggère une relation positive entre achalandage et ventes.
+Cette observation justifie un premier modèle, mais ne suffit pas à conclure à un
+effet causal.
+:::
+
+## Étape 4 - Ajuster un modèle simple
+
+```{r}
+#| label: modele-simple-guide
+modele_simple <- lm(ventes ~ achalandage, data = performance)
+
+summary(modele_simple)
+```
+
+Notez la pente de `achalandage`.
+
+```{r}
+#| label: pente-simple-guide
+pente_achalandage <- coef(modele_simple)["achalandage"]
+
+pente_achalandage
+```
+
+::: {.callout-tip title="Interprétation attendue"}
+Dans ce modèle simple, une unité supplémentaire d'achalandage est associée à une
+augmentation moyenne estimée des ventes de `r round(pente_achalandage, 1)` dollars.
+Cette phrase décrit une association moyenne dans les données.
+:::
+
+## Étape 5 - Ajouter des variables de contexte
+
+```{r}
+#| label: modele-enrichi-guide
+modele_enrichi <- lm(
+  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
+  data = performance
+)
+
+summary(modele_enrichi)
+```
+
+Dans le modèle enrichi, chaque coefficient se lit en tenant constantes les autres
+variables du modèle. Cette idée est essentielle pour éviter les interprétations
+trop rapides.
+
+```{r}
+#| label: comparaison-modeles-guide
+tibble(
+  modele = c("Simple", "Enrichi"),
+  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),
+  r_carre_ajuste = c(
+    summary(modele_simple)$adj.r.squared,
+    summary(modele_enrichi)$adj.r.squared
+  )
+)
+```
+
+## Étape 6 - Diagnostiquer le modèle
+
+```{r}
+#| label: donnees-residus-guide
+performance_modele <- performance |>
+  mutate(
+    ventes_predites = predict(modele_enrichi),
+    residu = residuals(modele_enrichi)
+  )
+```
+
+```{r}
+#| label: graphique-residus-guide
+#| fig-width: 8
+#| fig-height: 5
+ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
+  geom_point(alpha = 0.8, size = 2.4, colour = "#0B4F6C") +
+  labs(
+    title = "Résidus du modèle enrichi",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+::: {.callout-note title="Pause diagnostic"}
+Le graphique des résidus sert à vérifier si les erreurs du modèle semblent
+réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner dans
+la limite de l'analyse.
+:::
+
+## Étape 7 - Rédiger la recommandation
+
+Utilisez le modèle pour prioriser une piste, mais gardez l'incertitude visible.
+
+::: {.resource-code-card}
+<span>Modèle de paragraphe à adapter</span>
+
+```markdown
+Les données suggèrent que [facteur prioritaire] est associé aux ventes mensuelles.
+Dans le modèle, [résultat chiffré ou direction de l'effet] indique que ce facteur
+mérite une attention particulière. Je recommande donc de [action prudente à tester
+ou à approfondir]. Cette recommandation doit rester prudente, car les données sont
+observationnelles et le modèle ne prouve pas à lui seul une relation causale.
+Une prochaine étape serait de [validation ou analyse complémentaire].
+```
+:::
+
+## Gabarit minimal pour votre mini-analyse
+
+::: {.resource-code-card}
+<span>Structure Quarto à copier</span>
+
+```markdown
+---
+title: "Atelier 02 - Régression"
+format:
+  html:
+    embed-resources: true
+---
+
+## Question d'affaires
+
+## Données
+
+## Exploration
+
+## Modèle simple
+
+## Modèle enrichi
+
+## Diagnostic
+
+## Recommandation prudente
+```
+:::
+
+## Fin de l'atelier
+
+Avant de quitter, vérifiez que votre fichier contient :
+
+- au moins un graphique;
+- au moins un modèle ajusté avec `lm()`;
+- une interprétation de coefficient;
+- un diagnostic des résidus;
+- une recommandation qui ne confond pas association et causalité.

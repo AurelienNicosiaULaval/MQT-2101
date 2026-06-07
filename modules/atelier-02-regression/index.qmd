@@ -1,120 +1,156 @@
 ---
-title: "Atelier 02 - Régression, étude de cas business"
+title: "Atelier 02"
+subtitle: "Régression appliquée à une décision d'affaires"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.learning-hero}
+<p class="hero-kicker">Atelier en classe</p>
+<h2>Régression appliquée à une décision d'affaires</h2>
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+Cet atelier prolonge le module 03. Vous allez utiliser la régression pour
+analyser la performance de succursales fictives et formuler une recommandation
+prudente à partir d'un modèle.
 
-## Let’s eat the cake
+:::: {.quick-facts}
+::: {.fact-card}
+<div class="fact-icon fact-clock" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Pendant</div>
+  <div class="fact-value">2 h 30 à 3 h en classe</div>
+</div>
+:::
 
-Objectif : utiliser la régression pour répondre à une question d'affaires.
+::: {.fact-card}
+<div class="fact-icon fact-tools" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Outils</div>
+  <div class="fact-value">R, Quarto, régression</div>
+</div>
+:::
 
-Compétences développées :
-- Ajuster un modèle.
-- Interpréter les coefficients.
-- Transformer les résultats en recommandation.
+::: {.fact-card}
+<div class="fact-icon fact-data" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Données</div>
+  <div class="fact-value"><a class="data-link" href="../../donnees/#performance-de-succursales-québécoises-fictives">performance_succursales_quebec.csv</a></div>
+</div>
+:::
 
-Application business : expliquer les ventes, la satisfaction ou la performance d'une succursale.
+::: {.fact-card}
+<div class="fact-icon fact-report" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Production</div>
+  <div class="fact-value">Mini-analyse commentée</div>
+</div>
+:::
+::::
+:::
 
-Résultat final attendu : une analyse de cas structurée.
+## Avant l'atelier
 
-Lien avec une décision d'affaires réelle : choisir un levier prioritaire pour améliorer un indicateur.
+Arrivez avec les bases du module 03 en tête :
 
-## Mise en contexte
+- variable réponse et variable explicative;
+- nuage de points;
+- pente et ordonnée à l'origine;
+- résidus;
+- différence entre association, prédiction et causalité.
 
-Une direction veut comprendre quels facteurs expliquent la performance de ses points de service au Canada.
+Téléchargez ou repérez le fichier
+[`performance_succursales_quebec.csv`](data/performance_succursales_quebec.csv).
 
-## Utilité pour le génie et l'administration
+## Pendant l'atelier
 
-Le module doit être lu avec deux angles complémentaires.
+Le guide complet est la page principale à suivre en classe. Les démonstrations
+et les exercices servent de soutien pendant le parcours.
 
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
+```{=html}
+<div class="workshop-launch" aria-label="Liens principaux de l'atelier">
+  <a class="workshop-link-card workshop-link-card-primary" href="guide-atelier.html">
+    <span class="phase-label">Guide</span>
+    <h3>Guide complet de l'atelier</h3>
+    <p>Suivre le déroulement en classe, étape par étape, jusqu'à la recommandation finale.</p>
+  </a>
+  <a class="workshop-link-card" href="demonstrations.html">
+    <span class="phase-label">Démo</span>
+    <h3>Démonstrations R</h3>
+    <p>Voir une analyse reproductible avant de produire votre propre version.</p>
+  </a>
+  <a class="workshop-link-card" href="exercices.html">
+    <span class="phase-label">Pratique</span>
+    <h3>Exercices</h3>
+    <p>Tester votre compréhension et vérifier vos interprétations.</p>
+  </a>
+</div>
+```
 
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
+## Déroulement suggéré
 
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
+```{=html}
+<div class="workshop-agenda">
+  <div class="agenda-item">
+    <div class="agenda-time">0:00 - 0:25</div>
+    <div class="agenda-content">
+      <h3>Question d'affaires</h3>
+      <p>Identifier la variable réponse, les variables explicatives et la décision à éclairer.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">0:25 - 1:05</div>
+    <div class="agenda-content">
+      <h3>Exploration</h3>
+      <p>Inspecter le tableau, produire les premiers graphiques et repérer les relations plausibles.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">1:05 - 1:55</div>
+    <div class="agenda-content">
+      <h3>Modélisation</h3>
+      <p>Ajuster un modèle simple, puis un modèle enrichi, et comparer les interprétations.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">1:55 - 2:35</div>
+    <div class="agenda-content">
+      <h3>Diagnostic</h3>
+      <p>Examiner les résidus, les points influents et les limites du modèle.</p>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="agenda-time">2:35 - 3:00</div>
+    <div class="agenda-content">
+      <h3>Recommandation</h3>
+      <p>Transformer les résultats en recommandation prudente et défendable.</p>
+    </div>
+  </div>
+</div>
+```
 
-## Repères avant les capsules
+## Résultat attendu
 
-Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.
+Votre mini-analyse doit inclure :
 
-## Préparer votre espace de travail
+- une question d'affaires claire;
+- un graphique exploratoire;
+- un modèle linéaire simple;
+- une interprétation de coefficient;
+- un diagnostic des résidus;
+- une recommandation;
+- une limite importante.
 
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
+::: {.callout-warning title="Responsabilité statistique"}
+La recommandation doit rester cohérente avec les données. Un modèle peut aider à
+prioriser une piste d'action, mais il ne remplace pas l'analyse du contexte ni
+la validation avec d'autres informations.
+:::
 
+## Ressources de l'atelier
 
-Pour l'atelier, le [guide d'atelier](guide-atelier.qmd) donne le déroulement détaillé des manipulations à réaliser.
-
-## Capsule 1 - Question d'affaires et variable réponse
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 2 - Nuage de points et relation
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 3 - Ajustement du modele
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 4 - Recommandation et limites
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-Trace attendue : une correction courte et une liste de questions restantes.
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-Trace attendue : une idée utile, une définition ou une référence à retenir.
-
-## Trace finale
-
-Terminez le module en produisant le livrable court : Analyse de cas en regression.
-
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
-
-## Mini-cas business
-
-Performance de succursales : quel facteur explique le mieux les écarts de ventes?
-
-## Pour aller plus loin
-
-TODO ajouter une ressource complémentaire ou une piste de consolidation.
+- [Capsules](capsules.qmd)
+- [Guide complet](guide-atelier.qmd)
+- [Démonstrations R](demonstrations.qmd)
+- [Exercices](exercices.qmd)
+- [Lectures](lectures.qmd)

@@ -1,15 +1,26 @@
-# Données - Semaine 03
+# Données - Module 03
 
-Ce dossier contient uniquement les données publiques utilisées dans le module.
+Ce dossier contient les données publiques utilisées dans le module sur la
+régression linéaire.
 
-## Fichiers
+## Fichier
 
-- TODO ajouter les fichiers publics lorsque les données du module seront choisies.
+- `campagnes_marketing_quebec.csv` : données simulées sur des campagnes
+  marketing régionales fictives. Chaque ligne représente une combinaison
+  mois-région.
 
-## Règles
+## Variables principales
 
-- ne pas placer de fichiers nominatifs dans ce dossier;
-- ne pas publier de fichiers provenant d'examens;
-- documenter l'origine, les variables et les transformations;
-- privilégier les formats `.csv` pour les exemples étudiants.
+- `mois` : mois de l'observation;
+- `mois_label` : nom du mois;
+- `region` : région québécoise fictive de la campagne;
+- `canal` : canal principal de campagne;
+- `saison` : période régulière, moyenne ou haute;
+- `budget_marketing` : budget marketing mensuel;
+- `visites_site` : visites web associées à la campagne;
+- `rabais` : niveau de rabais appliqué;
+- `ventes` : ventes mensuelles;
+- `satisfaction` : score de satisfaction simulé.
 
+Les données sont simulées pour l'enseignement. Elles ne représentent pas une
+organisation réelle.

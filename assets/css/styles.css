@@ -2534,8 +2534,10 @@ main.content .code-copy-button:focus-visible {
   overflow: hidden;
 }
 
-.resource-code-card > span {
+.resource-code-card > span,
+.resource-code-card > p:first-child {
   display: block;
+  margin: 0;
   min-height: 2.85rem;
   padding: 0.65rem 0.85rem;
   padding-right: 5.6rem;
@@ -2546,6 +2548,10 @@ main.content .code-copy-button:focus-visible {
   font-weight: 900;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.resource-code-card > p:first-child span {
+  display: inline;
 }
 
 .resource-code-card pre {
@@ -2567,7 +2573,8 @@ main.content .code-copy-button:focus-visible {
   color: var(--resource-ink);
 }
 
-.resource-code-card--light > span {
+.resource-code-card--light > span,
+.resource-code-card--light > p:first-child {
   border-bottom-color: #cfe4ee;
   background: #dff1f8;
   color: var(--resource-blue);

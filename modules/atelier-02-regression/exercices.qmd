@@ -7,47 +7,117 @@ format:
 
 ## Objectif
 
-Faire pratiquer les notions du module après les capsules et les démonstrations R.
+Ces exercices accompagnent le guide de l'atelier. Ils servent à préparer la
+mini-analyse finale.
 
-## Exercice 1 - Interprétation
-
-TODO ajouter une question courte qui force l'étudiant à expliquer le sens d'un concept dans le contexte du module.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO rédiger la solution courte.
-:::
-
-## Exercice 2 - Code R
+## Préparation
 
 ```{r}
 #| eval: false
 library(tidyverse)
 
-# TODO ajouter un exercice de manipulation, de visualisation ou de modélisation.
+data_path <- "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+performance <- read_csv(data_path, show_col_types = FALSE)
 ```
 
-::: {.callout-tip collapse="true"}
-### Solution
+## Exercice 1 - Question et variables
+
+Pour la question « Quels facteurs sont associés aux ventes mensuelles des
+succursales? », identifiez :
+
+- la variable réponse;
+- deux variables explicatives plausibles;
+- une variable qui pourrait confondre l'interprétation;
+- une limite du tableau.
+
+::: {.callout-tip collapse="true" title="Solution"}
+La variable réponse est `ventes`. Des variables explicatives plausibles sont
+`achalandage`, `depenses_marketing`, `heures_personnel` et `ruptures_stock`.
+Une variable de contexte comme `succursale`, `region` ou `saison` peut influencer
+l'interprétation. Une limite est que les observations ne proviennent pas d'une
+expérience contrôlée.
+:::
+
+## Exercice 2 - Graphique exploratoire
+
+Produisez un graphique des ventes selon l'achalandage, avec une couleur par
+succursale.
 
 ```{r}
 #| eval: false
-# TODO ajouter le code solution.
+ggplot(performance, aes(x = achalandage, y = ventes, colour = succursale)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, colour = "black") +
+  labs(
+    title = "Ventes selon l'achalandage",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Succursale"
+  ) +
+  theme_minimal()
 ```
+
+::: {.callout-tip collapse="true" title="Solution"}
+Le graphique doit permettre de vérifier si une relation positive existe et si
+certaines succursales semblent systématiquement au-dessus ou au-dessous de la
+tendance générale.
 :::
 
-## Exercice 3 - Réflexion critique
+## Exercice 3 - Modèle simple
 
-TODO demander une limite, une mise en garde ou une interprétation prudente.
+Ajustez un modèle simple avec `achalandage` comme variable explicative.
 
-::: {.callout-tip collapse="true"}
-### Solution
+```{r}
+#| eval: false
+modele_simple <- lm(ventes ~ achalandage, data = performance)
+summary(modele_simple)
+```
 
-TODO rédiger les éléments attendus.
+Interprétez la pente en une phrase.
+
+::: {.callout-tip collapse="true" title="Solution"}
+La pente indique la variation moyenne estimée des ventes pour une unité
+supplémentaire d'achalandage mensuel. Il faut préciser l'unité et éviter de dire
+que l'achalandage cause automatiquement les ventes.
 :::
 
-## Livrable court
+## Exercice 4 - Modèle enrichi
 
-Livrable attendu : Analyse de cas en regression.
+Ajustez le modèle suivant :
 
+```{r}
+#| eval: false
+modele_enrichi <- lm(
+  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
+  data = performance
+)
+
+summary(modele_enrichi)
+```
+
+Choisissez un coefficient et interprétez-le dans le contexte.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Un coefficient du modèle enrichi se lit en tenant constantes les autres
+variables incluses dans le modèle. Par exemple, le coefficient de
+`depenses_marketing` décrit l'association moyenne avec les ventes pour des
+observations ayant le même achalandage, les mêmes heures de personnel et le même
+nombre de ruptures de stock, selon le modèle.
+:::
+
+## Exercice 5 - Recommandation
+
+Rédigez une recommandation de cinq à sept lignes pour une direction régionale.
+Votre texte doit inclure :
+
+- le facteur prioritaire;
+- un résultat de modèle;
+- une limite;
+- une prochaine vérification.
+
+::: {.callout-tip collapse="true" title="Solution"}
+La recommandation doit être défendable sans être excessive. Une bonne réponse
+peut recommander de prioriser l'analyse de l'achalandage, de surveiller les
+ruptures de stock ou de tester des actions marketing, mais elle doit préciser
+que le modèle décrit une association observée.
+:::

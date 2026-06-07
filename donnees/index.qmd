@@ -78,6 +78,22 @@ dataset_catalog <- tibble::tribble(
   "Jeu de données simulé sur les ventes mensuelles d'une PME québécoise fictive dans cinq succursales.",
   "Explorer un tableau d'affaires, produire des synthèses descriptives et relier les variables opérationnelles aux ventes.",
   "Données simulées pour le cours.",
+  "Données simulées pour le cours.",
+  "campagnes_marketing_quebec",
+  "Campagnes marketing québécoises fictives",
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv",
+  "Module 03 - Régression linéaire",
+  "Jeu de données simulé sur des campagnes marketing régionales fictives.",
+  "Visualiser une relation entre budget marketing et ventes, ajuster une régression linéaire simple et interpréter les résidus.",
+  "Données simulées pour le cours.",
+  "Données simulées pour le cours.",
+  "performance_succursales_quebec",
+  "Performance de succursales québécoises fictives",
+  "modules/atelier-02-regression/data/performance_succursales_quebec.csv",
+  "Atelier 02 - Régression",
+  "Jeu de données simulé sur la performance mensuelle de succursales fictives au Québec.",
+  "Ajuster un modèle de régression appliqué, comparer un modèle simple et un modèle enrichi, puis formuler une recommandation prudente.",
+  "Données simulées pour le cours.",
   "Données simulées pour le cours."
 )
 
@@ -507,4 +523,104 @@ dataset_profile("ventes_pme_quebec") |>
 #| fig-width: 8
 
 plot_numeric_overview("ventes_pme_quebec")
+```
+
+## Campagnes marketing québécoises fictives
+
+Jeu de données simulé sur des campagnes marketing régionales fictives. Le
+fichier sert à visualiser une relation entre budget marketing et ventes, ajuster
+une régression linéaire simple et interpréter les résidus.
+
+```{r}
+#| label: telecharger-campagnes-marketing-quebec
+#| results: asis
+
+cat(download_link("campagnes_marketing_quebec"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-campagnes-marketing-quebec
+
+dataset_facts("campagnes_marketing_quebec") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-campagnes-marketing-quebec
+
+dataset_table("campagnes_marketing_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-campagnes-marketing-quebec
+#| tbl-cap: "Profil des variables de campagnes_marketing_quebec.csv"
+
+dataset_profile("campagnes_marketing_quebec") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-campagnes-marketing-quebec
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("campagnes_marketing_quebec")
+```
+
+## Performance de succursales québécoises fictives
+
+Jeu de données simulé sur la performance mensuelle de succursales fictives au
+Québec. Le fichier sert à ajuster un modèle de régression appliqué, comparer un
+modèle simple et un modèle enrichi, puis formuler une recommandation prudente.
+
+```{r}
+#| label: telecharger-performance-succursales-quebec
+#| results: asis
+
+cat(download_link("performance_succursales_quebec"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-performance-succursales-quebec
+
+dataset_facts("performance_succursales_quebec") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-performance-succursales-quebec
+
+dataset_table("performance_succursales_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-performance-succursales-quebec
+#| tbl-cap: "Profil des variables de performance_succursales_quebec.csv"
+
+dataset_profile("performance_succursales_quebec") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-performance-succursales-quebec
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("performance_succursales_quebec")
 ```

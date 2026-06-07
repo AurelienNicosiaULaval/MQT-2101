@@ -1,5 +1,5 @@
 ---
-title: "Démonstrations R - Semaine 03"
+title: "Démonstrations R - Module 03"
 format:
   html:
     embed-resources: true
@@ -7,41 +7,177 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Cette page montre une analyse reproductible de régression linéaire simple. Le
+but n'est pas de mémoriser le code, mais de comprendre la séquence :
+
+1. importer;
+2. visualiser;
+3. ajuster;
+4. interpréter;
+5. diagnostiquer;
+6. formuler une conclusion prudente.
 
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-module-03
 library(tidyverse)
-library(janitor)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
+  "data/campagnes_marketing_quebec.csv"
+} else {
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+}
+
+campagnes <- read_csv(data_path, show_col_types = FALSE)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Inspecter le tableau
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+#| label: inspecter-campagnes
+glimpse(campagnes)
 ```
-
-## Démonstration 2 - Produire un résultat intermédiaire
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+#| label: resume-campagnes
+campagnes |>
+  summarise(
+    observations = n(),
+    budget_moyen = mean(budget_marketing),
+    ventes_moyennes = mean(ventes),
+    ventes_min = min(ventes),
+    ventes_max = max(ventes)
+  )
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## Visualiser la relation
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+```{r}
+#| label: nuage-budget-ventes
+#| fig-width: 8
+#| fig-height: 5
+ggplot(campagnes, aes(x = budget_marketing, y = ventes)) +
+  geom_point(aes(colour = region), alpha = 0.8, size = 2.4) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
+  labs(
+    title = "Ventes selon le budget marketing",
+    x = "Budget marketing",
+    y = "Ventes",
+    colour = "Région"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
 
-## À vérifier
+Le graphique suggère une association positive : les campagnes avec un budget
+plus élevé tendent aussi à avoir des ventes plus élevées.
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+## Ajuster le modèle
 
+```{r}
+#| label: modele-budget-ventes
+modele_budget <- lm(ventes ~ budget_marketing, data = campagnes)
+
+summary(modele_budget)
+```
+
+## Interpréter les coefficients
+
+```{r}
+#| label: coefficients-budget
+coefficients_modele <- coef(modele_budget)
+
+coefficients_modele
+```
+
+La pente estimée correspond à la variation moyenne des ventes associée à une
+augmentation d'une unité de budget marketing, dans ce jeu de données.
+
+Comme le budget est en dollars, une augmentation de 1 dollar est peu parlante.
+On peut reformuler la pente pour 1 000 dollars.
+
+```{r}
+#| label: pente-mille-dollars
+pente_1000 <- coefficients_modele["budget_marketing"] * 1000
+
+pente_1000
+```
+
+Interprétation attendue : pour 1 000 dollars de budget marketing
+supplémentaire, le modèle estime une augmentation moyenne des ventes d'environ
+`r round(pente_1000)` dollars, dans ces données.
+
+## Qualité d'ajustement
+
+```{r}
+#| label: r-carre-module-03
+resume_modele <- summary(modele_budget)
+
+resume_modele$r.squared
+```
+
+Le `R²` indique la proportion de variation des ventes expliquée par la droite
+utilisant seulement le budget marketing.
+
+## Résidus et valeurs ajustées
+
+```{r}
+#| label: ajouter-residus-module-03
+campagnes_modele <- campagnes |>
+  mutate(
+    ventes_predites = predict(modele_budget),
+    residu = residuals(modele_budget)
+  )
+
+campagnes_modele |>
+  select(region, mois_label, budget_marketing, ventes, ventes_predites, residu) |>
+  slice_head(n = 8)
+```
+
+```{r}
+#| label: diagnostic-residus-module-03
+#| fig-width: 8
+#| fig-height: 5
+ggplot(campagnes_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
+  geom_point(alpha = 0.8, size = 2.4, colour = "#0B4F6C") +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+Un bon diagnostic de base vérifie si les résidus sont dispersés autour de zéro
+sans motif évident. Si les résidus augmentent, diminuent ou forment une courbe,
+le modèle linéaire simple peut être insuffisant.
+
+## Prédire pour de nouveaux budgets
+
+```{r}
+#| label: predictions-nouveaux-budgets
+nouveaux_budgets <- tibble(
+  budget_marketing = c(4000, 6000, 8000)
+)
+
+predict(
+  modele_budget,
+  newdata = nouveaux_budgets,
+  interval = "prediction"
+)
+```
+
+Une prédiction doit être interprétée comme une estimation incertaine. Elle est
+plus crédible pour des budgets comparables à ceux observés dans les données.
+
+## Conclusion prudente
+
+::: {.callout-tip title="Interprétation synthèse"}
+Dans ces données simulées, les ventes sont positivement associées au budget
+marketing. La pente du modèle donne une estimation de l'augmentation moyenne des
+ventes lorsque le budget augmente. Cette relation reste une association
+observée: elle ne suffit pas à prouver un effet causal du budget sur les ventes.
+:::

@@ -1,5 +1,5 @@
 ---
-title: "Capsules - Semaine 03"
+title: "Capsules - Module 03"
 format:
   html:
     embed-resources: true
@@ -7,110 +7,86 @@ format:
 
 ## Objectif
 
-Présenter la logique de la régression linéaire dans un contexte d'affaires.
+Ces capsules servent à construire l'intuition avant de coder. Lisez-les dans
+l'ordre, puis gardez une courte trace de vos réponses. Les démonstrations R
+reprennent ensuite les mêmes idées avec les données du module.
 
-## Capsule 1 - Relation entre variables
+## Capsule 1 - Relation entre deux variables
 
-::: {.panel-tabset}
-### Vidéo
+Une régression linéaire commence par une question qui relie deux variables.
+Dans le module :
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 1.
+- la variable réponse est `ventes`;
+- la variable explicative principale est `budget_marketing`.
+
+Avant de modéliser, on regarde le nuage de points. Si les points montent
+globalement de gauche à droite, l'association est positive. Si les points
+descendent, elle est négative. Si aucun motif clair n'apparaît, la droite risque
+de résumer peu d'information.
+
+::: {.callout-tip title="Activité courte"}
+En une phrase, formulez la question d'affaires sans utiliser le mot « cause ».
 :::
 
-Emplacement prévu : `media/videos/capsule-01.mp4` ou lien vidéo institutionnel.
+## Capsule 2 - Droite de régression
 
-### Support
+Le modèle linéaire simple s'écrit :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.
+$$
+y = \beta_0 + \beta_1 x + \varepsilon.
+$$
 
-Emplacement prévu : `media/pdf/capsule-01-support.pdf`.
+Dans le contexte du module :
+
+- `y` représente les ventes;
+- `x` représente le budget marketing;
+- `β0` est l'ordonnée à l'origine;
+- `β1` est la pente;
+- `ε` représente ce que la droite ne capture pas.
+
+La pente est l'élément le plus important à interpréter. Elle décrit la variation
+moyenne de la variable réponse lorsque la variable explicative augmente d'une
+unité.
+
+::: {.callout-tip title="Activité courte"}
+Si la pente estimée est positive, que signifie-t-elle dans le cas des ventes et
+du budget marketing?
 :::
 
+## Capsule 3 - Résidus
 
-TODO: Ajouter une capsule sur nuage de points et corrélation.
+Un résidu est la différence entre la valeur observée et la valeur prédite par le
+modèle :
 
-## Capsule 2 - Modèle linéaire
+$$
+résidu = valeur observée - valeur prédite.
+$$
 
-::: {.panel-tabset}
-### Vidéo
+Les résidus ne sont pas un détail technique. Ils indiquent où la droite se
+trompe et si cette erreur semble raisonnable. Un modèle peut avoir une pente
+intéressante, mais rester fragile si les résidus montrent une structure claire
+ou des observations très atypiques.
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 2.
+::: {.callout-tip title="Activité courte"}
+Pourquoi faut-il regarder les résidus même si le coefficient de détermination
+semble élevé?
 :::
 
-Emplacement prévu : `media/videos/capsule-02.mp4` ou lien vidéo institutionnel.
+## Capsule 4 - Qualité d'ajustement et prudence
 
-### Support
+Le coefficient de détermination, souvent noté `R²`, résume la part de variation
+de la variable réponse expliquée par le modèle linéaire. Un `R²` élevé indique
+que la droite suit bien les données, mais il ne transforme pas automatiquement
+une association en effet causal.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.
+Trois réflexes sont essentiels :
 
-Emplacement prévu : `media/pdf/capsule-02-support.pdf`.
+- vérifier le nuage de points;
+- examiner les résidus;
+- relier l'interprétation à la question d'affaires sans dépasser ce que les
+  données permettent.
+
+::: {.callout-warning title="À retenir"}
+La régression linéaire estime une relation moyenne. Elle ne remplace pas la
+connaissance du contexte, la validation du modèle ou le jugement statistique.
 :::
-
-
-TODO: Ajouter une démonstration avec `lm()`.
-
-## Capsule 3 - Diagnostic
-
-::: {.panel-tabset}
-### Vidéo
-
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 3.
-:::
-
-Emplacement prévu : `media/videos/capsule-03.mp4` ou lien vidéo institutionnel.
-
-### Support
-
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.
-
-Emplacement prévu : `media/pdf/capsule-03-support.pdf`.
-:::
-
-
-TODO: Ajouter une lecture des résidus et points atypiques.
-
-
-
-## Capsule 4 - Qualité d'ajustement et résidus
-
-::: {.panel-tabset}
-### Vidéo
-
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 4.
-:::
-
-Emplacement prévu : `media/videos/capsule-04.mp4` ou lien vidéo institutionnel.
-
-### Support
-
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.
-
-Emplacement prévu : `media/pdf/capsule-04-support.pdf`.
-:::
-
-Durée cible : 5 à 8 minutes.
-
-Objectif : TODO rédiger et synthétiser la portion correspondante du module.
-
-À couvrir :
-
-- TODO idée principale;
-- TODO exemple simple;
-- TODO lien avec une décision ou une interprétation d'affaires.
-
-### Activité
-
-TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.
-
-## Règle de découpage des capsules
-
-Chaque capsule doit être courte et suivie d'une activité.
-
-### Exemple d'activité
-
-TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.
-

@@ -7,41 +7,150 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Cette démonstration montre comment passer d'un tableau de performance de
+succursales à une recommandation fondée sur une régression.
 
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-atelier-02-demo
 library(tidyverse)
-library(janitor)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
+  "data/performance_succursales_quebec.csv"
+} else {
+  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+}
+
+performance <- read_csv(data_path, show_col_types = FALSE)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Comprendre les données
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+#| label: inspecter-performance-demo
+glimpse(performance)
 ```
-
-## Démonstration 2 - Produire un résultat intermédiaire
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+#| label: resume-performance-demo
+performance |>
+  summarise(
+    observations = n(),
+    succursales = n_distinct(succursale),
+    ventes_moyennes = mean(ventes),
+    achalandage_moyen = mean(achalandage),
+    depenses_moyennes = mean(depenses_marketing)
+  )
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## Explorer une relation principale
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+```{r}
+#| label: graphique-achalandage-ventes-demo
+#| fig-width: 8
+#| fig-height: 5
+ggplot(performance, aes(x = achalandage, y = ventes)) +
+  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
+  labs(
+    title = "Ventes selon l'achalandage",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Succursale"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
 
-## À vérifier
+## Ajuster un modèle simple
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+```{r}
+#| label: modele-simple-atelier-02
+modele_simple <- lm(ventes ~ achalandage, data = performance)
 
+summary(modele_simple)
+```
+
+La pente du modèle simple indique la variation moyenne estimée des ventes pour
+une unité supplémentaire d'achalandage mensuel.
+
+```{r}
+#| label: pente-achalandage-atelier-02
+coef(modele_simple)["achalandage"]
+```
+
+## Ajouter le contexte
+
+Un modèle enrichi peut inclure d'autres variables plausibles. Ici, on ajoute les
+dépenses marketing, les heures de personnel et les ruptures de stock.
+
+```{r}
+#| label: modele-enrichi-atelier-02
+modele_enrichi <- lm(
+  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
+  data = performance
+)
+
+summary(modele_enrichi)
+```
+
+Les coefficients du modèle enrichi se lisent « toutes choses incluses dans le
+modèle étant égales par ailleurs ». Cette formulation est importante, car elle
+évite de comparer naïvement des succursales qui n'ont pas le même achalandage ou
+la même dotation en personnel.
+
+## Comparer les modèles
+
+```{r}
+#| label: comparer-modeles-atelier-02
+tibble(
+  modele = c("Simple", "Enrichi"),
+  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),
+  r_carre_ajuste = c(
+    summary(modele_simple)$adj.r.squared,
+    summary(modele_enrichi)$adj.r.squared
+  )
+)
+```
+
+Le modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible.
+Dans une analyse appliquée, le meilleur modèle n'est pas seulement celui qui a
+le plus grand `R²`. C'est aussi celui qui soutient une interprétation utile.
+
+## Diagnostiquer les résidus
+
+```{r}
+#| label: residus-atelier-02
+performance_modele <- performance |>
+  mutate(
+    ventes_predites = predict(modele_enrichi),
+    residu = residuals(modele_enrichi)
+  )
+```
+
+```{r}
+#| label: graphique-residus-atelier-02
+#| fig-width: 8
+#| fig-height: 5
+ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
+  geom_point(alpha = 0.8, size = 2.4, colour = "#0B4F6C") +
+  labs(
+    title = "Résidus du modèle enrichi",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Formuler une recommandation
+
+::: {.callout-tip title="Exemple de formulation"}
+Les données suggèrent que l'achalandage est fortement associé aux ventes. Les
+dépenses marketing et les heures de personnel peuvent aussi être considérées
+dans l'interprétation du modèle enrichi. La recommandation doit toutefois rester
+prudente, car ces données simulées sont observationnelles et ne prouvent pas un
+effet causal.
+:::

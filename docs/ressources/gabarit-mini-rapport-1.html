@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/** 
+/**
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document. 
+ * Finds all non-overlapping matches for a search string in the document.
  * The search string may be split between multiple consecutive leaf nodes.
- * 
+ *
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- * 
+ *
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match 
+ * and would contribute the match
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- * 
+ *
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/** 
+/**
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- * 
+ *
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset. 
+// inside/outside that tabset.
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6205,8 +6205,10 @@ color: var(--resource-ink);
 box-shadow: 0 14px 34px rgba(11, 79, 108, 0.1);
 overflow: hidden;
 }
-.resource-code-card > span {
+.resource-code-card > span,
+.resource-code-card > p:first-child {
 display: block;
+margin: 0;
 min-height: 2.85rem;
 padding: 0.65rem 0.85rem;
 padding-right: 5.6rem;
@@ -6217,6 +6219,9 @@ font-size: 0.78rem;
 font-weight: 900;
 letter-spacing: 0;
 text-transform: uppercase;
+}
+.resource-code-card > p:first-child span {
+display: inline;
 }
 .resource-code-card pre {
 margin: 0;
@@ -6234,7 +6239,8 @@ border-color: #bddbe8;
 background: #eef8fc;
 color: var(--resource-ink);
 }
-.resource-code-card--light > span {
+.resource-code-card--light > span,
+.resource-code-card--light > p:first-child {
 border-bottom-color: #cfe4ee;
 background: #dff1f8;
 color: var(--resource-blue);
@@ -6594,99 +6600,107 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../index.html">
 <span class="menu-text">Accueil</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../plan-de-cours.html"> 
+    <a class="nav-link" href="../plan-de-cours.html">
 <span class="menu-text">Plan de cours</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../calendrier.html"> 
+    <a class="nav-link" href="../calendrier.html">
 <span class="menu-text">Calendrier</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../installation.html"> 
+    <a class="nav-link" href="../installation.html">
 <span class="menu-text">Installation</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
         <li>
     <a class="dropdown-item" href="../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>  
+  </li>
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-03-regression-lineaire/index.html">
+ <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
+  </li>
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-02-regression/index.html">
+ <span class="dropdown-text">Atelier 02 - Régression</span></a>
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../evaluations/index.html"> 
+    <a class="nav-link" href="../evaluations/index.html">
 <span class="menu-text">Évaluations</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
         <li>
     <a class="dropdown-item" href="../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../donnees/index.html"> 
+    <a class="nav-link" href="../donnees/index.html">
 <span class="menu-text">Données</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6698,7 +6712,7 @@ display: none;
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -6711,11 +6725,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -7008,7 +7022,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -7028,11 +7042,11 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7109,7 +7123,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7184,7 +7198,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7212,7 +7226,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7236,7 +7250,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7276,7 +7290,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7402,7 +7416,7 @@ Compléter cette section si l&#39;IA a influencé significativement le livrable.
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>   
+</div>
     <div class="nav-footer-center">
        
     </div>
