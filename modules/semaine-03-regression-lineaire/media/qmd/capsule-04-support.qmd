@@ -1,0 +1,78 @@
+---
+title: 'Capsule 4 - Ajuster le modèle avec R'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Utiliser `lm()` pour ajuster une régression linéaire.
+- Lire les coefficients du modèle.
+- Transformer la sortie R en phrases interprétables.
+- Éviter de recopier la sortie sans explication.
+
+## Code de base
+
+```r
+library(tidyverse)
+
+campagnes <- read_csv("data/campagnes_marketing_quebec.csv")
+
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+summary(modele)
+```
+
+## Lire la formule
+
+- À gauche de `~` : variable réponse.
+- À droite de `~` : variable explicative.
+- `data = campagnes` : tableau utilisé.
+- `summary()` : résumé numérique du modèle.
+
+## Coefficients
+
+La ligne `(Intercept)` correspond à l'ordonnée à l'origine. La ligne `budget_marketing` correspond à la pente estimée.
+
+## Ce qu'il faut écrire
+
+- Une phrase sur la direction de l'association.
+- Une phrase sur la taille de la pente avec les unités.
+- Une phrase sur la qualité générale de l'ajustement.
+- Une limite sur la causalité ou les variables omises.
+
+## À ne pas faire
+
+Ne pas écrire seulement : `le coefficient est 2.4`. Une réponse utile explique ce que 2.4 veut dire dans le contexte des ventes.
+
+## Activité 3.4
+
+Écrivez le code du modèle et préparez deux phrases : une phrase pour la pente, une phrase pour la limite d'interprétation.
+
+## À retenir
+
+- `lm()` ajuste la droite.
+- `summary()` donne les coefficients.
+- La réponse finale doit traduire les coefficients en langage d'affaires.

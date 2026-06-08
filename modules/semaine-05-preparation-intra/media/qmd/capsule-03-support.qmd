@@ -1,0 +1,81 @@
+---
+title: 'Capsule 3 - Répondre à une question descriptive'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Choisir un résumé descriptif.
+- Choisir un graphique adapté.
+- Formuler un constat court.
+- Distinguer description et explication.
+
+## Structure descriptive
+
+- Question.
+- Variable ou groupe.
+- Tableau résumé.
+- Graphique.
+- Constat.
+- Limite.
+
+## Exemple de tableau
+
+```r
+donnees |>
+  group_by(groupe) |>
+  summarise(
+    moyenne = mean(valeur, na.rm = TRUE),
+    mediane = median(valeur, na.rm = TRUE),
+    n = n()
+  )
+```
+
+## Graphique
+
+Le graphique doit montrer exactement ce qui est interprété. Un graphique décoratif ne remplace pas un graphique utile.
+
+## Constat descriptif
+
+Dans ces données, le groupe A présente une moyenne plus élevée que le groupe B pour la variable observée. Cette comparaison est descriptive et ne prouve pas la cause de l'écart.
+
+## Erreurs fréquentes
+
+- Ne pas dire quelle variable est comparée.
+- Comparer des moyennes sans mentionner le nombre d'observations.
+- Oublier les valeurs manquantes.
+- Transformer une description en causalité.
+
+## Activité 5.3
+
+Rédigez une réponse descriptive en quatre phrases : méthode, résultat, constat, limite.
+
+## À retenir
+
+- Une réponse descriptive doit rester descriptive.
+- Le graphique et le tableau doivent raconter la même histoire.
+- La limite protège la conclusion.

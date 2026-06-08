@@ -1,0 +1,78 @@
+---
+title: 'Capsule 2 - Lire le nuage de points'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Lire un nuage de points avant d'ajuster un modèle.
+- Repérer la direction globale de la relation.
+- Observer la dispersion autour d'une tendance.
+- Identifier les situations où une droite pourrait être insuffisante.
+
+## Pourquoi regarder avant de calculer?
+
+Le graphique révèle la forme de la relation. Une sortie R peut donner une pente, mais elle ne montre pas à elle seule si une droite résume correctement les données.
+
+## Trois questions visuelles
+
+- Direction : les points montent-ils ou descendent-ils?
+- Forme : la relation ressemble-t-elle à une droite?
+- Dispersion : les points sont-ils proches ou loin de la tendance?
+
+## Code minimal
+
+```r
+library(tidyverse)
+
+campagnes <- read_csv("data/campagnes_marketing_quebec.csv")
+
+ggplot(campagnes, aes(x = budget_marketing, y = ventes)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+## Ce que la droite ajoute
+
+La droite résume la tendance moyenne. Elle ne remplace pas les points : ce sont les points qui permettent de juger si le résumé est crédible.
+
+## Pièges fréquents
+
+- Conclure seulement à partir de la pente.
+- Ignorer un groupe ou une région qui se comporte autrement.
+- Ne pas regarder les points extrêmes.
+- Confondre association visuelle et causalité.
+
+## Activité 3.2
+
+Dessinez ou décrivez le nuage de points attendu. Ajoutez une phrase qui précise ce que le graphique ne permet pas de conclure.
+
+## À retenir
+
+- Le graphique vient avant le modèle.
+- La droite est un résumé, pas la réalité.
+- La dispersion annonce déjà la prudence de l'interprétation.

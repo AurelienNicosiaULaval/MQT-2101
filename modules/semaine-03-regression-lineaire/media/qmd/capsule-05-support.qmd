@@ -1,0 +1,80 @@
+---
+title: 'Capsule 5 - Diagnostiquer avec les résidus'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Définir un résidu.
+- Comprendre ce que les résidus révèlent.
+- Produire un graphique de diagnostic simple.
+- Repérer les signes d'un modèle fragile.
+
+## Définition
+
+Un résidu est la différence entre la valeur observée et la valeur prédite :
+
+$$résidu = y - \hat{y}.$$
+
+## Pourquoi regarder les résidus?
+
+Les résidus indiquent où la droite se trompe. S'ils montrent une structure claire, le modèle linéaire simple peut être insuffisant.
+
+## Code de diagnostic
+
+```r
+resultats <- campagnes |>
+  mutate(
+    ventes_predites = fitted(modele),
+    residus = residuals(modele)
+  )
+
+ggplot(resultats, aes(x = ventes_predites, y = residus)) +
+  geom_point(alpha = 0.7) +
+  geom_hline(yintercept = 0)
+```
+
+## Ce qu'on espère voir
+
+- Des résidus répartis autour de zéro.
+- Pas de courbure évidente.
+- Pas d'éventail très marqué.
+- Pas d'observation isolée qui domine toute l'analyse.
+
+## Piège fréquent
+
+Un coefficient significatif ou un `R²` élevé ne dispense pas de regarder les résidus. Le diagnostic sert à vérifier la forme du modèle.
+
+## Activité 3.5
+
+Décrivez ce que vous regarderiez dans un graphique résidus versus valeurs prédites avant de faire une recommandation.
+
+## À retenir
+
+- Les résidus sont la mémoire des erreurs du modèle.
+- Un diagnostic visuel protège contre une interprétation trop rapide.
+- Une droite utile doit rester cohérente avec les données.

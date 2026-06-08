@@ -1,0 +1,78 @@
+---
+title: 'Capsule 1 - Reconnaître une relation non linéaire'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Repérer une courbure dans un nuage de points.
+- Comprendre la notion de saturation.
+- Expliquer pourquoi une droite peut devenir trompeuse.
+- Préparer la comparaison de modèles.
+
+## L'idée centrale
+
+Une relation est non linéaire lorsque l'effet moyen de `x` sur `y` change selon le niveau de `x`. Une hausse de 100 clients peut avoir un effet différent à faible et à fort achalandage.
+
+## Exemple du module
+
+- Variable réponse : `ventes`.
+- Variable explicative : `achalandage`.
+- Contexte : les succursales peuvent approcher leur capacité.
+- Conséquence possible : les ventes augmentent, mais de moins en moins vite.
+
+## Ce que le graphique doit montrer
+
+- Une hausse rapide au début.
+- Un ralentissement aux niveaux élevés.
+- Une dispersion possiblement plus forte près de la saturation.
+- Des limites pratiques : attente, capacité, ruptures de stock.
+
+## Code minimal
+
+```r
+library(tidyverse)
+
+saturation <- read_csv("data/achalandage_saturation_quebec.csv")
+
+ggplot(saturation, aes(x = achalandage, y = ventes)) +
+  geom_point(alpha = 0.7)
+```
+
+## Piège fréquent
+
+Ajuster une droite sans regarder le graphique peut donner une réponse techniquement correcte, mais substantiellement trompeuse.
+
+## Activité 4.1
+
+Expliquez en deux phrases pourquoi une succursale très achalandée peut ne pas convertir chaque client additionnel en ventes proportionnelles.
+
+## À retenir
+
+- La non-linéarité est d'abord une question de forme.
+- La saturation est une explication opérationnelle plausible.
+- Le graphique décide si la droite mérite confiance.

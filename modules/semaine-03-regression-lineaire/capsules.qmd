@@ -7,86 +7,112 @@ format:
 
 ## Objectif
 
-Ces capsules servent à construire l'intuition avant de coder. Lisez-les dans
-l'ordre, puis gardez une courte trace de vos réponses. Les démonstrations R
-reprennent ensuite les mêmes idées avec les données du module.
+Cette page rassemble les six capsules du module 03. Elles construisent progressivement l'intuition de la régression linéaire : partir d'une question d'affaires, lire un nuage de points, ajuster une droite, interpréter les coefficients, examiner les résidus et conclure avec prudence.
 
-## Capsule 1 - Relation entre deux variables
+Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont conçus pour être assez courts pour accompagner une vidéo, mais assez complets pour rester utiles en révision.
 
-Une régression linéaire commence par une question qui relie deux variables.
-Dans le module :
+## Capsule 1 - Formuler une question de régression
 
-- la variable réponse est `ventes`;
-- la variable explicative principale est `budget_marketing`.
+Cette capsule transforme une question d'affaires en question statistique avec une variable réponse et une variable explicative.
 
-Avant de modéliser, on regarde le nuage de points. Si les points montent
-globalement de gauche à droite, l'association est positive. Si les points
-descendent, elle est négative. Si aucun motif clair n'apparaît, la droite risque
-de résumer peu d'information.
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 1">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-01-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-01-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-::: {.callout-tip title="Activité courte"}
-En une phrase, formulez la question d'affaires sans utiliser le mot « cause ».
-:::
+À faire après la capsule : Formulez la question du module en une phrase sans utiliser le mot « cause ».
 
-## Capsule 2 - Droite de régression
+## Capsule 2 - Lire le nuage de points
 
-Le modèle linéaire simple s'écrit :
+Cette capsule montre comment regarder la relation avant de modéliser : direction, forme, dispersion et points atypiques.
 
-$$
-y = \beta_0 + \beta_1 x + \varepsilon.
-$$
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 2">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-02-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-02-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-Dans le contexte du module :
+À faire après la capsule : Décrivez le nuage de points attendu entre `budget_marketing` et `ventes` avec les mots direction, dispersion et limite.
 
-- `y` représente les ventes;
-- `x` représente le budget marketing;
-- `β0` est l'ordonnée à l'origine;
-- `β1` est la pente;
-- `ε` représente ce que la droite ne capture pas.
+## Capsule 3 - Comprendre la droite de régression
 
-La pente est l'élément le plus important à interpréter. Elle décrit la variation
-moyenne de la variable réponse lorsque la variable explicative augmente d'une
-unité.
+Cette capsule présente l'équation du modèle linéaire et le sens de la pente dans une analyse appliquée.
 
-::: {.callout-tip title="Activité courte"}
-Si la pente estimée est positive, que signifie-t-elle dans le cas des ventes et
-du budget marketing?
-:::
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 3">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-03-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-03-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-## Capsule 3 - Résidus
+À faire après la capsule : Expliquez ce que signifierait une pente positive dans le contexte des ventes et du budget marketing.
 
-Un résidu est la différence entre la valeur observée et la valeur prédite par le
-modèle :
+## Capsule 4 - Ajuster le modèle avec R
 
-$$
-résidu = valeur observée - valeur prédite.
-$$
+Cette capsule relie l'intuition à la commande `lm()` et à la lecture des coefficients.
 
-Les résidus ne sont pas un détail technique. Ils indiquent où la droite se
-trompe et si cette erreur semble raisonnable. Un modèle peut avoir une pente
-intéressante, mais rester fragile si les résidus montrent une structure claire
-ou des observations très atypiques.
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 4">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-04-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-04-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-::: {.callout-tip title="Activité courte"}
-Pourquoi faut-il regarder les résidus même si le coefficient de détermination
-semble élevé?
-:::
+À faire après la capsule : Écrivez le code `lm()` du module et indiquez où se trouvent la pente et l'ordonnée à l'origine dans la sortie.
 
-## Capsule 4 - Qualité d'ajustement et prudence
+## Capsule 5 - Diagnostiquer avec les résidus
 
-Le coefficient de détermination, souvent noté `R²`, résume la part de variation
-de la variable réponse expliquée par le modèle linéaire. Un `R²` élevé indique
-que la droite suit bien les données, mais il ne transforme pas automatiquement
-une association en effet causal.
+Cette capsule montre pourquoi les résidus sont indispensables pour vérifier si la droite résume correctement les données.
 
-Trois réflexes sont essentiels :
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 5">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-05-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-05-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-- vérifier le nuage de points;
-- examiner les résidus;
-- relier l'interprétation à la question d'affaires sans dépasser ce que les
-  données permettent.
+À faire après la capsule : Expliquez pourquoi un modèle avec une pente intéressante peut quand même être fragile.
 
-::: {.callout-warning title="À retenir"}
-La régression linéaire estime une relation moyenne. Elle ne remplace pas la
-connaissance du contexte, la validation du modèle ou le jugement statistique.
-:::
+## Capsule 6 - Conclure sans dépasser les données
+
+Cette capsule rassemble pente, qualité d'ajustement, prédiction et prudence causale dans une conclusion courte.
+
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 6">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-06-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-06-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
+
+À faire après la capsule : Rédigez une conclusion de quatre phrases qui mentionne la pente, l'ajustement, une limite et une suite possible.
+
+## Après les capsules
+
+Poursuivez avec les [démonstrations R](demonstrations.html), puis les [exercices](exercices.html). Les capsules donnent l'intuition; les démonstrations montrent le code complet; les exercices servent à produire l'interprétation finale du modèle.

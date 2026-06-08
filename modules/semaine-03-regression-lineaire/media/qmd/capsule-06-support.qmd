@@ -1,0 +1,77 @@
+---
+title: 'Capsule 6 - Conclure sans dépasser les données'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Lire le `R²` sans le surinterpréter.
+- Distinguer association, prédiction et causalité.
+- Formuler une conclusion courte.
+- Nommer une limite et une suite possible.
+
+## Qualité d'ajustement
+
+Le `R²` résume la part de variation de la réponse expliquée par la relation linéaire avec la variable explicative. Il aide à juger l'ajustement, mais il ne valide pas tout le raisonnement.
+
+## Prédire avec prudence
+
+```r
+nouveaux <- tibble(budget_marketing = c(5000, 10000, 15000))
+predict(modele, newdata = nouveaux)
+```
+
+Une prédiction est plus défendable lorsqu'elle reste dans la plage de valeurs observées.
+
+## Association, prédiction, causalité
+
+- Association : deux variables varient ensemble.
+- Prédiction : le modèle estime une valeur attendue.
+- Causalité : une intervention sur une variable produit un effet sur l'autre.
+- La régression seule ne suffit pas toujours à établir la causalité.
+
+## Structure de conclusion
+
+- Question : que voulait-on savoir?
+- Résultat : que dit la pente?
+- Ajustement : la droite est-elle raisonnable?
+- Limite : que ne peut-on pas conclure?
+- Suite : que vérifier ensuite?
+
+## Phrase modèle
+
+Dans ces données, les ventes moyennes sont plus élevées lorsque le budget marketing est plus élevé. La droite résume une association positive, mais elle ne prouve pas que le budget cause les ventes. Il faut vérifier les résidus et considérer les variables de contexte avant de recommander une action.
+
+## Activité 3.6
+
+Rédigez une conclusion de quatre phrases : question, pente, diagnostic, limite.
+
+## À retenir
+
+- La conclusion doit être courte et défendable.
+- Une bonne réponse dit aussi ce que le modèle ne prouve pas.
+- La prudence est une compétence statistique, pas une faiblesse.

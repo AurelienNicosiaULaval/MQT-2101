@@ -1,0 +1,79 @@
+---
+title: 'Capsule 4 - Comparer plusieurs modèles'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Comparer plusieurs modèles sur les mêmes données.
+- Utiliser un graphique de prédictions.
+- Calculer une mesure d'erreur.
+- Éviter le réflexe du modèle le plus complexe.
+
+## Trois modèles candidats
+
+```r
+modele_lin <- lm(ventes ~ achalandage, data = saturation)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = saturation)
+modele_log <- lm(ventes ~ log(achalandage), data = saturation)
+```
+
+## Critères utiles
+
+- Graphique des courbes superposées.
+- Résidus sans structure évidente.
+- Erreur de prédiction plus faible.
+- Interprétation compréhensible pour la décision.
+
+## RMSE
+
+La RMSE résume l'erreur typique de prédiction dans l'unité de la variable réponse. Plus elle est faible, plus les prédictions sont proches des valeurs observées, toutes choses égales par ailleurs.
+
+## Code indicatif
+
+```r
+rmse <- function(modele) sqrt(mean(residuals(modele)^2))
+
+tibble(
+  modele = c("lineaire", "quadratique", "logarithmique"),
+  rmse = c(rmse(modele_lin), rmse(modele_quad), rmse(modele_log))
+)
+```
+
+## Piège fréquent
+
+Le modèle qui gagne sur une mesure numérique n'est pas automatiquement le meilleur pour communiquer une recommandation.
+
+## Activité 4.4
+
+Préparez une grille de comparaison avec trois colonnes : graphique, erreur, interprétation.
+
+## À retenir
+
+- Comparer, c'est trianguler.
+- Un chiffre ne suffit pas.
+- Le meilleur modèle est celui qui résume bien les données et reste interprétable.

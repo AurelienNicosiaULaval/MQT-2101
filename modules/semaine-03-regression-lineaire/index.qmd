@@ -73,34 +73,120 @@ raisonnable et à formuler une interprétation prudente.
 ## Parcours recommandé
 
 ::: {.callout-note title="Notes de cours"}
-Le support global de notes de cours est disponible en [HTML](notes-cours.qmd) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les pages de démonstrations et d'exercices gardent le code complet.
+Le support global de notes de cours est disponible en [HTML](notes-cours.qmd) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
 :::
 
+Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l'étape complète : objectif, ressource, action, trace attendue et activité associée.
+
 ```{=html}
-<div class="workshop-launch" aria-label="Parcours du module">
-  <a class="workshop-link-card workshop-link-card-primary" href="capsules.html">
-    <span class="phase-label">1</span>
-    <h3>Capsules</h3>
-    <p>Construire l'intuition: relation, droite, résidus et qualité d'ajustement.</p>
-  </a>
-  <a class="workshop-link-card" href="demonstrations.html">
-    <span class="phase-label">2</span>
-    <h3>Démonstrations R</h3>
-    <p>Reproduire une analyse complète avec le fichier de campagnes marketing.</p>
-  </a>
-  <a class="workshop-link-card" href="exercices.html">
-    <span class="phase-label">3</span>
-    <h3>Exercices</h3>
-    <p>Pratiquer l'interprétation, le code, les diagnostics et la prudence statistique.</p>
-  </a>
+<div class="path-grid interactive-path">
+  <details class="path-card" id="etape-1">
+    <summary>
+      <span class="path-number">1</span>
+      <span class="path-title">Formuler la question</span>
+      <span class="path-preview">Passer d'une question d'affaires à une question de régression.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1---formuler-une-question-de-régression">Capsule 1</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1---identifier-les-variables">Ex. 1</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Identifier la variable réponse, la variable explicative et la limite causale de départ.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-1---formuler-une-question-de-régression">Capsule 1</a> <a class="resource-link exercise-link" href="exercices.html#exercice-1---identifier-les-variables">Exercice 1</a></p>
+      <p><span class="step-label">Action</span> Reformuler la question avec les mots association moyenne, ventes et budget marketing.</p>
+      <p><span class="step-label">Trace</span> Une phrase de question d'analyse et une phrase de prudence causale.</p>
+      <div class="ae-box"><p class="ae-title">Activité 3.1 - Question et variables</p><p>Écrivez la question statistique, puis nommez la variable réponse, la variable explicative principale et une variable de contexte.</p></div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-2">
+    <summary>
+      <span class="path-number">2</span>
+      <span class="path-title">Lire le nuage de points</span>
+      <span class="path-preview">Observer direction, forme, dispersion et points atypiques avant de modéliser.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2---lire-le-nuage-de-points">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#visualiser-la-relation">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2---nuage-de-points">Ex. 2</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Vérifier visuellement si une droite est un résumé plausible.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-2---lire-le-nuage-de-points">Capsule 2</a> <a class="resource-link demo-link" href="demonstrations.html#visualiser-la-relation">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-2---nuage-de-points">Exercice 2</a></p>
+      <p><span class="step-label">Action</span> Produire le nuage de points et décrire la direction de l'association.</p>
+      <p><span class="step-label">Trace</span> Un graphique et une phrase qui décrit la relation sans causalité.</p>
+      <div class="ae-box"><p class="ae-title">Activité 3.2 - Lecture graphique</p><p>Décrivez le graphique avec trois mots-clés : direction, dispersion, limite.</p></div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-3">
+    <summary>
+      <span class="path-number">3</span>
+      <span class="path-title">Comprendre la droite</span>
+      <span class="path-preview">Relier l'équation du modèle à la pente et à l'ordonnée à l'origine.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3---comprendre-la-droite-de-régression">Capsule 3</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Comprendre ce que la pente mesure dans le contexte du module.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-3---comprendre-la-droite-de-régression">Capsule 3</a></p>
+      <p><span class="step-label">Action</span> Traduire l'équation en langage d'affaires.</p>
+      <p><span class="step-label">Trace</span> Une phrase d'interprétation de pente avec unités.</p>
+      <div class="ae-box"><p class="ae-title">Activité 3.3 - Pente et unités</p><p>Préparez une phrase qui explique ce que signifie une pente positive pour les ventes.</p></div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-4">
+    <summary>
+      <span class="path-number">4</span>
+      <span class="path-title">Ajuster le modèle dans R</span>
+      <span class="path-preview">Utiliser lm(), lire les coefficients et transformer la sortie en phrases.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4---ajuster-le-modèle-avec-r">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#ajuster-le-modèle">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3---ajuster-le-modèle">Ex. 3</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Ajuster une régression linéaire simple et lire la sortie R utile.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-4---ajuster-le-modèle-avec-r">Capsule 4</a> <a class="resource-link demo-link" href="demonstrations.html#ajuster-le-modèle">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-3---ajuster-le-modèle">Exercice 3</a></p>
+      <p><span class="step-label">Action</span> Exécuter `lm(ventes ~ budget_marketing, data = campagnes)` et repérer les coefficients.</p>
+      <p><span class="step-label">Trace</span> Le code du modèle et deux phrases : pente, ordonnée à l'origine.</p>
+      <div class="ae-box"><p class="ae-title">Activité 3.4 - Lire les coefficients</p><p>Indiquez où se trouve la pente dans la sortie et ce qu'elle signifie.</p></div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-5">
+    <summary>
+      <span class="path-number">5</span>
+      <span class="path-title">Diagnostiquer les résidus</span>
+      <span class="path-preview">Vérifier si les erreurs du modèle restent compatibles avec une droite.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---diagnostiquer-avec-les-résidus">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#résidus-et-valeurs-ajustées">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4---examiner-les-résidus">Ex. 4</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Utiliser les résidus pour juger la crédibilité du modèle.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---diagnostiquer-avec-les-résidus">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#résidus-et-valeurs-ajustées">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-4---examiner-les-résidus">Exercice 4</a></p>
+      <p><span class="step-label">Action</span> Ajouter valeurs prédites et résidus, puis produire un graphique de diagnostic.</p>
+      <p><span class="step-label">Trace</span> Une phrase sur ce que les résidus semblent confirmer ou fragiliser.</p>
+      <div class="ae-box"><p class="ae-title">Activité 3.5 - Résidus</p><p>Expliquez pourquoi une pente intéressante ne suffit pas sans diagnostic.</p></div>
+    </div>
+  </details>
+
+  <details class="path-card" id="etape-6">
+    <summary>
+      <span class="path-number">6</span>
+      <span class="path-title">Conclure prudemment</span>
+      <span class="path-preview">Rassembler graphique, pente, ajustement, limite et recommandation.</span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---conclure-sans-dépasser-les-données">Capsule 6</a><a class="summary-resource-link demo-link" href="demonstrations.html#conclusion-prudente">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5---conclusion-courte">Ex. 5</a></span>
+      <span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span>
+    </summary>
+    <div class="step-detail">
+      <p><span class="step-label">Objectif</span> Produire une conclusion courte, utile et statistiquement défendable.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---conclure-sans-dépasser-les-données">Capsule 6</a> <a class="resource-link demo-link" href="demonstrations.html#conclusion-prudente">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-5---conclusion-courte">Exercice 5</a></p>
+      <p><span class="step-label">Action</span> Rédiger une conclusion qui distingue association, prédiction et causalité.</p>
+      <p><span class="step-label">Trace</span> Une interprétation finale en quatre phrases maximum.</p>
+      <div class="ae-box"><p class="ae-title">Activité 3.6 - Conclusion finale</p><p>Rédigez quatre phrases : question, pente, diagnostic, limite.</p></div>
+    </div>
+  </details>
 </div>
 ```
 
 ## Avant de commencer
 
-Téléchargez ou repérez le fichier
-[`campagnes_marketing_quebec.csv`](data/campagnes_marketing_quebec.csv).
-Chaque ligne représente une combinaison mois-région pour une campagne fictive.
+Téléchargez ou repérez le fichier [`campagnes_marketing_quebec.csv`](data/campagnes_marketing_quebec.csv). Chaque ligne représente une combinaison mois-région pour une campagne fictive.
 
 Variables centrales :
 
@@ -117,20 +203,33 @@ Votre trace finale doit tenir en quelques paragraphes. Elle doit inclure :
 2. le graphique de relation entre budget marketing et ventes;
 3. l'équation interprétée du modèle;
 4. une phrase sur la pente;
-5. une phrase sur la qualité d'ajustement;
+5. une phrase sur la qualité d'ajustement ou les résidus;
 6. une limite claire sur l'interprétation causale.
 
 ::: {.callout-tip title="Phrase cible"}
-Une bonne conclusion ressemble à ceci : « Dans ces données, les ventes moyennes
-sont plus élevées lorsque le budget marketing est plus élevé. Le modèle estime
-l'association moyenne, mais il ne suffit pas à prouver que le budget cause
-l'augmentation des ventes. »
+Une bonne conclusion ressemble à ceci : « Dans ces données, les ventes moyennes sont plus élevées lorsque le budget marketing est plus élevé. Le modèle estime l'association moyenne, mais il ne suffit pas à prouver que le budget cause l'augmentation des ventes. »
 :::
 
 ## Ressources du module
 
-- [Notes de cours](notes-cours.qmd)
-- [Capsules](capsules.qmd)
-- [Démonstrations R](demonstrations.qmd)
-- [Exercices](exercices.qmd)
-- [Lectures](lectures.qmd)
+```{=html}
+<div class="resource-list">
+  <a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Six capsules courtes avec supports HTML/PDF pour construire l'intuition.</span></span></a>
+  <a class="resource-row" href="notes-cours.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Notes de cours</span><span class="resource-row-text">Synthèse globale du module en format RevealJS.</span></span></a>
+  <a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Analyse complète avec le fichier de campagnes marketing.</span></span></a>
+  <a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Pratiquer l'interprétation, le code et les diagnostics.</span></span></a>
+  <a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Clarifier les notions de régression et de prudence causale.</span></span></a>
+</div>
+```
+
+## Auto-vérification
+
+::: {.checklist-box}
+- [ ] J'ai formulé une question de régression sans causalité non justifiée.
+- [ ] J'ai identifié la variable réponse et la variable explicative.
+- [ ] J'ai produit et interprété un nuage de points.
+- [ ] J'ai ajusté un modèle avec `lm()`.
+- [ ] J'ai interprété la pente avec les unités.
+- [ ] J'ai examiné les résidus.
+- [ ] J'ai rédigé une conclusion prudente.
+:::

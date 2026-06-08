@@ -7,71 +7,112 @@ format:
 
 ## Objectif
 
-Ces capsules servent à reconnaître les situations où une droite ne suffit plus.
-L'idée centrale est simple : un modèle peut être techniquement ajusté, mais
-mal représenter la forme de la relation.
+Cette page rassemble les six capsules du module 04. Elles montrent comment reconnaître une relation courbée, pourquoi une droite peut devenir trompeuse, comment utiliser des transformations simples, comment comparer des modèles et comment éviter l'extrapolation.
 
-## Capsule 1 - Voir la non-linéarité
+Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont conçus pour être assez courts pour accompagner une vidéo, mais assez complets pour rester utiles en révision.
 
-Une relation est non linéaire lorsque la variation moyenne de la réponse n'est
-pas constante sur toute l'échelle de la variable explicative.
+## Capsule 1 - Reconnaître une relation non linéaire
 
-Exemple : les ventes peuvent augmenter rapidement lorsque l'achalandage passe de
-faible à moyen, puis augmenter plus lentement lorsque la succursale devient
-saturée. Dans ce cas, une droite risque de surestimer les ventes aux niveaux
-élevés ou de sous-estimer les ventes aux niveaux faibles.
+Cette capsule installe l'intuition : parfois la variation moyenne n'est pas constante sur toute l'échelle.
 
-::: {.callout-tip title="Activité courte"}
-Dans un contexte de succursale, donnez une raison opérationnelle qui pourrait
-expliquer une relation avec saturation.
-:::
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 1">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-01-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-01-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-## Capsule 2 - Transformer une variable
+À faire après la capsule : Donnez une raison opérationnelle qui pourrait expliquer une relation avec saturation en succursale.
 
-Une transformation change l'échelle utilisée pour modéliser une relation. Deux
-approches simples sont utiles ici :
+## Capsule 2 - Comprendre la saturation
 
-- ajouter un terme quadratique avec `I(x^2)`;
-- utiliser `log(x)` lorsque l'effet augmente rapidement puis ralentit.
+Cette capsule relie la courbure statistique à des contraintes d'affaires concrètes : capacité, attente et rupture de stock.
 
-La transformation doit être choisie parce qu'elle correspond à la forme observée
-et au contexte, pas seulement parce qu'elle améliore un chiffre.
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 2">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-02-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-02-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-::: {.callout-warning title="Point de vigilance"}
-Une transformation améliore parfois l'ajustement, mais elle rend
-l'interprétation moins directe. Il faut toujours revenir à la question d'affaires
-et à l'échelle originale.
-:::
+À faire après la capsule : Associez un signe de saturation possible à une variable du fichier.
 
-## Capsule 3 - Comparer plusieurs modèles
+## Capsule 3 - Ajouter une transformation simple
 
-Comparer des modèles ne consiste pas seulement à choisir le plus grand `R²`.
-Trois éléments doivent être regardés ensemble :
+Cette capsule présente deux outils simples : terme quadratique et logarithme.
 
-- le graphique des prédictions;
-- les résidus;
-- une mesure d'erreur comme la racine de l'erreur quadratique moyenne.
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 3">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-03-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-03-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-Un modèle plus complexe peut mieux suivre les données, mais devenir moins clair
-ou plus fragile hors de la plage observée.
+À faire après la capsule : Expliquez en quoi un terme quadratique peut représenter un ralentissement de la croissance.
 
-::: {.callout-tip title="Activité courte"}
-Pourquoi un modèle quadratique peut-il être risqué pour prédire très loin en
-dehors des valeurs observées?
-:::
+## Capsule 4 - Comparer plusieurs modèles
 
-## Capsule 4 - Interprétation appliquée
+Cette capsule montre comment comparer une droite, une courbe quadratique et un modèle logarithmique.
 
-Une bonne interprétation ne dit pas seulement qu'un modèle est meilleur. Elle
-explique ce que le modèle change pour la décision.
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 4">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-04-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-04-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
 
-Dans le cas de la saturation, la conclusion peut être :
+À faire après la capsule : Nommez trois critères de comparaison qui ne se limitent pas au plus grand `R²`.
 
-- augmenter l'achalandage reste utile;
-- l'effet marginal semble diminuer à haut niveau;
-- il faut alors regarder la capacité, les files d'attente ou les ruptures de stock.
+## Capsule 5 - Prédire et éviter l'extrapolation
 
-::: {.callout-tip title="Activité courte"}
-Rédigez une phrase qui distingue clairement « plus d'achalandage » et « meilleure
-capacité à absorber l'achalandage ».
-:::
+Cette capsule insiste sur les limites des prédictions hors de la plage observée.
+
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 5">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-05-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-05-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
+
+À faire après la capsule : Expliquez pourquoi prédire pour un achalandage jamais observé est fragile.
+
+## Capsule 6 - Communiquer le choix du modèle
+
+Cette capsule transforme la comparaison technique en conclusion de gestion prudente.
+
+```{=html}
+<div class="support-icons" aria-label="Supports de la capsule 6">
+  <a class="support-icon support-icon-html" href="media/qmd/capsule-06-support.html" aria-label="Ouvrir le support HTML" title="HTML">
+    <i class="bi bi-filetype-html" aria-hidden="true"></i>
+  </a>
+  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-06-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
+    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
+  </a>
+</div>
+```
+
+À faire après la capsule : Rédigez une recommandation qui distingue résultat statistique, décision possible et limite.
+
+## Après les capsules
+
+Poursuivez avec les [démonstrations R](demonstrations.html), puis les [exercices](exercices.html). Les capsules préparent le vocabulaire; les démonstrations montrent la comparaison complète; les exercices servent à justifier un choix de modèle.

@@ -12,10 +12,10 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 - La navigation étudiante ne contient plus de roadmap, de pages internes enseignantes ou de références visibles aux outils de développement.
 - Les pages d'accueil, plan de cours, calendrier, installation, évaluations et ressources ont été refondues visuellement.
 - Le calendrier public présente un déroulement simple par blocs, sans dates précises ni mention de session.
-- Le module 03 sur la régression linéaire est public, avec notes de cours HTML/PDF, capsules, démonstrations R, exercices, lectures et données.
+- Le module 03 sur la régression linéaire est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et données.
 - L'atelier 02 sur la régression appliquée est public, avec page d'accueil, guide en classe, démonstrations R, exercices, lectures et données.
-- Le module 04 sur la régression non linéaire et les transformations est public, avec notes de cours HTML/PDF, capsules, démonstrations R, exercices, lectures et données.
-- Le module 05 de préparation à l'examen intra est public, avec notes de cours HTML/PDF, capsules, démonstrations R, exercices, lectures et canevas de réponse.
+- Le module 04 sur la régression non linéaire et les transformations est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et données.
+- Le module 05 de préparation à l'examen intra est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et canevas de réponse.
 - La structure d'évaluation est définie : deux mini-rapports en équipe et deux examens individuels en personne.
 - La politique IA est clarifiée dans les ressources étudiantes, avec une page de déclaration d'usage de l'IA.
 - Le GPT du cours est créé, intégré au site et présenté comme tuteur pédagogique.
@@ -56,7 +56,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 | 1. Cartographier l'ancien matériel | Terminé pour la relance | Table de correspondance entre ancien et nouveau cours |
 | 2. Définir la progression pédagogique | Partiellement terminé | Objectifs, compétences et livrables par semaine |
 | 3. Construire les données du cours | Avancé pour les premiers blocs | Jeux de données propres et documentés |
-| 4. Rédiger les modules | Modules 01 à 05 publics; notes 01 à 05 disponibles | Notes, capsules, exercices et mini-cas |
+| 4. Rédiger les modules | Modules 01 à 05 publics; notes 01 à 05 disponibles; supports de capsules 01 à 05 disponibles | Notes, capsules, exercices et mini-cas |
 | 5. Développer les ateliers | Ateliers 01 et 02 publics | Ateliers guidés et appliqués |
 | 6. Refaire les évaluations | Structure publique terminée | Mini-rapports, examens, questionnaires formatifs et grilles |
 | 7. Produire les ressources | Terminé pour la première version publique | Guides R, Quarto, IA, statistiques, modélisation et mini-rapports |
@@ -71,6 +71,8 @@ Livraison du 8 juin 2026 :
 - publication du module 04 sur la régression non linéaire et les transformations;
 - publication du module 05 de préparation à l'examen intra;
 - ajout des notes de cours HTML/PDF pour les modules 03, 04 et 05;
+- ajout des supports HTML/PDF de capsules pour les modules 03, 04 et 05;
+- refonte des parcours d'apprentissage des modules 03, 04 et 05 avec liens précis vers capsules, démonstrations, exercices et traces;
 - ajout des jeux de données `campagnes_marketing_quebec.csv`, `performance_succursales_quebec.csv` et `achalandage_saturation_quebec.csv`;
 - mise à jour de la navigation, du calendrier et du catalogue des données;
 - amélioration des boîtes copiables pour les modèles et gabarits;

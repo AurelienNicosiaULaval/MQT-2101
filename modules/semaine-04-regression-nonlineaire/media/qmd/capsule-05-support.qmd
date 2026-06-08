@@ -1,0 +1,76 @@
+---
+title: "Capsule 5 - Prédire et éviter l'extrapolation"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Produire des prédictions sur une grille de valeurs.
+- Comprendre la plage observée.
+- Identifier l'extrapolation.
+- Formuler une limite claire.
+
+## Prédire sur une grille
+
+```r
+grille <- tibble(
+  achalandage = seq(min(saturation$achalandage),
+                    max(saturation$achalandage),
+                    length.out = 100)
+)
+
+grille$ventes_predites <- predict(modele_quad, newdata = grille)
+```
+
+## Plage observée
+
+Une prédiction est plus crédible lorsqu'elle reste dans les valeurs d'achalandage réellement observées. Hors de cette plage, le modèle prolonge une forme sans preuve directe.
+
+## Pourquoi c'est risqué?
+
+- Une courbe quadratique peut monter ou descendre très vite.
+- Le logarithme peut lisser trop fortement.
+- Les contraintes opérationnelles peuvent changer.
+- Les données ne contiennent pas d'information directe sur la zone extrapolée.
+
+## Formulation prudente
+
+Le modèle décrit bien la relation dans la plage observée, mais il ne devrait pas être utilisé seul pour prédire des niveaux d'achalandage très supérieurs à ceux du fichier.
+
+## Lien avec la décision
+
+Si la décision concerne une situation nouvelle, il faut chercher des données supplémentaires, simuler des scénarios ou ajouter des variables opérationnelles.
+
+## Activité 4.5
+
+Rédigez une limite d'extrapolation en deux phrases, adaptée à une recommandation de capacité en succursale.
+
+## À retenir
+
+- Prédire n'est pas deviner.
+- La plage observée protège l'interprétation.
+- L'extrapolation doit être nommée explicitement.

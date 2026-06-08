@@ -1,0 +1,73 @@
+---
+title: 'Capsule 2 - Préparer les données et le diagnostic minimal'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Nommer l'unité d'observation.
+- Identifier les types de variables.
+- Repérer les valeurs manquantes.
+- Documenter les limites de préparation.
+
+## Unité d'observation
+
+Une ligne représente quoi? Une journée, une succursale, une campagne, une combinaison mois-région? Cette réponse guide toute l'interprétation.
+
+## Types de variables
+
+- Numérique continue : ventes, budget, achalandage.
+- Catégorielle : région, canal, saison.
+- Date ou période : mois, semaine, jour.
+- Code : parfois numérique, mais pas une quantité.
+
+## Diagnostic minimal en R
+
+```r
+library(tidyverse)
+
+donnees |>
+  summarise(across(everything(), ~ sum(is.na(.x))))
+```
+
+## Pourquoi c'est important?
+
+Une valeur manquante, une variable mal typée ou une mauvaise unité d'observation peut rendre une conclusion correcte en apparence, mais fragile en réalité.
+
+## Phrase utile
+
+Chaque ligne représente [unité]. Les variables centrales sont [réponse] et [explicative]. Les valeurs manquantes touchent surtout [variable], ce qui limite [aspect].
+
+## Activité 5.2
+
+Préparez une phrase de diagnostic minimal pour un fichier du module 02, 03 ou 04.
+
+## À retenir
+
+- Un diagnostic court vaut mieux qu'une analyse aveugle.
+- L'unité d'observation est la base de l'interprétation.
+- Les limites doivent apparaître avant la conclusion.

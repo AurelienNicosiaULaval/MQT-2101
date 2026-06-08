@@ -1,0 +1,77 @@
+---
+title: 'Capsule 4 - Répondre à une question de régression'
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Objectifs de la capsule
+
+- Identifier la variable réponse et les explicatives.
+- Présenter le graphique avant le modèle.
+- Interpréter la pente.
+- Mentionner un diagnostic et une limite.
+
+## Structure de réponse
+
+- Question.
+- Nuage de points.
+- Formule du modèle.
+- Pente et unités.
+- Qualité d'ajustement.
+- Résidus.
+- Conclusion prudente.
+
+## Code minimal
+
+```r
+modele <- lm(y ~ x, data = donnees)
+summary(modele)
+```
+
+## Interpréter la pente
+
+Lorsque `x` augmente d'une unité, la valeur moyenne prédite de `y` varie de [pente] unités, dans ces données et selon ce modèle.
+
+## Diagnostic minimal
+
+- Le nuage de points soutient-il une relation linéaire?
+- Les résidus sont-ils centrés autour de zéro?
+- Y a-t-il une structure claire dans les résidus?
+- La prédiction reste-t-elle dans la plage observée?
+
+## Limite causale
+
+Une pente positive ne prouve pas que `x` cause `y`. Elle décrit une association conditionnelle au modèle et aux données observées.
+
+## Activité 5.4
+
+À partir d'un modèle du module 03, rédigez une réponse de six lignes maximum : question, pente, ajustement, diagnostic, limite, conclusion.
+
+## À retenir
+
+- La pente sans unités est incomplète.
+- Le diagnostic fait partie de la réponse.
+- La causalité doit être nommée avec prudence.
