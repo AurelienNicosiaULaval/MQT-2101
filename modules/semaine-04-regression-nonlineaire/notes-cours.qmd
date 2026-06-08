@@ -1,0 +1,303 @@
+---
+title: "Module 04 - Régression non linéaire et transformations"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup-notes-module-04
+#| include: false
+
+library(tidyverse)
+
+data_path <- if (file.exists("data/achalandage_saturation_quebec.csv")) {
+  "data/achalandage_saturation_quebec.csv"
+} else {
+  "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv"
+}
+
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+```
+
+## Objectifs du module
+
+::: {.keypoints}
+- Repérer une relation qui n'est pas bien décrite par une droite.
+- Comprendre l'idée de saturation.
+- Ajuster un modèle linéaire, quadratique et logarithmique.
+- Comparer les modèles avec le graphique, les résidus, le `R²` et la RMSE.
+- Interpréter le modèle sur l'échelle originale.
+- Éviter l'extrapolation fragile.
+:::
+
+## Point de départ
+
+::: {.lead}
+L'ancien matériel de la séance 04 présentait plusieurs familles de modèles non
+linéaires : polynômes, splines, GAM, probit, Tobit, logistique et autres.
+:::
+
+::: {.note-box}
+Dans ce module, on conserve l'idée centrale : la relation peut être courbée. On
+se limite volontairement aux transformations simples qui restent interprétables
+dans une première analyse.
+:::
+
+## Données du module
+
+```{r}
+#| label: apercu-saturation-notes
+saturation |>
+  slice_head(n = 6)
+```
+
+## Question
+
+::: {.lead}
+Les ventes augmentent-elles avec l'achalandage au même rythme sur toute l'échelle?
+:::
+
+::: {.note-box}
+Si une succursale approche sa capacité, une personne de plus ne produit pas
+nécessairement le même gain de ventes qu'à faible achalandage.
+:::
+
+## Visualiser la forme
+
+```{r}
+#| label: graphique-saturation-notes
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(saturation, aes(x = achalandage, y = ventes)) +
+  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.6) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#7A1C24", linewidth = 1) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    colour = "#0B4F6C",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Ventes selon l'achalandage",
+    subtitle = "Droite linéaire et courbe quadratique",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Succursale"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Pourquoi une droite peut être insuffisante
+
+::: {.keypoints}
+- La pente d'une droite est constante.
+- La saturation implique une pente qui diminue.
+- Un modèle linéaire peut surestimer les ventes aux hauts niveaux.
+- Le diagnostic doit partir du graphique, pas seulement du `R²`.
+:::
+
+## Trois modèles simples
+
+```{r}
+#| label: modeles-saturation-notes
+modele_lineaire <- lm(ventes ~ achalandage, data = saturation)
+
+modele_quadratique <- lm(
+  ventes ~ achalandage + I(achalandage^2),
+  data = saturation
+)
+
+modele_log <- lm(
+  ventes ~ log(achalandage),
+  data = saturation
+)
+```
+
+## Modèle linéaire
+
+```{r}
+#| label: resume-lineaire-module-04
+summary(modele_lineaire)
+```
+
+## Modèle quadratique
+
+```{r}
+#| label: resume-quadratique-module-04
+summary(modele_quadratique)
+```
+
+## Modèle logarithmique
+
+```{r}
+#| label: resume-log-module-04
+summary(modele_log)
+```
+
+## Comparer les modèles
+
+```{r}
+#| label: comparaison-module-04-notes
+rmse <- function(modele) {
+  sqrt(mean(residuals(modele)^2))
+}
+
+comparaison <- tibble(
+  modele = c("Linéaire", "Quadratique", "Logarithmique"),
+  r_carre = c(
+    summary(modele_lineaire)$r.squared,
+    summary(modele_quadratique)$r.squared,
+    summary(modele_log)$r.squared
+  ),
+  erreur_rmse = c(
+    rmse(modele_lineaire),
+    rmse(modele_quadratique),
+    rmse(modele_log)
+  )
+)
+
+comparaison
+```
+
+## `R²` et RMSE
+
+::: {.keypoints}
+- Le `R²` mesure la proportion de variation expliquée.
+- La RMSE mesure une erreur typique sur l'échelle de la réponse.
+- Un meilleur `R²` ne suffit pas.
+- Il faut aussi vérifier les résidus et l'interprétabilité.
+:::
+
+## Superposer les prédictions
+
+```{r}
+#| label: predictions-module-04-notes
+grille <- tibble(
+  achalandage = seq(
+    min(saturation$achalandage),
+    max(saturation$achalandage),
+    length.out = 120
+  )
+)
+
+predictions <- bind_rows(
+  grille |>
+    mutate(modele = "Linéaire", ventes_predites = predict(modele_lineaire, newdata = grille)),
+  grille |>
+    mutate(modele = "Quadratique", ventes_predites = predict(modele_quadratique, newdata = grille)),
+  grille |>
+    mutate(modele = "Logarithmique", ventes_predites = predict(modele_log, newdata = grille))
+)
+```
+
+```{r}
+#| label: graphique-predictions-module-04-notes
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(saturation, aes(x = achalandage, y = ventes)) +
+  geom_point(alpha = 0.45, colour = "#40515C") +
+  geom_line(
+    data = predictions,
+    aes(y = ventes_predites, colour = modele),
+    linewidth = 1.1
+  ) +
+  labs(
+    title = "Comparaison des prédictions",
+    x = "Achalandage mensuel",
+    y = "Ventes prédites",
+    colour = "Modèle"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Diagnostic des résidus
+
+```{r}
+#| label: residus-module-04-notes
+residus_modeles <- bind_rows(
+  saturation |>
+    mutate(modele = "Linéaire", ventes_predites = predict(modele_lineaire), residu = residuals(modele_lineaire)),
+  saturation |>
+    mutate(modele = "Quadratique", ventes_predites = predict(modele_quadratique), residu = residuals(modele_quadratique)),
+  saturation |>
+    mutate(modele = "Logarithmique", ventes_predites = predict(modele_log), residu = residuals(modele_log))
+)
+```
+
+```{r}
+#| label: graphique-residus-module-04-notes
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(residus_modeles, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 1) +
+  geom_point(alpha = 0.7, colour = "#0B4F6C", size = 2.4) +
+  facet_wrap(vars(modele)) +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Extrapolation
+
+::: {.callout-warning}
+Un modèle non linéaire peut devenir très dangereux hors de la plage observée.
+:::
+
+Un polynôme peut monter ou descendre rapidement sans raison d'affaires. Il faut
+donc limiter les prédictions aux niveaux d'achalandage comparables aux données.
+
+## Interprétation d'affaires
+
+::: {.note-box}
+Si les ventes augmentent de moins en moins vite à haut achalandage, la décision
+n'est pas seulement d'attirer plus de clients. Il faut aussi regarder la
+capacité, les ruptures de stock, le personnel et le temps d'attente.
+:::
+
+## Ce qui sera repris plus tard
+
+::: {.keypoints}
+- La régression logistique de l'ancien matériel sera reprise dans le module sur
+  la classification et les résultats binaires.
+- Les splines et les GAM sont utiles, mais dépassent le niveau attendu ici.
+- Pour ce module, on veut surtout choisir et défendre une transformation simple.
+:::
+
+## Sources et prolongements
+
+::: {.keypoints}
+- Ancien matériel MQT-2101, séance 04 : modèles non linéaires, modèles
+  polynomiaux, GAM, RMSE et `R²`.
+- Documentation R : `lm()` et `predict.lm()`.
+- Documentation ggplot2 : `geom_smooth()`.
+:::

@@ -1,0 +1,312 @@
+---
+title: "Module 03 - Régression linéaire"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup-notes-module-03
+#| include: false
+
+library(tidyverse)
+library(scales)
+
+data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
+  "data/campagnes_marketing_quebec.csv"
+} else {
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+}
+
+campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+
+currency_ca <- scales::label_dollar(
+  prefix = "",
+  suffix = " $",
+  big.mark = " ",
+  decimal.mark = ","
+)
+```
+
+## Objectifs du module
+
+::: {.keypoints}
+- Lire une relation entre deux variables quantitatives.
+- Distinguer corrélation, association, prédiction et causalité.
+- Ajuster une régression linéaire simple avec `lm()`.
+- Interpréter une pente, une ordonnée à l'origine et un `R²`.
+- Vérifier les résidus avant de conclure.
+- Rédiger une interprétation utile pour une décision d'affaires.
+:::
+
+## Point de départ
+
+::: {.lead}
+L'ancien matériel introduisait la corrélation, les moindres carrés, les tests,
+les diagnostics et les exercices R.
+:::
+
+::: {.note-box}
+La version actuelle conserve ces idées, mais les réorganise autour d'une
+question appliquée : comment quantifier l'association moyenne entre budget
+marketing et ventes?
+:::
+
+## Données du module
+
+```{r}
+#| label: apercu-campagnes-notes
+campagnes |>
+  slice_head(n = 6)
+```
+
+## Unité d'observation
+
+::: {.keypoints}
+- Une ligne représente une combinaison mois-région.
+- `ventes` est la variable réponse.
+- `budget_marketing` est la variable explicative principale.
+- `region`, `canal`, `saison`, `visites_site` et `rabais` contextualisent
+  l'analyse.
+:::
+
+## Corrélation
+
+::: {.lead}
+La corrélation mesure la force et la direction d'une relation linéaire entre
+deux variables quantitatives.
+:::
+
+::: {.note-box}
+Elle est symétrique : la corrélation entre `x` et `y` est la même que celle entre
+`y` et `x`. Une régression, elle, impose une variable réponse et une variable
+explicative.
+:::
+
+## Corrélation dans les données
+
+```{r}
+#| label: correlation-module-03
+campagnes |>
+  summarise(
+    correlation_budget_ventes = cor(budget_marketing, ventes)
+  )
+```
+
+## Nuage de points
+
+```{r}
+#| label: graphique-correlation-module-03
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(campagnes, aes(x = budget_marketing, y = ventes)) +
+  geom_point(aes(colour = region), alpha = 0.8, size = 2.6) +
+  labs(
+    title = "Ventes selon le budget marketing",
+    x = "Budget marketing",
+    y = "Ventes",
+    colour = "Région"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Pourquoi un modèle?
+
+::: {.keypoints}
+- Le graphique montre une tendance.
+- Le modèle quantifie cette tendance.
+- Le coefficient donne une interprétation moyenne.
+- Les résidus montrent ce que la droite ne capture pas.
+:::
+
+## Modèle linéaire simple
+
+$$
+Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+$$
+
+Dans le module :
+
+::: {.keypoints}
+- $Y_i$ : ventes observées.
+- $x_i$ : budget marketing.
+- $\beta_0$ : ventes moyennes estimées lorsque le budget vaut 0.
+- $\beta_1$ : variation moyenne des ventes pour une unité de budget.
+- $\varepsilon_i$ : écart entre la valeur observée et la droite.
+:::
+
+## Estimation
+
+::: {.lead}
+La droite de régression est estimée par la méthode des moindres carrés.
+:::
+
+::: {.note-box}
+Elle choisit les coefficients qui minimisent la somme des carrés des résidus.
+C'est le principe central repris de l'ancien support de régression.
+:::
+
+## Ajustement dans R
+
+```{r}
+#| label: lm-module-03
+modele_budget <- lm(ventes ~ budget_marketing, data = campagnes)
+
+summary(modele_budget)
+```
+
+## Lire les coefficients
+
+```{r}
+#| label: coefficients-module-03-notes
+coef(modele_budget)
+```
+
+::: {.note-box}
+La pente est souvent plus utile si on la reformule pour 1 000 dollars de budget.
+:::
+
+```{r}
+#| label: pente-1000-module-03-notes
+coef(modele_budget)["budget_marketing"] * 1000
+```
+
+## Interprétation de la pente
+
+::: {.lead}
+Dans ces données, 1 000 dollars de budget marketing supplémentaire sont associés
+à une variation moyenne estimée des ventes de `r round(coef(modele_budget)["budget_marketing"] * 1000)` dollars.
+:::
+
+::: {.note-box}
+Cette phrase décrit une association moyenne. Elle ne prouve pas que le budget
+cause directement les ventes.
+:::
+
+## Qualité d'ajustement
+
+```{r}
+#| label: qualite-ajustement-module-03
+tibble(
+  r_carre = summary(modele_budget)$r.squared,
+  r_carre_ajuste = summary(modele_budget)$adj.r.squared,
+  rmse = sqrt(mean(residuals(modele_budget)^2))
+)
+```
+
+## Valeurs prédites et résidus
+
+```{r}
+#| label: predictions-residus-module-03
+campagnes_modele <- campagnes |>
+  mutate(
+    ventes_predites = predict(modele_budget),
+    residu = residuals(modele_budget)
+  )
+
+campagnes_modele |>
+  select(region, mois_label, budget_marketing, ventes, ventes_predites, residu) |>
+  slice_head(n = 8)
+```
+
+## Diagnostic des résidus
+
+```{r}
+#| label: graphique-residus-module-03-notes
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(campagnes_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 1) +
+  geom_point(alpha = 0.8, colour = "#0B4F6C", size = 2.6) +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Ce qu'on cherche dans les résidus
+
+::: {.keypoints}
+- Des points répartis autour de 0.
+- Pas de courbe évidente.
+- Pas de dispersion qui augmente fortement.
+- Pas d'observation isolée qui domine l'interprétation.
+:::
+
+## Prédire
+
+```{r}
+#| label: prediction-module-03-notes
+nouveaux_budgets <- tibble(
+  budget_marketing = c(4000, 6000, 8000)
+)
+
+predict(
+  modele_budget,
+  newdata = nouveaux_budgets,
+  interval = "prediction"
+)
+```
+
+## Prédiction et prudence
+
+::: {.keypoints}
+- Une prédiction est incertaine.
+- Elle est plus défendable dans la plage observée.
+- Elle dépend du modèle choisi.
+- Elle ne remplace pas la connaissance du contexte.
+:::
+
+## Association ou causalité?
+
+::: {.callout-warning}
+Une régression sur données observationnelles ne suffit pas à établir une relation
+causale.
+:::
+
+Pour parler de causalité, il faudrait discuter du plan d'étude, des variables
+omises, de la temporalité, des mécanismes et des biais possibles.
+
+## Réponse attendue
+
+::: {.note-box}
+Les ventes sont positivement associées au budget marketing. La pente indique la
+variation moyenne estimée des ventes pour une hausse du budget, dans les données
+observées. Le graphique et les résidus doivent être examinés avant de conclure.
+L'interprétation reste une association, pas une preuve causale.
+:::
+
+## Sources et prolongements
+
+::: {.keypoints}
+- Ancien matériel MQT-2101, séance 03 : corrélation, régression linéaire,
+  moindres carrés, diagnostics et exercices R.
+- Documentation R : `stats::lm()` et `predict.lm()`.
+- Documentation ggplot2 : `geom_point()` et `geom_smooth()`.
+:::

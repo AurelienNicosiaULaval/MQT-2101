@@ -1,0 +1,242 @@
+---
+title: "Module 05 - Préparation à l'examen intra"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup-notes-module-05
+#| include: false
+
+library(tidyverse)
+
+data_path <- if (file.exists("../atelier-02-regression/data/performance_succursales_quebec.csv")) {
+  "../atelier-02-regression/data/performance_succursales_quebec.csv"
+} else {
+  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+}
+
+performance <- readr::read_csv(data_path, show_col_types = FALSE)
+```
+
+## Objectifs de la séance
+
+::: {.keypoints}
+- Réviser les modules 01 à 04.
+- Structurer une réponse d'analyse.
+- Lire une sortie R sans recopier mécaniquement.
+- Justifier le modèle ou le graphique utilisé.
+- Interpréter les résultats avec les unités.
+- Formuler une limite défendable.
+:::
+
+## Point de départ
+
+::: {.lead}
+L'ancien matériel de préparation intra utilisait des exemples de régression
+linéaire et logistique et insistait sur le rapport reproductible.
+:::
+
+::: {.note-box}
+La version actuelle recentre la préparation sur les compétences évaluables avant
+l'intra : analyse descriptive, R, régression linéaire, transformations et
+communication.
+:::
+
+## Ce qui doit être maîtrisé
+
+| Bloc | Compétence | Trace attendue |
+|---|---|---|
+| Module 01 | Lire un tableau | unité, variables, limites |
+| Module 02 | Travailler avec R | importation, résumé, graphique |
+| Module 03 | Régression linéaire | pente, `R²`, résidus |
+| Module 04 | Transformations | comparaison de modèles |
+
+## Structure d'une réponse
+
+::: {.keypoints}
+1. Question.
+2. Données et variables.
+3. Méthode.
+4. Résultat.
+5. Interprétation.
+6. Diagnostic.
+7. Limite.
+:::
+
+## Question de révision
+
+::: {.lead}
+Les ventes mensuelles des succursales sont-elles associées à l'achalandage et
+aux ruptures de stock?
+:::
+
+::: {.note-box}
+La question porte sur une association. Il faut éviter de conclure directement à
+un effet causal.
+:::
+
+## Inspecter les données
+
+```{r}
+#| label: apercu-module-05-notes
+performance |>
+  slice_head(n = 6)
+```
+
+## Résumé minimal
+
+```{r}
+#| label: resume-module-05-notes
+performance |>
+  summarise(
+    observations = n(),
+    succursales = n_distinct(succursale),
+    ventes_moyennes = mean(ventes),
+    achalandage_moyen = mean(achalandage),
+    ruptures_moyennes = mean(ruptures_stock)
+  )
+```
+
+## Graphique avant modèle
+
+```{r}
+#| label: graphique-module-05-notes
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(performance, aes(x = achalandage, y = ventes)) +
+  geom_point(aes(colour = ruptures_stock), alpha = 0.8, size = 2.6) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
+  labs(
+    title = "Ventes selon l'achalandage",
+    subtitle = "La couleur indique le nombre de ruptures de stock",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Ruptures"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Modèle de révision
+
+```{r}
+#| label: modele-module-05-notes
+modele <- lm(
+  ventes ~ achalandage + ruptures_stock,
+  data = performance
+)
+
+summary(modele)
+```
+
+## Interpréter les coefficients
+
+```{r}
+#| label: coefficients-module-05-notes
+coef(modele)
+```
+
+::: {.keypoints}
+- `achalandage` : association moyenne avec les ventes, à ruptures constantes.
+- `ruptures_stock` : association moyenne avec les ventes, à achalandage constant.
+- L'unité doit être nommée.
+- Le résultat reste observationnel.
+:::
+
+## Résidus
+
+```{r}
+#| label: residus-module-05-notes
+performance_modele <- performance |>
+  mutate(
+    ventes_predites = predict(modele),
+    residu = residuals(modele)
+  )
+```
+
+```{r}
+#| label: graphique-residus-module-05-notes
+#| fig-width: 10
+#| fig-height: 5.6
+ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 1) +
+  geom_point(alpha = 0.8, colour = "#0B4F6C", size = 2.6) +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Réponse courte attendue
+
+::: {.note-box}
+Les ventes semblent positivement associées à l'achalandage. Le modèle inclut les
+ruptures de stock pour tenir compte d'une contrainte opérationnelle. Les
+coefficients doivent être interprétés comme des associations moyennes, à
+variables incluses dans le modèle constantes. Le graphique des résidus ne doit
+pas montrer de structure majeure. La conclusion ne prouve pas une causalité.
+:::
+
+## Erreurs fréquentes
+
+::: {.keypoints}
+- Oublier l'unité d'observation.
+- Interpréter une pente sans unité.
+- Confondre association et causalité.
+- Choisir un modèle sans graphique.
+- Oublier les résidus.
+- Écrire une réponse seulement en code.
+:::
+
+## Utiliser R efficacement
+
+::: {.keypoints}
+- Commencer par `glimpse()`, `summary()` ou un résumé ciblé.
+- Nommer les objets clairement.
+- Garder seulement les résultats nécessaires.
+- Relier chaque sortie à une phrase d'interprétation.
+:::
+
+## À retenir pour l'examen
+
+::: {.callout-warning}
+L'examen individuel en personne ne permet pas l'utilisation de l'IA. La
+préparation peut inclure des outils d'apprentissage, mais la compréhension doit
+être personnelle et défendable.
+:::
+
+## Sources et prolongements
+
+::: {.keypoints}
+- Ancien matériel MQT-2101, séance 05 : exemples de préparation à l'examen,
+  modèle linéaire, modèle logistique et rapport reproductible.
+- Modules 01 à 04 du site actuel.
+- Documentation R : `lm()`, `summary.lm()` et `predict.lm()`.
+:::
