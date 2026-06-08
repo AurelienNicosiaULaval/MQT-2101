@@ -1,5 +1,5 @@
 ---
-title: "Démonstrations R - Semaine 04"
+title: "Démonstrations R - Module 04"
 format:
   html:
     embed-resources: true
@@ -7,41 +7,228 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Cette page montre comment comparer un modèle linéaire simple à deux modèles avec
+transformation. La question est la même pour chaque modèle : quelle forme décrit
+le mieux la relation entre l'achalandage et les ventes?
 
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-module-04
 library(tidyverse)
-library(janitor)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/achalandage_saturation_quebec.csv")) {
+  "data/achalandage_saturation_quebec.csv"
+} else {
+  "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv"
+}
+
+saturation <- read_csv(data_path, show_col_types = FALSE)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Inspecter les données
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+#| label: inspecter-saturation
+glimpse(saturation)
 ```
-
-## Démonstration 2 - Produire un résultat intermédiaire
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+#| label: resume-saturation
+saturation |>
+  summarise(
+    observations = n(),
+    succursales = n_distinct(succursale),
+    achalandage_moyen = mean(achalandage),
+    ventes_moyennes = mean(ventes),
+    taux_occupation_moyen = mean(taux_occupation)
+  )
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## Visualiser la courbure
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+```{r}
+#| label: nuage-saturation
+#| fig-width: 8
+#| fig-height: 5
+ggplot(saturation, aes(x = achalandage, y = ventes)) +
+  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#7A1C24", linewidth = 1) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    colour = "#0B4F6C",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Ventes selon l'achalandage",
+    subtitle = "Droite linéaire et courbe quadratique",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Succursale"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
 
-## À vérifier
+Le graphique suggère que la relation est positive, mais que la pente semble
+ralentir lorsque l'achalandage devient élevé.
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+## Ajuster trois modèles
 
+```{r}
+#| label: modeles-module-04
+modele_lineaire <- lm(ventes ~ achalandage, data = saturation)
+
+modele_quadratique <- lm(
+  ventes ~ achalandage + I(achalandage^2),
+  data = saturation
+)
+
+modele_log <- lm(
+  ventes ~ log(achalandage),
+  data = saturation
+)
+```
+
+```{r}
+#| label: resumes-modeles-module-04
+summary(modele_lineaire)$coefficients
+summary(modele_quadratique)$coefficients
+summary(modele_log)$coefficients
+```
+
+## Comparer l'ajustement
+
+```{r}
+#| label: comparer-modeles-module-04
+rmse <- function(modele) {
+  sqrt(mean(residuals(modele)^2))
+}
+
+comparaison <- tibble(
+  modele = c("Linéaire", "Quadratique", "Logarithmique"),
+  r_carre = c(
+    summary(modele_lineaire)$r.squared,
+    summary(modele_quadratique)$r.squared,
+    summary(modele_log)$r.squared
+  ),
+  erreur_rmse = c(
+    rmse(modele_lineaire),
+    rmse(modele_quadratique),
+    rmse(modele_log)
+  )
+)
+
+comparaison
+```
+
+Le `R²` résume la proportion de variation expliquée. La RMSE mesure l'erreur
+typique de prédiction sur l'échelle des ventes. Une RMSE plus faible indique des
+résidus généralement plus petits.
+
+## Superposer les prédictions
+
+```{r}
+#| label: predictions-module-04
+grille_achalandage <- tibble(
+  achalandage = seq(
+    min(saturation$achalandage),
+    max(saturation$achalandage),
+    length.out = 120
+  )
+)
+
+predictions <- bind_rows(
+  grille_achalandage |>
+    mutate(
+      modele = "Linéaire",
+      ventes_predites = predict(modele_lineaire, newdata = grille_achalandage)
+    ),
+  grille_achalandage |>
+    mutate(
+      modele = "Quadratique",
+      ventes_predites = predict(modele_quadratique, newdata = grille_achalandage)
+    ),
+  grille_achalandage |>
+    mutate(
+      modele = "Logarithmique",
+      ventes_predites = predict(modele_log, newdata = grille_achalandage)
+    )
+)
+```
+
+```{r}
+#| label: graphique-predictions-module-04
+#| fig-width: 8
+#| fig-height: 5
+ggplot(saturation, aes(x = achalandage, y = ventes)) +
+  geom_point(alpha = 0.45, colour = "#40515C") +
+  geom_line(
+    data = predictions,
+    aes(y = ventes_predites, colour = modele),
+    linewidth = 1.1
+  ) +
+  labs(
+    title = "Comparaison des prédictions",
+    x = "Achalandage mensuel",
+    y = "Ventes prédites",
+    colour = "Modèle"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Diagnostiquer les résidus
+
+```{r}
+#| label: residus-module-04
+residus_modeles <- bind_rows(
+  saturation |>
+    mutate(
+      modele = "Linéaire",
+      ventes_predites = predict(modele_lineaire),
+      residu = residuals(modele_lineaire)
+    ),
+  saturation |>
+    mutate(
+      modele = "Quadratique",
+      ventes_predites = predict(modele_quadratique),
+      residu = residuals(modele_quadratique)
+    ),
+  saturation |>
+    mutate(
+      modele = "Logarithmique",
+      ventes_predites = predict(modele_log),
+      residu = residuals(modele_log)
+    )
+)
+```
+
+```{r}
+#| label: graphique-residus-module-04
+#| fig-width: 8
+#| fig-height: 5
+ggplot(residus_modeles, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
+  geom_point(alpha = 0.7, colour = "#0B4F6C") +
+  facet_wrap(vars(modele)) +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Conclusion prudente
+
+::: {.callout-tip title="Interprétation synthèse"}
+Dans ces données simulées, les ventes augmentent avec l'achalandage, mais la
+relation semble ralentir lorsque l'achalandage est élevé. Un modèle avec
+courbure ou une transformation logarithmique peut mieux représenter cette
+saturation qu'une droite. La conclusion doit rester limitée à la plage observée
+et ne doit pas être extrapolée à des achalandages beaucoup plus élevés.
+:::

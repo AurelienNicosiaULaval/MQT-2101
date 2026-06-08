@@ -1,5 +1,5 @@
 ---
-title: "Capsules - Semaine 04"
+title: "Capsules - Module 04"
 format:
   html:
     embed-resources: true
@@ -7,110 +7,71 @@ format:
 
 ## Objectif
 
-Présenter les transformations et les relations non linéaires.
+Ces capsules servent à reconnaître les situations où une droite ne suffit plus.
+L'idée centrale est simple : un modèle peut être techniquement ajusté, mais
+mal représenter la forme de la relation.
 
 ## Capsule 1 - Voir la non-linéarité
 
-::: {.panel-tabset}
-### Vidéo
+Une relation est non linéaire lorsque la variation moyenne de la réponse n'est
+pas constante sur toute l'échelle de la variable explicative.
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 1.
+Exemple : les ventes peuvent augmenter rapidement lorsque l'achalandage passe de
+faible à moyen, puis augmenter plus lentement lorsque la succursale devient
+saturée. Dans ce cas, une droite risque de surestimer les ventes aux niveaux
+élevés ou de sous-estimer les ventes aux niveaux faibles.
+
+::: {.callout-tip title="Activité courte"}
+Dans un contexte de succursale, donnez une raison opérationnelle qui pourrait
+expliquer une relation avec saturation.
 :::
 
-Emplacement prévu : `media/videos/capsule-01.mp4` ou lien vidéo institutionnel.
+## Capsule 2 - Transformer une variable
 
-### Support
+Une transformation change l'échelle utilisée pour modéliser une relation. Deux
+approches simples sont utiles ici :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.
+- ajouter un terme quadratique avec `I(x^2)`;
+- utiliser `log(x)` lorsque l'effet augmente rapidement puis ralentit.
 
-Emplacement prévu : `media/pdf/capsule-01-support.pdf`.
+La transformation doit être choisie parce qu'elle correspond à la forme observée
+et au contexte, pas seulement parce qu'elle améliore un chiffre.
+
+::: {.callout-warning title="Point de vigilance"}
+Une transformation améliore parfois l'ajustement, mais elle rend
+l'interprétation moins directe. Il faut toujours revenir à la question d'affaires
+et à l'échelle originale.
 :::
 
+## Capsule 3 - Comparer plusieurs modèles
 
-TODO: Ajouter des exemples graphiques.
+Comparer des modèles ne consiste pas seulement à choisir le plus grand `R²`.
+Trois éléments doivent être regardés ensemble :
 
-## Capsule 2 - Transformer
+- le graphique des prédictions;
+- les résidus;
+- une mesure d'erreur comme la racine de l'erreur quadratique moyenne.
 
-::: {.panel-tabset}
-### Vidéo
+Un modèle plus complexe peut mieux suivre les données, mais devenir moins clair
+ou plus fragile hors de la plage observée.
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 2.
+::: {.callout-tip title="Activité courte"}
+Pourquoi un modèle quadratique peut-il être risqué pour prédire très loin en
+dehors des valeurs observées?
 :::
-
-Emplacement prévu : `media/videos/capsule-02.mp4` ou lien vidéo institutionnel.
-
-### Support
-
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.
-
-Emplacement prévu : `media/pdf/capsule-02-support.pdf`.
-:::
-
-
-TODO: Ajouter un exemple logarithmique.
-
-## Capsule 3 - Comparer
-
-::: {.panel-tabset}
-### Vidéo
-
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 3.
-:::
-
-Emplacement prévu : `media/videos/capsule-03.mp4` ou lien vidéo institutionnel.
-
-### Support
-
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.
-
-Emplacement prévu : `media/pdf/capsule-03-support.pdf`.
-:::
-
-
-TODO: Ajouter une comparaison de modèles.
-
-
 
 ## Capsule 4 - Interprétation appliquée
 
-::: {.panel-tabset}
-### Vidéo
+Une bonne interprétation ne dit pas seulement qu'un modèle est meilleur. Elle
+explique ce que le modèle change pour la décision.
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 4.
+Dans le cas de la saturation, la conclusion peut être :
+
+- augmenter l'achalandage reste utile;
+- l'effet marginal semble diminuer à haut niveau;
+- il faut alors regarder la capacité, les files d'attente ou les ruptures de stock.
+
+::: {.callout-tip title="Activité courte"}
+Rédigez une phrase qui distingue clairement « plus d'achalandage » et « meilleure
+capacité à absorber l'achalandage ».
 :::
-
-Emplacement prévu : `media/videos/capsule-04.mp4` ou lien vidéo institutionnel.
-
-### Support
-
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.
-
-Emplacement prévu : `media/pdf/capsule-04-support.pdf`.
-:::
-
-Durée cible : 5 à 8 minutes.
-
-Objectif : TODO rédiger et synthétiser la portion correspondante du module.
-
-À couvrir :
-
-- TODO idée principale;
-- TODO exemple simple;
-- TODO lien avec une décision ou une interprétation d'affaires.
-
-### Activité
-
-TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.
-
-## Règle de découpage des capsules
-
-Chaque capsule doit être courte et suivie d'une activité.
-
-### Exemple d'activité
-
-TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.
-

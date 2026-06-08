@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Semaine 04"
+title: "Exercices - Module 04"
 format:
   html:
     embed-resources: true
@@ -7,34 +7,108 @@ format:
 
 ## Objectif
 
-Comparer des modèles linéaires transformés ou non linéaires simples.
+Ces exercices servent à choisir et justifier un modèle lorsque la relation n'est
+pas bien résumée par une droite.
 
-## Exercices
-
-TODO: Ajouter un mini-cas sur achalandage, saturation et ventes.
+## Préparation
 
 ```{r}
 #| eval: false
 library(tidyverse)
 
-ggplot(commerce, aes(achalandage, ventes)) +
-  geom_point() +
-  geom_smooth(method = "lm", formula = y ~ x + I(x^2))
+data_path <- "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv"
+saturation <- read_csv(data_path, show_col_types = FALSE)
 ```
 
+## Exercice 1 - Lire le graphique
 
-## Modèle de solution cachée à utiliser
-
-Les solutions doivent rester cachées par défaut pour encourager une vraie tentative avant consultation.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO ajouter la solution de l'exercice ici.
+Produisez un graphique des ventes selon l'achalandage avec une droite linéaire
+et une courbe quadratique.
 
 ```{r}
 #| eval: false
-# Code R de solution à compléter.
+ggplot(saturation, aes(x = achalandage, y = ventes)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE) +
+  theme_minimal()
 ```
+
+Que suggère le graphique?
+
+::: {.callout-tip collapse="true" title="Solution"}
+Le graphique suggère une relation positive, mais possiblement courbée. Les
+ventes augmentent avec l'achalandage, puis la hausse semble ralentir lorsque
+l'achalandage devient élevé.
 :::
 
+## Exercice 2 - Ajuster deux modèles
+
+Ajustez un modèle linéaire et un modèle quadratique.
+
+```{r}
+#| eval: false
+modele_lineaire <- lm(ventes ~ achalandage, data = saturation)
+
+modele_quadratique <- lm(
+  ventes ~ achalandage + I(achalandage^2),
+  data = saturation
+)
+
+summary(modele_lineaire)
+summary(modele_quadratique)
+```
+
+Comparez les deux modèles avec le `R²`.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Le modèle quadratique devrait expliquer davantage de variation si la courbure
+est réelle. Le `R²` ne suffit toutefois pas à lui seul : il faut aussi regarder
+le graphique des prédictions et les résidus.
+:::
+
+## Exercice 3 - Calculer la RMSE
+
+Créez une fonction `rmse()` et comparez les erreurs des deux modèles.
+
+```{r}
+#| eval: false
+rmse <- function(modele) {
+  sqrt(mean(residuals(modele)^2))
+}
+
+tibble(
+  modele = c("Linéaire", "Quadratique"),
+  erreur_rmse = c(rmse(modele_lineaire), rmse(modele_quadratique))
+)
+```
+
+::: {.callout-tip collapse="true" title="Solution"}
+Une RMSE plus faible indique que les erreurs typiques sont plus petites sur
+l'échelle des ventes. Si le modèle quadratique a une RMSE plus faible et des
+résidus mieux répartis, il devient plus défendable.
+:::
+
+## Exercice 4 - Interpréter la saturation
+
+Expliquez en cinq lignes pourquoi la saturation opérationnelle peut produire
+une relation non linéaire entre achalandage et ventes.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Lorsque l'achalandage augmente, les ventes augmentent généralement aussi. Mais à
+haut niveau d'achalandage, les files d'attente, les ruptures de stock, la fatigue
+du personnel ou les limites de capacité peuvent réduire l'effet marginal de
+clients supplémentaires. La relation peut alors ralentir.
+:::
+
+## Exercice 5 - Conclusion prudente
+
+Rédigez une conclusion qui recommande un modèle et mentionne une limite
+d'extrapolation.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Une réponse acceptable doit justifier le choix du modèle par la forme graphique,
+les résidus ou une mesure d'erreur. Elle doit aussi préciser que la conclusion
+est valable surtout pour les niveaux d'achalandage observés et qu'une prédiction
+hors de cette plage serait fragile.
+:::

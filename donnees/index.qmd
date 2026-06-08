@@ -94,6 +94,14 @@ dataset_catalog <- tibble::tribble(
   "Jeu de données simulé sur la performance mensuelle de succursales fictives au Québec.",
   "Ajuster un modèle de régression appliqué, comparer un modèle simple et un modèle enrichi, puis formuler une recommandation prudente.",
   "Données simulées pour le cours.",
+  "Données simulées pour le cours.",
+  "achalandage_saturation_quebec",
+  "Achalandage et saturation de succursales fictives",
+  "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv",
+  "Module 04 - Régression non linéaire",
+  "Jeu de données simulé sur l'achalandage, la saturation opérationnelle et les ventes de succursales fictives.",
+  "Comparer un modèle linéaire, un modèle quadratique et un modèle logarithmique pour décrire une relation avec saturation.",
+  "Données simulées pour le cours.",
   "Données simulées pour le cours."
 )
 
@@ -623,4 +631,55 @@ dataset_profile("performance_succursales_quebec") |>
 #| fig-width: 8
 
 plot_numeric_overview("performance_succursales_quebec")
+```
+
+## Achalandage et saturation de succursales fictives
+
+Jeu de données simulé sur l'achalandage, la saturation opérationnelle et les
+ventes de succursales fictives. Le fichier sert à comparer un modèle linéaire,
+un modèle quadratique et un modèle logarithmique pour décrire une relation avec
+saturation.
+
+```{r}
+#| label: telecharger-achalandage-saturation-quebec
+#| results: asis
+
+cat(download_link("achalandage_saturation_quebec"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-achalandage-saturation-quebec
+
+dataset_facts("achalandage_saturation_quebec") |>
+  knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-achalandage-saturation-quebec
+
+dataset_table("achalandage_saturation_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-achalandage-saturation-quebec
+#| tbl-cap: "Profil des variables de achalandage_saturation_quebec.csv"
+
+dataset_profile("achalandage_saturation_quebec") |>
+  knitr::kable()
+```
+
+### Distribution des variables numériques
+
+```{r}
+#| label: plot-achalandage-saturation-quebec
+#| fig-height: 5
+#| fig-width: 8
+
+plot_numeric_overview("achalandage_saturation_quebec")
 ```

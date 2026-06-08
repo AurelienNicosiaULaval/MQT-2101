@@ -1,134 +1,134 @@
 ---
-title: "Semaine 04 - Régression non linéaire et transformations"
+title: "Module 04"
+subtitle: "Régression non linéaire et transformations"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.learning-hero}
+<p class="hero-kicker">Séance autonome</p>
+<h2>Régression non linéaire et transformations</h2>
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+Reconnaître une relation qui n'est pas bien résumée par une droite, choisir une
+transformation simple et comparer plusieurs modèles sans perdre l'interprétation
+d'affaires.
 
-## Let’s eat the cake
+:::: {.quick-facts}
+::: {.fact-card}
+<div class="fact-icon fact-clock" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Durée estimée</div>
+  <div class="fact-value">2 h 30 à 3 h</div>
+</div>
+:::
 
-Objectif : reconnaître et modéliser des relations qui ne sont pas linéaires sur l'échelle originale.
+::: {.fact-card}
+<div class="fact-icon fact-tools" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Outils</div>
+  <div class="fact-value">R, graphiques, transformations</div>
+</div>
+:::
 
-Compétences développées :
-- Visualiser une relation non linéaire.
-- Utiliser des transformations simples.
-- Comparer des modèles selon leur interprétation d'affaires.
+::: {.fact-card}
+<div class="fact-icon fact-data" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Données</div>
+  <div class="fact-value"><a class="data-link" href="../../donnees/#achalandage-et-saturation-de-succursales-fictives">achalandage_saturation_quebec.csv</a></div>
+</div>
+:::
 
-Application business : modéliser le panier moyen selon le trafic ou la fidélité client.
+::: {.fact-card}
+<div class="fact-icon fact-report" aria-hidden="true"></div>
+<div>
+  <div class="fact-label">Trace finale</div>
+  <div class="fact-value">Comparaison de modèles</div>
+</div>
+:::
+::::
+:::
 
-Résultat final attendu : une proposition de transformation et son interprétation.
+## On passe au concret
 
-Lien avec une décision d'affaires réelle : éviter une extrapolation trompeuse dans une décision de prix, de marketing ou d'inventaire.
+::: {.callout-note title="La question du module"}
+Une direction observe que les ventes augmentent lorsque l'achalandage augmente,
+mais cette hausse semble ralentir lorsque les succursales approchent leur
+capacité. Une droite peut alors exagérer les ventes attendues aux très hauts
+niveaux d'achalandage.
 
-## Mise en contexte
+Le module sert à décider si un modèle linéaire simple est suffisant ou si une
+transformation, par exemple un terme quadratique ou un logarithme, décrit mieux
+la relation.
+:::
 
-Un commerce observe que les ventes augmentent avec l'achalandage, mais de moins en moins rapidement lorsque le magasin devient saturé.
+À la fin du module, vous devriez pouvoir :
 
-TODO: Ajouter un exemple de données d'achalandage et de ventes.
+- repérer une courbure dans un nuage de points;
+- expliquer pourquoi une droite peut être trompeuse en présence de saturation;
+- ajuster un modèle linéaire, un modèle quadratique et un modèle logarithmique;
+- comparer les modèles avec un graphique, les résidus et une mesure d'erreur;
+- interpréter les résultats sur l'échelle originale des données;
+- éviter l'extrapolation au-delà des valeurs observées.
 
-## Utilité pour le génie et l'administration
+## Parcours recommandé
 
-Le module doit être lu avec deux angles complémentaires.
+```{=html}
+<div class="workshop-launch" aria-label="Parcours du module">
+  <a class="workshop-link-card workshop-link-card-primary" href="capsules.html">
+    <span class="phase-label">1</span>
+    <h3>Capsules</h3>
+    <p>Comprendre la courbure, les transformations et la saturation.</p>
+  </a>
+  <a class="workshop-link-card" href="demonstrations.html">
+    <span class="phase-label">2</span>
+    <h3>Démonstrations R</h3>
+    <p>Comparer plusieurs modèles sur les mêmes données.</p>
+  </a>
+  <a class="workshop-link-card" href="exercices.html">
+    <span class="phase-label">3</span>
+    <h3>Exercices</h3>
+    <p>Choisir un modèle, justifier le choix et formuler une limite.</p>
+  </a>
+</div>
+```
 
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
+## Avant de commencer
 
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
+Téléchargez ou repérez le fichier
+[`achalandage_saturation_quebec.csv`](data/achalandage_saturation_quebec.csv).
+Chaque ligne représente une combinaison mois-succursale pour des succursales
+fictives.
 
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
+Variables centrales :
 
-## Concepts clés
-
-- Courbure et saturation.
-- Transformation logarithmique.
-- Terme quadratique.
-- Comparaison visuelle des ajustements.
-- Interprétation sur l'échelle transformée.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Limites de la relation linéaire
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 2 - Transformations de variables
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 3 - Modèles non linéaires simples
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Capsule 4 - Interprétation appliquée
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-Trace attendue : une réponse courte, une note de synthèse ou une micro-tâche complétée dans votre document de travail.
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-Trace attendue : le code exécuté, un résultat observé et une phrase d'interprétation.
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-Trace attendue : vos réponses personnelles, même imparfaites, et le code R que vous avez tenté d'exécuter.
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-Trace attendue : une correction courte et une liste de questions restantes.
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-Trace attendue : une idée utile, une définition ou une référence à retenir.
+- `ventes` : variable réponse;
+- `achalandage` : variable explicative principale;
+- `taux_occupation` : niveau d'utilisation de la capacité de référence;
+- `temps_attente_minutes` et `ruptures_stock` : signes possibles de saturation;
+- `depenses_marketing`, `succursale`, `saison` : variables de contexte.
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Comparaison de deux spécifications de modèle.
+Votre trace finale doit inclure :
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+1. la question d'analyse;
+2. un graphique montrant la relation entre achalandage et ventes;
+3. une comparaison entre au moins deux modèles;
+4. un argument clair pour choisir un modèle;
+5. une limite sur l'extrapolation;
+6. une interprétation prudente liée à la décision.
 
-## Mini-cas business
+::: {.callout-tip title="Phrase cible"}
+Une bonne conclusion ressemble à ceci : « Les ventes augmentent avec
+l'achalandage, mais la relation semble ralentir aux niveaux élevés. Un modèle
+avec courbure décrit mieux cette saturation qu'une droite, sans prouver à lui
+seul la cause de cette saturation. »
+:::
 
-Achalandage et saturation : quand une promotion cesse-t-elle de produire un gain proportionnel?
+## Ressources du module
 
-## À retenir
-
-Une transformation doit améliorer l'ajustement tout en gardant une interprétation utile pour la décision.
-
-## Erreurs fréquentes
-
-- Transformer sans regarder les graphiques.
-- Comparer des modèles sur des échelles différentes sans prudence.
-- Extrapoler au-delà de la plage observée.
-
-## Pour aller plus loin
-
-TODO: Ajouter un exemple de transformation logarithmique avec interprétation en pourcentage.
+- [Capsules](capsules.qmd)
+- [Démonstrations R](demonstrations.qmd)
+- [Exercices](exercices.qmd)
+- [Lectures](lectures.qmd)

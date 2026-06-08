@@ -14,6 +14,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 - Le calendrier public présente un déroulement simple par blocs, sans dates précises ni mention de session.
 - Le module 03 sur la régression linéaire est public, avec capsules, démonstrations R, exercices, lectures et données.
 - L'atelier 02 sur la régression appliquée est public, avec page d'accueil, guide en classe, démonstrations R, exercices, lectures et données.
+- Le module 04 sur la régression non linéaire et les transformations est public, avec capsules, démonstrations R, exercices, lectures et données.
 - La structure d'évaluation est définie : deux mini-rapports en équipe et deux examens individuels en personne.
 - La politique IA est clarifiée dans les ressources étudiantes, avec une page de déclaration d'usage de l'IA.
 - Le GPT du cours est créé, intégré au site et présenté comme tuteur pédagogique.
@@ -21,7 +22,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 - Les gabarits internes de module, de notes de cours et de principes de refonte sont conservés dans `interne/`, mais retirés du site public.
 - Les solutionnaires demeurent exclus du rendu public.
 - La cartographie de l'ancien matériel est disponible.
-- Les modules 01, 02 et 03 ainsi que les ateliers 01 et 02 sont les éléments publics les plus avancés.
+- Les modules 01 à 04 ainsi que les ateliers 01 et 02 sont les éléments publics les plus avancés.
 
 ## Décisions retenues
 
@@ -43,7 +44,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 3. Durée et ressources permises pour les examens en personne.
 4. Grilles détaillées des mini-rapports et des examens.
 5. Maintien des instructions et de la base de connaissances du GPT du cours.
-6. Niveau de détail attendu pour les notes de cours des modules 04 à 10.
+6. Niveau de détail attendu pour les notes de cours des modules 05 à 10.
 7. Place exacte des ateliers 03 et 04 dans la séquence de remise des mini-rapports.
 
 ## Phases
@@ -54,7 +55,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 | 1. Cartographier l'ancien matériel | Terminé pour la relance | Table de correspondance entre ancien et nouveau cours |
 | 2. Définir la progression pédagogique | Partiellement terminé | Objectifs, compétences et livrables par semaine |
 | 3. Construire les données du cours | Avancé pour les premiers blocs | Jeux de données propres et documentés |
-| 4. Rédiger les modules | Modules 01 à 03 publics | Notes, capsules, exercices et mini-cas |
+| 4. Rédiger les modules | Modules 01 à 04 publics | Notes, capsules, exercices et mini-cas |
 | 5. Développer les ateliers | Ateliers 01 et 02 publics | Ateliers guidés et appliqués |
 | 6. Refaire les évaluations | Structure publique terminée | Mini-rapports, examens, questionnaires formatifs et grilles |
 | 7. Produire les ressources | Terminé pour la première version publique | Guides R, Quarto, IA, statistiques, modélisation et mini-rapports |
@@ -66,7 +67,8 @@ Livraison du 8 juin 2026 :
 
 - publication du module 03 sur la régression linéaire;
 - publication de l'atelier 02 sur la régression appliquée;
-- ajout des jeux de données `campagnes_marketing_quebec.csv` et `performance_succursales_quebec.csv`;
+- publication du module 04 sur la régression non linéaire et les transformations;
+- ajout des jeux de données `campagnes_marketing_quebec.csv`, `performance_succursales_quebec.csv` et `achalandage_saturation_quebec.csv`;
 - mise à jour de la navigation, du calendrier et du catalogue des données;
 - amélioration des boîtes copiables pour les modèles et gabarits;
 - rendu local complet avec Quarto;
@@ -76,7 +78,7 @@ Livraison du 8 juin 2026 :
 
 ## Prochaines priorités
 
-1. Compléter les contenus des modules 04 à 10.
+1. Compléter les contenus des modules 05 à 10.
 2. Finaliser les ateliers 03 et 04.
 3. Consolider les dictionnaires de variables et les exemples d'importation pour tous les jeux de données.
 4. Rédiger les grilles détaillées des deux mini-rapports.
