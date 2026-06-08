@@ -1,5 +1,5 @@
 ---
-title: "Démonstrations R - Semaine 05"
+title: "Démonstrations R - Module 05"
 format:
   html:
     embed-resources: true
@@ -7,41 +7,138 @@ format:
 
 ## Objectif
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
+Cette page montre une réponse de révision complète avec un jeu de données déjà
+utilisé dans le cours. L'objectif est de pratiquer le format attendu : code,
+résultat et interprétation.
 
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-module-05
 library(tidyverse)
-library(janitor)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("../atelier-02-regression/data/performance_succursales_quebec.csv")) {
+  "../atelier-02-regression/data/performance_succursales_quebec.csv"
+} else {
+  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+}
+
+performance <- read_csv(data_path, show_col_types = FALSE)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Question de révision
+
+> Les ventes mensuelles des succursales sont-elles associées à l'achalandage et
+> aux ruptures de stock?
+
+Cette question porte sur une association. Elle ne permet pas, à elle seule, de
+conclure que l'achalandage ou les ruptures causent les ventes.
+
+## Inspecter le tableau
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+#| label: inspecter-module-05
+glimpse(performance)
 ```
-
-## Démonstration 2 - Produire un résultat intermédiaire
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+#| label: resume-module-05
+performance |>
+  summarise(
+    observations = n(),
+    succursales = n_distinct(succursale),
+    ventes_moyennes = mean(ventes),
+    achalandage_moyen = mean(achalandage),
+    ruptures_moyennes = mean(ruptures_stock)
+  )
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+Interprétation : chaque ligne représente une combinaison mois-succursale. Les
+variables `ventes`, `achalandage` et `ruptures_stock` sont numériques.
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+## Visualiser avant de modéliser
 
-## À vérifier
+```{r}
+#| label: graphique-module-05
+#| fig-width: 8
+#| fig-height: 5
+ggplot(performance, aes(x = achalandage, y = ventes)) +
+  geom_point(aes(colour = ruptures_stock), alpha = 0.8, size = 2.4) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
+  labs(
+    title = "Ventes selon l'achalandage",
+    subtitle = "La couleur indique le nombre de ruptures de stock",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Ruptures"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+Le graphique suggère une association positive entre achalandage et ventes. La
+couleur permet aussi de vérifier si les ruptures semblent concentrées dans
+certaines zones du graphique.
 
+## Ajuster un modèle
+
+```{r}
+#| label: modele-module-05
+modele <- lm(
+  ventes ~ achalandage + ruptures_stock,
+  data = performance
+)
+
+summary(modele)
+```
+
+## Lire les coefficients
+
+```{r}
+#| label: coefficients-module-05
+coef(modele)
+```
+
+Interprétation attendue :
+
+- le coefficient de `achalandage` décrit l'association moyenne entre une unité
+  supplémentaire d'achalandage et les ventes, à nombre de ruptures constant;
+- le coefficient de `ruptures_stock` décrit l'association moyenne entre une
+  rupture de stock supplémentaire et les ventes, à achalandage constant.
+
+## Vérifier les résidus
+
+```{r}
+#| label: residus-module-05
+performance_modele <- performance |>
+  mutate(
+    ventes_predites = predict(modele),
+    residu = residuals(modele)
+  )
+```
+
+```{r}
+#| label: graphique-residus-module-05
+#| fig-width: 8
+#| fig-height: 5
+ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
+  geom_point(alpha = 0.8, colour = "#0B4F6C", size = 2.4) +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Réponse synthèse
+
+::: {.callout-tip title="Exemple de réponse"}
+Les ventes mensuelles semblent positivement associées à l'achalandage. Le modèle
+ajusté inclut aussi les ruptures de stock afin de tenir compte d'une contrainte
+opérationnelle. Les coefficients doivent être lus comme des associations
+moyennes, pas comme des effets causaux démontrés. Le graphique des résidus sert
+à vérifier si le modèle laisse une structure visible non expliquée.
+:::

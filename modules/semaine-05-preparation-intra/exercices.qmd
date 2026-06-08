@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Semaine 05"
+title: "Exercices - Module 05"
 format:
   html:
     embed-resources: true
@@ -7,34 +7,73 @@ format:
 
 ## Objectif
 
-Réviser la régression et la communication des résultats.
+Ces exercices servent à vérifier votre autonomie avant l'examen intra.
 
-## Exercices
+## Exercice 1 - Identifier la question
 
-TODO: Ajouter une étude de cas de préparation à l'intra.
+Pour chacune des formulations suivantes, dites s'il s'agit surtout de
+description, d'association, de prédiction ou de causalité.
 
-```{r}
-#| eval: false
-library(tidyverse)
-library(broom)
+1. Décrire les ventes moyennes par succursale.
+2. Étudier la relation entre budget marketing et ventes.
+3. Estimer les ventes attendues pour un nouveau niveau d'achalandage.
+4. Conclure qu'une hausse de budget cause une hausse des ventes.
 
-modele <- lm(performance ~ satisfaction + delai + prix, data = cas_intra)
-broom::glance(modele)
-```
-
-
-## Modèle de solution cachée à utiliser
-
-Les solutions doivent rester cachées par défaut pour encourager une vraie tentative avant consultation.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO ajouter la solution de l'exercice ici.
-
-```{r}
-#| eval: false
-# Code R de solution à compléter.
-```
+::: {.callout-tip collapse="true" title="Solution"}
+1. Description.
+2. Association.
+3. Prédiction.
+4. Causalité. Cette dernière affirmation exige un plan d'analyse plus fort
+qu'une simple régression observationnelle.
 :::
 
+## Exercice 2 - Réponse courte
+
+Expliquez pourquoi il faut regarder un nuage de points avant d'ajuster une
+régression linéaire.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Le nuage de points permet de voir la forme de la relation, les valeurs atypiques,
+la dispersion et les signes possibles de non-linéarité. Une droite peut être
+techniquement ajustée même si elle décrit mal les données.
+:::
+
+## Exercice 3 - Interpréter une pente
+
+Supposons qu'un modèle donne une pente de 12 pour `budget_marketing`, avec
+`ventes` comme variable réponse. Rédigez une interprétation en une phrase.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Dans ce modèle, une augmentation d'une unité de budget marketing est associée à
+une augmentation moyenne estimée de 12 unités de ventes, dans les données
+étudiées. Il faut préciser les unités réelles si elles sont connues.
+:::
+
+## Exercice 4 - Choisir entre deux modèles
+
+Un modèle linéaire a un `R²` de 0,72. Un modèle quadratique a un `R²` de 0,78.
+Que devez-vous vérifier avant de choisir le modèle quadratique?
+
+::: {.callout-tip collapse="true" title="Solution"}
+Il faut vérifier le graphique des prédictions, les résidus, l'interprétation du
+modèle et le risque d'extrapolation. Le `R²` plus élevé ne suffit pas à justifier
+le choix si le modèle est moins interprétable ou fragile hors de la plage
+observée.
+:::
+
+## Exercice 5 - Mini-réponse complète
+
+Rédigez une réponse de six à huit lignes à partir de cette situation :
+
+> Une succursale veut savoir si l'achalandage est associé aux ventes mensuelles.
+> Le graphique montre une relation positive. Le modèle linéaire donne une pente
+> positive. Les résidus ne montrent pas de structure évidente.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Une réponse complète doit dire que la question porte sur une association entre
+achalandage et ventes. Le graphique et la pente positive suggèrent que les
+ventes moyennes augmentent lorsque l'achalandage augmente. Le diagnostic des
+résidus ne signale pas de problème évident pour une première analyse. La
+conclusion doit rester prudente : le modèle ne prouve pas que l'achalandage
+cause les ventes, et d'autres facteurs opérationnels peuvent intervenir.
+:::

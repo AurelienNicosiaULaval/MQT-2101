@@ -1,15 +1,14 @@
-# Données - Semaine 05
+# Données - Module 05
 
-Ce dossier contient uniquement les données publiques utilisées dans le module.
+Ce module de préparation intra ne contient pas de nouveau jeu de données.
 
-## Fichiers
+Les démonstrations et exercices utilisent les jeux de données déjà publiés dans
+les modules précédents, notamment :
 
-- TODO ajouter les fichiers publics lorsque les données du module seront choisies.
+- `ventes_pme_quebec.csv`;
+- `campagnes_marketing_quebec.csv`;
+- `performance_succursales_quebec.csv`;
+- `achalandage_saturation_quebec.csv`.
 
-## Règles
-
-- ne pas placer de fichiers nominatifs dans ce dossier;
-- ne pas publier de fichiers provenant d'examens;
-- documenter l'origine, les variables et les transformations;
-- privilégier les formats `.csv` pour les exemples étudiants.
-
+L'objectif est de réviser les gestes analytiques plutôt que d'introduire un
+nouveau cas.
