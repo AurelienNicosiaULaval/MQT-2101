@@ -16,6 +16,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 - L'atelier 02 sur la régression appliquée est public, avec page d'accueil, guide en classe, démonstrations R, exercices, lectures et données.
 - Le module 04 sur la régression non linéaire et les transformations est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et données.
 - Le module 05 de préparation à l'examen intra est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et canevas de réponse.
+- Les modules 03 à 05 ont été relus pédagogiquement pour ajouter des garde-fous étudiants : erreurs fréquentes, aide en cas de blocage, auto-vérification assistée par IA, prolongements et exercices de synthèse.
 - La structure d'évaluation est définie : deux mini-rapports en équipe et deux examens individuels en personne.
 - La politique IA est clarifiée dans les ressources étudiantes, avec une page de déclaration d'usage de l'IA.
 - Le GPT du cours est créé, intégré au site et présenté comme tuteur pédagogique.
@@ -73,6 +74,7 @@ Livraison du 8 juin 2026 :
 - ajout des notes de cours HTML/PDF pour les modules 03, 04 et 05;
 - ajout des supports HTML/PDF de capsules pour les modules 03, 04 et 05;
 - refonte des parcours d'apprentissage des modules 03, 04 et 05 avec liens précis vers capsules, démonstrations, exercices et traces;
+- révision pédagogique des modules 03, 04 et 05, avec ajout d'erreurs fréquentes, d'aides en cas de blocage, de prompts d'auto-vérification et d'exercices de synthèse;
 - ajout des jeux de données `campagnes_marketing_quebec.csv`, `performance_succursales_quebec.csv` et `achalandage_saturation_quebec.csv`;
 - mise à jour de la navigation, du calendrier et du catalogue des données;
 - amélioration des boîtes copiables pour les modèles et gabarits;

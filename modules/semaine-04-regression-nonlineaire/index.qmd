@@ -71,7 +71,7 @@ la relation.
 - interpréter les résultats sur l'échelle originale des données;
 - éviter l'extrapolation au-delà des valeurs observées.
 
-## Parcours recommandé
+## Votre parcours
 
 ::: {.callout-note title="Notes de cours"}
 Le support global de notes de cours est disponible en [HTML](notes-cours.qmd) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
@@ -129,7 +129,18 @@ Une bonne conclusion ressemble à ceci : « Les ventes augmentent avec l'achalan
 </div>
 ```
 
+::: {.callout-warning title="Erreurs fréquentes à éviter"}
+- Choisir automatiquement le modèle qui a le plus grand `R²`.
+- Oublier que le modèle quadratique peut devenir irréaliste hors de la plage observée.
+- Interpréter une courbe comme une preuve de saturation causée par un seul facteur.
+- Comparer des modèles sans regarder les prédictions superposées aux données.
+- Présenter une transformation sans expliquer ce qu'elle change dans l'interprétation.
+- Faire une recommandation opérationnelle sans mentionner la limite d'extrapolation.
+:::
+
 ## Auto-vérification
+
+Avant de passer au module suivant, je peux dire que :
 
 ::: {.checklist-box}
 - [ ] J'ai reconnu une relation non linéaire dans un graphique.
@@ -139,3 +150,34 @@ Une bonne conclusion ressemble à ceci : « Les ventes augmentent avec l'achalan
 - [ ] J'ai nommé une limite d'extrapolation.
 - [ ] J'ai formulé une recommandation prudente.
 :::
+
+::: {.callout-note title="Auto-vérification assistée par IA"}
+Vous pouvez utiliser le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) pour relire votre comparaison de modèles. Son rôle est de signaler les arguments incomplets, les diagnostics manquants et les conclusions qui dépassent les données. Il ne doit pas choisir le modèle à votre place sans justification.
+
+Suggestion de demande :
+
+> Voici ma comparaison de modèles pour le module 04. Vérifie si j'utilise au moins un argument graphique, un argument numérique, un diagnostic et une limite d'extrapolation. Indique les passages à clarifier, sans rédiger la conclusion à ma place.
+
+Après cette vérification, notez l'argument le plus faible de votre comparaison et améliorez-le.
+:::
+
+## Je suis bloqué·e
+
+::: {.help-box}
+Avant de demander de l'aide, vérifiez dans l'ordre :
+
+1. le chargement de `tidyverse`;
+2. le chemin vers `achalandage_saturation_quebec.csv`;
+3. le nuage de points entre `achalandage` et `ventes`;
+4. le modèle linéaire;
+5. le modèle quadratique ou logarithmique;
+6. le graphique des prédictions;
+7. les résidus et la RMSE;
+8. la plage des valeurs d'achalandage observées.
+:::
+
+## Pour aller plus loin
+
+- Comparer une conclusion basée seulement sur le `R²` avec une conclusion qui utilise aussi les résidus.
+- Identifier une situation d'affaires où une relation saturée serait plausible.
+- Reprendre la conclusion en précisant ce qui relève du résultat statistique et ce qui relève de la décision de gestion.

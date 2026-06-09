@@ -70,7 +70,7 @@ raisonnable et à formuler une interprétation prudente.
 - utiliser les résidus pour vérifier si la droite résume correctement les données;
 - expliquer ce que le modèle permet de dire, et ce qu'il ne permet pas de conclure.
 
-## Parcours recommandé
+## Votre parcours
 
 ::: {.callout-note title="Notes de cours"}
 Le support global de notes de cours est disponible en [HTML](notes-cours.qmd) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
@@ -222,7 +222,18 @@ Une bonne conclusion ressemble à ceci : « Dans ces données, les ventes moyenn
 </div>
 ```
 
+::: {.callout-warning title="Erreurs fréquentes à éviter"}
+- Interpréter la pente sans préciser l'unité de la variable explicative.
+- Lire une association comme une preuve de causalité.
+- Ajuster le modèle avant d'avoir regardé le nuage de points.
+- Citer seulement le `R²` sans regarder les résidus.
+- Oublier que l'ordonnée à l'origine peut être peu utile si `budget_marketing = 0` n'est pas une situation réaliste dans les données.
+- Faire une prédiction loin de la plage de budgets observés.
+:::
+
 ## Auto-vérification
+
+Avant de passer au module suivant, je peux dire que :
 
 ::: {.checklist-box}
 - [ ] J'ai formulé une question de régression sans causalité non justifiée.
@@ -233,3 +244,33 @@ Une bonne conclusion ressemble à ceci : « Dans ces données, les ventes moyenn
 - [ ] J'ai examiné les résidus.
 - [ ] J'ai rédigé une conclusion prudente.
 :::
+
+::: {.callout-note title="Auto-vérification assistée par IA"}
+Vous pouvez utiliser le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) pour vérifier votre interprétation. Son rôle est de repérer les imprécisions, les oublis de diagnostic et les conclusions trop fortes. Il ne doit pas rédiger la trace finale à votre place.
+
+Suggestion de demande :
+
+> Voici ma trace finale pour le module 03. Vérifie si ma question, mon graphique, mon interprétation de la pente, mon diagnostic des résidus et ma limite causale sont clairs. Indique les éléments manquants ou imprécis, sans réécrire ma réponse à ma place.
+
+Après cette vérification, notez une correction concrète à apporter à votre interprétation.
+:::
+
+## Je suis bloqué·e
+
+::: {.help-box}
+Avant de demander de l'aide, vérifiez dans l'ordre :
+
+1. le chargement de `tidyverse`;
+2. le chemin vers `campagnes_marketing_quebec.csv`;
+3. le nom exact des variables `ventes` et `budget_marketing`;
+4. le nuage de points avant le modèle;
+5. le code `lm(ventes ~ budget_marketing, data = campagnes)`;
+6. le graphique des résidus;
+7. le message d'erreur complet si R bloque.
+:::
+
+## Pour aller plus loin
+
+- Comparer l'interprétation d'une hausse de 1 dollar et d'une hausse de 1 000 dollars de budget.
+- Ajouter une variable de contexte dans le graphique, par exemple `region` ou `canal`, sans en faire une preuve causale.
+- Reprendre la conclusion en distinguant clairement association, prédiction et décision.
