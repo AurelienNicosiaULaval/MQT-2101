@@ -10,6 +10,12 @@ format:
 Ces exercices accompagnent le guide de l'atelier. Ils servent à préparer la
 mini-analyse finale.
 
+::: {.callout-note title="Lien avec le guide complet"}
+Pendant la séance, ouvrez d'abord le [guide complet](guide-atelier.qmd). Utilisez
+cette page pour pratiquer les gestes essentiels, vérifier votre interprétation
+et préparer la trace finale.
+:::
+
 ## Préparation
 
 ```{r}
@@ -121,3 +127,72 @@ peut recommander de prioriser l'analyse de l'achalandage, de surveiller les
 ruptures de stock ou de tester des actions marketing, mais elle doit préciser
 que le modèle décrit une association observée.
 :::
+
+## Exercice 6 - Diagnostic des résidus
+
+Créez les valeurs prédites et les résidus du modèle enrichi, puis produisez un
+graphique des résidus selon les ventes prédites.
+
+```{r}
+#| eval: false
+performance_modele <- performance |>
+  mutate(
+    ventes_predites = predict(modele_enrichi),
+    residu = residuals(modele_enrichi)
+  )
+
+ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0) +
+  geom_point() +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal()
+```
+
+Rédigez une phrase sur ce que le graphique permet de vérifier.
+
+::: {.callout-tip collapse="true" title="Solution"}
+On cherche surtout à voir si les résidus sont répartis autour de zéro sans motif
+évident. Si les résidus montrent une courbe, une dispersion qui augmente ou
+quelques points très éloignés, il faut le mentionner comme limite.
+:::
+
+## Exercice 7 - Mini-recommandation complète
+
+Rédigez une mini-recommandation de huit lignes maximum. Elle doit contenir :
+
+- la question d'affaires;
+- le facteur prioritaire;
+- le résultat qui appuie ce choix;
+- une interprétation avec les unités;
+- un diagnostic ou une vérification;
+- une limite causale;
+- une prochaine étape.
+
+::: {.callout-tip collapse="true" title="Solution"}
+Une bonne recommandation reste actionnable sans devenir trop forte. Elle peut
+proposer de prioriser l'achalandage, les dépenses marketing, la capacité de
+service ou les ruptures de stock, mais elle doit préciser que le modèle soutient
+une association observée. Une prochaine étape réaliste serait de valider la piste
+avec des données supplémentaires, une expérimentation ou une analyse plus ciblée.
+:::
+
+## Trace finale courte
+
+Votre trace finale doit rassembler les éléments des exercices dans un court
+fichier Quarto :
+
+1. question d'affaires;
+2. description des données;
+3. graphique exploratoire;
+4. modèle simple ou enrichi;
+5. coefficient interprété;
+6. diagnostic des résidus;
+7. recommandation prudente;
+8. limite.
+
+Avant de terminer, relisez votre trace comme si une autre personne devait la
+comprendre sans votre code ouvert dans la console.

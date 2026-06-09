@@ -10,6 +10,25 @@ format:
 Cette démonstration montre comment passer d'un tableau de performance de
 succursales à une recommandation fondée sur une régression.
 
+::: {.callout-note title="Comment utiliser cette page"}
+Cette page sert de référence pendant l'atelier. Lisez l'objectif de chaque
+démonstration, exécutez le code, puis écrivez l'interprétation dans votre propre
+fichier Quarto. Le code seul ne suffit pas : chaque résultat doit être relié à
+la question d'affaires.
+:::
+
+## Vue d'ensemble
+
+Les démonstrations suivent le même ordre que la trace finale :
+
+1. comprendre le tableau;
+2. visualiser la relation principale;
+3. ajuster un modèle simple;
+4. ajouter des variables de contexte;
+5. comparer les modèles;
+6. diagnostiquer les résidus;
+7. formuler une recommandation prudente.
+
 ## Préparation
 
 ```{r}
@@ -25,7 +44,10 @@ data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
 performance <- read_csv(data_path, show_col_types = FALSE)
 ```
 
-## Comprendre les données
+## Démonstration 1 - Comprendre les données
+
+Objectif : vérifier le contenu du tableau avant de modéliser. Une ligne
+représente une observation mensuelle pour une succursale fictive.
 
 ```{r}
 #| label: inspecter-performance-demo
@@ -44,7 +66,16 @@ performance |>
   )
 ```
 
-## Explorer une relation principale
+::: {.callout-warning title="Erreur fréquente"}
+Ne commencez pas par `lm()` sans avoir vérifié l'unité d'observation et les
+variables disponibles. Une bonne interprétation dépend d'abord d'une bonne
+lecture du tableau.
+:::
+
+## Démonstration 2 - Explorer une relation principale
+
+Objectif : produire un graphique qui permet de voir la relation entre
+achalandage et ventes avant d'ajuster le modèle.
 
 ```{r}
 #| label: graphique-achalandage-ventes-demo
@@ -63,7 +94,14 @@ ggplot(performance, aes(x = achalandage, y = ventes)) +
   theme(panel.grid.minor = element_blank())
 ```
 
-## Ajuster un modèle simple
+::: {.callout-caution title="Limite importante"}
+Le nuage de points peut suggérer une relation positive. Il ne permet pas, à lui
+seul, de dire que l'achalandage cause les ventes.
+:::
+
+## Démonstration 3 - Ajuster un modèle simple
+
+Objectif : quantifier l'association moyenne entre l'achalandage et les ventes.
 
 ```{r}
 #| label: modele-simple-atelier-02
@@ -80,7 +118,13 @@ une unité supplémentaire d'achalandage mensuel.
 coef(modele_simple)["achalandage"]
 ```
 
-## Ajouter le contexte
+::: {.callout-tip title="Phrase à adapter"}
+Dans ce modèle simple, une unité supplémentaire d'achalandage est associée à une
+variation moyenne estimée des ventes égale à la pente. Cette interprétation doit
+être formulée avec les unités réelles du contexte.
+:::
+
+## Démonstration 4 - Ajouter le contexte
 
 Un modèle enrichi peut inclure d'autres variables plausibles. Ici, on ajoute les
 dépenses marketing, les heures de personnel et les ruptures de stock.
@@ -100,7 +144,15 @@ modèle étant égales par ailleurs ». Cette formulation est importante, car el
 évite de comparer naïvement des succursales qui n'ont pas le même achalandage ou
 la même dotation en personnel.
 
-## Comparer les modèles
+::: {.callout-warning title="Point de vigilance"}
+Dans un modèle enrichi, un coefficient ne se lit pas comme une comparaison brute.
+Il se lit conditionnellement aux autres variables incluses dans la formule.
+:::
+
+## Démonstration 5 - Comparer les modèles
+
+Objectif : comparer le modèle simple et le modèle enrichi sans choisir seulement
+le plus grand `R²`.
 
 ```{r}
 #| label: comparer-modeles-atelier-02
@@ -118,7 +170,10 @@ Le modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible.
 Dans une analyse appliquée, le meilleur modèle n'est pas seulement celui qui a
 le plus grand `R²`. C'est aussi celui qui soutient une interprétation utile.
 
-## Diagnostiquer les résidus
+## Démonstration 6 - Diagnostiquer les résidus
+
+Objectif : vérifier si les erreurs du modèle enrichi montrent une structure qui
+fragilise la recommandation.
 
 ```{r}
 #| label: residus-atelier-02
@@ -145,7 +200,13 @@ ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
   theme(panel.grid.minor = element_blank())
 ```
 
-## Formuler une recommandation
+::: {.callout-important title="Point d'interprétation"}
+Des résidus répartis autour de zéro rendent le modèle plus défendable pour une
+première analyse. Un motif clair dans les résidus doit être mentionné comme
+limite, même si les coefficients semblent intéressants.
+:::
+
+## Démonstration 7 - Préparer une recommandation
 
 ::: {.callout-tip title="Exemple de formulation"}
 Les données suggèrent que l'achalandage est fortement associé aux ventes. Les
@@ -153,4 +214,23 @@ dépenses marketing et les heures de personnel peuvent aussi être considérées
 dans l'interprétation du modèle enrichi. La recommandation doit toutefois rester
 prudente, car ces données simulées sont observationnelles et ne prouvent pas un
 effet causal.
+:::
+
+## Synthèse pour la trace finale
+
+Votre trace finale doit relier les éléments suivants :
+
+- question d'affaires;
+- graphique;
+- modèle;
+- coefficient interprété;
+- diagnostic;
+- recommandation;
+- limite.
+
+::: {.callout-tip title="Phrase de recommandation à adapter"}
+Les données suggèrent de prioriser [facteur], car [résultat du modèle ou du
+graphique]. Cette recommandation doit rester prudente : le modèle décrit une
+association observée et une validation complémentaire serait nécessaire avant de
+conclure à un effet causal.
 :::

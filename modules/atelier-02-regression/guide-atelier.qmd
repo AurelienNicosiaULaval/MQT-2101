@@ -35,6 +35,23 @@ suggèrent et ce qu'il faut encore vérifier.
 - une recommandation prudente;
 - une limite explicite.
 
+## Organisation du parcours
+
+L'atelier est construit en épisodes courts. Chaque épisode ajoute une pièce à la
+trace finale. Ne gardez pas seulement le code : écrivez aussi les phrases
+d'interprétation pendant que les résultats sont encore frais.
+
+```{=html}
+<div class="workshop-agenda">
+  <div class="agenda-item"><div class="agenda-time">1</div><div class="agenda-content"><h3>Question</h3><p>Clarifier la décision et les variables.</p></div></div>
+  <div class="agenda-item"><div class="agenda-time">2</div><div class="agenda-content"><h3>Données</h3><p>Comprendre les lignes, les colonnes et les limites.</p></div></div>
+  <div class="agenda-item"><div class="agenda-time">3</div><div class="agenda-content"><h3>Graphique</h3><p>Observer la relation avant le modèle.</p></div></div>
+  <div class="agenda-item"><div class="agenda-time">4</div><div class="agenda-content"><h3>Modèles</h3><p>Ajuster, comparer et interpréter.</p></div></div>
+  <div class="agenda-item"><div class="agenda-time">5</div><div class="agenda-content"><h3>Diagnostic</h3><p>Vérifier les résidus et les limites.</p></div></div>
+  <div class="agenda-item"><div class="agenda-time">6</div><div class="agenda-content"><h3>Recommandation</h3><p>Transformer les résultats en décision prudente.</p></div></div>
+</div>
+```
+
 ## Données et préparation
 
 Fichier : <a class="data-link" href="../../donnees/#performance-de-succursales-québécoises-fictives">performance_succursales_quebec.csv</a>.
@@ -72,6 +89,17 @@ Variables à repérer :
 - `ruptures_stock` : contrainte opérationnelle;
 - `campagne_locale` : indicateur d'action locale.
 
+::: {.callout-tip title="À vous 1 - Reformuler la question"}
+Écrivez votre propre version de la question en une phrase. Elle doit mentionner
+les ventes, les succursales et l'idée d'une décision à éclairer.
+:::
+
+::: {.callout-important title="Pause diagnostic"}
+Avant de continuer, vérifiez que vous pouvez distinguer la variable réponse des
+variables explicatives. Si ce n'est pas clair, le modèle sera difficile à
+interpréter.
+:::
+
 ## Étape 2 - Inspecter le tableau
 
 ```{r}
@@ -98,6 +126,16 @@ Quelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela
 semble cohérent avec l'achalandage moyen?
 :::
 
+::: {.callout-tip title="À vous 2 - Décrire le tableau"}
+Ajoutez à votre trace une phrase qui indique ce que représente une ligne du
+tableau, puis nommez trois variables qui seront utiles pour la décision.
+:::
+
+### Trace finale
+
+Votre mini-analyse doit maintenant contenir la question d'affaires et une courte
+description des données.
+
 ## Étape 3 - Visualiser avant de modéliser
 
 ```{r}
@@ -123,6 +161,11 @@ Cette observation justifie un premier modèle, mais ne suffit pas à conclure à
 effet causal.
 :::
 
+::: {.callout-tip title="À vous 3 - Lire le graphique"}
+Écrivez deux phrases : une sur la direction de la relation entre `achalandage`
+et `ventes`, puis une sur une limite visible ou possible du graphique.
+:::
+
 ## Étape 4 - Ajuster un modèle simple
 
 ```{r}
@@ -145,6 +188,17 @@ pente_achalandage
 Dans ce modèle simple, une unité supplémentaire d'achalandage est associée à une
 augmentation moyenne estimée des ventes de `r round(pente_achalandage, 1)` dollars.
 Cette phrase décrit une association moyenne dans les données.
+:::
+
+::: {.callout-warning title="Erreur fréquente"}
+Ne dites pas que l'achalandage cause les ventes. Le modèle estime une
+association moyenne dans des données observationnelles.
+:::
+
+::: {.callout-tip title="À vous 4 - Interpréter la pente"}
+Rédigez une phrase qui interprète la pente avec les unités. Commencez par
+« Dans ce modèle... » pour garder visible le fait que l'interprétation dépend du
+modèle ajusté.
 :::
 
 ## Étape 5 - Ajouter des variables de contexte
@@ -174,6 +228,16 @@ tibble(
   )
 )
 ```
+
+::: {.callout-note title="Pause diagnostic"}
+Est-ce que le modèle enrichi améliore assez l'ajustement pour justifier une
+interprétation plus complexe? Notez un avantage et une limite du modèle enrichi.
+:::
+
+::: {.callout-tip title="À vous 5 - Comparer les modèles"}
+Remplissez une mini-grille avec trois colonnes : modèle simple, modèle enrichi,
+ce que cela change dans l'interprétation.
+:::
 
 ## Étape 6 - Diagnostiquer le modèle
 
@@ -208,7 +272,34 @@ réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner d
 la limite de l'analyse.
 :::
 
-## Étape 7 - Rédiger la recommandation
+::: {.callout-tip title="À vous 6 - Lire les résidus"}
+Ajoutez une phrase à votre trace : les résidus semblent-ils raisonnablement
+répartis autour de zéro ou montrent-ils une structure à mentionner?
+:::
+
+::: {.callout-important title="Pause diagnostic"}
+Une recommandation sans diagnostic est fragile. Avant de rédiger, assurez-vous
+d'avoir au moins une phrase sur les résidus ou sur une limite du modèle.
+:::
+
+## Étape 7 - Choisir une piste prioritaire
+
+Le modèle enrichi peut suggérer plusieurs pistes : achalandage, marketing,
+capacité de service, ruptures de stock. Votre rôle n'est pas de transformer un
+coefficient en certitude, mais de choisir une piste raisonnable à tester ou à
+approfondir.
+
+```{r}
+#| label: coefficients-priorites-guide
+coef(modele_enrichi)
+```
+
+::: {.callout-tip title="À vous 7 - Choisir une priorité"}
+Choisissez une variable prioritaire. Justifiez-la avec un résultat du modèle et
+un élément de contexte. Ajoutez immédiatement une limite.
+:::
+
+## Étape 8 - Rédiger la recommandation
 
 Utilisez le modèle pour prioriser une piste, mais gardez l'incertitude visible.
 
@@ -224,6 +315,24 @@ observationnelles et le modèle ne prouve pas à lui seul une relation causale.
 Une prochaine étape serait de [validation ou analyse complémentaire].
 ```
 :::
+
+::: {.callout-tip title="À vous 8 - Rédiger votre recommandation"}
+Rédigez cinq à sept lignes. Votre recommandation doit nommer le facteur
+prioritaire, le résultat qui l'appuie, l'action prudente à tester et une limite.
+:::
+
+## Étape 9 - Mise en commun
+
+En petit groupe, comparez vos recommandations. Cherchez surtout les différences
+d'interprétation :
+
+- avez-vous choisi le même facteur prioritaire?
+- avez-vous utilisé le même argument statistique?
+- avez-vous nommé la même limite?
+- votre recommandation dépasse-t-elle ce que les données permettent de dire?
+
+Après la mise en commun, ajustez votre recommandation si un autre groupe a
+repéré une limite ou une formulation plus prudente.
 
 ## Gabarit minimal pour votre mini-analyse
 
@@ -253,6 +362,40 @@ format:
 ## Recommandation prudente
 ```
 :::
+
+## Trace finale
+
+Votre trace finale doit être courte, mais complète. Elle doit contenir :
+
+1. la question d'affaires;
+2. une description minimale des données;
+3. un graphique exploratoire;
+4. un modèle simple ou enrichi;
+5. une interprétation de coefficient;
+6. un diagnostic des résidus;
+7. une recommandation prudente;
+8. une limite et une prochaine vérification.
+
+## Grille formative
+
+::: {.checklist-box}
+- [ ] La question d'affaires est claire.
+- [ ] Le graphique est interprété avant le modèle.
+- [ ] Le modèle est écrit avec `lm()`.
+- [ ] Au moins un coefficient est interprété avec les unités.
+- [ ] Le modèle enrichi est comparé au modèle simple.
+- [ ] Les résidus sont commentés.
+- [ ] La recommandation est prudente et actionnable.
+- [ ] La limite causale est explicite.
+:::
+
+## Auto-vérification assistée par IA
+
+Vous pouvez demander au [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) de relire votre trace. Demandez-lui de vérifier la structure, la reproductibilité du code, l'interprétation de la pente, le diagnostic et la prudence de la recommandation. Ne lui demandez pas de rédiger la recommandation finale à votre place.
+
+Suggestion de demande :
+
+> Voici ma trace finale de l'atelier 02. Vérifie si la question, le graphique, le modèle, l'interprétation de coefficient, le diagnostic des résidus, la recommandation et la limite sont présents et cohérents. Donne-moi une rétroaction actionnable sans réécrire mon texte.
 
 ## Fin de l'atelier
 

@@ -14,6 +14,7 @@ Les outils Git et GitHub servent au développement, à la sauvegarde et à la pu
 - Le calendrier public présente un déroulement simple par blocs, sans dates précises ni mention de session.
 - Le module 03 sur la régression linéaire est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et données.
 - L'atelier 02 sur la régression appliquée est public, avec page d'accueil, guide en classe, démonstrations R, exercices, lectures et données.
+- L'atelier 02 a été relu pédagogiquement pour mieux accompagner le travail en classe : préparation, guide complet, démonstrations commentées, exercices de synthèse, trace finale et auto-vérification.
 - Le module 04 sur la régression non linéaire et les transformations est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et données.
 - Le module 05 de préparation à l'examen intra est public, avec parcours détaillé, six capsules, supports HTML/PDF de capsules, notes de cours HTML/PDF, démonstrations R, exercices, lectures et canevas de réponse.
 - Les modules 03 à 05 ont été relus pédagogiquement pour ajouter des garde-fous étudiants : erreurs fréquentes, aide en cas de blocage, auto-vérification assistée par IA, prolongements et exercices de synthèse.
@@ -75,6 +76,7 @@ Livraison du 8 juin 2026 :
 - ajout des supports HTML/PDF de capsules pour les modules 03, 04 et 05;
 - refonte des parcours d'apprentissage des modules 03, 04 et 05 avec liens précis vers capsules, démonstrations, exercices et traces;
 - révision pédagogique des modules 03, 04 et 05, avec ajout d'erreurs fréquentes, d'aides en cas de blocage, de prompts d'auto-vérification et d'exercices de synthèse;
+- révision pédagogique de l'atelier 02, avec renforcement du déroulement en classe, des pauses diagnostic, des exercices et de la trace finale;
 - ajout des jeux de données `campagnes_marketing_quebec.csv`, `performance_succursales_quebec.csv` et `achalandage_saturation_quebec.csv`;
 - mise à jour de la navigation, du calendrier et du catalogue des données;
 - amélioration des boîtes copiables pour les modèles et gabarits;

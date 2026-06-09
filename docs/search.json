@@ -473,7 +473,7 @@
     "href": "modules/atelier-02-regression/guide-atelier.html",
     "title": "Guide en classe - Atelier 02",
     "section": "",
-    "text": "NotePlace dans la progression\n\n\n\nCet atelier se fait après le module 03. Il sert à passer d’une régression linéaire simple à une mini-analyse appliquée : question d’affaires, exploration, modèle, diagnostic et recommandation."
+    "text": "Place dans la progression\n\n\n\nCet atelier se fait après le module 03. Il sert à passer d’une régression linéaire simple à une mini-analyse appliquée : question d’affaires, exploration, modèle, diagnostic et recommandation."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#objectif-du-parcours",
@@ -501,42 +501,42 @@
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-1---comprendre-la-question",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 1 - Comprendre la question",
-    "text": "Étape 1 - Comprendre la question\nAvant de coder, écrivez une phrase qui relie l’analyse à une décision.\n\n\n\n\n\n\nAstuceTrace à conserver\n\n\n\nNous voulons comprendre quels facteurs sont associés aux ventes mensuelles des succursales afin de prioriser une piste d’amélioration à tester.\n\n\nVariables à repérer :\n\nventes : variable réponse;\nachalandage : volume de clients ou clientes;\ndepenses_marketing : effort marketing mensuel;\nheures_personnel : capacité opérationnelle;\nruptures_stock : contrainte opérationnelle;\ncampagne_locale : indicateur d’action locale."
+    "text": "Étape 1 - Comprendre la question\nAvant de coder, écrivez une phrase qui relie l’analyse à une décision.\n\n\n\n\n\n\nTrace à conserver\n\n\n\nNous voulons comprendre quels facteurs sont associés aux ventes mensuelles des succursales afin de prioriser une piste d’amélioration à tester.\n\n\nVariables à repérer :\n\nventes : variable réponse;\nachalandage : volume de clients ou clientes;\ndepenses_marketing : effort marketing mensuel;\nheures_personnel : capacité opérationnelle;\nruptures_stock : contrainte opérationnelle;\ncampagne_locale : indicateur d’action locale.\n\n\n\n\n\n\n\nÀ vous 1 - Reformuler la question\n\n\n\nÉcrivez votre propre version de la question en une phrase. Elle doit mentionner les ventes, les succursales et l’idée d’une décision à éclairer.\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nAvant de continuer, vérifiez que vous pouvez distinguer la variable réponse des variables explicatives. Si ce n’est pas clair, le modèle sera difficile à interpréter."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-2---inspecter-le-tableau",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-2---inspecter-le-tableau",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 2 - Inspecter le tableau",
-    "text": "Étape 2 - Inspecter le tableau\n\nglimpse(performance)\n\nRows: 72\nColumns: 14\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Saguenay\", \"S…\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 420, 560, 470, 350, 390, 365, 420, 560, 470, 350…\n$ campagne_locale       &lt;chr&gt; \"oui\", \"oui\", \"non\", \"non\", \"oui\", \"non\", \"non\",…\n$ depenses_marketing    &lt;dbl&gt; 5977, 6162, 4978, 2981, 5061, 3279, 4677, 4693, …\n$ achalandage           &lt;dbl&gt; 1653, 2043, 1864, 1202, 1362, 1369, 1486, 2179, …\n$ heures_personnel      &lt;dbl&gt; 483, 528, 499, 450, 476, 493, 498, 577, 495, 465…\n$ ruptures_stock        &lt;dbl&gt; 1, 1, 2, 1, 0, 1, 0, 1, 6, 3, 0, 2, 1, 0, 1, 2, …\n$ delai_service_minutes &lt;dbl&gt; 5.5, 6.8, 3.8, 5.4, 3.8, 5.5, 5.0, 6.2, 6.5, 5.3…\n$ satisfaction          &lt;dbl&gt; 7.7, 8.0, 7.7, 7.4, 8.7, 8.4, 8.6, 8.3, 7.1, 7.6…\n$ ventes                &lt;dbl&gt; 163260, 180567, 166706, 126460, 151254, 132775, …\n\n\n\nperformance |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    ventes_moyennes = mean(ventes),\n    achalandage_moyen = mean(achalandage),\n    depenses_moyennes = mean(depenses_marketing),\n    ruptures_moyennes = mean(ruptures_stock),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_moyennes))\n\n# A tibble: 6 × 5\n  succursale     ventes_moyennes achalandage_moyen depenses_moyennes\n  &lt;chr&gt;                    &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;\n1 Montréal               183803.             2129.             6216.\n2 Québec                 163630.             1754.             5853.\n3 Gatineau               155196.             1631.             5339.\n4 Sherbrooke             144795.             1529              4520.\n5 Trois-Rivières         144135.             1450.             5045.\n6 Saguenay               133635.             1360.             3977.\n# ℹ 1 more variable: ruptures_moyennes &lt;dbl&gt;\n\n\n\n\n\n\n\n\nNotePause diagnostic\n\n\n\nQuelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela semble cohérent avec l’achalandage moyen?"
+    "text": "Étape 2 - Inspecter le tableau\n\nglimpse(performance)\n\nRows: 72\nColumns: 14\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Saguenay\", \"S…\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 420, 560, 470, 350, 390, 365, 420, 560, 470, 350…\n$ campagne_locale       &lt;chr&gt; \"oui\", \"oui\", \"non\", \"non\", \"oui\", \"non\", \"non\",…\n$ depenses_marketing    &lt;dbl&gt; 5977, 6162, 4978, 2981, 5061, 3279, 4677, 4693, …\n$ achalandage           &lt;dbl&gt; 1653, 2043, 1864, 1202, 1362, 1369, 1486, 2179, …\n$ heures_personnel      &lt;dbl&gt; 483, 528, 499, 450, 476, 493, 498, 577, 495, 465…\n$ ruptures_stock        &lt;dbl&gt; 1, 1, 2, 1, 0, 1, 0, 1, 6, 3, 0, 2, 1, 0, 1, 2, …\n$ delai_service_minutes &lt;dbl&gt; 5.5, 6.8, 3.8, 5.4, 3.8, 5.5, 5.0, 6.2, 6.5, 5.3…\n$ satisfaction          &lt;dbl&gt; 7.7, 8.0, 7.7, 7.4, 8.7, 8.4, 8.6, 8.3, 7.1, 7.6…\n$ ventes                &lt;dbl&gt; 163260, 180567, 166706, 126460, 151254, 132775, …\n\n\n\nperformance |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    ventes_moyennes = mean(ventes),\n    achalandage_moyen = mean(achalandage),\n    depenses_moyennes = mean(depenses_marketing),\n    ruptures_moyennes = mean(ruptures_stock),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_moyennes))\n\n# A tibble: 6 × 5\n  succursale     ventes_moyennes achalandage_moyen depenses_moyennes\n  &lt;chr&gt;                    &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;\n1 Montréal               183803.             2129.             6216.\n2 Québec                 163630.             1754.             5853.\n3 Gatineau               155196.             1631.             5339.\n4 Sherbrooke             144795.             1529              4520.\n5 Trois-Rivières         144135.             1450.             5045.\n6 Saguenay               133635.             1360.             3977.\n# ℹ 1 more variable: ruptures_moyennes &lt;dbl&gt;\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nQuelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela semble cohérent avec l’achalandage moyen?\n\n\n\n\n\n\n\n\nÀ vous 2 - Décrire le tableau\n\n\n\nAjoutez à votre trace une phrase qui indique ce que représente une ligne du tableau, puis nommez trois variables qui seront utiles pour la décision.\n\n\n\nTrace finale\nVotre mini-analyse doit maintenant contenir la question d’affaires et une courte description des données."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-3---visualiser-avant-de-modéliser",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-3---visualiser-avant-de-modéliser",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 3 - Visualiser avant de modéliser",
-    "text": "Étape 3 - Visualiser avant de modéliser\n\nggplot(performance, aes(x = achalandage, y = ventes)) +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\", linewidth = 1.1) +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAstuceTrace à conserver\n\n\n\nLe nuage de points suggère une relation positive entre achalandage et ventes. Cette observation justifie un premier modèle, mais ne suffit pas à conclure à un effet causal."
+    "text": "Étape 3 - Visualiser avant de modéliser\n\nggplot(performance, aes(x = achalandage, y = ventes)) +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\", linewidth = 1.1) +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTrace à conserver\n\n\n\nLe nuage de points suggère une relation positive entre achalandage et ventes. Cette observation justifie un premier modèle, mais ne suffit pas à conclure à un effet causal.\n\n\n\n\n\n\n\n\nÀ vous 3 - Lire le graphique\n\n\n\nÉcrivez deux phrases : une sur la direction de la relation entre achalandage et ventes, puis une sur une limite visible ou possible du graphique."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-4---ajuster-un-modèle-simple",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-4---ajuster-un-modèle-simple",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 4 - Ajuster un modèle simple",
-    "text": "Étape 4 - Ajuster un modèle simple\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\n\nsummary(modele_simple)\n\n\nCall:\nlm(formula = ventes ~ achalandage, data = performance)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-18695.7  -4922.6   -294.8   5934.3  18386.3 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 50540.53    5526.11   9.146 1.43e-13 ***\nachalandage    63.12       3.31  19.069  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8433 on 70 degrees of freedom\nMultiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 \nF-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16\n\n\nNotez la pente de achalandage.\n\npente_achalandage &lt;- coef(modele_simple)[\"achalandage\"]\n\npente_achalandage\n\nachalandage \n   63.12511 \n\n\n\n\n\n\n\n\nAstuceInterprétation attendue\n\n\n\nDans ce modèle simple, une unité supplémentaire d’achalandage est associée à une augmentation moyenne estimée des ventes de 63.1 dollars. Cette phrase décrit une association moyenne dans les données."
+    "text": "Étape 4 - Ajuster un modèle simple\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\n\nsummary(modele_simple)\n\n\nCall:\nlm(formula = ventes ~ achalandage, data = performance)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-18695.7  -4922.6   -294.8   5934.3  18386.3 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 50540.53    5526.11   9.146 1.43e-13 ***\nachalandage    63.12       3.31  19.069  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8433 on 70 degrees of freedom\nMultiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 \nF-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16\n\n\nNotez la pente de achalandage.\n\npente_achalandage &lt;- coef(modele_simple)[\"achalandage\"]\n\npente_achalandage\n\nachalandage \n   63.12511 \n\n\n\n\n\n\n\n\nInterprétation attendue\n\n\n\nDans ce modèle simple, une unité supplémentaire d’achalandage est associée à une augmentation moyenne estimée des ventes de 63.1 dollars. Cette phrase décrit une association moyenne dans les données.\n\n\n\n\n\n\n\n\nErreur fréquente\n\n\n\nNe dites pas que l’achalandage cause les ventes. Le modèle estime une association moyenne dans des données observationnelles.\n\n\n\n\n\n\n\n\nÀ vous 4 - Interpréter la pente\n\n\n\nRédigez une phrase qui interprète la pente avec les unités. Commencez par « Dans ce modèle… » pour garder visible le fait que l’interprétation dépend du modèle ajusté."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-5---ajouter-des-variables-de-contexte",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-5---ajouter-des-variables-de-contexte",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 5 - Ajouter des variables de contexte",
-    "text": "Étape 5 - Ajouter des variables de contexte\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\n\nCall:\nlm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + \n    ruptures_stock, data = performance)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-8940.3 -2956.8  -437.2  2763.3 12110.6 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)         5098.7691  9382.6231   0.543    0.589    \nachalandage           34.7889     3.6456   9.543 4.12e-14 ***\ndepenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***\nheures_personnel     131.4254    25.6218   5.129 2.68e-06 ***\nruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4995 on 67 degrees of freedom\nMultiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 \nF-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16\n\n\nDans le modèle enrichi, chaque coefficient se lit en tenant constantes les autres variables du modèle. Cette idée est essentielle pour éviter les interprétations trop rapides.\n\ntibble(\n  modele = c(\"Simple\", \"Enrichi\"),\n  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),\n  r_carre_ajuste = c(\n    summary(modele_simple)$adj.r.squared,\n    summary(modele_enrichi)$adj.r.squared\n  )\n)\n\n# A tibble: 2 × 3\n  modele  r_carre r_carre_ajuste\n  &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;\n1 Simple    0.839          0.836\n2 Enrichi   0.946          0.943"
+    "text": "Étape 5 - Ajouter des variables de contexte\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\n\nCall:\nlm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + \n    ruptures_stock, data = performance)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-8940.3 -2956.8  -437.2  2763.3 12110.6 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)         5098.7691  9382.6231   0.543    0.589    \nachalandage           34.7889     3.6456   9.543 4.12e-14 ***\ndepenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***\nheures_personnel     131.4254    25.6218   5.129 2.68e-06 ***\nruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4995 on 67 degrees of freedom\nMultiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 \nF-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16\n\n\nDans le modèle enrichi, chaque coefficient se lit en tenant constantes les autres variables du modèle. Cette idée est essentielle pour éviter les interprétations trop rapides.\n\ntibble(\n  modele = c(\"Simple\", \"Enrichi\"),\n  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),\n  r_carre_ajuste = c(\n    summary(modele_simple)$adj.r.squared,\n    summary(modele_enrichi)$adj.r.squared\n  )\n)\n\n# A tibble: 2 × 3\n  modele  r_carre r_carre_ajuste\n  &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;\n1 Simple    0.839          0.836\n2 Enrichi   0.946          0.943\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nEst-ce que le modèle enrichi améliore assez l’ajustement pour justifier une interprétation plus complexe? Notez un avantage et une limite du modèle enrichi.\n\n\n\n\n\n\n\n\nÀ vous 5 - Comparer les modèles\n\n\n\nRemplissez une mini-grille avec trois colonnes : modèle simple, modèle enrichi, ce que cela change dans l’interprétation."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-6---diagnostiquer-le-modèle",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-6---diagnostiquer-le-modèle",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 6 - Diagnostiquer le modèle",
-    "text": "Étape 6 - Diagnostiquer le modèle\n\nperformance_modele &lt;- performance |&gt;\n  mutate(\n    ventes_predites = predict(modele_enrichi),\n    residu = residuals(modele_enrichi)\n  )\n\n\nggplot(performance_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\", linewidth = 0.9) +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus du modèle enrichi\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotePause diagnostic\n\n\n\nLe graphique des résidus sert à vérifier si les erreurs du modèle semblent réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner dans la limite de l’analyse."
+    "text": "Étape 6 - Diagnostiquer le modèle\n\nperformance_modele &lt;- performance |&gt;\n  mutate(\n    ventes_predites = predict(modele_enrichi),\n    residu = residuals(modele_enrichi)\n  )\n\n\nggplot(performance_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\", linewidth = 0.9) +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus du modèle enrichi\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nLe graphique des résidus sert à vérifier si les erreurs du modèle semblent réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner dans la limite de l’analyse.\n\n\n\n\n\n\n\n\nÀ vous 6 - Lire les résidus\n\n\n\nAjoutez une phrase à votre trace : les résidus semblent-ils raisonnablement répartis autour de zéro ou montrent-ils une structure à mentionner?\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nUne recommandation sans diagnostic est fragile. Avant de rédiger, assurez-vous d’avoir au moins une phrase sur les résidus ou sur une limite du modèle."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-7---rédiger-la-recommandation",
@@ -564,14 +564,14 @@
     "href": "modules/atelier-02-regression/demonstrations.html",
     "title": "Démonstrations R - Atelier 02",
     "section": "",
-    "text": "Cette démonstration montre comment passer d’un tableau de performance de succursales à une recommandation fondée sur une régression."
+    "text": "Cette démonstration montre comment passer d’un tableau de performance de succursales à une recommandation fondée sur une régression.\n\n\n\n\n\n\nComment utiliser cette page\n\n\n\nCette page sert de référence pendant l’atelier. Lisez l’objectif de chaque démonstration, exécutez le code, puis écrivez l’interprétation dans votre propre fichier Quarto. Le code seul ne suffit pas : chaque résultat doit être relié à la question d’affaires."
   },
   {
     "objectID": "modules/atelier-02-regression/demonstrations.html#objectif",
     "href": "modules/atelier-02-regression/demonstrations.html#objectif",
     "title": "Démonstrations R - Atelier 02",
     "section": "",
-    "text": "Cette démonstration montre comment passer d’un tableau de performance de succursales à une recommandation fondée sur une régression."
+    "text": "Cette démonstration montre comment passer d’un tableau de performance de succursales à une recommandation fondée sur une régression.\n\n\n\n\n\n\nComment utiliser cette page\n\n\n\nCette page sert de référence pendant l’atelier. Lisez l’objectif de chaque démonstration, exécutez le code, puis écrivez l’interprétation dans votre propre fichier Quarto. Le code seul ne suffit pas : chaque résultat doit être relié à la question d’affaires."
   },
   {
     "objectID": "modules/atelier-02-regression/demonstrations.html#préparation",
@@ -3322,56 +3322,56 @@
     "href": "modules/atelier-02-regression/capsules.html",
     "title": "Capsules - Atelier 02",
     "section": "",
-    "text": "Ces capsules préparent le travail en classe. Elles résument les décisions à prendre pendant une analyse de régression appliquée."
+    "text": "Ces capsules préparent le travail en classe. Elles résument les décisions à prendre pendant une analyse de régression appliquée.\nPour chaque capsule, produisez une trace très courte : une phrase, une liste ou un choix argumenté. Ces traces seront réutilisées dans le guide complet."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#rôle-des-capsules",
     "href": "modules/atelier-02-regression/capsules.html#rôle-des-capsules",
     "title": "Capsules - Atelier 02",
     "section": "",
-    "text": "Ces capsules préparent le travail en classe. Elles résument les décisions à prendre pendant une analyse de régression appliquée."
+    "text": "Ces capsules préparent le travail en classe. Elles résument les décisions à prendre pendant une analyse de régression appliquée.\nPour chaque capsule, produisez une trace très courte : une phrase, une liste ou un choix argumenté. Ces traces seront réutilisées dans le guide complet."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-1---question-daffaires-et-variable-réponse",
     "href": "modules/atelier-02-regression/capsules.html#capsule-1---question-daffaires-et-variable-réponse",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 1 - Question d’affaires et variable réponse",
-    "text": "Capsule 1 - Question d’affaires et variable réponse\nUne bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :\n\nQuels facteurs sont associés aux ventes mensuelles des succursales?\n\nLa variable réponse est ventes. Les variables explicatives possibles incluent achalandage, depenses_marketing, heures_personnel, ruptures_stock et campagne_locale.\n\n\n\n\n\n\nAstuceActivité courte\n\n\n\nChoisissez une variable explicative et écrivez pourquoi elle pourrait être liée aux ventes."
+    "text": "Capsule 1 - Question d’affaires et variable réponse\nUne bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :\n\nQuels facteurs sont associés aux ventes mensuelles des succursales?\n\nLa variable réponse est ventes. Les variables explicatives possibles incluent achalandage, depenses_marketing, heures_personnel, ruptures_stock et campagne_locale.\n\n\n\n\n\n\nActivité courte\n\n\n\nChoisissez une variable explicative et écrivez pourquoi elle pourrait être liée aux ventes.\n\n\nÀ conserver : une question d’affaires et la variable réponse."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-2---relation-visible-et-relation-modélisée",
     "href": "modules/atelier-02-regression/capsules.html#capsule-2---relation-visible-et-relation-modélisée",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 2 - Relation visible et relation modélisée",
-    "text": "Capsule 2 - Relation visible et relation modélisée\nUn nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.\nLa droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.\n\n\n\n\n\n\nAstuceActivité courte\n\n\n\nAvant d’ajuster le modèle, écrivez ce que vous vous attendez à voir entre achalandage et ventes."
+    "text": "Capsule 2 - Relation visible et relation modélisée\nUn nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.\nLa droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.\n\n\n\n\n\n\nActivité courte\n\n\n\nAvant d’ajuster le modèle, écrivez ce que vous vous attendez à voir entre achalandage et ventes.\n\n\nÀ conserver : une phrase qui décrit la relation attendue avant le modèle."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-3---modèle-simple-et-modèle-enrichi",
     "href": "modules/atelier-02-regression/capsules.html#capsule-3---modèle-simple-et-modèle-enrichi",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 3 - Modèle simple et modèle enrichi",
-    "text": "Capsule 3 - Modèle simple et modèle enrichi\nUn modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.\nUn modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en tenant les autres variables du modèle constantes.\n\n\n\n\n\n\nAvertissementPoint de vigilance\n\n\n\nAjouter des variables ne rend pas automatiquement le modèle meilleur pour la décision. Il faut vérifier si l’interprétation reste claire et si les variables ajoutées ont un sens dans le contexte."
+    "text": "Capsule 3 - Modèle simple et modèle enrichi\nUn modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.\nUn modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en tenant les autres variables du modèle constantes.\n\n\n\n\n\n\nPoint de vigilance\n\n\n\nAjouter des variables ne rend pas automatiquement le modèle meilleur pour la décision. Il faut vérifier si l’interprétation reste claire et si les variables ajoutées ont un sens dans le contexte.\n\n\nÀ conserver : un avantage et une limite du modèle enrichi."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-4---recommandation-et-limites",
     "href": "modules/atelier-02-regression/capsules.html#capsule-4---recommandation-et-limites",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 4 - Recommandation et limites",
-    "text": "Capsule 4 - Recommandation et limites\nUne recommandation statistique doit relier trois éléments :\n\nce que le modèle estime;\nce que le contexte rend plausible;\nce que les données ne permettent pas de conclure.\n\nUne recommandation solide ne dit pas seulement « faire plus de X ». Elle précise la variable priorisée, l’incertitude, la limite et la prochaine vérification à faire.\n\n\n\n\n\n\nAstuceActivité courte\n\n\n\nRédigez une phrase qui commence par : « Les données suggèrent de prioriser… », puis ajoutez immédiatement une limite."
+    "text": "Capsule 4 - Recommandation et limites\nUne recommandation statistique doit relier trois éléments :\n\nce que le modèle estime;\nce que le contexte rend plausible;\nce que les données ne permettent pas de conclure.\n\nUne recommandation solide ne dit pas seulement « faire plus de X ». Elle précise la variable priorisée, l’incertitude, la limite et la prochaine vérification à faire.\n\n\n\n\n\n\nActivité courte\n\n\n\nRédigez une phrase qui commence par : « Les données suggèrent de prioriser… », puis ajoutez immédiatement une limite.\n\n\nÀ conserver : une recommandation provisoire et une limite causale."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html",
     "href": "modules/atelier-02-regression/exercices.html",
     "title": "Exercices - Atelier 02",
     "section": "",
-    "text": "Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale."
+    "text": "Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale.\n\n\n\n\n\n\nLien avec le guide complet\n\n\n\nPendant la séance, ouvrez d’abord le guide complet. Utilisez cette page pour pratiquer les gestes essentiels, vérifier votre interprétation et préparer la trace finale."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html#objectif",
     "href": "modules/atelier-02-regression/exercices.html#objectif",
     "title": "Exercices - Atelier 02",
     "section": "",
-    "text": "Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale."
+    "text": "Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale.\n\n\n\n\n\n\nLien avec le guide complet\n\n\n\nPendant la séance, ouvrez d’abord le guide complet. Utilisez cette page pour pratiquer les gestes essentiels, vérifier votre interprétation et préparer la trace finale."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html#préparation",
@@ -3385,35 +3385,35 @@
     "href": "modules/atelier-02-regression/exercices.html#exercice-1---question-et-variables",
     "title": "Exercices - Atelier 02",
     "section": "Exercice 1 - Question et variables",
-    "text": "Exercice 1 - Question et variables\nPour la question « Quels facteurs sont associés aux ventes mensuelles des succursales? », identifiez :\n\nla variable réponse;\ndeux variables explicatives plausibles;\nune variable qui pourrait confondre l’interprétation;\nune limite du tableau.\n\n\n\n\n\n\n\nAstuceSolution\n\n\n\n\n\nLa variable réponse est ventes. Des variables explicatives plausibles sont achalandage, depenses_marketing, heures_personnel et ruptures_stock. Une variable de contexte comme succursale, region ou saison peut influencer l’interprétation. Une limite est que les observations ne proviennent pas d’une expérience contrôlée."
+    "text": "Exercice 1 - Question et variables\nPour la question « Quels facteurs sont associés aux ventes mensuelles des succursales? », identifiez :\n\nla variable réponse;\ndeux variables explicatives plausibles;\nune variable qui pourrait confondre l’interprétation;\nune limite du tableau.\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nLa variable réponse est ventes. Des variables explicatives plausibles sont achalandage, depenses_marketing, heures_personnel et ruptures_stock. Une variable de contexte comme succursale, region ou saison peut influencer l’interprétation. Une limite est que les observations ne proviennent pas d’une expérience contrôlée."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html#exercice-2---graphique-exploratoire",
     "href": "modules/atelier-02-regression/exercices.html#exercice-2---graphique-exploratoire",
     "title": "Exercices - Atelier 02",
     "section": "Exercice 2 - Graphique exploratoire",
-    "text": "Exercice 2 - Graphique exploratoire\nProduisez un graphique des ventes selon l’achalandage, avec une couleur par succursale.\n\nggplot(performance, aes(x = achalandage, y = ventes, colour = succursale)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"black\") +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\nAstuceSolution\n\n\n\n\n\nLe graphique doit permettre de vérifier si une relation positive existe et si certaines succursales semblent systématiquement au-dessus ou au-dessous de la tendance générale."
+    "text": "Exercice 2 - Graphique exploratoire\nProduisez un graphique des ventes selon l’achalandage, avec une couleur par succursale.\n\nggplot(performance, aes(x = achalandage, y = ventes, colour = succursale)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"black\") +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nLe graphique doit permettre de vérifier si une relation positive existe et si certaines succursales semblent systématiquement au-dessus ou au-dessous de la tendance générale."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html#exercice-3---modèle-simple",
     "href": "modules/atelier-02-regression/exercices.html#exercice-3---modèle-simple",
     "title": "Exercices - Atelier 02",
     "section": "Exercice 3 - Modèle simple",
-    "text": "Exercice 3 - Modèle simple\nAjustez un modèle simple avec achalandage comme variable explicative.\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\nsummary(modele_simple)\n\nInterprétez la pente en une phrase.\n\n\n\n\n\n\nAstuceSolution\n\n\n\n\n\nLa pente indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel. Il faut préciser l’unité et éviter de dire que l’achalandage cause automatiquement les ventes."
+    "text": "Exercice 3 - Modèle simple\nAjustez un modèle simple avec achalandage comme variable explicative.\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\nsummary(modele_simple)\n\nInterprétez la pente en une phrase.\n\n\n\n\n\n\nSolution\n\n\n\n\n\nLa pente indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel. Il faut préciser l’unité et éviter de dire que l’achalandage cause automatiquement les ventes."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html#exercice-4---modèle-enrichi",
     "href": "modules/atelier-02-regression/exercices.html#exercice-4---modèle-enrichi",
     "title": "Exercices - Atelier 02",
     "section": "Exercice 4 - Modèle enrichi",
-    "text": "Exercice 4 - Modèle enrichi\nAjustez le modèle suivant :\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\nChoisissez un coefficient et interprétez-le dans le contexte.\n\n\n\n\n\n\nAstuceSolution\n\n\n\n\n\nUn coefficient du modèle enrichi se lit en tenant constantes les autres variables incluses dans le modèle. Par exemple, le coefficient de depenses_marketing décrit l’association moyenne avec les ventes pour des observations ayant le même achalandage, les mêmes heures de personnel et le même nombre de ruptures de stock, selon le modèle."
+    "text": "Exercice 4 - Modèle enrichi\nAjustez le modèle suivant :\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\nChoisissez un coefficient et interprétez-le dans le contexte.\n\n\n\n\n\n\nSolution\n\n\n\n\n\nUn coefficient du modèle enrichi se lit en tenant constantes les autres variables incluses dans le modèle. Par exemple, le coefficient de depenses_marketing décrit l’association moyenne avec les ventes pour des observations ayant le même achalandage, les mêmes heures de personnel et le même nombre de ruptures de stock, selon le modèle."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html#exercice-5---recommandation",
     "href": "modules/atelier-02-regression/exercices.html#exercice-5---recommandation",
     "title": "Exercices - Atelier 02",
     "section": "Exercice 5 - Recommandation",
-    "text": "Exercice 5 - Recommandation\nRédigez une recommandation de cinq à sept lignes pour une direction régionale. Votre texte doit inclure :\n\nle facteur prioritaire;\nun résultat de modèle;\nune limite;\nune prochaine vérification.\n\n\n\n\n\n\n\nAstuceSolution\n\n\n\n\n\nLa recommandation doit être défendable sans être excessive. Une bonne réponse peut recommander de prioriser l’analyse de l’achalandage, de surveiller les ruptures de stock ou de tester des actions marketing, mais elle doit préciser que le modèle décrit une association observée."
+    "text": "Exercice 5 - Recommandation\nRédigez une recommandation de cinq à sept lignes pour une direction régionale. Votre texte doit inclure :\n\nle facteur prioritaire;\nun résultat de modèle;\nune limite;\nune prochaine vérification.\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nLa recommandation doit être défendable sans être excessive. Une bonne réponse peut recommander de prioriser l’analyse de l’achalandage, de surveiller les ruptures de stock ou de tester des actions marketing, mais elle doit préciser que le modèle décrit une association observée."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html",
@@ -3427,35 +3427,35 @@
     "href": "modules/atelier-02-regression/index.html#avant-latelier",
     "title": "Atelier 02",
     "section": "Avant l’atelier",
-    "text": "Avant l’atelier\nArrivez avec les bases du module 03 en tête :\n\nvariable réponse et variable explicative;\nnuage de points;\npente et ordonnée à l’origine;\nrésidus;\ndifférence entre association, prédiction et causalité.\n\nTéléchargez ou repérez le fichier performance_succursales_quebec.csv."
+    "text": "Avant l’atelier\nCet atelier suppose que les bases du module 03 sont assez fraîches pour être réutilisées en classe. L’objectif n’est pas de tout maîtriser avant d’arriver, mais d’avoir les bons repères pour participer activement.\n\n\n\n\n\n\nPréparation à faire avant d’arriver\n\n\n\nAvant l’atelier, relisez surtout les éléments qui permettent de passer d’une sortie R à une interprétation : variable réponse, variable explicative, pente, résidus et prudence causale.\n\n\nAvant d’arriver, vérifiez que vous pouvez expliquer :\n\nvariable réponse et variable explicative;\nnuage de points;\npente et ordonnée à l’origine;\nrésidus;\ndifférence entre association, prédiction et causalité.\n\nTéléchargez ou repérez le fichier performance_succursales_quebec.csv.\n\n\nJ’ai relu les capsules ou les notes du module 03.\nJe sais ouvrir un fichier .qmd.\nJe sais charger tidyverse.\nJe sais ajuster un modèle avec lm().\nJe sais expliquer pourquoi une régression observationnelle ne prouve pas automatiquement une causalité.\n\n\n\n\n\n\n\n\nPréparation minimale\n\n\n\nSi vous manquez de temps, relisez seulement la page des capsules du module 03, puis ouvrez le guide complet de l’atelier avant la séance."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#pendant-latelier",
     "href": "modules/atelier-02-regression/index.html#pendant-latelier",
     "title": "Atelier 02",
     "section": "Pendant l’atelier",
-    "text": "Pendant l’atelier\nLe guide complet est la page principale à suivre en classe. Les démonstrations et les exercices servent de soutien pendant le parcours.\n\n  \n    Guide\n    Guide complet de l'atelier\n    Suivre le déroulement en classe, étape par étape, jusqu'à la recommandation finale.\n  \n  \n    Démo\n    Démonstrations R\n    Voir une analyse reproductible avant de produire votre propre version.\n  \n  \n    Pratique\n    Exercices\n    Tester votre compréhension et vérifier vos interprétations."
+    "text": "Pendant l’atelier\nLe guide complet est la page principale à suivre en classe. Les démonstrations et les exercices servent de soutien pendant le parcours.\n\n  \n    Guide\n    Guide complet de l'atelier\n    Suivre le déroulement en classe, étape par étape, jusqu'à la recommandation finale.\n  \n  \n    Démo\n    Démonstrations R\n    Voir une analyse reproductible avant de produire votre propre version.\n  \n  \n    Pratique\n    Exercices\n    Tester votre compréhension et vérifier vos interprétations.\n  \n\n\n\n\n\n\n\nCe qui sera accompagné en classe\n\n\n\nLa partie la plus importante de l’atelier est le passage du modèle à la recommandation. Le code sert à produire les résultats, mais le travail principal est d’expliquer ce que les coefficients veulent dire, ce que les résidus permettent de vérifier et ce que la direction peut raisonnablement faire ensuite."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#déroulement-suggéré",
     "href": "modules/atelier-02-regression/index.html#déroulement-suggéré",
     "title": "Atelier 02",
     "section": "Déroulement suggéré",
-    "text": "Déroulement suggéré\n\n  \n    0:00 - 0:25\n    \n      Question d'affaires\n      Identifier la variable réponse, les variables explicatives et la décision à éclairer.\n    \n  \n  \n    0:25 - 1:05\n    \n      Exploration\n      Inspecter le tableau, produire les premiers graphiques et repérer les relations plausibles.\n    \n  \n  \n    1:05 - 1:55\n    \n      Modélisation\n      Ajuster un modèle simple, puis un modèle enrichi, et comparer les interprétations.\n    \n  \n  \n    1:55 - 2:35\n    \n      Diagnostic\n      Examiner les résidus, les points influents et les limites du modèle.\n    \n  \n  \n    2:35 - 3:00\n    \n      Recommandation\n      Transformer les résultats en recommandation prudente et défendable."
+    "text": "Déroulement suggéré\n\n  \n    0:00 - 0:25\n    \n      Question d'affaires\n      Identifier la variable réponse, les variables explicatives et la décision à éclairer.\n    \n  \n  \n    0:25 - 1:05\n    \n      Exploration\n      Inspecter le tableau, produire les premiers graphiques et repérer les relations plausibles.\n    \n  \n  \n    1:05 - 1:55\n    \n      Modélisation\n      Ajuster un modèle simple, puis un modèle enrichi, et comparer les interprétations.\n    \n  \n  \n    1:55 - 2:35\n    \n      Diagnostic\n      Examiner les résidus, les points influents et les limites du modèle.\n    \n  \n  \n    2:35 - 3:00\n    \n      Recommandation\n      Transformer les résultats en recommandation prudente et défendable.\n    \n  \n\nPendant l’atelier, gardez le même fichier Quarto ouvert. À la fin de chaque bloc, ajoutez directement la trace demandée : une phrase, un graphique, un tableau ou un paragraphe de recommandation.\n\n\nJ’ai reformulé la question d’affaires.\nJ’ai décrit le tableau et l’unité d’observation.\nJ’ai produit un graphique exploratoire.\nJ’ai ajusté un modèle simple.\nJ’ai ajusté ou interprété un modèle enrichi.\nJ’ai regardé les résidus.\nJ’ai rédigé une recommandation prudente."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#résultat-attendu",
     "href": "modules/atelier-02-regression/index.html#résultat-attendu",
     "title": "Atelier 02",
     "section": "Résultat attendu",
-    "text": "Résultat attendu\nVotre mini-analyse doit inclure :\n\nune question d’affaires claire;\nun graphique exploratoire;\nun modèle linéaire simple;\nune interprétation de coefficient;\nun diagnostic des résidus;\nune recommandation;\nune limite importante.\n\n\n\n\n\n\n\nAvertissementResponsabilité statistique\n\n\n\nLa recommandation doit rester cohérente avec les données. Un modèle peut aider à prioriser une piste d’action, mais il ne remplace pas l’analyse du contexte ni la validation avec d’autres informations."
+    "text": "Résultat attendu\nVotre mini-analyse doit inclure :\n\nune question d’affaires claire;\nun graphique exploratoire;\nun modèle linéaire simple;\nune interprétation de coefficient;\nun diagnostic des résidus;\nune recommandation;\nune limite importante.\n\n\n\n\n\n\n\nResponsabilité statistique\n\n\n\nLa recommandation doit rester cohérente avec les données. Un modèle peut aider à prioriser une piste d’action, mais il ne remplace pas l’analyse du contexte ni la validation avec d’autres informations."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#ressources-de-latelier",
     "href": "modules/atelier-02-regression/index.html#ressources-de-latelier",
     "title": "Atelier 02",
     "section": "Ressources de l’atelier",
-    "text": "Ressources de l’atelier\n\nCapsules\nGuide complet\nDémonstrations R\nExercices\nLectures"
+    "text": "Ressources de l’atelier\n\n  CapsulesPréparer les décisions clés avant la séance.\n  Guide completSuivre le parcours en classe jusqu'à la recommandation finale.\n  Démonstrations RReproduire l'analyse pas à pas et comprendre les sorties.\n  ExercicesTester les gestes essentiels et préparer la trace finale.\n  LecturesRevoir les références utiles sur `lm()`, les prédictions et les graphiques."
   },
   {
     "objectID": "modules/semaine-04-regression-nonlineaire/capsules.html",
@@ -5164,5 +5164,173 @@
     "title": "Exercices - Module 05",
     "section": "Exercice 6 - Mini-réponse complète",
     "text": "Exercice 6 - Mini-réponse complète\nRédigez une réponse de six à huit lignes à partir de cette situation :\n\nUne succursale veut savoir si l’achalandage est associé aux ventes mensuelles. Le graphique montre une relation positive avec un léger ralentissement aux niveaux élevés d’achalandage. Le modèle quadratique réduit la RMSE par rapport au modèle linéaire. Les résidus du modèle quadratique ne montrent pas de structure évidente.\n\nVotre réponse doit contenir :\n\nla question reformulée;\nla méthode utilisée;\nle résultat principal;\nun diagnostic ou une justification du modèle;\nune limite.\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nUne réponse complète doit dire que la question porte sur l’association entre achalandage et ventes. Elle doit expliquer que la relation observée est positive, mais qu’elle semble ralentir aux niveaux élevés. Le modèle quadratique est défendable si la RMSE est plus faible et si les résidus ne montrent pas de structure évidente. La conclusion doit rester prudente : le modèle ne prouve pas que l’achalandage cause les ventes, et les prédictions hors de la plage observée seraient fragiles."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/index.html#après-latelier",
+    "href": "modules/atelier-02-regression/index.html#après-latelier",
+    "title": "Atelier 02",
+    "section": "Après l’atelier",
+    "text": "Après l’atelier\nAprès la séance, le travail principal consiste à nettoyer la mini-analyse pour qu’elle soit lisible sans votre présence. Une personne qui ouvre votre fichier doit comprendre la question, les résultats et la recommandation sans chercher dans votre console R.\n\n\n\n\n\n\nTrace finale à produire\n\n\n\nVotre trace finale est une mini-analyse Quarto courte. Elle doit contenir un graphique, au moins un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite.\n\n\nAvant de considérer la trace terminée :\n\n\nLe fichier se rend en HTML.\nLes graphiques ont des titres et des axes lisibles.\nLes coefficients sont interprétés avec les unités.\nLa recommandation ne confond pas association et causalité.\nUne limite importante est mentionnée.\n\n\n\n\n\n\n\n\nAuto-vérification assistée par IA\n\n\n\nVous pouvez utiliser le GPT du cours pour relire votre mini-analyse. Son rôle est de repérer les éléments manquants, les imprécisions statistiques et les conclusions trop fortes. Il ne doit pas rédiger la recommandation à votre place.\nSuggestion de demande :\n\nVoici ma mini-analyse de l’atelier 02. Vérifie si elle contient une question claire, un graphique, un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite. Indique les passages à corriger, sans réécrire mon texte à ma place.\n\nAprès cette vérification, notez une correction apportée à votre recommandation ou à votre interprétation."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/index.html#je-suis-bloquée",
+    "href": "modules/atelier-02-regression/index.html#je-suis-bloquée",
+    "title": "Atelier 02",
+    "section": "Je suis bloqué·e",
+    "text": "Je suis bloqué·e\n\nAvant de demander de l’aide, vérifiez dans l’ordre :\n\nle chemin vers performance_succursales_quebec.csv;\nle chargement de tidyverse;\nle nom exact des variables utilisées dans le modèle;\nle graphique avant le modèle;\nla formule dans lm();\nle graphique des résidus;\nla phrase de recommandation et la limite causale."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/index.html#pour-la-suite",
+    "href": "modules/atelier-02-regression/index.html#pour-la-suite",
+    "title": "Atelier 02",
+    "section": "Pour la suite",
+    "text": "Pour la suite\n\nReprendre la recommandation en huit lignes maximum.\nIdentifier une variable qui mériterait une analyse plus poussée dans le mini-rapport 1.\nComparer le modèle enrichi de l’atelier avec les idées du module 04 sur la complexité des modèles."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#organisation-du-parcours",
+    "href": "modules/atelier-02-regression/guide-atelier.html#organisation-du-parcours",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Organisation du parcours",
+    "text": "Organisation du parcours\nL’atelier est construit en épisodes courts. Chaque épisode ajoute une pièce à la trace finale. Ne gardez pas seulement le code : écrivez aussi les phrases d’interprétation pendant que les résultats sont encore frais.\n\n  1QuestionClarifier la décision et les variables.\n  2DonnéesComprendre les lignes, les colonnes et les limites.\n  3GraphiqueObserver la relation avant le modèle.\n  4ModèlesAjuster, comparer et interpréter.\n  5DiagnosticVérifier les résidus et les limites.\n  6RecommandationTransformer les résultats en décision prudente."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-7---choisir-une-piste-prioritaire",
+    "href": "modules/atelier-02-regression/guide-atelier.html#étape-7---choisir-une-piste-prioritaire",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Étape 7 - Choisir une piste prioritaire",
+    "text": "Étape 7 - Choisir une piste prioritaire\nLe modèle enrichi peut suggérer plusieurs pistes : achalandage, marketing, capacité de service, ruptures de stock. Votre rôle n’est pas de transformer un coefficient en certitude, mais de choisir une piste raisonnable à tester ou à approfondir.\n\ncoef(modele_enrichi)\n\n       (Intercept)        achalandage depenses_marketing   heures_personnel \n       5098.769070          34.788875           5.945467         131.425422 \n    ruptures_stock \n      -1947.275885 \n\n\n\n\n\n\n\n\nÀ vous 7 - Choisir une priorité\n\n\n\nChoisissez une variable prioritaire. Justifiez-la avec un résultat du modèle et un élément de contexte. Ajoutez immédiatement une limite."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-8---rédiger-la-recommandation",
+    "href": "modules/atelier-02-regression/guide-atelier.html#étape-8---rédiger-la-recommandation",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Étape 8 - Rédiger la recommandation",
+    "text": "Étape 8 - Rédiger la recommandation\nUtilisez le modèle pour prioriser une piste, mais gardez l’incertitude visible.\n\nModèle de paragraphe à adapter\nLes données suggèrent que [facteur prioritaire] est associé aux ventes mensuelles.\nDans le modèle, [résultat chiffré ou direction de l'effet] indique que ce facteur\nmérite une attention particulière. Je recommande donc de [action prudente à tester\nou à approfondir]. Cette recommandation doit rester prudente, car les données sont\nobservationnelles et le modèle ne prouve pas à lui seul une relation causale.\nUne prochaine étape serait de [validation ou analyse complémentaire].\n\n\n\n\n\n\n\nÀ vous 8 - Rédiger votre recommandation\n\n\n\nRédigez cinq à sept lignes. Votre recommandation doit nommer le facteur prioritaire, le résultat qui l’appuie, l’action prudente à tester et une limite."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-9---mise-en-commun",
+    "href": "modules/atelier-02-regression/guide-atelier.html#étape-9---mise-en-commun",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Étape 9 - Mise en commun",
+    "text": "Étape 9 - Mise en commun\nEn petit groupe, comparez vos recommandations. Cherchez surtout les différences d’interprétation :\n\navez-vous choisi le même facteur prioritaire?\navez-vous utilisé le même argument statistique?\navez-vous nommé la même limite?\nvotre recommandation dépasse-t-elle ce que les données permettent de dire?\n\nAprès la mise en commun, ajustez votre recommandation si un autre groupe a repéré une limite ou une formulation plus prudente."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#trace-finale-1",
+    "href": "modules/atelier-02-regression/guide-atelier.html#trace-finale-1",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Trace finale",
+    "text": "Trace finale\nVotre trace finale doit être courte, mais complète. Elle doit contenir :\n\nla question d’affaires;\nune description minimale des données;\nun graphique exploratoire;\nun modèle simple ou enrichi;\nune interprétation de coefficient;\nun diagnostic des résidus;\nune recommandation prudente;\nune limite et une prochaine vérification."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#grille-formative",
+    "href": "modules/atelier-02-regression/guide-atelier.html#grille-formative",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Grille formative",
+    "text": "Grille formative\n\n\nLa question d’affaires est claire.\nLe graphique est interprété avant le modèle.\nLe modèle est écrit avec lm().\nAu moins un coefficient est interprété avec les unités.\nLe modèle enrichi est comparé au modèle simple.\nLes résidus sont commentés.\nLa recommandation est prudente et actionnable.\nLa limite causale est explicite."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/guide-atelier.html#auto-vérification-assistée-par-ia",
+    "href": "modules/atelier-02-regression/guide-atelier.html#auto-vérification-assistée-par-ia",
+    "title": "Guide en classe - Atelier 02",
+    "section": "Auto-vérification assistée par IA",
+    "text": "Auto-vérification assistée par IA\nVous pouvez demander au GPT du cours de relire votre trace. Demandez-lui de vérifier la structure, la reproductibilité du code, l’interprétation de la pente, le diagnostic et la prudence de la recommandation. Ne lui demandez pas de rédiger la recommandation finale à votre place.\nSuggestion de demande :\n\nVoici ma trace finale de l’atelier 02. Vérifie si la question, le graphique, le modèle, l’interprétation de coefficient, le diagnostic des résidus, la recommandation et la limite sont présents et cohérents. Donne-moi une rétroaction actionnable sans réécrire mon texte."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#vue-densemble",
+    "href": "modules/atelier-02-regression/demonstrations.html#vue-densemble",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Vue d’ensemble",
+    "text": "Vue d’ensemble\nLes démonstrations suivent le même ordre que la trace finale :\n\ncomprendre le tableau;\nvisualiser la relation principale;\najuster un modèle simple;\najouter des variables de contexte;\ncomparer les modèles;\ndiagnostiquer les résidus;\nformuler une recommandation prudente."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-1---comprendre-les-données",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-1---comprendre-les-données",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 1 - Comprendre les données",
+    "text": "Démonstration 1 - Comprendre les données\nObjectif : vérifier le contenu du tableau avant de modéliser. Une ligne représente une observation mensuelle pour une succursale fictive.\n\nglimpse(performance)\n\nRows: 72\nColumns: 14\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Saguenay\", \"S…\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 420, 560, 470, 350, 390, 365, 420, 560, 470, 350…\n$ campagne_locale       &lt;chr&gt; \"oui\", \"oui\", \"non\", \"non\", \"oui\", \"non\", \"non\",…\n$ depenses_marketing    &lt;dbl&gt; 5977, 6162, 4978, 2981, 5061, 3279, 4677, 4693, …\n$ achalandage           &lt;dbl&gt; 1653, 2043, 1864, 1202, 1362, 1369, 1486, 2179, …\n$ heures_personnel      &lt;dbl&gt; 483, 528, 499, 450, 476, 493, 498, 577, 495, 465…\n$ ruptures_stock        &lt;dbl&gt; 1, 1, 2, 1, 0, 1, 0, 1, 6, 3, 0, 2, 1, 0, 1, 2, …\n$ delai_service_minutes &lt;dbl&gt; 5.5, 6.8, 3.8, 5.4, 3.8, 5.5, 5.0, 6.2, 6.5, 5.3…\n$ satisfaction          &lt;dbl&gt; 7.7, 8.0, 7.7, 7.4, 8.7, 8.4, 8.6, 8.3, 7.1, 7.6…\n$ ventes                &lt;dbl&gt; 163260, 180567, 166706, 126460, 151254, 132775, …\n\n\n\nperformance |&gt;\n  summarise(\n    observations = n(),\n    succursales = n_distinct(succursale),\n    ventes_moyennes = mean(ventes),\n    achalandage_moyen = mean(achalandage),\n    depenses_moyennes = mean(depenses_marketing)\n  )\n\n# A tibble: 1 × 5\n  observations succursales ventes_moyennes achalandage_moyen depenses_moyennes\n         &lt;int&gt;       &lt;int&gt;           &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;\n1           72           6         154199.             1642.             5158.\n\n\n\n\n\n\n\n\nErreur fréquente\n\n\n\nNe commencez pas par lm() sans avoir vérifié l’unité d’observation et les variables disponibles. Une bonne interprétation dépend d’abord d’une bonne lecture du tableau."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-2---explorer-une-relation-principale",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-2---explorer-une-relation-principale",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 2 - Explorer une relation principale",
+    "text": "Démonstration 2 - Explorer une relation principale\nObjectif : produire un graphique qui permet de voir la relation entre achalandage et ventes avant d’ajuster le modèle.\n\nggplot(performance, aes(x = achalandage, y = ventes)) +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\", linewidth = 1.1) +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLimite importante\n\n\n\nLe nuage de points peut suggérer une relation positive. Il ne permet pas, à lui seul, de dire que l’achalandage cause les ventes."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-3---ajuster-un-modèle-simple",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-3---ajuster-un-modèle-simple",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 3 - Ajuster un modèle simple",
+    "text": "Démonstration 3 - Ajuster un modèle simple\nObjectif : quantifier l’association moyenne entre l’achalandage et les ventes.\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\n\nsummary(modele_simple)\n\n\nCall:\nlm(formula = ventes ~ achalandage, data = performance)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-18695.7  -4922.6   -294.8   5934.3  18386.3 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 50540.53    5526.11   9.146 1.43e-13 ***\nachalandage    63.12       3.31  19.069  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8433 on 70 degrees of freedom\nMultiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 \nF-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16\n\n\nLa pente du modèle simple indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel.\n\ncoef(modele_simple)[\"achalandage\"]\n\nachalandage \n   63.12511 \n\n\n\n\n\n\n\n\nPhrase à adapter\n\n\n\nDans ce modèle simple, une unité supplémentaire d’achalandage est associée à une variation moyenne estimée des ventes égale à la pente. Cette interprétation doit être formulée avec les unités réelles du contexte."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-4---ajouter-le-contexte",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-4---ajouter-le-contexte",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 4 - Ajouter le contexte",
+    "text": "Démonstration 4 - Ajouter le contexte\nUn modèle enrichi peut inclure d’autres variables plausibles. Ici, on ajoute les dépenses marketing, les heures de personnel et les ruptures de stock.\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\n\nCall:\nlm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + \n    ruptures_stock, data = performance)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-8940.3 -2956.8  -437.2  2763.3 12110.6 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)         5098.7691  9382.6231   0.543    0.589    \nachalandage           34.7889     3.6456   9.543 4.12e-14 ***\ndepenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***\nheures_personnel     131.4254    25.6218   5.129 2.68e-06 ***\nruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4995 on 67 degrees of freedom\nMultiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 \nF-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16\n\n\nLes coefficients du modèle enrichi se lisent « toutes choses incluses dans le modèle étant égales par ailleurs ». Cette formulation est importante, car elle évite de comparer naïvement des succursales qui n’ont pas le même achalandage ou la même dotation en personnel.\n\n\n\n\n\n\nPoint de vigilance\n\n\n\nDans un modèle enrichi, un coefficient ne se lit pas comme une comparaison brute. Il se lit conditionnellement aux autres variables incluses dans la formule."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-5---comparer-les-modèles",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-5---comparer-les-modèles",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 5 - Comparer les modèles",
+    "text": "Démonstration 5 - Comparer les modèles\nObjectif : comparer le modèle simple et le modèle enrichi sans choisir seulement le plus grand R².\n\ntibble(\n  modele = c(\"Simple\", \"Enrichi\"),\n  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),\n  r_carre_ajuste = c(\n    summary(modele_simple)$adj.r.squared,\n    summary(modele_enrichi)$adj.r.squared\n  )\n)\n\n# A tibble: 2 × 3\n  modele  r_carre r_carre_ajuste\n  &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;\n1 Simple    0.839          0.836\n2 Enrichi   0.946          0.943\n\n\nLe modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible. Dans une analyse appliquée, le meilleur modèle n’est pas seulement celui qui a le plus grand R². C’est aussi celui qui soutient une interprétation utile."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-6---diagnostiquer-les-résidus",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-6---diagnostiquer-les-résidus",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 6 - Diagnostiquer les résidus",
+    "text": "Démonstration 6 - Diagnostiquer les résidus\nObjectif : vérifier si les erreurs du modèle enrichi montrent une structure qui fragilise la recommandation.\n\nperformance_modele &lt;- performance |&gt;\n  mutate(\n    ventes_predites = predict(modele_enrichi),\n    residu = residuals(modele_enrichi)\n  )\n\n\nggplot(performance_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\", linewidth = 0.9) +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus du modèle enrichi\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPoint d’interprétation\n\n\n\nDes résidus répartis autour de zéro rendent le modèle plus défendable pour une première analyse. Un motif clair dans les résidus doit être mentionné comme limite, même si les coefficients semblent intéressants."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#démonstration-7---préparer-une-recommandation",
+    "href": "modules/atelier-02-regression/demonstrations.html#démonstration-7---préparer-une-recommandation",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Démonstration 7 - Préparer une recommandation",
+    "text": "Démonstration 7 - Préparer une recommandation\n\n\n\n\n\n\nExemple de formulation\n\n\n\nLes données suggèrent que l’achalandage est fortement associé aux ventes. Les dépenses marketing et les heures de personnel peuvent aussi être considérées dans l’interprétation du modèle enrichi. La recommandation doit toutefois rester prudente, car ces données simulées sont observationnelles et ne prouvent pas un effet causal."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/demonstrations.html#synthèse-pour-la-trace-finale",
+    "href": "modules/atelier-02-regression/demonstrations.html#synthèse-pour-la-trace-finale",
+    "title": "Démonstrations R - Atelier 02",
+    "section": "Synthèse pour la trace finale",
+    "text": "Synthèse pour la trace finale\nVotre trace finale doit relier les éléments suivants :\n\nquestion d’affaires;\ngraphique;\nmodèle;\ncoefficient interprété;\ndiagnostic;\nrecommandation;\nlimite.\n\n\n\n\n\n\n\nPhrase de recommandation à adapter\n\n\n\nLes données suggèrent de prioriser [facteur], car [résultat du modèle ou du graphique]. Cette recommandation doit rester prudente : le modèle décrit une association observée et une validation complémentaire serait nécessaire avant de conclure à un effet causal."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/exercices.html#exercice-6---diagnostic-des-résidus",
+    "href": "modules/atelier-02-regression/exercices.html#exercice-6---diagnostic-des-résidus",
+    "title": "Exercices - Atelier 02",
+    "section": "Exercice 6 - Diagnostic des résidus",
+    "text": "Exercice 6 - Diagnostic des résidus\nCréez les valeurs prédites et les résidus du modèle enrichi, puis produisez un graphique des résidus selon les ventes prédites.\n\nperformance_modele &lt;- performance |&gt;\n  mutate(\n    ventes_predites = predict(modele_enrichi),\n    residu = residuals(modele_enrichi)\n  )\n\nggplot(performance_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0) +\n  geom_point() +\n  labs(\n    title = \"Résidus selon les ventes prédites\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal()\n\nRédigez une phrase sur ce que le graphique permet de vérifier.\n\n\n\n\n\n\nSolution\n\n\n\n\n\nOn cherche surtout à voir si les résidus sont répartis autour de zéro sans motif évident. Si les résidus montrent une courbe, une dispersion qui augmente ou quelques points très éloignés, il faut le mentionner comme limite."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/exercices.html#exercice-7---mini-recommandation-complète",
+    "href": "modules/atelier-02-regression/exercices.html#exercice-7---mini-recommandation-complète",
+    "title": "Exercices - Atelier 02",
+    "section": "Exercice 7 - Mini-recommandation complète",
+    "text": "Exercice 7 - Mini-recommandation complète\nRédigez une mini-recommandation de huit lignes maximum. Elle doit contenir :\n\nla question d’affaires;\nle facteur prioritaire;\nle résultat qui appuie ce choix;\nune interprétation avec les unités;\nun diagnostic ou une vérification;\nune limite causale;\nune prochaine étape.\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nUne bonne recommandation reste actionnable sans devenir trop forte. Elle peut proposer de prioriser l’achalandage, les dépenses marketing, la capacité de service ou les ruptures de stock, mais elle doit préciser que le modèle soutient une association observée. Une prochaine étape réaliste serait de valider la piste avec des données supplémentaires, une expérimentation ou une analyse plus ciblée."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/exercices.html#trace-finale-courte",
+    "href": "modules/atelier-02-regression/exercices.html#trace-finale-courte",
+    "title": "Exercices - Atelier 02",
+    "section": "Trace finale courte",
+    "text": "Trace finale courte\nVotre trace finale doit rassembler les éléments des exercices dans un court fichier Quarto :\n\nquestion d’affaires;\ndescription des données;\ngraphique exploratoire;\nmodèle simple ou enrichi;\ncoefficient interprété;\ndiagnostic des résidus;\nrecommandation prudente;\nlimite.\n\nAvant de terminer, relisez votre trace comme si une autre personne devait la comprendre sans votre code ouvert dans la console."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/capsules.html#après-les-capsules",
+    "href": "modules/atelier-02-regression/capsules.html#après-les-capsules",
+    "title": "Capsules - Atelier 02",
+    "section": "Après les capsules",
+    "text": "Après les capsules\nPoursuivez avec le guide complet. Les capsules servent à préparer les décisions; le guide sert à produire la mini-analyse en classe."
+  },
+  {
+    "objectID": "modules/atelier-02-regression/lectures.html#à-utiliser-pendant-latelier",
+    "href": "modules/atelier-02-regression/lectures.html#à-utiliser-pendant-latelier",
+    "title": "Lectures - Atelier 02",
+    "section": "À utiliser pendant l’atelier",
+    "text": "À utiliser pendant l’atelier\n\nGarder le guide complet ouvert comme fil principal.\nUtiliser les démonstrations R lorsque le code bloque.\nRevenir aux exercices pour vérifier l’interprétation avant la recommandation finale."
   }
 ]
