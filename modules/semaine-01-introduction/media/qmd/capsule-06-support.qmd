@@ -70,55 +70,32 @@ safety_resume <- readr::read_csv(safety_path, show_col_types = FALSE) |>
   )
 ```
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+La compagnie A a 6 incidents, la compagnie B en a 1. A est-elle plus dangereuse?
+:::
+
+::: {.note-box}
+Impossible à dire sans connaître leur taille. Si A vole dix fois plus que B, son taux peut être plus faible. Comparer sans tenir compte de l'échelle mène à de fausses conclusions.
+:::
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Comparer une variable numérique selon une variable catégorielle.
-- Lire un graphique de comparaison sans expliquer trop vite.
+- Comparer une variable numérique selon une catégorie.
 - Distinguer un nombre brut d'un indicateur ajusté à l'échelle.
 - Formuler une limite d'interprétation claire.
 :::
 
-## Pourquoi comparer?
+## Comparer births selon jour_semaine
 
 ::: {.lead}
-Après avoir décrit une variable seule, on veut souvent savoir si elle varie
-selon un groupe, une période ou une autre caractéristique.
-:::
-
-::: {.note-box}
-Comparer sert à décrire des écarts observés. Cela ne suffit pas à expliquer
-leurs causes.
-:::
-
-## Deux situations de comparaison
-
-| Situation | Question descriptive |
-|---|---|
-| `births` selon `jour_semaine` | Les distributions se ressemblent-elles selon les jours? |
-| `incidents_00_14` selon l'exposition | Le nombre brut raconte-t-il la même chose qu'un taux? |
-
-::: {.note-box}
-Dans les deux cas, il faut nommer l'échelle utilisée avant de conclure.
-:::
-
-## Comparer `births` selon `jour_semaine`
-
-::: {.lead}
-On compare une variable numérique avec une variable catégorielle.
-:::
-
-::: {.keypoints}
-- variable numérique : `births`;
-- variable catégorielle : `jour_semaine`;
-- unité d'observation : une journée;
-- objectif : décrire les écarts entre distributions.
-:::
-
-## Numérique + catégorie : boxplot
-
-::: {.lead}
-Un boxplot résume la distribution d'une variable numérique dans chaque groupe.
+On compare une variable numérique (`births`) selon une variable catégorielle (`jour_semaine`).
 :::
 
 ::: {.metric-grid}
@@ -126,27 +103,22 @@ Un boxplot résume la distribution d'une variable numérique dans chaque groupe.
 ::: {.value}
 centre
 :::
-
 ::: {.label}
-médiane du groupe
+médiane de chaque jour
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 étendue
 :::
-
 ::: {.label}
 dispersion visible
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 écarts
 :::
-
 ::: {.label}
 comparaison entre groupes
 :::
@@ -173,54 +145,51 @@ birth_prepare |>
   theme_minimal(base_size = 15)
 ```
 
-## Lire les écarts
+## Le constat, et sa limite
 
-::: {.lead}
-Le graphique peut montrer que certains jours ont des niveaux plus élevés ou plus
-faibles.
+::: {.statement-grid}
+::: {.statement-card .acceptable}
+::: {.tag}
+Constat descriptif
+:::
+::: {.text}
+Le samedi et le dimanche ont des niveaux nettement plus bas que les jours de semaine.
+:::
+:::
+::: {.statement-card .warning}
+::: {.tag}
+Limite
+:::
+::: {.text}
+Le graphique décrit cet écart ; il n'explique pas pourquoi il existe.
+:::
+:::
 :::
 
-::: {.note-box}
-Une différence visible décrit un écart dans la base. Elle ne dit pas encore
-pourquoi cet écart existe.
+::: {.visual-note}
+C'est l'écart qui produisait les deux bosses de l'histogramme de la capsule 5.
 :::
 
 ## Nombre brut et échelle
 
 ::: {.lead}
-Dans <a class="data-link" href="../../../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>, les compagnies n'ont pas toutes la même taille ni la
-même exposition.
+Dans <a class="data-link" href="../../../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>, les compagnies n'ont ni la même taille ni la même exposition.
 :::
 
 | Indicateur | Ce qu'il mesure |
 |---|---|
 | `incidents_00_14` | nombre brut d'incidents |
 | `avail_seat_km_per_week` | volume d'activité hebdomadaire |
-| `incidents_par_milliard` | incidents par milliard de sièges-kilomètres estimés |
+| `incidents_par_milliard` | incidents par milliard de sièges-km estimés |
 
 ## Pourquoi un taux indicatif?
 
 ::: {.note-box}
-Deux compagnies peuvent avoir des nombres bruts différents simplement parce
-qu'elles n'ont pas le même volume d'activité.
+Un taux ramène les incidents à une échelle commune : incidents ÷ exposition. Il rend les compagnies comparables.
 :::
 
-::: {.example-box}
-Un taux indicatif ramène les incidents à une échelle commune. Il facilite la
-comparaison, mais il dépend aussi de la manière dont l'exposition est calculée.
-:::
-
-## Construire un taux : la logique
-
-| Étape | Rôle |
-|---|---|
-| Nombre d'incidents | volume observé |
-| Exposition approximée | taille ou volume d'activité |
-| Incidents / exposition | indicateur ramené à une échelle commune |
-
-::: {.note-box}
-Ce taux est un indicateur descriptif pour comparer l'ordre de grandeur. Il ne
-constitue pas à lui seul une évaluation complète de la sécurité.
+::: {.visual-note}
+L'exposition est **approximée** : on applique un volume hebdomadaire récent à 15 ans (2000–2014). Utile pour l'ordre de grandeur, pas pour une mesure exacte de la sécurité.
 :::
 
 ## Comparer deux classements
@@ -241,43 +210,73 @@ safety_resume |>
 ```
 
 ::: {.note-box}
-Si le classement change entre le nombre brut et le taux, c'est le signe que
-l'échelle de comparaison influence l'interprétation.
+Si le classement change entre le nombre brut et le taux, c'est que l'échelle de comparaison influence l'interprétation.
+:::
+
+## La même logique en gestion
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Nombre brut
+:::
+::: {.text}
+120 plaintes, 8 défauts, 50 000 $ de ventes.
+:::
+:::
+::: {.concept-card .accent}
+::: {.tag}
+Ramené à une base commune
+:::
+::: {.text}
+Plaintes par 1 000 clients, défauts par lot, ventes par employé.
+:::
+:::
+:::
+
+::: {.visual-note}
+Brut vs taux : même grille de lecture en ventes, en qualité ou en RH.
 :::
 
 ## Association et causalité
 
-::: {.lead}
-Une comparaison descriptive peut révéler une association. Elle ne démontre pas
-une cause.
-:::
-
 ::: {.keypoints}
-- Un boxplot décrit des écarts entre groupes.
-- Un taux décrit un indicateur ramené à une échelle commune.
-- Une cause demande d'autres informations et une stratégie d'analyse adaptée.
+- un boxplot décrit des écarts entre groupes;
+- un taux décrit un indicateur sur une échelle commune;
+- une cause demande d'autres informations et une analyse adaptée.
 :::
 
-## Écrire une limite
-
-::: {.example-box}
-Phrase acceptable : le graphique montre des écarts de naissances selon le jour
-de la semaine, mais il ne permet pas d'expliquer les mécanismes qui produisent
-ces écarts.
-:::
-
-::: {.example-box}
-Phrase acceptable : le taux indicatif tient compte d'une exposition approximée,
-mais il ne résume pas tous les facteurs liés à la sécurité aérienne.
+::: {.note-box}
+Une comparaison descriptive peut révéler une association. Elle ne démontre pas une cause.
 :::
 
 ## À retenir
 
-::: {.keypoints}
-- Comparer demande toujours de nommer les variables et l'échelle.
-- Un nombre brut peut être utile, mais il peut être trompeur sans contexte.
-- Un taux aide à comparer sur une base commune.
-- Une comparaison descriptive ne prouve pas une cause.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Comparer demande de nommer les variables et l'échelle.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Un nombre brut peut être trompeur sans contexte ; un taux ramène à une base commune.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Une comparaison descriptive ne prouve pas une cause.
+:::
+:::
 :::
 
 ## Production autonome 1.6
@@ -287,13 +286,9 @@ Produisez deux constats descriptifs et une limite.
 :::
 
 ::: {.keypoints}
-Comparez `births` selon `jour_semaine`, puis comparez `incidents_00_14` au taux
-indicatif dans <a class="data-link" href="../../../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>. Terminez par une limite qui précise ce que
-ces comparaisons ne permettent pas de conclure.
+Comparez `births` selon `jour_semaine`, puis `incidents_00_14` au taux indicatif dans <a class="data-link" href="../../../../donnees/#sécurité-aérienne-par-compagnie">safety_airlines.csv</a>. Terminez par une limite.
 :::
 
 ::: {.self-check}
-Auto-vérification : le travail est complet si chaque constat nomme les variables
-comparées, précise l'échelle utilisée et évite de transformer une comparaison
-descriptive en conclusion causale.
+Auto-vérification : le travail est complet si chaque constat nomme les variables comparées, précise l'échelle utilisée et évite de transformer une comparaison descriptive en conclusion causale.
 :::

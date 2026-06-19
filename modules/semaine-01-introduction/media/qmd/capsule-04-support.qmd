@@ -27,211 +27,180 @@ execute:
 editor: visual
 ---
 
-## Objectifs de la capsule
+## Pourquoi ça compte
 
-::: {.keypoints}
-- Comprendre pourquoi une base doit être préparée avant d'être résumée.
-- Créer une vraie date à partir de colonnes séparées.
-- Transformer un code numérique en catégorie lisible.
-- Documenter les transformations utiles à l'analyse.
+::: {.kicker}
+Une décision concrète
 :::
 
-## Pourquoi préparer la base?
-
-::: {.lead}
-Une base peut être lisible pour un humain sans être directement prête pour
-l'analyse.
+::: {.question-line}
+Que vaut une analyse juste menée sur des données mal préparées?
 :::
 
 ::: {.note-box}
-La préparation consiste à expliciter les formats, les unités et les
-codes pour éviter des calculs corrects sur des variables mal interprétées.
+Elle donne un résultat faux, mais présenté avec assurance. Trois colonnes de date qu'on ne peut pas trier, un code qu'on moyenne par erreur : la préparation rend les données dignes de confiance avant tout calcul.
 :::
 
-## Point de départ : <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Comprendre pourquoi une base se prépare avant d'être résumée.
+- Créer une vraie date et transformer un code en catégorie.
+- Documenter les transformations pour les rendre reproductibles.
+:::
+
+## Point de départ : birth_us.csv
 
 ::: {.lead}
-Dans cette base, une ligne correspond à une journée d'observation.
+Une ligne correspond à une journée. Voir <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.
 :::
 
-| Variable | Rôle avant préparation |
-|---|---|
-| `year` | morceau de date |
-| `month` | morceau de date |
-| `date_of_month` | morceau de date |
-| `day_of_week` | code de jour |
-| `births` | nombre de naissances |
+::: {.data-strip}
+::: {.data-field}
+::: {.name}
+year
+:::
+::: {.value}
+morceau de date
+:::
+:::
+::: {.data-field}
+::: {.name}
+month
+:::
+::: {.value}
+morceau de date
+:::
+:::
+::: {.data-field}
+::: {.name}
+date_of_month
+:::
+::: {.value}
+morceau de date
+:::
+:::
+::: {.data-field}
+::: {.name}
+day_of_week
+:::
+::: {.value}
+code de jour
+:::
+:::
+::: {.data-field}
+::: {.name}
+births
+:::
+::: {.value}
+naissances/jour
+:::
+:::
+:::
 
 ## Préparer sans modifier au hasard
 
 ::: {.note-box}
-Une transformation doit toujours répondre à un besoin d'analyse.
+Une transformation répond toujours à un besoin d'analyse.
 :::
 
 ::: {.keypoints}
-- garder la variable originale si elle est utile pour vérifier;
+- garder la variable d'origine pour vérifier;
 - créer une nouvelle variable quand le sens devient plus clair;
-- nommer la transformation;
-- pouvoir expliquer ce qui a changé.
+- nommer et pouvoir expliquer ce qui a changé.
 :::
 
-## Vérifier les noms et la structure
+## Deux transformations utiles
 
-::: {.lead}
-Avant de transformer, il faut lire la structure de la base et vérifier le sens
-des colonnes.
+::: {.concept-grid}
+::: {.concept-card .accent}
+::: {.tag}
+Créer une date
+:::
+::: {.text}
+`year` + `month` + `date_of_month` → `2000-01-01`. La journée devient un repère temporel complet : trier, situer, construire une série.
+:::
+:::
+::: {.concept-card .accent}
+::: {.tag}
+Coder en catégorie
+:::
+::: {.text}
+`day_of_week` (1 à 7) → lundi … dimanche. Le jour devient une catégorie lisible plutôt qu'un nombre à moyenner.
+:::
+:::
 :::
 
-| Variable | Question à se poser |
-|---|---|
-| `year` | Est-ce bien l'année de la journée observée? |
-| `month` | Est-ce bien le mois, codé de 1 à 12? |
-| `date_of_month` | Est-ce bien le jour dans le mois? |
-| `day_of_week` | Est-ce un code ou une quantité? |
-| `births` | Est-ce un nombre quotidien de naissances? |
+## Le geste en R
 
-::: {.note-box}
-La question n'est pas seulement : est-ce que la base est ouverte? Il faut aussi
-vérifier ce que chaque colonne représente.
+``` r
+birth <- birth |>
+  mutate(
+    date = make_date(year, month, date_of_month),
+    jour_semaine = factor(
+      day_of_week, levels = 1:7,
+      labels = c("lundi", "mardi", "mercredi", "jeudi",
+                 "vendredi", "samedi", "dimanche")
+    )
+  )
+```
+
+::: {.visual-note}
+La version complète et commentée est montrée dans la <a class="data-link" href="../../demonstrations.html">démonstration 1</a>.
 :::
 
-## Créer une vraie date
+## Vérifier avant de résumer
 
-::: {.lead}
-Les colonnes `year`, `month` et `date_of_month` décrivent ensemble une date.
-:::
-
-| Avant | Après | Gain d'interprétation |
-|---|---|---|
-| `year = 2000`, `month = 1`, `date_of_month = 1` | `2000-01-01` | la journée devient un repère temporel complet |
-
-::: {.example-box}
-Une vraie date permet de trier les observations, de construire une série
-chronologique et de vérifier les périodes couvertes.
-:::
-
-## Transformer un code en catégorie
-
-::: {.lead}
-`day_of_week` contient des nombres, mais ces nombres identifient des jours.
-:::
-
-| Code | Libellé |
-|---|---|
-| 1 | lundi |
-| 2 | mardi |
-| 3 | mercredi |
-| 4 | jeudi |
-| 5 | vendredi |
-| 6 | samedi |
-| 7 | dimanche |
-
-::: {.note-box}
-Après cette transformation, le jour de la semaine devient une catégorie
-interprétable plutôt qu'un nombre à moyenner.
-:::
-
-## Valeurs manquantes et inattendues
-
-::: {.lead}
-Une première vérification cherche les valeurs absentes ou impossibles.
-:::
-
-| Vérification | Pourquoi? |
+| Vérification | Pourquoi |
 |---|---|
 | Valeurs manquantes dans `births` | éviter un résumé calculé sur une information absente |
-| Codes de jour hors de 1 à 7 | repérer un codage impossible |
-| Mois hors de 1 à 12 | repérer une date impossible |
+| Codes hors de 1–7, mois hors de 1–12 | repérer un codage impossible |
+| Une seule ligne par date | éviter les doublons avant de moyenner |
 
 ::: {.note-box}
-Cette vérification ne remplace pas un nettoyage complet. Elle signale les
-points à examiner avant de produire des résumés.
-:::
-
-## Cohérence temporelle et doublons
-
-::: {.lead}
-Une base quotidienne devrait avoir une seule observation par date.
-:::
-
-| Vérification | Question |
-|---|---|
-| Une seule ligne par date | Est-ce que chaque journée apparaît une seule fois? |
-| Période couverte | Est-ce que le début et la fin de la base sont cohérents? |
-| Ordre temporel | Est-ce que les journées peuvent être replacées dans l'ordre? |
-
-::: {.example-box}
-Si une date apparaît deux fois, il faut comprendre pourquoi avant de calculer
-une moyenne ou de produire une série temporelle.
+Cette vérification ne remplace pas un nettoyage complet : elle signale les points à examiner.
 :::
 
 ## Documenter les transformations
 
 ::: {.keypoints}
-- `date` : créée avec `year`, `month` et `date_of_month`;
-- `jour_semaine` : créée à partir du code `day_of_week`;
-- `births` : conservée comme nombre de naissances quotidiennes;
-- les variables originales restent disponibles pour vérification.
+- `date` : créée avec `year`, `month`, `date_of_month`;
+- `jour_semaine` : créée à partir de `day_of_week`;
+- `births` : conservée comme nombre quotidien;
+- variables d'origine gardées pour vérification.
 :::
 
 ::: {.note-box}
-Une transformation documentée peut être relue, corrigée et reproduite.
+Ce recodage de `jour_semaine` servira dès la capsule 6 à révéler un écart frappant entre la semaine et le week-end.
 :::
 
-## Résumé des transformations
-
-::: {.note-box}
-La préparation nécessaire ici reste minimale : créer une date complète,
-transformer le code de jour en catégorie et documenter ces choix.
-:::
-
-| Transformation | But |
-|---|---|
-| `year` + `month` + `date_of_month` → `date` | situer les observations dans le temps |
-| `day_of_week` → `jour_semaine` | comparer des catégories lisibles |
-| conserver `births` | garder le nombre quotidien de naissances |
-
-## Ce que la préparation permet
+## À retenir
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
 1
 :::
-
 ::: {.label}
-Situer chaque observation dans le temps.
+Préparer une base, c'est clarifier le sens des variables.
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 2
 :::
-
 ::: {.label}
-Comparer les jours comme des catégories.
+Une date complète vaut mieux que trois morceaux de date.
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 3
 :::
-
 ::: {.label}
-Produire des résumés plus faciles à interpréter.
+Toute transformation doit pouvoir être expliquée et reproduite.
 :::
 :::
-:::
-
-## À retenir
-
-::: {.keypoints}
-- Préparer une base, c'est clarifier le sens des variables.
-- Une date complète est plus utile que trois morceaux de date.
-- Un code numérique peut représenter une catégorie.
-- Toute transformation doit pouvoir être expliquée.
 :::
 
 ## Production autonome 1.4
@@ -241,14 +210,9 @@ Préparez mentalement la base avant de résumer `births`.
 :::
 
 ::: {.keypoints}
-Indiquez ce que représente une ligne de <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>, expliquez pourquoi
-`day_of_week` doit être traité comme une catégorie et nommez une vérification à
-faire avant de produire un résumé descriptif.
+Indiquez ce que représente une ligne de <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>, pourquoi `day_of_week` doit être traité comme une catégorie, et une vérification à faire avant un résumé.
 :::
 
 ::: {.self-check}
-Auto-vérification : votre réponse est complète si elle relie une ligne à une
-journée, transforme le code de jour en catégorie lisible et nomme au moins une
-vérification concrète, par exemple les valeurs manquantes ou les codes
-inattendus.
+Auto-vérification : votre réponse est complète si elle relie une ligne à une journée, transforme le code de jour en catégorie lisible et nomme au moins une vérification concrète, par exemple les valeurs manquantes ou les codes inattendus.
 :::

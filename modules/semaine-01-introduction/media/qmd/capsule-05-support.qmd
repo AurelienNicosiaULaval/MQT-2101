@@ -66,51 +66,38 @@ birth_summary <- birth_prepare |>
   )
 ```
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+Une seule moyenne peut-elle décrire fidèlement vos données?
+:::
+
+::: {.note-box}
+« Environ 10 000 naissances par jour » : la moyenne paraît claire. Pourtant elle cache deux mondes, la semaine et le week-end. Décrire une variable seule, c'est apprendre à voir ce qu'un seul chiffre masque.
+:::
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
 - Résumer une variable numérique avec quelques indicateurs simples.
-- Distinguer ce que la moyenne et la médiane montrent.
-- Construire un histogramme pour observer la distribution.
-- Écrire un constat descriptif sans dépasser ce que la base permet de dire.
+- Distinguer ce que montrent la moyenne et la médiane.
+- Construire un histogramme et écrire un constat prudent.
 :::
 
-## Pourquoi décrire une variable?
+## La variable births
 
 ::: {.lead}
-Avant de comparer ou de modéliser, il faut comprendre chaque variable importante
-prise séparément.
+`births` est une variable numérique discrète : un nombre de naissances par journée.
 :::
 
-::: {.note-box}
-Une analyse univariée répond à une première question simple : quelles valeurs
-observe-t-on pour une variable donnée?
-:::
-
-## De la base préparée à l'analyse
-
-::: {.lead}
-À cette étape, la base a déjà été lue, comprise et préparée.
-:::
-
-::: {.keypoints}
-- une ligne correspond à une journée;
-- `date` situe l'observation dans le temps;
-- `jour_semaine` décrit une catégorie;
-- `births` donne le nombre de naissances observées.
-:::
-
-## La variable `births`
-
-::: {.lead}
-`births` est une variable numérique.
-:::
-
-| Question | Réponse attendue |
+| Question | Réponse |
 |---|---|
-| Que mesure la variable? | un nombre de naissances |
+| Que mesure-t-elle? | un nombre de naissances |
 | Pour quelle unité? | une journée |
-| Quelle échelle? | un dénombrement |
 | Peut-on faire une moyenne? | oui, avec interprétation prudente |
 
 ## Résumer une variable numérique
@@ -120,44 +107,33 @@ observe-t-on pour une variable donnée?
 ::: {.value}
 min
 :::
-
 ::: {.label}
 plus petite valeur observée
 :::
 :::
-
-::: {.metric}
-::: {.value}
-moy.
-:::
-
-::: {.label}
-niveau moyen observé
-:::
-:::
-
 ::: {.metric}
 ::: {.value}
 méd.
 :::
-
 ::: {.label}
 valeur centrale robuste
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 max
 :::
-
 ::: {.label}
 plus grande valeur observée
 :::
 :::
 :::
 
-## Minimum, moyenne, médiane et maximum
+::: {.visual-note}
+« Robuste » signifie peu sensible aux valeurs extrêmes : c'est la force de la médiane.
+:::
+
+## Minimum, moyenne, médiane, maximum
 
 ```{r}
 #| label: capsule-05-resume
@@ -168,35 +144,17 @@ birth_summary |>
 ```
 
 ::: {.note-box}
-Ces indicateurs décrivent la variable. Ils ne disent pas encore pourquoi les
-naissances varient d'une journée à l'autre.
+Ces indicateurs décrivent la variable. Ils ne disent pas encore pourquoi les naissances varient d'un jour à l'autre.
 :::
 
 ## Moyenne et médiane
 
 ::: {.lead}
-La moyenne utilise toutes les valeurs. La médiane coupe les observations en deux
-groupes de même taille.
+La moyenne utilise toutes les valeurs. La médiane coupe les observations en deux groupes de même taille.
 :::
 
 ::: {.example-box}
-Quand la moyenne et la médiane sont proches, cela suggère un centre assez
-stable. Quand elles sont très différentes, il faut regarder la distribution
-avant d'interpréter.
-:::
-
-## Tableau descriptif minimal
-
-| Élément du tableau | Lecture à faire |
-|---|---|
-| minimum et maximum | étendue des valeurs observées |
-| moyenne | niveau moyen observé |
-| médiane | valeur centrale moins sensible aux extrêmes |
-| nombre de jours | taille de la base résumée |
-
-::: {.note-box}
-Un tableau descriptif est utile s'il reste lié au sens de la variable et à
-l'unité d'observation.
+Proches : un centre assez stable. Très différentes : il faut regarder la distribution avant d'interpréter.
 :::
 
 ## Histogramme : voir la distribution
@@ -217,6 +175,13 @@ birth_prepare |>
     color = "#1F2933",
     linewidth = 1.1
   ) +
+  geom_vline(
+    data = birth_summary,
+    aes(xintercept = Moyenne),
+    color = "#E76F51",
+    linewidth = 1.0,
+    linetype = "dashed"
+  ) +
   scale_x_continuous(labels = label_number(big.mark = " ", decimal.mark = ",")) +
   labs(
     x = "Nombre de naissances",
@@ -225,73 +190,87 @@ birth_prepare |>
   theme_minimal(base_size = 15)
 ```
 
-::: {.note-box}
-L'histogramme montre la forme générale : concentration des valeurs, asymétrie
-possible et valeurs inhabituelles.
+::: {.visual-note}
+Trait plein : médiane. Trait tireté : moyenne. Changer `bins` change le regard, pas les données.
 :::
 
-## Classes de l'histogramme
+## Deux bosses : la bimodalité
 
 ::: {.lead}
-Un histogramme regroupe les valeurs numériques en classes.
+L'histogramme ne montre pas une seule cloche, mais deux paquets de valeurs.
 :::
 
-::: {.keypoints}
-- Trop peu de classes peuvent cacher des détails.
-- Trop de classes peuvent créer du bruit visuel.
-- Le choix doit aider à voir la structure générale.
+::: {.concept-grid}
+::: {.concept-card .accent}
+::: {.tag}
+Paquet haut
+:::
+::: {.text}
+Les jours de semaine : niveaux élevés, autour de 11 000.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Paquet bas
+:::
+::: {.text}
+Les week-ends : niveaux plus faibles, autour de 8 000.
+:::
+:::
 :::
 
 ::: {.note-box}
-Changer `bins` ne change pas la base. Cela change la manière de regarder la
-distribution.
-:::
-
-## Valeurs inhabituelles
-
-::: {.lead}
-Une valeur très petite ou très grande mérite d'être examinée avant d'être
-expliquée.
-:::
-
-::: {.note-box}
-Repérer une valeur inhabituelle ne suffit pas pour conclure à une erreur, à une
-cause particulière ou à un phénomène exceptionnel.
+La moyenne tombe « entre les deux » et ne décrit aucun des deux groupes. Pourquoi deux paquets? La capsule 6 le compare jour par jour.
 :::
 
 ## Écrire un constat prudent
 
-::: {.example-box}
-Phrase acceptable : la variable `births` décrit un nombre quotidien de
-naissances et ses valeurs se concentrent autour d'un niveau central visible dans
-le tableau descriptif et l'histogramme.
+::: {.statement-grid}
+::: {.statement-card .acceptable}
+::: {.tag}
+Acceptable
 :::
-
-::: {.note-box}
-Évitez les explications causales à cette étape. On décrit ce qui est observé
-dans la base.
+::: {.text}
+`births` décrit un nombre quotidien de naissances ; ses valeurs forment deux groupes visibles dans l'histogramme.
 :::
-
-## Lien avec la suite
-
-::: {.lead}
-Après avoir décrit une variable, on peut comparer cette variable selon une autre
-variable.
 :::
-
-::: {.keypoints}
-- `births` seule : analyse univariée;
-- `births` selon `jour_semaine` : comparaison entre groupes;
-- la comparaison demande une interprétation encore plus prudente.
+::: {.statement-card .warning}
+::: {.tag}
+À éviter
+:::
+::: {.text}
+« Les naissances baissent le week-end à cause de… » : on décrit, on n'explique pas encore les causes.
+:::
+:::
 :::
 
 ## À retenir
 
-::: {.keypoints}
-- Une analyse univariée décrit une variable à la fois.
-- Le tableau descriptif et le graphique se complètent.
-- La moyenne et la médiane n'ont pas exactement le même rôle.
-- Un constat descriptif ne doit pas devenir une explication causale.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Une analyse univariée décrit une variable à la fois.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Tableau et graphique se complètent ; moyenne et médiane diffèrent.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Un constat descriptif ne devient pas une explication causale.
+:::
+:::
 :::
 
 ## Production autonome 1.5
@@ -301,12 +280,9 @@ Produisez une courte analyse univariée de `births`.
 :::
 
 ::: {.keypoints}
-Incluez un tableau avec le minimum, la moyenne, la médiane et le maximum, un
-histogramme, une phrase descriptive prudente et une limite d'interprétation.
+Un tableau (min, moyenne, médiane, max), un histogramme, une phrase descriptive prudente et une limite d'interprétation.
 :::
 
 ::: {.self-check}
-Auto-vérification : l'analyse est complète si le tableau et l'histogramme
-décrivent la même variable, si la phrase reste descriptive et si la limite évite
-d'expliquer les causes des variations observées.
+Auto-vérification : l'analyse est complète si le tableau et l'histogramme décrivent la même variable, si la phrase reste descriptive et si la limite évite d'expliquer les causes des variations observées.
 :::

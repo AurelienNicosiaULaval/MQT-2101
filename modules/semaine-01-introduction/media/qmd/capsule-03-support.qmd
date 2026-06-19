@@ -27,62 +27,101 @@ execute:
 editor: visual
 ---
 
-## Objectifs de la capsule
+## Pourquoi ça compte
 
-::: {.keypoints}
-- Comprendre ce que représente une observation dans une base de données.
-- Distinguer les principaux types de variables.
-- Reconnaître les codes numériques qui ne sont pas des quantités.
-- Repérer les premières précautions d'interprétation avant de calculer.
+::: {.kicker}
+Une décision concrète
 :::
 
-## Pourquoi reconnaître les variables?
-
-::: {.lead}
-Le type d'une variable détermine les calculs pertinents, les graphiques utiles
-et les conclusions raisonnables.
+::: {.question-line}
+Quelle est la « moyenne » du jour de la semaine?
 :::
 
 ::: {.note-box}
-Avant de produire une moyenne, un graphique ou un modèle, il faut savoir ce que
-chaque colonne mesure, comment elle est codée et ce qu'une ligne représente.
+Un logiciel répondra sans broncher : 3,98. La réponse est exacte… et n'a aucun sens, parce que le jour n'est pas une quantité. Reconnaître le type d'une variable évite ce genre de calcul juste mais absurde.
 :::
 
-## Observation, variable et unité d'analyse
+## Objectifs de la capsule
 
-:::: {.columns}
-
-::: {.column width="48%"}
-### Observation
-
-Une observation correspond à l'unité décrite par une ligne.
-
-Exemples : une journée, une transaction, une succursale, une personne.
+::: {.keypoints}
+- Comprendre ce que représente une observation.
+- Distinguer les principaux types de variables.
+- Reconnaître un code numérique qui n'est pas une quantité.
 :::
 
-::: {.column width="48%"}
-### Variable
+## Observation, variable, unité
 
-Une variable correspond à une caractéristique mesurée ou codée.
-
-Exemples : nombre, catégorie, date, statut, indicateur temporel.
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Observation
+:::
+::: {.text}
+L'unité décrite par une ligne : une journée, une transaction, une succursale, une personne.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Variable
+:::
+::: {.text}
+Une caractéristique mesurée ou codée : nombre, catégorie, date, statut, code.
+:::
+:::
 :::
 
-::::
+::: {.note-box}
+Avant toute moyenne ou graphique : savoir ce que chaque colonne mesure et ce qu'une ligne représente.
+:::
 
-## <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>
+## La base birth_us.csv
 
 ::: {.lead}
-Dans cette base, une ligne correspond à une journée d'observation.
+Une ligne correspond à une journée d'observation. Voir <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>.
 :::
 
-| Variable | Sens général |
-|---|---|
-| `year` | année |
-| `month` | mois |
-| `date_of_month` | jour dans le mois |
-| `day_of_week` | jour de la semaine codé |
-| `births` | nombre de naissances |
+::: {.data-strip}
+::: {.data-field}
+::: {.name}
+year
+:::
+::: {.value}
+année
+:::
+:::
+::: {.data-field}
+::: {.name}
+month
+:::
+::: {.value}
+mois
+:::
+:::
+::: {.data-field}
+::: {.name}
+date_of_month
+:::
+::: {.value}
+jour du mois
+:::
+:::
+::: {.data-field}
+::: {.name}
+day_of_week
+:::
+::: {.value}
+jour codé 1–7
+:::
+:::
+::: {.data-field}
+::: {.name}
+births
+:::
+::: {.value}
+naissances
+:::
+:::
+:::
 
 ## Variables numériques
 
@@ -91,116 +130,65 @@ Une variable numérique représente une quantité mesurable ou comptable.
 :::
 
 ::: {.keypoints}
-- on peut calculer un minimum, une moyenne ou une médiane;
+- on peut calculer un minimum, une moyenne, une médiane;
 - l'unité de mesure doit être claire;
-- les valeurs extrêmes doivent être interprétées avec prudence;
-- un graphique peut montrer la distribution des valeurs.
+- continue (une mesure) ou discrète (un dénombrement).
 :::
 
 ::: {.example-box}
-Dans <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>, `births` est une variable numérique : elle compte le nombre
-de naissances observées pendant une journée.
+`births` est numérique **discrète** : elle compte les naissances d'une journée.
 :::
 
-## Variables catégorielles
+## Variables catégorielles : nominal et ordinal
 
-::: {.lead}
-Une variable catégorielle sert à distinguer des groupes ou des modalités.
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Nominal
+:::
+::: {.text}
+Des groupes sans ordre : jour de la semaine, succursale, région.
+:::
+:::
+::: {.concept-card .accent}
+::: {.tag}
+Ordinal
+:::
+::: {.text}
+Des modalités ordonnées : satisfaction 1 à 5, niveau de risque faible/moyen/élevé.
+:::
+:::
 :::
 
-::: {.keypoints}
-- on compte les effectifs ou les proportions;
-- on compare des groupes;
-- l'ordre des modalités peut être absent ou important;
-- les libellés doivent être compréhensibles.
+::: {.visual-note}
+On compte des effectifs ou des proportions ; pour l'ordinal, l'ordre porte de l'information.
 :::
-
-::: {.example-box}
-Un jour de semaine peut être traité comme une catégorie : lundi, mardi,
-mercredi, etc.
-:::
-
-## Dates et indicateurs temporels
-
-::: {.note-box}
-Les variables `year`, `month` et `date_of_month` peuvent être combinées pour
-former une vraie date.
-:::
-
-:::: {.columns}
-
-::: {.column width="48%"}
-### Date complète
-
-Permet de situer une observation dans le temps et de construire une série
-chronologique.
-:::
-
-::: {.column width="48%"}
-### Indicateur temporel
-
-Permet de comparer des périodes, par exemple les mois ou les jours de la
-semaine.
-:::
-
-::::
 
 ## Quand un nombre n'est pas une quantité
 
 ::: {.lead}
-Un code numérique peut ressembler à un nombre, sans être une quantité.
+Un code numérique peut ressembler à un nombre sans être une quantité.
 :::
 
 ::: {.example-box}
-Dans <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>, `day_of_week` utilise les nombres 1 à 7. Ces nombres
-identifient des jours, mais la moyenne de ces codes n'a pas de sens direct.
+Dans <a class="data-link" href="../../../../donnees/#naissances-quotidiennes-aux-états-unis">birth_us.csv</a>, `day_of_week` utilise 1 à 7. Ces nombres identifient des jours : leur moyenne n'a pas de sens.
 :::
 
 ::: {.note-box}
-Un code doit souvent être converti en variable catégorielle avant d'être résumé
-ou visualisé.
-:::
-
-## Unités, échelles et interprétation
-
-::: {.keypoints}
-- nommer l'unité d'observation;
-- nommer l'unité de mesure;
-- distinguer un total, un taux, un pourcentage et un code;
-- éviter de comparer des valeurs qui ne sont pas sur la même échelle.
-:::
-
-::: {.example-box}
-Comparer des nombres de naissances par journée n'est pas la même chose que
-comparer des taux ou des proportions.
+Un code doit souvent être converti en catégorie avant d'être résumé ou visualisé.
 :::
 
 ## Premiers signaux de qualité
 
 ::: {.lead}
-Avant l'analyse, il faut repérer les signes qui peuvent modifier
-l'interprétation.
+Avant l'analyse, repérer ce qui peut modifier l'interprétation.
 :::
 
 ::: {.keypoints}
 - valeurs manquantes;
 - valeurs impossibles ou inattendues;
-- changements de codage;
-- unités mélangées;
+- changements de codage ou unités mélangées;
 - libellés ambigus.
-:::
-
-## Ce qui vient ensuite
-
-::: {.note-box}
-L'étape suivante portera sur la préparation concrète des données : créer une
-date, transformer un code en catégorie, vérifier les formats et documenter les
-transformations.
-:::
-
-::: {.example-box}
-Dans une base préparée, `day_of_week` devrait devenir une variable catégorielle
-avec des libellés comme lundi, mardi, mercredi, etc.
 :::
 
 ## À retenir
@@ -210,27 +198,22 @@ avec des libellés comme lundi, mardi, mercredi, etc.
 ::: {.value}
 1
 :::
-
 ::: {.label}
-Une ligne doit toujours être interprétée comme une unité d'analyse.
+Une ligne s'interprète toujours comme une unité d'analyse.
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 2
 :::
-
 ::: {.label}
-Le type d'une variable détermine les résumés et les graphiques possibles.
+Le type d'une variable décide des résumés et graphiques possibles.
 :::
 :::
-
 ::: {.metric}
 ::: {.value}
 3
 :::
-
 ::: {.label}
 Un code numérique n'est pas automatiquement une quantité.
 :::
@@ -244,12 +227,9 @@ Classez les variables de <a class="data-link" href="../../../../donnees/#naissan
 :::
 
 ::: {.keypoints}
-Pour chaque variable, indiquez : son nom, son type, son rôle possible dans une
-analyse et une précaution d'interprétation.
+Pour chaque variable : nom, type, rôle possible dans une analyse, précaution d'interprétation.
 :::
 
 ::: {.self-check}
-Auto-vérification : le tableau est suffisant si `births` est traité comme une
-variable numérique, `day_of_week` comme un code catégoriel, et si au moins une
-précaution rappelle qu'un nombre n'est pas toujours une quantité.
+Auto-vérification : le tableau est suffisant si `births` est traité comme une variable numérique, `day_of_week` comme un code catégoriel, et si au moins une précaution rappelle qu'un nombre n'est pas toujours une quantité.
 :::
