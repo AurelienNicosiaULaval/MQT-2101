@@ -473,7 +473,7 @@
     "href": "modules/atelier-02-regression/guide-atelier.html",
     "title": "Guide en classe - Atelier 02",
     "section": "",
-    "text": "Place dans la progression\n\n\n\nCet atelier se fait après le module 03. Il sert à passer d’une régression linéaire simple à une mini-analyse appliquée : question d’affaires, exploration, modèle, diagnostic et recommandation."
+    "text": "NotePourquoi ça compte\n\n\n\nLa direction veut savoir quel levier actionner pour augmenter les ventes des succursales : marketing, personnel ou ruptures de stock. Un modèle de régression peut éclairer ce choix, à condition de lire ses coefficients avec prudence. À la fin de la séance, vous aurez une recommandation appuyée sur un modèle et une limite assumée."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#objectif-du-parcours",
@@ -501,42 +501,42 @@
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-1---comprendre-la-question",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 1 - Comprendre la question",
-    "text": "Étape 1 - Comprendre la question\nAvant de coder, écrivez une phrase qui relie l’analyse à une décision.\n\n\n\n\n\n\nTrace à conserver\n\n\n\nNous voulons comprendre quels facteurs sont associés aux ventes mensuelles des succursales afin de prioriser une piste d’amélioration à tester.\n\n\nVariables à repérer :\n\nventes : variable réponse;\nachalandage : volume de clients ou clientes;\ndepenses_marketing : effort marketing mensuel;\nheures_personnel : capacité opérationnelle;\nruptures_stock : contrainte opérationnelle;\ncampagne_locale : indicateur d’action locale.\n\n\n\n\n\n\n\nÀ vous 1 - Reformuler la question\n\n\n\nÉcrivez votre propre version de la question en une phrase. Elle doit mentionner les ventes, les succursales et l’idée d’une décision à éclairer.\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nAvant de continuer, vérifiez que vous pouvez distinguer la variable réponse des variables explicatives. Si ce n’est pas clair, le modèle sera difficile à interpréter."
+    "text": "Étape 1 - Comprendre la question\nAvant de coder, écrivez une phrase qui relie l’analyse à une décision.\n\n\n\n\n\n\nAstuceTrace à conserver\n\n\n\nNous voulons comprendre quels facteurs sont associés aux ventes mensuelles des succursales afin de prioriser une piste d’amélioration à tester.\n\n\nVariables à repérer :\n\nventes : variable réponse;\nachalandage : volume de clients ou clientes;\ndepenses_marketing : effort marketing mensuel;\nheures_personnel : capacité opérationnelle;\nruptures_stock : contrainte opérationnelle;\ncampagne_locale : indicateur d’action locale.\n\n\n\n\n\n\n\nAstuceÀ vous 1 - Reformuler la question\n\n\n\nÉcrivez votre propre version de la question en une phrase. Elle doit mentionner les ventes, les succursales et l’idée d’une décision à éclairer.\n\n\n\n\n\n\n\n\nImportantPause diagnostic\n\n\n\nAvant de continuer, vérifiez que vous pouvez distinguer la variable réponse des variables explicatives. Si ce n’est pas clair, le modèle sera difficile à interpréter."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-2---inspecter-le-tableau",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-2---inspecter-le-tableau",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 2 - Inspecter le tableau",
-    "text": "Étape 2 - Inspecter le tableau\n\nglimpse(performance)\n\nRows: 72\nColumns: 14\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Saguenay\", \"S…\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 420, 560, 470, 350, 390, 365, 420, 560, 470, 350…\n$ campagne_locale       &lt;chr&gt; \"oui\", \"oui\", \"non\", \"non\", \"oui\", \"non\", \"non\",…\n$ depenses_marketing    &lt;dbl&gt; 5977, 6162, 4978, 2981, 5061, 3279, 4677, 4693, …\n$ achalandage           &lt;dbl&gt; 1653, 2043, 1864, 1202, 1362, 1369, 1486, 2179, …\n$ heures_personnel      &lt;dbl&gt; 483, 528, 499, 450, 476, 493, 498, 577, 495, 465…\n$ ruptures_stock        &lt;dbl&gt; 1, 1, 2, 1, 0, 1, 0, 1, 6, 3, 0, 2, 1, 0, 1, 2, …\n$ delai_service_minutes &lt;dbl&gt; 5.5, 6.8, 3.8, 5.4, 3.8, 5.5, 5.0, 6.2, 6.5, 5.3…\n$ satisfaction          &lt;dbl&gt; 7.7, 8.0, 7.7, 7.4, 8.7, 8.4, 8.6, 8.3, 7.1, 7.6…\n$ ventes                &lt;dbl&gt; 163260, 180567, 166706, 126460, 151254, 132775, …\n\n\n\nperformance |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    ventes_moyennes = mean(ventes),\n    achalandage_moyen = mean(achalandage),\n    depenses_moyennes = mean(depenses_marketing),\n    ruptures_moyennes = mean(ruptures_stock),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_moyennes))\n\n# A tibble: 6 × 5\n  succursale     ventes_moyennes achalandage_moyen depenses_moyennes\n  &lt;chr&gt;                    &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;\n1 Montréal               183803.             2129.             6216.\n2 Québec                 163630.             1754.             5853.\n3 Gatineau               155196.             1631.             5339.\n4 Sherbrooke             144795.             1529              4520.\n5 Trois-Rivières         144135.             1450.             5045.\n6 Saguenay               133635.             1360.             3977.\n# ℹ 1 more variable: ruptures_moyennes &lt;dbl&gt;\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nQuelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela semble cohérent avec l’achalandage moyen?\n\n\n\n\n\n\n\n\nÀ vous 2 - Décrire le tableau\n\n\n\nAjoutez à votre trace une phrase qui indique ce que représente une ligne du tableau, puis nommez trois variables qui seront utiles pour la décision.\n\n\n\nTrace finale\nVotre mini-analyse doit maintenant contenir la question d’affaires et une courte description des données."
+    "text": "Étape 2 - Inspecter le tableau\n\nglimpse(performance)\n\nRows: 72\nColumns: 14\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_label            &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"jan…\n$ saison                &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moy…\n$ succursale            &lt;chr&gt; \"Gatineau\", \"Montréal\", \"Québec\", \"Saguenay\", \"S…\n$ region                &lt;chr&gt; \"Outaouais\", \"Montréal\", \"Capitale-Nationale\", \"…\n$ surface_m2            &lt;dbl&gt; 420, 560, 470, 350, 390, 365, 420, 560, 470, 350…\n$ campagne_locale       &lt;chr&gt; \"oui\", \"oui\", \"non\", \"non\", \"oui\", \"non\", \"non\",…\n$ depenses_marketing    &lt;dbl&gt; 5977, 6162, 4978, 2981, 5061, 3279, 4677, 4693, …\n$ achalandage           &lt;dbl&gt; 1653, 2043, 1864, 1202, 1362, 1369, 1486, 2179, …\n$ heures_personnel      &lt;dbl&gt; 483, 528, 499, 450, 476, 493, 498, 577, 495, 465…\n$ ruptures_stock        &lt;dbl&gt; 1, 1, 2, 1, 0, 1, 0, 1, 6, 3, 0, 2, 1, 0, 1, 2, …\n$ delai_service_minutes &lt;dbl&gt; 5.5, 6.8, 3.8, 5.4, 3.8, 5.5, 5.0, 6.2, 6.5, 5.3…\n$ satisfaction          &lt;dbl&gt; 7.7, 8.0, 7.7, 7.4, 8.7, 8.4, 8.6, 8.3, 7.1, 7.6…\n$ ventes                &lt;dbl&gt; 163260, 180567, 166706, 126460, 151254, 132775, …\n\n\n\nperformance |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    ventes_moyennes = mean(ventes),\n    achalandage_moyen = mean(achalandage),\n    depenses_moyennes = mean(depenses_marketing),\n    ruptures_moyennes = mean(ruptures_stock),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_moyennes))\n\n# A tibble: 6 × 5\n  succursale     ventes_moyennes achalandage_moyen depenses_moyennes\n  &lt;chr&gt;                    &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;\n1 Montréal               183803.             2129.             6216.\n2 Québec                 163630.             1754.             5853.\n3 Gatineau               155196.             1631.             5339.\n4 Sherbrooke             144795.             1529              4520.\n5 Trois-Rivières         144135.             1450.             5045.\n6 Saguenay               133635.             1360.             3977.\n# ℹ 1 more variable: ruptures_moyennes &lt;dbl&gt;\n\n\n\n\n\n\n\n\nNotePause diagnostic\n\n\n\nQuelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela semble cohérent avec l’achalandage moyen?\n\n\n\n\n\n\n\n\nAstuceÀ vous 2 - Décrire le tableau\n\n\n\nAjoutez à votre trace une phrase qui indique ce que représente une ligne du tableau, puis nommez trois variables qui seront utiles pour la décision.\n\n\n\nTrace finale\nVotre mini-analyse doit maintenant contenir la question d’affaires et une courte description des données."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-3---visualiser-avant-de-modéliser",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-3---visualiser-avant-de-modéliser",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 3 - Visualiser avant de modéliser",
-    "text": "Étape 3 - Visualiser avant de modéliser\n\nggplot(performance, aes(x = achalandage, y = ventes)) +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\", linewidth = 1.1) +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTrace à conserver\n\n\n\nLe nuage de points suggère une relation positive entre achalandage et ventes. Cette observation justifie un premier modèle, mais ne suffit pas à conclure à un effet causal.\n\n\n\n\n\n\n\n\nÀ vous 3 - Lire le graphique\n\n\n\nÉcrivez deux phrases : une sur la direction de la relation entre achalandage et ventes, puis une sur une limite visible ou possible du graphique."
+    "text": "Étape 3 - Visualiser avant de modéliser\n\nggplot(performance, aes(x = achalandage, y = ventes)) +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\", linewidth = 1.1) +\n  labs(\n    title = \"Ventes selon l'achalandage\",\n    x = \"Achalandage mensuel\",\n    y = \"Ventes\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAstuceTrace à conserver\n\n\n\nLe nuage de points suggère une relation positive entre achalandage et ventes. Cette observation justifie un premier modèle, mais ne suffit pas à conclure à un effet causal.\n\n\n\n\n\n\n\n\nAstuceÀ vous 3 - Lire le graphique\n\n\n\nÉcrivez deux phrases : une sur la direction de la relation entre achalandage et ventes, puis une sur une limite visible ou possible du graphique."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-4---ajuster-un-modèle-simple",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-4---ajuster-un-modèle-simple",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 4 - Ajuster un modèle simple",
-    "text": "Étape 4 - Ajuster un modèle simple\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\n\nsummary(modele_simple)\n\n\nCall:\nlm(formula = ventes ~ achalandage, data = performance)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-18695.7  -4922.6   -294.8   5934.3  18386.3 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 50540.53    5526.11   9.146 1.43e-13 ***\nachalandage    63.12       3.31  19.069  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8433 on 70 degrees of freedom\nMultiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 \nF-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16\n\n\nNotez la pente de achalandage.\n\npente_achalandage &lt;- coef(modele_simple)[\"achalandage\"]\n\npente_achalandage\n\nachalandage \n   63.12511 \n\n\n\n\n\n\n\n\nInterprétation attendue\n\n\n\nDans ce modèle simple, une unité supplémentaire d’achalandage est associée à une augmentation moyenne estimée des ventes de 63.1 dollars. Cette phrase décrit une association moyenne dans les données.\n\n\n\n\n\n\n\n\nErreur fréquente\n\n\n\nNe dites pas que l’achalandage cause les ventes. Le modèle estime une association moyenne dans des données observationnelles.\n\n\n\n\n\n\n\n\nÀ vous 4 - Interpréter la pente\n\n\n\nRédigez une phrase qui interprète la pente avec les unités. Commencez par « Dans ce modèle… » pour garder visible le fait que l’interprétation dépend du modèle ajusté."
+    "text": "Étape 4 - Ajuster un modèle simple\n\nmodele_simple &lt;- lm(ventes ~ achalandage, data = performance)\n\nsummary(modele_simple)\n\n\nCall:\nlm(formula = ventes ~ achalandage, data = performance)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-18695.7  -4922.6   -294.8   5934.3  18386.3 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 50540.53    5526.11   9.146 1.43e-13 ***\nachalandage    63.12       3.31  19.069  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8433 on 70 degrees of freedom\nMultiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 \nF-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16\n\n\nNotez la pente de achalandage.\n\npente_achalandage &lt;- coef(modele_simple)[\"achalandage\"]\n\npente_achalandage\n\nachalandage \n   63.12511 \n\n\n\n\n\n\n\n\nAstuceInterprétation attendue\n\n\n\nDans ce modèle simple, une unité supplémentaire d’achalandage est associée à une augmentation moyenne estimée des ventes de 63.1 dollars. Cette phrase décrit une association moyenne dans les données.\n\n\n\n\n\n\n\n\nAvertissementErreur fréquente\n\n\n\nNe dites pas que l’achalandage cause les ventes. Le modèle estime une association moyenne dans des données observationnelles.\n\n\n\n\n\n\n\n\nAstuceÀ vous 4 - Interpréter la pente\n\n\n\nRédigez une phrase qui interprète la pente avec les unités. Commencez par « Dans ce modèle… » pour garder visible le fait que l’interprétation dépend du modèle ajusté."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-5---ajouter-des-variables-de-contexte",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-5---ajouter-des-variables-de-contexte",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 5 - Ajouter des variables de contexte",
-    "text": "Étape 5 - Ajouter des variables de contexte\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\n\nCall:\nlm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + \n    ruptures_stock, data = performance)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-8940.3 -2956.8  -437.2  2763.3 12110.6 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)         5098.7691  9382.6231   0.543    0.589    \nachalandage           34.7889     3.6456   9.543 4.12e-14 ***\ndepenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***\nheures_personnel     131.4254    25.6218   5.129 2.68e-06 ***\nruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4995 on 67 degrees of freedom\nMultiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 \nF-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16\n\n\nDans le modèle enrichi, chaque coefficient se lit en tenant constantes les autres variables du modèle. Cette idée est essentielle pour éviter les interprétations trop rapides.\n\ntibble(\n  modele = c(\"Simple\", \"Enrichi\"),\n  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),\n  r_carre_ajuste = c(\n    summary(modele_simple)$adj.r.squared,\n    summary(modele_enrichi)$adj.r.squared\n  )\n)\n\n# A tibble: 2 × 3\n  modele  r_carre r_carre_ajuste\n  &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;\n1 Simple    0.839          0.836\n2 Enrichi   0.946          0.943\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nEst-ce que le modèle enrichi améliore assez l’ajustement pour justifier une interprétation plus complexe? Notez un avantage et une limite du modèle enrichi.\n\n\n\n\n\n\n\n\nÀ vous 5 - Comparer les modèles\n\n\n\nRemplissez une mini-grille avec trois colonnes : modèle simple, modèle enrichi, ce que cela change dans l’interprétation."
+    "text": "Étape 5 - Ajouter des variables de contexte\n\nmodele_enrichi &lt;- lm(\n  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,\n  data = performance\n)\n\nsummary(modele_enrichi)\n\n\nCall:\nlm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + \n    ruptures_stock, data = performance)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-8940.3 -2956.8  -437.2  2763.3 12110.6 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)         5098.7691  9382.6231   0.543    0.589    \nachalandage           34.7889     3.6456   9.543 4.12e-14 ***\ndepenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***\nheures_personnel     131.4254    25.6218   5.129 2.68e-06 ***\nruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4995 on 67 degrees of freedom\nMultiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 \nF-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16\n\n\nDans le modèle enrichi, chaque coefficient se lit en tenant constantes les autres variables du modèle. Cette idée est essentielle pour éviter les interprétations trop rapides.\n\ntibble(\n  modele = c(\"Simple\", \"Enrichi\"),\n  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),\n  r_carre_ajuste = c(\n    summary(modele_simple)$adj.r.squared,\n    summary(modele_enrichi)$adj.r.squared\n  )\n)\n\n# A tibble: 2 × 3\n  modele  r_carre r_carre_ajuste\n  &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;\n1 Simple    0.839          0.836\n2 Enrichi   0.946          0.943\n\n\n\n\n\n\n\n\nNotePause diagnostic\n\n\n\nEst-ce que le modèle enrichi améliore assez l’ajustement pour justifier une interprétation plus complexe? Notez un avantage et une limite du modèle enrichi.\n\n\n\n\n\n\n\n\nAstuceÀ vous 5 - Comparer les modèles\n\n\n\nRemplissez une mini-grille avec trois colonnes : modèle simple, modèle enrichi, ce que cela change dans l’interprétation."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-6---diagnostiquer-le-modèle",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-6---diagnostiquer-le-modèle",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 6 - Diagnostiquer le modèle",
-    "text": "Étape 6 - Diagnostiquer le modèle\n\nperformance_modele &lt;- performance |&gt;\n  mutate(\n    ventes_predites = predict(modele_enrichi),\n    residu = residuals(modele_enrichi)\n  )\n\n\nggplot(performance_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\", linewidth = 0.9) +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus du modèle enrichi\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nLe graphique des résidus sert à vérifier si les erreurs du modèle semblent réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner dans la limite de l’analyse.\n\n\n\n\n\n\n\n\nÀ vous 6 - Lire les résidus\n\n\n\nAjoutez une phrase à votre trace : les résidus semblent-ils raisonnablement répartis autour de zéro ou montrent-ils une structure à mentionner?\n\n\n\n\n\n\n\n\nPause diagnostic\n\n\n\nUne recommandation sans diagnostic est fragile. Avant de rédiger, assurez-vous d’avoir au moins une phrase sur les résidus ou sur une limite du modèle."
+    "text": "Étape 6 - Diagnostiquer le modèle\n\nperformance_modele &lt;- performance |&gt;\n  mutate(\n    ventes_predites = predict(modele_enrichi),\n    residu = residuals(modele_enrichi)\n  )\n\n\nggplot(performance_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\", linewidth = 0.9) +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus du modèle enrichi\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotePause diagnostic\n\n\n\nLe graphique des résidus sert à vérifier si les erreurs du modèle semblent réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner dans la limite de l’analyse.\n\n\n\n\n\n\n\n\nAstuceÀ vous 6 - Lire les résidus\n\n\n\nAjoutez une phrase à votre trace : les résidus semblent-ils raisonnablement répartis autour de zéro ou montrent-ils une structure à mentionner?\n\n\n\n\n\n\n\n\nImportantPause diagnostic\n\n\n\nUne recommandation sans diagnostic est fragile. Avant de rédiger, assurez-vous d’avoir au moins une phrase sur les résidus ou sur une limite du modèle."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-7---rédiger-la-recommandation",
@@ -893,42 +893,42 @@
     "href": "modules/atelier-01-r/capsules.html#capsule-1---du-tableau-au-diagnostic-descriptif",
     "title": "Capsules - Atelier 01",
     "section": "Capsule 1 - Du tableau au diagnostic descriptif",
-    "text": "Capsule 1 - Du tableau au diagnostic descriptif\nDurée cible : 5 à 8 minutes.\nObjectif : comprendre ce qu’un diagnostic descriptif peut fournir avant une analyse plus avancée.\nÀ couvrir :\n\nunité d’observation;\nvariable et type de variable;\nindicateur descriptif;\ndifférence entre constater, comparer et expliquer;\nlimite d’une analyse purement descriptive.\n\nActivité :\n\nécrire une phrase qui décrit ce que représente une ligne du tableau ventes_pme_quebec.csv."
+    "text": "Capsule 1 - Du tableau au diagnostic descriptif\nPourquoi ça compte : avant de promettre une explication à la direction, il faut savoir ce qu’un simple tableau permet, et ne permet pas encore, de dire.\nObjectif : comprendre ce qu’un diagnostic descriptif peut fournir avant une analyse plus avancée.\nÀ couvrir :\n\nunité d’observation;\nvariable et type de variable;\nindicateur descriptif;\ndifférence entre constater, comparer et expliquer;\nlimite d’une analyse purement descriptive.\n\nActivité :\n\nécrire une phrase qui décrit ce que représente une ligne du tableau ventes_pme_quebec.csv."
   },
   {
     "objectID": "modules/atelier-01-r/capsules.html#capsule-2---importation-et-inspection",
     "href": "modules/atelier-01-r/capsules.html#capsule-2---importation-et-inspection",
     "title": "Capsules - Atelier 01",
     "section": "Capsule 2 - Importation et inspection",
-    "text": "Capsule 2 - Importation et inspection\nDurée cible : 5 à 8 minutes.\nObjectif : importer un fichier CSV et vérifier rapidement la structure du tableau.\nÀ couvrir :\n\nchemin relatif dans un projet R;\nreadr::read_csv();\njanitor::clean_names();\nglimpse();\nnombre de lignes, nombre de colonnes et types de variables.\n\nActivité :\n\nimporter le fichier CSV et noter les dimensions du tableau."
+    "text": "Capsule 2 - Importation et inspection\nPourquoi ça compte : un fichier mal importé, et tous vos chiffres portent sur un tableau que vous ne connaissez pas vraiment.\nObjectif : importer un fichier CSV et vérifier rapidement la structure du tableau.\nÀ couvrir :\n\nchemin relatif dans un projet R;\nreadr::read_csv();\njanitor::clean_names();\nglimpse();\nnombre de lignes, nombre de colonnes et types de variables.\n\nActivité :\n\nimporter le fichier CSV et noter les dimensions du tableau."
   },
   {
     "objectID": "modules/atelier-01-r/capsules.html#capsule-3---valeurs-manquantes-et-indicateurs",
     "href": "modules/atelier-01-r/capsules.html#capsule-3---valeurs-manquantes-et-indicateurs",
     "title": "Capsules - Atelier 01",
     "section": "Capsule 3 - Valeurs manquantes et indicateurs",
-    "text": "Capsule 3 - Valeurs manquantes et indicateurs\nDurée cible : 5 à 8 minutes.\nObjectif : repérer les valeurs manquantes et produire des indicateurs descriptifs utiles.\nÀ couvrir :\n\ndiagnostic des valeurs manquantes;\nutilisation prudente de na.rm = TRUE;\nregroupement avec group_by();\nrésumé avec summarise();\nchoix d’un indicateur adapté à la question.\n\nActivité :\n\nproduire un tableau synthèse par succursale et choisir deux indicateurs à commenter."
+    "text": "Capsule 3 - Valeurs manquantes et indicateurs\nPourquoi ça compte : une colonne incomplète peut désigner la mauvaise succursale comme championne des ventes.\nObjectif : repérer les valeurs manquantes et produire des indicateurs descriptifs utiles.\nÀ couvrir :\n\ndiagnostic des valeurs manquantes;\nutilisation prudente de na.rm = TRUE;\nregroupement avec group_by();\nrésumé avec summarise();\nchoix d’un indicateur adapté à la question.\n\nActivité :\n\nproduire un tableau synthèse par succursale et choisir deux indicateurs à commenter."
   },
   {
     "objectID": "modules/atelier-01-r/capsules.html#capsule-4---graphiques-et-constats",
     "href": "modules/atelier-01-r/capsules.html#capsule-4---graphiques-et-constats",
     "title": "Capsules - Atelier 01",
     "section": "Capsule 4 - Graphiques et constats",
-    "text": "Capsule 4 - Graphiques et constats\nDurée cible : 5 à 8 minutes.\nObjectif : transformer un tableau de résultats en graphiques et en constats descriptifs.\nÀ couvrir :\n\ngraphique de comparaison;\ngraphique de relation descriptive;\ntitre, axes et unités;\ndistinction entre association descriptive et explication;\nformulation d’un constat avec une limite.\n\nActivité :\n\nécrire un constat descriptif à partir d’un graphique et nommer ce que ce graphique ne permet pas de conclure."
+    "text": "Capsule 4 - Graphiques et constats\nPourquoi ça compte : un graphique clair montre en cinq secondes ce qu’un tableau cache; un graphique trompeur fait conclure trop vite.\nObjectif : transformer un tableau de résultats en graphiques et en constats descriptifs.\nÀ couvrir :\n\ngraphique de comparaison;\ngraphique de relation descriptive;\ntitre, axes et unités;\ndistinction entre association descriptive et explication;\nformulation d’un constat avec une limite.\n\nActivité :\n\nécrire un constat descriptif à partir d’un graphique et nommer ce que ce graphique ne permet pas de conclure."
   },
   {
     "objectID": "modules/atelier-01-r/capsules.html#capsule-5---de-lexploration-à-la-priorité",
     "href": "modules/atelier-01-r/capsules.html#capsule-5---de-lexploration-à-la-priorité",
     "title": "Capsules - Atelier 01",
     "section": "Capsule 5 - De l’exploration à la priorité",
-    "text": "Capsule 5 - De l’exploration à la priorité\nDurée cible : 5 à 8 minutes.\nObjectif : transformer plusieurs résultats descriptifs en priorité de prochaine analyse.\nÀ couvrir :\n\ndifférence entre résultat descriptif et recommandation finale;\nchoix d’une priorité : marketing, opérations ou saisonnalité;\nnécessité d’appuyer la priorité par un tableau ou un graphique;\nformulation d’une limite;\nlien avec les modèles qui viendront ensuite.\n\nActivité :\n\nchoisir une priorité de prochaine analyse et écrire la phrase : « La prochaine analyse devrait prioriser…, parce que… »."
+    "text": "Capsule 5 - De l’exploration à la priorité\nPourquoi ça compte : la direction n’attend pas dix chiffres, mais une priorité défendable pour la prochaine analyse.\nObjectif : transformer plusieurs résultats descriptifs en priorité de prochaine analyse.\nÀ couvrir :\n\ndifférence entre résultat descriptif et recommandation finale;\nchoix d’une priorité : marketing, opérations ou saisonnalité;\nnécessité d’appuyer la priorité par un tableau ou un graphique;\nformulation d’une limite;\nlien avec les modèles qui viendront ensuite.\n\nActivité :\n\nchoisir une priorité de prochaine analyse et écrire la phrase : « La prochaine analyse devrait prioriser…, parce que… »."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#objectifs-de-la-capsule",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nCréer un graphique simple avec ggplot2.\nStructurer un mini-rapport Quarto.\nRendre le document en HTML.\nFormuler deux constats descriptifs et une question à approfondir."
+    "text": "Objectifs de la capsule\n\n\nCréer un graphique simple avec ggplot2.\nStructurer un mini-rapport Quarto et le rendre en HTML.\nFormuler deux constats descriptifs et une question à approfondir."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#le-rôle-du-mini-rapport",
@@ -949,7 +949,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#un-graphique-doit-être-lisible",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Un graphique doit être lisible",
-    "text": "Un graphique doit être lisible\n\n\nLe titre indique ce qui est comparé.\nLes axes indiquent les unités.\nLes catégories sont lisibles.\nLe graphique répond à une question simple."
+    "text": "Un graphique doit être lisible\n\n\nle titre indique ce qui est comparé;\nles axes indiquent les unités;\nles catégories sont lisibles;\nle graphique répond à une question simple."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#structure-minimale-du-qmd",
@@ -970,7 +970,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#rendre-le-document",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Rendre le document",
-    "text": "Rendre le document\n\nDans RStudio, utilisez le bouton Render pour produire la page HTML.\n\nquarto render rapport_semaine_02.qmd\n\nAprès le rendu, ouvrez le HTML et vérifiez que le texte, les tableaux, le graphique et les constats apparaissent correctement."
+    "text": "Rendre le document\n\nDans RStudio, le bouton Render produit la page HTML.\n\nquarto render rapport_semaine_02.qmd\n\nAprès le rendu, ouvrez le HTML et vérifiez que texte, tableaux, graphique et constats apparaissent correctement."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#écrire-un-constat-descriptif",
@@ -984,7 +984,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#question-à-approfondir",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Question à approfondir",
-    "text": "Question à approfondir\n\nLa dernière phrase du rapport peut ouvrir vers une analyse future.\n\n\nQuestion possible : la relation entre les dépenses marketing et les ventes reste-t-elle visible lorsqu’on compare les succursales et les mois?"
+    "text": "Question à approfondir\n\nLa relation entre les dépenses marketing et les ventes reste-t-elle visible lorsqu’on compare les succursales et les mois?\n\n\nLa dernière phrase du rapport ouvre vers une analyse future : c’est le pont vers la régression."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#activité-2.6",
@@ -998,14 +998,14 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#à-retenir",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "À retenir",
-    "text": "À retenir\n\n\nLe rapport doit pouvoir être rendu à nouveau.\nLe code et les résultats doivent rester ensemble.\nLes constats doivent être descriptifs et prudents.\nLa question finale prépare les analyses plus avancées."
+    "text": "À retenir\n\n\n\n1\n\n\nLe rapport doit pouvoir être rendu de nouveau, sans clic manuel.\n\n\n\n\n2\n\n\nLe code et les résultats restent ensemble.\n\n\n\n\n3\n\n\nLes constats restent descriptifs; la question finale prépare la suite."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nImporter un fichier CSV dans R.\nNettoyer les noms de variables.\nInspecter les dimensions et les types de colonnes.\nProduire le code d’importation et une courte description du tableau."
+    "text": "Objectifs de la capsule\n\n\nImporter un fichier CSV dans R.\nNettoyer les noms de variables.\nInspecter les dimensions, les types et l’unité d’observation."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#avant-de-calculer",
@@ -1026,14 +1026,14 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#pourquoi-clean_names",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Pourquoi clean_names()?",
-    "text": "Pourquoi clean_names()?\n\nDes noms de variables réguliers rendent le code plus simple à écrire et à relire.\n\n\n\nnoms en minuscules;\nespaces remplacés par _;\naccents et caractères spéciaux évités;\ncode plus stable dans les blocs suivants."
+    "text": "Pourquoi clean_names()?\n\n\n\nAvant\n\n\nPanier Moyen ($), Délai Livraison - espaces, accents, majuscules.\n\n\n\n\nAprès\n\n\npanier_moyen, delai_livraison_jours - code plus simple et plus stable."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#inspecter-avec-glimpse",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#inspecter-avec-glimpse",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Inspecter avec glimpse()",
-    "text": "Inspecter avec glimpse()\n\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…\n\n\n\nglimpse() permet de voir rapidement les colonnes, les types de variables et quelques valeurs."
+    "text": "Inspecter avec glimpse()\n\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…\n\n\n\nglimpse() montre d’un coup les colonnes, leurs types et quelques valeurs."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#dimensions-du-tableau",
@@ -1054,7 +1054,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#types-de-variables-à-repérer",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Types de variables à repérer",
-    "text": "Types de variables à repérer\n\n\n\nType\nExemples dans le tableau\n\n\n\n\nDate ou période\nmois\n\n\nCatégorie\nsuccursale, region, canal_principal\n\n\nNumérique\nclients, panier_moyen, ventes, satisfaction\n\n\nIndicateur\ncampagne_locale"
+    "text": "Types de variables à repérer\n\n\n\n\n\n\n\nType\nExemples dans le tableau\n\n\n\n\nDate ou période\nmois\n\n\nCatégorie\nsuccursale, region, canal_principal\n\n\nNumérique\nclients, ventes, delai_livraison_jours, satisfaction\n\n\nIndicateur\ncampagne_locale"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#activité-2.4",
@@ -1068,28 +1068,28 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#à-retenir",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "À retenir",
-    "text": "À retenir\n\n\nLe code d’importation doit être conservé dans le QMD.\nclean_names() facilite le travail.\nglimpse() aide à inspecter la structure.\nL’unité d’observation doit être nommée avant les analyses."
+    "text": "À retenir\n\n\n\n1\n\n\nLe code d’importation reste dans le .qmd.\n\n\n\n\n2\n\n\nclean_names() et glimpse() préparent et inspectent.\n\n\n\n\n3\n\n\nL’unité d’observation se nomme avant toute analyse."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nReconnaître les principales zones de RStudio.\nComprendre quoi écrire, quoi exécuter et quoi inspecter.\nRepérer les fichiers et les graphiques produits.\nProduire une phrase sur le rôle de deux zones de RStudio."
+    "text": "Objectifs de la capsule\n\n\nReconnaître les zones essentielles de RStudio.\nDistinguer ce qu’on écrit, ce qu’on exécute et ce qu’on inspecte.\nRepérer les fichiers et les graphiques produits."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#rstudio-comme-poste-de-travail",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#rstudio-comme-poste-de-travail",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "RStudio comme poste de travail",
-    "text": "RStudio comme poste de travail\n\nRStudio rassemble plusieurs outils dans la même interface. Chaque zone répond à un besoin différent.\n\n\nApprendre l’interface réduit les erreurs : on sait où écrire le rapport, où exécuter une commande et où chercher un fichier."
+    "text": "RStudio comme poste de travail\n\nRStudio réunit plusieurs outils dans une même fenêtre. Chaque zone répond à un besoin précis."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#les-zones-essentielles",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#les-zones-essentielles",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "Les zones essentielles",
-    "text": "Les zones essentielles\n\n\n\nZone\nÀ quoi elle sert\n\n\n\n\nSource\nécrire les scripts et fichiers .qmd\n\n\nConsole\nexécuter rapidement des commandes\n\n\nEnvironment\nvoir les objets créés\n\n\nFiles\nnaviguer dans les fichiers du projet\n\n\nPlots\nafficher les graphiques\n\n\nHelp\nconsulter l’aide des fonctions\n\n\nViewer\nvoir certains documents et sorties HTML"
+    "text": "Les zones essentielles\n\n\n\nSource\n\n\nécrire scripts et fichiers .qmd\n\n\n\n\nConsole\n\n\nexécuter des commandes rapides\n\n\n\n\nEnvironment\n\n\nvoir les objets créés\n\n\n\n\n\n\nFiles\n\n\nnaviguer dans le projet\n\n\n\n\nPlots\n\n\nafficher les graphiques\n\n\n\n\nHelp\n\n\nconsulter l’aide des fonctions"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#source-écrire-le-travail",
@@ -1145,7 +1145,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#à-retenir",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "À retenir",
-    "text": "À retenir\n\n\nLe rapport s’écrit dans Source.\nLes commandes rapides se testent dans Console.\nLes objets se vérifient dans Environment.\nLes fichiers se repèrent dans Files.\nLes graphiques se vérifient dans Plots."
+    "text": "À retenir\n\n\n\n1\n\n\nLe rapport s’écrit dans Source; les essais se font dans Console.\n\n\n\n\n2\n\n\nLes objets se vérifient dans Environment, les fichiers dans Files.\n\n\n\n\n3\n\n\nUn graphique ne vaut que si son code reste dans le rapport."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/lectures.html",
@@ -2566,7 +2566,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nComprendre le rôle de R, RStudio et Quarto dans le cours.\nVérifier que l’environnement de travail fonctionne.\nCharger les packages de base utilisés dans les premières semaines.\nProduire une courte trace indiquant que le poste de travail est prêt."
+    "text": "Objectifs de la capsule\n\n\nComprendre le rôle de R, RStudio et Quarto.\nVérifier que l’environnement fonctionne.\nCharger les packages de base du cours."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#pourquoi-commencer-par-lenvironnement",
@@ -2580,7 +2580,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#trois-outils-trois-rôles",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Trois outils, trois rôles",
-    "text": "Trois outils, trois rôles\n\n\nR\nLangage qui exécute les commandes statistiques et produit les objets.\n\nRStudio\nInterface pour écrire, organiser, exécuter et inspecter le travail.\n\nQuarto\nFormat qui rassemble texte, code, tableaux, graphiques et interprétation."
+    "text": "Trois outils, trois rôles\n\n\nR\nLe langage qui exécute les commandes et produit les résultats.\n\nRStudio\nL’interface pour écrire, organiser, exécuter et inspecter.\n\nQuarto\nLe format qui réunit texte, code, tableaux, graphiques et interprétation."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#ce-que-vous-devez-vérifier",
@@ -2601,7 +2601,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#charger-les-packages-de-base",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Charger les packages de base",
-    "text": "Charger les packages de base\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(scales)\n\nSi un package n’est pas installé, il faut l’installer une fois avec install.packages(\"nom_du_package\"), puis refaire library()."
+    "text": "Charger les packages de base\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(scales)\n\n\n\nPackage\nRôle dans le module\n\n\n\n\ntidyverse\nimporter, transformer, résumer, visualiser\n\n\njanitor\nnettoyer les noms de variables\n\n\nlubridate\nmanipuler les dates\n\n\nscales\nafficher des montants lisibles\n\n\n\n\nUn package non installé s’ajoute une fois avec install.packages(\"nom\"), puis library()."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#packages-utilisés-cette-semaine",
@@ -2636,28 +2636,28 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#à-retenir",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "À retenir",
-    "text": "À retenir\n\n\nR calcule.\nRStudio organise le travail.\nQuarto produit le rapport reproductible.\nLa trace attendue est une courte note indiquant que l’environnement est prêt."
+    "text": "À retenir\n\n\n\nR\n\n\ncalcule et produit les résultats.\n\n\n\n\nRStudio\n\n\norganise le travail.\n\n\n\n\nQuarto\n\n\nproduit le rapport reproductible."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nComprendre pourquoi un projet R soutient la reproductibilité.\nDistinguer chemin relatif et chemin absolu.\nOrganiser minimalement un dossier d’analyse.\nProduire une courte justification du choix d’un projet."
+    "text": "Objectifs de la capsule\n\n\nComprendre pourquoi un projet R soutient la reproductibilité.\nDistinguer chemin relatif et chemin absolu.\nOrganiser minimalement un dossier d’analyse."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#le-problème-des-chemins",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#le-problème-des-chemins",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Le problème des chemins",
-    "text": "Le problème des chemins\n\nUn chemin qui fonctionne sur un seul ordinateur peut échouer partout ailleurs.\n\n\nChemin fragile : /Users/nom/Desktop/cours/donnees.csv\nChemin reproductible : data/ventes_operations_quebec.csv"
+    "text": "Le problème des chemins\n\n\n\nReproductible\n\n\ndata/ventes_operations_quebec.csv - relatif au projet, valide partout.\n\n\n\n\nFragile\n\n\n/Users/nom/Desktop/cours/donnees.csv - lié à un seul ordinateur.\n\n\n\n\nUn chemin relatif reste valide tant que le dossier du projet se déplace d’un bloc."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#le-rôle-du-projet-r",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#le-rôle-du-projet-r",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Le rôle du projet R",
-    "text": "Le rôle du projet R\n\nUn projet R donne un point de départ clair au travail.\n\n\n\nles fichiers de données sont au même endroit pour tout le monde;\nle rapport retrouve les fichiers avec des chemins relatifs;\nle travail est plus facile à reprendre;\nles erreurs de dossier sont plus faciles à diagnostiquer."
+    "text": "Le rôle du projet R\n\n\nles données sont au même endroit pour toute l’équipe;\nle rapport les retrouve par chemin relatif;\nle travail se reprend et se diagnostique plus facilement."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#structure-minimale",
@@ -2692,7 +2692,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#nommer-les-fichiers",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Nommer les fichiers",
-    "text": "Nommer les fichiers\n\n\nutiliser des noms courts;\néviter les espaces;\néviter les accents dans les noms de fichiers personnels;\nindiquer le contenu plutôt que la version vague.\n\n\n\nPréférer rapport_semaine_02.qmd à travail final nouveau vraiment final.qmd."
+    "text": "Nommer les fichiers\n\n\n\nÀ préférer\n\n\nrapport_semaine_02.qmd - court, sans espace ni accent, descriptif.\n\n\n\n\nÀ éviter\n\n\ntravail final nouveau vraiment final.qmd - vague et fragile."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#activité-2.3",
@@ -2706,21 +2706,21 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#à-retenir",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "À retenir",
-    "text": "À retenir\n\n\nUn projet R donne un point de départ stable.\nLe dossier data/ contient les fichiers d’entrée.\nLes chemins relatifs rendent le rapport plus facile à reprendre.\nLe fichier .qmd doit rester dans le projet."
+    "text": "À retenir\n\n\n\n1\n\n\nUn projet R donne un point de départ stable.\n\n\n\n\n2\n\n\nLe dossier data/ contient les fichiers d’entrée.\n\n\n\n\n3\n\n\nLes chemins relatifs rendent l’analyse transférable."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nPréparer les types de variables utiles.\nRepérer les valeurs manquantes.\nProduire un tableau descriptif par groupe.\nInterpréter un diagnostic sans masquer les limites."
+    "text": "Objectifs de la capsule\n\n\nPréparer les types de variables utiles.\nRepérer et signaler les valeurs manquantes.\nProduire un tableau descriptif par groupe et l’interpréter prudemment."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#préparer-avant-de-résumer",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#préparer-avant-de-résumer",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Préparer avant de résumer",
-    "text": "Préparer avant de résumer\n\nUn résumé est plus fiable lorsque les types de variables sont explicites."
+    "text": "Préparer avant de résumer\n\nUn résumé est plus fiable quand les types de variables sont explicites."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#vérifier-la-structure-préparée",
@@ -2748,7 +2748,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#interpréter-le-diagnostic",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Interpréter le diagnostic",
-    "text": "Interpréter le diagnostic\n\n\nNommer les variables incomplètes.\nDire quels indicateurs peuvent être touchés.\nUtiliser na.rm = TRUE seulement si la décision est signalée.\nÉviter d’ignorer les valeurs manquantes dans le texte."
+    "text": "Interpréter le diagnostic\n\n\nnommer les variables incomplètes;\ndire quels indicateurs peuvent être touchés;\nn’utiliser na.rm = TRUE que si la décision est signalée."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#résumer-par-succursale",
@@ -2762,7 +2762,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#lire-un-tableau-descriptif",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Lire un tableau descriptif",
-    "text": "Lire un tableau descriptif\n\nUn tableau descriptif sert à comparer quelques indicateurs, pas à tout commenter.\n\n\n\nRepérer la succursale avec les ventes les plus élevées.\nComparer le panier moyen et la satisfaction.\nVérifier si un même groupe ressort pour tous les indicateurs.\nFormuler une limite de comparaison."
+    "text": "Lire un tableau descriptif\n\n\nrepérer la succursale aux ventes les plus élevées;\ncomparer panier moyen et satisfaction;\nvérifier si le même groupe ressort pour tous les indicateurs;\nformuler une limite de comparaison."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#activité-2.5",
@@ -2776,7 +2776,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#à-retenir",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "À retenir",
-    "text": "À retenir\n\n\nPréparer les variables aide à éviter des erreurs de calcul.\nLes valeurs manquantes doivent être signalées.\nUn tableau descriptif doit être lié à une question.\nUne interprétation prudente nomme aussi une limite."
+    "text": "À retenir\n\n\n\n1\n\n\nPréparer les variables évite des erreurs de calcul.\n\n\n\n\n2\n\n\nLes valeurs manquantes se signalent, ne se cachent pas.\n\n\n\n\n3\n\n\nUn tableau descriptif se lie à une question et à une limite."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#objectifs-de-la-séance",
@@ -3042,7 +3042,7 @@
     "href": "modules/atelier-01-r/guide-atelier.html",
     "title": "Guide en classe - Atelier 01",
     "section": "",
-    "text": "NotePlace dans la progression\n\n\n\nCet atelier se fait après la semaine 01 et la semaine 02. Il sert à pratiquer dans RStudio les gestes de base : importer, inspecter, résumer, visualiser et interpréter prudemment."
+    "text": "NotePourquoi ça compte\n\n\n\nLa direction d’une PME hésite entre trois pistes pour l’an prochain : marketing, opérations ou saisonnalité. Vous partez d’un seul tableau de ventes mensuelles. À la fin de la séance, vous aurez transformé ce tableau en une priorité défendable, appuyée sur un résultat et assortie d’une limite claire."
   },
   {
     "objectID": "modules/atelier-01-r/guide-atelier.html#objectif-du-parcours",
@@ -3336,28 +3336,28 @@
     "href": "modules/atelier-02-regression/capsules.html#capsule-1---question-daffaires-et-variable-réponse",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 1 - Question d’affaires et variable réponse",
-    "text": "Capsule 1 - Question d’affaires et variable réponse\nUne bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :\n\nQuels facteurs sont associés aux ventes mensuelles des succursales?\n\nLa variable réponse est ventes. Les variables explicatives possibles incluent achalandage, depenses_marketing, heures_personnel, ruptures_stock et campagne_locale.\n\n\n\n\n\n\nActivité courte\n\n\n\nChoisissez une variable explicative et écrivez pourquoi elle pourrait être liée aux ventes.\n\n\nÀ conserver : une question d’affaires et la variable réponse."
+    "text": "Capsule 1 - Question d’affaires et variable réponse\nPourquoi ça compte : un modèle qui répond à une question floue produit une recommandation floue.\nUne bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :\n\nQuels facteurs sont associés aux ventes mensuelles des succursales?\n\nLa variable réponse est ventes. Les variables explicatives possibles incluent achalandage, depenses_marketing, heures_personnel, ruptures_stock et campagne_locale.\n\n\n\n\n\n\nAstuceActivité courte\n\n\n\nChoisissez une variable explicative et écrivez pourquoi elle pourrait être liée aux ventes.\n\n\nÀ conserver : une question d’affaires et la variable réponse."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-2---relation-visible-et-relation-modélisée",
     "href": "modules/atelier-02-regression/capsules.html#capsule-2---relation-visible-et-relation-modélisée",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 2 - Relation visible et relation modélisée",
-    "text": "Capsule 2 - Relation visible et relation modélisée\nUn nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.\nLa droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.\n\n\n\n\n\n\nActivité courte\n\n\n\nAvant d’ajuster le modèle, écrivez ce que vous vous attendez à voir entre achalandage et ventes.\n\n\nÀ conserver : une phrase qui décrit la relation attendue avant le modèle."
+    "text": "Capsule 2 - Relation visible et relation modélisée\nPourquoi ça compte : une droite bien ajustée sur un nuage courbé donne une fausse impression de précision.\nUn nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.\nLa droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.\n\n\n\n\n\n\nAstuceActivité courte\n\n\n\nAvant d’ajuster le modèle, écrivez ce que vous vous attendez à voir entre achalandage et ventes.\n\n\nÀ conserver : une phrase qui décrit la relation attendue avant le modèle."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-3---modèle-simple-et-modèle-enrichi",
     "href": "modules/atelier-02-regression/capsules.html#capsule-3---modèle-simple-et-modèle-enrichi",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 3 - Modèle simple et modèle enrichi",
-    "text": "Capsule 3 - Modèle simple et modèle enrichi\nUn modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.\nUn modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en tenant les autres variables du modèle constantes.\n\n\n\n\n\n\nPoint de vigilance\n\n\n\nAjouter des variables ne rend pas automatiquement le modèle meilleur pour la décision. Il faut vérifier si l’interprétation reste claire et si les variables ajoutées ont un sens dans le contexte.\n\n\nÀ conserver : un avantage et une limite du modèle enrichi."
+    "text": "Capsule 3 - Modèle simple et modèle enrichi\nPourquoi ça compte : ajouter des variables peut clarifier le portrait, ou rendre chaque coefficient impossible à expliquer à la direction.\nUn modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.\nUn modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en tenant les autres variables du modèle constantes.\n\n\n\n\n\n\nAvertissementPoint de vigilance\n\n\n\nAjouter des variables ne rend pas automatiquement le modèle meilleur pour la décision. Il faut vérifier si l’interprétation reste claire et si les variables ajoutées ont un sens dans le contexte.\n\n\nÀ conserver : un avantage et une limite du modèle enrichi."
   },
   {
     "objectID": "modules/atelier-02-regression/capsules.html#capsule-4---recommandation-et-limites",
     "href": "modules/atelier-02-regression/capsules.html#capsule-4---recommandation-et-limites",
     "title": "Capsules - Atelier 02",
     "section": "Capsule 4 - Recommandation et limites",
-    "text": "Capsule 4 - Recommandation et limites\nUne recommandation statistique doit relier trois éléments :\n\nce que le modèle estime;\nce que le contexte rend plausible;\nce que les données ne permettent pas de conclure.\n\nUne recommandation solide ne dit pas seulement « faire plus de X ». Elle précise la variable priorisée, l’incertitude, la limite et la prochaine vérification à faire.\n\n\n\n\n\n\nActivité courte\n\n\n\nRédigez une phrase qui commence par : « Les données suggèrent de prioriser… », puis ajoutez immédiatement une limite.\n\n\nÀ conserver : une recommandation provisoire et une limite causale."
+    "text": "Capsule 4 - Recommandation et limites\nPourquoi ça compte : une recommandation sans limite, c’est une décision risquée présentée comme une certitude.\nUne recommandation statistique doit relier trois éléments :\n\nce que le modèle estime;\nce que le contexte rend plausible;\nce que les données ne permettent pas de conclure.\n\nUne recommandation solide ne dit pas seulement « faire plus de X ». Elle précise la variable priorisée, l’incertitude, la limite et la prochaine vérification à faire.\n\n\n\n\n\n\nAstuceActivité courte\n\n\n\nRédigez une phrase qui commence par : « Les données suggèrent de prioriser… », puis ajoutez immédiatement une limite.\n\n\nÀ conserver : une recommandation provisoire et une limite causale."
   },
   {
     "objectID": "modules/atelier-02-regression/exercices.html",
@@ -3427,14 +3427,14 @@
     "href": "modules/atelier-02-regression/index.html#avant-latelier",
     "title": "Atelier 02",
     "section": "Avant l’atelier",
-    "text": "Avant l’atelier\nCet atelier suppose que les bases du module 03 sont assez fraîches pour être réutilisées en classe. L’objectif n’est pas de tout maîtriser avant d’arriver, mais d’avoir les bons repères pour participer activement.\n\n\n\n\n\n\nPréparation à faire avant d’arriver\n\n\n\nAvant l’atelier, relisez surtout les éléments qui permettent de passer d’une sortie R à une interprétation : variable réponse, variable explicative, pente, résidus et prudence causale.\n\n\nAvant d’arriver, vérifiez que vous pouvez expliquer :\n\nvariable réponse et variable explicative;\nnuage de points;\npente et ordonnée à l’origine;\nrésidus;\ndifférence entre association, prédiction et causalité.\n\nTéléchargez ou repérez le fichier performance_succursales_quebec.csv.\n\n\nJ’ai relu les capsules ou les notes du module 03.\nJe sais ouvrir un fichier .qmd.\nJe sais charger tidyverse.\nJe sais ajuster un modèle avec lm().\nJe sais expliquer pourquoi une régression observationnelle ne prouve pas automatiquement une causalité.\n\n\n\n\n\n\n\n\nPréparation minimale\n\n\n\nSi vous manquez de temps, relisez seulement la page des capsules du module 03, puis ouvrez le guide complet de l’atelier avant la séance."
+    "text": "Avant l’atelier\nCet atelier suppose que les bases du module 03 sont assez fraîches pour être réutilisées en classe. L’objectif n’est pas de tout maîtriser avant d’arriver, mais d’avoir les bons repères pour participer activement.\n\n\n\n\n\n\nNotePréparation à faire avant d’arriver\n\n\n\nAvant l’atelier, relisez surtout les éléments qui permettent de passer d’une sortie R à une interprétation : variable réponse, variable explicative, pente, résidus et prudence causale.\n\n\nAvant d’arriver, vérifiez que vous pouvez expliquer :\n\nvariable réponse et variable explicative;\nnuage de points;\npente et ordonnée à l’origine;\nrésidus;\ndifférence entre association, prédiction et causalité.\n\nTéléchargez ou repérez le fichier performance_succursales_quebec.csv.\n\n\nJ’ai relu les capsules ou les notes du module 03.\nJe sais ouvrir un fichier .qmd.\nJe sais charger tidyverse.\nJe sais ajuster un modèle avec lm().\nJe sais expliquer pourquoi une régression observationnelle ne prouve pas automatiquement une causalité.\n\n\n\n\n\n\n\n\nAstucePréparation minimale\n\n\n\nSi vous manquez de temps, relisez seulement la page des capsules du module 03, puis ouvrez le guide complet de l’atelier avant la séance."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#pendant-latelier",
     "href": "modules/atelier-02-regression/index.html#pendant-latelier",
     "title": "Atelier 02",
     "section": "Pendant l’atelier",
-    "text": "Pendant l’atelier\nLe guide complet est la page principale à suivre en classe. Les démonstrations et les exercices servent de soutien pendant le parcours.\n\n  \n    Guide\n    Guide complet de l'atelier\n    Suivre le déroulement en classe, étape par étape, jusqu'à la recommandation finale.\n  \n  \n    Démo\n    Démonstrations R\n    Voir une analyse reproductible avant de produire votre propre version.\n  \n  \n    Pratique\n    Exercices\n    Tester votre compréhension et vérifier vos interprétations.\n  \n\n\n\n\n\n\n\nCe qui sera accompagné en classe\n\n\n\nLa partie la plus importante de l’atelier est le passage du modèle à la recommandation. Le code sert à produire les résultats, mais le travail principal est d’expliquer ce que les coefficients veulent dire, ce que les résidus permettent de vérifier et ce que la direction peut raisonnablement faire ensuite."
+    "text": "Pendant l’atelier\nLe guide complet est la page principale à suivre en classe. Les démonstrations et les exercices servent de soutien pendant le parcours.\n\n  \n    Guide\n    Guide complet de l'atelier\n    Suivre le déroulement en classe, étape par étape, jusqu'à la recommandation finale.\n  \n  \n    Démo\n    Démonstrations R\n    Voir une analyse reproductible avant de produire votre propre version.\n  \n  \n    Pratique\n    Exercices\n    Tester votre compréhension et vérifier vos interprétations.\n  \n\n\n\n\n\n\n\nImportantCe qui sera accompagné en classe\n\n\n\nLa partie la plus importante de l’atelier est le passage du modèle à la recommandation. Le code sert à produire les résultats, mais le travail principal est d’expliquer ce que les coefficients veulent dire, ce que les résidus permettent de vérifier et ce que la direction peut raisonnablement faire ensuite."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#déroulement-suggéré",
@@ -3448,7 +3448,7 @@
     "href": "modules/atelier-02-regression/index.html#résultat-attendu",
     "title": "Atelier 02",
     "section": "Résultat attendu",
-    "text": "Résultat attendu\nVotre mini-analyse doit inclure :\n\nune question d’affaires claire;\nun graphique exploratoire;\nun modèle linéaire simple;\nune interprétation de coefficient;\nun diagnostic des résidus;\nune recommandation;\nune limite importante.\n\n\n\n\n\n\n\nResponsabilité statistique\n\n\n\nLa recommandation doit rester cohérente avec les données. Un modèle peut aider à prioriser une piste d’action, mais il ne remplace pas l’analyse du contexte ni la validation avec d’autres informations."
+    "text": "Résultat attendu\nVotre mini-analyse doit inclure :\n\nune question d’affaires claire;\nun graphique exploratoire;\nun modèle linéaire simple;\nune interprétation de coefficient;\nun diagnostic des résidus;\nune recommandation;\nune limite importante.\n\n\n\n\n\n\n\nAvertissementResponsabilité statistique\n\n\n\nLa recommandation doit rester cohérente avec les données. Un modèle peut aider à prioriser une piste d’action, mais il ne remplace pas l’analyse du contexte ni la validation avec d’autres informations."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#ressources-de-latelier",
@@ -5170,7 +5170,7 @@
     "href": "modules/atelier-02-regression/index.html#après-latelier",
     "title": "Atelier 02",
     "section": "Après l’atelier",
-    "text": "Après l’atelier\nAprès la séance, le travail principal consiste à nettoyer la mini-analyse pour qu’elle soit lisible sans votre présence. Une personne qui ouvre votre fichier doit comprendre la question, les résultats et la recommandation sans chercher dans votre console R.\n\n\n\n\n\n\nTrace finale à produire\n\n\n\nVotre trace finale est une mini-analyse Quarto courte. Elle doit contenir un graphique, au moins un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite.\n\n\nAvant de considérer la trace terminée :\n\n\nLe fichier se rend en HTML.\nLes graphiques ont des titres et des axes lisibles.\nLes coefficients sont interprétés avec les unités.\nLa recommandation ne confond pas association et causalité.\nUne limite importante est mentionnée.\n\n\n\n\n\n\n\n\nAuto-vérification assistée par IA\n\n\n\nVous pouvez utiliser le GPT du cours pour relire votre mini-analyse. Son rôle est de repérer les éléments manquants, les imprécisions statistiques et les conclusions trop fortes. Il ne doit pas rédiger la recommandation à votre place.\nSuggestion de demande :\n\nVoici ma mini-analyse de l’atelier 02. Vérifie si elle contient une question claire, un graphique, un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite. Indique les passages à corriger, sans réécrire mon texte à ma place.\n\nAprès cette vérification, notez une correction apportée à votre recommandation ou à votre interprétation."
+    "text": "Après l’atelier\nAprès la séance, le travail principal consiste à nettoyer la mini-analyse pour qu’elle soit lisible sans votre présence. Une personne qui ouvre votre fichier doit comprendre la question, les résultats et la recommandation sans chercher dans votre console R.\n\n\n\n\n\n\nImportantTrace finale à produire\n\n\n\nVotre trace finale est une mini-analyse Quarto courte. Elle doit contenir un graphique, au moins un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite.\n\n\nAvant de considérer la trace terminée :\n\n\nLe fichier se rend en HTML.\nLes graphiques ont des titres et des axes lisibles.\nLes coefficients sont interprétés avec les unités.\nLa recommandation ne confond pas association et causalité.\nUne limite importante est mentionnée.\n\n\n\n\n\n\n\n\nNoteAuto-vérification assistée par IA\n\n\n\nVous pouvez utiliser le GPT du cours pour relire votre mini-analyse. Son rôle est de repérer les éléments manquants, les imprécisions statistiques et les conclusions trop fortes. Il ne doit pas rédiger la recommandation à votre place.\nSuggestion de demande :\n\nVoici ma mini-analyse de l’atelier 02. Vérifie si elle contient une question claire, un graphique, un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite. Indique les passages à corriger, sans réécrire mon texte à ma place.\n\nAprès cette vérification, notez une correction apportée à votre recommandation ou à votre interprétation."
   },
   {
     "objectID": "modules/atelier-02-regression/index.html#je-suis-bloquée",
@@ -5198,14 +5198,14 @@
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-7---choisir-une-piste-prioritaire",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 7 - Choisir une piste prioritaire",
-    "text": "Étape 7 - Choisir une piste prioritaire\nLe modèle enrichi peut suggérer plusieurs pistes : achalandage, marketing, capacité de service, ruptures de stock. Votre rôle n’est pas de transformer un coefficient en certitude, mais de choisir une piste raisonnable à tester ou à approfondir.\n\ncoef(modele_enrichi)\n\n       (Intercept)        achalandage depenses_marketing   heures_personnel \n       5098.769070          34.788875           5.945467         131.425422 \n    ruptures_stock \n      -1947.275885 \n\n\n\n\n\n\n\n\nÀ vous 7 - Choisir une priorité\n\n\n\nChoisissez une variable prioritaire. Justifiez-la avec un résultat du modèle et un élément de contexte. Ajoutez immédiatement une limite."
+    "text": "Étape 7 - Choisir une piste prioritaire\nLe modèle enrichi peut suggérer plusieurs pistes : achalandage, marketing, capacité de service, ruptures de stock. Votre rôle n’est pas de transformer un coefficient en certitude, mais de choisir une piste raisonnable à tester ou à approfondir.\n\ncoef(modele_enrichi)\n\n       (Intercept)        achalandage depenses_marketing   heures_personnel \n       5098.769070          34.788875           5.945467         131.425422 \n    ruptures_stock \n      -1947.275885 \n\n\n\n\n\n\n\n\nAstuceÀ vous 7 - Choisir une priorité\n\n\n\nChoisissez une variable prioritaire. Justifiez-la avec un résultat du modèle et un élément de contexte. Ajoutez immédiatement une limite."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-8---rédiger-la-recommandation",
     "href": "modules/atelier-02-regression/guide-atelier.html#étape-8---rédiger-la-recommandation",
     "title": "Guide en classe - Atelier 02",
     "section": "Étape 8 - Rédiger la recommandation",
-    "text": "Étape 8 - Rédiger la recommandation\nUtilisez le modèle pour prioriser une piste, mais gardez l’incertitude visible.\n\nModèle de paragraphe à adapter\nLes données suggèrent que [facteur prioritaire] est associé aux ventes mensuelles.\nDans le modèle, [résultat chiffré ou direction de l'effet] indique que ce facteur\nmérite une attention particulière. Je recommande donc de [action prudente à tester\nou à approfondir]. Cette recommandation doit rester prudente, car les données sont\nobservationnelles et le modèle ne prouve pas à lui seul une relation causale.\nUne prochaine étape serait de [validation ou analyse complémentaire].\n\n\n\n\n\n\n\nÀ vous 8 - Rédiger votre recommandation\n\n\n\nRédigez cinq à sept lignes. Votre recommandation doit nommer le facteur prioritaire, le résultat qui l’appuie, l’action prudente à tester et une limite."
+    "text": "Étape 8 - Rédiger la recommandation\nUtilisez le modèle pour prioriser une piste, mais gardez l’incertitude visible.\n\nModèle de paragraphe à adapter\nLes données suggèrent que [facteur prioritaire] est associé aux ventes mensuelles.\nDans le modèle, [résultat chiffré ou direction de l'effet] indique que ce facteur\nmérite une attention particulière. Je recommande donc de [action prudente à tester\nou à approfondir]. Cette recommandation doit rester prudente, car les données sont\nobservationnelles et le modèle ne prouve pas à lui seul une relation causale.\nUne prochaine étape serait de [validation ou analyse complémentaire].\n\n\n\n\n\n\n\nAstuceÀ vous 8 - Rédiger votre recommandation\n\n\n\nRédigez cinq à sept lignes. Votre recommandation doit nommer le facteur prioritaire, le résultat qui l’appuie, l’action prudente à tester et une limite."
   },
   {
     "objectID": "modules/atelier-02-regression/guide-atelier.html#étape-9---mise-en-commun",
@@ -5486,5 +5486,152 @@
     "title": "Capsule 6 - Comparer prudemment",
     "section": "La même logique en gestion",
     "text": "La même logique en gestion\n\n\n\nNombre brut\n\n\n120 plaintes, 8 défauts, 50 000 $ de ventes.\n\n\n\n\nRamené à une base commune\n\n\nPlaintes par 1 000 clients, défauts par lot, ventes par employé.\n\n\n\n\nBrut vs taux : même grille de lecture en ventes, en qualité ou en RH."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
+    "title": "Capsule 1 - Préparer son environnement de travail",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nVoulez-vous que vos premiers obstacles soient des bugs d’installation, ou de vraies questions d’analyse?\n\n\nUn poste mal préparé fait perdre des heures sur des fichiers introuvables et des packages manquants. Cette capsule règle l’environnement une fois pour que le reste du cours porte sur les données, pas sur la plomberie."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#vérifier-que-tout-fonctionne",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#vérifier-que-tout-fonctionne",
+    "title": "Capsule 1 - Préparer son environnement de travail",
+    "section": "Vérifier que tout fonctionne",
+    "text": "Vérifier que tout fonctionne\n\n\nRStudio s’ouvre; la console répond;\ntidyverse se charge sans erreur;\nQuarto est accessible; le dossier de travail est repéré.\n\n\n1 + 1\n\nSi la console retourne 2, R exécute correctement une commande."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#reproductible-par-construction",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#reproductible-par-construction",
+    "title": "Capsule 1 - Préparer son environnement de travail",
+    "section": "Reproductible, par construction",
+    "text": "Reproductible, par construction\n\n\n\nDonnées\n\n\nrestent dans le projet, jamais modifiées à la main.\n\n\n\n\nCode\n\n\nconservé dans un fichier, relisible et réexécutable.\n\n\n\n\nRésultats\n\n\ngénérés par le code, pas copiés-collés.\n\n\n\n\nInterprétation\n\n\nécrite à côté des résultats qu’elle commente."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#lerreur-fréquente",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#lerreur-fréquente",
+    "title": "Capsule 1 - Préparer son environnement de travail",
+    "section": "L’erreur fréquente",
+    "text": "L’erreur fréquente\n\nObtenir un graphique en cliquant ou en copiant un résultat, mais ne pas garder le code qui l’a produit.\n\n\nDans ce cours, le code fait partie de la preuve : il doit pouvoir être relu et réexécuté."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#production-autonome-2.1",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#production-autonome-2.1",
+    "title": "Capsule 1 - Préparer son environnement de travail",
+    "section": "Production autonome 2.1",
+    "text": "Production autonome 2.1\n\nVérifiez que votre environnement est prêt et gardez-en une trace.\n\n\nExécutez 1 + 1, chargez tidyverse, puis notez : le résultat obtenu, un package chargé, un problème éventuel à régler.\n\n\nAuto-vérification : votre trace est complète si elle montre que R exécute une commande, qu’un package se charge, et qu’elle nomme tout blocage restant à résoudre."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
+    "title": "Capsule 2 - Se repérer dans RStudio",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nDans RStudio, savez-vous où va chaque chose que vous faites?\n\n\nOù écrire le rapport, où exécuter une commande, où retrouver un fichier ou un graphique : connaître les zones de l’interface évite la plupart des erreurs de débutant. Cinq minutes ici en font gagner beaucoup ensuite."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#la-discipline-qui-évite-les-erreurs",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#la-discipline-qui-évite-les-erreurs",
+    "title": "Capsule 2 - Se repérer dans RStudio",
+    "section": "La discipline qui évite les erreurs",
+    "text": "La discipline qui évite les erreurs\n\n\n\nOn teste dans la Console\n\n\nune commande ponctuelle, pour voir si elle marche.\n\n\n\n\nOn garde dans la Source\n\n\ntout ce qui fait partie de l’analyse finale, dans le .qmd.\n\n\n\n\nUn graphique affiché ne suffit pas : le code qui le produit doit rester dans le rapport."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#chercher-une-fonction",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#chercher-une-fonction",
+    "title": "Capsule 2 - Se repérer dans RStudio",
+    "section": "Chercher une fonction",
+    "text": "Chercher une fonction\n?read_csv\n?ggplot\n\nL’aide intégrée montre les arguments d’une fonction et un exemple minimal."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#production-autonome-2.2",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#production-autonome-2.2",
+    "title": "Capsule 2 - Se repérer dans RStudio",
+    "section": "Production autonome 2.2",
+    "text": "Production autonome 2.2\n\nAssociez chaque zone de RStudio à une action concrète.\n\n\nÉcrire le rapport, exécuter du code, voir les objets, trouver les fichiers, afficher un graphique. Puis écrivez une phrase sur le rôle de deux zones utiles.\n\n\nAuto-vérification : votre réponse est complète si chaque action est reliée à la bonne zone et si vos deux phrases distinguent clairement écrire, exécuter et inspecter."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
+    "title": "Capsule 3 - Organiser un projet reproductible",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nVotre analyse fonctionnera-t-elle sur un autre ordinateur que le vôtre?\n\n\nLes mini-rapports se font en équipe. Si votre code pointe vers un dossier qui n’existe que sur votre portable, il plantera chez votre coéquipier. Un projet R bien organisé rend l’analyse transférable."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#lire-le-fichier-par-chemin-relatif",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#lire-le-fichier-par-chemin-relatif",
+    "title": "Capsule 3 - Organiser un projet reproductible",
+    "section": "Lire le fichier par chemin relatif",
+    "text": "Lire le fichier par chemin relatif\nreadr::read_csv(\"data/ventes_operations_quebec.csv\")\n\nLe fichier de travail est ventes_operations_quebec.csv : à placer dans data/, sans le modifier à la main."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#production-autonome-2.3",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#production-autonome-2.3",
+    "title": "Capsule 3 - Organiser un projet reproductible",
+    "section": "Production autonome 2.3",
+    "text": "Production autonome 2.3\n\nCréez ou ouvrez un projet R pour la semaine 02.\n\n\nNotez : le nom du projet, l’emplacement du dossier data/, et une phrase expliquant pourquoi les chemins relatifs facilitent la reprise par une autre personne.\n\n\nAuto-vérification : votre réponse est complète si le projet contient un dossier data/, si le fichier CSV y est placé, et si la phrase relie chemin relatif et transfert vers un autre ordinateur."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
+    "title": "Capsule 4 - Importer et inspecter un tableau",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nComment savoir si R a vraiment lu ce que vous croyez avoir importé?\n\n\nUn fichier importé sans vérification, c’est un calcul juste sur un tableau inconnu. Avant toute moyenne : combien de lignes, combien de colonnes, quels types, et que représente une ligne?"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#dimensions-et-unité-dobservation",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#dimensions-et-unité-dobservation",
+    "title": "Capsule 4 - Importer et inspecter un tableau",
+    "section": "Dimensions et unité d’observation",
+    "text": "Dimensions et unité d’observation\n\n\n[1] 24 12\n\n\n\nPremière valeur : le nombre de lignes. Deuxième : le nombre de colonnes. Ici, une ligne correspond à une succursale pour un mois."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#production-autonome-2.4",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#production-autonome-2.4",
+    "title": "Capsule 4 - Importer et inspecter un tableau",
+    "section": "Production autonome 2.4",
+    "text": "Production autonome 2.4\n\nImportez ventes_operations_quebec.csv et décrivez le tableau.\n\n\nIndiquez : le code d’importation, le nombre de lignes, le nombre de colonnes et ce que représente une ligne.\n\n\nAuto-vérification : votre réponse est complète si le code d’importation est conservé, si les dimensions sont exactes et si l’unité d’observation (une succursale pour un mois) est nommée."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nCette succursale a-t-elle vraiment les meilleures ventes, ou des données manquantes faussent-elles le portrait?\n\n\nUn classement bâti sur des colonnes incomplètes peut désigner le mauvais gagnant. Avant de comparer, on prépare les types de variables et on repère ce qui manque."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#repérer-les-valeurs-manquantes",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#repérer-les-valeurs-manquantes",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Repérer les valeurs manquantes",
+    "text": "Repérer les valeurs manquantes\n\nUne valeur manquante peut modifier une moyenne, un total ou une conclusion. Cette semaine, on ne les impute pas encore : on les repère et on les signale.\n\n\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#production-autonome-2.5",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#production-autonome-2.5",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Production autonome 2.5",
+    "text": "Production autonome 2.5\n\nDiagnostiquez et résumez le tableau préparé.\n\n\nAjoutez : un tableau de diagnostic des valeurs manquantes, un tableau descriptif par succursale ou par canal, et une phrase de précaution d’interprétation.\n\n\nAuto-vérification : votre travail est complet si le diagnostic nomme les variables incomplètes, si le tableau descriptif répond à une question claire et si la limite évite toute conclusion causale."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#pourquoi-ça-compte",
+    "title": "Capsule 6 - Produire un mini-rapport Quarto",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nPourriez-vous reproduire votre analyse du début à la fin, sans un seul clic manuel?\n\n\nC’est l’épreuve du mini-rapport : un document Quarto qui se rend tout seul, du fichier brut aux constats. S’il se rend chez vous, il se rendra chez le correcteur et dans votre équipe."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#écrire-un-constat-éviter-une-cause",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#écrire-un-constat-éviter-une-cause",
+    "title": "Capsule 6 - Produire un mini-rapport Quarto",
+    "section": "Écrire un constat, éviter une cause",
+    "text": "Écrire un constat, éviter une cause\n\n\n\nConstat descriptif\n\n\nLa succursale aux ventes totales les plus élevées n’a pas forcément le panier moyen le plus élevé.\n\n\n\n\nÀ éviter\n\n\n« La campagne locale cause les ventes plus élevées » : l’analyse ne permet qu’une description."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#production-autonome-2.6",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#production-autonome-2.6",
+    "title": "Capsule 6 - Produire un mini-rapport Quarto",
+    "section": "Production autonome 2.6",
+    "text": "Production autonome 2.6\n\nProduisez le mini-rapport Quarto et vérifiez qu’il se rend sans erreur.\n\n\nRelisez avant de conclure : le code d’importation, le diagnostic, le tableau, le graphique, les deux constats et la question à approfondir.\n\n\nAuto-vérification : votre trace est complète si le document se rend sans erreur, si les constats restent descriptifs et si la question finale ouvre vers une analyse future."
   }
 ]

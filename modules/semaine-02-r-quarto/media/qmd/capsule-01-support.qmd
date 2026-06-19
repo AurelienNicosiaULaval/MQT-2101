@@ -27,138 +27,170 @@ execute:
 editor: visual
 ---
 
-## Objectifs de la capsule
+## Pourquoi ça compte
 
-::: {.keypoints}
-- Comprendre le rôle de R, RStudio et Quarto dans le cours.
-- Vérifier que l'environnement de travail fonctionne.
-- Charger les packages de base utilisés dans les premières semaines.
-- Produire une courte trace indiquant que le poste de travail est prêt.
+::: {.kicker}
+Une décision concrète
 :::
 
-## Pourquoi commencer par l'environnement?
-
-::: {.lead}
-Une analyse reproductible commence avant le premier calcul : il faut savoir où
-se trouvent les fichiers, quel outil exécute le code et comment refaire le
-résultat.
+::: {.question-line}
+Voulez-vous que vos premiers obstacles soient des bugs d'installation, ou de vraies questions d'analyse?
 :::
 
 ::: {.note-box}
-Le but de cette capsule est simple : éviter que les premiers problèmes soient
-des problèmes d'installation, de dossier ou de package manquant.
+Un poste mal préparé fait perdre des heures sur des fichiers introuvables et des packages manquants. Cette capsule règle l'environnement une fois pour que le reste du cours porte sur les données, pas sur la plomberie.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Comprendre le rôle de R, RStudio et Quarto.
+- Vérifier que l'environnement fonctionne.
+- Charger les packages de base du cours.
 :::
 
 ## Trois outils, trois rôles
 
-:::: {.columns}
-
+::: {.columns}
 ::: {.column width="32%"}
 ### R
 
-Langage qui exécute les commandes statistiques et produit les objets.
+Le langage qui exécute les commandes et produit les résultats.
 :::
-
 ::: {.column width="32%"}
 ### RStudio
 
-Interface pour écrire, organiser, exécuter et inspecter le travail.
+L'interface pour écrire, organiser, exécuter et inspecter.
 :::
-
 ::: {.column width="32%"}
 ### Quarto
 
-Format qui rassemble texte, code, tableaux, graphiques et interprétation.
+Le format qui réunit texte, code, tableaux, graphiques et interprétation.
+:::
 :::
 
-::::
-
-## Ce que vous devez vérifier
+## Vérifier que tout fonctionne
 
 ::: {.keypoints}
-- RStudio s'ouvre correctement.
-- La console accepte une commande simple.
-- Le package `tidyverse` se charge.
-- Quarto est accessible depuis RStudio.
-- Vous savez retrouver le dossier de travail.
+- RStudio s'ouvre; la console répond;
+- `tidyverse` se charge sans erreur;
+- Quarto est accessible; le dossier de travail est repéré.
 :::
 
-## Test minimal dans la console
-
-```r
+``` r
 1 + 1
 ```
 
 ::: {.note-box}
-Si la console retourne `2`, R exécute correctement une commande simple.
+Si la console retourne `2`, R exécute correctement une commande.
 :::
 
 ## Charger les packages de base
 
-```r
+``` r
 library(tidyverse)
 library(janitor)
 library(lubridate)
 library(scales)
 ```
 
-::: {.note-box}
-Si un package n'est pas installé, il faut l'installer une fois avec
-`install.packages("nom_du_package")`, puis refaire `library()`.
-:::
-
-## Packages utilisés cette semaine
-
 | Package | Rôle dans le module |
 |---|---|
-| `tidyverse` | importer, transformer, résumer et visualiser |
+| `tidyverse` | importer, transformer, résumer, visualiser |
 | `janitor` | nettoyer les noms de variables |
 | `lubridate` | manipuler les dates |
-| `scales` | afficher des montants et des nombres lisibles |
+| `scales` | afficher des montants lisibles |
 
-## Reproductibilité : l'idée centrale
-
-::: {.lead}
-Un résultat est reproductible si une autre personne peut reprendre les mêmes
-fichiers et le même code pour obtenir les mêmes résultats.
+::: {.visual-note}
+Un package non installé s'ajoute une fois avec `install.packages("nom")`, puis `library()`.
 :::
 
-::: {.keypoints}
-- les données restent dans le projet;
-- le code est conservé dans un fichier;
-- les résultats sont générés par le code;
-- l'interprétation indique ce que les résultats montrent.
+## Reproductible, par construction
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Données
+:::
+::: {.text}
+restent dans le projet, jamais modifiées à la main.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Code
+:::
+::: {.text}
+conservé dans un fichier, relisible et réexécutable.
+:::
+:::
+::: {.concept-card .accent}
+::: {.tag}
+Résultats
+:::
+::: {.text}
+générés par le code, pas copiés-collés.
+:::
+:::
+::: {.concept-card .accent}
+::: {.tag}
+Interprétation
+:::
+::: {.text}
+écrite à côté des résultats qu'elle commente.
+:::
+:::
 :::
 
-## Erreur fréquente
+## L'erreur fréquente
 
 ::: {.example-box}
-Erreur fréquente : obtenir un graphique en cliquant ou en copiant un résultat,
-mais ne pas garder le code qui l'a produit.
+Obtenir un graphique en cliquant ou en copiant un résultat, mais ne pas garder le code qui l'a produit.
 :::
 
 ::: {.note-box}
-Dans ce cours, le code est une partie de la preuve. Il doit pouvoir être relu et
-réexécuté.
-:::
-
-## Activité 2.1
-
-::: {.callout-tip title="Vérifier que l'environnement fonctionne"}
-Dans la console, exécutez `1 + 1`, puis chargez `tidyverse`.
-
-Dans votre trace, notez :
-
-- le résultat obtenu;
-- un package chargé correctement;
-- une question ou un problème à régler, s'il y en a un.
+Dans ce cours, le code fait partie de la preuve : il doit pouvoir être relu et réexécuté.
 :::
 
 ## À retenir
 
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+R
+:::
+::: {.label}
+calcule et produit les résultats.
+:::
+:::
+::: {.metric}
+::: {.value}
+RStudio
+:::
+::: {.label}
+organise le travail.
+:::
+:::
+::: {.metric}
+::: {.value}
+Quarto
+:::
+::: {.label}
+produit le rapport reproductible.
+:::
+:::
+:::
+
+## Production autonome 2.1
+
+::: {.lead}
+Vérifiez que votre environnement est prêt et gardez-en une trace.
+:::
+
 ::: {.keypoints}
-- R calcule.
-- RStudio organise le travail.
-- Quarto produit le rapport reproductible.
-- La trace attendue est une courte note indiquant que l'environnement est prêt.
+Exécutez `1 + 1`, chargez `tidyverse`, puis notez : le résultat obtenu, un package chargé, un problème éventuel à régler.
+:::
+
+::: {.self-check}
+Auto-vérification : votre trace est complète si elle montre que R exécute une commande, qu'un package se charge, et qu'elle nomme tout blocage restant à résoudre.
 :::

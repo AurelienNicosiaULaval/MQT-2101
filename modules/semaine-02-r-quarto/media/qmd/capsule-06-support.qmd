@@ -73,25 +73,26 @@ resume_succursales <- ventes_preparees |>
   arrange(desc(ventes_totales))
 ```
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+Pourriez-vous reproduire votre analyse du début à la fin, sans un seul clic manuel?
+:::
+
+::: {.note-box}
+C'est l'épreuve du mini-rapport : un document Quarto qui se rend tout seul, du fichier brut aux constats. S'il se rend chez vous, il se rendra chez le correcteur et dans votre équipe.
+:::
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
 - Créer un graphique simple avec `ggplot2`.
-- Structurer un mini-rapport Quarto.
-- Rendre le document en HTML.
+- Structurer un mini-rapport Quarto et le rendre en HTML.
 - Formuler deux constats descriptifs et une question à approfondir.
-:::
-
-## Le rôle du mini-rapport
-
-::: {.lead}
-La trace finale de la semaine 02 montre que vous pouvez reprendre l'analyse du
-début à la fin.
-:::
-
-::: {.note-box}
-Le mini-rapport n'est pas long. Il doit surtout être clair, reproductible et
-lisible.
 :::
 
 ## Créer un graphique
@@ -118,15 +119,15 @@ resume_succursales |>
 ## Un graphique doit être lisible
 
 ::: {.keypoints}
-- Le titre indique ce qui est comparé.
-- Les axes indiquent les unités.
-- Les catégories sont lisibles.
-- Le graphique répond à une question simple.
+- le titre indique ce qui est comparé;
+- les axes indiquent les unités;
+- les catégories sont lisibles;
+- le graphique répond à une question simple.
 :::
 
 ## Structure minimale du QMD
 
-```qmd
+``` qmd
 ---
 title: "Mini-rapport - Semaine 02"
 format:
@@ -147,78 +148,90 @@ format:
 ## Constats
 ```
 
-## Ce que le rapport doit contenir
-
-::: {.keypoints}
-- une courte introduction;
-- le code d'importation;
-- une inspection du tableau;
-- un diagnostic des valeurs manquantes;
-- un tableau descriptif;
-- un graphique;
-- deux constats descriptifs;
-- une question à approfondir.
-:::
-
 ## Rendre le document
 
 ::: {.lead}
-Dans RStudio, utilisez le bouton Render pour produire la page HTML.
+Dans RStudio, le bouton Render produit la page HTML.
 :::
 
-```bash
+``` bash
 quarto render rapport_semaine_02.qmd
 ```
 
 ::: {.note-box}
-Après le rendu, ouvrez le HTML et vérifiez que le texte, les tableaux, le
-graphique et les constats apparaissent correctement.
+Après le rendu, ouvrez le HTML et vérifiez que texte, tableaux, graphique et constats apparaissent correctement.
 :::
 
-## Écrire un constat descriptif
+## Écrire un constat, éviter une cause
 
-::: {.example-box}
-Constat descriptif acceptable : la succursale qui présente les ventes totales
-les plus élevées n'est pas nécessairement celle qui présente le panier moyen le
-plus élevé.
+::: {.statement-grid}
+::: {.statement-card .acceptable}
+::: {.tag}
+Constat descriptif
 :::
-
-::: {.callout-warning title="À éviter"}
-Éviter les conclusions causales comme : "la campagne locale cause les ventes
-plus élevées", si l'analyse ne permet qu'une description.
+::: {.text}
+La succursale aux ventes totales les plus élevées n'a pas forcément le panier moyen le plus élevé.
+:::
+:::
+::: {.statement-card .warning}
+::: {.tag}
+À éviter
+:::
+::: {.text}
+« La campagne locale cause les ventes plus élevées » : l'analyse ne permet qu'une description.
+:::
+:::
 :::
 
 ## Question à approfondir
 
-::: {.lead}
-La dernière phrase du rapport peut ouvrir vers une analyse future.
-:::
-
 ::: {.example-box}
-Question possible : la relation entre les dépenses marketing et les ventes
-reste-t-elle visible lorsqu'on compare les succursales et les mois?
+La relation entre les dépenses marketing et les ventes reste-t-elle visible lorsqu'on compare les succursales et les mois?
 :::
 
-## Activité 2.6
-
-::: {.callout-tip title="Finaliser la trace finale"}
-Produisez le mini-rapport Quarto et vérifiez qu'il se rend sans erreur.
-
-Avant de considérer le fichier terminé, relisez :
-
-- le code d'importation;
-- le diagnostic;
-- le tableau;
-- le graphique;
-- les deux constats;
-- la question à approfondir.
+::: {.visual-note}
+La dernière phrase du rapport ouvre vers une analyse future : c'est le pont vers la régression.
 :::
 
 ## À retenir
 
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Le rapport doit pouvoir être rendu de nouveau, sans clic manuel.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Le code et les résultats restent ensemble.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Les constats restent descriptifs; la question finale prépare la suite.
+:::
+:::
+:::
+
+## Production autonome 2.6
+
+::: {.lead}
+Produisez le mini-rapport Quarto et vérifiez qu'il se rend sans erreur.
+:::
+
 ::: {.keypoints}
-- Le rapport doit pouvoir être rendu à nouveau.
-- Le code et les résultats doivent rester ensemble.
-- Les constats doivent être descriptifs et prudents.
-- La question finale prépare les analyses plus avancées.
+Relisez avant de conclure : le code d'importation, le diagnostic, le tableau, le graphique, les deux constats et la question à approfondir.
+:::
+
+::: {.self-check}
+Auto-vérification : votre trace est complète si le document se rend sans erreur, si les constats restent descriptifs et si la question finale ouvre vers une analyse future.
 :::

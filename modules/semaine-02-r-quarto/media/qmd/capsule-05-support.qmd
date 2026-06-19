@@ -55,19 +55,32 @@ currency_ca <- scales::label_dollar(
 )
 ```
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+Cette succursale a-t-elle vraiment les meilleures ventes, ou des données manquantes faussent-elles le portrait?
+:::
+
+::: {.note-box}
+Un classement bâti sur des colonnes incomplètes peut désigner le mauvais gagnant. Avant de comparer, on prépare les types de variables et on repère ce qui manque.
+:::
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
 - Préparer les types de variables utiles.
-- Repérer les valeurs manquantes.
-- Produire un tableau descriptif par groupe.
-- Interpréter un diagnostic sans masquer les limites.
+- Repérer et signaler les valeurs manquantes.
+- Produire un tableau descriptif par groupe et l'interpréter prudemment.
 :::
 
 ## Préparer avant de résumer
 
 ::: {.lead}
-Un résumé est plus fiable lorsque les types de variables sont explicites.
+Un résumé est plus fiable quand les types de variables sont explicites.
 :::
 
 ```{r}
@@ -99,19 +112,11 @@ ventes_preparees |>
   )
 ```
 
-## Pourquoi diagnostiquer les valeurs manquantes?
-
-::: {.lead}
-Une valeur manquante peut modifier une moyenne, un total, un graphique ou une
-conclusion descriptive.
-:::
+## Repérer les valeurs manquantes
 
 ::: {.note-box}
-Pour cette semaine, on ne cherche pas encore à imputer les valeurs. On apprend
-à les repérer et à les signaler.
+Une valeur manquante peut modifier une moyenne, un total ou une conclusion. Cette semaine, on ne les impute pas encore : on les repère et on les signale.
 :::
-
-## Compter les valeurs manquantes
 
 ```{r}
 #| label: capsule-05-manquants
@@ -131,10 +136,9 @@ diagnostic_manquants
 ## Interpréter le diagnostic
 
 ::: {.keypoints}
-- Nommer les variables incomplètes.
-- Dire quels indicateurs peuvent être touchés.
-- Utiliser `na.rm = TRUE` seulement si la décision est signalée.
-- Éviter d'ignorer les valeurs manquantes dans le texte.
+- nommer les variables incomplètes;
+- dire quels indicateurs peuvent être touchés;
+- n'utiliser `na.rm = TRUE` que si la décision est signalée.
 :::
 
 ## Résumer par succursale
@@ -164,33 +168,52 @@ resume_succursales |>
 
 ## Lire un tableau descriptif
 
-::: {.lead}
-Un tableau descriptif sert à comparer quelques indicateurs, pas à tout
-commenter.
-:::
-
 ::: {.keypoints}
-- Repérer la succursale avec les ventes les plus élevées.
-- Comparer le panier moyen et la satisfaction.
-- Vérifier si un même groupe ressort pour tous les indicateurs.
-- Formuler une limite de comparaison.
-:::
-
-## Activité 2.5
-
-::: {.callout-tip title="Diagnostiquer et résumer"}
-Dans votre trace, ajoutez :
-
-- un tableau de diagnostic des valeurs manquantes;
-- un tableau descriptif par succursale ou par canal;
-- une phrase qui explique une précaution d'interprétation.
+- repérer la succursale aux ventes les plus élevées;
+- comparer panier moyen et satisfaction;
+- vérifier si le même groupe ressort pour tous les indicateurs;
+- formuler une limite de comparaison.
 :::
 
 ## À retenir
 
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Préparer les variables évite des erreurs de calcul.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Les valeurs manquantes se signalent, ne se cachent pas.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Un tableau descriptif se lie à une question et à une limite.
+:::
+:::
+:::
+
+## Production autonome 2.5
+
+::: {.lead}
+Diagnostiquez et résumez le tableau préparé.
+:::
+
 ::: {.keypoints}
-- Préparer les variables aide à éviter des erreurs de calcul.
-- Les valeurs manquantes doivent être signalées.
-- Un tableau descriptif doit être lié à une question.
-- Une interprétation prudente nomme aussi une limite.
+Ajoutez : un tableau de diagnostic des valeurs manquantes, un tableau descriptif par succursale ou par canal, et une phrase de précaution d'interprétation.
+:::
+
+::: {.self-check}
+Auto-vérification : votre travail est complet si le diagnostic nomme les variables incomplètes, si le tableau descriptif répond à une question claire et si la limite évite toute conclusion causale.
 :::

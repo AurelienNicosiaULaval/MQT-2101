@@ -27,43 +27,64 @@ execute:
 editor: visual
 ---
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+Votre analyse fonctionnera-t-elle sur un autre ordinateur que le vôtre?
+:::
+
+::: {.note-box}
+Les mini-rapports se font en équipe. Si votre code pointe vers un dossier qui n'existe que sur votre portable, il plantera chez votre coéquipier. Un projet R bien organisé rend l'analyse transférable.
+:::
+
 ## Objectifs de la capsule
 
 ::: {.keypoints}
 - Comprendre pourquoi un projet R soutient la reproductibilité.
 - Distinguer chemin relatif et chemin absolu.
 - Organiser minimalement un dossier d'analyse.
-- Produire une courte justification du choix d'un projet.
 :::
 
 ## Le problème des chemins
 
-::: {.lead}
-Un chemin qui fonctionne sur un seul ordinateur peut échouer partout ailleurs.
+::: {.concept-grid}
+::: {.concept-card .accent}
+::: {.tag}
+Reproductible
+:::
+::: {.text}
+`data/ventes_operations_quebec.csv` - relatif au projet, valide partout.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Fragile
+:::
+::: {.text}
+`/Users/nom/Desktop/cours/donnees.csv` - lié à un seul ordinateur.
+:::
+:::
 :::
 
-::: {.example-box}
-Chemin fragile : `/Users/nom/Desktop/cours/donnees.csv`
-
-Chemin reproductible : `data/ventes_operations_quebec.csv`
+::: {.note-box}
+Un chemin relatif reste valide tant que le dossier du projet se déplace d'un bloc.
 :::
 
 ## Le rôle du projet R
 
-::: {.lead}
-Un projet R donne un point de départ clair au travail.
-:::
-
 ::: {.keypoints}
-- les fichiers de données sont au même endroit pour tout le monde;
-- le rapport retrouve les fichiers avec des chemins relatifs;
-- le travail est plus facile à reprendre;
-- les erreurs de dossier sont plus faciles à diagnostiquer.
+- les données sont au même endroit pour toute l'équipe;
+- le rapport les retrouve par chemin relatif;
+- le travail se reprend et se diagnostique plus facilement.
 :::
 
 ## Structure minimale
 
-```text
+``` text
 projet-semaine-02/
   data/
     ventes_operations_quebec.csv
@@ -74,79 +95,76 @@ projet-semaine-02/
 Cette structure suffit pour produire la trace finale de la semaine 02.
 :::
 
-## Chemin relatif
+## Lire le fichier par chemin relatif
 
-::: {.lead}
-Un chemin relatif décrit où se trouve un fichier à partir du dossier du projet.
-:::
-
-```r
+``` r
 readr::read_csv("data/ventes_operations_quebec.csv")
 ```
 
-::: {.note-box}
-Le chemin reste valide si tout le dossier du projet est déplacé ensemble.
-:::
-
-## Chemin absolu
-
-::: {.lead}
-Un chemin absolu dépend souvent d'un ordinateur précis.
-:::
-
-```r
-readr::read_csv("/Users/mon_nom/Desktop/data/ventes_operations_quebec.csv")
-```
-
-::: {.callout-warning title="À éviter"}
-Un chemin absolu rend le rapport difficile à reprendre par une autre personne.
-:::
-
-## Où placer le fichier CSV?
-
-::: {.lead}
-Dans ce module, le fichier de travail est
-<a class="data-link" href="../../../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.
-:::
-
-::: {.keypoints}
-- placer le fichier dans `data/`;
-- ne pas modifier le CSV à la main;
-- garder les transformations dans le code;
-- vérifier le nom exact du fichier.
+::: {.visual-note}
+Le fichier de travail est <a class="data-link" href="../../../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a> : à placer dans `data/`, sans le modifier à la main.
 :::
 
 ## Nommer les fichiers
 
-::: {.keypoints}
-- utiliser des noms courts;
-- éviter les espaces;
-- éviter les accents dans les noms de fichiers personnels;
-- indiquer le contenu plutôt que la version vague.
+::: {.concept-grid}
+::: {.concept-card .accent}
+::: {.tag}
+À préférer
 :::
-
-::: {.example-box}
-Préférer `rapport_semaine_02.qmd` à `travail final nouveau vraiment final.qmd`.
+::: {.text}
+`rapport_semaine_02.qmd` - court, sans espace ni accent, descriptif.
 :::
-
-## Activité 2.3
-
-::: {.callout-tip title="Expliquer l'utilité d'un projet R"}
-Créez ou ouvrez un projet R pour la semaine 02.
-
-Dans votre trace, indiquez :
-
-- le nom du projet;
-- l'emplacement du dossier `data/`;
-- une phrase expliquant pourquoi les chemins relatifs facilitent la reprise de
-  l'analyse.
+:::
+::: {.concept-card}
+::: {.tag}
+À éviter
+:::
+::: {.text}
+`travail final nouveau vraiment final.qmd` - vague et fragile.
+:::
+:::
 :::
 
 ## À retenir
 
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Un projet R donne un point de départ stable.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Le dossier `data/` contient les fichiers d'entrée.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Les chemins relatifs rendent l'analyse transférable.
+:::
+:::
+:::
+
+## Production autonome 2.3
+
+::: {.lead}
+Créez ou ouvrez un projet R pour la semaine 02.
+:::
+
 ::: {.keypoints}
-- Un projet R donne un point de départ stable.
-- Le dossier `data/` contient les fichiers d'entrée.
-- Les chemins relatifs rendent le rapport plus facile à reprendre.
-- Le fichier `.qmd` doit rester dans le projet.
+Notez : le nom du projet, l'emplacement du dossier `data/`, et une phrase expliquant pourquoi les chemins relatifs facilitent la reprise par une autre personne.
+:::
+
+::: {.self-check}
+Auto-vérification : votre réponse est complète si le projet contient un dossier `data/`, si le fichier CSV y est placé, et si la phrase relie chemin relatif et transfert vers un autre ordinateur.
 :::
