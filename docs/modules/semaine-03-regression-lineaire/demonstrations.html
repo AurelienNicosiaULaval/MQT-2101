@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -4031,7 +4031,18 @@ vertical-align: -.125em;
 }</script>
 
 
-<style type="text/css">.navbar-logo {
+<style type="text/css">@media (min-width: 992px) {
+#quarto-content.page-layout-article main.content {
+grid-column: screen-start / screen-end;
+justify-self: center;
+width: min(1180px, calc(100vw - 4rem));
+max-width: min(1180px, calc(100vw - 4rem));
+}
+#quarto-content.page-layout-article #quarto-margin-sidebar {
+display: none;
+}
+}
+.navbar-logo {
 width: 34px !important;
 height: 34px !important;
 max-width: 34px;
@@ -4480,7 +4491,8 @@ margin: 1rem 0 0;
 }
 .calendar-flow {
 --calendar-border: #d8e4ea;
-margin: 1rem 0 3rem;
+max-width: 1120px;
+margin: 1rem auto 3rem;
 }
 .calendar-flow__header {
 margin-bottom: clamp(1.1rem, 3vw, 2rem);
@@ -4502,8 +4514,8 @@ gap: 0;
 .calendar-block {
 --block-color: #0b4f6c;
 display: grid;
-grid-template-columns: minmax(170px, 0.34fr) minmax(0, 1fr);
-gap: clamp(1rem, 3vw, 2.25rem);
+grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);
+gap: clamp(1.35rem, 4vw, 3rem);
 padding: clamp(1.25rem, 3vw, 2rem) 0;
 border-bottom: 1px solid var(--calendar-border);
 }
@@ -4523,6 +4535,7 @@ border-top: 1px solid var(--calendar-border);
 position: sticky;
 top: 5.3rem;
 align-self: start;
+min-width: 0;
 padding-left: 1rem;
 border-left: 5px solid var(--block-color);
 }
@@ -4538,9 +4551,10 @@ text-transform: uppercase;
 .calendar-block__header h2 {
 margin: 0;
 color: #123244;
-font-size: clamp(1.35rem, 2.5vw, 2rem);
+font-size: clamp(1.45rem, 2.25vw, 2rem);
 font-weight: 900;
 line-height: 1.08;
+overflow-wrap: break-word;
 }
 .calendar-weeks {
 display: grid;
@@ -4579,12 +4593,14 @@ line-height: 1;
 .calendar-weeks a,
 .calendar-week__plain {
 grid-column: 2;
-width: fit-content;
+width: auto;
+max-width: 100%;
 color: #123244;
 font-size: 1.05rem;
 font-weight: 800;
 line-height: 1.25;
 text-decoration: none;
+overflow-wrap: break-word;
 }
 .calendar-weeks a + a {
 margin-top: 0.18rem;
