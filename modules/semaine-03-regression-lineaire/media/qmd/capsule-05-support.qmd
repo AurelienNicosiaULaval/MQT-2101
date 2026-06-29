@@ -27,54 +27,128 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-capsule-05-semaine-03
+#| include: false
+
+library(tidyverse)
+
+data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
+  "data/campagnes_marketing_quebec.csv"
+} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
+  "../../data/campagnes_marketing_quebec.csv"
+} else {
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+}
+
+campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+Un R² élevé garantit-il un bon modèle?
+:::
+
+::: {.note-box}
+Non. Une droite peut afficher un bon ajustement global tout en commettant des erreurs systématiques sur une partie des données. Les résidus révèlent ces erreurs cachées avant qu'elles ne fragilisent une recommandation.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Définir un résidu.
-- Comprendre ce que les résidus révèlent.
 - Produire un graphique de diagnostic simple.
 - Repérer les signes d'un modèle fragile.
+:::
 
 ## Définition
 
-Un résidu est la différence entre la valeur observée et la valeur prédite :
+::: {.lead}
+Un résidu est l'écart entre la valeur observée et la valeur prédite :
+:::
 
-$$résidu = y - \hat{y}.$$
+$$\text{résidu} = y - \hat{y}.$$
 
-## Pourquoi regarder les résidus?
+::: {.note-box}
+Les résidus indiquent où la droite se trompe. Une structure claire peut signaler qu'un modèle linéaire simple est insuffisant.
+:::
 
-Les résidus indiquent où la droite se trompe. S'ils montrent une structure claire, le modèle linéaire simple peut être insuffisant.
+## Le graphique des résidus
 
-## Code de diagnostic
+```{r}
+#| label: capsule-05-residus
+#| echo: true
+#| fig-width: 9
+#| fig-height: 4.4
+#| out-width: "100%"
 
-```r
 resultats <- campagnes |>
   mutate(
     ventes_predites = fitted(modele),
     residus = residuals(modele)
   )
 
-ggplot(resultats, aes(x = ventes_predites, y = residus)) +
-  geom_point(alpha = 0.7) +
-  geom_hline(yintercept = 0)
+ggplot(resultats, aes(ventes_predites, residus)) +
+  geom_point(alpha = 0.6, color = "#0B4F6C") +
+  geom_hline(yintercept = 0, color = "#E63946", linewidth = 1) +
+  labs(x = "Ventes prédites", y = "Résidus") +
+  theme_minimal(base_size = 14)
 ```
 
 ## Ce qu'on espère voir
 
-- Des résidus répartis autour de zéro.
-- Pas de courbure évidente.
-- Pas d'éventail très marqué.
-- Pas d'observation isolée qui domine toute l'analyse.
+::: {.keypoints}
+- des résidus répartis autour de zéro;
+- pas de courbure évidente;
+- pas d'éventail qui s'élargit;
+- pas d'observation isolée qui domine tout.
+:::
 
-## Piège fréquent
-
-Un coefficient significatif ou un `R²` élevé ne dispense pas de regarder les résidus. Le diagnostic sert à vérifier la forme du modèle.
-
-## Activité 3.5
-
-Décrivez ce que vous regarderiez dans un graphique résidus versus valeurs prédites avant de faire une recommandation.
+::: {.visual-note}
+Un coefficient significatif ou un R² élevé ne remplace jamais l'examen des résidus.
+:::
 
 ## À retenir
 
-- Les résidus sont la mémoire des erreurs du modèle.
-- Un diagnostic visuel protège contre une interprétation trop rapide.
-- Une droite utile doit rester cohérente avec les données.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Les résidus gardent la trace des erreurs du modèle.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Un diagnostic visuel protège d'une interprétation trop rapide.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Une droite utile reste cohérente avec les données.
+:::
+:::
+:::
+
+## Production autonome 3.5
+
+::: {.lead}
+Décrivez votre lecture d'un graphique résidus contre valeurs prédites.
+:::
+
+::: {.keypoints}
+Nommez ce que vous regardez : centrage, courbure, éventail et point isolé, avant de faire une recommandation.
+:::

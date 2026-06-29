@@ -27,52 +27,146 @@ execute:
 editor: visual
 ---
 
-## Objectifs de la capsule
+```{r}
+#| label: setup-capsule-04-semaine-03
+#| include: false
 
-- Utiliser `lm()` pour ajuster une régression linéaire.
-- Lire les coefficients du modèle.
-- Transformer la sortie R en phrases interprétables.
-- Éviter de recopier la sortie sans explication.
-
-## Code de base
-
-```r
 library(tidyverse)
 
-campagnes <- read_csv("data/campagnes_marketing_quebec.csv")
+data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
+  "data/campagnes_marketing_quebec.csv"
+} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
+  "../../data/campagnes_marketing_quebec.csv"
+} else {
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+}
 
-modele <- lm(ventes ~ budget_marketing, data = campagnes)
-summary(modele)
+campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
 ```
 
-## Lire la formule
+## Pourquoi ça compte
 
-- À gauche de `~` : variable réponse.
-- À droite de `~` : variable explicative.
-- `data = campagnes` : tableau utilisé.
-- `summary()` : résumé numérique du modèle.
+::: {.kicker}
+Une décision concrète
+:::
 
-## Coefficients
+::: {.question-line}
+Votre sortie R affiche « 2,4 ». Que signifie cette valeur pour la direction?
+:::
 
-La ligne `(Intercept)` correspond à l'ordonnée à l'origine. La ligne `budget_marketing` correspond à la pente estimée.
+::: {.note-box}
+Recopier un coefficient ne décide rien. Le travail utile consiste à traduire « 2,4 » en une phrase d'affaires : ce que ce chiffre signifie pour les ventes, et ce qu'il ne prouve pas.
+:::
 
-## Ce qu'il faut écrire
+## Objectifs de la capsule
 
-- Une phrase sur la direction de l'association.
-- Une phrase sur la taille de la pente avec les unités.
-- Une phrase sur la qualité générale de l'ajustement.
-- Une limite sur la causalité ou les variables omises.
+::: {.keypoints}
+- Ajuster une régression avec `lm()`.
+- Lire les coefficients du modèle.
+- Traduire la sortie R en phrases interprétables.
+:::
 
-## À ne pas faire
+## Ajuster le modèle
 
-Ne pas écrire seulement : `le coefficient est 2.4`. Une réponse utile explique ce que 2.4 veut dire dans le contexte des ventes.
+```{r}
+#| label: capsule-04-modele
+#| echo: true
 
-## Activité 3.4
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+```
 
-Écrivez le code du modèle et préparez deux phrases : une phrase pour la pente, une phrase pour la limite d'interprétation.
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+À gauche du ~
+:::
+::: {.text}
+la variable réponse : `ventes`.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+À droite du ~
+:::
+::: {.text}
+la variable explicative : `budget_marketing`.
+:::
+:::
+:::
+
+## Lire les coefficients
+
+```{r}
+#| label: capsule-04-coefs
+#| echo: false
+
+tibble::tibble(
+  Terme = c("Ordonnée à l'origine", "Pente (budget_marketing)"),
+  Estimation = round(coef(modele), 2)
+) |>
+  knitr::kable()
+```
+
+::: {.visual-note}
+La ligne `budget_marketing` est la pente estimée : la variation moyenne des ventes par unité de budget.
+:::
+
+## Traduire en langage d'affaires
+
+::: {.statement-grid}
+::: {.statement-card .acceptable}
+::: {.tag}
+Réponse utile
+:::
+::: {.text}
+En moyenne, chaque dollar de budget supplémentaire est associé à X ventes de plus, dans la plage observée.
+:::
+:::
+::: {.statement-card .warning}
+::: {.tag}
+À éviter
+:::
+::: {.text}
+« Le coefficient est 2,4 » : un nombre sans contexte ni unité ne décide rien.
+:::
+:::
+:::
 
 ## À retenir
 
-- `lm()` ajuste la droite.
-- `summary()` donne les coefficients.
-- La réponse finale doit traduire les coefficients en langage d'affaires.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+`lm()` ajuste la droite.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Les coefficients donnent pente et ordonnée.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Une réponse utile traduit les coefficients en interprétation.
+:::
+:::
+:::
+
+## Production autonome 3.4
+
+::: {.lead}
+Ajustez le modèle et interprétez-le.
+:::
+
+::: {.keypoints}
+Écrivez le code `lm()`, puis deux phrases : une pour la pente (avec l'unité) et une pour la limite d'interprétation.
+:::

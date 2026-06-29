@@ -7,7 +7,7 @@ format:
 
 ## Objectif
 
-Cette démonstration montre comment passer d'un tableau de performance de
+Cette page montre comment passer d'un tableau de performance de
 succursales à une recommandation fondée sur une régression.
 
 ::: {.callout-note title="Comment utiliser cette page"}
@@ -139,8 +139,8 @@ modele_enrichi <- lm(
 summary(modele_enrichi)
 ```
 
-Les coefficients du modèle enrichi se lisent « toutes choses incluses dans le
-modèle étant égales par ailleurs ». Cette formulation est importante, car elle
+Les coefficients du modèle enrichi se lisent en gardant constantes les autres
+variables incluses dans la formule. Cette formulation est importante, car elle
 évite de comparer naïvement des succursales qui n'ont pas le même achalandage ou
 la même dotation en personnel.
 
@@ -152,7 +152,7 @@ Il se lit conditionnellement aux autres variables incluses dans la formule.
 ## Démonstration 5 - Comparer les modèles
 
 Objectif : comparer le modèle simple et le modèle enrichi sans choisir seulement
-le plus grand `R²`.
+le `R²` le plus élevé.
 
 ```{r}
 #| label: comparer-modeles-atelier-02
@@ -168,7 +168,7 @@ tibble(
 
 Le modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible.
 Dans une analyse appliquée, le meilleur modèle n'est pas seulement celui qui a
-le plus grand `R²`. C'est aussi celui qui soutient une interprétation utile.
+le `R²` le plus élevé. C'est aussi celui qui soutient une interprétation utile.
 
 ## Démonstration 6 - Diagnostiquer les résidus
 

@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6616,115 +6616,115 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6739,7 +6739,7 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
   <li><a href="#avant-latelier" id="toc-avant-latelier" class="nav-link active" data-scroll-target="#avant-latelier">Avant l’atelier</a></li>
   <li><a href="#pendant-latelier" id="toc-pendant-latelier" class="nav-link" data-scroll-target="#pendant-latelier">Pendant l’atelier</a></li>
@@ -6765,11 +6765,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -6782,7 +6782,7 @@ Atelier en classe
 <h2 class="anchored">
 Régression appliquée à une décision d’affaires
 </h2>
-<p>Cet atelier prolonge le module 03. Vous allez utiliser la régression pour analyser la performance de succursales fictives et formuler une recommandation prudente à partir d’un modèle.</p>
+<p>Cet atelier prolonge le module 3. Vous allez utiliser la régression pour analyser la performance de succursales fictives et formuler une recommandation prudente à partir d’un modèle.</p>
 <div class="quick-facts">
 <div class="fact-card">
 <div class="fact-icon fact-clock" aria-hidden="true">
@@ -6848,12 +6848,12 @@ Mini-analyse commentée
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Faut-il investir davantage en marketing, ajouter du personnel ou réduire les ruptures de stock pour faire grimper les ventes? La direction veut une réponse appuyée sur un modèle, pas sur une intuition. Cet atelier vous fait passer d’un nuage de points à une recommandation prudente et chiffrée.</p>
+<p>Faut-il investir davantage en marketing, ajouter du personnel ou réduire les ruptures de stock pour augmenter les ventes? La direction veut une réponse appuyée sur un modèle, pas sur une intuition. Cet atelier vous fait passer d’un nuage de points à une recommandation prudente et chiffrée.</p>
 </div>
 </div>
 <section id="avant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="avant-latelier">Avant l’atelier</h2>
-<p>Cet atelier suppose que les bases du module 03 sont assez fraîches pour être réutilisées en classe. L’objectif n’est pas de tout maîtriser avant d’arriver, mais d’avoir les bons repères pour participer activement.</p>
+<p>Cet atelier suppose que les notions du module 3 sont assez présentes pour être réutilisées en classe. L’objectif n’est pas de tout maîtriser avant d’arriver, mais d’avoir les bons repères pour participer activement.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Préparation à faire avant d&#39;arriver">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -6878,7 +6878,7 @@ Mini-analyse commentée
 <p>Téléchargez ou repérez le fichier <a href="data/performance_succursales_quebec.csv"><code>performance_succursales_quebec.csv</code></a>.</p>
 <div class="checklist-box">
 <ul class="task-list">
-<li><label><input type="checkbox">J’ai relu les capsules ou les notes du module 03.</label></li>
+<li><label><input type="checkbox">J’ai relu les capsules ou les notes du module 3.</label></li>
 <li><label><input type="checkbox">Je sais ouvrir un fichier <code>.qmd</code>.</label></li>
 <li><label><input type="checkbox">Je sais charger <code>tidyverse</code>.</label></li>
 <li><label><input type="checkbox">Je sais ajuster un modèle avec <code>lm()</code>.</label></li>
@@ -6895,7 +6895,7 @@ Mini-analyse commentée
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Si vous manquez de temps, relisez seulement la page des <a href="../../modules/semaine-03-regression-lineaire/capsules.html">capsules du module 03</a>, puis ouvrez le <a href="../../modules/atelier-02-regression/guide-atelier.html">guide complet de l’atelier</a> avant la séance.</p>
+<p>Si vous manquez de temps, relisez seulement la page des <a href="../semaine-03-regression-lineaire/capsules.html">capsules du module 3</a>, puis ouvrez le <a href="guide-atelier.html">guide complet de l’atelier</a> avant la séance.</p>
 </div>
 </div>
 </section>
@@ -7030,7 +7030,7 @@ Mini-analyse commentée
 <p>Avant de considérer la trace terminée :</p>
 <div class="checklist-box">
 <ul class="task-list">
-<li><label><input type="checkbox">Le fichier se rend en HTML.</label></li>
+<li><label><input type="checkbox">Le fichier se génère en HTML.</label></li>
 <li><label><input type="checkbox">Les graphiques ont des titres et des axes lisibles.</label></li>
 <li><label><input type="checkbox">Les coefficients sont interprétés avec les unités.</label></li>
 <li><label><input type="checkbox">La recommandation ne confond pas association et causalité.</label></li>
@@ -7059,7 +7059,7 @@ Mini-analyse commentée
 <section id="ressources-de-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="ressources-de-latelier">Ressources de l’atelier</h2>
 <div class="resource-list">
-  <a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Préparer les décisions clés avant la séance.</span></span></a>
+  <a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Repères</span><span class="resource-row-text">Préparer les décisions clés avant la séance.</span></span></a>
   <a class="resource-row" href="guide-atelier.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Guide complet</span><span class="resource-row-text">Suivre le parcours en classe jusqu&#39;à la recommandation finale.</span></span></a>
   <a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Reproduire l&#39;analyse pas à pas et comprendre les sorties.</span></span></a>
   <a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Tester les gestes essentiels et préparer la trace finale.</span></span></a>
@@ -7176,7 +7176,7 @@ Mini-analyse commentée
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7196,11 +7196,11 @@ Mini-analyse commentée
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7277,7 +7277,7 @@ Mini-analyse commentée
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7352,7 +7352,7 @@ Mini-analyse commentée
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7380,7 +7380,7 @@ Mini-analyse commentée
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7404,7 +7404,7 @@ Mini-analyse commentée
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7444,7 +7444,7 @@ Mini-analyse commentée
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7570,7 +7570,7 @@ Mini-analyse commentée
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

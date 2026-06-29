@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Capsules - Atelier 02 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Repères - Atelier 02 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6616,115 +6616,115 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6739,14 +6739,14 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
-  <li><a href="#rôle-des-capsules" id="toc-rôle-des-capsules" class="nav-link active" data-scroll-target="#rôle-des-capsules">Rôle des capsules</a></li>
-  <li><a href="#capsule-1---question-daffaires-et-variable-réponse" id="toc-capsule-1---question-daffaires-et-variable-réponse" class="nav-link" data-scroll-target="#capsule-1---question-daffaires-et-variable-réponse">Capsule 1 - Question d’affaires et variable réponse</a></li>
-  <li><a href="#capsule-2---relation-visible-et-relation-modélisée" id="toc-capsule-2---relation-visible-et-relation-modélisée" class="nav-link" data-scroll-target="#capsule-2---relation-visible-et-relation-modélisée">Capsule 2 - Relation visible et relation modélisée</a></li>
-  <li><a href="#capsule-3---modèle-simple-et-modèle-enrichi" id="toc-capsule-3---modèle-simple-et-modèle-enrichi" class="nav-link" data-scroll-target="#capsule-3---modèle-simple-et-modèle-enrichi">Capsule 3 - Modèle simple et modèle enrichi</a></li>
-  <li><a href="#capsule-4---recommandation-et-limites" id="toc-capsule-4---recommandation-et-limites" class="nav-link" data-scroll-target="#capsule-4---recommandation-et-limites">Capsule 4 - Recommandation et limites</a></li>
-  <li><a href="#après-les-capsules" id="toc-après-les-capsules" class="nav-link" data-scroll-target="#après-les-capsules">Après les capsules</a></li>
+  <li><a href="#rôle-des-repères" id="toc-rôle-des-repères" class="nav-link active" data-scroll-target="#rôle-des-repères">Rôle des repères</a></li>
+  <li><a href="#repère-1---question-daffaires-et-variable-réponse" id="toc-repère-1---question-daffaires-et-variable-réponse" class="nav-link" data-scroll-target="#repère-1---question-daffaires-et-variable-réponse">Repère 1 - Question d’affaires et variable réponse</a></li>
+  <li><a href="#repère-2---relation-visible-et-relation-modélisée" id="toc-repère-2---relation-visible-et-relation-modélisée" class="nav-link" data-scroll-target="#repère-2---relation-visible-et-relation-modélisée">Repère 2 - Relation visible et relation modélisée</a></li>
+  <li><a href="#repère-3---modèle-simple-et-modèle-enrichi" id="toc-repère-3---modèle-simple-et-modèle-enrichi" class="nav-link" data-scroll-target="#repère-3---modèle-simple-et-modèle-enrichi">Repère 3 - Modèle simple et modèle enrichi</a></li>
+  <li><a href="#repère-4---recommandation-et-limites" id="toc-repère-4---recommandation-et-limites" class="nav-link" data-scroll-target="#repère-4---recommandation-et-limites">Repère 4 - Recommandation et limites</a></li>
+  <li><a href="#après-les-repères" id="toc-après-les-repères" class="nav-link" data-scroll-target="#après-les-repères">Après les repères</a></li>
   </ul>
 </nav>
     </div>
@@ -6755,30 +6755,30 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Capsules - Atelier 02</h1>
+<h1 class="title">Repères - Atelier 02</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
 
 
-<section id="rôle-des-capsules" class="level2">
-<h2 class="anchored" data-anchor-id="rôle-des-capsules">Rôle des capsules</h2>
-<p>Ces capsules préparent le travail en classe. Elles résument les décisions à prendre pendant une analyse de régression appliquée.</p>
-<p>Pour chaque capsule, produisez une trace très courte : une phrase, une liste ou un choix argumenté. Ces traces seront réutilisées dans le guide complet.</p>
+<section id="rôle-des-repères" class="level2">
+<h2 class="anchored" data-anchor-id="rôle-des-repères">Rôle des repères</h2>
+<p>Ces repères préparent le travail en classe. Ils résument les décisions à prendre pendant une analyse de régression appliquée.</p>
+<p>Pour chaque repère, produisez une trace très courte : une phrase, une liste ou un choix argumenté. Ces traces seront réutilisées dans le guide complet.</p>
 </section>
-<section id="capsule-1---question-daffaires-et-variable-réponse" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-1---question-daffaires-et-variable-réponse">Capsule 1 - Question d’affaires et variable réponse</h2>
+<section id="repère-1---question-daffaires-et-variable-réponse" class="level2">
+<h2 class="anchored" data-anchor-id="repère-1---question-daffaires-et-variable-réponse">Repère 1 - Question d’affaires et variable réponse</h2>
 <p><em>Pourquoi ça compte</em> : un modèle qui répond à une question floue produit une recommandation floue.</p>
 <p>Une bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :</p>
 <blockquote class="blockquote">
@@ -6800,8 +6800,8 @@ display: none;
 </div>
 <p>À conserver : une question d’affaires et la variable réponse.</p>
 </section>
-<section id="capsule-2---relation-visible-et-relation-modélisée" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-2---relation-visible-et-relation-modélisée">Capsule 2 - Relation visible et relation modélisée</h2>
+<section id="repère-2---relation-visible-et-relation-modélisée" class="level2">
+<h2 class="anchored" data-anchor-id="repère-2---relation-visible-et-relation-modélisée">Repère 2 - Relation visible et relation modélisée</h2>
 <p><em>Pourquoi ça compte</em> : une droite bien ajustée sur un nuage courbé donne une fausse impression de précision.</p>
 <p>Un nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.</p>
 <p>La droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.</p>
@@ -6820,11 +6820,11 @@ display: none;
 </div>
 <p>À conserver : une phrase qui décrit la relation attendue avant le modèle.</p>
 </section>
-<section id="capsule-3---modèle-simple-et-modèle-enrichi" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-3---modèle-simple-et-modèle-enrichi">Capsule 3 - Modèle simple et modèle enrichi</h2>
+<section id="repère-3---modèle-simple-et-modèle-enrichi" class="level2">
+<h2 class="anchored" data-anchor-id="repère-3---modèle-simple-et-modèle-enrichi">Repère 3 - Modèle simple et modèle enrichi</h2>
 <p><em>Pourquoi ça compte</em> : ajouter des variables peut clarifier le portrait, ou rendre chaque coefficient impossible à expliquer à la direction.</p>
 <p>Un modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.</p>
-<p>Un modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en tenant les autres variables du modèle constantes.</p>
+<p>Un modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en gardant constantes les autres variables du modèle.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Point de vigilance">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -6840,8 +6840,8 @@ display: none;
 </div>
 <p>À conserver : un avantage et une limite du modèle enrichi.</p>
 </section>
-<section id="capsule-4---recommandation-et-limites" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-4---recommandation-et-limites">Capsule 4 - Recommandation et limites</h2>
+<section id="repère-4---recommandation-et-limites" class="level2">
+<h2 class="anchored" data-anchor-id="repère-4---recommandation-et-limites">Repère 4 - Recommandation et limites</h2>
 <p><em>Pourquoi ça compte</em> : une recommandation sans limite, c’est une décision risquée présentée comme une certitude.</p>
 <p>Une recommandation statistique doit relier trois éléments :</p>
 <ul>
@@ -6865,9 +6865,9 @@ display: none;
 </div>
 <p>À conserver : une recommandation provisoire et une limite causale.</p>
 </section>
-<section id="après-les-capsules" class="level2">
-<h2 class="anchored" data-anchor-id="après-les-capsules">Après les capsules</h2>
-<p>Poursuivez avec le <a href="../../modules/atelier-02-regression/guide-atelier.html">guide complet</a>. Les capsules servent à préparer les décisions; le guide sert à produire la mini-analyse en classe.</p>
+<section id="après-les-repères" class="level2">
+<h2 class="anchored" data-anchor-id="après-les-repères">Après les repères</h2>
+<p>Poursuivez avec le <a href="guide-atelier.html">guide complet</a>. Les repères servent à préparer les décisions; le guide sert à produire la mini-analyse en classe.</p>
 
 
 </section>
@@ -6956,7 +6956,7 @@ display: none;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -6976,11 +6976,11 @@ display: none;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7057,7 +7057,7 @@ display: none;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7132,7 +7132,7 @@ display: none;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7160,7 +7160,7 @@ display: none;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7184,7 +7184,7 @@ display: none;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7224,7 +7224,7 @@ display: none;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7350,7 +7350,7 @@ display: none;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

@@ -27,51 +27,202 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-capsule-06-semaine-03
+#| include: false
+
+library(tidyverse)
+
+data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
+  "data/campagnes_marketing_quebec.csv"
+} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
+  "../../data/campagnes_marketing_quebec.csv"
+} else {
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+}
+
+campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision concrète
+:::
+
+::: {.question-line}
+Jusqu'où peut aller votre recommandation sans dépasser les données?
+:::
+
+::: {.note-box}
+Une conclusion trop forte engage la direction sur une promesse que le modèle ne peut pas soutenir. Conclure, c'est dire ce que la droite montre et tracer clairement la frontière de ce qu'elle ne prouve pas.
+:::
+
 ## Objectifs de la capsule
 
-- Lire le `R²` sans le surinterpréter.
+::: {.keypoints}
+- Lire le R² sans le surinterpréter.
 - Distinguer association, prédiction et causalité.
-- Formuler une conclusion courte.
-- Nommer une limite et une suite possible.
+- Formuler une conclusion courte et défendable.
+:::
 
 ## Qualité d'ajustement
 
-Le `R²` résume la part de variation de la réponse expliquée par la relation linéaire avec la variable explicative. Il aide à juger l'ajustement, mais il ne valide pas tout le raisonnement.
+```{r}
+#| label: capsule-06-r2
+#| echo: false
+
+tibble::tibble(
+  Mesure = "R carré",
+  Valeur = round(summary(modele)$r.squared, 3)
+) |>
+  knitr::kable()
+```
+
+::: {.visual-note}
+Le R² résume la part de variation des ventes captée par la droite. Il aide à juger l'ajustement, mais il ne valide pas tout le raisonnement.
+:::
 
 ## Prédire avec prudence
 
-```r
-nouveaux <- tibble(budget_marketing = c(5000, 10000, 15000))
-predict(modele, newdata = nouveaux)
+```{r}
+#| label: capsule-06-predire
+#| echo: true
+
+nouveaux <- tibble(budget_marketing = c(3000, 4500, 6000))
+
+nouveaux |>
+  mutate(ventes_predites = round(predict(modele, newdata = nouveaux))) |>
+  knitr::kable()
 ```
 
-Une prédiction est plus défendable lorsqu'elle reste dans la plage de valeurs observées.
+::: {.visual-note}
+Une prédiction est plus défendable lorsqu'elle reste dans la plage de budgets observée.
+:::
 
-## Association, prédiction, causalité
+## Trois notions à ne pas confondre
 
-- Association : deux variables varient ensemble.
-- Prédiction : le modèle estime une valeur attendue.
-- Causalité : une intervention sur une variable produit un effet sur l'autre.
-- La régression seule ne suffit pas toujours à établir la causalité.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+association
+:::
+::: {.label}
+deux variables varient ensemble
+:::
+:::
+::: {.metric}
+::: {.value}
+prédiction
+:::
+::: {.label}
+le modèle estime une valeur attendue
+:::
+:::
+::: {.metric}
+::: {.value}
+causalité
+:::
+::: {.label}
+agir sur une variable change l'autre variable
+:::
+:::
+:::
 
-## Structure de conclusion
+## Structure d'une conclusion
 
-- Question : que voulait-on savoir?
-- Résultat : que dit la pente?
-- Ajustement : la droite est-elle raisonnable?
-- Limite : que ne peut-on pas conclure?
-- Suite : que vérifier ensuite?
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Question
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Résultat (pente)
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Ajustement
+:::
+:::
+::: {.journey-step}
+::: {.num}
+4
+:::
+::: {.text}
+Limite
+:::
+:::
+::: {.journey-step}
+::: {.num}
+5
+:::
+::: {.text}
+Suite
+:::
+:::
+:::
 
-## Phrase modèle
+## Une phrase modèle
 
-Dans ces données, les ventes moyennes sont plus élevées lorsque le budget marketing est plus élevé. La droite résume une association positive, mais elle ne prouve pas que le budget cause les ventes. Il faut vérifier les résidus et considérer les variables de contexte avant de recommander une action.
-
-## Activité 3.6
-
-Rédigez une conclusion de quatre phrases : question, pente, diagnostic, limite.
+::: {.statement-grid}
+::: {.statement-card .acceptable}
+::: {.tag}
+Conclusion défendable
+:::
+::: {.text}
+Les ventes moyennes sont plus élevées lorsque le budget est plus élevé : la droite résume une association positive, mais ne prouve pas que le budget cause les ventes. Il faut vérifier les résidus et le contexte avant de recommander.
+:::
+:::
+:::
 
 ## À retenir
 
-- La conclusion doit être courte et défendable.
-- Une bonne réponse dit aussi ce que le modèle ne prouve pas.
-- La prudence est une compétence statistique, pas une faiblesse.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La conclusion est courte et défendable.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Une bonne réponse dit aussi ce que le modèle ne prouve pas.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La prudence est une compétence, pas une faiblesse.
+:::
+:::
+:::
+
+## Production autonome 3.6
+
+::: {.lead}
+Rédigez une conclusion de quatre phrases.
+:::
+
+::: {.keypoints}
+Une phrase par élément : question, pente, diagnostic (résidus/ajustement), limite.
+:::

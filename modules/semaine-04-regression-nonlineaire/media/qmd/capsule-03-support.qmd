@@ -31,12 +31,12 @@ editor: visual
 
 - Comprendre le rôle d'une transformation.
 - Utiliser un terme quadratique.
-- Utiliser un logarithme lorsque cela a du sens.
+- Utiliser un logarithme lorsque le contexte le justifie.
 - Garder le lien avec l'échelle originale.
 
 ## Transformation : définition pratique
 
-Une transformation change la forme utilisée par le modèle. Elle ne change pas la question : elle change la façon de résumer la relation.
+Une transformation change la forme utilisée par le modèle. Elle ne change pas la question d'analyse : elle change la façon de résumer la relation.
 
 ## Modèle quadratique
 
@@ -44,7 +44,7 @@ Une transformation change la forme utilisée par le modèle. Elle ne change pas 
 modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = saturation)
 ```
 
-Le terme `I(achalandage^2)` permet à la courbe de se plier.
+Le terme `I(achalandage^2)` permet à la relation estimée de se courber.
 
 ## Modèle logarithmique
 
@@ -52,7 +52,7 @@ Le terme `I(achalandage^2)` permet à la courbe de se plier.
 modele_log <- lm(ventes ~ log(achalandage), data = saturation)
 ```
 
-Le logarithme peut représenter une augmentation rapide au début, puis plus lente ensuite.
+Le logarithme peut représenter une augmentation rapide au début, puis plus lente par la suite.
 
 ## Choisir avec une raison
 
@@ -63,7 +63,7 @@ Le logarithme peut représenter une augmentation rapide au début, puis plus len
 
 ## Vigilance
 
-Une transformation peut améliorer l'ajustement tout en rendant l'interprétation moins directe. Il faut revenir à des phrases concrètes sur les ventes et l'achalandage.
+Une transformation peut améliorer l'ajustement tout en rendant l'interprétation moins directe. Il faut donc revenir à des phrases concrètes sur les ventes et l'achalandage.
 
 ## Activité 4.3
 
@@ -73,4 +73,4 @@ Une transformation peut améliorer l'ajustement tout en rendant l'interprétatio
 
 - Une transformation est un choix de forme.
 - Le choix doit être justifié par les données et le contexte.
-- L'interprétation doit revenir à l'échelle d'affaires.
+- L'interprétation doit revenir à l'échelle de la décision d'affaires.

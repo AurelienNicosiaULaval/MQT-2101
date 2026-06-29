@@ -1572,7 +1572,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1584,16 +1584,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1638,7 +1638,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1700,7 +1700,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1714,7 +1714,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6651,115 +6651,115 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6774,7 +6774,7 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
   <li><a href="#objectif-du-parcours" id="toc-objectif-du-parcours" class="nav-link active" data-scroll-target="#objectif-du-parcours">Objectif du parcours</a></li>
   <li><a href="#ce-que-vous-allez-construire" id="toc-ce-que-vous-allez-construire" class="nav-link" data-scroll-target="#ce-que-vous-allez-construire">Ce que vous allez construire</a></li>
@@ -6834,11 +6834,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -6854,7 +6854,7 @@ display: none;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La direction d’une PME hésite entre trois pistes pour l’an prochain : marketing, opérations ou saisonnalité. Vous partez d’un seul tableau de ventes mensuelles. À la fin de la séance, vous aurez transformé ce tableau en une priorité défendable, appuyée sur un résultat et assortie d’une limite claire.</p>
+<p>La direction d’une PME hésite entre trois pistes pour l’an prochain : marketing, opérations ou saisonnalité. Vous travaillez à partir d’un tableau de ventes mensuelles. À la fin de la séance, vous aurez transformé ce tableau en une priorité défendable, appuyée sur un résultat et assortie d’une limite claire.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Place dans la progression">
@@ -6867,7 +6867,7 @@ display: none;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Cet atelier se fait après la semaine 01 et la semaine 02. Il sert à pratiquer dans RStudio les gestes de base : importer, inspecter, résumer, visualiser et interpréter prudemment.</p>
+<p>Cet atelier se fait après les modules 1 et 2. Il sert à pratiquer dans RStudio les gestes de base : importer, inspecter, résumer, visualiser et interpréter prudemment.</p>
 </div>
 </div>
 <section id="objectif-du-parcours" class="level2">
@@ -6877,7 +6877,7 @@ display: none;
 <blockquote class="blockquote">
 <p>Qu’est-ce qu’un tableau de ventes mensuelles permet de dire, et que ne permet-il pas encore de conclure?</p>
 </blockquote>
-<p>L’objectif n’est pas encore de prouver une relation causale. L’objectif est de transformer un tableau brut en premiers constats descriptifs, en distinguant clairement observation, indicateur, interprétation et limite.</p>
+<p>L’objectif n’est pas de prouver une relation causale. L’objectif est de transformer un tableau brut en premiers constats descriptifs, en distinguant clairement observation, indicateur, interprétation et limite.</p>
 </section>
 <section id="ce-que-vous-allez-construire" class="level2">
 <h2 class="anchored" data-anchor-id="ce-que-vous-allez-construire">Ce que vous allez construire</h2>
@@ -6926,7 +6926,7 @@ display: none;
 </tr>
 <tr class="odd">
 <td>Trace finale</td>
-<td>Vous gardez une phrase ou un résultat pour votre rapport final</td>
+<td>Vous conservez une phrase ou un résultat pour votre rapport final</td>
 </tr>
 </tbody>
 </table>
@@ -6967,7 +6967,7 @@ display: none;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La première étape consiste à transformer une question générale en question descriptive assez précise pour être traitée dans un tableau.</p>
+<p>La première étape consiste à transformer une question générale en question descriptive assez précise pour être traitée à partir d’un tableau.</p>
 </div>
 </div>
 <p>Une question générale est souvent trop large pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.</p>
@@ -7486,13 +7486,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </table>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 5 - Lire le tableau de façon analytique">
+<div class="callout callout-style-default callout-tip callout-titled" title="À vous 5 - Lire le tableau avec un regard analytique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 5 - Lire le tableau de façon analytique
+<span class="screen-reader-only">Astuce</span>À vous 5 - Lire le tableau avec un regard analytique
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -7600,14 +7600,14 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ce graphique ne prouve pas que les ruptures causent une baisse de satisfaction. Il suggère seulement une relation descriptive à examiner plus sérieusement.</p>
+<p>Ce graphique ne prouve pas que les ruptures de stock causent une baisse de satisfaction. Il suggère seulement une relation descriptive à examiner plus rigoureusement.</p>
 </div>
 </div>
 </section>
 </section>
 <section id="épisode-7---enquête-guidée-pour-la-direction" class="level2">
 <h2 class="anchored" data-anchor-id="épisode-7---enquête-guidée-pour-la-direction">Épisode 7 - Enquête guidée pour la direction</h2>
-<p>La direction hésite entre trois priorités : mieux comprendre le marketing, réduire les problèmes opérationnels ou examiner les saisons. Choisissez une priorité et produisez une preuve descriptive.</p>
+<p>La direction hésite entre trois priorités : mieux comprendre le marketing, réduire les problèmes opérationnels ou examiner les saisons. Choisissez une priorité et produisez un appui descriptif.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Repère - Une priorité, une preuve, une limite">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7618,7 +7618,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une recommandation préliminaire doit rester prudente. Elle doit nommer un résultat observé, expliquer pourquoi il mérite une analyse plus poussée et dire ce que l’analyse descriptive ne prouve pas.</p>
+<p>Une recommandation préliminaire doit rester prudente. Elle doit nommer un résultat observé, expliquer pourquoi il mérite une analyse plus poussée et préciser ce que l’analyse descriptive ne prouve pas.</p>
 </div>
 </div>
 <section id="option-a---marketing" class="level3">
@@ -7905,7 +7905,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <li>la priorité choisie;</li>
 <li>le résultat descriptif qui appuie cette priorité;</li>
 <li>une limite d’interprétation;</li>
-<li>une question à vérifier avec un modèle plus tard.</li>
+<li>une question à vérifier plus tard avec un modèle.</li>
 </ol>
 <p>Après la mise en commun, ajustez votre recommandation si un autre groupe a repéré une limite ou un indicateur plus convaincant.</p>
 </section>
@@ -7976,7 +7976,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </tr>
 <tr class="even">
 <td>Reproductibilité</td>
-<td>Le document Quarto se rend sans modification</td>
+<td>Le document Quarto se génère sans correction manuelle</td>
 </tr>
 </tbody>
 </table>
@@ -8090,7 +8090,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -8110,11 +8110,11 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -8191,7 +8191,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -8266,7 +8266,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -8294,7 +8294,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -8318,7 +8318,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -8358,7 +8358,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -8484,7 +8484,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

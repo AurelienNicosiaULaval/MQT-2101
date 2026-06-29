@@ -1572,7 +1572,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1584,16 +1584,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1638,7 +1638,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1700,7 +1700,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1714,7 +1714,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6651,115 +6651,115 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6774,7 +6774,7 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
   <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#vue-densemble" id="toc-vue-densemble" class="nav-link" data-scroll-target="#vue-densemble">Vue d’ensemble</a></li>
@@ -6802,11 +6802,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -6814,7 +6814,7 @@ display: none;
 
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Cette démonstration montre comment passer d’un tableau de performance de succursales à une recommandation fondée sur une régression.</p>
+<p>Cette page montre comment passer d’un tableau de performance de succursales à une recommandation fondée sur une régression.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Comment utiliser cette page">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -6960,18 +6960,18 @@ Call:
 lm(formula = ventes ~ achalandage, data = performance)
 
 Residuals:
-     Min       1Q   Median       3Q      Max
--18695.7  -4922.6   -294.8   5934.3  18386.3
+     Min       1Q   Median       3Q      Max 
+-18695.7  -4922.6   -294.8   5934.3  18386.3 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)
+            Estimate Std. Error t value Pr(&gt;|t|)    
 (Intercept) 50540.53    5526.11   9.146 1.43e-13 ***
 achalandage    63.12       3.31  19.069  &lt; 2e-16 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 8433 on 70 degrees of freedom
-Multiple R-squared:  0.8386,    Adjusted R-squared:  0.8363
+Multiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 
 F-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
@@ -6979,7 +6979,7 @@ F-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modele_simple)[<span class="st">&quot;achalandage&quot;</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>achalandage
+<pre><code>achalandage 
    63.12511 </code></pre>
 </div>
 </div>
@@ -7010,16 +7010,16 @@ F-statistic: 363.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel +
+lm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + 
     ruptures_stock, data = performance)
 
 Residuals:
-    Min      1Q  Median      3Q     Max
--8940.3 -2956.8  -437.2  2763.3 12110.6
+    Min      1Q  Median      3Q     Max 
+-8940.3 -2956.8  -437.2  2763.3 12110.6 
 
 Coefficients:
-                     Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)         5098.7691  9382.6231   0.543    0.589
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         5098.7691  9382.6231   0.543    0.589    
 achalandage           34.7889     3.6456   9.543 4.12e-14 ***
 depenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***
 heures_personnel     131.4254    25.6218   5.129 2.68e-06 ***
@@ -7028,11 +7028,11 @@ ruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 4995 on 67 degrees of freedom
-Multiple R-squared:  0.9458,    Adjusted R-squared:  0.9426
+Multiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 
 F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Les coefficients du modèle enrichi se lisent « toutes choses incluses dans le modèle étant égales par ailleurs ». Cette formulation est importante, car elle évite de comparer naïvement des succursales qui n’ont pas le même achalandage ou la même dotation en personnel.</p>
+<p>Les coefficients du modèle enrichi se lisent en gardant constantes les autres variables incluses dans la formule. Cette formulation est importante, car elle évite de comparer naïvement des succursales qui n’ont pas le même achalandage ou la même dotation en personnel.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Point de vigilance">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7049,7 +7049,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="démonstration-5---comparer-les-modèles" class="level2">
 <h2 class="anchored" data-anchor-id="démonstration-5---comparer-les-modèles">Démonstration 5 - Comparer les modèles</h2>
-<p>Objectif : comparer le modèle simple et le modèle enrichi sans choisir seulement le plus grand <code>R²</code>.</p>
+<p>Objectif : comparer le modèle simple et le modèle enrichi sans choisir seulement le <code>R²</code> le plus élevé.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">modele =</span> <span class="fu">c</span>(<span class="st">&quot;Simple&quot;</span>, <span class="st">&quot;Enrichi&quot;</span>),</span>
@@ -7067,7 +7067,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
 2 Enrichi   0.946          0.943</code></pre>
 </div>
 </div>
-<p>Le modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible. Dans une analyse appliquée, le meilleur modèle n’est pas seulement celui qui a le plus grand <code>R²</code>. C’est aussi celui qui soutient une interprétation utile.</p>
+<p>Le modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible. Dans une analyse appliquée, le meilleur modèle n’est pas seulement celui qui a le <code>R²</code> le plus élevé. C’est aussi celui qui soutient une interprétation utile.</p>
 </section>
 <section id="démonstration-6---diagnostiquer-les-résidus" class="level2">
 <h2 class="anchored" data-anchor-id="démonstration-6---diagnostiquer-les-résidus">Démonstration 6 - Diagnostiquer les résidus</h2>
@@ -7241,7 +7241,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7261,11 +7261,11 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7342,7 +7342,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7417,7 +7417,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7445,7 +7445,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7469,7 +7469,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7509,7 +7509,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7635,7 +7635,7 @@ F-statistic: 292.3 on 4 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

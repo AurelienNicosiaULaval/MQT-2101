@@ -15,7 +15,7 @@ régression appliquée.
 - `mois_label` : nom du mois;
 - `saison` : période régulière, moyenne ou haute;
 - `succursale` : succursale fictive;
-- `region` : région québécoise;
+- `region` : région administrative québécoise;
 - `surface_m2` : superficie de la succursale;
 - `campagne_locale` : présence ou absence d'une campagne locale;
 - `depenses_marketing` : dépenses marketing mensuelles;

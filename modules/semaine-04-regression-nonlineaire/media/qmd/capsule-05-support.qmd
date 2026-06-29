@@ -48,9 +48,9 @@ grille$ventes_predites <- predict(modele_quad, newdata = grille)
 
 ## Plage observée
 
-Une prédiction est plus crédible lorsqu'elle reste dans les valeurs d'achalandage réellement observées. Hors de cette plage, le modèle prolonge une forme sans preuve directe.
+Une prédiction est plus crédible lorsqu'elle reste dans les valeurs d'achalandage réellement observées. Hors de cette plage, le modèle prolonge une forme sans preuve directe dans les données.
 
-## Pourquoi c'est risqué?
+## Pourquoi est-ce risqué?
 
 - Une courbe quadratique peut monter ou descendre très vite.
 - Le logarithme peut lisser trop fortement.
@@ -59,7 +59,7 @@ Une prédiction est plus crédible lorsqu'elle reste dans les valeurs d'achaland
 
 ## Formulation prudente
 
-Le modèle décrit bien la relation dans la plage observée, mais il ne devrait pas être utilisé seul pour prédire des niveaux d'achalandage très supérieurs à ceux du fichier.
+Le modèle décrit bien la relation dans la plage observée, mais il ne devrait pas être utilisé seul pour prédire des niveaux d'achalandage très supérieurs à ceux présents dans le fichier.
 
 ## Lien avec la décision
 
@@ -71,6 +71,6 @@ Rédigez une limite d'extrapolation en deux phrases, adaptée à une recommandat
 
 ## À retenir
 
-- Prédire n'est pas deviner.
+- Prédire n'est pas extrapoler sans justification.
 - La plage observée protège l'interprétation.
 - L'extrapolation doit être nommée explicitement.

@@ -19,4 +19,4 @@ Variables principales :
 - `satisfaction` : score moyen de satisfaction sur 10;
 - `taux_retour` : proportion de retours.
 
-Les données ont été simulées avec `scripts/04_create_atelier_01_data.R`.
+Les données ont été simulées pour un usage pédagogique dans l'atelier.

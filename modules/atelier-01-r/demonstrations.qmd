@@ -25,10 +25,10 @@ gardez seulement les résultats utiles pour votre trace finale.
 
 | Démonstration | Question traitée | Résultat attendu |
 |---|---|---|
-| 1 | Est-ce que les données sont importées correctement? | Tableau lisible dans R |
+| 1 | Les données sont-elles importées correctement? | Tableau lisible dans R |
 | 2 | Que représente chaque variable importante? | Dictionnaire rapide |
 | 3 | Quelles variables sont incomplètes? | Diagnostic des valeurs manquantes |
-| 4 | Pourquoi `na.rm = TRUE` change certains calculs? | Comparaison avec et sans valeurs manquantes |
+| 4 | Pourquoi `na.rm = TRUE` peut-il changer certains calculs? | Comparaison avec et sans valeurs manquantes |
 | 5 | Comment comparer les succursales? | Tableau synthèse |
 | 6 | Comment visualiser les ventes? | Graphique de comparaison |
 | 7 | Comment explorer une relation descriptive? | Nuage de points interprétable |
@@ -36,7 +36,7 @@ gardez seulement les résultats utiles pour votre trace finale.
 
 ## Préparation
 
-Avant de commencer, on charge les packages nécessaires et on définit deux objets
+Avant de commencer, chargez les packages nécessaires et définissez deux objets
 qui seront réutilisés dans les démonstrations.
 
 ```{r}
@@ -173,7 +173,7 @@ diagnostic_manquants |>
 À observer :
 
 - seules les variables ayant au moins une valeur manquante apparaissent;
-- une variable incomplète peut rendre certains résumés impossibles si on ne
+- une variable incomplète peut rendre certains résumés impossibles à calculer si on ne
   précise pas comment traiter les valeurs manquantes;
 - ce diagnostic doit être mentionné dans le rapport, même si le problème semble
   petit.
@@ -206,7 +206,7 @@ comparaison_na_rm |>
 
 - sans `na.rm = TRUE`, une moyenne peut devenir `NA`;
 - avec `na.rm = TRUE`, R calcule la moyenne à partir des valeurs observées;
-- cette correction n'efface pas le problème de données manquantes, elle permet
+- ce choix n'efface pas le problème de données manquantes, il permet
   seulement de calculer un résumé sur les observations disponibles.
 
 ::: {.callout-important title="Point d'interprétation"}
@@ -251,7 +251,7 @@ synthese_succursales |>
 - la satisfaction et les ruptures de stock ajoutent une dimension
   opérationnelle;
 - la succursale avec les ventes les plus élevées n'est pas nécessairement la
-  meilleure selon tous les indicateurs.
+  plus favorable selon tous les indicateurs.
 
 À reprendre dans la trace finale :
 
@@ -325,7 +325,7 @@ ventes |>
 ::: {.callout-caution title="Limite importante"}
 Ce graphique ne prouve pas que les ruptures de stock causent une baisse de
 satisfaction. Il suggère seulement une relation descriptive à examiner plus
-sérieusement.
+rigoureusement.
 :::
 
 ## Démonstration 8 - Choisir une priorité de prochaine analyse
@@ -357,7 +357,7 @@ priorite_marketing |>
   knitr::kable()
 ```
 
-Ce résultat aide à formuler une question de suite sur les campagnes locales. Il
+Ce résultat aide à formuler une question pour la suite sur les campagnes locales. Il
 ne démontre pas l'effet du marketing, parce que les mois avec campagne peuvent
 différer des autres mois pour plusieurs raisons.
 
@@ -428,6 +428,6 @@ succursale, de saison, de marketing ou d'opérations.
 
 ::: {.callout-tip title="Phrase de recommandation à adapter"}
 La prochaine analyse devrait prioriser [marketing, opérations ou saisonnalité],
-car le diagnostic descriptif montre que [résultat observé]. Cette conclusion
+car le diagnostic descriptif suggère que [résultat observé]. Cette conclusion
 reste préliminaire, car [limite à nommer].
 :::
