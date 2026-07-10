@@ -1,0 +1,90 @@
+---
+title: "Capsule 2 - Lire un graphique temporel"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Le premier modèle est souvent un graphique bien construit.
+:::
+
+::: {.question-line}
+Quels motifs le temps rend-il visibles?
+:::
+
+::: {.note-box}
+Un graphique temporel permet de voir le niveau, la tendance, les motifs récurrents et les ruptures avant de choisir une méthode.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Construire un graphique qui respecte l'ordre temporel.
+- Distinguer tendance, saisonnalité et variation irrégulière.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- La tendance est un mouvement de long terme.
+- La saisonnalité est un motif qui revient selon une période connue.
+- Une pointe isolée ne prouve pas une saisonnalité.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Un décembre élevé une seule année peut être une observation inhabituelle. Il faut comparer plusieurs décembres.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+ventes |> ggplot(aes(date, ventes)) +
+  geom_line() + geom_point()
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Attribuer une hausse à une promotion seulement parce que les deux apparaissent au même moment dépasse ce que montre le graphique.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Décrire un motif n'est pas expliquer sa cause.
+- Chercher aussi les données manquantes et les changements de variabilité.
+:::
+
+## Activité 6.2
+
+::: {.lead}
+Tracez les ventes selon la date, puis nommez deux motifs visibles et une question qui reste ouverte.
+:::

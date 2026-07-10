@@ -1,0 +1,90 @@
+---
+title: "Capsule 4 - Prévoir et communiquer l'incertitude"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Un budget est une décision sous incertitude, pas une certitude déguisée.
+:::
+
+::: {.question-line}
+Pourquoi montrer un intervalle de prédiction?
+:::
+
+::: {.note-box}
+Une prévision ponctuelle donne une valeur centrale. L'intervalle de prédiction décrit une plage plausible pour une nouvelle observation, selon le modèle.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Produire une prévision ponctuelle et un intervalle.
+- Relier l'incertitude à un scénario budgétaire.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- L'intervalle de prédiction concerne une nouvelle observation.
+- Il est généralement plus large que l'intervalle de confiance de la moyenne.
+- La décision peut prévoir des scénarios de capacité.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Un budget peut utiliser une valeur centrale, un scénario prudent et un scénario de capacité élevée plutôt qu'un seul chiffre présenté comme certain.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+pred <- predict(modele, newdata = test, interval = "prediction")
+head(pred)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Communiquer seulement la valeur centrale masque la variabilité qui compte pour les stocks, les équipes et la capacité.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Une prévision doit être accompagnée de son incertitude.
+- Une décision robuste prévoit des scénarios.
+:::
+
+## Activité 8.4
+
+::: {.lead}
+Expliquez pourquoi l'intervalle de prédiction est plus large que l'intervalle de confiance de la moyenne.
+:::

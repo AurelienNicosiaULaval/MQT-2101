@@ -1,0 +1,91 @@
+---
+title: "Capsule 4 - Évaluer sans regarder le futur"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une bonne prévision doit survivre à des données qu'elle n'a pas vues.
+:::
+
+::: {.question-line}
+Pourquoi réserver une période test chronologique?
+:::
+
+::: {.note-box}
+L'évaluation doit reproduire la situation réelle : le futur n'était pas disponible au moment de prévoir.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Séparer entraînement et test dans l'ordre du temps.
+- Comparer un modèle à une référence naïve.
+- Interpréter la MAE dans l'unité de la cible.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Le test vient après l'entraînement.
+- La méthode naïve utilise la dernière valeur observée.
+- La MAE mesure une erreur moyenne dans l'unité de la cible.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Une méthode complexe qui ne bat pas la méthode naïve n'a pas encore démontré une valeur pratique supplémentaire.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+train <- ventes |> filter(date < as.Date("2025-01-01"))
+test <- ventes |> filter(date >= as.Date("2025-01-01"))
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Mélanger aléatoirement les mois donne au modèle une information qui aurait été future au point d'origine.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- L'évaluation temporelle protège contre la fuite vers le futur.
+- La référence simple est un seuil minimal de valeur.
+:::
+
+## Activité 6.4
+
+::: {.lead}
+Expliquez en deux phrases pourquoi une séparation aléatoire des mois est irréaliste.
+:::

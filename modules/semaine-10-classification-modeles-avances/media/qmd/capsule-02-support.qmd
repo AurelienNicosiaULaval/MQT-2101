@@ -1,0 +1,91 @@
+---
+title: "Capsule 2 - Probabilité logistique"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une probabilité est plus utile qu'une étiquette lorsqu'il faut prioriser une intervention.
+:::
+
+::: {.question-line}
+Comment passer d'un score à une probabilité entre zéro et un?
+:::
+
+::: {.note-box}
+La régression logistique modélise les log-cotes, puis les traduit en probabilités. Pour communiquer, les probabilités prédites dans des scénarios sont souvent plus parlantes que les coefficients seuls.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Interpréter le signe d'un coefficient logistique.
+- Distinguer probabilité prédite et classe.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Un coefficient positif augmente les log-cotes de la classe positive.
+- Une probabilité n'est pas une certitude individuelle.
+- Un seuil transforme ensuite la probabilité en action.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Une probabilité de 0,70 signifie que le modèle estime un risque élevé selon ses données et hypothèses, pas qu'un départ est certain.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+modele <- glm(depart_90j ~ anciennete_mois + satisfaction + tickets_service_6m,
+  family = binomial(), data = train)
+predict(modele, newdata = test, type = "response")
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Présenter une probabilité comme un verdict individuel confond incertitude statistique et certitude opérationnelle.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Les probabilités servent à ordonner les priorités.
+- La règle de décision exige un seuil explicite.
+:::
+
+## Activité 10.2
+
+::: {.lead}
+Expliquez pourquoi une probabilité prédite de 0,70 ne garantit pas un départ.
+:::

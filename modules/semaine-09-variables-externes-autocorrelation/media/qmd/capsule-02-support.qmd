@@ -1,0 +1,90 @@
+---
+title: "Capsule 2 - Régression conditionnelle"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une prévision avec promotion ou prix est toujours liée aux hypothèses retenues.
+:::
+
+::: {.question-line}
+Que permet réellement un coefficient de promotion?
+:::
+
+::: {.note-box}
+Le coefficient d'une variable externe décrit une association conditionnelle aux autres variables du modèle. Il ne prouve pas à lui seul un effet causal.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Ajuster une régression temporelle avec prédicteurs externes.
+- Employer un langage conditionnel et non causal.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Le modèle combine tendance, calendrier et prédicteurs.
+- Les coefficients dépendent des autres variables incluses.
+- Les prédictions sont conditionnelles au scénario.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Comparer « promotion oui » et « promotion non » dans un modèle observationnel ne reproduit pas une expérimentation aléatoire.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label,
+  data = train)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Transformer une association estimée en promesse d'effet causal peut produire une recommandation injustifiée.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Les coefficients sont conditionnels au modèle.
+- Une question causale exige un autre plan d'étude.
+:::
+
+## Activité 9.2
+
+::: {.lead}
+Expliquez pourquoi deux prévisions sous des niveaux de promotion différents ne prouvent pas automatiquement un effet causal.
+:::

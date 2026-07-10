@@ -1,0 +1,90 @@
+---
+title: "Capsule 3 - Mesurer les erreurs"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+La meilleure erreur dépend des conséquences opérationnelles.
+:::
+
+::: {.question-line}
+Que mesure MAE, RMSE et MAPE?
+:::
+
+::: {.note-box}
+Les mesures résument des erreurs différentes. Il faut conserver leur unité, leur sensibilité et leur limite avant de les utiliser pour choisir une méthode.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Calculer et interpréter MAE et RMSE.
+- Identifier la limite du MAPE près de zéro.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- La MAE reste dans l'unité de la cible.
+- La RMSE pénalise les grandes erreurs.
+- Le MAPE est instable près de zéro.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Deux méthodes peuvent avoir la même MAE. Celle qui fait une erreur extrême aura généralement une RMSE plus élevée.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+mae <- mean(abs(test$demande - prevision))
+rmse <- sqrt(mean((test$demande - prevision)^2))
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Choisir la plus petite mesure sans relier l'erreur au coût des ruptures ou des surplus donne une décision incomplète.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- L'erreur doit être lue avec son unité.
+- Une grande erreur peut compter plus qu'une petite amélioration moyenne.
+:::
+
+## Activité 7.3
+
+::: {.lead}
+Indiquez quelle mesure distinguera davantage deux méthodes ayant la même MAE mais des erreurs extrêmes différentes.
+:::

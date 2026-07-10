@@ -1,0 +1,90 @@
+---
+title: "Capsule 2 - Lissage exponentiel simple"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Les observations récentes peuvent compter davantage sans effacer tout l'historique.
+:::
+
+::: {.question-line}
+Quel rôle joue le paramètre alpha?
+:::
+
+::: {.note-box}
+Le lissage exponentiel met à jour un niveau estimé en pondérant la dernière observation et le niveau précédent.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Expliquer le rôle de alpha.
+- Choisir le lissage simple seulement lorsque sa structure est plausible.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Un alpha élevé réagit plus vite.
+- Un alpha faible produit un niveau plus stable.
+- Le lissage simple n'est pas adapté à une forte tendance non modélisée.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Avec une demande en hausse, alpha = 0,8 se rapproche beaucoup plus vite de la dernière observation que alpha = 0,2.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+fit <- forecast::ses(train$demande, h = nrow(test))
+autoplot(fit)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Présenter alpha comme une constante universellement bonne masque qu'il doit être évalué sur une période test.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Le niveau lissé est une prévision révisable.
+- La méthode doit être comparée à une référence.
+:::
+
+## Activité 7.2
+
+::: {.lead}
+Comparez qualitativement les effets de alpha = 0,2 et alpha = 0,8 pour une demande récente en hausse.
+:::

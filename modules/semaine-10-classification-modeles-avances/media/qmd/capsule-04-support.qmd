@@ -1,0 +1,90 @@
+---
+title: "Capsule 4 - Choisir un seuil décisionnel"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Le seuil est une règle de gestion, pas une constante mathématique.
+:::
+
+::: {.question-line}
+Pourquoi 0,5 n'est-il pas automatiquement le bon choix?
+:::
+
+::: {.note-box}
+Un seuil plus bas cible davantage de clients et augmente souvent la sensibilité, mais il utilise aussi plus de capacité et peut réduire la précision.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Comparer des seuils sur une période test.
+- Relier le seuil à la capacité et au coût des erreurs.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Le seuil transforme une probabilité en intervention.
+- La capacité de contact peut définir une règle réaliste.
+- La règle doit être validée hors échantillon.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Si l'équipe peut contacter 15 % des clients, elle peut ordonner les probabilités et cibler les 15 % les plus élevés, puis vérifier cette règle sur le test.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+seuil <- quantile(probabilite, probs = 0.85)
+cible <- probabilite >= seuil
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Fixer 0,5 sans regarder la capacité, la valeur d'un client ou le coût des faux négatifs donne une décision arbitraire.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Un seuil est un choix explicite de gestion.
+- Il doit être justifié et testé.
+:::
+
+## Activité 10.4
+
+::: {.lead}
+Proposez une règle de ciblage lorsque l'équipe peut contacter seulement 15 % des clients.
+:::

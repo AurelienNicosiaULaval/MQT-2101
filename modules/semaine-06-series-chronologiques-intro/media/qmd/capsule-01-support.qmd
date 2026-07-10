@@ -1,0 +1,90 @@
+---
+title: "Capsule 1 - Reconnaître une série chronologique"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Prévoir exige de respecter le temps.
+:::
+
+::: {.question-line}
+Qu'est-ce qui transforme un tableau en série chronologique?
+:::
+
+::: {.note-box}
+L'ordre des observations porte de l'information. Une ligne de mars ne peut pas être traitée comme interchangeable avec une ligne de février.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Nommer l'unité d'observation, la fréquence et la période.
+- Distinguer données transversales et données temporelles.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Une série est repérée dans le temps.
+- La date et la fréquence doivent être explicites.
+- La chronologie ne doit pas être détruite.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Une ligne peut représenter un mois-succursale, mais seulement si la date et la succursale sont toutes deux identifiées.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+library(tidyverse)
+ventes |> arrange(date) |> glimpse()
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Trier une date stockée comme texte peut produire un ordre faux. Vérifiez toujours la classe de la date.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Une unité, une variable, une fréquence et une période définissent la série.
+- L'ordre temporel est une information, pas une colonne décorative.
+:::
+
+## Activité 6.1
+
+::: {.lead}
+Pour chaque situation, indiquez si elle décrit une série chronologique et justifiez votre réponse.
+:::

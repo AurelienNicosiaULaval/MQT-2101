@@ -1,0 +1,89 @@
+---
+title: "Capsule 4 - Comparer équitablement"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une comparaison de méthodes doit être équitable avant d'être impressionnante.
+:::
+
+::: {.question-line}
+Qu'est-ce qui doit rester identique entre les méthodes?
+:::
+
+::: {.note-box}
+La même origine, le même horizon, la même période test et les mêmes mesures sont nécessaires pour attribuer une différence à la méthode plutôt qu'au protocole.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Construire une période test commune.
+- Choisir une méthode selon l'erreur et l'usage.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Toutes les méthodes prédisent les mêmes semaines.
+- Le classement numérique ne suffit pas.
+- La stabilité et le coût de maintenance comptent.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Une réduction de MAE de 1 % peut ne pas justifier un outil coûteux ou fragile.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+comparaison |> arrange(MAE, RMSE) |> select(methode, MAE, RMSE)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Comparer les erreurs sur des horizons ou des semaines différents invalide le classement.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Comparer d'abord à protocole constant.
+- Choisir ensuite la solution qui sert réellement la décision.
+:::
+
+## Activité 7.4
+
+::: {.lead}
+Formulez une décision prudente lorsqu'une méthode améliore peu la MAE mais augmente fortement les coûts de maintenance.
+:::

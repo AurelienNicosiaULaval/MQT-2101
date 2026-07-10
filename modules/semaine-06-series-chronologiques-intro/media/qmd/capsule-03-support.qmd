@@ -1,0 +1,90 @@
+---
+title: "Capsule 3 - Définir la cible et l'horizon"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une prévision utile répond à une décision concrète.
+:::
+
+::: {.question-line}
+Que faut-il préciser avant de choisir un modèle?
+:::
+
+::: {.note-box}
+La cible, l'origine, la fréquence et l'horizon doivent être définis avant l'ajustement. Sinon, on ne sait pas quelle prévision est réellement évaluée.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Distinguer cible, origine et horizon.
+- Formuler une prévision liée à une décision.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- La cible est la valeur future à prévoir.
+- L'horizon est la distance entre l'origine et la période visée.
+- La fréquence doit être compatible avec la décision.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+À la fin de décembre, prévoir les ventes mensuelles de janvier à mars pour planifier les achats du trimestre.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+origine <- as.Date("2025-12-01")
+horizon_mois <- 3
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Dire seulement « prévoir les ventes » ne précise ni la période, ni le moment où la prévision est produite, ni son usage.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Une formulation précise évite une évaluation ambiguë.
+- L'horizon dépend du délai réel de décision.
+:::
+
+## Activité 6.3
+
+::: {.lead}
+Formulez une cible compatible avec un délai de commande de six semaines.
+:::

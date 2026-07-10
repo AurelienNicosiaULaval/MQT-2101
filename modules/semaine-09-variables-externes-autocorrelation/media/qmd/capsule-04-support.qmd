@@ -1,0 +1,90 @@
+---
+title: "Capsule 4 - Erreurs AR et scénarios"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Les variables externes et la mémoire des erreurs peuvent contribuer ensemble à une prévision.
+:::
+
+::: {.question-line}
+Que signifie une prévision conditionnelle?
+:::
+
+::: {.note-box}
+Un modèle avec erreurs AR(1) ajoute une dépendance entre les erreurs. Pour l'utiliser, les prédicteurs futurs doivent être connus, prévus ou scénarisés.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Comparer une régression ordinaire et une régression avec erreurs AR.
+- Communiquer une prévision conditionnelle à un scénario.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- AR(1) relie une erreur à l'erreur précédente.
+- Les scénarios doivent expliciter les valeurs futures des prédicteurs.
+- Le résultat n'est pas une prévision inconditionnelle.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Une prévision pour avril suppose ici qu'une promotion est maintenue et que le prix reste stable. Ces hypothèses font partie du résultat.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+modele_ar <- forecast::Arima(train$ventes, order = c(1, 0, 0),
+  xreg = model.matrix(~ promotion + prix_moyen, train)[, -1])
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Omettre les hypothèses sur prix et promotion donne l'impression trompeuse que le modèle connaît automatiquement le futur.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Les scénarios sont des intrants du modèle.
+- Une recommandation doit nommer ses hypothèses.
+:::
+
+## Activité 9.4
+
+::: {.lead}
+Rédigez une phrase complète présentant une prévision sous un scénario de promotion maintenue et de prix stable.
+:::

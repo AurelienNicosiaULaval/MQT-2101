@@ -1,0 +1,90 @@
+---
+title: "Capsule 1 - Moyennes mobiles"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Lisser aide à décider sans réagir à chaque fluctuation.
+:::
+
+::: {.question-line}
+Comment réduire le bruit sans regarder vers le futur?
+:::
+
+::: {.note-box}
+Une moyenne mobile arrière utilise uniquement des observations déjà disponibles. La taille de sa fenêtre règle le compromis entre réactivité et stabilité.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Calculer une moyenne mobile arrière.
+- Expliquer l'effet d'une fenêtre courte ou longue.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Une fenêtre courte réagit vite.
+- Une fenêtre longue lisse davantage.
+- Pour prévoir, la fenêtre doit être arrière.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Les quatre dernières demandes 980, 1 020, 1 080 et 1 120 donnent une moyenne mobile de 1 050 unités.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+demande |> mutate(mm4 = slider::slide_dbl(
+  demande, mean, .before = 3, .complete = TRUE))
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Une moyenne mobile centrée peut être utile pour décrire, mais elle utilise des valeurs futures et ne convient pas à une prévision en temps réel.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- La fenêtre détermine la réactivité.
+- Une moyenne mobile ne modélise pas automatiquement la tendance ou la saisonnalité.
+:::
+
+## Activité 7.1
+
+::: {.lead}
+Calculez la moyenne mobile des quatre dernières demandes et nommez ce qu'elle ignore.
+:::

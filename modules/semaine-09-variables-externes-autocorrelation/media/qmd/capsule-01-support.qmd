@@ -1,0 +1,89 @@
+---
+title: "Capsule 1 - Variables externes disponibles"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une variable utile dans un modèle peut être inutilisable au moment de prévoir.
+:::
+
+::: {.question-line}
+Quelles informations seront réellement connues dans le futur?
+:::
+
+::: {.note-box}
+Avant d'ajouter un prédicteur, il faut vérifier son statut au point d'origine. Une variable future indisponible crée une fuite d'information.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Classer un prédicteur selon sa disponibilité future.
+- Repérer une fuite d'information.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Le calendrier et une promotion approuvée peuvent être connus.
+- Un prix envisagé doit être scénarisé.
+- La cible future ne peut jamais être un prédicteur.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Une promotion approuvée est connue. La météo est prévue séparément. Les ventes réelles du mois prochain sont la cible.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+predicteurs |> count(statut_disponibilite)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Utiliser les ventes observées du mois prochain comme variable explicative améliore artificiellement la performance sans aider la décision réelle.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- La disponibilité future est une condition de validité.
+- Un scénario doit être annoncé comme tel.
+:::
+
+## Activité 9.1
+
+::: {.lead}
+Classez une promotion approuvée, la météo du mois prochain et les ventes du mois prochain.
+:::

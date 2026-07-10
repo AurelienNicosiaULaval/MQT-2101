@@ -1,0 +1,90 @@
+---
+title: "Capsule 2 - Coder le calendrier"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Le calendrier devient utile lorsqu'il est représenté explicitement dans le modèle.
+:::
+
+::: {.question-line}
+Que représente un coefficient de décembre?
+:::
+
+::: {.note-box}
+Un indice de temps porte la tendance et un facteur mois porte les différences saisonnières par rapport à une référence choisie.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Créer un indice de temps et un facteur mois.
+- Interpréter une catégorie de référence.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- L'indice de temps augmente d'une unité par période.
+- Le mois est un facteur pour le modèle.
+- La référence fixe la comparaison, elle n'est pas la meilleure catégorie.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Avec janvier comme référence, un coefficient de décembre de 80 000 représente une différence moyenne conditionnelle au temps dans le modèle.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+ventes <- ventes |> mutate(mois_label = factor(mois_label))
+contrasts(ventes$mois_label)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Présenter un coefficient de mois comme un effet causal du calendrier dépasse un modèle observationnel.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- La référence est un point de comparaison.
+- Les coefficients se lisent conditionnellement au modèle.
+:::
+
+## Activité 8.2
+
+::: {.lead}
+Interprétez un coefficient de décembre de 80 000 avec les mots « à tendance égale ».
+:::

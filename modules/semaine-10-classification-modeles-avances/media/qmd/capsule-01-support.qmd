@@ -1,0 +1,90 @@
+---
+title: "Capsule 1 - Définir une cible binaire"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une classification utile commence par un événement mesurable.
+:::
+
+::: {.question-line}
+Que signifie exactement « client à risque »?
+:::
+
+::: {.note-box}
+Une cible binaire doit définir l'événement, l'horizon, la classe positive et la période à laquelle les prédicteurs sont disponibles.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Définir une classe positive vérifiable.
+- Éviter une fuite de cible.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- La classe positive est l'événement à détecter.
+- L'horizon rend la cible mesurable.
+- Les prédicteurs doivent précéder l'événement.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+« Départ dans les 90 jours » est une cible vérifiable. « Client à risque » est une intuition trop vague pour entraîner un modèle.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+clients |> count(depart_90j)
+prop.table(table(clients$depart_90j))
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Utiliser une information créée après le départ dans les prédicteurs donne une performance irréaliste et une intervention impossible à temps.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Une cible doit être définie avant le modèle.
+- La chronologie protège aussi la classification.
+:::
+
+## Activité 10.1
+
+::: {.lead}
+Expliquez pourquoi « client à risque » est une cible insuffisante.
+:::

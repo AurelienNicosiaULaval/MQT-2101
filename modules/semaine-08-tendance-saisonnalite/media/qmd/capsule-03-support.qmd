@@ -1,0 +1,90 @@
+---
+title: "Capsule 3 - Ajuster un modèle tendance-saisonnalité"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Un modèle simple peut rendre un budget plus défendable.
+:::
+
+::: {.question-line}
+Quelle structure le modèle additif suppose-t-il?
+:::
+
+::: {.note-box}
+Une régression avec indice de temps et facteur mois suppose que les écarts saisonniers restent approximativement constants quand le niveau change.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Ajuster un modèle avec tendance et mois.
+- Diagnostiquer une structure saisonnière restante.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Le modèle est additif.
+- Les résidus doivent être inspectés.
+- Une amplitude croissante suggère une autre structure.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Si l'amplitude saisonnière croît avec les ventes, une transformation logarithmique peut être plus appropriée.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+broom::tidy(modele)
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Choisir le modèle uniquement parce qu'il produit davantage de coefficients ne garantit ni une meilleure prévision ni une meilleure interprétation.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Le modèle doit représenter un motif utile.
+- Les résidus révèlent ce qui reste à expliquer.
+:::
+
+## Activité 8.3
+
+::: {.lead}
+Nommez un graphique de résidus qui pourrait signaler qu'un modèle additif est insuffisant.
+:::

@@ -17,7 +17,8 @@ La refonte pédagogique et technique du site est complète pour une première mi
 - Les questionnaires sont formatifs. Les examens intra et final sont individuels, en personne, et accompagnés d'un plan de contenu explicite.
 - La politique d'usage de l'IA couvre l'autorisation, la déclaration, la confidentialité, l'accès équitable et l'interdiction pendant les examens.
 - Les lectures distinguent l'accès libre d'une véritable licence ouverte et privilégient des ressources récentes ou durablement accessibles.
-- Le rendu Quarto complet, les calculs R, les liens internes et les pages principales ont été vérifiés.
+- Les 50 supports RevealJS des capsules respectent un même fil pédagogique, avec des activités nommées de façon uniforme.
+- Le rendu Quarto complet, les calculs R, les liens internes, les transitions pédagogiques et les pages principales ont été vérifiés.
 - Les solutionnaires enseignants et les documents internes demeurent exclus du site public.
 
 ## Décisions retenues
@@ -45,7 +46,7 @@ La refonte pédagogique et technique du site est complète pour une première mi
 | 5. Développer les ateliers | Terminé | Ateliers 01 à 04 complets |
 | 6. Refaire les évaluations | Terminé | Consignes, grilles, validation et questionnaires formatifs |
 | 7. Produire les ressources | Terminé | Guides, lectures, feuille de référence, IA et gabarits |
-| 8. Tester le site | Terminé pour cette livraison | Rendu complet et contrôles fonctionnels effectués |
+| 8. Tester le site | Terminé | Rendu complet, contrôle de cohérence et vérifications fonctionnelles effectués |
 | 9. Enregistrer les vidéos | À produire | Remplacer les emplacements prévus par les capsules vidéo |
 
 ## Dernière livraison
@@ -59,6 +60,9 @@ Livraison du 10 juillet 2026 :
 - renforcement de la politique d'IA, de la déclaration et des règles de confidentialité;
 - mise à jour des lectures, des licences et du catalogue des données;
 - alignement du plan de cours, du calendrier et de la navigation;
+- ajout de 20 supports RevealJS aux modules 06 à 10 et harmonisation des 50 supports de capsules;
+- ajout des transitions entre les blocs, les ateliers et les évaluations;
+- ajout d'un audit et d'un validateur de cohérence pédagogique;
 - rendu Quarto complet et contrôle du site sur ordinateur et mobile.
 
 ## Travail restant

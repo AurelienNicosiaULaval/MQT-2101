@@ -1,0 +1,90 @@
+---
+title: "Capsule 3 - Matrice de confusion"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une décision de ciblage crée des erreurs différentes, pas seulement un pourcentage global.
+:::
+
+::: {.question-line}
+Que se passe-t-il après le choix d'un seuil?
+:::
+
+::: {.note-box}
+Le seuil crée des vrais positifs, faux positifs, vrais négatifs et faux négatifs. Les mesures doivent correspondre au coût de ces erreurs.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Construire une matrice de confusion.
+- Interpréter sensibilité, spécificité et précision.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- La sensibilité mesure les départs détectés.
+- La spécificité mesure les non-départs écartés.
+- La précision décrit la part des clients ciblés qui partent réellement.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Avec un événement rare, prédire toujours la classe majoritaire peut donner une exactitude élevée tout en ratant les clients à retenir.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+table(observe = test$depart_90j,
+      predit = as.integer(probabilite >= seuil))
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Rapporter seulement l'exactitude peut masquer une méthode incapable de détecter la classe positive.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- La matrice montre le type d'erreur.
+- La mesure choisie doit servir la décision.
+:::
+
+## Activité 10.3
+
+::: {.lead}
+Nommez l'erreur associée à un client qui part sans être ciblé et son coût possible.
+:::

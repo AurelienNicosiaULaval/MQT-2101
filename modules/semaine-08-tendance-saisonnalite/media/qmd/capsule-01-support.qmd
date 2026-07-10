@@ -1,0 +1,90 @@
+---
+title: "Capsule 1 - Distinguer tendance et saisonnalité"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Un niveau qui monte peut masquer des mois systématiquement forts ou faibles.
+:::
+
+::: {.question-line}
+Comment séparer l'évolution de long terme des effets de calendrier?
+:::
+
+::: {.note-box}
+La tendance change graduellement le niveau. La saisonnalité est un motif récurrent à une fréquence connue. Les deux peuvent être présents simultanément.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Définir tendance et saisonnalité.
+- Chercher une récurrence sur plusieurs cycles.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Une seule année ne prouve pas la saisonnalité.
+- Comparer les mêmes mois sur plusieurs années.
+- La tendance peut modifier le niveau général.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Regrouper les observations de janvier permet de comparer janvier d'une année à l'autre malgré une tendance globale.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+ventes |> ggplot(aes(mois_label, ventes)) +
+  geom_boxplot()
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Interpréter une hausse de janvier à décembre dans une seule année comme une saisonnalité confond un trajet unique et un motif récurrent.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- La tendance est un mouvement de long terme.
+- La saisonnalité revient selon un calendrier.
+:::
+
+## Activité 8.1
+
+::: {.lead}
+Expliquez pourquoi il est utile de comparer toutes les observations de janvier.
+:::

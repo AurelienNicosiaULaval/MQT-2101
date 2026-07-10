@@ -1,0 +1,90 @@
+---
+title: "Capsule 3 - Autocorrélation des résidus"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Des résidus organisés dans le temps indiquent une information encore inutilisée.
+:::
+
+::: {.question-line}
+Que signifie un résidu positif suivi souvent d'un autre résidu positif?
+:::
+
+::: {.note-box}
+Après modélisation, les résidus devraient ressembler à du bruit. Une dépendance temporelle restante peut rendre les prévisions successivement trop basses ou trop hautes.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Lire une fonction d'autocorrélation.
+- Interpréter prudemment un test de Ljung-Box.
+:::
+
+## L'idée centrale
+
+::: {.keypoints}
+- Un pic au retard 1 concerne des voisins temporels.
+- Le test de Ljung-Box examine plusieurs retards.
+- Une valeur p ne mesure pas à elle seule le coût opérationnel.
+:::
+
+## Décision ou exemple
+
+::: {.example-box}
+Des résidus positifs consécutifs peuvent signaler plusieurs sous-prévisions successives et un risque accru de rupture.
+:::
+
+## Le geste en R
+
+```{r}
+#| eval: false
+acf(residuals(modele))
+Box.test(residuals(modele), lag = 12, type = "Ljung-Box")
+```
+
+## Piège fréquent
+
+::: {.warning-box}
+Se limiter à une valeur p sans regarder le graphique des résidus empêche de comprendre le motif et son importance pratique.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Inspecter le temps avant de conclure.
+- Un diagnostic statistique doit conduire à une question de décision.
+:::
+
+## Activité 9.3
+
+::: {.lead}
+Décrivez le risque pratique associé à une succession de résidus positifs.
+:::
