@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -3997,14 +3997,16 @@ vertical-align: -.125em;
 
 
 <style type="text/css">@media (min-width: 992px) {
-#quarto-content.page-layout-article main.content {
+body.page-home #quarto-content.page-layout-article main.content,
+body.page-plan #quarto-content.page-layout-article main.content,
+body.page-calendar #quarto-content.page-layout-article main.content,
+body.page-installation #quarto-content.page-layout-article main.content,
+body.page-evaluations #quarto-content.page-layout-article main.content,
+body.page-resource #quarto-content.page-layout-article main.content {
 grid-column: screen-start / screen-end;
 justify-self: center;
 width: min(1180px, calc(100vw - 4rem));
 max-width: min(1180px, calc(100vw - 4rem));
-}
-#quarto-content.page-layout-article #quarto-margin-sidebar {
-display: none;
 }
 }
 .navbar-logo {
@@ -5322,6 +5324,40 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.video-embed,
+.pdf-viewer {
+width: 100%;
+margin: 1rem 0;
+border: 1px solid #d0d7de;
+border-radius: 8px;
+overflow: hidden;
+background: #f8fafc;
+}
+.video-embed {
+aspect-ratio: 16 / 9;
+}
+.video-embed iframe,
+.pdf-viewer iframe {
+display: block;
+width: 100%;
+border: 0;
+}
+.video-embed iframe {
+height: 100%;
+}
+.pdf-viewer iframe {
+min-height: 620px;
+height: min(76vh, 820px);
+}
+.resource-fallback {
+margin: -0.35rem 0 1rem;
+font-size: 0.95rem;
+}
+@media (max-width: 767px) {
+.pdf-viewer iframe {
+min-height: 480px;
+}
+}
 .data-link {
 display: inline-flex;
 align-items: center;
@@ -6616,115 +6652,143 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../plan-de-cours.html">
+    <a class="nav-link" href="../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../calendrier.html">
+    <a class="nav-link" href="../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../installation.html">
+    <a class="nav-link" href="../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-06-series-chronologiques-intro/index.html">
+ <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-07-lissage/index.html">
+ <span class="dropdown-text">Module 07 - Lissage</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-08-tendance-saisonnalite/index.html">
+ <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-03-series-chronologiques/index.html">
+ <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-09-variables-externes-autocorrelation/index.html">
+ <span class="dropdown-text">Module 09 - Variables externes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-10-classification-modeles-avances/index.html">
+ <span class="dropdown-text">Module 10 - Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-04-recapitulation/index.html">
+ <span class="dropdown-text">Atelier 04 - Intégration</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../evaluations/index.html">
+    <a class="nav-link" href="../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../donnees/index.html">
+    <a class="nav-link" href="../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6739,7 +6803,7 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
   <li><a href="#references-principales" id="toc-references-principales" class="nav-link active" data-scroll-target="#references-principales">Références principales</a></li>
   <li><a href="#references-complementaires" id="toc-references-complementaires" class="nav-link" data-scroll-target="#references-complementaires">Références complémentaires</a></li>
@@ -6760,11 +6824,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7155,7 +7219,7 @@ height: 82px;
       <div class="reading-actions">
         <a href="https://otexts.com/fpp3/" target="_blank" rel="noopener">Lire en ligne</a>
       </div>
-      <p class="reading-source">Image et accès : site officiel OTexts.</p>
+      <p class="reading-source">Statut : lecture gratuite en ligne sur OTexts. La page d&#39;accueil ne présente pas ce livre comme une ressource sous licence ouverte de réutilisation.</p>
     </div>
   </article>
 
@@ -7173,7 +7237,7 @@ height: 82px;
       <div class="reading-actions">
         <a href="https://r4ds.hadley.nz/" target="_blank" rel="noopener">Lire en ligne</a>
       </div>
-      <p class="reading-source">Image et accès : site officiel R for Data Science.</p>
+      <p class="reading-source">Statut : accès gratuit; licence CC BY-NC-ND 3.0. La redistribution non commerciale est permise avec attribution, mais les adaptations ne le sont pas.</p>
     </div>
   </article>
 
@@ -7192,7 +7256,7 @@ height: 82px;
         <a href="https://www.statlearning.com/" target="_blank" rel="noopener">Page officielle</a>
         <a class="secondary-link" href="https://hastie.su.domains/ISLR2/ISLRv2_corrected_June_2023.pdf.download.html" target="_blank" rel="noopener">PDF gratuit</a>
       </div>
-      <p class="reading-source">Image et accès : site officiel An Introduction to Statistical Learning.</p>
+      <p class="reading-source">Statut : PDF gratuit fourni par les auteurs; ouvrage protégé, tous droits réservés. Il s&#39;agit d&#39;un accès gratuit, pas d&#39;une licence ouverte de réutilisation.</p>
     </div>
   </article>
 </div>
@@ -7220,7 +7284,7 @@ height: 82px;
       <div class="reading-actions">
         <a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener">Page officielle</a>
       </div>
-      <p class="reading-source">Image : Open Textbook Library. Accès : OpenIntro.</p>
+      <p class="reading-source">Statut : ressource éducative libre; OpenIntro indique une licence CC BY-SA 3.0 pour la plupart de ses manuels de statistique. Vérifier les exceptions signalées pour les ressources enseignantes.</p>
     </div>
   </article>
 
@@ -7239,7 +7303,7 @@ height: 82px;
         <a href="https://openintro-ims.netlify.app/" target="_blank" rel="noopener">Lire en ligne</a>
         <a class="secondary-link" href="https://www.openintro.org/book/ims/" target="_blank" rel="noopener">Page OpenIntro</a>
       </div>
-      <p class="reading-source">Image et accès : sites officiels OpenIntro et Introduction to Modern Statistics.</p>
+      <p class="reading-source">Statut : lecture et PDF gratuits; ressource OpenIntro. La politique générale OpenIntro indique CC BY-SA 3.0 pour la plupart de ses manuels, avec exceptions possibles pour certaines ressources complémentaires.</p>
     </div>
   </article>
 
@@ -7258,7 +7322,7 @@ height: 82px;
         <a href="https://math.univ-cotedazur.fr/~rubentha/enseignement/poly-cours-series-temp-m1-im.pdf" target="_blank" rel="noopener">PDF</a>
         <a class="secondary-link" href="https://cel.hal.science/hal-02429148v1/file/poly-cours-series-temp-m1-im.pdf" target="_blank" rel="noopener">Lien HAL</a>
       </div>
-      <p class="reading-source">Aperçu généré à partir du PDF public.</p>
+      <p class="reading-source">Statut : PDF en accès public. Aucune licence ouverte n&#39;est affirmée ici; utiliser le lien pour la lecture et citer les auteurs.</p>
     </div>
   </article>
 
@@ -7276,7 +7340,7 @@ height: 82px;
       <div class="reading-actions">
         <a href="https://www.math.univ-toulouse.fr/~lagnoux/Poly_SC.pdf" target="_blank" rel="noopener">PDF</a>
       </div>
-      <p class="reading-source">Aperçu généré à partir du PDF public.</p>
+      <p class="reading-source">Statut : PDF en accès public. Aucune licence ouverte n&#39;est affirmée ici; utiliser le lien pour la lecture et citer l&#39;autrice.</p>
     </div>
   </article>
 </div>
@@ -7474,7 +7538,7 @@ height: 82px;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7494,11 +7558,11 @@ height: 82px;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7575,7 +7639,7 @@ height: 82px;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7650,7 +7714,7 @@ height: 82px;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7678,7 +7742,7 @@ height: 82px;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7702,7 +7766,7 @@ height: 82px;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7742,7 +7806,7 @@ height: 82px;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7868,7 +7932,7 @@ height: 82px;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

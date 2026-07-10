@@ -192,5 +192,59 @@ glance(modele)</code></pre>
       </article>
     </div>
   </section>
+
+  <section class="resource-section" id="prevision" aria-labelledby="forecast-title">
+    <div class="resource-section__header">
+      <h2 id="forecast-title">Prévision temporelle</h2>
+      <p>Avant le modèle, préciser cible, fréquence, origine, horizon et décision.</p>
+    </div>
+    <div class="resource-card-grid resource-card-grid--two">
+      <article class="resource-card">
+        <h3>Validation</h3>
+        <ul>
+          <li>Entraînement avant test.</li>
+          <li>Même période test pour toutes les méthodes.</li>
+          <li>Référence naïve ou saisonnière.</li>
+          <li>Aucune variable future indisponible.</li>
+        </ul>
+      </article>
+      <article class="resource-card">
+        <h3>Mesures</h3>
+        <ul>
+          <li>Erreur = observé - prévu.</li>
+          <li>MAE : erreur absolue moyenne.</li>
+          <li>RMSE : sensible aux grandes erreurs.</li>
+          <li>Biais positif : sous-prévision moyenne.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="resource-section" id="classification" aria-labelledby="classification-title">
+    <div class="resource-section__header">
+      <h2 id="classification-title">Classification binaire</h2>
+      <p>Définir la classe positive avant de calculer les mesures.</p>
+    </div>
+    <div class="resource-card-grid resource-card-grid--two">
+      <article class="resource-card">
+        <h3>Matrice</h3>
+        <ul>
+          <li>VP : positif correctement détecté.</li>
+          <li>FP : intervention inutile.</li>
+          <li>VN : négatif correctement écarté.</li>
+          <li>FN : positif manqué.</li>
+        </ul>
+      </article>
+      <article class="resource-card">
+        <h3>Mesures</h3>
+        <ul>
+          <li>Sensibilité = VP / (VP + FN).</li>
+          <li>Spécificité = VN / (VN + FP).</li>
+          <li>Précision = VP / (VP + FP).</li>
+          <li>Le seuil dépend du coût et de la capacité.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
 </div>
 ```

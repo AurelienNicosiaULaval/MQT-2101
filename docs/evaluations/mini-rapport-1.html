@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Mini-rapport 1 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Mini-rapport 1 - Exploration et régression – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -3997,14 +3997,16 @@ vertical-align: -.125em;
 
 
 <style type="text/css">@media (min-width: 992px) {
-#quarto-content.page-layout-article main.content {
+body.page-home #quarto-content.page-layout-article main.content,
+body.page-plan #quarto-content.page-layout-article main.content,
+body.page-calendar #quarto-content.page-layout-article main.content,
+body.page-installation #quarto-content.page-layout-article main.content,
+body.page-evaluations #quarto-content.page-layout-article main.content,
+body.page-resource #quarto-content.page-layout-article main.content {
 grid-column: screen-start / screen-end;
 justify-self: center;
 width: min(1180px, calc(100vw - 4rem));
 max-width: min(1180px, calc(100vw - 4rem));
-}
-#quarto-content.page-layout-article #quarto-margin-sidebar {
-display: none;
 }
 }
 .navbar-logo {
@@ -5322,6 +5324,40 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.video-embed,
+.pdf-viewer {
+width: 100%;
+margin: 1rem 0;
+border: 1px solid #d0d7de;
+border-radius: 8px;
+overflow: hidden;
+background: #f8fafc;
+}
+.video-embed {
+aspect-ratio: 16 / 9;
+}
+.video-embed iframe,
+.pdf-viewer iframe {
+display: block;
+width: 100%;
+border: 0;
+}
+.video-embed iframe {
+height: 100%;
+}
+.pdf-viewer iframe {
+min-height: 620px;
+height: min(76vh, 820px);
+}
+.resource-fallback {
+margin: -0.35rem 0 1rem;
+font-size: 0.95rem;
+}
+@media (max-width: 767px) {
+.pdf-viewer iframe {
+min-height: 480px;
+}
+}
 .data-link {
 display: inline-flex;
 align-items: center;
@@ -6616,115 +6652,143 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../plan-de-cours.html">
+    <a class="nav-link" href="../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../calendrier.html">
+    <a class="nav-link" href="../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../installation.html">
+    <a class="nav-link" href="../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-06-series-chronologiques-intro/index.html">
+ <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-07-lissage/index.html">
+ <span class="dropdown-text">Module 07 - Lissage</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-08-tendance-saisonnalite/index.html">
+ <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-03-series-chronologiques/index.html">
+ <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-09-variables-externes-autocorrelation/index.html">
+ <span class="dropdown-text">Module 09 - Variables externes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-10-classification-modeles-avances/index.html">
+ <span class="dropdown-text">Module 10 - Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-04-recapitulation/index.html">
+ <span class="dropdown-text">Atelier 04 - Intégration</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../evaluations/index.html">
+    <a class="nav-link" href="../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../donnees/index.html">
+    <a class="nav-link" href="../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6739,12 +6803,22 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
-  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#objectif-et-pondération" id="toc-objectif-et-pondération" class="nav-link active" data-scroll-target="#objectif-et-pondération">Objectif et pondération</a></li>
+  <li><a href="#échéancier-pédagogique" id="toc-échéancier-pédagogique" class="nav-link" data-scroll-target="#échéancier-pédagogique">Échéancier pédagogique</a></li>
   <li><a href="#modalité" id="toc-modalité" class="nav-link" data-scroll-target="#modalité">Modalité</a></li>
-  <li><a href="#contenu-attendu" id="toc-contenu-attendu" class="nav-link" data-scroll-target="#contenu-attendu">Contenu attendu</a></li>
-  <li><a href="#ia" id="toc-ia" class="nav-link" data-scroll-target="#ia">IA</a></li>
+  <li><a href="#livrables" id="toc-livrables" class="nav-link" data-scroll-target="#livrables">Livrables</a></li>
+  <li><a href="#validation-des-données" id="toc-validation-des-données" class="nav-link" data-scroll-target="#validation-des-données">Validation des données</a></li>
+  <li><a href="#contenu-attendu" id="toc-contenu-attendu" class="nav-link" data-scroll-target="#contenu-attendu">Contenu attendu</a>
+  <ul class="collapse">
+  <li><a href="#question-et-données" id="toc-question-et-données" class="nav-link" data-scroll-target="#question-et-données">Question et données</a></li>
+  <li><a href="#exploration" id="toc-exploration" class="nav-link" data-scroll-target="#exploration">Exploration</a></li>
+  <li><a href="#régression" id="toc-régression" class="nav-link" data-scroll-target="#régression">Régression</a></li>
+  <li><a href="#décision" id="toc-décision" class="nav-link" data-scroll-target="#décision">Décision</a></li>
+  </ul></li>
+  <li><a href="#grille" id="toc-grille" class="nav-link" data-scroll-target="#grille">Grille</a></li>
+  <li><a href="#vérification-avant-remise" id="toc-vérification-avant-remise" class="nav-link" data-scroll-target="#vérification-avant-remise">Vérification avant remise</a></li>
   <li><a href="#gabarit" id="toc-gabarit" class="nav-link" data-scroll-target="#gabarit">Gabarit</a></li>
   </ul>
 </nav>
@@ -6754,64 +6828,118 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Mini-rapport 1</h1>
+<h1 class="title">Mini-rapport 1 - Exploration et régression</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
 
 
-<section id="objectif" class="level2">
-<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Produire en équipe une courte analyse reproductible allant de la préparation des données à une première modélisation par régression.</p>
-<p>Ce mini-rapport compte pour 15 % de la note finale.</p>
+<section id="objectif-et-pondération" class="level2">
+<h2 class="anchored" data-anchor-id="objectif-et-pondération">Objectif et pondération</h2>
+<p>Produire en équipe une analyse reproductible allant de la compréhension des données à une recommandation prudente appuyée par une régression.</p>
+<p>Pondération : 15 % de la note finale.</p>
+</section>
+<section id="échéancier-pédagogique" class="level2">
+<h2 class="anchored" data-anchor-id="échéancier-pédagogique">Échéancier pédagogique</h2>
+<ul>
+<li>Proposition du jeu de données : au plus tard au début du module 04.</li>
+<li>Validation du jeu de données : avant de commencer la modélisation.</li>
+<li>Remise : à la fin de la semaine 06 du calendrier, avant la préparation à l’intra.</li>
+</ul>
+<p>La date et l’heure civiles sont celles du calendrier institutionnel de la session. Cette séquence ne change pas d’une session à l’autre.</p>
 </section>
 <section id="modalité" class="level2">
 <h2 class="anchored" data-anchor-id="modalité">Modalité</h2>
 <ul>
-<li>Travail en équipe de 2 à 3 personnes.</li>
-<li>Remise après la semaine de relâche, selon le calendrier officiel.</li>
-<li>Source Quarto <code>.qmd</code> à remettre.</li>
-<li>Rendu final HTML à remettre.</li>
-<li>Jeu de données choisi par l’équipe et validé par l’enseignant.</li>
-<li>IA permise, déclarée.</li>
+<li>Équipe de 2 ou 3 personnes.</li>
+<li>Environ 1 200 à 1 600 mots, hors code et références.</li>
+<li>Maximum de quatre figures ou tableaux principaux.</li>
+<li>IA permise avec déclaration selon la <a href="../ressources/ia.html">politique du cours</a>.</li>
 </ul>
+</section>
+<section id="livrables" class="level2">
+<h2 class="anchored" data-anchor-id="livrables">Livrables</h2>
+<p>Remettre une archive contenant :</p>
+<ol type="1">
+<li>le fichier source <code>.qmd</code>;</li>
+<li>le fichier HTML autonome;</li>
+<li>le jeu de données autorisé ou un script reproductible d’importation;</li>
+<li>un court <code>README.md</code> indiquant comment rendre le document;</li>
+<li>la déclaration IA, ou la mention explicite « Aucun usage d’IA ayant influencé le livrable »;</li>
+<li>une déclaration de contribution d’une phrase par membre.</li>
+</ol>
+</section>
+<section id="validation-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="validation-des-données">Validation des données</h2>
+<p>Suivez la <a href="../evaluations/validation-donnees.html">procédure de validation</a>. Aucun renseignement personnel, confidentiel ou non autorisé ne doit être téléversé dans le rapport ou un outil d’IA. Les jeux fournis par le cours sont déjà autorisés.</p>
 </section>
 <section id="contenu-attendu" class="level2">
 <h2 class="anchored" data-anchor-id="contenu-attendu">Contenu attendu</h2>
-<p>Le mini-rapport doit couvrir :</p>
+<section id="question-et-données" class="level3">
+<h3 class="anchored" data-anchor-id="question-et-données">Question et données</h3>
 <ul>
-<li>la question d’analyse;</li>
-<li>l’origine et la description du jeu de données;</li>
-<li>l’unité d’observation;</li>
-<li>les variables principales;</li>
-<li>les limites du jeu de données;</li>
-<li>l’importation et la préparation des données;</li>
-<li>une exploration descriptive;</li>
-<li>au moins une visualisation pertinente;</li>
-<li>une régression;</li>
-<li>une interprétation des résultats;</li>
-<li>une courte recommandation ou conclusion décisionnelle.</li>
+<li>question d’analyse liée à une décision;</li>
+<li>origine, droit d’utilisation et limites;</li>
+<li>unité d’observation et variables;</li>
+<li>contrôles de qualité et transformations justifiées.</li>
 </ul>
 </section>
-<section id="ia" class="level2">
-<h2 class="anchored" data-anchor-id="ia">IA</h2>
-<p>L’utilisation d’outils d’IA générative est permise, à condition d’être déclarée lorsque l’aide obtenue influence de manière significative le code, la documentation, l’analyse ou le livrable remis.</p>
-<p>Le travail remis doit être compris, vérifié, adapté au contexte du projet et défendable. Le <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">GPT du cours</a> doit être utilisé pour les activités liées au cours.</p>
+<section id="exploration" class="level3">
+<h3 class="anchored" data-anchor-id="exploration">Exploration</h3>
+<ul>
+<li>résumé descriptif ciblé;</li>
+<li>au moins une visualisation répondant à la question;</li>
+<li>distinction entre observation, association et causalité.</li>
+</ul>
+</section>
+<section id="régression" class="level3">
+<h3 class="anchored" data-anchor-id="régression">Régression</h3>
+<ul>
+<li>modèle simple servant de référence;</li>
+<li>modèle principal justifié;</li>
+<li>interprétation d’au moins deux coefficients en unités concrètes;</li>
+<li>diagnostic des résidus et discussion d’une limite;</li>
+<li>comparaison des modèles selon ajustement, interprétabilité et utilité.</li>
+</ul>
+</section>
+<section id="décision" class="level3">
+<h3 class="anchored" data-anchor-id="décision">Décision</h3>
+<ul>
+<li>recommandation répondant à la question;</li>
+<li>incertitude ou réserve importante;</li>
+<li>prochaine vérification à réaliser avant une décision réelle.</li>
+</ul>
+</section>
+</section>
+<section id="grille" class="level2">
+<h2 class="anchored" data-anchor-id="grille">Grille</h2>
+<p>La <a href="../evaluations/grille-mini-rapports.html">grille commune des mini-rapports</a> est appliquée sur 100 points puis convertie en 15 %.</p>
+</section>
+<section id="vérification-avant-remise" class="level2">
+<h2 class="anchored" data-anchor-id="vérification-avant-remise">Vérification avant remise</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Le HTML se rend sur un autre ordinateur à partir des fichiers remis.</label></li>
+<li><label><input type="checkbox">Les bibliothèques sont chargées explicitement.</label></li>
+<li><label><input type="checkbox">Les chemins sont relatifs.</label></li>
+<li><label><input type="checkbox">Les graphiques comportent titre, axes et unités.</label></li>
+<li><label><input type="checkbox">La conclusion répond à la question sans causalité non démontrée.</label></li>
+<li><label><input type="checkbox">Les contributions et l’usage de l’IA sont documentés.</label></li>
+</ul>
 </section>
 <section id="gabarit" class="level2">
 <h2 class="anchored" data-anchor-id="gabarit">Gabarit</h2>
-<p>Un gabarit Quarto est disponible dans les ressources du cours : <a href="../ressources/gabarit-mini-rapport-1.html">Gabarit du mini-rapport 1</a>.</p>
+<p>Utilisez le <a href="../ressources/gabarit-mini-rapport-1.html">gabarit du mini-rapport 1</a>.</p>
 
 
 </section>
@@ -6900,7 +7028,7 @@ display: none;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -6920,11 +7048,11 @@ display: none;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7001,7 +7129,7 @@ display: none;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7076,7 +7204,7 @@ display: none;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7104,7 +7232,7 @@ display: none;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7128,7 +7256,7 @@ display: none;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7168,7 +7296,7 @@ display: none;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7294,7 +7422,7 @@ display: none;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

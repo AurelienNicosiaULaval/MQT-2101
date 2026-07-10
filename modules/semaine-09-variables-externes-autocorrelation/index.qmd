@@ -1,126 +1,51 @@
 ---
-title: "Semaine 09 - Prévision avec variables externes et autocorrélation"
+title: "Module 09 - Variables externes et autocorrélation"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Pourquoi ça compte"}
+Les promotions, les prix et les indicateurs économiques peuvent améliorer une prévision, mais seulement si leur valeur future est connue ou peut être scénarisée au moment de prévoir. Les résidus doivent aussi être examinés dans leur ordre temporel : une dépendance restante indique que le modèle laisse de l'information exploitable.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Résultat attendu
 
-## Let’s eat the cake
+À la fin du module, vous pourrez :
 
-Objectif : améliorer une prévision en intégrant des variables externes et en vérifiant la dépendance temporelle.
+- distinguer une variable future connue, scénarisée ou inconnue;
+- construire une régression de ventes avec facteurs externes;
+- interpréter un coefficient sans lui attribuer automatiquement une causalité;
+- représenter et tester l'autocorrélation des résidus;
+- comparer une régression ordinaire à une régression avec erreurs AR(1);
+- formuler une prévision conditionnelle à un scénario.
 
-Compétences développées :
-- Ajouter des variables explicatives à un modèle de prévision.
-- Lire un graphique de résidus temporels.
-- Repérer une autocorrélation problématique.
+Temps de travail indicatif : 3 heures.
 
-Application business : prévoir les ventes avec promotions, prix ou indicateurs économiques.
+## Données
 
-Résultat final attendu : un modèle de prévision avec facteurs externes et diagnostic des résidus.
+Le fichier [`ventes_promotions_quebec.csv`](data/ventes_promotions_quebec.csv) contient 72 mois fictifs de ventes, promotions, prix moyen, budget marketing et indice de confiance.
 
-Lien avec une décision d'affaires réelle : quantifier l'effet attendu d'une promotion ou d'un changement de prix.
+## Parcours
 
-## Mise en contexte
-
-Une entreprise veut prévoir ses ventes mensuelles en tenant compte des promotions, du prix moyen et d'un indicateur économique canadien.
-
-TODO: Ajouter un jeu de données combinant ventes et variables externes.
-
-## Utilité pour le génie et l'administration
-
-Le module doit être lu avec deux angles complémentaires.
-
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
-
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Concepts clés
-
-- Variables externes.
-- Retards temporels.
-- Résidus ordonnés dans le temps.
-- Autocorrélation.
-- Validation temporelle.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Variables explicatives externes
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Autocorrélation
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Diagnostics temporels
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Interprétation décisionnelle
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
+1. [Capsules et activités](capsules.qmd)
+2. [Notes de cours](notes-cours.qmd)
+3. [Démonstrations R](demonstrations.qmd)
+4. [Exercices](exercices.qmd)
+5. [Lectures ciblées](lectures.qmd)
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Diagnostic d'un modele avec variables externes.
+Comparez un modèle de régression avec variables externes et une version avec erreurs AR(1), sur les douze derniers mois. Incluez : justification des prédicteurs, statut de disponibilité future, diagnostic des résidus, MAE test, scénario de promotion et limite causale.
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+## Auto-vérification
 
-## Mini-cas business
+- [ ] Chaque prédicteur serait réellement disponible au point d'origine ou fait l'objet d'un scénario explicite.
+- [ ] La période test suit l'entraînement.
+- [ ] Les résidus sont examinés dans l'ordre du temps.
+- [ ] Une association de promotion n'est pas présentée comme un effet causal prouvé.
+- [ ] La prévision est identifiée comme conditionnelle au scénario des prédicteurs.
 
-Prévoir les ventes avec promotions : quelle campagne justifie son coût?
+## Lien avec l'évaluation
 
-## À retenir
-
-Une variable externe améliore la décision seulement si elle est pertinente, disponible et stable dans le contexte de prévision.
-
-## Erreurs fréquentes
-
-- Utiliser une variable future inconnue au moment de prévoir.
-- Ignorer l'ordre temporel des résidus.
-- Ajouter trop de variables sans justification d'affaires.
-
-## Pour aller plus loin
-
-TODO: Ajouter un exercice sur la validation temporelle.
+Ce module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d'une prévision conditionnelle.

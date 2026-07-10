@@ -5,43 +5,46 @@ format:
     embed-resources: true
 ---
 
-## Objectif
+Cette page regroupe les gestes techniques de l'atelier. Le [guide en classe](guide-atelier.qmd) demeure le parcours principal.
 
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
-
-## Préparation
+## Fonctions utiles
 
 ```{r}
-#| eval: false
 library(tidyverse)
-library(janitor)
 
-# TODO charger les packages propres au module.
+mesures_prevision <- function(observe, prevision) {
+  erreur <- observe - prevision
+  tibble(
+    MAE = mean(abs(erreur)),
+    RMSE = sqrt(mean(erreur^2)),
+    biais = mean(erreur)
+  )
+}
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Vérifier la continuité hebdomadaire
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+verifier_frequence <- function(dates) {
+  ecarts <- diff(sort(unique(dates)))
+  tibble(
+    ecart_min_jours = min(as.numeric(ecarts)),
+    ecart_max_jours = max(as.numeric(ecarts)),
+    frequence_reguliere = all(as.numeric(ecarts) == 7)
+  )
+}
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+## Graphique générique de comparaison
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+graphique_previsions <- function(data_longue) {
+  ggplot(data_longue, aes(semaine)) +
+    geom_line(aes(y = observe), colour = "black", linewidth = 1) +
+    geom_line(aes(y = prevision, colour = methode), linewidth = 0.8) +
+    labs(x = NULL, y = "Demande", colour = "Méthode") +
+    theme_minimal(base_size = 12)
+}
 ```
 
-## Démonstration 3 - Interpréter pour une décision
-
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
-
-## À vérifier
-
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
-
+Ces fonctions réduisent les répétitions, mais ne remplacent pas la vérification des colonnes, unités et périodes.

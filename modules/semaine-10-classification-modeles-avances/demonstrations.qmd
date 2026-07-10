@@ -1,47 +1,124 @@
 ---
-title: "Démonstrations R - Semaine 10"
+title: "Démonstrations R - Module 10"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
-
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-module-10
 library(tidyverse)
-library(janitor)
+library(broom)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/fidelisation_clients_quebec.csv")) {
+  "data/fidelisation_clients_quebec.csv"
+} else {
+  "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv"
+}
+
+clients <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(type_contrat = factor(type_contrat), rabais_actuel = factor(rabais_actuel))
+
+set.seed(210110)
+ids_entrainement <- clients |>
+  group_by(depart_90j) |>
+  slice_sample(prop = 0.75) |>
+  pull(client_id)
+
+entrainement <- clients |> filter(client_id %in% ids_entrainement)
+test <- clients |> filter(!client_id %in% ids_entrainement)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## 1. Examiner la cible
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+clients |>
+  count(depart_90j) |>
+  mutate(proportion = n / sum(n))
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+## 2. Ajuster une régression logistique
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+modele <- glm(
+  depart_90j ~ anciennete_mois + utilisation_mensuelle + tickets_service_6m +
+    satisfaction + type_contrat + rabais_actuel,
+  data = entrainement,
+  family = binomial()
+)
+
+tidy(modele, conf.int = TRUE, exponentiate = TRUE) |>
+  filter(term != "(Intercept)")
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+Les valeurs exponentiées sont des rapports de cotes, pas des différences directes de probabilité.
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+## 3. Produire les probabilités test
 
-## À vérifier
+```{r}
+evaluation <- test |>
+  mutate(prob_depart = predict(modele, newdata = test, type = "response"))
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+evaluation |>
+  summarise(
+    probabilite_min = min(prob_depart),
+    probabilite_mediane = median(prob_depart),
+    probabilite_max = max(prob_depart)
+  )
+```
 
+## 4. Calculer les mesures à un seuil
+
+```{r}
+mesures_seuil <- function(data, seuil) {
+  data |>
+    mutate(prediction = as.integer(prob_depart >= seuil)) |>
+    summarise(
+      seuil = seuil,
+      VP = sum(prediction == 1 & depart_90j == 1),
+      FP = sum(prediction == 1 & depart_90j == 0),
+      VN = sum(prediction == 0 & depart_90j == 0),
+      FN = sum(prediction == 0 & depart_90j == 1)
+    ) |>
+    mutate(
+      exactitude = (VP + VN) / (VP + FP + VN + FN),
+      sensibilite = VP / (VP + FN),
+      specificite = VN / (VN + FP),
+      precision = VP / (VP + FP),
+      proportion_ciblee = (VP + FP) / (VP + FP + VN + FN)
+    )
+}
+
+bind_rows(
+  mesures_seuil(evaluation, 0.30),
+  mesures_seuil(evaluation, 0.50)
+)
+```
+
+## 5. Relier le seuil à une capacité
+
+```{r}
+capacite <- 0.15
+seuil_capacite <- quantile(evaluation$prob_depart, probs = 1 - capacite)
+mesures_seuil(evaluation, seuil_capacite)
+```
+
+## 6. Vérifier sommairement la calibration
+
+```{r}
+evaluation |>
+  mutate(groupe_risque = ntile(prob_depart, 5)) |>
+  group_by(groupe_risque) |>
+  summarise(
+    probabilite_moyenne = mean(prob_depart),
+    frequence_observee = mean(depart_90j),
+    clients = n(),
+    .groups = "drop"
+  )
+```
+
+## Interprétation
+
+Le modèle ordonne des risques selon les données simulées. Avant une utilisation réelle, il faudrait valider les mesures sur une autre période, examiner la stabilité, documenter les populations touchées et s'assurer que l'intervention proposée est proportionnée et respectueuse.

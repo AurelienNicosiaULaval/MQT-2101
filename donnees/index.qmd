@@ -53,16 +53,16 @@ dataset_catalog <- tibble::tribble(
   "Module 01 - Introduction",
   "Observations quotidiennes de naissances aux États-Unis.",
   "Revoir la notion d'observation, classer des variables, produire des mesures descriptives et préparer un premier tableau.",
-  "Fichier fourni avec le matériel du cours; source externe non documentée dans le dépôt.",
-  "Licence externe non documentée dans le dépôt.",
+  "FiveThirtyEight, U.S. Births; données d'origine du CDC/National Center for Health Statistics, 1994-2003.",
+  "Dépôt FiveThirtyEight/data sous licence CC BY 4.0; attribution requise.",
   "safety_airlines",
   "Sécurité aérienne par compagnie",
   "modules/semaine-01-introduction/data/safety_airlines.csv",
   "Module 01 - Introduction",
   "Données descriptives par compagnie aérienne, avec trafic hebdomadaire, incidents, accidents mortels et décès sur deux périodes.",
   "Comparer des indicateurs bruts et des échelles de référence, puis discuter l'interprétation prudente d'un tableau.",
-  "Fichier fourni avec le matériel du cours; source externe non documentée dans le dépôt.",
-  "Licence externe non documentée dans le dépôt.",
+  "FiveThirtyEight, Airline Safety; données d'origine de l'Aviation Safety Network.",
+  "Dépôt FiveThirtyEight/data sous licence CC BY 4.0; attribution requise.",
   "ventes_operations_quebec",
   "Ventes et opérations de succursales québécoises",
   "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv",
@@ -102,7 +102,55 @@ dataset_catalog <- tibble::tribble(
   "Jeu de données simulé sur l'achalandage, la saturation opérationnelle et les ventes de succursales fictives.",
   "Comparer un modèle linéaire, un modèle quadratique et un modèle logarithmique pour décrire une relation avec saturation.",
   "Données simulées pour le cours.",
-  "Données simulées pour le cours."
+  "Données simulées pour le cours.",
+  "ventes_mensuelles_quebec",
+  "Ventes mensuelles fictives",
+  "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv",
+  "Module 06 - Séries chronologiques",
+  "Série mensuelle simulée de ventes et de clients sur 72 mois.",
+  "Définir une cible et un horizon, visualiser le temps et construire une référence naïve.",
+  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées redistribuables avec le matériel du cours.",
+  "demande_hebdomadaire_quebec",
+  "Demande hebdomadaire fictive",
+  "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv",
+  "Module 07 et Atelier 03",
+  "Série hebdomadaire simulée de demande, prix et promotion sur 104 semaines.",
+  "Comparer moyenne mobile, méthodes naïves et lissage exponentiel sur une période test.",
+  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées redistribuables avec le matériel du cours.",
+  "ventes_saisonnieres_quebec",
+  "Ventes saisonnières fictives",
+  "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv",
+  "Module 08 - Tendance et saisonnalité",
+  "Série mensuelle simulée avec tendance, saisonnalité et budget cible.",
+  "Ajuster et valider une régression avec tendance et calendrier.",
+  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées redistribuables avec le matériel du cours.",
+  "ventes_promotions_quebec",
+  "Ventes et promotions fictives",
+  "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv",
+  "Module 09 - Variables externes",
+  "Série mensuelle simulée avec promotions, prix et dépendance temporelle.",
+  "Auditer la disponibilité future, ajuster une régression et diagnostiquer l'autocorrélation.",
+  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées redistribuables avec le matériel du cours.",
+  "fidelisation_clients_quebec",
+  "Fidélisation de clients fictifs",
+  "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv",
+  "Module 10 - Classification",
+  "Données transversales simulées de 650 clients avec cible de départ à 90 jours.",
+  "Ajuster une régression logistique, comparer des seuils et relier les erreurs aux coûts.",
+  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées sans renseignements personnels, redistribuables avec le matériel du cours.",
+  "cas_integrateur_quebec",
+  "Cas intégrateur de succursales fictives",
+  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv",
+  "Atelier 04 - Intégration",
+  "Données mensuelles simulées pour quatre succursales avec réponses continue et binaire.",
+  "Choisir une voie de régression-prévision ou de classification et produire une recommandation validée.",
+  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées redistribuables avec le matériel du cours."
 )
 
 read_course_dataset <- function(path) {
@@ -345,6 +393,8 @@ cat(dataset_cards())
 
 Observations quotidiennes de naissances aux États-Unis. Ce fichier est utilisé pour revoir la notion d'observation, distinguer les types de variables et produire de premières descriptions numériques.
 
+Source : FiveThirtyEight, *U.S. Births*, à partir des données du CDC/National Center for Health Statistics. Licence du dépôt : CC BY 4.0.
+
 ```{r}
 #| label: telecharger-birth-us
 #| results: asis
@@ -392,6 +442,8 @@ plot_numeric_overview("birth_us")
 ## Sécurité aérienne par compagnie
 
 Données descriptives par compagnie aérienne. Le fichier sert à discuter la différence entre un nombre brut et un indicateur rapporté à une échelle d'exposition.
+
+Source : FiveThirtyEight, *Airline Safety*, à partir de l'Aviation Safety Network. Licence du dépôt : CC BY 4.0. Ces données historiques ne décrivent pas la sécurité actuelle d'une compagnie.
 
 ```{r}
 #| label: telecharger-safety-airlines
@@ -682,4 +734,43 @@ dataset_profile("achalandage_saturation_quebec") |>
 #| fig-width: 8
 
 plot_numeric_overview("achalandage_saturation_quebec")
+```
+
+## Jeux de données du bloc prévision et classification
+
+Les six jeux suivants sont entièrement simulés et reproductibles avec `scripts/10_create_second_block_data.R`. Les aperçus permettent de vérifier la structure avant téléchargement.
+
+```{r}
+#| label: details-donnees-bloc-2
+
+second_block_ids <- c(
+  "ventes_mensuelles_quebec",
+  "demande_hebdomadaire_quebec",
+  "ventes_saisonnieres_quebec",
+  "ventes_promotions_quebec",
+  "fidelisation_clients_quebec",
+  "cas_integrateur_quebec"
+)
+
+second_block_sections <- purrr::map(second_block_ids, function(dataset_id) {
+  meta <- dataset_meta(dataset_id)
+
+  htmltools::tagList(
+    htmltools::tags$section(
+      id = dataset_id,
+      htmltools::tags$h2(meta$title),
+      htmltools::tags$p(meta$description),
+      htmltools::HTML(download_link(dataset_id)),
+      htmltools::tags$h3("En bref"),
+      htmltools::HTML(knitr::kable(dataset_facts(dataset_id), format = "html")),
+      htmltools::tags$h3("Aperçu interactif"),
+      dataset_table(dataset_id),
+      htmltools::tags$h3("Variables"),
+      htmltools::HTML(knitr::kable(dataset_profile(dataset_id), format = "html")),
+      htmltools::tags$hr()
+    )
+  )
+})
+
+htmltools::tagList(second_block_sections)
 ```

@@ -1,47 +1,120 @@
 ---
-title: "Démonstrations R - Semaine 09"
+title: "Démonstrations R - Module 09"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
-
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-module-09
 library(tidyverse)
-library(janitor)
+library(broom)
+library(forecast)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/ventes_promotions_quebec.csv")) {
+  "data/ventes_promotions_quebec.csv"
+} else {
+  "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
+}
+
+ventes <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(
+    date = as.Date(date),
+    promotion = factor(promotion, levels = c("non", "oui")),
+    mois = factor(mois)
+  ) |>
+  arrange(date)
+
+entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
+test <- ventes |> slice_tail(n = 12)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## 1. Visualiser cible et prédicteurs
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+ventes |>
+  select(date, ventes, prix_moyen, indice_confiance, budget_marketing) |>
+  pivot_longer(-date, names_to = "variable", values_to = "valeur") |>
+  ggplot(aes(date, valeur)) +
+  geom_line(colour = "#0B4F6C") +
+  facet_wrap(~ variable, scales = "free_y", ncol = 1) +
+  labs(title = "Cible et variables externes", x = NULL, y = NULL) +
+  theme_minimal(base_size = 11)
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+## 2. Ajuster une régression ordinaire
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+modele_lm <- lm(
+  ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois,
+  data = entrainement
+)
+
+tidy(modele_lm, conf.int = TRUE) |>
+  filter(term %in% c("tendance", "promotionoui", "prix_moyen", "indice_confiance"))
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## 3. Diagnostiquer les résidus temporels
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+```{r}
+residus_lm <- residuals(modele_lm)
 
-## À vérifier
+par(mfrow = c(1, 2))
+plot(entrainement$date, residus_lm, type = "l", xlab = "Date", ylab = "Résidu")
+abline(h = 0, lty = 2)
+acf(residus_lm, main = "Autocorrélation des résidus")
+par(mfrow = c(1, 1))
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+Box.test(residus_lm, lag = 12, type = "Ljung-Box", fitdf = 0)
+```
 
+## 4. Ajuster une régression avec erreurs AR(1)
+
+```{r}
+x_train <- model.matrix(
+  ~ tendance + promotion + prix_moyen + indice_confiance + mois,
+  data = entrainement
+)[, -1, drop = FALSE]
+
+x_test <- model.matrix(
+  ~ tendance + promotion + prix_moyen + indice_confiance + mois,
+  data = test
+)[, -1, drop = FALSE]
+
+modele_ar1 <- Arima(
+  entrainement$ventes,
+  xreg = x_train,
+  order = c(1, 0, 0),
+  include.mean = TRUE
+)
+
+prevision_ar1 <- forecast(modele_ar1, xreg = x_test, h = nrow(test))
+```
+
+## 5. Comparer sur la période test
+
+```{r}
+comparaison <- test |>
+  transmute(
+    date,
+    observe = ventes,
+    regression = predict(modele_lm, newdata = test),
+    erreurs_ar1 = as.numeric(prevision_ar1$mean)
+  ) |>
+  pivot_longer(regression:erreurs_ar1, names_to = "methode", values_to = "prevision") |>
+  mutate(erreur = observe - prevision)
+
+comparaison |>
+  group_by(methode) |>
+  summarise(
+    MAE = mean(abs(erreur)),
+    RMSE = sqrt(mean(erreur^2)),
+    .groups = "drop"
+  )
+```
+
+## Interprétation
+
+La comparaison indique si la structure AR(1) améliore la prévision sur cette période. Elle ne transforme pas les coefficients de promotion ou de prix en effets causaux et reste conditionnelle aux valeurs externes utilisées pour le test.

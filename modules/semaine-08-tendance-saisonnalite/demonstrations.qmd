@@ -1,47 +1,107 @@
 ---
-title: "Démonstrations R - Semaine 08"
+title: "Démonstrations R - Module 08"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
-
 ## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-module-08
 library(tidyverse)
-library(janitor)
+library(broom)
 
-# TODO charger les packages propres au module.
+data_path <- if (file.exists("data/ventes_saisonnieres_quebec.csv")) {
+  "data/ventes_saisonnieres_quebec.csv"
+} else {
+  "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv"
+}
+
+ventes <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(
+    date = as.Date(date),
+    mois_label = factor(
+      mois_label,
+      levels = c("janvier", "février", "mars", "avril", "mai", "juin",
+                 "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+    )
+  ) |>
+  arrange(date)
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## 1. Visualiser les deux structures
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+ggplot(ventes, aes(date, ventes)) +
+  geom_line(colour = "#0B4F6C") +
+  labs(title = "Ventes mensuelles avec tendance et saisonnalité", x = NULL, y = "Ventes") +
+  theme_minimal(base_size = 12)
 ```
-
-## Démonstration 2 - Produire un résultat intermédiaire
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+ggplot(ventes, aes(mois_label, ventes)) +
+  geom_boxplot(fill = "#D9EEF2", colour = "#0B4F6C") +
+  labs(title = "Ventes selon le mois", x = NULL, y = "Ventes") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1))
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## 2. Créer entraînement et test
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
+```{r}
+entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
+test <- ventes |> slice_tail(n = 12)
+```
 
-## À vérifier
+## 3. Ajuster la tendance saisonnière
 
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
+```{r}
+modele <- lm(ventes ~ indice_temps + mois_label, data = entrainement)
 
+tidy(modele, conf.int = TRUE) |>
+  filter(term %in% c("indice_temps", "mois_labeldécembre"))
+```
+
+## 4. Prévoir la période test
+
+```{r}
+saison_naive <- entrainement |>
+  slice_tail(n = 12) |>
+  pull(ventes)
+
+predictions <- predict(modele, newdata = test, interval = "prediction") |>
+  as_tibble() |>
+  bind_cols(test |> select(date, ventes)) |>
+  mutate(
+    erreur = ventes - fit,
+    erreur_saison_naive = ventes - saison_naive
+  )
+
+predictions |>
+  summarise(
+    MAE_modele = mean(abs(erreur)),
+    RMSE_modele = sqrt(mean(erreur^2)),
+    MAE_saison_naive = mean(abs(erreur_saison_naive))
+  )
+```
+
+## 5. Représenter l'incertitude
+
+```{r}
+ggplot(predictions, aes(date)) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), fill = "#BFDDE5", alpha = 0.6) +
+  geom_line(aes(y = fit), colour = "#0B4F6C", linewidth = 1) +
+  geom_point(aes(y = ventes), colour = "black") +
+  labs(
+    title = "Prévisions et observations de la période test",
+    subtitle = "Ruban : intervalle de prédiction à 95 %",
+    x = NULL,
+    y = "Ventes"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+## Interprétation
+
+Le modèle doit être retenu seulement si sa performance test et ses diagnostics sont acceptables. L'intervalle rappelle qu'une prévision budgétaire est une plage de résultats possibles, pas une promesse.

@@ -1,15 +1,6 @@
-# Données - Atelier 03
+# Données de l'atelier 03
 
-Ce dossier contient uniquement les données publiques utilisées dans le module.
+`demande_hebdomadaire_quebec.csv` contient 104 semaines de demande simulée pour une organisation québécoise fictive. Il s'agit du même scénario que dans le module 07 afin de permettre une analyse plus intégrée en atelier.
 
-## Fichiers
-
-- TODO ajouter les fichiers publics lorsque les données du module seront choisies.
-
-## Règles
-
-- ne pas placer de fichiers nominatifs dans ce dossier;
-- ne pas publier de fichiers provenant d'examens;
-- documenter l'origine, les variables et les transformations;
-- privilégier les formats `.csv` pour les exemples étudiants.
+Le fichier est généré par `scripts/10_create_second_block_data.R`, ne représente aucune organisation réelle et peut être redistribué avec le matériel du cours.
 

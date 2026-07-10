@@ -11,7 +11,12 @@ Le fichier `diagnostic_succursales.csv`, créé pendant une première ébauche d
 
 ## Origine
 
-`birth_us.csv` et `safety_airlines.csv` proviennent de l'archive locale `MQT-2101-A25_Séance 01 _  Introduction.zip`.
+Les copies de travail proviennent de l'archive locale `MQT-2101-A25_Séance 01 _  Introduction.zip`. Leur provenance publique a été rétablie :
+
+- `birth_us.csv` correspond à `US_births_1994-2003_CDC_NCHS.csv` du dossier [FiveThirtyEight U.S. Births](https://github.com/fivethirtyeight/data/tree/master/births). Les données d'origine sont attribuées au CDC/National Center for Health Statistics.
+- `safety_airlines.csv` correspond au dossier [FiveThirtyEight Airline Safety](https://github.com/fivethirtyeight/data/tree/master/airline-safety). La source d'origine indiquée est l'Aviation Safety Network.
+
+Le dépôt `fivethirtyeight/data` distribue ces fichiers sous licence CC BY 4.0. Les pages du cours doivent conserver l'attribution à FiveThirtyEight et aux sources d'origine.
 
 Les fichiers PDF, PowerPoint et lectures d'origine ne sont pas publiés avec le site.
 

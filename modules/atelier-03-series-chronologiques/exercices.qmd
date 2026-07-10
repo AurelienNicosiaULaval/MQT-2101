@@ -5,49 +5,26 @@ format:
     embed-resources: true
 ---
 
-## Objectif
+## Exercice 1 - Détecter une fuite
 
-Faire pratiquer les notions du module après les capsules et les démonstrations R.
+Une personne choisit la fenêtre de moyenne mobile qui minimise la MAE sur les treize semaines test, puis rapporte cette même MAE comme performance finale. Expliquez le problème et proposez une correction.
 
-## Exercice 1 - Interprétation
-
-TODO ajouter une question courte qui force l'étudiant à expliquer le sens d'un concept dans le contexte du module.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO rédiger la solution courte.
+::: {.callout-tip collapse="true" title="Solution"}
+La période test a servi au choix de la méthode et n'est plus indépendante. Il faut choisir la fenêtre avec une validation située dans l'entraînement, puis utiliser le test une seule fois pour l'évaluation finale.
 :::
 
-## Exercice 2 - Code R
+## Exercice 2 - Changer le coût
 
-```{r}
-#| eval: false
-library(tidyverse)
+Recalculez le classement si une sous-prévision coûte 30 dollars et une sur-prévision 3 dollars par unité. Expliquez pourquoi le meilleur choix peut changer sans modification de MAE.
 
-# TODO ajouter un exercice de manipulation, de visualisation ou de modélisation.
-```
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-```{r}
-#| eval: false
-# TODO ajouter le code solution.
-```
+::: {.callout-tip collapse="true" title="Solution"}
+Le coût pondère différemment le signe des erreurs, alors que la MAE traite sous-prévision et sur-prévision symétriquement.
 :::
 
-## Exercice 3 - Réflexion critique
+## Exercice 3 - Plan de surveillance
 
-TODO demander une limite, une mise en garde ou une interprétation prudente.
+Proposez trois indicateurs mensuels de surveillance : erreur moyenne récente, grande erreur maximale et dérive du niveau de la demande. Indiquez une règle de révision du modèle.
 
-::: {.callout-tip collapse="true"}
-### Solution
+## Exercice de synthèse
 
-TODO rédiger les éléments attendus.
-:::
-
-## Livrable court
-
-Livrable attendu : Rapport de prevision court.
-
+Transformez la trace de l'atelier en une note de décision de 250 mots maximum avec un graphique, un tableau et une recommandation.

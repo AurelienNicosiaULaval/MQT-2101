@@ -8,5 +8,7 @@ Ce dossier regroupe les données du cours.
 
 Ne pas déposer de données confidentielles ou nominatives dans un dépôt public.
 
-TODO: Ajouter l'origine, la licence et le dictionnaire de chaque fichier.
-
+Le catalogue public `donnees/index.qmd` documente l'origine, le statut de licence,
+l'usage pédagogique et le dictionnaire des variables de chaque fichier diffusé.
+Les fichiers `data/README.md` des modules précisent les choix de simulation ou les
+attributions propres à chaque jeu de données.

@@ -16,13 +16,14 @@ execute:
     <div>
       <h1 id="mr2-title">Gabarit du mini-rapport 2</h1>
       <p>
-        Ce gabarit soutient une analyse reproductible centrée sur les séries chronologiques,
-        la prévision, la validation et l'interprétation des résultats.
+        Ce gabarit soutient une analyse reproductible selon une voie de prévision temporelle
+        ou de classification binaire, avec validation hors échantillon et décision.
       </p>
       <div class="resource-actions" aria-label="Accès rapides">
         <a class="home-action home-action--primary" href="#structure">Structure attendue</a>
         <a class="home-action" href="#modele-qmd">Modèle .qmd</a>
         <a class="home-action" href="declaration-ia.html">Déclaration IA</a>
+        <a class="home-action" href="../evaluations/grille-mini-rapports.html">Grille</a>
       </div>
     </div>
     <div class="resource-panel" aria-label="Mini-rapport 2">
@@ -108,9 +109,19 @@ execute:
 - Jeu de données :
 - Date :
 
+## Contribution de l'équipe
+
+- Membre 1 :
+- Membre 2 :
+- Membre 3, si applicable :
+
+## Voie choisie
+
+Indiquer « prévision temporelle » ou « classification binaire » et justifier ce choix en fonction de la cible et de la décision.
+
 ## Question d'analyse
 
-Formuler la cible à prévoir, l'horizon et la décision que l'analyse doit éclairer.
+Formuler la cible, l'horizon ou la fenêtre de l'événement, et la décision que l'analyse doit éclairer.
 
 ## Données
 
@@ -160,7 +171,7 @@ donnees_modele &lt;- donnees |&gt;
 
 ## Validation
 
-Présenter une mesure d'erreur, une validation temporelle ou une mesure de performance adaptée.
+Présenter une séparation hors échantillon. Pour la prévision, respecter l'ordre du temps et comparer une référence simple avec MAE et RMSE. Pour la classification, définir la classe positive et comparer au moins deux seuils avec sensibilité, spécificité, précision et proportion ciblée.
 
 &#96;&#96;&#96;{r}
 # Ajouter le code de validation utilisé par l'équipe
@@ -180,7 +191,7 @@ Nommer au moins deux limites de l'analyse.
 
 ## Déclaration d'usage de l'IA
 
-Compléter cette section si l'IA a influencé significativement le livrable.</code></pre>
+Compléter la déclaration si l'IA a influencé le livrable. Sinon, écrire explicitement qu'aucun usage d'IA n'a influencé le code, l'analyse, l'interprétation, la documentation ou le texte.</code></pre>
     </div>
   </section>
 

@@ -1,48 +1,71 @@
 ---
-title: "Mini-rapport 2"
+title: "Mini-rapport 2 - Prévision ou classification"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
+## Objectif et pondération
 
-Produire en équipe une courte analyse reproductible portant sur la prévision, les séries chronologiques et une ouverture vers la classification ou les modèles avancés.
+Produire en équipe une analyse prédictive reproductible avec validation hors échantillon et recommandation décisionnelle.
 
-Ce mini-rapport compte pour 15 % de la note finale.
+Pondération : 15 % de la note finale.
+
+## Échéancier pédagogique
+
+- Proposition et validation du jeu de données : au plus tard à la fin du module 08.
+- Point de contrôle sur la validation : pendant l'atelier 03.
+- Remise : à la fin du module 10, avant l'atelier 04 et l'examen final.
+
+La date et l'heure civiles sont celles du calendrier institutionnel de la session.
 
 ## Modalité
 
-- Travail en équipe de 2 à 3 personnes.
-- Remise après l'examen final, selon le calendrier officiel.
-- Source Quarto `.qmd` à remettre.
-- Rendu final HTML à remettre.
-- Jeu de données choisi par l'équipe et validé par l'enseignant.
-- IA permise, déclarée.
+- Équipe de 2 ou 3 personnes.
+- Environ 1 200 à 1 600 mots, hors code et références.
+- Maximum de quatre figures ou tableaux principaux.
+- Choisir une seule voie et la développer complètement.
+- IA permise avec déclaration selon la [politique du cours](../ressources/ia.qmd).
 
-## Contenu attendu
+## Voie A - Prévision temporelle
 
-Le mini-rapport doit couvrir :
+Le rapport doit inclure :
 
-- la question d'analyse;
-- l'origine et la description du jeu de données;
-- l'unité d'observation et la fréquence temporelle, si applicable;
-- les variables principales;
-- les limites du jeu de données;
-- la préparation des données;
-- l'exploration temporelle ou prédictive;
-- le choix d'un horizon ou d'une cible;
-- une méthode de prévision ou de classification;
-- une validation ou une mesure de performance;
-- une interprétation des résultats;
-- une courte recommandation ou conclusion décisionnelle.
+- cible, origine, fréquence et horizon;
+- audit de la continuité temporelle;
+- graphique de tendance, saisonnalité et valeurs inhabituelles;
+- séparation chronologique entraînement-test;
+- référence naïve ou saisonnière naïve;
+- au moins une méthode principale;
+- MAE et RMSE, plus une mesure ou un coût adapté;
+- prévision conditionnelle et incertitude;
+- recommandation et règle de surveillance.
 
-## IA
+## Voie B - Classification binaire
 
-L'utilisation d'outils d'IA générative est permise, à condition d'être déclarée lorsque l'aide obtenue influence de manière significative le code, la documentation, l'analyse ou le livrable remis.
+Le rapport doit inclure :
 
-Le travail remis doit être compris, vérifié, adapté au contexte du projet et défendable. Le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) doit être utilisé pour les activités liées au cours.
+- définition de l'événement, de la classe positive et de l'horizon;
+- séparation entraînement-test;
+- régression logistique comme référence ou méthode principale;
+- probabilités prédites et vérification descriptive de calibration;
+- matrices de confusion à au moins deux seuils;
+- sensibilité, spécificité, précision et proportion ciblée;
+- choix de seuil selon les coûts ou la capacité;
+- recommandation et limite éthique ou opérationnelle.
+
+## Livrables
+
+Remettre une archive contenant : source `.qmd`, HTML autonome, données autorisées ou script d'importation, `README.md`, déclaration IA ou mention de non-usage influent, et déclaration de contribution.
+
+## Validation des données
+
+Suivez la [procédure de validation](validation-donnees.qmd). Les données futures ou la cible ne doivent jamais fuiter dans la préparation des prédicteurs.
+
+## Grille
+
+La [grille commune des mini-rapports](grille-mini-rapports.qmd) est appliquée sur 100 points puis convertie en 15 %. Pour ce rapport, la rubrique « modélisation et validation » exige explicitement une preuve hors échantillon.
 
 ## Gabarit
 
-Un gabarit Quarto est disponible dans les ressources du cours : [Gabarit du mini-rapport 2](../ressources/gabarit-mini-rapport-2.qmd).
+Utilisez le [gabarit du mini-rapport 2](../ressources/gabarit-mini-rapport-2.qmd).

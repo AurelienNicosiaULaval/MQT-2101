@@ -1,116 +1,134 @@
 ---
-title: "Capsules - Semaine 06"
+title: "Capsules - Module 06"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
+## Mode d'emploi
 
-Introduire les séries chronologiques et la logique de prévision.
+Chaque capsule comporte un emplacement vidéo, un support écrit autonome et une activité immédiate. Les supports écrits suffisent pour réaliser le module avant l'ajout des vidéos.
 
-## Capsule 1 - Données temporelles
-
-::: {.panel-tabset}
-### Vidéo
-
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 1.
-:::
-
-Emplacement prévu : `media/videos/capsule-01.mp4` ou lien vidéo institutionnel.
-
-### Support
-
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.
-
-Emplacement prévu : `media/pdf/capsule-01-support.pdf`.
-:::
-
-
-TODO: Ajouter une capsule sur fréquence, date et horizon.
-
-## Capsule 2 - Visualisation
+## Capsule 1 - Reconnaître une série chronologique
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 2.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 6 à 8 minutes. Montrer la différence entre données transversales et données ordonnées dans le temps, puis définir date, fréquence et intervalle d'observation.
 :::
 
-Emplacement prévu : `media/videos/capsule-02.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Une série chronologique est une suite d'observations repérées dans le temps. L'ordre est porteur d'information : la valeur de mars vient après celle de février et peut dépendre de ce qui s'est passé auparavant.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.
+Quatre éléments doivent toujours être explicités :
 
-Emplacement prévu : `media/pdf/capsule-02-support.pdf`.
+- l'unité d'observation, par exemple un mois-succursale;
+- la variable mesurée, par exemple les ventes mensuelles;
+- la fréquence, par exemple mensuelle;
+- la période couverte, par exemple janvier 2020 à décembre 2025.
+
+Une date stockée comme texte peut être triée incorrectement. Dans R, vérifiez sa classe avec `class()` et l'ordre avec `arrange(date)`.
 :::
 
+### Activité 6.1
 
-TODO: Ajouter un exemple de graphique temporel.
+Pour chacune des situations suivantes, indiquez s'il s'agit d'une série chronologique : ventes mensuelles d'une succursale; satisfaction de 400 clients interrogés une seule fois; température relevée chaque heure.
 
-## Capsule 3 - Prévision et décision
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Les ventes mensuelles et les températures horaires sont des séries chronologiques. Le sondage transversal ne le devient que si les mêmes mesures sont répétées à des dates comparables.
+:::
+
+## Capsule 2 - Lire un graphique temporel
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 3.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 6 à 8 minutes. Construire un graphique temporel et identifier niveau, tendance, saisonnalité, ruptures et observations inhabituelles.
 :::
 
-Emplacement prévu : `media/videos/capsule-03.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Le graphique temporel est le premier diagnostic. Il doit utiliser le temps sur l'axe horizontal et conserver les observations dans leur ordre réel.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.
+Cherchez systématiquement :
 
-Emplacement prévu : `media/pdf/capsule-03-support.pdf`.
+- le niveau général de la série;
+- une tendance persistante;
+- une saisonnalité qui revient à une fréquence connue;
+- des changements de variabilité;
+- des valeurs inhabituelles ou des ruptures;
+- des données manquantes.
+
+Une tendance est une évolution de long terme. Une saisonnalité est un motif qui se répète selon une période connue, par exemple chaque mois de décembre. Une seule pointe en décembre ne suffit pas à conclure à une saisonnalité.
 :::
 
+### Activité 6.2
 
-TODO: Ajouter une capsule sur l'horizon opérationnel.
+Tracez `ventes` selon `date`. Nommez deux motifs visibles et une caractéristique qui ne peut pas être confirmée par le graphique seul.
 
+::: {.callout-tip collapse="true" title="Rétroaction"}
+On peut décrire une tendance ou des variations récurrentes. On ne peut pas attribuer causalement une hausse à une campagne ou à une décision sans information supplémentaire et sans plan d'analyse approprié.
+:::
 
-
-## Capsule 4 - Premiers diagnostics temporels
+## Capsule 3 - Définir la cible et l'horizon
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 4.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 5 à 7 minutes. Relier la cible, l'horizon, la fréquence et la décision opérationnelle.
 :::
 
-Emplacement prévu : `media/videos/capsule-04.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+La cible est la variable future à prévoir. L'horizon est la distance entre le moment où la prévision est produite et la période visée.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.
+Une prévision doit être formulée avant de choisir le modèle :
 
-Emplacement prévu : `media/pdf/capsule-04-support.pdf`.
+> À la fin de décembre 2025, prévoir les ventes mensuelles de janvier à mars 2026 afin de planifier les achats du trimestre.
+
+Cette formulation précise le point d'origine, la cible, la fréquence, l'horizon et l'usage. Un horizon trop court ou trop long peut rendre une prévision inutile même si son erreur numérique semble faible.
 :::
 
-Durée cible : 5 à 8 minutes.
+### Activité 6.3
 
-Objectif : TODO rédiger et synthétiser la portion correspondante du module.
+Une organisation doit commander ses stocks six semaines à l'avance. Reformulez une cible de prévision compatible avec ce délai.
 
-À couvrir :
+::: {.callout-tip collapse="true" title="Rétroaction"}
+La formulation doit viser au moins les six prochaines semaines et préciser à quel moment la prévision est produite. « Prévoir la demande » est insuffisant sans origine, fréquence et horizon.
+:::
 
-- TODO idée principale;
-- TODO exemple simple;
-- TODO lien avec une décision ou une interprétation d'affaires.
+## Capsule 4 - Évaluer sans regarder le futur
 
-### Activité
+::: {.panel-tabset}
+### Vidéo
 
-TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Présenter la séparation chronologique, la méthode naïve et l'idée d'une évaluation hors échantillon.
+:::
 
-## Règle de découpage des capsules
+### Support écrit
 
-Chaque capsule doit être courte et suivie d'une activité.
+Pour évaluer une prévision, on entraîne le modèle sur une première période et on réserve la période suivante pour le test. Le futur ne doit jamais influencer la préparation ou l'ajustement du modèle.
 
-### Exemple d'activité
+La méthode naïve utilise la dernière valeur observée comme prévision de la prochaine période. Elle est simple, mais elle constitue une référence importante : une méthode complexe qui ne la dépasse pas n'apporte pas encore de valeur démontrée.
 
-TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.
+L'erreur absolue moyenne est :
 
+$$
+\operatorname{MAE}=\frac{1}{n}\sum_{t=1}^{n}|y_t-\widehat{y}_t|.
+$$
+
+Elle s'exprime dans la même unité que la cible.
+:::
+
+### Activité 6.4
+
+Expliquez en deux phrases pourquoi une séparation aléatoire des mois entre entraînement et test produit une évaluation irréaliste.
+
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Une séparation aléatoire peut utiliser des observations futures pour prévoir des observations passées. Elle ne reproduit donc pas la situation réelle où seules les informations disponibles au point d'origine peuvent être utilisées.
+:::

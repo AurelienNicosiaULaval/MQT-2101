@@ -1,127 +1,79 @@
 ---
-title: "Semaine 06 - Introduction à la prévision et aux séries chronologiques"
+title: "Module 06 - Introduction aux séries chronologiques"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Pourquoi ça compte"}
+Une décision de stock, de personnel ou de capacité porte sur le futur. Une série chronologique oblige à respecter l'ordre du temps et à distinguer ce qui était connu au moment où la prévision aurait réellement été produite.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Résultat attendu
 
-## Let’s eat the cake
+À la fin du module, vous pourrez :
 
-Objectif : comprendre ce qu'est une série chronologique et pourquoi la prévision est centrale en gestion.
+- reconnaître une série chronologique et préciser sa fréquence;
+- construire un graphique temporel lisible;
+- distinguer tendance, saisonnalité, cycle et variation irrégulière;
+- définir une cible et un horizon de prévision;
+- séparer chronologiquement les données d'entraînement et de test;
+- comparer une prévision à une méthode naïve.
 
-Compétences développées :
-- Identifier la structure temporelle d'une donnée.
-- Visualiser une série chronologique.
-- Distinguer tendance, saisonnalité et bruit.
+Temps de travail indicatif : 2 h 30 à 3 h, incluant les exercices et la trace finale.
 
-Application business : prévoir les ventes ou la demande à court terme.
+## Données du module
 
-Résultat final attendu : un premier diagnostic temporel.
+Le fichier [`ventes_mensuelles_quebec.csv`](data/ventes_mensuelles_quebec.csv) contient 72 mois de ventes fictives d'une organisation québécoise. Chaque ligne représente un mois. Les données sont simulées et ne décrivent aucune organisation réelle.
 
-Lien avec une décision d'affaires réelle : planifier les stocks, la main-d'oeuvre ou les budgets.
+## Parcours recommandé
 
-## Mise en contexte
+1. Parcourez les quatre [capsules et activités](capsules.qmd).
+2. Consultez les [notes de cours](notes-cours.qmd) pour consolider le vocabulaire.
+3. Reproduisez les [démonstrations R](demonstrations.qmd).
+4. Faites les [exercices](exercices.qmd) avant d'ouvrir les solutions cachées.
+5. Ciblez les passages indiqués dans les [lectures](lectures.qmd).
+6. Produisez la trace finale.
 
-Une entreprise de tourisme au Québec veut anticiper l'achalandage mensuel afin d'ajuster les horaires et les campagnes promotionnelles.
+## Avant de commencer
 
-TODO: Ajouter un jeu de données mensuel sur ventes, fréquentation ou demande.
+Sans calculer, répondez à ces trois questions :
 
-## Utilité pour le génie et l'administration
+1. Pourquoi ne peut-on pas mélanger aléatoirement le passé et le futur pour évaluer une prévision?
+2. Quelle différence faites-vous entre une cible et un horizon?
+3. Une hausse observée chaque mois est-elle nécessairement saisonnière?
 
-Le module doit être lu avec deux angles complémentaires.
-
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
-
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Concepts clés
-
-- Série chronologique.
-- Fréquence.
-- Horizon de prévision.
-- Tendance.
-- Saisonnalité.
-- Ensemble d'entraînement et période de validation.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Pourquoi prévoir en gestion
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Structure d'une serie chronologique
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Visualiser une serie
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Premiers diagnostics temporels
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
+Conservez vos réponses. Vous les reprendrez à la fin du module.
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Diagnostic initial d'une série de ventes ou de demande.
+Produisez une page Quarto comprenant :
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+- la définition de l'unité d'observation et de la fréquence;
+- un graphique temporel annoté;
+- deux caractéristiques visibles de la série;
+- une cible de prévision et un horizon justifiés;
+- une séparation entraînement-test respectant le temps;
+- une prévision naïve et son erreur absolue moyenne sur la période test;
+- une limite décisionnelle.
 
-## Mini-cas business
+::: {.callout-important title="Critère de réussite"}
+Une personne qui ne connaît pas le jeu de données doit comprendre ce qui est prévu, pour quelle période, avec quelles données et à quelle décision la prévision pourrait servir.
+:::
 
-Prévoir l'achalandage touristique pour ajuster la capacité opérationnelle.
+## Auto-vérification
 
-## À retenir
+- [ ] Ma date est reconnue comme une date dans R.
+- [ ] Mon graphique respecte l'ordre chronologique.
+- [ ] Je distingue description du passé et prévision du futur.
+- [ ] Mon horizon correspond à une décision réelle.
+- [ ] Ma période test vient après ma période d'entraînement.
+- [ ] Je compare mon résultat à une référence simple.
 
-La prévision commence par la structure temporelle et par une définition explicite de l'horizon de décision.
+::: {.callout-note title="Usage de l'IA"}
+Vous pouvez utiliser le GPT du cours pour faire critiquer votre définition de la cible et de l'horizon. Demandez-lui de relever une ambiguïté sans proposer la formulation finale. Vérifiez ensuite la réponse à l'aide des données et des notes de cours.
+:::
 
-## Erreurs fréquentes
+## Lien avec l'évaluation
 
-- Mélanger des données sans respecter l'ordre temporel.
-- Évaluer une prévision sur les mêmes données que l'entraînement.
-- Ignorer la saisonnalité.
-
-## Pour aller plus loin
-
-TODO: Ajouter une capsule sur les horizons de prévision en gestion.
+Ce module prépare le mini-rapport 2 et l'examen final. Vous devez pouvoir expliquer pourquoi l'ordre temporel modifie la manière de visualiser, d'entraîner et d'évaluer un modèle.

@@ -1,40 +1,82 @@
 ---
-title: "Exercices - Semaine 08"
+title: "Exercices - Module 08"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Modéliser une tendance et une saisonnalité dans une série de ventes.
-
-## Exercices
-
-TODO: Ajouter un exercice de ventes mensuelles d'une PME.
+## Préparation
 
 ```{r}
-#| eval: false
 library(tidyverse)
-library(lubridate)
+library(broom)
 
-modele <- lm(ventes ~ t + month(date, label = TRUE), data = ventes_mensuelles)
-summary(modele)
+data_path <- if (file.exists("data/ventes_saisonnieres_quebec.csv")) {
+  "data/ventes_saisonnieres_quebec.csv"
+} else {
+  "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv"
+}
+
+ventes <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(date = as.Date(date), mois_label = factor(mois_label)) |>
+  arrange(date)
 ```
 
+## Exercice 1 - Isoler la tendance
 
-## Modèle de solution cachée à utiliser
+Ajustez `ventes ~ indice_temps` sans mois. Examinez les résidus dans le temps et décrivez le motif manquant.
 
-Les solutions doivent rester cachées par défaut pour encourager une vraie tentative avant consultation.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO ajouter la solution de l'exercice ici.
-
+::: {.callout-tip collapse="true" title="Solution"}
 ```{r}
-#| eval: false
-# Code R de solution à compléter.
+modele_tendance <- lm(ventes ~ indice_temps, data = ventes)
+
+augment(modele_tendance, data = ventes) |>
+  ggplot(aes(date, .resid)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_line(colour = "#0B4F6C") +
+  theme_minimal(base_size = 12)
+```
+
+Un motif récurrent selon les mois indique que la tendance seule est insuffisante.
+:::
+
+## Exercice 2 - Interpréter une saison
+
+Fixez janvier comme référence, ajustez tendance et mois, puis interprétez les coefficients de juillet et décembre.
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+ventes <- ventes |>
+  mutate(mois_label = relevel(factor(mois_label), ref = "janvier"))
+
+modele_saisonnier <- lm(ventes ~ indice_temps + mois_label, data = ventes)
+tidy(modele_saisonnier) |>
+  filter(term %in% c("mois_labeljuillet", "mois_labeldécembre"))
+```
+
+Chaque coefficient est une différence moyenne avec janvier, à indice de temps égal.
+:::
+
+## Exercice 3 - Tester le modèle
+
+Réservez les douze derniers mois, calculez MAE et taux de couverture de l'intervalle de prédiction à 95 %.
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ indice_temps + mois_label, data = entrainement)
+pred <- as_tibble(predict(modele, newdata = test, interval = "prediction")) |>
+  bind_cols(test |> select(ventes))
+
+pred |>
+  summarise(
+    MAE = mean(abs(ventes - fit)),
+    couverture = mean(ventes >= lwr & ventes <= upr)
+  )
 ```
 :::
 
+## Exercice de synthèse
+
+Comparez les prévisions au `budget_cible`. Indiquez les mois où le budget semble le plus risqué et proposez une règle de révision mensuelle.

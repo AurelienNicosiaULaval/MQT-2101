@@ -1,15 +1,6 @@
-# Données - Semaine 10
+# Données du module 10
 
-Ce dossier contient uniquement les données publiques utilisées dans le module.
+`fidelisation_clients_quebec.csv` contient 650 clients simulés d'une organisation québécoise fictive. Chaque ligne représente un client. La cible `depart_90j` indique un départ simulé dans les 90 jours.
 
-## Fichiers
-
-- TODO ajouter les fichiers publics lorsque les données du module seront choisies.
-
-## Règles
-
-- ne pas placer de fichiers nominatifs dans ce dossier;
-- ne pas publier de fichiers provenant d'examens;
-- documenter l'origine, les variables et les transformations;
-- privilégier les formats `.csv` pour les exemples étudiants.
+Les variables sont entièrement fictives et ne comprennent aucun renseignement personnel réel. Le fichier est généré par `scripts/10_create_second_block_data.R` et peut être redistribué avec le matériel du cours.
 

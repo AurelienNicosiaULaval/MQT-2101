@@ -1,24 +1,186 @@
 ---
-title: "Guide atelier 04"
+title: "Guide en classe - Atelier 04"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Préparer l'intégration des apprentissages avant l'examen final.
-
-## Consignes
-
-TODO: Ajouter un cas intégrateur combinant modèle et recommandation.
+## Préparation
 
 ```{r}
-#| eval: false
+#| label: setup-atelier-04
 library(tidyverse)
+library(broom)
 
-# Point de départ suggéré
-donnees_atelier |>
-  summarise(across(where(is.numeric), mean, na.rm = TRUE))
+data_path <- if (file.exists("data/cas_integrateur_quebec.csv")) {
+  "data/cas_integrateur_quebec.csv"
+} else {
+  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
+}
+
+cas <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(
+    date = as.Date(date),
+    succursale = factor(succursale),
+    promotion = factor(promotion, levels = c("non", "oui"))
+  ) |>
+  arrange(date, succursale)
+
+date_coupure <- as.Date("2025-01-01")
+entrainement <- cas |> filter(date < date_coupure)
+test <- cas |> filter(date >= date_coupure)
 ```
 
+## Étape 1 - Auditer la structure
+
+```{r}
+cas |>
+  summarise(
+    lignes = n(),
+    debut = min(date),
+    fin = max(date),
+    succursales = n_distinct(succursale),
+    dates = n_distinct(date),
+    valeurs_manquantes = sum(is.na(cas))
+  )
+```
+
+::: {.callout-tip title="Trace 1"}
+Définissez l'unité mois-succursale et écrivez votre question selon la voie A ou B.
+:::
+
+## Étape 2 - Explorer sans multiplier les graphiques
+
+```{r}
+cas |>
+  ggplot(aes(date, ventes, colour = succursale)) +
+  geom_line() +
+  facet_wrap(~ succursale, scales = "free_y") +
+  labs(title = "Ventes mensuelles par succursale", x = NULL, y = "Ventes", colour = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "none")
+```
+
+```{r}
+cas |>
+  group_by(succursale) |>
+  summarise(
+    ventes_moyennes = mean(ventes),
+    attente_moyenne = mean(temps_attente),
+    taux_service_insuffisant = mean(niveau_service_insuffisant),
+    .groups = "drop"
+  )
+```
+
+::: {.callout-tip title="Trace 2"}
+Conservez un graphique et un tableau qui répondent directement à votre question.
+:::
+
+## Voie A - Prévoir une réponse continue
+
+### Modèle et référence
+
+```{r}
+modele_ventes <- lm(
+  ventes ~ indice_temps + succursale + achalandage + promotion + ruptures_stock,
+  data = entrainement
+)
+
+reference_succursale <- entrainement |>
+  group_by(succursale) |>
+  summarise(reference = mean(ventes), .groups = "drop")
+
+evaluation_ventes <- test |>
+  mutate(prevision_modele = predict(modele_ventes, newdata = test)) |>
+  left_join(reference_succursale, by = "succursale") |>
+  pivot_longer(
+    c(prevision_modele, reference),
+    names_to = "methode",
+    values_to = "prevision"
+  ) |>
+  mutate(erreur = ventes - prevision)
+
+evaluation_ventes |>
+  group_by(methode) |>
+  summarise(
+    MAE = mean(abs(erreur)),
+    RMSE = sqrt(mean(erreur^2)),
+    biais = mean(erreur),
+    .groups = "drop"
+  )
+```
+
+### Interprétation
+
+```{r}
+tidy(modele_ventes, conf.int = TRUE) |>
+  filter(term %in% c("achalandage", "promotionoui", "ruptures_stock"))
+```
+
+Les coefficients décrivent des associations conditionnelles. Ils ne démontrent pas qu'imposer une promotion ou réduire artificiellement une variable produira exactement le changement estimé.
+
+## Voie B - Détecter une réponse binaire
+
+### Modèle et seuil de capacité
+
+```{r}
+modele_service <- glm(
+  niveau_service_insuffisant ~ temps_attente + ruptures_stock + satisfaction +
+    achalandage + succursale,
+  data = entrainement,
+  family = binomial()
+)
+
+evaluation_service <- test |>
+  mutate(prob_risque = predict(modele_service, newdata = test, type = "response"))
+
+capacite_intervention <- 0.20
+seuil <- quantile(evaluation_service$prob_risque, 1 - capacite_intervention)
+
+evaluation_service <- evaluation_service |>
+  mutate(prediction = as.integer(prob_risque >= seuil))
+```
+
+### Matrice et mesures
+
+```{r}
+matrice <- evaluation_service |>
+  count(observe = niveau_service_insuffisant, prediction)
+
+matrice
+
+evaluation_service |>
+  summarise(
+    VP = sum(prediction == 1 & niveau_service_insuffisant == 1),
+    FP = sum(prediction == 1 & niveau_service_insuffisant == 0),
+    VN = sum(prediction == 0 & niveau_service_insuffisant == 0),
+    FN = sum(prediction == 0 & niveau_service_insuffisant == 1)
+  ) |>
+  mutate(
+    sensibilite = VP / (VP + FN),
+    specificite = VN / (VN + FP),
+    precision = VP / (VP + FP),
+    proportion_ciblee = (VP + FP) / (VP + FP + VN + FN)
+  )
+```
+
+## Étape finale - Formuler la recommandation
+
+Votre recommandation doit suivre quatre phrases :
+
+1. Nous avons analysé...
+2. Sur la période test, le modèle...
+3. Nous recommandons de...
+4. Cette recommandation dépend de... et sera révisée lorsque...
+
+::: {.callout-important title="Livrable"}
+Remettez une synthèse de deux pages maximum, en plus du code repliable. Une seule voie analytique doit être développée en profondeur. L'autre doit être résumée en trois phrases pour montrer que vous comprenez la différence de cible et de mesures.
+:::
+
+## Vérification finale
+
+- [ ] La voie choisie correspond à la décision.
+- [ ] La période test est entièrement postérieure à l'entraînement.
+- [ ] Une référence simple est présente.
+- [ ] Les mesures conviennent au type de cible.
+- [ ] La recommandation comporte une limite et une règle de suivi.

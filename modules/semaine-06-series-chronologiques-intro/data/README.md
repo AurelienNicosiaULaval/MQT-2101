@@ -1,15 +1,8 @@
-# Données - Semaine 06
+# Données du module 06
 
-Ce dossier contient uniquement les données publiques utilisées dans le module.
+`ventes_mensuelles_quebec.csv` est un jeu simulé représentant 72 mois de ventes d'une organisation québécoise fictive, de janvier 2020 à décembre 2025.
 
-## Fichiers
+Chaque ligne représente un mois. Les variables décrivent la date, le mois, l'année, le trimestre, le nombre de jours d'ouverture, les clients et les ventes.
 
-- TODO ajouter les fichiers publics lorsque les données du module seront choisies.
-
-## Règles
-
-- ne pas placer de fichiers nominatifs dans ce dossier;
-- ne pas publier de fichiers provenant d'examens;
-- documenter l'origine, les variables et les transformations;
-- privilégier les formats `.csv` pour les exemples étudiants.
+Les données ne représentent aucune organisation réelle. Elles sont générées de manière déterministe par `scripts/10_create_second_block_data.R` et peuvent être redistribuées avec le matériel du cours.
 

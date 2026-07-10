@@ -1,112 +1,47 @@
 ---
-title: "Atelier 03 - Séries chronologiques, prévision des ventes ou de la demande"
+title: "Atelier 03 - Prévoir la demande"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Mission"}
+Une équipe d'approvisionnement doit prévoir la demande des treize prochaines semaines. Vous devez comparer des références simples, choisir une méthode et traduire les erreurs en risque de stock.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Résultat attendu
 
-## Let’s eat the cake
+À la fin de l'atelier, votre fichier Quarto contiendra :
 
-Objectif : produire une prévision simple et interprétable.
+- la cible, l'origine et l'horizon;
+- un audit de la série;
+- un graphique annoté;
+- une période test chronologique;
+- au moins trois méthodes comparées;
+- MAE, RMSE et biais;
+- une recommandation de stock et une règle de surveillance.
 
-Compétences développées :
-- Visualiser une série.
-- Choisir une méthode de base.
-- Évaluer une erreur de prévision.
+Temps indicatif en classe : 2 h 30.
 
-Application business : prévoir les ventes, la demande ou l'achalandage.
+## Préparation avant la séance
 
-Résultat final attendu : une prévision avec interprétation opérationnelle.
+1. Téléchargez [`demande_hebdomadaire_quebec.csv`](data/demande_hebdomadaire_quebec.csv).
+2. Relisez les [repères préparatoires](capsules.qmd).
+3. Ouvrez un nouveau fichier Quarto et vérifiez qu'il se rend en HTML.
+4. Apportez votre trace des modules 06 à 08.
 
-Lien avec une décision d'affaires réelle : planifier la capacité ou l'inventaire.
+## Déroulement
 
-## Mise en contexte
+Suivez le [guide en classe](guide-atelier.qmd), puis utilisez les [démonstrations](demonstrations.qmd) uniquement pour débloquer une étape. Les [exercices](exercices.qmd) servent à consolider et à vérifier la trace finale.
 
-Une entreprise doit prévoir la demande des prochaines semaines pour ajuster ses achats.
+## Critères de réussite
 
-## Utilité pour le génie et l'administration
+- [ ] Aucune information future n'entre dans l'entraînement.
+- [ ] Les méthodes utilisent la même période test.
+- [ ] Une référence naïve est incluse.
+- [ ] La méthode retenue est justifiée par les données et la décision.
+- [ ] La recommandation reconnaît l'incertitude et le coût des erreurs.
 
-Le module doit être lu avec deux angles complémentaires.
-
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
-
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Repères avant les capsules
-
-Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-Pour l'atelier, le [guide d'atelier](guide-atelier.qmd) donne le déroulement détaillé des manipulations à réaliser.
-
-## Capsule 1 - Question de prévision
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Préparation d'une série
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Modèle de base
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Communication de la prévision
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-
-## Trace finale
-
-Terminez le module en produisant le livrable court : Rapport de prevision court.
-
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
-
-## Mini-cas business
-
-Prévision de la demande pour réduire les ruptures de stock.
-
-## Pour aller plus loin
-
-TODO ajouter une ressource complémentaire ou une piste de consolidation.
+::: {.callout-note title="IA autorisée pour la rétroaction"}
+Après avoir produit votre première comparaison, vous pouvez demander au GPT du cours de relever une fuite temporelle possible ou une incohérence entre mesure et recommandation. Vous devez vérifier puis documenter la correction retenue.
+:::

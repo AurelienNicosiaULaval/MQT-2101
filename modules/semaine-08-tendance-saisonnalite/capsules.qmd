@@ -1,116 +1,106 @@
 ---
-title: "Capsules - Semaine 08"
+title: "Capsules - Module 08"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Présenter les modèles avec tendance et saisonnalité.
-
-## Capsule 1 - Tendance
+## Capsule 1 - Distinguer tendance et saisonnalité
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 1.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 6 à 8 minutes. Annoter une tendance et un motif mensuel sur un graphique.
 :::
 
-Emplacement prévu : `media/videos/capsule-01.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+La tendance décrit l'évolution de long terme du niveau. La saisonnalité décrit un motif qui revient selon une période connue. Une série peut présenter les deux simultanément.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.
-
-Emplacement prévu : `media/pdf/capsule-01-support.pdf`.
+Une hausse de janvier à décembre au cours d'une seule année ne prouve pas la saisonnalité. Il faut comparer les mêmes mois sur plusieurs années.
 :::
 
+### Activité 8.1
 
-TODO: Ajouter une capsule sur les tendances linéaires.
+Pourquoi un graphique regroupant toutes les observations de janvier est-il utile en complément du graphique temporel?
 
-## Capsule 2 - Saisonnalité
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Il permet de comparer janvier d'une année à l'autre et de voir si son niveau relatif est récurrent malgré la tendance générale.
+:::
+
+## Capsule 2 - Coder le calendrier
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 2.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 6 à 8 minutes. Créer un indice de temps et un facteur mois avec une référence explicite.
 :::
 
-Emplacement prévu : `media/videos/capsule-02.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Une régression saisonnière simple peut utiliser un indice $t=1,2,\ldots,n$ pour la tendance et un facteur pour le mois. Avec janvier comme référence, chaque coefficient mensuel représente une différence moyenne par rapport à janvier, à tendance égale.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.
-
-Emplacement prévu : `media/pdf/capsule-02-support.pdf`.
+La catégorie de référence n'est pas la « meilleure » catégorie. Elle fixe seulement le point de comparaison.
 :::
 
+### Activité 8.2
 
-TODO: Ajouter une capsule sur les variables indicatrices.
+Si le coefficient de décembre vaut 80 000, formulez une interprétation correcte et prudente.
 
-## Capsule 3 - Prévoir
+::: {.callout-tip collapse="true" title="Rétroaction"}
+À indice de temps égal, les ventes prévues en décembre sont en moyenne 80 000 dollars plus élevées qu'en janvier selon ce modèle. Il s'agit d'une différence modélisée, non d'un effet causal du mois.
+:::
+
+## Capsule 3 - Ajuster le modèle
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 3.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Ajuster `lm(ventes ~ indice_temps + mois_label)` et lire les coefficients utiles.
 :::
 
-Emplacement prévu : `media/videos/capsule-03.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Le modèle additif suppose que l'écart saisonnier reste approximativement constant lorsque le niveau augmente :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.
+$$
+y_t=\beta_0+\beta_1t+\gamma_{m(t)}+\varepsilon_t.
+$$
 
-Emplacement prévu : `media/pdf/capsule-03-support.pdf`.
+Si l'amplitude saisonnière augmente avec le niveau, une transformation logarithmique ou un modèle multiplicatif peut être plus approprié.
 :::
 
+### Activité 8.3
 
-TODO: Ajouter une démonstration de prévision.
+Quel graphique de résidus pourrait révéler qu'une saisonnalité additive est insuffisante?
 
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Un graphique des résidus dans le temps ou selon les valeurs ajustées montrant une amplitude croissante ou un motif saisonnier restant indique une structure non captée.
+:::
 
-
-## Capsule 4 - Modèle de prévision interprétable
+## Capsule 4 - Prévoir et communiquer l'incertitude
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 4.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Produire une prévision ponctuelle et un intervalle de prédiction, puis discuter son usage budgétaire.
 :::
 
-Emplacement prévu : `media/videos/capsule-04.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+La prévision ponctuelle donne une valeur centrale. L'intervalle de prédiction représente une plage plausible pour une future observation selon le modèle et ses hypothèses.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.
-
-Emplacement prévu : `media/pdf/capsule-04-support.pdf`.
+Un budget ne devrait pas être présenté comme certain. Une décision peut utiliser la prévision centrale, un scénario prudent et un scénario de capacité élevée.
 :::
 
-Durée cible : 5 à 8 minutes.
+### Activité 8.4
 
-Objectif : TODO rédiger et synthétiser la portion correspondante du module.
+Expliquez pourquoi l'intervalle de prédiction est généralement plus large que l'intervalle de confiance de la moyenne.
 
-À couvrir :
-
-- TODO idée principale;
-- TODO exemple simple;
-- TODO lien avec une décision ou une interprétation d'affaires.
-
-### Activité
-
-TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.
-
-## Règle de découpage des capsules
-
-Chaque capsule doit être courte et suivie d'une activité.
-
-### Exemple d'activité
-
-TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.
-
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Il tient compte à la fois de l'incertitude sur la moyenne estimée et de la variabilité d'une nouvelle observation individuelle.
+:::

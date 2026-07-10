@@ -1,116 +1,117 @@
 ---
-title: "Capsules - Semaine 09"
+title: "Capsules - Module 09"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Présenter les variables externes et le diagnostic d'autocorrélation.
-
-## Capsule 1 - Variables externes
+## Capsule 1 - Variables externes disponibles
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 1.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Classer prix, promotion, calendrier et indicateur économique selon leur disponibilité au moment de prévoir.
 :::
 
-Emplacement prévu : `media/videos/capsule-01.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Un prédicteur externe apporte de l'information autre que le passé de la cible. Avant de l'utiliser, classez-le :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.
+- connu : calendrier ou promotion déjà planifiée;
+- scénarisé : prix envisagé ou budget proposé;
+- prévu séparément : indicateur économique futur;
+- indisponible : valeur observée seulement après la période cible.
 
-Emplacement prévu : `media/pdf/capsule-01-support.pdf`.
+Utiliser une variable indisponible dans le futur crée une fuite d'information et une performance irréaliste.
 :::
 
+### Activité 9.1
 
-TODO: Ajouter des exemples de promotions, prix et indicateurs économiques.
+Classez la météo du mois prochain, une promotion déjà approuvée et les ventes réelles du mois prochain.
 
-## Capsule 2 - Résidus temporels
+::: {.callout-tip collapse="true" title="Rétroaction"}
+La promotion est connue. La météo est prévue séparément et donc incertaine. Les ventes futures sont la cible et ne peuvent pas servir de prédicteur.
+:::
+
+## Capsule 2 - Régression conditionnelle
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 2.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Ajuster une régression avec tendance, promotion, prix et calendrier.
 :::
 
-Emplacement prévu : `media/videos/capsule-02.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Une régression temporelle peut s'écrire :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.
+$$
+y_t=\beta_0+\beta_1t+\beta_2x_{t}+\gamma_{m(t)}+\eta_t.
+$$
 
-Emplacement prévu : `media/pdf/capsule-02-support.pdf`.
+Le coefficient de promotion est une association conditionnelle aux autres variables du modèle. Si les promotions ont été choisies précisément durant les mois faibles, une comparaison brute peut même sous-estimer leur contribution. Une analyse causale exigerait un plan différent.
 :::
 
+### Activité 9.2
 
-TODO: Ajouter une lecture graphique.
+Pourquoi les ventes prévues sous « promotion oui » et « promotion non » ne constituent-elles pas automatiquement une estimation causale de la promotion?
 
-## Capsule 3 - Validation temporelle
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Le modèle observationnel peut omettre des facteurs associés au choix de la promotion et aux ventes. La différence est conditionnelle au modèle, pas à une assignation expérimentale.
+:::
+
+## Capsule 3 - Autocorrélation des résidus
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 3.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Lire une fonction d'autocorrélation et interpréter le test de Ljung-Box.
 :::
 
-Emplacement prévu : `media/videos/capsule-03.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+L'autocorrélation mesure la relation entre une série et ses valeurs décalées. Après modélisation, les résidus devraient idéalement ressembler à un bruit sans structure prévisible.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.
-
-Emplacement prévu : `media/pdf/capsule-03-support.pdf`.
+Un pic au retard 1 indique que des résidus voisins tendent à se ressembler. Le test de Ljung-Box évalue collectivement plusieurs autocorrélations. Une petite valeur p signale une incompatibilité avec l'absence globale d'autocorrélation, mais ne mesure pas à elle seule l'importance opérationnelle.
 :::
 
+### Activité 9.3
 
-TODO: Ajouter un exemple d'entraînement et validation.
+Si les résidus positifs sont souvent suivis de résidus positifs, quel défaut pratique peut apparaître?
 
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Le modèle peut sous-prévoir plusieurs périodes consécutives. Les erreurs ne sont pas indépendantes et certaines structures temporelles restent inutilisées.
+:::
 
-
-## Capsule 4 - Interprétation décisionnelle
+## Capsule 4 - Erreurs AR et scénarios
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 4.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 8 à 10 minutes. Comparer régression ordinaire et régression avec erreurs AR(1), puis prévoir sous scénarios.
 :::
 
-Emplacement prévu : `media/videos/capsule-04.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Un modèle avec erreurs AR(1) suppose :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.
+$$
+\eta_t=\phi\eta_{t-1}+\varepsilon_t,
+$$
 
-Emplacement prévu : `media/pdf/capsule-04-support.pdf`.
+où $\varepsilon_t$ n'est plus autocorrélé. Le modèle combine l'information des variables externes et la dépendance des erreurs.
+
+Pour prévoir, il faut fournir les valeurs futures des prédicteurs. Si elles sont scénarisées, le résultat doit être présenté comme « prévision conditionnelle à ce scénario ».
 :::
 
-Durée cible : 5 à 8 minutes.
+### Activité 9.4
 
-Objectif : TODO rédiger et synthétiser la portion correspondante du module.
+Rédigez une phrase complète présentant une prévision sous un scénario où une promotion est maintenue et le prix reste stable.
 
-À couvrir :
-
-- TODO idée principale;
-- TODO exemple simple;
-- TODO lien avec une décision ou une interprétation d'affaires.
-
-### Activité
-
-TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.
-
-## Règle de découpage des capsules
-
-Chaque capsule doit être courte et suivie d'une activité.
-
-### Exemple d'activité
-
-TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.
-
+::: {.callout-tip collapse="true" title="Rétroaction"}
+La phrase doit nommer l'horizon, la cible et les hypothèses de promotion et de prix; elle ne doit pas présenter le résultat comme inconditionnel.
+:::

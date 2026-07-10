@@ -5,49 +5,36 @@ format:
     embed-resources: true
 ---
 
-## Objectif
+## Exercice 1 - Aligner question et mesure
 
-Faire pratiquer les notions du module après les capsules et les démonstrations R.
+Associez chaque question à une cible et à deux mesures : prévoir les ventes; repérer les mois de service insuffisant; quantifier l'erreur budgétaire.
 
-## Exercice 1 - Interprétation
-
-TODO ajouter une question courte qui force l'étudiant à expliquer le sens d'un concept dans le contexte du module.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO rédiger la solution courte.
+::: {.callout-tip collapse="true" title="Solution"}
+Ventes et erreur budgétaire utilisent une réponse continue, avec MAE, RMSE ou biais. Le service insuffisant utilise une réponse binaire, avec sensibilité, spécificité, précision et proportion ciblée.
 :::
 
-## Exercice 2 - Code R
+## Exercice 2 - Critiquer une conclusion
 
-```{r}
-#| eval: false
-library(tidyverse)
+> Le coefficient de promotion est positif; l'organisation doit donc lancer une promotion chaque mois.
 
-# TODO ajouter un exercice de manipulation, de visualisation ou de modélisation.
-```
+Relevez au moins trois problèmes.
 
-::: {.callout-tip collapse="true"}
-### Solution
-
-```{r}
-#| eval: false
-# TODO ajouter le code solution.
-```
+::: {.callout-tip collapse="true" title="Solution"}
+Le coefficient est observationnel et conditionnel, les coûts ne sont pas considérés, la validité hors échantillon n'est pas mentionnée, une promotion permanente peut modifier les comportements et le modèle n'établit pas un effet causal.
 :::
 
-## Exercice 3 - Réflexion critique
+## Exercice 3 - Critiquer une classification
 
-TODO demander une limite, une mise en garde ou une interprétation prudente.
+Un modèle atteint 92 % d'exactitude, mais seulement 10 % de sensibilité. Expliquez pourquoi il peut être inutile si l'objectif est de prévenir les défaillances de service.
 
-::: {.callout-tip collapse="true"}
-### Solution
-
-TODO rédiger les éléments attendus.
+::: {.callout-tip collapse="true" title="Solution"}
+Il manque 90 % des événements positifs. L'exactitude est dominée par les mois sans défaillance et ne répond pas au coût principal des faux négatifs.
 :::
 
-## Livrable court
+## Exercice 4 - Plan de mise à jour
 
-Livrable attendu : Synthese integratrice.
+Proposez une fréquence de surveillance, deux indicateurs de dérive et un déclencheur de réentraînement.
 
+## Exercice de synthèse
+
+Relisez votre livrable avec la grille suivante : alignement, reproductibilité, validation, interprétation, décision, limites. Corrigez le point le plus faible avant la remise.

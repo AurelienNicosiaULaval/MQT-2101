@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Questionnaire formatif sur les séries chronologiques – MQT-2101 : Analyse et modélisation des données</title>
+<title>Questionnaire formatif - Prévision et classification – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -3997,14 +3997,16 @@ vertical-align: -.125em;
 
 
 <style type="text/css">@media (min-width: 992px) {
-#quarto-content.page-layout-article main.content {
+body.page-home #quarto-content.page-layout-article main.content,
+body.page-plan #quarto-content.page-layout-article main.content,
+body.page-calendar #quarto-content.page-layout-article main.content,
+body.page-installation #quarto-content.page-layout-article main.content,
+body.page-evaluations #quarto-content.page-layout-article main.content,
+body.page-resource #quarto-content.page-layout-article main.content {
 grid-column: screen-start / screen-end;
 justify-self: center;
 width: min(1180px, calc(100vw - 4rem));
 max-width: min(1180px, calc(100vw - 4rem));
-}
-#quarto-content.page-layout-article #quarto-margin-sidebar {
-display: none;
 }
 }
 .navbar-logo {
@@ -5322,6 +5324,40 @@ background: #fee2e2;
 border-color: #f87171;
 color: #991b1b;
 }
+.video-embed,
+.pdf-viewer {
+width: 100%;
+margin: 1rem 0;
+border: 1px solid #d0d7de;
+border-radius: 8px;
+overflow: hidden;
+background: #f8fafc;
+}
+.video-embed {
+aspect-ratio: 16 / 9;
+}
+.video-embed iframe,
+.pdf-viewer iframe {
+display: block;
+width: 100%;
+border: 0;
+}
+.video-embed iframe {
+height: 100%;
+}
+.pdf-viewer iframe {
+min-height: 620px;
+height: min(76vh, 820px);
+}
+.resource-fallback {
+margin: -0.35rem 0 1rem;
+font-size: 0.95rem;
+}
+@media (max-width: 767px) {
+.pdf-viewer iframe {
+min-height: 480px;
+}
+}
 .data-link {
 display: inline-flex;
 align-items: center;
@@ -6616,115 +6652,143 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../plan-de-cours.html">
+    <a class="nav-link" href="../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../calendrier.html">
+    <a class="nav-link" href="../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../installation.html">
+    <a class="nav-link" href="../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-06-series-chronologiques-intro/index.html">
+ <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-07-lissage/index.html">
+ <span class="dropdown-text">Module 07 - Lissage</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-08-tendance-saisonnalite/index.html">
+ <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-03-series-chronologiques/index.html">
+ <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-09-variables-externes-autocorrelation/index.html">
+ <span class="dropdown-text">Module 09 - Variables externes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/semaine-10-classification-modeles-avances/index.html">
+ <span class="dropdown-text">Module 10 - Classification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/atelier-04-recapitulation/index.html">
+ <span class="dropdown-text">Atelier 04 - Intégration</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../evaluations/index.html">
+    <a class="nav-link" href="../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../donnees/index.html">
+    <a class="nav-link" href="../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6739,11 +6803,21 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
-  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#structure" id="toc-structure" class="nav-link" data-scroll-target="#structure">Structure</a></li>
-  <li><a href="#ia" id="toc-ia" class="nav-link" data-scroll-target="#ia">IA</a></li>
+  <li><a href="#mode-demploi" id="toc-mode-demploi" class="nav-link active" data-scroll-target="#mode-demploi">Mode d’emploi</a></li>
+  <li><a href="#fréquence-et-horizon" id="toc-fréquence-et-horizon" class="nav-link" data-scroll-target="#fréquence-et-horizon">1. Fréquence et horizon</a></li>
+  <li><a href="#tendance-ou-saisonnalité" id="toc-tendance-ou-saisonnalité" class="nav-link" data-scroll-target="#tendance-ou-saisonnalité">2. Tendance ou saisonnalité</a></li>
+  <li><a href="#fuite-temporelle" id="toc-fuite-temporelle" class="nav-link" data-scroll-target="#fuite-temporelle">3. Fuite temporelle</a></li>
+  <li><a href="#moyenne-mobile" id="toc-moyenne-mobile" class="nav-link" data-scroll-target="#moyenne-mobile">4. Moyenne mobile</a></li>
+  <li><a href="#mae-et-rmse" id="toc-mae-et-rmse" class="nav-link" data-scroll-target="#mae-et-rmse">5. MAE et RMSE</a></li>
+  <li><a href="#biais" id="toc-biais" class="nav-link" data-scroll-target="#biais">6. Biais</a></li>
+  <li><a href="#variable-externe" id="toc-variable-externe" class="nav-link" data-scroll-target="#variable-externe">7. Variable externe</a></li>
+  <li><a href="#autocorrélation" id="toc-autocorrélation" class="nav-link" data-scroll-target="#autocorrélation">8. Autocorrélation</a></li>
+  <li><a href="#classe-positive" id="toc-classe-positive" class="nav-link" data-scroll-target="#classe-positive">9. Classe positive</a></li>
+  <li><a href="#seuil" id="toc-seuil" class="nav-link" data-scroll-target="#seuil">10. Seuil</a></li>
+  <li><a href="#exactitude-trompeuse" id="toc-exactitude-trompeuse" class="nav-link" data-scroll-target="#exactitude-trompeuse">11. Exactitude trompeuse</a></li>
+  <li><a href="#décision-finale" id="toc-décision-finale" class="nav-link" data-scroll-target="#décision-finale">12. Décision finale</a></li>
   </ul>
 </nav>
     </div>
@@ -6752,40 +6826,279 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Questionnaire formatif sur les séries chronologiques</h1>
+<h1 class="title">Questionnaire formatif - Prévision et classification</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
 
 
-<section id="objectif" class="level2">
-<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Vérifier la compréhension des séries chronologiques, de la prévision et des mesures d’erreur avant l’examen final.</p>
-<p>Ce questionnaire est formatif et non évalué.</p>
+<section id="mode-demploi" class="level2">
+<h2 class="anchored" data-anchor-id="mode-demploi">Mode d’emploi</h2>
+<p>Répondez sans notes ni IA au premier essai. Consultez ensuite les rétroactions et créez une liste de trois notions à reprendre. Ce questionnaire est formatif et non évalué.</p>
 </section>
-<section id="structure" class="level2">
-<h2 class="anchored" data-anchor-id="structure">Structure</h2>
-<ul>
-<li>Questions sur tendance, saisonnalité et horizon.</li>
-<li>Questions de lecture graphique.</li>
-<li>Questions sur l’évaluation des prévisions.</li>
-</ul>
+<section id="fréquence-et-horizon" class="level2">
+<h2 class="anchored" data-anchor-id="fréquence-et-horizon">1. Fréquence et horizon</h2>
+<p>Une série mensuelle doit soutenir une commande livrée dans trois mois. Quel horizon minimal faut-il étudier?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Au moins trois mois. La cible et l’origine doivent aussi être précisées.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="ia" class="level2">
-<h2 class="anchored" data-anchor-id="ia">IA</h2>
-<p>L’IA est permise pour clarifier une notion, obtenir un exemple ou reformuler une explication. L’étudiant·e demeure responsable de comprendre les réponses soumises.</p>
-<p>Le <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">GPT du cours</a> doit être utilisé pour les activités liées au cours.</p>
+<section id="tendance-ou-saisonnalité" class="level2">
+<h2 class="anchored" data-anchor-id="tendance-ou-saisonnalité">2. Tendance ou saisonnalité</h2>
+<p>Les ventes augmentent progressivement depuis quatre ans et culminent chaque décembre. Nommez les deux structures.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Une tendance croissante et une saisonnalité annuelle avec niveau élevé en décembre.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="fuite-temporelle" class="level2">
+<h2 class="anchored" data-anchor-id="fuite-temporelle">3. Fuite temporelle</h2>
+<p>Pourquoi une séparation aléatoire des mois est-elle inadéquate pour évaluer une prévision réelle?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Elle peut utiliser des mois futurs pour entraîner un modèle évalué sur des mois antérieurs et ne reproduit pas l’information disponible au point d’origine.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="moyenne-mobile" class="level2">
+<h2 class="anchored" data-anchor-id="moyenne-mobile">4. Moyenne mobile</h2>
+<p>Que change une fenêtre de 12 semaines comparativement à une fenêtre de 4 semaines?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Elle lisse davantage et réagit plus lentement aux changements récents.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="mae-et-rmse" class="level2">
+<h2 class="anchored" data-anchor-id="mae-et-rmse">5. MAE et RMSE</h2>
+<p>Deux méthodes ont la même MAE, mais l’une produit une très grande erreur. Quelle mesure devrait être plus élevée pour cette méthode?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La RMSE, car elle pénalise davantage les grandes erreurs.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="biais" class="level2">
+<h2 class="anchored" data-anchor-id="biais">6. Biais</h2>
+<p>Avec <code>erreur = observé - prévu</code>, un biais moyen positif indique quoi?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Une tendance moyenne à sous-prévoir.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="variable-externe" class="level2">
+<h2 class="anchored" data-anchor-id="variable-externe">7. Variable externe</h2>
+<p>Une variable explique très bien les ventes historiques, mais n’est observée qu’un mois après les ventes. Peut-elle servir directement à prévoir?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Non, car elle n’est pas disponible au moment nécessaire. Il faudrait la prévoir séparément, la scénariser de manière défendable ou ne pas l’utiliser.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="autocorrélation" class="level2">
+<h2 class="anchored" data-anchor-id="autocorrélation">8. Autocorrélation</h2>
+<p>Des résidus positifs sont fréquemment suivis de résidus positifs. Que suggère ce motif?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Une autocorrélation positive et une structure temporelle non captée par le modèle.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="classe-positive" class="level2">
+<h2 class="anchored" data-anchor-id="classe-positive">9. Classe positive</h2>
+<p>Dans une analyse de départ client, pourquoi faut-il définir explicitement la classe positive?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les mesures comme sensibilité et précision dépendent de l’événement considéré positif. Ici, il s’agit normalement du départ à détecter.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="seuil" class="level2">
+<h2 class="anchored" data-anchor-id="seuil">10. Seuil</h2>
+<p>Quel effet général produit une diminution du seuil de classification?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Davantage de cas sont classés positifs. La sensibilité augmente souvent, mais les faux positifs et la capacité nécessaire peuvent augmenter aussi.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exactitude-trompeuse" class="level2">
+<h2 class="anchored" data-anchor-id="exactitude-trompeuse">11. Exactitude trompeuse</h2>
+<p>Seulement 5 % des cas sont positifs. Une règle qui prédit toujours « négatif » obtient quelle exactitude et quelle sensibilité?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Exactitude de 95 %, mais sensibilité de 0 %. La règle est inutile pour détecter les cas positifs.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="décision-finale" class="level2">
+<h2 class="anchored" data-anchor-id="décision-finale">12. Décision finale</h2>
+<p>Une méthode réduit la MAE de 2 %, mais double le coût de maintenance et exige une variable future incertaine. Formulez une décision prudente.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Critères">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Critères
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La réponse compare le gain à son incertitude et aux coûts. Elle peut retenir la méthode simple, demander une validation supplémentaire ou utiliser des scénarios plutôt que présenter le gain comme certain.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="IA après le premier essai">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>IA après le premier essai
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demandez au GPT du cours de générer une question analogue sur la notion la moins maîtrisée, sans solution visible. Résolvez-la, puis demandez seulement une critique de votre raisonnement.</p>
+</div>
+</div>
 
 
 </section>
@@ -6874,7 +7187,7 @@ display: none;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -6894,11 +7207,11 @@ display: none;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -6975,7 +7288,7 @@ display: none;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7050,7 +7363,7 @@ display: none;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7078,7 +7391,7 @@ display: none;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7102,7 +7415,7 @@ display: none;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7142,7 +7455,7 @@ display: none;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7268,7 +7581,7 @@ display: none;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

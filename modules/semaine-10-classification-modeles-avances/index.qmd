@@ -1,127 +1,57 @@
 ---
-title: "Semaine 10 - Résultats binaires, classification et modèles avancés"
+title: "Module 10 - Résultats binaires et classification"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Pourquoi ça compte"}
+Lorsque la cible est un départ, un défaut ou une réponse, la décision ne consiste pas seulement à estimer une moyenne. Il faut produire une probabilité, choisir un seuil et assumer les coûts différents des faux positifs et des faux négatifs.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Frontière conceptuelle
 
-## Let’s eat the cake
+Le module 04 étudiait des relations non linéaires pour une réponse continue. Ce module traite une réponse binaire et une décision de classification. La régression logistique modélise une probabilité; le seuil transforme ensuite cette probabilité en action.
 
-Objectif : analyser une décision d'affaires lorsque le résultat est binaire.
+## Résultat attendu
 
-Compétences développées :
-- Définir une variable cible binaire.
-- Comprendre une probabilité prédite.
-- Évaluer une classification avec des mesures adaptées.
+À la fin du module, vous pourrez :
 
-Application business : prévoir le risque de départ des clients ou la réponse à une campagne.
+- définir une cible binaire et la classe positive;
+- ajuster une régression logistique;
+- interpréter le signe d'un coefficient et une probabilité prédite;
+- construire une matrice de confusion;
+- calculer exactitude, sensibilité, spécificité et précision;
+- choisir un seuil selon le coût des erreurs;
+- distinguer performance statistique et utilité décisionnelle.
 
-Résultat final attendu : une interprétation de modèle orientée action.
+Temps de travail indicatif : 3 heures.
 
-Lien avec une décision d'affaires réelle : cibler les clients à contacter en priorité.
+## Données
 
-## Mise en contexte
+Le fichier [`fidelisation_clients_quebec.csv`](data/fidelisation_clients_quebec.csv) décrit 650 clients fictifs et leur départ éventuel dans les 90 jours.
 
-Une entreprise de services veut identifier les clients qui risquent de quitter afin de cibler une offre de fidélisation.
+## Parcours
 
-TODO: Ajouter un jeu de données de fidélisation client simulé ou anonymisé.
-
-## Utilité pour le génie et l'administration
-
-Le module doit être lu avec deux angles complémentaires.
-
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
-
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Concepts clés
-
-- Variable binaire.
-- Probabilité prédite.
-- Seuil de classification.
-- Matrice de confusion.
-- Sensibilité, spécificité et précision.
-- Coût des faux positifs et faux négatifs.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Résultat binaire
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Classification appliquée
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Probabilités et seuils
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Introduction aux modèles avancés
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
+1. [Capsules et activités](capsules.qmd)
+2. [Notes de cours](notes-cours.qmd)
+3. [Démonstrations R](demonstrations.qmd)
+4. [Exercices](exercices.qmd)
+5. [Lectures ciblées](lectures.qmd)
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Interpretation d'un modele de classification.
+Construisez une analyse de fidélisation comprenant : définition de la classe positive, séparation entraînement-test, régression logistique, calibration descriptive des probabilités, matrices de confusion à deux seuils, mesures de performance, coût des erreurs et recommandation de ciblage.
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+## Auto-vérification
 
-## Mini-cas business
+- [ ] La classe positive correspond à l'événement d'intérêt.
+- [ ] Le test n'a pas servi à ajuster le modèle ou le seuil.
+- [ ] Je distingue probabilité et classe prédite.
+- [ ] Je ne rapporte pas seulement l'exactitude.
+- [ ] Le seuil est justifié par une capacité ou un coût.
+- [ ] Je nomme une limite éthique ou opérationnelle.
 
-Fidélisation client : qui contacter cette semaine?
+## Lien avec l'évaluation
 
-## À retenir
-
-Une bonne classification est d'abord une bonne décision sous contrainte de coût, de capacité et de risque.
-
-## Erreurs fréquentes
-
-- Évaluer seulement l'exactitude globale.
-- Choisir un seuil arbitraire.
-- Oublier les conséquences d'affaires des erreurs.
-
-## Pour aller plus loin
-
-TODO: Ajouter une ouverture vers les arbres, forêts aléatoires ou réseaux de neurones.
+Le module prépare la classification et l'interprétation décisionnelle de l'examen final. Il offre aussi une option classification pour le mini-rapport 2.

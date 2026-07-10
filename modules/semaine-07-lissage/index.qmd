@@ -1,126 +1,54 @@
 ---
-title: "Semaine 07 - Méthodes de lissage pour la prévision court terme"
+title: "Module 07 - Lissage et évaluation des prévisions"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Pourquoi ça compte"}
+Une prévision opérationnelle doit réagir aux nouvelles observations sans sur-réagir au bruit. Les méthodes de lissage organisent ce compromis et fournissent des références difficiles à battre lorsque l'horizon est court.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Résultat attendu
 
-## Let’s eat the cake
+À la fin du module, vous pourrez :
 
-Objectif : utiliser des méthodes de lissage pour produire des prévisions simples et utiles.
+- calculer et interpréter une moyenne mobile;
+- expliquer le rôle du paramètre de lissage exponentiel;
+- produire des prévisions naïves et par lissage exponentiel simple;
+- comparer des méthodes sur une période test avec MAE et RMSE;
+- choisir une méthode selon son erreur et son utilité opérationnelle.
 
-Compétences développées :
-- Calculer une moyenne mobile.
-- Comprendre le lissage exponentiel.
-- Évaluer une prévision court terme.
+Temps de travail indicatif : 2 h 30 à 3 h.
 
-Application business : prévoir la demande hebdomadaire ou mensuelle.
+## Données
 
-Résultat final attendu : une prévision de court terme accompagnée d'une mesure d'erreur.
+Le fichier [`demande_hebdomadaire_quebec.csv`](data/demande_hebdomadaire_quebec.csv) contient 104 semaines de demande fictive, avec prix moyen et indicateur de promotion. Chaque ligne représente une semaine.
 
-Lien avec une décision d'affaires réelle : décider d'un niveau de stock ou de personnel.
+## Parcours
 
-## Mise en contexte
-
-Un commerce alimentaire doit prévoir la demande hebdomadaire pour réduire les ruptures de stock et les surplus.
-
-TODO: Ajouter un jeu de données de demande hebdomadaire.
-
-## Utilité pour le génie et l'administration
-
-Le module doit être lu avec deux angles complémentaires.
-
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
-
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Concepts clés
-
-- Moyenne mobile.
-- Lissage exponentiel simple.
-- Erreur de prévision.
-- MAE, RMSE et MAPE.
-- Arbitrage entre réactivité et stabilité.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Prévision court terme
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Moyennes mobiles
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Lissage exponentiel
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Evaluation d'une prevision
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
+1. [Capsules et activités](capsules.qmd)
+2. [Notes de cours](notes-cours.qmd)
+3. [Démonstrations R](demonstrations.qmd)
+4. [Exercices avec solutions cachées](exercices.qmd)
+5. [Lectures ciblées](lectures.qmd)
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Comparaison de méthodes de lissage.
+Produisez une comparaison de trois méthodes sur les treize dernières semaines : naïve, moyenne des quatre dernières semaines et lissage exponentiel simple. Incluez le graphique des prévisions, MAE, RMSE, un choix justifié et une limite.
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+::: {.callout-warning title="Piège à éviter"}
+Ne choisissez pas une méthode d'après son ajustement sur les données qui ont servi à l'estimer. Le choix doit s'appuyer sur une période qui n'a pas servi à l'ajustement.
+:::
 
-## Mini-cas business
+## Auto-vérification
 
-Prévision court terme pour éviter les ruptures d'inventaire.
+- [ ] Ma moyenne mobile est calculée uniquement avec les observations antérieures.
+- [ ] Je peux expliquer l'effet d'un alpha élevé.
+- [ ] Toutes les méthodes sont évaluées sur les mêmes semaines.
+- [ ] Je compare au moins MAE et RMSE.
+- [ ] Ma recommandation tient compte du coût des erreurs.
 
-## À retenir
+## Lien avec l'évaluation
 
-Le bon niveau de lissage dépend du coût d'une erreur et de la rapidité des changements dans la demande.
-
-## Erreurs fréquentes
-
-- Choisir une fenêtre de lissage sans justification.
-- Confondre ajustement passé et performance future.
-- Ignorer les coûts asymétriques des erreurs.
-
-## Pour aller plus loin
-
-TODO: Ajouter un exercice sur le choix d'une fenêtre de moyenne mobile.
+Le module prépare la comparaison de méthodes exigée dans le mini-rapport 2 et l'interprétation des mesures d'erreur à l'examen final.

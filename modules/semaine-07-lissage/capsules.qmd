@@ -1,116 +1,116 @@
 ---
-title: "Capsules - Semaine 07"
+title: "Capsules - Module 07"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
-
-Présenter les méthodes de lissage utilisées pour la prévision court terme.
-
-## Capsule 1 - Moyenne mobile
+## Capsule 1 - Moyennes mobiles
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 1.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 6 à 8 minutes. Montrer une moyenne mobile arrière de quatre semaines et expliquer l'effet de la fenêtre.
 :::
 
-Emplacement prévu : `media/videos/capsule-01.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Une moyenne mobile remplace une observation par la moyenne de plusieurs observations voisines. Pour prévoir, la fenêtre doit être arrière : seules les valeurs déjà observées sont utilisées.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 1.
+Une fenêtre courte réagit rapidement mais conserve beaucoup de variabilité. Une fenêtre longue lisse davantage mais réagit plus lentement aux changements de niveau.
 
-Emplacement prévu : `media/pdf/capsule-01-support.pdf`.
+Pour une fenêtre de taille $k$ :
+
+$$
+m_t=\frac{1}{k}\sum_{j=0}^{k-1}y_{t-j}.
+$$
 :::
 
+### Activité 7.1
 
-TODO: Ajouter une démonstration.
+Les quatre dernières demandes sont 980, 1 020, 1 080 et 1 120 unités. Calculez la moyenne mobile et expliquez ce qu'elle ignore.
 
-## Capsule 2 - Lissage exponentiel
+::: {.callout-tip collapse="true" title="Rétroaction"}
+La moyenne est 1 050. Elle donne le même poids aux quatre semaines, ignore les observations plus anciennes et ne représente explicitement ni tendance ni saisonnalité.
+:::
+
+## Capsule 2 - Lissage exponentiel simple
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 2.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Construire récursivement le niveau lissé et comparer deux valeurs de alpha.
 :::
 
-Emplacement prévu : `media/videos/capsule-02.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Le lissage exponentiel simple met à jour un niveau estimé :
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 2.
+$$
+\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}, \qquad 0<\alpha<1.
+$$
 
-Emplacement prévu : `media/pdf/capsule-02-support.pdf`.
+Un alpha élevé donne plus de poids à la dernière observation et réagit rapidement. Un alpha faible produit une série plus stable. Cette méthode convient surtout lorsqu'il n'y a pas de tendance ou de saisonnalité forte non modélisée.
 :::
 
+### Activité 7.2
 
-TODO: Ajouter une intuition visuelle.
+Pour une demande récente en hausse rapide, comparez qualitativement les effets de $\alpha=0{,}2$ et $\alpha=0{,}8$.
 
-## Capsule 3 - Erreurs de prévision
+::: {.callout-tip collapse="true" title="Rétroaction"}
+Avec 0,8, le niveau lissé se rapproche rapidement de la dernière demande. Avec 0,2, l'historique conserve plus d'influence et l'ajustement est plus lent.
+:::
+
+## Capsule 3 - Mesurer les erreurs
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 3.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 6 à 8 minutes. Calculer une erreur, MAE et RMSE, puis discuter le MAPE près de zéro.
 :::
 
-Emplacement prévu : `media/videos/capsule-03.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+L'erreur est $e_t=y_t-\widehat y_t$. Une erreur positive signifie que la prévision a sous-estimé la valeur observée.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 3.
+- MAE : erreur absolue moyenne, dans l'unité de la cible.
+- RMSE : racine de l'erreur quadratique moyenne, plus sensible aux grandes erreurs.
+- MAPE : erreur absolue en pourcentage, difficile à utiliser lorsque les observations sont nulles ou très faibles.
 
-Emplacement prévu : `media/pdf/capsule-03-support.pdf`.
+La meilleure mesure dépend du coût réel. Une rupture de stock peut rendre les sous-prévisions plus coûteuses que les sur-prévisions.
 :::
 
+### Activité 7.3
 
-TODO: Ajouter MAE, RMSE et MAPE.
+Deux méthodes ont la même MAE, mais la seconde produit une erreur extrême. Quelle mesure les distinguera davantage?
 
+::: {.callout-tip collapse="true" title="Rétroaction"}
+La RMSE pénalise davantage les grandes erreurs parce qu'elles sont mises au carré.
+:::
 
-
-## Capsule 4 - Evaluation d'une prevision
+## Capsule 4 - Comparer équitablement
 
 ::: {.panel-tabset}
 ### Vidéo
 
-::: {.callout-note title="Vidéo à intégrer"}
-TODO intégrer ici la vidéo courte de la capsule 4.
+::: {.callout-note title="Capsule vidéo à produire"}
+Durée cible : 7 à 9 minutes. Construire une période test commune et relier les mesures au choix de méthode.
 :::
 
-Emplacement prévu : `media/videos/capsule-04.mp4` ou lien vidéo institutionnel.
+### Support écrit
 
-### Support
+Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période test et les mêmes mesures.
 
-TODO ajouter le support PDF généré à partir du contenu Quarto de la capsule 4.
-
-Emplacement prévu : `media/pdf/capsule-04-support.pdf`.
+Le classement numérique ne suffit pas. Il faut aussi examiner : stabilité, interprétabilité, effort de maintenance, délai de calcul et conséquences des erreurs.
 :::
 
-Durée cible : 5 à 8 minutes.
+### Activité 7.4
 
-Objectif : TODO rédiger et synthétiser la portion correspondante du module.
+Une méthode réduit la MAE de 1 %, mais exige des variables externes coûteuses et une maintenance hebdomadaire. Formulez une décision prudente.
 
-À couvrir :
-
-- TODO idée principale;
-- TODO exemple simple;
-- TODO lien avec une décision ou une interprétation d'affaires.
-
-### Activité
-
-TODO ajouter une question courte ou une micro-tâche à faire immédiatement après la capsule.
-
-## Règle de découpage des capsules
-
-Chaque capsule doit être courte et suivie d'une activité.
-
-### Exemple d'activité
-
-TODO ajouter une question d'interprétation, un court calcul ou une micro-tâche en R.
-
+::: {.callout-tip collapse="true" title="Rétroaction"}
+L'amélioration doit être comparée au coût opérationnel et à sa stabilité. Une méthode plus simple peut être préférable si l'écart est faible ou incertain.
+:::

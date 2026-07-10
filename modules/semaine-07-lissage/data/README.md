@@ -1,15 +1,6 @@
-# Données - Semaine 07
+# Données du module 07
 
-Ce dossier contient uniquement les données publiques utilisées dans le module.
+`demande_hebdomadaire_quebec.csv` contient 104 semaines de demande simulée pour une organisation québécoise fictive. Les variables incluent la semaine, le numéro de semaine, une promotion, un prix moyen et la demande.
 
-## Fichiers
-
-- TODO ajouter les fichiers publics lorsque les données du module seront choisies.
-
-## Règles
-
-- ne pas placer de fichiers nominatifs dans ce dossier;
-- ne pas publier de fichiers provenant d'examens;
-- documenter l'origine, les variables et les transformations;
-- privilégier les formats `.csv` pour les exemples étudiants.
+Chaque ligne représente une semaine. Les données ne représentent aucune organisation réelle. Elles sont générées par `scripts/10_create_second_block_data.R` et peuvent être redistribuées avec le matériel du cours.
 

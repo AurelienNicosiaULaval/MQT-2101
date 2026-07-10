@@ -1,112 +1,53 @@
 ---
-title: "Atelier 04 - Atelier intégrateur et récapitulation"
+title: "Atelier 04 - Analyse intégratrice et décision"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Mission"}
+Une direction vous demande une recommandation analytique sur la performance de quatre succursales. Vous devez choisir une cible, construire une preuve hors échantillon et communiquer une décision avec ses limites.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Deux voies possibles
 
-## Let’s eat the cake
+- Voie A, réponse continue : prévoir les ventes et identifier les contraintes opérationnelles associées.
+- Voie B, réponse binaire : détecter les mois à risque de niveau de service insuffisant et définir une règle d'intervention.
 
-Objectif : intégrer les compétences de régression, de prévision et de communication.
+Le choix de la voie fait partie de l'évaluation. Il doit correspondre à la décision formulée.
 
-Compétences développées :
-- Choisir une approche analytique.
-- Construire un rapport reproductible.
-- Présenter une recommandation de gestion.
+## Résultat attendu
 
-Application business : produire une analyse complète pour un client interne.
+Votre synthèse Quarto doit contenir :
 
-Résultat final attendu : une synthèse prête pour l'examen final.
+- question, cible, unité d'observation et décision;
+- provenance et limites du jeu simulé;
+- exploration concise;
+- méthode principale et référence simple;
+- séparation chronologique;
+- mesures sur la période test;
+- recommandation, risque d'erreur et condition de révision;
+- déclaration IA, si applicable.
 
-Lien avec une décision d'affaires réelle : choisir une action sur la base d'un modèle et de ses limites.
+Temps indicatif : 3 heures.
 
-## Mise en contexte
+## Données
 
-Une équipe de direction souhaite une recommandation analytique sur une décision liée aux ventes, à la demande ou à la fidélisation.
+Le fichier [`cas_integrateur_quebec.csv`](data/cas_integrateur_quebec.csv) contient 72 mois pour quatre succursales fictives. Chaque ligne représente un mois-succursale.
 
-## Utilité pour le génie et l'administration
+## Parcours
 
-Le module doit être lu avec deux angles complémentaires.
+1. Lire les [repères préparatoires](capsules.qmd).
+2. Suivre le [guide en classe](guide-atelier.qmd).
+3. Utiliser les [démonstrations](demonstrations.qmd) au besoin.
+4. Terminer avec les [exercices de consolidation](exercices.qmd).
+5. Consulter les [lectures de synthèse](lectures.qmd).
 
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
+## Critères de réussite
 
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Repères avant les capsules
-
-Avant de commencer les capsules, notez les notions que vous connaissez déjà et celles qui devront être consolidées pendant le module.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-Pour l'atelier, le [guide d'atelier](guide-atelier.qmd) donne le déroulement détaillé des manipulations à réaliser.
-
-## Capsule 1 - Choisir une approche
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Relire les diagnostics
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Comparer les resultats
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Préparer la synthèse finale
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
-
-## Trace finale
-
-Terminez le module en produisant le livrable court : Synthèse intégratrice.
-
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
-
-## Mini-cas business
-
-Analyse intégratrice pour soutenir une décision de fin de trimestre.
-
-## Pour aller plus loin
-
-TODO ajouter une ressource complémentaire ou une piste de consolidation.
+- [ ] La méthode répond à la question choisie.
+- [ ] La validation respecte le temps.
+- [ ] La référence simple utilise seulement l'entraînement.
+- [ ] Les mesures correspondent à une réponse continue ou binaire.
+- [ ] La recommandation ne dépasse pas la preuve disponible.
+- [ ] Une limite et une règle de suivi sont explicites.

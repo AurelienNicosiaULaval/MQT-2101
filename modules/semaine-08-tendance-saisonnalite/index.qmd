@@ -1,126 +1,51 @@
 ---
-title: "Semaine 08 - Modèles de prévision avec tendance et saisonnalité"
+title: "Module 08 - Tendance et saisonnalité"
 format:
   html:
     embed-resources: true
 ---
 
-Ce module se fait en autonomie. Suivez la page de haut en bas : elle sert de feuille de route et indique à quel moment ouvrir les pages spécialisées.
+::: {.callout-note title="Pourquoi ça compte"}
+Une organisation peut croître tout en connaissant des mois systématiquement forts ou faibles. Séparer tendance et saisonnalité aide à établir des budgets réalistes, à planifier la capacité et à ne pas confondre effet du calendrier et performance exceptionnelle.
+:::
 
-Les contenus longs sont répartis dans les pages du module. Revenez toujours ici pour garder le fil : une capsule courte, une activité, une mise en pratique en R, des exercices, une correction, puis une trace finale.
+## Résultat attendu
 
-## Let’s eat the cake
+À la fin du module, vous pourrez :
 
-Objectif : modéliser des séries avec tendance et saisonnalité.
+- distinguer tendance et saisonnalité;
+- représenter une saisonnalité mensuelle;
+- ajuster une régression avec tendance et mois;
+- interpréter un coefficient saisonnier relativement à un mois de référence;
+- produire des prévisions et intervalles pour une période test;
+- comparer le modèle à une référence saisonnière naïve.
 
-Compétences développées :
-- Identifier une tendance.
-- Représenter la saisonnalité.
-- Ajuster un modèle de prévision basé sur le temps.
+Temps de travail indicatif : 2 h 30 à 3 h.
 
-Application business : prévoir les ventes mensuelles d'une PME.
+## Données
 
-Résultat final attendu : une prévision saisonnière interprétée dans un contexte de gestion.
+Le fichier [`ventes_saisonnieres_quebec.csv`](data/ventes_saisonnieres_quebec.csv) contient 72 mois de ventes et de budgets fictifs.
 
-Lien avec une décision d'affaires réelle : préparer les budgets, achats et objectifs par période.
+## Parcours
 
-## Mise en contexte
-
-Une PME québécoise observe des pics de ventes récurrents à certaines périodes de l'année et veut prévoir ses revenus mensuels.
-
-TODO: Ajouter un jeu de données avec tendance et saisonnalité.
-
-## Utilité pour le génie et l'administration
-
-Le module doit être lu avec deux angles complémentaires.
-
-Pour les étudiant·es en génie, l'objectif est de mieux comprendre les données utilisées pour décrire, surveiller, comparer ou prévoir un phénomène lié aux opérations, aux systèmes, à la production ou à la performance.
-
-Pour les étudiant·es en administration, l'objectif est de relier l'analyse aux décisions de gestion : ventes, marketing, finance, ressources humaines, opérations, satisfaction client ou performance organisationnelle.
-
-L'IA peut être utilisée comme outil de questionnement ou de vérification lorsque les consignes l'autorisent, mais le raisonnement statistique, le code R et l'interprétation restent au centre du travail.
-
-## Concepts clés
-
-- Tendance déterministe.
-- Variables indicatrices saisonnières.
-- Décomposition.
-- Prévision hors échantillon.
-- Incertitude de prévision.
-
-## Préparer votre espace de travail
-
-Ouvrez un document de travail pour conserver vos notes, votre code R et vos réponses courtes. Ce document deviendra la base de votre trace finale ou du livrable du module.
-
-
-## Capsule 1 - Tendance
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 2 - Saisonnalité
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 3 - Variables indicatrices
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Capsule 4 - Modèle de prévision interprétable
-
-Poursuivez le parcours dans [les capsules](capsules.qmd). Commencez par l'onglet `Vidéo`, puis utilisez l'onglet `Support` pour revoir les idées essentielles.
-
-Après la capsule, faites immédiatement l'activité associée. Cette pause sert à vérifier la compréhension avant de continuer.
-
-
-## Démonstrations R
-
-Après les capsules, passez aux [démonstrations R](demonstrations.qmd). Reproduisez le code dans l'ordre, sans seulement lire les résultats. L'objectif est de voir les gestes techniques attendus avant les exercices.
-
-
-## Exercices d'application
-
-Faites ensuite [les exercices](exercices.qmd) sans ouvrir les solutions cachées. Les exercices servent à transformer les idées vues dans les capsules en gestes concrets : interpréter, coder, vérifier et expliquer.
-
-
-## Correction avec solutions cachées
-
-Une fois les exercices tentés, ouvrez les solutions cachées dans [la page d'exercices](exercices.qmd). Comparez votre raisonnement à la solution, puis annotez ce qui doit être repris.
-
-
-## Lectures ciblées
-
-Consultez ensuite [les lectures](lectures.qmd). Il ne s'agit pas de tout lire mécaniquement : ciblez les passages indiqués et notez ce qu'ils clarifient par rapport aux capsules ou aux exercices.
-
+1. [Capsules et activités](capsules.qmd)
+2. [Notes de cours](notes-cours.qmd)
+3. [Démonstrations R](demonstrations.qmd)
+4. [Exercices](exercices.qmd)
+5. [Lectures ciblées](lectures.qmd)
 
 ## Trace finale
 
-Terminez le module en produisant le livrable court : Modèle avec tendance et saisonnalité.
+Construisez un modèle de ventes avec tendance et effet du mois. Évaluez-le sur les douze derniers mois et comparez-le à la valeur observée le même mois de l'année précédente. Présentez un graphique, MAE, une interprétation saisonnière, une recommandation budgétaire et une limite.
 
-Déposez seulement une trace concise, structurée et vérifiable. Elle doit montrer ce que vous savez faire à la fin du module, pas recopier tout le contenu.
+## Auto-vérification
 
-## Mini-cas business
+- [ ] Mon indice de temps augmente d'une unité par mois.
+- [ ] Le mois est traité comme une catégorie ordonnée pour l'affichage et comme facteur dans le modèle.
+- [ ] J'identifie la catégorie de référence avant d'interpréter les coefficients.
+- [ ] Ma période test vient après l'entraînement.
+- [ ] Je communique l'incertitude de la prévision.
 
-Budget de ventes : intégrer la saisonnalité dans les objectifs mensuels.
+## Lien avec l'évaluation
 
-## À retenir
-
-Une prévision saisonnière devient utile lorsqu'elle est reliée à des décisions de capacité, de budget ou d'inventaire.
-
-## Erreurs fréquentes
-
-- Oublier la fréquence de la série.
-- Interpréter les mois sans catégorie de référence claire.
-- Présenter une prévision sans incertitude.
-
-## Pour aller plus loin
-
-TODO: Ajouter un exemple avec `fable` ou `forecast`.
+Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapport 2 et de l'examen final.

@@ -5,43 +5,53 @@ format:
     embed-resources: true
 ---
 
-## Objectif
-
-Regrouper les démonstrations reproductibles en R associées au module. Cette page doit montrer les gestes techniques attendus avant les exercices autonomes.
-
-## Préparation
+## Choisir une famille de modèle
 
 ```{r}
-#| eval: false
-library(tidyverse)
-library(janitor)
-
-# TODO charger les packages propres au module.
+choisir_famille <- function(cible) {
+  if (is.numeric(cible) && dplyr::n_distinct(cible) > 2) {
+    return("Régression pour réponse continue")
+  }
+  if (dplyr::n_distinct(cible) == 2) {
+    return("Classification pour réponse binaire")
+  }
+  "Vérifier la définition de la cible"
+}
 ```
 
-## Démonstration 1 - Importer ou préparer les données
+## Mesures continues
 
 ```{r}
-#| eval: false
-# TODO lire le ou les fichiers de données du module.
+mesures_continues <- function(observe, prevision) {
+  erreur <- observe - prevision
+  tibble(
+    MAE = mean(abs(erreur)),
+    RMSE = sqrt(mean(erreur^2)),
+    biais = mean(erreur)
+  )
+}
 ```
 
-## Démonstration 2 - Produire un résultat intermédiaire
+## Mesures binaires
 
 ```{r}
-#| eval: false
-# TODO calculer un résumé, ajuster un modèle ou produire un diagnostic.
+mesures_binaires <- function(observe, probabilite, seuil = 0.5) {
+  prediction <- as.integer(probabilite >= seuil)
+  VP <- sum(prediction == 1 & observe == 1)
+  FP <- sum(prediction == 1 & observe == 0)
+  VN <- sum(prediction == 0 & observe == 0)
+  FN <- sum(prediction == 0 & observe == 1)
+
+  tibble(
+    seuil = seuil,
+    sensibilite = VP / (VP + FN),
+    specificite = VN / (VN + FP),
+    precision = VP / (VP + FP),
+    proportion_ciblee = (VP + FP) / length(observe)
+  )
+}
 ```
 
-## Démonstration 3 - Interpréter pour une décision
+## Gabarit de décision
 
-TODO formuler ce que le résultat permet de dire, ce qu'il ne permet pas de dire, et la décision qu'il peut éclairer.
-
-## À vérifier
-
-- le code s'exécute du début à la fin;
-- les chemins sont relatifs au projet;
-- les objets portent des noms explicites;
-- les graphiques ont des titres et des axes interprétables;
-- l'interprétation reste alignée avec la question d'affaires.
-
+Une sortie numérique doit être accompagnée de la question, de la période test, de la référence, de l'unité des mesures et d'une limite. Une fonction facilite les calculs, mais ne fournit pas ces éléments de jugement.
