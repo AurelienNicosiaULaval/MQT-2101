@@ -1,0 +1,158 @@
+# Exercices - Atelier 02
+
+## Objectif
+
+Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale.
+
+> **NOTE:**
+>
+> Pendant la séance, ouvrez d’abord le [guide complet](guide-atelier.llms.md). Utilisez cette page pour pratiquer les gestes essentiels, vérifier votre interprétation et préparer la trace finale.
+
+## Préparation
+
+``` r
+library(tidyverse)
+
+data_path <- "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+performance <- read_csv(data_path, show_col_types = FALSE)
+```
+
+## Exercice 1 - Question et variables
+
+Pour la question « Quels facteurs sont associés aux ventes mensuelles des succursales? », identifiez :
+
+- la variable réponse;
+- deux variables explicatives plausibles;
+- une variable qui pourrait confondre l’interprétation;
+- une limite du tableau.
+
+> **TIP:**
+>
+> La variable réponse est `ventes`. Des variables explicatives plausibles sont `achalandage`, `depenses_marketing`, `heures_personnel` et `ruptures_stock`. Une variable de contexte comme `succursale`, `region` ou `saison` peut influencer l’interprétation. Une limite est que les observations ne proviennent pas d’une expérience contrôlée.
+
+## Exercice 2 - Graphique exploratoire
+
+Produisez un graphique des ventes selon l’achalandage, avec une couleur par succursale.
+
+``` r
+ggplot(performance, aes(x = achalandage, y = ventes, colour = succursale)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, colour = "black") +
+  labs(
+    title = "Ventes selon l'achalandage",
+    x = "Achalandage mensuel",
+    y = "Ventes",
+    colour = "Succursale"
+  ) +
+  theme_minimal()
+```
+
+> **TIP:**
+>
+> Le graphique doit permettre de vérifier si une relation positive existe et si certaines succursales semblent systématiquement au-dessus ou au-dessous de la tendance générale.
+
+## Exercice 3 - Modèle simple
+
+Ajustez un modèle simple avec `achalandage` comme variable explicative.
+
+``` r
+modele_simple <- lm(ventes ~ achalandage, data = performance)
+summary(modele_simple)
+```
+
+Interprétez la pente en une phrase.
+
+> **TIP:**
+>
+> La pente indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel. Il faut préciser l’unité et éviter de dire que l’achalandage cause automatiquement les ventes.
+
+## Exercice 4 - Modèle enrichi
+
+Ajustez le modèle suivant :
+
+``` r
+modele_enrichi <- lm(
+  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
+  data = performance
+)
+
+summary(modele_enrichi)
+```
+
+Choisissez un coefficient et interprétez-le dans le contexte.
+
+> **TIP:**
+>
+> Un coefficient du modèle enrichi se lit en gardant constantes les autres variables incluses dans le modèle. Par exemple, le coefficient de `depenses_marketing` décrit l’association moyenne avec les ventes pour des observations ayant le même achalandage, les mêmes heures de personnel et le même nombre de ruptures de stock, selon le modèle.
+
+## Exercice 5 - Recommandation
+
+Rédigez une recommandation de cinq à sept lignes pour une direction régionale. Votre texte doit inclure :
+
+- le facteur prioritaire;
+- un résultat de modèle;
+- une limite;
+- une prochaine vérification.
+
+> **TIP:**
+>
+> La recommandation doit être défendable sans être excessive. Une bonne réponse peut recommander de prioriser l’analyse de l’achalandage, de surveiller les ruptures de stock ou de tester des actions marketing, mais elle doit préciser que le modèle décrit une association observée.
+
+## Exercice 6 - Diagnostic des résidus
+
+Créez les valeurs prédites et les résidus du modèle enrichi, puis produisez un graphique des résidus selon les ventes prédites.
+
+``` r
+performance_modele <- performance |>
+  mutate(
+    ventes_predites = predict(modele_enrichi),
+    residu = residuals(modele_enrichi)
+  )
+
+ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0) +
+  geom_point() +
+  labs(
+    title = "Résidus selon les ventes prédites",
+    x = "Ventes prédites",
+    y = "Résidu"
+  ) +
+  theme_minimal()
+```
+
+Rédigez une phrase sur ce que le graphique permet de vérifier.
+
+> **TIP:**
+>
+> On cherche surtout à voir si les résidus sont répartis autour de zéro sans motif évident. Si les résidus montrent une courbe, une dispersion qui augmente ou quelques points très éloignés, il faut le mentionner comme limite.
+
+## Exercice 7 - Mini-recommandation complète
+
+Rédigez une mini-recommandation de huit lignes maximum. Elle doit contenir :
+
+- la question d’affaires;
+- le facteur prioritaire;
+- le résultat qui appuie ce choix;
+- une interprétation avec les unités;
+- un diagnostic ou une vérification;
+- une limite causale;
+- une prochaine étape.
+
+> **TIP:**
+>
+> Une bonne recommandation reste utile pour l’action sans devenir trop forte. Elle peut proposer de prioriser l’achalandage, les dépenses marketing, la capacité de service ou les ruptures de stock, mais elle doit préciser que le modèle soutient une association observée. Une prochaine étape réaliste serait de valider la piste avec des données supplémentaires, une expérimentation ou une analyse plus ciblée.
+
+## Trace finale courte
+
+Votre trace finale doit rassembler les éléments des exercices dans un court fichier Quarto :
+
+1.  question d’affaires;
+2.  description des données;
+3.  graphique exploratoire;
+4.  modèle simple ou enrichi;
+5.  coefficient interprété;
+6.  diagnostic des résidus;
+7.  recommandation prudente;
+8.  limite.
+
+Avant de terminer, relisez votre trace comme si une autre personne devait la comprendre sans votre code ouvert dans la console.

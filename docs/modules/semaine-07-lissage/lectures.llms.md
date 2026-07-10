@@ -1,0 +1,14 @@
+# Lectures - Module 07
+
+## Lectures obligatoires
+
+- Hyndman et Athanasopoulos, [Chapitre 8 - Exponential smoothing](https://otexts.com/fpp3/expsmooth.html), sections 8.1 et 8.2 pour l’intuition du lissage;
+- [Section 5.8 - Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html), pour MAE, RMSE et MAPE.
+
+Question de lecture : pourquoi aucune mesure d’erreur n’est-elle universellement meilleure?
+
+## Lecture facultative
+
+- [Section 8.2 - Methods with trend](https://otexts.com/fpp3/holt.html), pour préparer le module suivant.
+
+Les ressources sont accessibles gratuitement sur le site officiel de l’ouvrage.

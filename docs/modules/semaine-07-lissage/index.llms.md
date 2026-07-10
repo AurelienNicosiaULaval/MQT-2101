@@ -1,0 +1,57 @@
+# Module 07 - Lissage et évaluation des prévisions
+
+> **NOTE:**
+>
+> Une prévision opérationnelle doit réagir aux nouvelles observations sans sur-réagir au bruit. Les méthodes de lissage organisent ce compromis et fournissent des références difficiles à battre lorsque l’horizon est court.
+
+## Continuité du parcours
+
+Le module 06 a défini la cible, l’horizon et une période test chronologique. Vous utilisez maintenant ce protocole pour comparer des méthodes simples et mesurer leurs erreurs sur les mêmes semaines futures.
+
+## Résultat attendu
+
+À la fin du module, vous pourrez :
+
+- calculer et interpréter une moyenne mobile;
+- expliquer le rôle du paramètre de lissage exponentiel;
+- produire des prévisions naïves et par lissage exponentiel simple;
+- comparer des méthodes sur une période test avec MAE et RMSE;
+- choisir une méthode selon son erreur et son utilité opérationnelle.
+
+Temps de travail indicatif : 2 h 30 à 3 h.
+
+## Données
+
+Le fichier [`demande_hebdomadaire_quebec.csv`](data/demande_hebdomadaire_quebec.csv) contient 104 semaines de demande fictive, avec prix moyen et indicateur de promotion. Chaque ligne représente une semaine.
+
+## Parcours
+
+1.  [Capsules et activités](../../modules/semaine-07-lissage/capsules.llms.md)
+2.  [Notes de cours](../../modules/semaine-07-lissage/notes-cours.llms.md)
+3.  [Démonstrations R](../../modules/semaine-07-lissage/demonstrations.llms.md)
+4.  [Exercices avec solutions cachées](../../modules/semaine-07-lissage/exercices.llms.md)
+5.  [Lectures ciblées](../../modules/semaine-07-lissage/lectures.llms.md)
+
+## Trace finale
+
+Produisez une comparaison de trois méthodes sur les treize dernières semaines : naïve, moyenne des quatre dernières semaines et lissage exponentiel simple. Incluez le graphique des prévisions, MAE, RMSE, un choix justifié et une limite.
+
+> **WARNING:**
+>
+> Ne choisissez pas une méthode d’après son ajustement sur les données qui ont servi à l’estimer. Le choix doit s’appuyer sur une période qui n’a pas servi à l’ajustement.
+
+## Auto-vérification
+
+Ma moyenne mobile est calculée uniquement avec les observations antérieures.
+
+Je peux expliquer l’effet d’un alpha élevé.
+
+Toutes les méthodes sont évaluées sur les mêmes semaines.
+
+Je compare au moins MAE et RMSE.
+
+Ma recommandation tient compte du coût des erreurs.
+
+## Lien avec l’évaluation
+
+Le module prépare la comparaison de méthodes exigée dans le mini-rapport 2 et l’interprétation des mesures d’erreur à l’examen final.

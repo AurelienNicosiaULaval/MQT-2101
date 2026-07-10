@@ -1,0 +1,83 @@
+# Module 06 - Introduction aux séries chronologiques
+
+> **NOTE:**
+>
+> Une décision de stock, de personnel ou de capacité porte sur le futur. Une série chronologique oblige à respecter l’ordre du temps et à distinguer ce qui était connu au moment où la prévision aurait réellement été produite.
+
+## Passage au bloc de prévision
+
+Les modules 01 à 04 ont développé la lecture d’un tableau, la régression et les diagnostics. Ici, ces réflexes restent nécessaires, mais la chronologie change le protocole : une observation future ne peut pas servir à préparer, ajuster ou évaluer une prévision du passé.
+
+## Résultat attendu
+
+À la fin du module, vous pourrez :
+
+- reconnaître une série chronologique et préciser sa fréquence;
+- construire un graphique temporel lisible;
+- distinguer tendance, saisonnalité, cycle et variation irrégulière;
+- définir une cible et un horizon de prévision;
+- séparer chronologiquement les données d’entraînement et de test;
+- comparer une prévision à une méthode naïve.
+
+Temps de travail indicatif : 2 h 30 à 3 h, incluant les exercices et la trace finale.
+
+## Données du module
+
+Le fichier [`ventes_mensuelles_quebec.csv`](data/ventes_mensuelles_quebec.csv) contient 72 mois de ventes fictives d’une organisation québécoise. Chaque ligne représente un mois. Les données sont simulées et ne décrivent aucune organisation réelle.
+
+## Parcours recommandé
+
+1.  Parcourez les quatre [capsules et activités](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md).
+2.  Consultez les [notes de cours](../../modules/semaine-06-series-chronologiques-intro/notes-cours.llms.md) pour consolider le vocabulaire.
+3.  Reproduisez les [démonstrations R](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md).
+4.  Faites les [exercices](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md) avant d’ouvrir les solutions cachées.
+5.  Ciblez les passages indiqués dans les [lectures](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md).
+6.  Produisez la trace finale.
+
+## Avant de commencer
+
+Sans calculer, répondez à ces trois questions :
+
+1.  Pourquoi ne peut-on pas mélanger aléatoirement le passé et le futur pour évaluer une prévision?
+2.  Quelle différence faites-vous entre une cible et un horizon?
+3.  Une hausse observée chaque mois est-elle nécessairement saisonnière?
+
+Conservez vos réponses. Vous les reprendrez à la fin du module.
+
+## Trace finale
+
+Produisez une page Quarto comprenant :
+
+- la définition de l’unité d’observation et de la fréquence;
+- un graphique temporel annoté;
+- deux caractéristiques visibles de la série;
+- une cible de prévision et un horizon justifiés;
+- une séparation entraînement-test respectant le temps;
+- une prévision naïve et son erreur absolue moyenne sur la période test;
+- une limite décisionnelle.
+
+> **IMPORTANT:**
+>
+> Une personne qui ne connaît pas le jeu de données doit comprendre ce qui est prévu, pour quelle période, avec quelles données et à quelle décision la prévision pourrait servir.
+
+## Auto-vérification
+
+Ma date est reconnue comme une date dans R.
+
+Mon graphique respecte l’ordre chronologique.
+
+Je distingue description du passé et prévision du futur.
+
+Mon horizon correspond à une décision réelle.
+
+Ma période test vient après ma période d’entraînement.
+
+Je compare mon résultat à une référence simple.
+
+> **NOTE:**
+>
+> Vous pouvez utiliser le GPT du cours pour faire critiquer votre définition de la cible et de l’horizon. Demandez-lui de relever une ambiguïté sans proposer la formulation finale. Vérifiez ensuite la réponse à l’aide des données et des notes de cours.
+
+## Lien avec l’évaluation
+
+Ce module prépare le mini-rapport 2 et l’examen final. Vous devez pouvoir expliquer pourquoi l’ordre temporel modifie la manière de visualiser, d’entraîner et d’évaluer un modèle.

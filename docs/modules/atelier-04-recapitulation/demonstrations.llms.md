@@ -1,0 +1,52 @@
+# Démonstrations R - Atelier 04
+
+## Choisir une famille de modèle
+
+``` r
+choisir_famille <- function(cible) {
+  if (is.numeric(cible) && dplyr::n_distinct(cible) > 2) {
+    return("Régression pour réponse continue")
+  }
+  if (dplyr::n_distinct(cible) == 2) {
+    return("Classification pour réponse binaire")
+  }
+  "Vérifier la définition de la cible"
+}
+```
+
+## Mesures continues
+
+``` r
+mesures_continues <- function(observe, prevision) {
+  erreur <- observe - prevision
+  tibble(
+    MAE = mean(abs(erreur)),
+    RMSE = sqrt(mean(erreur^2)),
+    biais = mean(erreur)
+  )
+}
+```
+
+## Mesures binaires
+
+``` r
+mesures_binaires <- function(observe, probabilite, seuil = 0.5) {
+  prediction <- as.integer(probabilite >= seuil)
+  VP <- sum(prediction == 1 & observe == 1)
+  FP <- sum(prediction == 1 & observe == 0)
+  VN <- sum(prediction == 0 & observe == 0)
+  FN <- sum(prediction == 0 & observe == 1)
+
+  tibble(
+    seuil = seuil,
+    sensibilite = VP / (VP + FN),
+    specificite = VN / (VN + FP),
+    precision = VP / (VP + FP),
+    proportion_ciblee = (VP + FP) / length(observe)
+  )
+}
+```
+
+## Gabarit de décision
+
+Une sortie numérique doit être accompagnée de la question, de la période test, de la référence, de l’unité des mesures et d’une limite. Une fonction facilite les calculs, mais ne fournit pas ces éléments de jugement.

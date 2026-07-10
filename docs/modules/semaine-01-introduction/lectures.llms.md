@@ -1,0 +1,39 @@
+# Lectures - Semaine 01
+
+Cette page rassemble les lectures utiles pour consolider les notions du module 1. Les lectures ne sont pas à faire intégralement : utilisez les sections indiquées pour revenir sur les notions qui restent moins claires après les capsules, les démonstrations et les exercices.
+
+## Lectures ciblées pour la consolidation
+
+Pendant l’étape de consolidation, utilisez les lectures suivantes pour vérifier les notions qui restent fragiles. Il ne faut pas lire les chapitres au complet : ciblez les sections indiquées.
+
+| Notion à consolider | Lecture ciblée |
+|----|----|
+| Observation, variable, type de variable, relation entre variables | Çetinkaya-Rundel et Hardin (2024), [Introduction to Modern Statistics](https://openintro-ims.netlify.app/), chapitre 1, sections 1.2 et 1.3 |
+| Moyenne, médiane, histogramme, boxplot, valeurs inhabituelles | Çetinkaya-Rundel et Hardin (2024), [Introduction to Modern Statistics](https://openintro-ims.netlify.app/), chapitre 5, sections 5.2, 5.3, 5.5, 5.6 et 5.9.1 |
+| Comparaison d’une variable numérique selon un groupe | Çetinkaya-Rundel et Hardin (2024), [Introduction to Modern Statistics](https://openintro-ims.netlify.app/), chapitre 4, section 4.6; Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science](https://r4ds.hadley.nz/), chapitre 1, section 1.5.1 |
+| Graphiques avec `ggplot2` | Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science](https://r4ds.hadley.nz/), chapitre 1, sections 1.4 et 1.5.1 |
+
+## Lectures facultatives
+
+Ces lectures sont utiles si vous voulez renforcer la trace finale ou vous préparer à la semaine 02 :
+
+- Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science](https://r4ds.hadley.nz/), chapitre 2, sections 2.1 à 2.4, pour revoir les gestes de base dans R;
+- Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science](https://r4ds.hadley.nz/), chapitre 7, sections 7.1 à 7.3, pour revoir l’importation d’un fichier CSV.
+
+Les références sur la prévision et l’apprentissage statistique ne sont pas requises pour ce module. Elles deviendront utiles plus tard dans le cours.
+
+## Exercices pour approfondir
+
+Ces exercices sont facultatifs. Choisissez-en deux ou trois selon ce que vous voulez consolider.
+
+| Difficulté | Exercices suggérés | Pourquoi les faire? |
+|----|----|----|
+| Facile | Introduction to Modern Statistics, chapitre 1, exercices 1, 3, 11 et 12; R for Data Science, chapitre 1, section 1.2.5, exercice 1 | Reconnaître les lignes, les variables, les types de variables et l’unité d’observation dans une base |
+| Intermédiaire | Introduction to Modern Statistics, chapitre 5, exercices 6, 8, 10, 11 et 12; R for Data Science, chapitre 1, section 1.4.3, exercices 3 et 4 | Consolider moyenne, médiane, histogramme, boxplot, valeurs inhabituelles et choix de classes |
+| Plus difficile | Introduction to Modern Statistics, chapitre 4, exercices 7 et 9; R for Data Science, chapitre 1, section 1.5.5, exercice 7 | Travailler la comparaison, les proportions, l’échelle de comparaison et la prudence d’interprétation |
+
+Pour la trace finale, ne recopiez pas ces exercices. Utilisez-les pour améliorer vos propres constats sur [birth_us.csv](../../donnees/#naissances-quotidiennes-aux-états-unis) et [safety_airlines.csv](../../donnees/#sécurité-aérienne-par-compagnie).
+
+## Ressources externes
+
+La page [Lectures et ressources](../../ressources/lectures.llms.md) regroupe les références principales du cours et les liens officiels vers les ouvrages.

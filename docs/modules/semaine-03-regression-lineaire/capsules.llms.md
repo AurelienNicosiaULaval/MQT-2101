@@ -1,0 +1,59 @@
+# Capsules - Module 03
+
+## Objectif
+
+Cette page rassemble les six capsules du module 03. Elles construisent progressivement l’intuition de la régression linéaire : partir d’une question d’affaires, lire un nuage de points, ajuster une droite, interpréter les coefficients, examiner les résidus et conclure avec prudence.
+
+Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont conçus pour être assez courts pour accompagner une vidéo, mais assez complets pour rester utiles en révision.
+
+## Capsule 1 - Formuler une question de régression
+
+Cette capsule transforme une question d’affaires en question statistique avec une variable réponse et une variable explicative.
+
+[](media/qmd/capsule-01-support.llms.md "HTML") [](media/pdf/capsule-01-support.pdf "PDF")
+
+À faire après la capsule : Formulez la question du module en une phrase sans utiliser le mot « cause ».
+
+## Capsule 2 - Lire le nuage de points
+
+Cette capsule montre comment regarder la relation avant de modéliser : direction, forme, dispersion et points atypiques.
+
+[](media/qmd/capsule-02-support.llms.md "HTML") [](media/pdf/capsule-02-support.pdf "PDF")
+
+À faire après la capsule : Décrivez le nuage de points attendu entre `budget_marketing` et `ventes` avec les mots direction, dispersion et limite.
+
+## Capsule 3 - Comprendre la droite de régression
+
+Cette capsule présente l’équation du modèle linéaire et le sens de la pente dans une analyse appliquée.
+
+[](media/qmd/capsule-03-support.llms.md "HTML") [](media/pdf/capsule-03-support.pdf "PDF")
+
+À faire après la capsule : Expliquez ce que signifierait une pente positive dans le contexte des ventes et du budget marketing.
+
+## Capsule 4 - Ajuster le modèle avec R
+
+Cette capsule relie l’intuition à la commande `lm()` et à la lecture des coefficients.
+
+[](media/qmd/capsule-04-support.llms.md "HTML") [](media/pdf/capsule-04-support.pdf "PDF")
+
+À faire après la capsule : Écrivez le code `lm()` du module et indiquez où se trouvent la pente et l’ordonnée à l’origine dans la sortie.
+
+## Capsule 5 - Diagnostiquer avec les résidus
+
+Cette capsule montre pourquoi les résidus sont indispensables pour vérifier si la droite résume correctement les données.
+
+[](media/qmd/capsule-05-support.llms.md "HTML") [](media/pdf/capsule-05-support.pdf "PDF")
+
+À faire après la capsule : Expliquez pourquoi un modèle avec une pente intéressante peut quand même être fragile.
+
+## Capsule 6 - Conclure sans dépasser les données
+
+Cette capsule rassemble pente, qualité d’ajustement, prédiction et prudence causale dans une conclusion courte.
+
+[](media/qmd/capsule-06-support.llms.md "HTML") [](media/pdf/capsule-06-support.pdf "PDF")
+
+À faire après la capsule : Rédigez une conclusion de quatre phrases qui mentionne la pente, l’ajustement, une limite et une suite possible.
+
+## Après les capsules
+
+Poursuivez avec les [démonstrations R](demonstrations.llms.md), puis les [exercices](exercices.llms.md). Les capsules donnent l’intuition; les démonstrations montrent le code complet; les exercices servent à produire l’interprétation finale du modèle.

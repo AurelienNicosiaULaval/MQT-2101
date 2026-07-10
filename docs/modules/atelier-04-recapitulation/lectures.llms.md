@@ -1,0 +1,10 @@
+# Lectures - Atelier 04
+
+## Références de synthèse
+
+- [Étapes d’une tâche de prévision](https://otexts.com/fpp3/basic-steps.html);
+- [Évaluation d’une régression temporelle](https://otexts.com/fpp3/regression-evaluation.html);
+- James et coll., [An Introduction to Statistical Learning](https://www.statlearning.com/), chapitres sur régression et classification;
+- [Documentation `yardstick`](https://yardstick.tidymodels.org/), pour les mesures de classification.
+
+Utilisez ces ressources pour vérifier une définition ou une interprétation précise. Le livrable doit rester centré sur votre question et vos résultats.

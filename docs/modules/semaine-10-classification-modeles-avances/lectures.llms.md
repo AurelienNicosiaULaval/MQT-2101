@@ -1,0 +1,16 @@
+# Lectures - Module 10
+
+## Lecture obligatoire
+
+James, Witten, Hastie et Tibshirani, *An Introduction to Statistical Learning with Applications in R*, 2e édition, [chapitre 4 - Classification](https://www.statlearning.com/), sections sur la régression logistique et les mesures de classification.
+
+Question de lecture : pourquoi une probabilité estimée et une classe prédite répondent-elles à deux questions différentes?
+
+## Ressources pratiques
+
+- [Documentation officielle de `yardstick`](https://yardstick.tidymodels.org/), pour les définitions et fonctions de mesures;
+- page générale [Lectures et ressources](../../ressources/lectures.llms.md), pour la référence complète et l’accès gratuit au manuel.
+
+## Pour aller plus loin
+
+Les arbres et forêts aléatoires sont mentionnés comme ouvertures. Ils ne sont pas exigés dans ce module : la priorité est de maîtriser la cible, la validation, les probabilités, les seuils et les coûts d’erreur.

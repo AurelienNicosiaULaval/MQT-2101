@@ -1,0 +1,36 @@
+# Repères préparatoires - Atelier 04
+
+## Repère 1 - Choisir la question avant le modèle
+
+Une question sur le montant des ventes appelle une réponse continue. Une question sur l’occurrence d’un niveau de service insuffisant appelle une réponse binaire. Le modèle vient après cette définition.
+
+## Repère 2 - Construire la preuve
+
+Une analyse défendable relie quatre éléments :
+
+\\ \text{question} \longrightarrow \text{méthode} \longrightarrow \text{validation} \longrightarrow \text{décision}. \\
+
+Si un élément change, les autres doivent être revérifiés.
+
+## Repère 3 - Choisir les mesures
+
+- Réponse continue : MAE, RMSE, biais et graphique des erreurs.
+- Réponse binaire : sensibilité, spécificité, précision, proportion ciblée et matrice de confusion.
+
+L’exactitude seule n’est pas suffisante pour une cible déséquilibrée.
+
+## Repère 4 - Limiter la conclusion
+
+Le jeu de données est simulé. Il permet de vérifier une démarche, mais pas de prouver qu’une action aurait le même effet dans une organisation réelle. Une recommandation doit donc proposer une prochaine vérification.
+
+## Auto-diagnostic
+
+Pour chaque phrase, indiquez « preuve », « décision » ou « hypothèse » :
+
+1.  La MAE test est de 12 000 dollars.
+2.  Nous recommandons de tester une réallocation du personnel.
+3.  Les délais futurs resteront comparables à ceux de l’entraînement.
+
+> **TIP:**
+>
+> 1.  Preuve. 2. Décision. 3. Hypothèse.

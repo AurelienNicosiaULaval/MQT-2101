@@ -1,0 +1,13 @@
+# Lectures - Module 09
+
+## Lectures obligatoires
+
+- Hyndman et Athanasopoulos, [Chapitre 10 - Dynamic regression models](https://otexts.com/fpp3/dynamic.html), introduction;
+- [Section 10.3 - Forecasting](https://otexts.com/fpp3/forecasting.html), pour la disponibilité des prédicteurs futurs;
+- [Section 7.3 - Evaluating the regression model](https://otexts.com/fpp3/regression-evaluation.html), pour les résidus.
+
+Question de lecture : pourquoi une variable très explicative dans le passé peut-elle être inutilisable pour prévoir?
+
+## Lecture facultative
+
+- [Section 7.6 - Forecasting with regression](https://otexts.com/fpp3/forecasting-regression.html), pour distinguer prévisions ex ante et ex post.

@@ -1,0 +1,112 @@
+# Capsules - Module 10
+
+## Capsule 1 - Définir une cible binaire
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 6 à 8 minutes. Définir l’événement, la fenêtre d’observation, la classe positive et l’unité d’analyse.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+
+## Support écrit
+
+Une cible binaire prend deux valeurs, par exemple départ dans les 90 jours ou absence de départ. La classe positive est l’événement que l’on veut détecter; elle doit être choisie explicitement.
+
+La définition doit être mesurable et disponible après la période utilisée pour construire les prédicteurs. Utiliser une information créée après le départ constituerait une fuite de cible.
+
+### Activité 10.1
+
+Pourquoi « client à risque » est-il une cible insuffisante?
+
+> **TIP:**
+>
+> Le terme ne précise ni événement observable, ni horizon, ni règle d’encodage. « Départ dans les 90 jours » est vérifiable et temporellement défini.
+
+## Capsule 2 - Probabilité logistique
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 7 à 9 minutes. Passer du prédicteur linéaire à une probabilité entre 0 et 1.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+
+## Support écrit
+
+La régression logistique modélise les log-cotes :
+
+\\ \log\left(\frac{p}{1-p}\right)=\beta_0+\beta_1x_1+\cdots+\beta_kx_k. \\
+
+Un coefficient positif augmente les log-cotes de la classe positive, toutes les autres variables du modèle étant maintenues constantes. Pour communiquer, il est souvent préférable de montrer des probabilités prédites dans des scénarios concrets.
+
+### Activité 10.2
+
+Une probabilité prédite de 0,70 signifie-t-elle que la personne partira nécessairement?
+
+> **TIP:**
+>
+> Non. La probabilité quantifie une incertitude selon le modèle. Elle ne détermine pas avec certitude le résultat individuel.
+
+## Capsule 3 - Matrice de confusion
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 7 à 9 minutes. Construire la matrice et interpréter sensibilité, spécificité et précision.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+
+## Support écrit
+
+Après choix d’un seuil, quatre résultats sont possibles : vrai positif, faux positif, vrai négatif et faux négatif.
+
+- Sensibilité : proportion des départs réellement détectés.
+- Spécificité : proportion des non-départs correctement écartés.
+- Précision : proportion des clients ciblés qui partent réellement.
+- Exactitude : proportion totale de classifications correctes.
+
+Avec une classe rare, prédire toujours la classe majoritaire peut donner une exactitude élevée et être inutile.
+
+### Activité 10.3
+
+Pour une campagne de rétention, quelle erreur correspond à un client qui part mais n’est pas ciblé?
+
+> **TIP:**
+>
+> C’est un faux négatif. Son coût peut être une perte de revenu et d’occasion d’intervention.
+
+## Capsule 4 - Choisir un seuil décisionnel
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 8 à 10 minutes. Comparer deux seuils et relier le choix à la capacité de contact et au coût des erreurs.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+
+## Support écrit
+
+Le seuil 0,5 n’est pas une loi. Le diminuer augmente généralement la sensibilité et le nombre de clients ciblés, mais peut réduire la précision.
+
+Le seuil doit dépendre du coût d’un contact, de la valeur d’un client conservé, de la capacité de l’équipe et des risques d’une intervention inutile. Il doit être validé sur des données qui n’ont pas servi à ajuster le modèle.
+
+### Activité 10.4
+
+L’équipe peut contacter seulement 15 % des clients. Quelle stratégie est préférable à un seuil fixé arbitrairement à 0,5?
+
+> **TIP:**
+>
+> Classer les probabilités et cibler les 15 % les plus élevées, puis évaluer la performance et la valeur attendue de cette règle sur des données test.

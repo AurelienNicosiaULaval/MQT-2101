@@ -1,0 +1,45 @@
+# Notes de cours - Introduction aux séries chronologiques
+
+## 1. De l’observation à la prévision
+
+Une analyse transversale décrit des unités observées dans une même période. Une analyse temporelle étudie une même quantité à plusieurs moments. Dans une série chronologique, permuter les lignes détruit une partie de l’information.
+
+Avant tout modèle, documentez : la variable, l’unité d’observation, l’index temporel, la fréquence, la période couverte et les éventuelles interruptions de mesure.
+
+## 2. Composantes visibles
+
+- Niveau : valeur autour de laquelle la série évolue.
+- Tendance : évolution persistante de long terme.
+- Saisonnalité : motif répétitif associé au calendrier.
+- Cycle : fluctuation dont la périodicité n’est pas nécessairement fixe.
+- Variation irrégulière : partie non expliquée par les motifs précédents.
+
+Ces termes décrivent la série. Ils ne constituent pas encore un modèle et ne démontrent pas de causalité.
+
+## 3. Cible, origine et horizon
+
+Une prévision complète précise :
+
+\\ \text{information disponible à l'origine} \longrightarrow \text{cible aux horizons } h=1,\ldots,H. \\
+
+L’horizon doit être choisi selon le délai de décision. Une organisation qui commande six semaines à l’avance a besoin d’une information différente de celle qui ajuste le personnel demain.
+
+## 4. Évaluation chronologique
+
+La période d’entraînement précède toujours la période test. Toutes les transformations estimées, sélections de variables et décisions de modèle doivent utiliser seulement l’entraînement. La période test simule ensuite le futur.
+
+Une référence simple, naïve ou saisonnière naïve, permet d’évaluer si la complexité ajoutée produit réellement une amélioration.
+
+## 5. Mesures d’erreur
+
+La MAE est facile à interpréter dans l’unité de la cible. La RMSE pénalise davantage les grandes erreurs. Le MAPE est une proportion, mais devient instable lorsque les valeurs réelles sont proches de zéro. Le choix doit tenir compte des coûts décisionnels, pas seulement de la commodité mathématique.
+
+## 6. Liste de contrôle
+
+- Le temps est-il correctement encodé?
+- La fréquence est-elle régulière?
+- Des périodes manquent-elles?
+- La cible est-elle disponible à l’horizon choisi?
+- La période test reproduit-elle la décision réelle?
+- La méthode dépasse-t-elle une référence simple?
+- L’incertitude et les limites sont-elles communiquées?

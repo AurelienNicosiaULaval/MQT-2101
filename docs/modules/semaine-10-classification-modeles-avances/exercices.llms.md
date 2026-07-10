@@ -1,0 +1,71 @@
+# Exercices - Module 10
+
+## Préparation
+
+``` r
+library(tidyverse)
+
+data_path <- if (file.exists("data/fidelisation_clients_quebec.csv")) {
+  "data/fidelisation_clients_quebec.csv"
+} else {
+  "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv"
+}
+
+clients <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(type_contrat = factor(type_contrat), rabais_actuel = factor(rabais_actuel))
+```
+
+## Exercice 1 - Définir le problème
+
+Définissez l’unité d’observation, la classe positive, l’horizon et deux coûts d’erreur.
+
+> **TIP:**
+>
+> L’unité est un client. La classe positive est un départ dans les 90 jours. Un faux négatif perd une occasion de rétention; un faux positif consomme une intervention et peut importuner une personne qui n’aurait pas quitté.
+
+## Exercice 2 - Probabilités et coefficients
+
+Ajustez un modèle avec `satisfaction`, `tickets_service_6m` et `type_contrat`. Comparez la probabilité prédite de deux profils identiques sauf pour la satisfaction.
+
+> **TIP:**
+>
+> ``` r
+> modele <- glm(
+>   depart_90j ~ satisfaction + tickets_service_6m + type_contrat,
+>   data = clients,
+>   family = binomial()
+> )
+>
+> profils <- tibble(
+>   satisfaction = c(4, 8),
+>   tickets_service_6m = c(2, 2),
+>   type_contrat = factor(c("mensuel", "mensuel"), levels = levels(clients$type_contrat))
+> )
+>
+> profils |>
+>   mutate(prob_depart = predict(modele, newdata = profils, type = "response"))
+> ```
+>
+>     # A tibble: 2 × 4
+>       satisfaction tickets_service_6m type_contrat prob_depart
+>              <dbl>              <dbl> <fct>              <dbl>
+>     1            4                  2 mensuel           0.0718
+>     2            8                  2 mensuel           0.0225
+>
+> La différence est conditionnelle au modèle et ne prouve pas qu’une modification isolée de satisfaction causerait la même variation.
+
+## Exercice 3 - Deux seuils
+
+Avec une séparation entraînement-test, comparez les seuils 0,25 et 0,50. Expliquez le compromis entre sensibilité, précision et proportion ciblée.
+
+> **TIP:**
+>
+> Un seuil plus faible cible davantage de clients et augmente généralement la sensibilité, mais peut réduire la précision et augmenter les faux positifs. Les mesures doivent être calculées sur le test.
+
+## Exercice 4 - Règle de capacité
+
+Proposez une règle pour une équipe capable de contacter 100 clients par semaine. Expliquez pourquoi la capacité doit être vérifiée sur les volumes réels à venir.
+
+## Exercice de synthèse
+
+Rédigez une recommandation de ciblage en huit lignes maximum. Elle doit nommer la classe positive, le seuil ou la capacité, deux mesures, un coût d’erreur et une limite éthique ou opérationnelle.

@@ -1,0 +1,87 @@
+# Questionnaire formatif - Régression
+
+## Mode d’emploi
+
+Répondez sans notes ni IA au premier essai. Ouvrez ensuite la rétroaction, classez chaque réponse en « acquis », « hésitant » ou « à reprendre », puis refaites seulement les questions hésitantes deux jours plus tard.
+
+Ce questionnaire est formatif et non évalué.
+
+## 1. Unité d’observation
+
+Un tableau contient une ligne par mois-succursale. Quelle est l’unité d’observation?
+
+> **TIP:**
+>
+> Une combinaison d’un mois et d’une succursale, et non une succursale seule.
+
+## 2. Choisir un graphique
+
+Quel graphique utiliser pour examiner la relation entre un budget marketing numérique et des ventes numériques?
+
+> **TIP:**
+>
+> Un nuage de points, avec budget sur l’axe horizontal et ventes sur l’axe vertical. Une droite ajustée peut compléter le graphique sans prouver une causalité.
+
+## 3. Interpréter une pente
+
+Dans `ventes ~ budget`, la pente vaut 4,2. Le budget et les ventes sont en dollars. Interprétez.
+
+> **TIP:**
+>
+> Dans ce modèle, un dollar supplémentaire de budget est associé à 4,2 dollars de ventes supplémentaires en moyenne. Cette association ne démontre pas à elle seule un effet causal.
+
+## 4. Interpréter un facteur
+
+La catégorie de référence est « sans promotion » et le coefficient `promotionoui` vaut 18 000.
+
+> **TIP:**
+>
+> À valeurs égales des autres variables du modèle, les observations avec promotion ont des ventes moyennes estimées supérieures de 18 000 dollars à celles sans promotion.
+
+## 5. Lire un résidu
+
+Une observation vaut 250 000 et sa valeur ajustée vaut 230 000. Calculez le résidu selon `observé - ajusté`.
+
+> **TIP:**
+>
+> Le résidu est 20 000. Le modèle sous-estime cette observation de 20 000 dollars.
+
+## 6. Diagnostiquer
+
+Les résidus forment une courbe en U selon les valeurs ajustées. Que suggère ce motif?
+
+> **TIP:**
+>
+> La forme moyenne n’est probablement pas suffisamment captée par une relation linéaire. Une transformation ou un terme non linéaire peut être examiné, puis validé.
+
+## 7. Comparer des modèles
+
+Un modèle plus complexe augmente légèrement \\R^2\\ mais détériore la performance sur des données non utilisées. Lequel privilégier pour prédire?
+
+> **TIP:**
+>
+> Le modèle qui performe mieux sur les données non utilisées, sous réserve de vérifier que la comparaison est équitable. L’ajustement d’entraînement ne suffit pas.
+
+## 8. Association et causalité
+
+Corrigez : « Les succursales ayant davantage de personnel ont plus de ventes; embaucher causera donc cette hausse. »
+
+> **TIP:**
+>
+> Les données montrent une association entre personnel et ventes. Des facteurs comme la taille ou l’achalandage peuvent influencer les deux. Une décision d’embauche exige une analyse supplémentaire ou un plan permettant d’estimer l’effet de l’intervention.
+
+## 9. Réponse décisionnelle
+
+Écrivez une conclusion de trois phrases comprenant résultat, décision et limite.
+
+> **TIP:**
+>
+> La réponse doit citer un résultat avec unité, proposer une action proportionnée et nommer une limite. Elle ne doit pas transformer une association en certitude causale.
+
+## 10. Plan de révision
+
+Notez les deux notions les moins solides et associez chacune à un exercice précis du module 03, 04 ou 05.
+
+> **NOTE:**
+>
+> L’IA peut expliquer une erreur après votre tentative. Demandez une question analogue plutôt que la réponse à la question originale, puis résolvez-la sans aide.

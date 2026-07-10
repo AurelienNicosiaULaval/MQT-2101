@@ -1,0 +1,45 @@
+# Démonstrations R - Atelier 03
+
+Cette page regroupe les gestes techniques de l’atelier. Le [guide en classe](../../modules/atelier-03-series-chronologiques/guide-atelier.llms.md) demeure le parcours principal.
+
+## Fonctions utiles
+
+``` r
+library(tidyverse)
+
+mesures_prevision <- function(observe, prevision) {
+  erreur <- observe - prevision
+  tibble(
+    MAE = mean(abs(erreur)),
+    RMSE = sqrt(mean(erreur^2)),
+    biais = mean(erreur)
+  )
+}
+```
+
+## Vérifier la continuité hebdomadaire
+
+``` r
+verifier_frequence <- function(dates) {
+  ecarts <- diff(sort(unique(dates)))
+  tibble(
+    ecart_min_jours = min(as.numeric(ecarts)),
+    ecart_max_jours = max(as.numeric(ecarts)),
+    frequence_reguliere = all(as.numeric(ecarts) == 7)
+  )
+}
+```
+
+## Graphique générique de comparaison
+
+``` r
+graphique_previsions <- function(data_longue) {
+  ggplot(data_longue, aes(semaine)) +
+    geom_line(aes(y = observe), colour = "black", linewidth = 1) +
+    geom_line(aes(y = prevision, colour = methode), linewidth = 0.8) +
+    labs(x = NULL, y = "Demande", colour = "Méthode") +
+    theme_minimal(base_size = 12)
+}
+```
+
+Ces fonctions réduisent les répétitions, mais ne remplacent pas la vérification des colonnes, unités et périodes.

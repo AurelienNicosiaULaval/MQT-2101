@@ -1,0 +1,63 @@
+# Exercices - Module 09
+
+## Préparation
+
+``` r
+library(tidyverse)
+library(broom)
+library(forecast)
+
+data_path <- if (file.exists("data/ventes_promotions_quebec.csv")) {
+  "data/ventes_promotions_quebec.csv"
+} else {
+  "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
+}
+
+ventes <- read_csv(data_path, show_col_types = FALSE) |>
+  mutate(date = as.Date(date), promotion = factor(promotion), mois = factor(mois)) |>
+  arrange(date)
+```
+
+## Exercice 1 - Audit de disponibilité
+
+Pour `promotion`, `prix_moyen`, `indice_confiance`, `budget_marketing` et `mois`, indiquez : connu, scénarisé, prévu séparément ou indisponible à l’horizon choisi.
+
+> **TIP:**
+>
+> Le mois est connu. Promotion et budget peuvent être connus s’ils sont planifiés. Le prix peut être connu ou scénarisé. L’indice de confiance doit généralement être prévu séparément ou remplacé par des scénarios. La réponse dépend du processus réel et doit être documentée.
+
+## Exercice 2 - Résidus et autocorrélation
+
+Ajustez une régression sans variable de mois. Comparez son ACF résiduelle à celle du modèle avec mois.
+
+> **TIP:**
+>
+> ``` r
+> train <- ventes |> slice_head(n = nrow(ventes) - 12)
+> sans_mois <- lm(ventes ~ tendance + promotion + prix_moyen + indice_confiance, data = train)
+> avec_mois <- lm(ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois, data = train)
+>
+> par(mfrow = c(1, 2))
+> acf(residuals(sans_mois), main = "Sans mois")
+> acf(residuals(avec_mois), main = "Avec mois")
+> ```
+>
+> ![](exercices_files/figure-html/unnamed-chunk-2-1.png)
+>
+> ``` r
+> par(mfrow = c(1, 1))
+> ```
+>
+> La comparaison montre si une partie de la dépendance provenait d’une saisonnalité omise.
+
+## Exercice 3 - Scénarios
+
+À partir du dernier mois, créez deux scénarios pour le mois suivant : promotion non et promotion oui, avec le même prix et le même indice de confiance. Comparez les prévisions et formulez la limite causale.
+
+> **TIP:**
+>
+> Créez deux lignes ayant les mêmes valeurs sauf `promotion`. La différence est une comparaison conditionnelle au modèle. Elle ne démontre pas l’effet causal réel d’une future promotion.
+
+## Exercice de synthèse
+
+Rédigez une recommandation expliquant si l’organisation doit utiliser les variables externes. Mentionnez la disponibilité future, la performance test, l’autocorrélation et le coût de maintenance.

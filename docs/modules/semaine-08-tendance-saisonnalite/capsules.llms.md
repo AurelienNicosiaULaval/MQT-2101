@@ -1,0 +1,107 @@
+# Capsules - Module 08
+
+## Capsule 1 - Distinguer tendance et saisonnalité
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 6 à 8 minutes. Annoter une tendance et un motif mensuel sur un graphique.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+
+## Support écrit
+
+La tendance décrit l’évolution de long terme du niveau. La saisonnalité décrit un motif qui revient selon une période connue. Une série peut présenter les deux simultanément.
+
+Une hausse de janvier à décembre au cours d’une seule année ne prouve pas la saisonnalité. Il faut comparer les mêmes mois sur plusieurs années.
+
+### Activité 8.1
+
+Pourquoi un graphique regroupant toutes les observations de janvier est-il utile en complément du graphique temporel?
+
+> **TIP:**
+>
+> Il permet de comparer janvier d’une année à l’autre et de voir si son niveau relatif est récurrent malgré la tendance générale.
+
+## Capsule 2 - Coder le calendrier
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 6 à 8 minutes. Créer un indice de temps et un facteur mois avec une référence explicite.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+
+## Support écrit
+
+Une régression saisonnière simple peut utiliser un indice \\t=1,2,\ldots,n\\ pour la tendance et un facteur pour le mois. Avec janvier comme référence, chaque coefficient mensuel représente une différence moyenne par rapport à janvier, à tendance égale.
+
+La catégorie de référence n’est pas la « meilleure » catégorie. Elle fixe seulement le point de comparaison.
+
+### Activité 8.2
+
+Si le coefficient de décembre vaut 80 000, formulez une interprétation correcte et prudente.
+
+> **TIP:**
+>
+> À indice de temps égal, les ventes prévues en décembre sont en moyenne 80 000 dollars plus élevées qu’en janvier selon ce modèle. Il s’agit d’une différence modélisée, non d’un effet causal du mois.
+
+## Capsule 3 - Ajuster le modèle
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 7 à 9 minutes. Ajuster `lm(ventes ~ indice_temps + mois_label)` et lire les coefficients utiles.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+
+## Support écrit
+
+Le modèle additif suppose que l’écart saisonnier reste approximativement constant lorsque le niveau augmente :
+
+\\ y_t=\beta_0+\beta_1t+\gamma\_{m(t)}+\varepsilon_t. \\
+
+Si l’amplitude saisonnière augmente avec le niveau, une transformation logarithmique ou un modèle multiplicatif peut être plus approprié.
+
+### Activité 8.3
+
+Quel graphique de résidus pourrait révéler qu’une saisonnalité additive est insuffisante?
+
+> **TIP:**
+>
+> Un graphique des résidus dans le temps ou selon les valeurs ajustées montrant une amplitude croissante ou un motif saisonnier restant indique une structure non captée.
+
+## Capsule 4 - Prévoir et communiquer l’incertitude
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 7 à 9 minutes. Produire une prévision ponctuelle et un intervalle de prédiction, puis discuter son usage budgétaire.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+
+## Support écrit
+
+La prévision ponctuelle donne une valeur centrale. L’intervalle de prédiction représente une plage plausible pour une future observation selon le modèle et ses hypothèses.
+
+Un budget ne devrait pas être présenté comme certain. Une décision peut utiliser la prévision centrale, un scénario prudent et un scénario de capacité élevée.
+
+### Activité 8.4
+
+Expliquez pourquoi l’intervalle de prédiction est généralement plus large que l’intervalle de confiance de la moyenne.
+
+> **TIP:**
+>
+> Il tient compte à la fois de l’incertitude sur la moyenne estimée et de la variabilité d’une nouvelle observation individuelle.

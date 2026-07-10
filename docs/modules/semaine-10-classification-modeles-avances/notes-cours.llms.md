@@ -1,0 +1,25 @@
+# Notes de cours - Résultats binaires et classification
+
+## Cible binaire
+
+La cible doit définir un événement observable et une fenêtre. La classe positive est l’événement à détecter. La prévalence est la proportion de cas positifs et influence fortement l’interprétation des mesures.
+
+## Régression logistique
+
+La régression logistique transforme une combinaison linéaire en probabilité. Les coefficients se lisent sur l’échelle des log-cotes; leur exponentielle est un rapport de cotes. Une probabilité prédite est souvent plus intelligible dans un profil concret.
+
+## Validation
+
+La séparation entraînement-test doit être établie avant l’ajustement. Le test ne sert ni à sélectionner les variables ni à choisir plusieurs seuils jusqu’à obtenir un résultat souhaité.
+
+## Seuil et matrice de confusion
+
+Le seuil convertit la probabilité en action. Sa variation déplace le compromis entre faux positifs et faux négatifs. L’exactitude doit être complétée par sensibilité, spécificité, précision et proportion ciblée.
+
+## Calibration
+
+Un modèle calibré associe une probabilité moyenne de 0,30 à une fréquence observée proche de 30 % dans des groupes comparables. Un modèle peut bien classer les risques tout en produisant des probabilités mal calibrées.
+
+## Décision responsable
+
+La performance globale ne suffit pas. Il faut examiner la population concernée, les conséquences de l’intervention, la stabilité temporelle, la protection des renseignements et la possibilité de recours ou de vérification humaine.

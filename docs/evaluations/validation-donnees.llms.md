@@ -1,0 +1,35 @@
+# Validation des jeux de données
+
+## Jeux automatiquement autorisés
+
+Tous les jeux publiés dans la section [Données](../donnees/index.llms.md) et identifiés comme simulés pour le cours peuvent être utilisés sans approbation supplémentaire.
+
+## Proposition d’un autre jeu
+
+Avant la date indiquée dans la consigne, transmettez dans le canal officiel du cours :
+
+1.  titre et lien direct vers la source;
+2.  organisme producteur;
+3.  licence ou conditions de réutilisation;
+4.  unité d’observation et nombre approximatif de lignes;
+5.  cible et variables envisagées;
+6.  question d’analyse;
+7.  confirmation de l’absence de renseignements personnels ou confidentiels;
+8.  pour une série, fréquence, période et horizon envisagé.
+
+L’approbation confirme seulement que le jeu est acceptable pour le travail. Elle ne garantit pas que la question ou la modélisation seront réussies.
+
+## Refus automatique
+
+Sont refusés :
+
+- données nominatives ou confidentielles;
+- fichiers obtenus sans droit clair d’utilisation;
+- données dont la cible est construite avec de l’information future;
+- jeux trop petits ou trop agrégés pour la question;
+- données déjà utilisées comme solution complète dans une source accessible;
+- données impossibles à remettre ou importer de façon reproductible.
+
+## IA et confidentialité
+
+Ne téléversez jamais dans un outil d’IA des données personnelles, confidentielles, contractuelles ou dont la licence interdit cet usage. Utilisez un extrait fictif ou la structure des variables pour demander de l’aide.

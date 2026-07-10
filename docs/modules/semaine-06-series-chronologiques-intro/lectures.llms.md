@@ -1,0 +1,17 @@
+# Lectures - Module 06
+
+## Lecture obligatoire
+
+Hyndman, R. J., et Athanasopoulos, G. (2021), *Forecasting: Principles and Practice*, 3e édition :
+
+- [Section 1.4 - Forecasting data and methods](https://otexts.com/fpp3/data-methods.html), pour distinguer données temporelles et transversales;
+- [Chapitre 2 - Time series graphics](https://otexts.com/fpp3/graphics.html), particulièrement les graphiques temporels.
+
+Question de lecture : quelles caractéristiques du graphique doivent influencer le choix ultérieur d’une méthode?
+
+## Lecture facultative
+
+- [Section 1.6 - The basic steps in a forecasting task](https://otexts.com/fpp3/basic-steps.html), pour replacer l’exploration dans le processus complet;
+- page générale [Lectures et ressources](../../ressources/lectures.llms.md), pour les autres ouvrages du cours.
+
+Ces ressources sont accessibles gratuitement en ligne. Consultez la page générale pour leur statut de licence et leur référence complète.

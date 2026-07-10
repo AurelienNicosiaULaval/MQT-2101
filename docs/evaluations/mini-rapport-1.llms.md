@@ -1,0 +1,88 @@
+# Mini-rapport 1 - Exploration et régression
+
+## Objectif et pondération
+
+Produire en équipe une analyse reproductible allant de la compréhension des données à une recommandation prudente appuyée par une régression.
+
+Pondération : 15 % de la note finale.
+
+## Échéancier pédagogique
+
+- Proposition du jeu de données : au plus tard au début du module 04.
+- Validation du jeu de données : avant de commencer la modélisation.
+- Remise : à la fin de la semaine 06 du calendrier, avant la préparation à l’intra.
+
+La date et l’heure civiles sont celles du calendrier institutionnel de la session. Cette séquence ne change pas d’une session à l’autre.
+
+## Modalité
+
+- Équipe de 2 ou 3 personnes.
+- Environ 1 200 à 1 600 mots, hors code et références.
+- Maximum de quatre figures ou tableaux principaux.
+- IA permise avec déclaration selon la [politique du cours](../ressources/ia.llms.md).
+
+## Livrables
+
+Remettre une archive contenant :
+
+1.  le fichier source `.qmd`;
+2.  le fichier HTML autonome;
+3.  le jeu de données autorisé ou un script reproductible d’importation;
+4.  un court `README.md` indiquant comment rendre le document;
+5.  la déclaration IA, ou la mention explicite « Aucun usage d’IA ayant influencé le livrable »;
+6.  une déclaration de contribution d’une phrase par membre.
+
+## Validation des données
+
+Suivez la [procédure de validation](../evaluations/validation-donnees.llms.md). Aucun renseignement personnel, confidentiel ou non autorisé ne doit être téléversé dans le rapport ou un outil d’IA. Les jeux fournis par le cours sont déjà autorisés.
+
+## Contenu attendu
+
+### Question et données
+
+- question d’analyse liée à une décision;
+- origine, droit d’utilisation et limites;
+- unité d’observation et variables;
+- contrôles de qualité et transformations justifiées.
+
+### Exploration
+
+- résumé descriptif ciblé;
+- au moins une visualisation répondant à la question;
+- distinction entre observation, association et causalité.
+
+### Régression
+
+- modèle simple servant de référence;
+- modèle principal justifié;
+- interprétation d’au moins deux coefficients en unités concrètes;
+- diagnostic des résidus et discussion d’une limite;
+- comparaison des modèles selon ajustement, interprétabilité et utilité.
+
+### Décision
+
+- recommandation répondant à la question;
+- incertitude ou réserve importante;
+- prochaine vérification à réaliser avant une décision réelle.
+
+## Grille
+
+La [grille commune des mini-rapports](../evaluations/grille-mini-rapports.llms.md) est appliquée sur 100 points puis convertie en 15 %.
+
+## Vérification avant remise
+
+Le HTML se rend sur un autre ordinateur à partir des fichiers remis.
+
+Les bibliothèques sont chargées explicitement.
+
+Les chemins sont relatifs.
+
+Les graphiques comportent titre, axes et unités.
+
+La conclusion répond à la question sans causalité non démontrée.
+
+Les contributions et l’usage de l’IA sont documentés.
+
+## Gabarit
+
+Utilisez le [gabarit du mini-rapport 1](../ressources/gabarit-mini-rapport-1.llms.md).

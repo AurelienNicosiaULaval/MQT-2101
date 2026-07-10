@@ -1,0 +1,25 @@
+# Exercices - Atelier 03
+
+## Exercice 1 - Détecter une fuite
+
+Une personne choisit la fenêtre de moyenne mobile qui minimise la MAE sur les treize semaines test, puis rapporte cette même MAE comme performance finale. Expliquez le problème et proposez une correction.
+
+> **TIP:**
+>
+> La période test a servi au choix de la méthode et n’est plus indépendante. Il faut choisir la fenêtre avec une validation située dans l’entraînement, puis utiliser le test une seule fois pour l’évaluation finale.
+
+## Exercice 2 - Changer le coût
+
+Recalculez le classement si une sous-prévision coûte 30 dollars et une sur-prévision 3 dollars par unité. Expliquez pourquoi le meilleur choix peut changer sans modification de MAE.
+
+> **TIP:**
+>
+> Le coût pondère différemment le signe des erreurs, alors que la MAE traite sous-prévision et sur-prévision symétriquement.
+
+## Exercice 3 - Plan de surveillance
+
+Proposez trois indicateurs mensuels de surveillance : erreur moyenne récente, grande erreur maximale et dérive du niveau de la demande. Indiquez une règle de révision du modèle.
+
+## Exercice de synthèse
+
+Transformez la trace de l’atelier en une note de décision de 250 mots maximum avec un graphique, un tableau et une recommandation.

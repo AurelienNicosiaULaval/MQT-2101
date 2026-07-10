@@ -1,0 +1,115 @@
+# Capsules - Module 07
+
+## Capsule 1 - Moyennes mobiles
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 6 à 8 minutes. Montrer une moyenne mobile arrière de quatre semaines et expliquer l’effet de la fenêtre.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+
+## Support écrit
+
+Une moyenne mobile remplace une observation par la moyenne de plusieurs observations voisines. Pour prévoir, la fenêtre doit être arrière : seules les valeurs déjà observées sont utilisées.
+
+Une fenêtre courte réagit rapidement mais conserve beaucoup de variabilité. Une fenêtre longue lisse davantage mais réagit plus lentement aux changements de niveau.
+
+Pour une fenêtre de taille \\k\\ :
+
+\\ m_t=\frac{1}{k}\sum\_{j=0}^{k-1}y\_{t-j}. \\
+
+### Activité 7.1
+
+Les quatre dernières demandes sont 980, 1 020, 1 080 et 1 120 unités. Calculez la moyenne mobile et expliquez ce qu’elle ignore.
+
+> **TIP:**
+>
+> La moyenne est 1 050. Elle donne le même poids aux quatre semaines, ignore les observations plus anciennes et ne représente explicitement ni tendance ni saisonnalité.
+
+## Capsule 2 - Lissage exponentiel simple
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 7 à 9 minutes. Construire récursivement le niveau lissé et comparer deux valeurs de alpha.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+
+## Support écrit
+
+Le lissage exponentiel simple met à jour un niveau estimé :
+
+\\ \ell_t=\alpha y_t+(1-\alpha)\ell\_{t-1}, \qquad 0\<\alpha\<1. \\
+
+Un alpha élevé donne plus de poids à la dernière observation et réagit rapidement. Un alpha faible produit une série plus stable. Cette méthode convient surtout lorsqu’il n’y a pas de tendance ou de saisonnalité forte non modélisée.
+
+### Activité 7.2
+
+Pour une demande récente en hausse rapide, comparez qualitativement les effets de \\\alpha=0{,}2\\ et \\\alpha=0{,}8\\.
+
+> **TIP:**
+>
+> Avec 0,8, le niveau lissé se rapproche rapidement de la dernière demande. Avec 0,2, l’historique conserve plus d’influence et l’ajustement est plus lent.
+
+## Capsule 3 - Mesurer les erreurs
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 6 à 8 minutes. Calculer une erreur, MAE et RMSE, puis discuter le MAPE près de zéro.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+
+## Support écrit
+
+L’erreur est \\e_t=y_t-\widehat y_t\\. Une erreur positive signifie que la prévision a sous-estimé la valeur observée.
+
+- MAE : erreur absolue moyenne, dans l’unité de la cible.
+- RMSE : racine de l’erreur quadratique moyenne, plus sensible aux grandes erreurs.
+- MAPE : erreur absolue en pourcentage, difficile à utiliser lorsque les observations sont nulles ou très faibles.
+
+La meilleure mesure dépend du coût réel. Une rupture de stock peut rendre les sous-prévisions plus coûteuses que les sur-prévisions.
+
+### Activité 7.3
+
+Deux méthodes ont la même MAE, mais la seconde produit une erreur extrême. Quelle mesure les distinguera davantage?
+
+> **TIP:**
+>
+> La RMSE pénalise davantage les grandes erreurs parce qu’elles sont mises au carré.
+
+## Capsule 4 - Comparer équitablement
+
+## Vidéo
+
+> **NOTE:**
+>
+> Durée cible : 7 à 9 minutes. Construire une période test commune et relier les mesures au choix de méthode.
+
+## Deck de capsule
+
+[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+
+## Support écrit
+
+Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période test et les mêmes mesures.
+
+Le classement numérique ne suffit pas. Il faut aussi examiner : stabilité, interprétabilité, effort de maintenance, délai de calcul et conséquences des erreurs.
+
+### Activité 7.4
+
+Une méthode réduit la MAE de 1 %, mais exige des variables externes coûteuses et une maintenance hebdomadaire. Formulez une décision prudente.
+
+> **TIP:**
+>
+> L’amélioration doit être comparée au coût opérationnel et à sa stabilité. Une méthode plus simple peut être préférable si l’écart est faible ou incertain.

@@ -1,0 +1,73 @@
+# Repères - Atelier 02
+
+## Rôle des repères
+
+Ces repères préparent le travail en classe. Ils résument les décisions à prendre pendant une analyse de régression appliquée.
+
+Pour chaque repère, produisez une trace très courte : une phrase, une liste ou un choix argumenté. Ces traces seront réutilisées dans le guide complet.
+
+## Repère 1 - Question d’affaires et variable réponse
+
+*Pourquoi ça compte* : un modèle qui répond à une question floue produit une recommandation floue.
+
+Une bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :
+
+> Quels facteurs sont associés aux ventes mensuelles des succursales?
+
+La variable réponse est `ventes`. Les variables explicatives possibles incluent `achalandage`, `depenses_marketing`, `heures_personnel`, `ruptures_stock` et `campagne_locale`.
+
+> **TIP:**
+>
+> Choisissez une variable explicative et écrivez pourquoi elle pourrait être liée aux ventes.
+
+À conserver : une question d’affaires et la variable réponse.
+
+## Repère 2 - Relation visible et relation modélisée
+
+*Pourquoi ça compte* : une droite bien ajustée sur un nuage courbé donne une fausse impression de précision.
+
+Un nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.
+
+La droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.
+
+> **TIP:**
+>
+> Avant d’ajuster le modèle, écrivez ce que vous vous attendez à voir entre `achalandage` et `ventes`.
+
+À conserver : une phrase qui décrit la relation attendue avant le modèle.
+
+## Repère 3 - Modèle simple et modèle enrichi
+
+*Pourquoi ça compte* : ajouter des variables peut clarifier le portrait, ou rendre chaque coefficient impossible à expliquer à la direction.
+
+Un modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.
+
+Un modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en gardant constantes les autres variables du modèle.
+
+> **WARNING:**
+>
+> Ajouter des variables ne rend pas automatiquement le modèle meilleur pour la décision. Il faut vérifier si l’interprétation reste claire et si les variables ajoutées ont un sens dans le contexte.
+
+À conserver : un avantage et une limite du modèle enrichi.
+
+## Repère 4 - Recommandation et limites
+
+*Pourquoi ça compte* : une recommandation sans limite, c’est une décision risquée présentée comme une certitude.
+
+Une recommandation statistique doit relier trois éléments :
+
+- ce que le modèle estime;
+- ce que le contexte rend plausible;
+- ce que les données ne permettent pas de conclure.
+
+Une recommandation solide ne dit pas seulement « faire plus de X ». Elle précise la variable priorisée, l’incertitude, la limite et la prochaine vérification à faire.
+
+> **TIP:**
+>
+> Rédigez une phrase qui commence par : « Les données suggèrent de prioriser… », puis ajoutez immédiatement une limite.
+
+À conserver : une recommandation provisoire et une limite causale.
+
+## Après les repères
+
+Poursuivez avec le [guide complet](guide-atelier.llms.md). Les repères servent à préparer les décisions; le guide sert à produire la mini-analyse en classe.
