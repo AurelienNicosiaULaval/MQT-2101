@@ -2,11 +2,11 @@
 
 ## Capsule 1 - Variables externes disponibles
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Classer prix, promotion, calendrier et indicateur économique selon leur disponibilité au moment de prévoir.
+> Classer prix, promotion, calendrier et indicateur économique selon leur disponibilité au moment de prévoir.
 
 ## Deck de capsule
 
@@ -33,11 +33,11 @@ Classez la météo du mois prochain, une promotion déjà approuvée et les vent
 
 ## Capsule 2 - Régression conditionnelle
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Ajuster une régression avec tendance, promotion, prix et calendrier.
+> Ajuster une régression avec tendance, promotion, prix et calendrier.
 
 ## Deck de capsule
 
@@ -61,11 +61,11 @@ Pourquoi les ventes prévues sous « promotion oui » et « promotion non » ne 
 
 ## Capsule 3 - Autocorrélation des résidus
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Lire une fonction d’autocorrélation et interpréter le test de Ljung-Box.
+> Lire une fonction d’autocorrélation et interpréter le test de Ljung-Box.
 
 ## Deck de capsule
 
@@ -87,11 +87,11 @@ Si les résidus positifs sont souvent suivis de résidus positifs, quel défaut 
 
 ## Capsule 4 - Erreurs AR et scénarios
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 8 à 10 minutes. Comparer régression ordinaire et régression avec erreurs AR(1), puis prévoir sous scénarios.
+> Comparer régression ordinaire et régression avec erreurs AR(1), puis prévoir sous scénarios.
 
 ## Deck de capsule
 

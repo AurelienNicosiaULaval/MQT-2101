@@ -77,7 +77,7 @@ cas |>
       succursale ventes_moyennes attente_moyenne taux_service_insuffisant
       <fct>                <dbl>           <dbl>                    <dbl>
     1 Gatineau           170130.            4.30                   0.0694
-    2 Montréal           257110.            4.28                   0     
+    2 Montréal           257110.            4.28                   0
     3 Québec             195407.            4.35                   0.0556
     4 Sherbrooke         147373.            4.44                   0.0278
 
@@ -136,8 +136,8 @@ tidy(modele_ventes, conf.int = TRUE) |>
       term           estimate std.error statistic  p.value conf.low conf.high
       <chr>             <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
     1 achalandage        67.3      4.37     15.4  2.70e-37     58.7      75.9
-    2 promotionoui    18212.    1575.       11.6  1.03e-24  15108.    21315. 
-    3 ruptures_stock  -3192.     328.       -9.72 5.85e-19  -3839.    -2545. 
+    2 promotionoui    18212.    1575.       11.6  1.03e-24  15108.    21315.
+    3 ruptures_stock  -3192.     328.       -9.72 5.85e-19  -3839.    -2545.
 
 Les coefficients décrivent des associations conditionnelles. Ils ne démontrent pas qu’imposer une promotion ou réduire artificiellement une variable produira exactement le changement estimé.
 

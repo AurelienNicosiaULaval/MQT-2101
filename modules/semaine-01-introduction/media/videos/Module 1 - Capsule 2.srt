@@ -1,0 +1,583 @@
+1
+00:00:02,440 --> 00:00:06,000
+Bienvenue dans cette capsule numéro deux sur les modèles mathématiques et
+
+2
+00:00:06,000 --> 00:00:09,600
+statistiques. Alors pourquoi c'est important
+
+3
+00:00:10,680 --> 00:00:14,580
+Quand vous faites un calcul, quand bien même qu'il soit exact,
+
+4
+00:00:14,580 --> 00:00:18,600
+qu'il soit très bon, qu'il n' ait pas d'erreur, ça peut quand même amener une mauvaise décision.
+
+5
+00:00:18,600 --> 00:00:22,140
+Parce qu'en effet, avec des données par exemple, on peut faire à peu près n'importe quel
+
+6
+00:00:22,140 --> 00:00:25,800
+calcul qu'on souhaite dessus, puis faire dire à peu près n'importe quoi en données.
+
+7
+00:00:27,86.66666666666788 --> 00:00:30,660
+dans le fond, c'est pour ça que on se pose ici la
+
+8
+00:00:30,660 --> 00:00:34,380
+question que si on répond
+
+9
+00:00:34,620 --> 00:00:38,160
+à la mauvaise question, c'est pas évidemment c'est pas la bonne chose. Nous, ce qu'on
+
+10
+00:00:38,160 --> 00:00:41,760
+veut, c'est répondre à la bonne question. Par exemple, si vous avez une personne gestionnaire, un gestionnaire
+
+11
+00:00:41,760 --> 00:00:45,540
+qui demande est-ce que les ventes vont bien ? évidemment que la réponse,
+
+12
+00:00:45,540 --> 00:00:49,260
+ça dépend d'abord de qu'est-ce qu'on décide de mesurer et de comparer.
+
+13
+00:00:49,680 --> 00:00:53,460
+Donc ça c'est important. Qu'est-ce qu'on mesure et qu'est-ce qu'on compare ? Parce qu'évidemment,
+
+14
+00:00:53,460 --> 00:00:57,960
+quand on parle des ventes, il y a beaucoup de choses qui peut être reliées à ça. Dans
+
+15
+00:00:57,960 --> 00:01:01,860
+le fond, ce qu'on appelle le modèle ou les calculs, ça vient avant de
+
+16
+00:01:01,860 --> 00:01:05,400.0000000000073
+faire dans le fond le calcul. Le modèle c'est très important, c'est comment on va
+
+17
+00:01:05,400.0000000000073 --> 00:01:09,180
+modéliser comment on modélise. comment
+
+18
+00:01:09,180 --> 00:01:14,040
+on répond à la question. ça c'est le plus important. Alors
+
+19
+00:01:14,040 --> 00:01:17,940
+l'objectif de cette capsule, c'est tout d'abord de comprendre qu'un
+
+20
+00:01:17,940 --> 00:01:21,660
+modèle c'est quoi C'est quelque chose qui simplifie une situation qui vient
+
+21
+00:01:21,660 --> 00:01:25,320
+répondre à une question. Donc tout l'objectif d'un modèle, c'est de répondre à une
+
+22
+00:01:25,320 --> 00:01:29,460
+question. En fait, c'est que on relie un certain problème à
+
+23
+00:01:29,460 --> 00:01:33,420
+des données évidemment pour appliquer un modèle, ça prend des données.
+
+24
+00:01:34,106.66666666667152 --> 00:01:37,620
+Donc on applique le modèle sur des données et ça donne une interprétation.
+
+25
+00:01:37,620 --> 00:01:42,540
+Donc souvent ça part vraiment de on a un problème Donc
+
+26
+00:01:42,540 --> 00:01:46,080
+on a un problème ici, une question qu'on se pose. On a des données, des
+
+27
+00:01:46,080 --> 00:01:49,680
+datas, puis on fait un modèle là-dessus.
+
+28
+00:01:51,266.6666666666715 --> 00:01:54,780
+Ça c'est très important. Et avec le modèle sur les données, on sort une
+
+29
+00:01:54,780 --> 00:01:58,500
+interprétrétation Et surtout
+
+30
+00:01:58,500 --> 00:02:02,700
+une réponse parce que c'est ça qu'on veut. On veut une réponse à
+
+31
+00:02:02,700 --> 00:02:07,260
+quoi évidemment, on veut une réponse à notre problème de départ. Puis
+
+32
+00:02:07,260 --> 00:02:10,860.0000000000146
+l'objectif aussi c'est que vous allez pouvoir vous poser les questions là à partir de ce
+
+33
+00:02:10,860.0000000000146 --> 00:02:14,700
+module-là sur sur les différentes notions
+
+34
+00:02:14,700 --> 00:02:18,660
+de statistiques que vous avez à consolider pour la suite. Donc vous allez avoir quelques petites lectures
+
+35
+00:02:19,46.666666666656965 --> 00:02:23,460
+cette semaine on se module pour ça. Alors,
+
+36
+00:02:23,460 --> 00:02:27,240
+on a dit qu'un modèle ça simplifie la réalité. Alors évidemment.
+
+37
+00:02:27,240 --> 00:02:31,080
+Donc, un modèle c'est quoi ? C'est une représentation volontairement simplifiée
+
+38
+00:02:31,080 --> 00:02:34,920
+d'une situation réelle. Un petit peu comme par exemple quand
+
+39
+00:02:34,920 --> 00:02:39,060
+on prend un exemple concret, les modèles en météo. Donc un modèle météorologique,
+
+40
+00:02:39,060 --> 00:02:42,720
+évidemment, ça essaie de représenter au mieux possible la réalité, mais c'est
+
+41
+00:02:42,720 --> 00:02:46,320
+quand même une simplification de la réalité parce que sinon le modèle serait
+
+42
+00:02:46,320 --> 00:02:49,860
+trop complexe. Donc ce qui fait le modèle, c'est qu'il
+
+43
+00:02:49,860 --> 00:02:53,460
+va les éléments importants pour la question, évidemment, il faut que dans notre
+
+44
+00:02:53,460 --> 00:02:57,120
+modèle on utilise les choses importantes pour répondre à la question. Il
+
+45
+00:02:57,120 --> 00:03:01,260
+va laisser de côté par exemple les détails secondaires, des choses qui seraient pas vraiment importantes.
+
+46
+00:03:01,620 --> 00:03:05,340
+Mais ce modèle-là, il va nous servir à comparer, c'est ça qui nous intéresse,
+
+47
+00:03:05,340 --> 00:03:09,240
+prévoir, expliquer ou encore décider. C'est ça l'objectif d'un modèle.
+
+48
+00:03:09,240 --> 00:03:13,800
+Et il doit rester assez simple pour être compris et utilisé.
+
+49
+00:03:14,580 --> 00:03:18,360
+Donc ici, ça on parle vraiment du concept quand on dit rester assez
+
+50
+00:03:18,360 --> 00:03:22,020
+simple, ça c'est différent du concept de on appelle ça boîte noire.
+
+51
+00:03:22,586.666666666657 --> 00:03:26,100
+Donc vous entendrez ça souvent par exemple un apprentissage automatique
+
+52
+00:03:26,100 --> 00:03:29,700
+ou en intelligence artificielle, ce qu'on appelle un modèle boîte noire. C'est
+
+53
+00:03:29,700 --> 00:03:33,360
+un modèle qu'on ne comprend pas vraiment qu'est-ce qu'il fait réellement à l'intérieur. Donc comme
+
+54
+00:03:33,360 --> 00:03:37,440
+son nom l'indique boîte noire, il fait quelque chose, il donne une réponse, mais on ne comprend pas à
+
+55
+00:03:37,440 --> 00:03:40,980
+l'intérieur qu'est-ce qu'il fait. Toutes les modèles qu'on va voir dans ce cours-là, ne vous
+
+56
+00:03:40,980 --> 00:03:44,820
+inquiétez pas, ça ne sera pas des boîtes noires. Alors
+
+57
+00:03:44,820 --> 00:03:49,080
+maintenant, distinction très importante avec ou sans incertitude.
+
+58
+00:03:49,526.666666666657 --> 00:03:53,220
+Donc, il y a deux types de modèles qui existent dans
+
+59
+00:03:53,220 --> 00:03:57,480
+la vraie vie. Il y a les modèles d'abord qu'on appelle déterministes et les stockastiques.
+
+60
+00:03:57,480 --> 00:04:01,140
+Donc un modèle déterministe, c'est que on a des entrées,
+
+61
+00:04:01,140 --> 00:04:04,740
+donc on parle de on a des entrées, des
+
+62
+00:04:04,740 --> 00:04:08,280
+inputs, donc des choses qu'on mesure, on rentre ça dans un modèle.
+
+63
+00:04:09,960 --> 00:04:13,680
+Et ça me sort une certaine sortie. Donc vraiment quelque chose,
+
+64
+00:04:13,680 --> 00:04:17,220.0000000000291
+une réponse. Dans un modèle déterministe,
+
+65
+00:04:17,519.9999999999709 --> 00:04:21,240
+à chaque fois que je rentre la même entrée, je rentre l'entrée par exemple qui vaut deux, ça
+
+66
+00:04:21,240 --> 00:04:24,900
+va me sortir la sortie 3. Si je rentre deux, ça va ressortir encore trois
+
+67
+00:04:24,900 --> 00:04:28,440
+c'est ça déterminer, c'est que ça reste toujours la même chose avec les mêmes entrées.
+
+68
+00:04:28,740 --> 00:04:33,180
+Stokastick maintenant, à l'inverse, c'est que j'ai encore une entrée.
+
+69
+00:04:33,746.6666666666861 --> 00:04:37,320
+Ça va encore entrer dans un modèle évidemment. Je
+
+70
+00:04:37,320 --> 00:04:41,940
+vais avoir une sortie, donc une réponse, mais aléatoire.
+
+71
+00:04:42,986.6666666666861 --> 00:04:46,740
+C'est ça le mot important d'un stockastique, c'est que la sortie est aléatoire, c'est-à-dire
+
+72
+00:04:46,740 --> 00:04:50,340
+que même si je rentre deux fois la même entrée dans le modèle, il va
+
+73
+00:04:50,340 --> 00:04:54,060
+me sortir deux sorties différentes. Donc ça amène de l'incertitude.
+
+74
+00:04:54,060 --> 00:04:58,320
+Pour la même entrée, je peux avoir des réponses différentes. Donc c'est ça l'incertitude.
+
+75
+00:04:59,306.66666666668607 --> 00:05:02,940
+C'est le cas de toutes les modèles qu'on va avoir dans ce cours-là. Donc tous les modèles dans ce cours-là,
+
+76
+00:05:02,940 --> 00:05:06,480
+c'est des modèles dystocastiques, donc avec de l'incertitude. Donc on va
+
+77
+00:05:06,480 --> 00:05:10,140
+avoir par exemple la régression ou les séries chronologiques qui sont des modèles vraiment
+
+78
+00:05:10,140 --> 00:05:13,680
+stoastiques puisque ils produisent un résultat avec une marge d'erreur,
+
+79
+00:05:13,680 --> 00:05:19,200
+donc ce qu'on appelle la marge d'erreur, c'est l'incertitude autour de ces résultats . Alors
+
+80
+00:05:19,200 --> 00:05:22,800
+le cycle de modélisation, premièrement, évidemment, on identifie le problème
+
+81
+00:05:22,800 --> 00:05:26,880
+très important. Ensuite de ça, on va formuler le modèle. Alors
+
+82
+00:05:26,880 --> 00:05:30,480
+évidemment, il peut y en avoir plusieurs des modèles, mais on en choisit un, on formule un modèle, qu'on
+
+83
+00:05:30,480 --> 00:05:34,320
+pense le plus pertinent. On va résoudre ou estimer le modèle parce qu'évidemment
+
+84
+00:05:34,320 --> 00:05:37,920
+un modèle souvent c'est quelque chose de théorique fait qu'on a besoin de l'estimer sur des vraies
+
+85
+00:05:37,920 --> 00:05:41,760
+données. On va valider le modèle, étape très importante parce
+
+86
+00:05:41,760 --> 00:05:45,300
+que la validation sert à dire à fond que mon modèle
+
+87
+00:05:47,640 --> 00:05:51,180
+Il est OK, c'est ça toute la question quand on le valide. Et à
+
+88
+00:05:51,180 --> 00:05:54,780
+la fin, on décide. Donc la décision, ça va être basé
+
+89
+00:05:54,780 --> 00:05:58,380
+sur la réponse à la question qu'on se posait au problème du
+
+90
+00:05:58,380 --> 00:06:03,180
+départ. Maintenant,
+
+91
+00:06:03,180 --> 00:06:06,780
+formuler un problème avant de calculer. Donc, voici quelques exemples, on
+
+92
+00:06:06,780 --> 00:06:10,440
+en a parlé au début de cette capsule-là. Mettons un gestion, un petit exemple
+
+93
+00:06:10,440 --> 00:06:13,980
+la gestion de formulation floue d'un problème. Est-ce
+
+94
+00:06:13,980 --> 00:06:17,760
+que les ventes vont bien ? Évidemment, c'est pas clair, c'est flou. Par
+
+95
+00:06:17,760 --> 00:06:21,780
+exemple, quelque chose qui est plus modélisable comme problème, c'est de dire quelle succursale
+
+96
+00:06:21,780 --> 00:06:25,920
+baisse par rapport à l'an dernier à volume d'activité comparable.
+
+97
+00:06:25,920 --> 00:06:29,880
+Donc là c'est un petit peu plus clair, on parle de succursale, on parle d'une notion d'altant
+
+98
+00:06:29,880 --> 00:06:33,540
+par rapport à l'année dernière, il y a des choses qu'on fige, par exemple le volume d'activité
+
+99
+00:06:33,540 --> 00:06:37,080
+qui est comparable, on le fige. Donc ça c'est un petit peu mieux posé.
+
+100
+00:06:37,080 --> 00:06:40,740
+En opération maintenant, un autre exemple, est-ce que la production est correcte
+
+101
+00:06:41,040 --> 00:06:45,420
+? Évidemment, une production c'est pareil, il y a beaucoup de choses qui
+
+102
+00:06:45,420 --> 00:06:48,960
+est induit dans la production. Si on veut une modélisation un peu plus adéquate, on pourrait dire
+
+103
+00:06:48,960 --> 00:06:52,500
+quelle ligne par exemple de production dépasse le taux de rebutible
+
+104
+00:06:52,500 --> 00:06:57,120
+compte tenu du volume produit. c'est beaucoup plus actionnable,
+
+105
+00:06:57,120 --> 00:07:01,020
+on sait exactement qu'est-ce qu'on mesure. qu'une bonne formulation
+
+106
+00:07:01,020 --> 00:07:04,560
+d'un problème, ça indique déjà les observations, les variables et
+
+107
+00:07:04,560 --> 00:07:08,400
+la comparaison et l'interprétation attendue. Donc tous ces éléments-là
+
+108
+00:07:09,326.66666666668607 --> 00:07:12,900
+sont importants pour former le pas
+
+109
+00:07:12,900 --> 00:07:18,120
+le modèle pardon pour former dans Toutes
+
+110
+00:07:18,120 --> 00:07:22,140
+ces éléments-là sont importants pour former vraiment la formulation
+
+111
+00:07:22,826.6666666666861 --> 00:07:26,520
+du problème. Donc vous allez voir dans votre
+
+112
+00:07:28,673.3333333333139 --> 00:07:32,220
+mini rapport numéro 1, vous allez avoir à formuler évidemment un problème
+
+113
+00:07:32,220 --> 00:07:36,120
+et le résoudre avec un modèle. Maintenant,
+
+114
+00:07:36,120 --> 00:07:39,840
+modèle prédictif du cours qu'on va voir donc il y a la régression et
+
+115
+00:07:39,840 --> 00:07:43,380
+les séries chronologiques. Donc régression, le tout premier, en fait, ça
+
+116
+00:07:43,380 --> 00:07:47,160
+c'est un modèle assez simple, c'est probablement le modèle le plus simple, je vous dirais de modèle
+
+117
+00:07:47,160 --> 00:07:50,760
+statistique. Donc ça c'est un modèle qui met en relation une variable qu'on
+
+118
+00:07:50,760 --> 00:07:54,480
+va dire réponse avec une ou plusieurs variables explicatives.
+
+119
+00:07:54,480 --> 00:07:58,020
+Donc si vraiment dans la régression, c'est qu'on a un
+
+120
+00:07:58,020 --> 00:08:03,000
+Y, donc ça c'est ma variable d'intérêt, on va dire réponse. Et
+
+121
+00:08:03,000 --> 00:08:06,600
+on va la mettre en relation avec plusieurs variables. X1, X2, X3,
+
+122
+00:08:06,600 --> 00:08:11,880
+etc. plusieurs variables qu'on va dire explicatives. Donc
+
+123
+00:08:11,880 --> 00:08:15,780
+ça va être ça le but de la réation c'est est-ce que mes variables 1X2X3 vont être capables de prédire
+
+124
+00:08:15,780 --> 00:08:19,440
+ma variable Y Une série chronologique maintenant c'est
+
+125
+00:08:19,440 --> 00:08:23,100
+un petit peu différent, c'est que là je mesure une chose, je mesure un Y,
+
+126
+00:08:23,100 --> 00:08:30,660
+mais je mesure un Y à différents temps, donc par exemple un Y janvier.
+
+127
+00:08:31,286.66666666668607 --> 00:08:34,919.9999999999418
+Je vais mesurer un y en février. Bon, etc.
+
+128
+00:08:34,919.9999999999418 --> 00:08:38,580.0000000000582
+etc. Donc je mesure mon Y, ma vraie réponse, je la mesure à différents pas
+
+129
+00:08:38,580.0000000000582 --> 00:08:42,480
+de temps et tout l'objectif de la série chronologique, c'est de prédire un petit peu l'évolution
+
+130
+00:08:42,480 --> 00:08:46,560
+dans le temps et le prochain pas de temps. Donc
+
+131
+00:08:46,800 --> 00:08:50,580
+à retenir pour ce module, un modèle ça fait quoi ça Ça simplifie
+
+132
+00:08:50,580 --> 00:08:54,600
+pour répondre à une question, mais la question doit être bien posée. Rappelez-vous. Le
+
+133
+00:08:54,600 --> 00:08:58,200
+problème, il dit avant le calcul, il faut bien spécifier dans le fond le problème avant
+
+134
+00:08:58,200 --> 00:09:01,920
+toute chose, il faut bien spécifier le problème, bien le formuler avant même de penser à un modèle ou
+
+135
+00:09:01,920 --> 00:09:05,520
+un calcul. Et à la fin de la conclusion, elle dépend évidemment des hypothèses que
+
+136
+00:09:05,520 --> 00:09:10,320
+vous avez faites et de la validation du modèle. Donc,
+
+137
+00:09:10,320 --> 00:09:13,860
+petite production autonome pour cette capsule-là. fait
+
+138
+00:09:13,860 --> 00:09:17,760
+que dans votre trace finale, j'aimerais ça que vous ajoutiez en une phrase simplement expliquer
+
+139
+00:09:17,760 --> 00:09:21,360
+c'est quoi un modèle mathématique ou statistique et qu'est-ce qu'il
+
+140
+00:09:21,360 --> 00:09:24,900
+cherche à simplifier. Puis aussi vous pouvez déjà commencer à
+
+141
+00:09:24,900 --> 00:09:28,800
+penser un lien avec les lectures pour ce module numéro un là, c'est
+
+142
+00:09:28,800 --> 00:09:32,340
+que vous ajoutiez un mini diagnostic personnel en fait de deux notions que vous
+
+143
+00:09:32,340 --> 00:09:36,000
+maîtrisez déjà et deux notions que vous avez à consolider avant la semaine numéro
+
+144
+00:09:36,000 --> 00:09:39,540
+numéro deux. Donc vraiment une fois que vous allez avoir terminé ce module-là,
+
+145
+00:09:39,540 --> 00:09:43,080
+pensez à deux choses que vous maîtrisez déjà, deux choses que vous avez à maîtriser pour
+
+146
+00:09:43,080 --> 00:09:44,760
+la semaine prochaine.

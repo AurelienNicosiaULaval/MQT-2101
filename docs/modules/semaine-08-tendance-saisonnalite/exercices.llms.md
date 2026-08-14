@@ -56,7 +56,7 @@ Fixez janvier comme référence, ajustez tendance et mois, puis interprétez les
 >       term               estimate std.error statistic       p.value
 >       <chr>                 <dbl>     <dbl>     <dbl>         <dbl>
 >     1 mois_labeldécembre   38121.     5563.      6.85 0.00000000480
->     2 mois_labeljuillet    -7710.     5540.     -1.39 0.169        
+>     2 mois_labeljuillet    -7710.     5540.     -1.39 0.169
 >
 > Chaque coefficient est une différence moyenne avec janvier, à indice de temps égal.
 

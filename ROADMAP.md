@@ -47,7 +47,7 @@ La refonte pédagogique et technique du site est complète pour une première mi
 | 6. Refaire les évaluations | Terminé | Consignes, grilles, validation et questionnaires formatifs |
 | 7. Produire les ressources | Terminé | Guides, lectures, feuille de référence, IA et gabarits |
 | 8. Tester le site | Terminé | Rendu complet, contrôle de cohérence et vérifications fonctionnelles effectués |
-| 9. Enregistrer les vidéos | À produire | Remplacer les emplacements prévus par les capsules vidéo |
+| 9. Enregistrer les vidéos | Planifié | Ajouter progressivement les capsules vidéo aux supports autonomes existants |
 
 ## Dernière livraison
 
@@ -67,6 +67,6 @@ Livraison du 10 juillet 2026 :
 
 ## Travail restant
 
-Le seul travail de production de contenu restant est l'enregistrement et l'intégration des capsules vidéo prévues dans les pages de capsules.
+Le seul travail de production de contenu restant est l'enregistrement et l'intégration progressive des capsules vidéo. Les pages étudiantes sont déjà utilisables sans vidéo grâce aux supports écrits et aux decks de capsule.
 
 Les dates, heures, locaux et durées exactes des examens sont des paramètres de session. Ils doivent être renseignés uniquement à partir du calendrier institutionnel confirmé; ils ne constituent pas du contenu pédagogique manquant.

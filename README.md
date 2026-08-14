@@ -1,6 +1,6 @@
 # MQT-2101 : Analyse et modélisation des données
 
-Ce dépôt contient le squelette du site Quarto du cours MQT-2101. Le cours est orienté vers l'analyse appliquée des données, la modélisation, la prévision et la prise de décision en administration.
+Ce dépôt contient le site Quarto complet du cours MQT-2101. Le cours est orienté vers l'analyse appliquée des données, la modélisation, la prévision et la prise de décision en administration.
 
 Ce README est une documentation interne de développement. Les commandes Git et GitHub Pages ci-dessous servent à l'enseignant pour maintenir et publier le site. Elles ne font pas partie des consignes destinées aux étudiantes et étudiants.
 
@@ -114,9 +114,11 @@ source("scripts/03_inventory_old_material.R")
 
 La correspondance entre l'ancien matériel et la nouvelle structure est documentée dans `migration-ancien-materiel.qmd` et `anciens_documents/correspondance_ancienne_nouvelle_structure.md`.
 
-## Prochaines étapes pédagogiques
+## État de préparation
 
-- Remplacer les TODO par les contenus de séance.
-- Ajouter des données canadiennes ou québécoises lorsque c'est pertinent.
-- Construire des mini-cas orientés ventes, demande, marketing, opérations, finance, ressources humaines et performance organisationnelle.
-- Ajouter les grilles officielles d'évaluation.
+- Les dix modules et les quatre laboratoires sont rédigés.
+- Les deux mini-rapports, les deux examens et les questionnaires formatifs sont documentés.
+- Les jeux de données publics ou simulés sont intégrés au site.
+- Les supports écrits des capsules sont utilisables de façon autonome.
+- Les prochaines capsules vidéo seront ajoutées sans modifier le parcours écrit.
+- Les dates, heures et locaux d'examen non publiés institutionnellement demeurent indiqués comme étant à confirmer.

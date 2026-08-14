@@ -2,15 +2,15 @@
 
 ## Mode d’emploi
 
-Chaque capsule comporte un emplacement vidéo, un support écrit autonome et une activité immédiate. Les supports écrits suffisent pour réaliser le module avant l’ajout des vidéos.
+Chaque capsule comporte un objectif, un deck, un support écrit autonome et une activité immédiate. Les vidéos, lorsqu’elles sont disponibles, servent de complément au parcours écrit.
 
 ## Capsule 1 - Reconnaître une série chronologique
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Montrer la différence entre données transversales et données ordonnées dans le temps, puis définir date, fréquence et intervalle d’observation.
+> Montrer la différence entre données transversales et données ordonnées dans le temps, puis définir date, fréquence et intervalle d’observation.
 
 ## Deck de capsule
 
@@ -39,11 +39,11 @@ Pour chacune des situations suivantes, indiquez s’il s’agit d’une série c
 
 ## Capsule 2 - Lire un graphique temporel
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Construire un graphique temporel et identifier niveau, tendance, saisonnalité, ruptures et observations inhabituelles.
+> Construire un graphique temporel et identifier niveau, tendance, saisonnalité, ruptures et observations inhabituelles.
 
 ## Deck de capsule
 
@@ -74,11 +74,11 @@ Tracez `ventes` selon `date`. Nommez deux motifs visibles et une caractéristiqu
 
 ## Capsule 3 - Définir la cible et l’horizon
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 5 à 7 minutes. Relier la cible, l’horizon, la fréquence et la décision opérationnelle.
+> Relier la cible, l’horizon, la fréquence et la décision opérationnelle.
 
 ## Deck de capsule
 
@@ -104,11 +104,11 @@ Une organisation doit commander ses stocks six semaines à l’avance. Reformule
 
 ## Capsule 4 - Évaluer sans regarder le futur
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Présenter la séparation chronologique, la méthode naïve et l’idée d’une évaluation hors échantillon.
+> Présenter la séparation chronologique, la méthode naïve et l’idée d’une évaluation hors échantillon.
 
 ## Deck de capsule
 

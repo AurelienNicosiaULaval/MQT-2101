@@ -73,7 +73,7 @@ Analyse de données, exploration et régression, en équipe de 2 à 3. Remise à
 
 ### Examen intra
 
-Évaluation individuelle en personne sur le bloc régression.
+Évaluation individuelle en personne sur le bloc régression, le mercredi 21 octobre 2026. L'heure et le local sont à confirmer.
 
 15 %
 

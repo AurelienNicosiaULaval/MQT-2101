@@ -2,11 +2,11 @@
 
 ## Capsule 1 - Distinguer tendance et saisonnalité
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Annoter une tendance et un motif mensuel sur un graphique.
+> Annoter une tendance et un motif mensuel sur un graphique.
 
 ## Deck de capsule
 
@@ -28,11 +28,11 @@ Pourquoi un graphique regroupant toutes les observations de janvier est-il utile
 
 ## Capsule 2 - Coder le calendrier
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Créer un indice de temps et un facteur mois avec une référence explicite.
+> Créer un indice de temps et un facteur mois avec une référence explicite.
 
 ## Deck de capsule
 
@@ -54,11 +54,11 @@ Si le coefficient de décembre vaut 80 000, formulez une interprétation correct
 
 ## Capsule 3 - Ajuster le modèle
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Ajuster `lm(ventes ~ indice_temps + mois_label)` et lire les coefficients utiles.
+> Ajuster `lm(ventes ~ indice_temps + mois_label)` et lire les coefficients utiles.
 
 ## Deck de capsule
 
@@ -82,11 +82,11 @@ Quel graphique de résidus pourrait révéler qu’une saisonnalité additive es
 
 ## Capsule 4 - Prévoir et communiquer l’incertitude
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Produire une prévision ponctuelle et un intervalle de prédiction, puis discuter son usage budgétaire.
+> Produire une prévision ponctuelle et un intervalle de prédiction, puis discuter son usage budgétaire.
 
 ## Deck de capsule
 

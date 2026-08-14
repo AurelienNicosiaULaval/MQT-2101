@@ -221,7 +221,7 @@ Avant de demander de l’aide, vérifiez dans l’ordre :
 
 Le bloc suivant ne repart pas de zéro. Vous conserverez les mêmes réflexes : définir une question, lire les données, choisir une représentation utile, vérifier ce qui est observable et formuler une limite. Le changement important est que le temps devient une contrainte centrale : une prévision doit être construite sans utiliser le futur.
 
-Commencez le [module 06 sur les séries chronologiques](../../modules/semaine-06-series-chronologiques-intro/index.llms.md) après l’examen intra.
+Le [module 06 sur les séries chronologiques](../../modules/semaine-06-series-chronologiques-intro/index.llms.md) commence le 14 octobre. Il introduit le bloc suivant, mais l’examen intra du 21 octobre porte sur les compétences de régression travaillées dans les modules 01 à 04.
 
 ## Pour aller plus loin
 

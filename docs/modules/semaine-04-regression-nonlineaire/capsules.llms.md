@@ -4,7 +4,7 @@
 
 Cette page rassemble les six capsules du module 04. Elles montrent comment reconnaître une relation courbée, pourquoi une droite peut devenir trompeuse, comment utiliser des transformations simples, comment comparer des modèles et comment éviter l’extrapolation.
 
-Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont conçus pour être assez courts pour accompagner une vidéo, mais assez complets pour rester utiles en révision.
+Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles.
 
 ## Capsule 1 - Reconnaître une relation non linéaire
 
