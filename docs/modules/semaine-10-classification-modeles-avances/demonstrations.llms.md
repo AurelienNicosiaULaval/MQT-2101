@@ -36,7 +36,7 @@ clients |>
     # A tibble: 2 × 3
       depart_90j     n proportion
            <dbl> <int>      <dbl>
-    1          0   631     0.971 
+    1          0   631     0.971
     2          1    19     0.0292
 
 ## 2. Ajuster une régression logistique
@@ -56,13 +56,13 @@ tidy(modele, conf.int = TRUE, exponentiate = TRUE) |>
     # A tibble: 7 × 7
       term                   estimate std.error statistic p.value conf.low conf.high
       <chr>                     <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
-    1 anciennete_mois           0.987    0.0178    -0.717 0.473      0.950     1.02 
+    1 anciennete_mois           0.987    0.0178    -0.717 0.473      0.950     1.02
     2 utilisation_mensuelle     0.875    0.0612    -2.19  0.0285     0.771     0.981
-    3 tickets_service_6m        1.11     0.238      0.448 0.654      0.688     1.77 
+    3 tickets_service_6m        1.11     0.238      0.448 0.654      0.688     1.77
     4 satisfaction              0.614    0.238     -2.04  0.0410     0.377     0.968
-    5 type_contratmensuel       1.23     0.622      0.330 0.741      0.385     4.71 
-    6 rabais_actuelfidélité     3.39     0.703      1.74  0.0826     0.850    14.6  
-    7 rabais_actuelrétention    6.46     0.711      2.63  0.00866    1.59     28.1  
+    5 type_contratmensuel       1.23     0.622      0.330 0.741      0.385     4.71
+    6 rabais_actuelfidélité     3.39     0.703      1.74  0.0826     0.850    14.6
+    7 rabais_actuelrétention    6.46     0.711      2.63  0.00866    1.59     28.1
 
 Les valeurs exponentiées sont des rapports de cotes, pas des différences directes de probabilité.
 

@@ -113,7 +113,7 @@ tableau_mesures
     1 moyenne_4  100.  128.  82.6       264.
     2 SES        114.  144. 106.        287.
     3 Holt       152.  189. 152.        354.
-    4 naive      185.  209. 185.        366 
+    4 naive      185.  209. 185.        366
 
 ``` r
 evaluation |>
@@ -152,7 +152,7 @@ couts
     1 moyenne_4     21944.
     2 SES           25997.
     3 Holt          35578.
-    4 naive         43254 
+    4 naive         43254
 
 > **IMPORTANT:**
 >

@@ -93,18 +93,18 @@ summary(modele_budget)
     lm(formula = ventes ~ budget_marketing, data = campagnes)
 
     Residuals:
-         Min       1Q   Median       3Q      Max 
-    -16277.1  -6353.5   -347.8   6892.4  17632.8 
+         Min       1Q   Median       3Q      Max
+    -16277.1  -6353.5   -347.8   6892.4  17632.8
 
     Coefficients:
-                      Estimate Std. Error t value Pr(>|t|)    
+                      Estimate Std. Error t value Pr(>|t|)
     (Intercept)      2.992e+04  4.632e+03    6.46 2.35e-08 ***
     budget_marketing 1.358e+01  8.236e-01   16.49  < 2e-16 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Residual standard error: 8339 on 58 degrees of freedom
-    Multiple R-squared:  0.8242,    Adjusted R-squared:  0.8212 
+    Multiple R-squared:  0.8242,    Adjusted R-squared:  0.8212
     F-statistic: 271.9 on 1 and 58 DF,  p-value: < 2.2e-16
 
 ## Interpréter les coefficients
@@ -115,8 +115,8 @@ coefficients_modele <- coef(modele_budget)
 coefficients_modele
 ```
 
-         (Intercept) budget_marketing 
-           29922.107           13.582 
+         (Intercept) budget_marketing
+           29922.107           13.582
 
 La pente estimée correspond à la variation moyenne des ventes associée à une augmentation d’une unité de budget marketing, dans ce jeu de données.
 
@@ -128,8 +128,8 @@ pente_1000 <- coefficients_modele["budget_marketing"] * 1000
 pente_1000
 ```
 
-    budget_marketing 
-               13582 
+    budget_marketing
+               13582
 
 Interprétation attendue : pour 1 000 dollars de budget marketing supplémentaire, le modèle estime une augmentation moyenne des ventes d’environ 1.3582^{4} dollars, dans ces données.
 

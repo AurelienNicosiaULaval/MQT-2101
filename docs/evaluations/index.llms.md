@@ -22,10 +22,10 @@ Chaque bloc mène vers une page de consignes plus détaillée.
 
 Analyse reproductible allant de la préparation des données à une première modélisation par régression.
 
-Moment  
+Moment
 Fin de la semaine 06
 
-IA  
+IA
 Permise avec déclaration
 
 [Consignes du mini-rapport 1](mini-rapport-1.llms.md)
@@ -36,10 +36,10 @@ Permise avec déclaration
 
 Évaluation individuelle sur les données, l'exploration, la visualisation, la régression et l'interprétation.
 
-Moment  
-Bloc régression
+Moment
+Mercredi 21 octobre 2026; heure et local à confirmer
 
-IA  
+IA
 Non permise
 
 [Consignes de l'examen intra](examen-intra.llms.md)
@@ -50,10 +50,10 @@ Non permise
 
 Analyse reproductible portant sur la prévision, les séries chronologiques ou une ouverture vers la classification.
 
-Moment  
+Moment
 Fin du module 10, avant l'atelier 04
 
-IA  
+IA
 Permise avec déclaration
 
 [Consignes du mini-rapport 2](mini-rapport-2.llms.md)
@@ -64,10 +64,10 @@ Permise avec déclaration
 
 Évaluation individuelle sur la prévision, les séries chronologiques, la validation, la classification et l'interprétation.
 
-Moment  
+Moment
 Fin de session
 
-IA  
+IA
 Non permise
 
 [Consignes de l'examen final](examen-final.llms.md)

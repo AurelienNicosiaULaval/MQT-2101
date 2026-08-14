@@ -102,19 +102,19 @@ summary(modele)
     lm(formula = ventes ~ achalandage + ruptures_stock, data = performance)
 
     Residuals:
-         Min       1Q   Median       3Q      Max 
-    -17740.1  -5714.9   -679.8   6558.4  16708.6 
+         Min       1Q   Median       3Q      Max
+    -17740.1  -5714.9   -679.8   6558.4  16708.6
 
     Coefficients:
-                    Estimate Std. Error t value Pr(>|t|)    
+                    Estimate Std. Error t value Pr(>|t|)
     (Intercept)    52567.578   5286.163   9.944 5.87e-15 ***
     achalandage       64.147      3.159  20.307  < 2e-16 ***
-    ruptures_stock -1919.406    647.063  -2.966  0.00414 ** 
+    ruptures_stock -1919.406    647.063  -2.966  0.00414 **
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Residual standard error: 7999 on 69 degrees of freedom
-    Multiple R-squared:  0.8568,    Adjusted R-squared:  0.8527 
+    Multiple R-squared:  0.8568,    Adjusted R-squared:  0.8527
     F-statistic: 206.5 on 2 and 69 DF,  p-value: < 2.2e-16
 
 ## Lire les coefficients
@@ -123,8 +123,8 @@ summary(modele)
 coef(modele)
 ```
 
-       (Intercept)    achalandage ruptures_stock 
-       52567.57794       64.14725    -1919.40640 
+       (Intercept)    achalandage ruptures_stock
+       52567.57794       64.14725    -1919.40640
 
 Interprétation attendue :
 

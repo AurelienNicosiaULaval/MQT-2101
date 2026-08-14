@@ -1572,7 +1572,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/** 
+/**
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1584,16 +1584,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document. 
+ * Finds all non-overlapping matches for a search string in the document.
  * The search string may be split between multiple consecutive leaf nodes.
- * 
+ *
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- * 
+ *
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match 
+ * and would contribute the match
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- * 
+ *
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1638,7 +1638,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/** 
+/**
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1700,7 +1700,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- * 
+ *
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1714,7 +1714,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset. 
+// inside/outside that tabset.
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -4501,6 +4501,14 @@ margin-bottom: clamp(1.1rem, 3vw, 2rem);
 padding-bottom: 1rem;
 border-bottom: 1px solid var(--calendar-border);
 }
+.calendar-flow__eyebrow {
+margin: 0 0 0.55rem;
+color: #b5121b;
+font-size: 0.82rem;
+font-weight: 900;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+}
 .calendar-flow__header h1 {
 max-width: 760px;
 margin: 0;
@@ -4508,6 +4516,104 @@ color: #123244;
 font-size: clamp(2.25rem, 5vw, 4.8rem);
 font-weight: 900;
 line-height: 0.98;
+}
+.calendar-flow__lede {
+max-width: 780px;
+margin: 1rem 0 0;
+color: #40515c;
+font-size: 1.08rem;
+line-height: 1.55;
+}
+.calendar-summary {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 0.75rem;
+margin-top: 1.35rem;
+}
+.calendar-summary div {
+padding: 0.9rem 1rem;
+border: 1px solid var(--calendar-border);
+border-radius: 10px;
+background: #f8fbfc;
+color: #40515c;
+line-height: 1.35;
+}
+.calendar-summary span {
+display: block;
+color: #123244;
+font-size: 1.55rem;
+font-weight: 900;
+}
+.calendar-legend {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-top: 1.1rem;
+}
+.calendar-flow__notice {
+max-width: 860px;
+margin: 1rem 0 0;
+padding: 0.85rem 1rem;
+border-left: 4px solid #0b4f6c;
+background: #f2f7fa;
+color: #334955;
+font-size: 0.94rem;
+line-height: 1.5;
+}
+.calendar-table-section {
+margin: 0 0 1.5rem;
+padding: clamp(1.25rem, 3vw, 2rem);
+border: 1px solid var(--calendar-border);
+border-radius: 12px;
+background: #fbfdfe;
+}
+.calendar-table-section__header h2 {
+margin: 0 0 0.55rem;
+color: #123244;
+font-size: clamp(1.45rem, 2.25vw, 2rem);
+line-height: 1.1;
+}
+.calendar-table-section__header p:last-child {
+max-width: 850px;
+margin: 0;
+color: #40515c;
+line-height: 1.55;
+}
+.calendar-table-wrap {
+margin-top: 1.1rem;
+overflow-x: auto;
+border: 1px solid #dfeaf0;
+border-radius: 8px;
+}
+.calendar-table {
+width: 100%;
+min-width: 820px;
+border-collapse: collapse;
+color: #263d49;
+font-size: 0.94rem;
+line-height: 1.42;
+}
+.calendar-table th,
+.calendar-table td {
+padding: 0.75rem 0.85rem;
+border-bottom: 1px solid #dfeaf0;
+text-align: left;
+vertical-align: top;
+}
+.calendar-table th {
+background: #123244;
+color: #ffffff;
+font-weight: 800;
+}
+.calendar-table tbody tr:nth-child(even) {
+background: #f5f9fb;
+}
+.calendar-table tbody tr:last-child td {
+border-bottom: 0;
+}
+.calendar-table a {
+color: #075a7d;
+font-weight: 750;
 }
 .calendar-blocks {
 display: grid;
@@ -4578,7 +4684,7 @@ border-bottom: 1px solid #e5eef2;
 border-bottom: 0;
 }
 .calendar-week__number {
-grid-row: 1 / span 4;
+grid-row: 1 / span 6;
 display: inline-flex;
 align-items: center;
 justify-content: center;
@@ -4591,6 +4697,46 @@ color: var(--block-color);
 font-size: 1rem;
 font-weight: 900;
 line-height: 1;
+}
+.calendar-week__meta {
+grid-column: 2;
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+align-items: center;
+margin-bottom: 0.18rem;
+}
+.calendar-week__meta time {
+color: #5b6c75;
+font-size: 0.86rem;
+font-weight: 750;
+}
+.calendar-week__mode {
+display: inline-flex;
+align-items: center;
+width: fit-content;
+min-height: 1.55rem;
+padding: 0.2rem 0.52rem;
+border-radius: 999px;
+font-size: 0.73rem;
+font-weight: 850;
+line-height: 1.15;
+}
+.calendar-week__mode--auto {
+background: #eaf3f8;
+color: #0b4f6c;
+}
+.calendar-week__mode--workshop {
+background: #e5f5f2;
+color: #17675e;
+}
+.calendar-week__mode--exam {
+background: #fae9eb;
+color: #9b1018;
+}
+.calendar-week__mode--break {
+background: #eef0f2;
+color: #4f5b62;
 }
 .calendar-weeks a,
 .calendar-week__plain {
@@ -4615,6 +4761,58 @@ font-weight: 800;
 color: var(--block-color);
 text-decoration: underline;
 text-underline-offset: 0.18rem;
+}
+.calendar-exams {
+display: grid;
+grid-template-columns: minmax(240px, 0.38fr) minmax(0, 1fr);
+gap: clamp(1.35rem, 4vw, 3rem);
+padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+border-bottom: 1px solid var(--calendar-border);
+}
+.calendar-exams__header h2 {
+margin: 0 0 0.65rem;
+color: #123244;
+font-size: clamp(1.45rem, 2.25vw, 2rem);
+font-weight: 900;
+line-height: 1.1;
+}
+.calendar-exams__header p:last-child {
+margin: 0;
+color: #40515c;
+line-height: 1.55;
+}
+.calendar-exam-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 0.85rem;
+}
+.calendar-exam-card {
+padding: 1.15rem;
+border: 1px solid #ecd3d6;
+border-radius: 12px;
+background: #fffafb;
+}
+.calendar-exam-card h3 {
+margin: 0.75rem 0 0.55rem;
+font-size: 1.2rem;
+}
+.calendar-exam-card h3 a {
+color: #123244;
+text-decoration: none;
+}
+.calendar-exam-card h3 a:hover,
+.calendar-exam-card h3 a:focus-visible {
+color: #b5121b;
+text-decoration: underline;
+text-underline-offset: 0.18rem;
+}
+.calendar-exam-card p {
+margin: 0.45rem 0 0;
+color: #40515c;
+line-height: 1.5;
+}
+.calendar-exam-card__status {
+font-size: 0.88rem;
 }
 .install-hero,
 .eval-hero {
@@ -6467,6 +6665,7 @@ grid-template-columns: repeat(2, minmax(0, 1fr));
 .plan-objectives,
 .plan-ai,
 .calendar-block,
+.calendar-exams,
 .install-hero,
 .eval-hero,
 .resource-hero,
@@ -6492,6 +6691,9 @@ border-right: 0;
 }
 .calendar-block__header {
 position: static;
+}
+.calendar-exam-grid {
+grid-template-columns: minmax(0, 1fr);
 }
 .interactive-path .path-card[open] {
 grid-column: span 2;
@@ -6534,6 +6736,7 @@ font-size: 1.55rem;
 .plan-hero__panel,
 .plan-theme-grid,
 .assessment-grid,
+.calendar-summary,
 .install-tool-grid,
 .eval-assessment-board,
 .eval-prep__links,
@@ -6652,6 +6855,11 @@ width: 2.95rem;
 min-height: 2.85rem;
 padding: 0.5rem 0.68rem;
 }
+body.page-calendar .course-gpt-widget {
+position: static;
+display: flex;
+margin: 0.5rem 1rem 1rem auto;
+}
 .course-gpt-widget__label,
 .course-gpt-widget__hint {
 display: none;
@@ -6687,143 +6895,143 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../index.html">
 <span class="menu-text">Accueil</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html"> 
+    <a class="nav-link" href="../../plan-de-cours.html">
 <span class="menu-text">Plan de cours</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html"> 
+    <a class="nav-link" href="../../calendrier.html">
 <span class="menu-text">Calendrier</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html"> 
+    <a class="nav-link" href="../../installation.html">
 <span class="menu-text">Installation</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html"> 
+    <a class="nav-link" href="../../evaluations/index.html">
 <span class="menu-text">Évaluations</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html"> 
+    <a class="nav-link" href="../../donnees/index.html">
 <span class="menu-text">Données</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6838,7 +7046,7 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-   
+
   <ul>
   <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
   <li><a href="#vérifier-lindex-temporel" id="toc-vérifier-lindex-temporel" class="nav-link" data-scroll-target="#vérifier-lindex-temporel">1. Vérifier l’index temporel</a></li>
@@ -6862,11 +7070,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -7108,7 +7316,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -7128,11 +7336,11 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7209,7 +7417,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7284,7 +7492,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7312,7 +7520,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7336,7 +7544,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7376,7 +7584,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7502,7 +7710,7 @@ $ ventes          &lt;dbl&gt; 273932, 283964, 282626, 307251, 296563, 296514, 30
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>   
+</div>
     <div class="nav-footer-center">
        
     </div>

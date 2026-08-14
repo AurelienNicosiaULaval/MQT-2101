@@ -87,6 +87,8 @@ Console R
 
     source("scripts/00_install_packages.R")
 
+[Télécharger le script d'installation](scripts/00_install_packages.R)
+
 ## Vérification rapide
 
 Si ce code s'exécute et produit un graphique, l'environnement de base est prêt pour le cours.

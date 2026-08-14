@@ -2,11 +2,11 @@
 
 ## Capsule 1 - Moyennes mobiles
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Montrer une moyenne mobile arrière de quatre semaines et expliquer l’effet de la fenêtre.
+> Montrer une moyenne mobile arrière de quatre semaines et expliquer l’effet de la fenêtre.
 
 ## Deck de capsule
 
@@ -32,11 +32,11 @@ Les quatre dernières demandes sont 980, 1 020, 1 080 et 1 120 unités. Calculez
 
 ## Capsule 2 - Lissage exponentiel simple
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Construire récursivement le niveau lissé et comparer deux valeurs de alpha.
+> Construire récursivement le niveau lissé et comparer deux valeurs de alpha.
 
 ## Deck de capsule
 
@@ -60,11 +60,11 @@ Pour une demande récente en hausse rapide, comparez qualitativement les effets 
 
 ## Capsule 3 - Mesurer les erreurs
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Calculer une erreur, MAE et RMSE, puis discuter le MAPE près de zéro.
+> Calculer une erreur, MAE et RMSE, puis discuter le MAPE près de zéro.
 
 ## Deck de capsule
 
@@ -90,11 +90,11 @@ Deux méthodes ont la même MAE, mais la seconde produit une erreur extrême. Qu
 
 ## Capsule 4 - Comparer équitablement
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Construire une période test commune et relier les mesures au choix de méthode.
+> Construire une période test commune et relier les mesures au choix de méthode.
 
 ## Deck de capsule
 

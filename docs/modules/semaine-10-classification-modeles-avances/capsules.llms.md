@@ -2,11 +2,11 @@
 
 ## Capsule 1 - Définir une cible binaire
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 6 à 8 minutes. Définir l’événement, la fenêtre d’observation, la classe positive et l’unité d’analyse.
+> Définir l’événement, la fenêtre d’observation, la classe positive et l’unité d’analyse.
 
 ## Deck de capsule
 
@@ -28,11 +28,11 @@ Pourquoi « client à risque » est-il une cible insuffisante?
 
 ## Capsule 2 - Probabilité logistique
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Passer du prédicteur linéaire à une probabilité entre 0 et 1.
+> Passer du prédicteur linéaire à une probabilité entre 0 et 1.
 
 ## Deck de capsule
 
@@ -56,11 +56,11 @@ Une probabilité prédite de 0,70 signifie-t-elle que la personne partira néces
 
 ## Capsule 3 - Matrice de confusion
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 7 à 9 minutes. Construire la matrice et interpréter sensibilité, spécificité et précision.
+> Construire la matrice et interpréter sensibilité, spécificité et précision.
 
 ## Deck de capsule
 
@@ -87,11 +87,11 @@ Pour une campagne de rétention, quelle erreur correspond à un client qui part 
 
 ## Capsule 4 - Choisir un seuil décisionnel
 
-## Vidéo
+## Objectif
 
 > **NOTE:**
 >
-> Durée cible : 8 à 10 minutes. Comparer deux seuils et relier le choix à la capacité de contact et au coût des erreurs.
+> Comparer deux seuils et relier le choix à la capacité de contact et au coût des erreurs.
 
 ## Deck de capsule
 

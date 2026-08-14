@@ -100,8 +100,8 @@ mesures
       methode               MAE  RMSE biais
       <chr>               <dbl> <dbl> <dbl>
     1 moyenne_mobile_4     100.  128.  82.6
-    2 lissage_exponentiel  114.  144. 106. 
-    3 naive                185.  209. 185. 
+    2 lissage_exponentiel  114.  144. 106.
+    3 naive                185.  209. 185.
 
 ## 5. Visualiser la période test
 

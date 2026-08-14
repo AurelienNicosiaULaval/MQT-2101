@@ -4,7 +4,7 @@
 
 Cette page rassemble les six capsules de révision du module 05. Elles ne présentent pas une nouvelle méthode : elles organisent les réflexes nécessaires pour répondre clairement à une question d’examen sur les modules 01 à 04.
 
-Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont conçus pour être assez courts pour accompagner une vidéo, mais assez complets pour rester utiles en révision.
+Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles.
 
 ## Capsule 1 - Lire la question avant de calculer
 

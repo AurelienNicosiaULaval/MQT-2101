@@ -1537,7 +1537,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/** 
+/**
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1549,16 +1549,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document. 
+ * Finds all non-overlapping matches for a search string in the document.
  * The search string may be split between multiple consecutive leaf nodes.
- * 
+ *
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- * 
+ *
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match 
+ * and would contribute the match
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- * 
+ *
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1603,7 +1603,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/** 
+/**
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1665,7 +1665,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- * 
+ *
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1679,7 +1679,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset. 
+// inside/outside that tabset.
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -4466,6 +4466,14 @@ margin-bottom: clamp(1.1rem, 3vw, 2rem);
 padding-bottom: 1rem;
 border-bottom: 1px solid var(--calendar-border);
 }
+.calendar-flow__eyebrow {
+margin: 0 0 0.55rem;
+color: #b5121b;
+font-size: 0.82rem;
+font-weight: 900;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+}
 .calendar-flow__header h1 {
 max-width: 760px;
 margin: 0;
@@ -4473,6 +4481,104 @@ color: #123244;
 font-size: clamp(2.25rem, 5vw, 4.8rem);
 font-weight: 900;
 line-height: 0.98;
+}
+.calendar-flow__lede {
+max-width: 780px;
+margin: 1rem 0 0;
+color: #40515c;
+font-size: 1.08rem;
+line-height: 1.55;
+}
+.calendar-summary {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 0.75rem;
+margin-top: 1.35rem;
+}
+.calendar-summary div {
+padding: 0.9rem 1rem;
+border: 1px solid var(--calendar-border);
+border-radius: 10px;
+background: #f8fbfc;
+color: #40515c;
+line-height: 1.35;
+}
+.calendar-summary span {
+display: block;
+color: #123244;
+font-size: 1.55rem;
+font-weight: 900;
+}
+.calendar-legend {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-top: 1.1rem;
+}
+.calendar-flow__notice {
+max-width: 860px;
+margin: 1rem 0 0;
+padding: 0.85rem 1rem;
+border-left: 4px solid #0b4f6c;
+background: #f2f7fa;
+color: #334955;
+font-size: 0.94rem;
+line-height: 1.5;
+}
+.calendar-table-section {
+margin: 0 0 1.5rem;
+padding: clamp(1.25rem, 3vw, 2rem);
+border: 1px solid var(--calendar-border);
+border-radius: 12px;
+background: #fbfdfe;
+}
+.calendar-table-section__header h2 {
+margin: 0 0 0.55rem;
+color: #123244;
+font-size: clamp(1.45rem, 2.25vw, 2rem);
+line-height: 1.1;
+}
+.calendar-table-section__header p:last-child {
+max-width: 850px;
+margin: 0;
+color: #40515c;
+line-height: 1.55;
+}
+.calendar-table-wrap {
+margin-top: 1.1rem;
+overflow-x: auto;
+border: 1px solid #dfeaf0;
+border-radius: 8px;
+}
+.calendar-table {
+width: 100%;
+min-width: 820px;
+border-collapse: collapse;
+color: #263d49;
+font-size: 0.94rem;
+line-height: 1.42;
+}
+.calendar-table th,
+.calendar-table td {
+padding: 0.75rem 0.85rem;
+border-bottom: 1px solid #dfeaf0;
+text-align: left;
+vertical-align: top;
+}
+.calendar-table th {
+background: #123244;
+color: #ffffff;
+font-weight: 800;
+}
+.calendar-table tbody tr:nth-child(even) {
+background: #f5f9fb;
+}
+.calendar-table tbody tr:last-child td {
+border-bottom: 0;
+}
+.calendar-table a {
+color: #075a7d;
+font-weight: 750;
 }
 .calendar-blocks {
 display: grid;
@@ -4543,7 +4649,7 @@ border-bottom: 1px solid #e5eef2;
 border-bottom: 0;
 }
 .calendar-week__number {
-grid-row: 1 / span 4;
+grid-row: 1 / span 6;
 display: inline-flex;
 align-items: center;
 justify-content: center;
@@ -4556,6 +4662,46 @@ color: var(--block-color);
 font-size: 1rem;
 font-weight: 900;
 line-height: 1;
+}
+.calendar-week__meta {
+grid-column: 2;
+display: flex;
+flex-wrap: wrap;
+gap: 0.45rem;
+align-items: center;
+margin-bottom: 0.18rem;
+}
+.calendar-week__meta time {
+color: #5b6c75;
+font-size: 0.86rem;
+font-weight: 750;
+}
+.calendar-week__mode {
+display: inline-flex;
+align-items: center;
+width: fit-content;
+min-height: 1.55rem;
+padding: 0.2rem 0.52rem;
+border-radius: 999px;
+font-size: 0.73rem;
+font-weight: 850;
+line-height: 1.15;
+}
+.calendar-week__mode--auto {
+background: #eaf3f8;
+color: #0b4f6c;
+}
+.calendar-week__mode--workshop {
+background: #e5f5f2;
+color: #17675e;
+}
+.calendar-week__mode--exam {
+background: #fae9eb;
+color: #9b1018;
+}
+.calendar-week__mode--break {
+background: #eef0f2;
+color: #4f5b62;
 }
 .calendar-weeks a,
 .calendar-week__plain {
@@ -4580,6 +4726,58 @@ font-weight: 800;
 color: var(--block-color);
 text-decoration: underline;
 text-underline-offset: 0.18rem;
+}
+.calendar-exams {
+display: grid;
+grid-template-columns: minmax(240px, 0.38fr) minmax(0, 1fr);
+gap: clamp(1.35rem, 4vw, 3rem);
+padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+border-bottom: 1px solid var(--calendar-border);
+}
+.calendar-exams__header h2 {
+margin: 0 0 0.65rem;
+color: #123244;
+font-size: clamp(1.45rem, 2.25vw, 2rem);
+font-weight: 900;
+line-height: 1.1;
+}
+.calendar-exams__header p:last-child {
+margin: 0;
+color: #40515c;
+line-height: 1.55;
+}
+.calendar-exam-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 0.85rem;
+}
+.calendar-exam-card {
+padding: 1.15rem;
+border: 1px solid #ecd3d6;
+border-radius: 12px;
+background: #fffafb;
+}
+.calendar-exam-card h3 {
+margin: 0.75rem 0 0.55rem;
+font-size: 1.2rem;
+}
+.calendar-exam-card h3 a {
+color: #123244;
+text-decoration: none;
+}
+.calendar-exam-card h3 a:hover,
+.calendar-exam-card h3 a:focus-visible {
+color: #b5121b;
+text-decoration: underline;
+text-underline-offset: 0.18rem;
+}
+.calendar-exam-card p {
+margin: 0.45rem 0 0;
+color: #40515c;
+line-height: 1.5;
+}
+.calendar-exam-card__status {
+font-size: 0.88rem;
 }
 .install-hero,
 .eval-hero {
@@ -6432,6 +6630,7 @@ grid-template-columns: repeat(2, minmax(0, 1fr));
 .plan-objectives,
 .plan-ai,
 .calendar-block,
+.calendar-exams,
 .install-hero,
 .eval-hero,
 .resource-hero,
@@ -6457,6 +6656,9 @@ border-right: 0;
 }
 .calendar-block__header {
 position: static;
+}
+.calendar-exam-grid {
+grid-template-columns: minmax(0, 1fr);
 }
 .interactive-path .path-card[open] {
 grid-column: span 2;
@@ -6499,6 +6701,7 @@ font-size: 1.55rem;
 .plan-hero__panel,
 .plan-theme-grid,
 .assessment-grid,
+.calendar-summary,
 .install-tool-grid,
 .eval-assessment-board,
 .eval-prep__links,
@@ -6617,6 +6820,11 @@ width: 2.95rem;
 min-height: 2.85rem;
 padding: 0.5rem 0.68rem;
 }
+body.page-calendar .course-gpt-widget {
+position: static;
+display: flex;
+margin: 0.5rem 1rem 1rem auto;
+}
 .course-gpt-widget__label,
 .course-gpt-widget__hint {
 display: none;
@@ -6652,143 +6860,143 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="./index.html">
 <span class="menu-text">Accueil</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="./plan-de-cours.html"> 
+    <a class="nav-link" href="./plan-de-cours.html">
 <span class="menu-text">Plan de cours</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link active" href="./calendrier.html" aria-current="page"> 
+    <a class="nav-link active" href="./calendrier.html" aria-current="page">
 <span class="menu-text">Calendrier</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="./installation.html"> 
+    <a class="nav-link" href="./installation.html">
 <span class="menu-text">Installation</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
         <li>
     <a class="dropdown-item" href="./modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./evaluations/index.html"> 
+    <a class="nav-link" href="./evaluations/index.html">
 <span class="menu-text">Évaluations</span></a>
-  </li>  
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
         <li>
     <a class="dropdown-item" href="./ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>  
+  </li>
         <li>
     <a class="dropdown-item" href="./ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>  
+  </li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./donnees/index.html"> 
+    <a class="nav-link" href="./donnees/index.html">
 <span class="menu-text">Données</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -6800,7 +7008,7 @@ display: none;
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -6813,11 +7021,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -6825,8 +7033,148 @@ display: none;
 
 <section class="calendar-flow" aria-labelledby="calendar-title">
   <header class="calendar-flow__header">
+    <p class="calendar-flow__eyebrow">Automne 2026</p>
     <h1 id="calendar-title">Calendrier</h1>
+    <p class="calendar-flow__lede">
+      Le cours alterne des semaines d&#39;autoapprentissage et quatre ateliers en classe.
+      Les examens sont individuels, en personne et organisés séparément des ateliers.
+    </p>
+    <div class="calendar-summary" aria-label="Répartition des activités de la session">
+      <div><span>10</span> modules d&#39;autoapprentissage</div>
+      <div><span>4</span> laboratoires en classe</div>
+      <div><span>2</span> examens en personne</div>
+    </div>
+    <div class="calendar-legend" aria-label="Légende des types d&#39;activités">
+      <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+      <span class="calendar-week__mode calendar-week__mode--workshop">Atelier en classe</span>
+      <span class="calendar-week__mode calendar-week__mode--exam">Examen en personne</span>
+      <span class="calendar-week__mode calendar-week__mode--break">Semaine de lecture</span>
+    </div>
+    <p class="calendar-flow__notice">
+      Les laboratoires sont planifiés le mercredi de 9 h à 11 h 50 au pavillon Palasis-Prince, local 3213.
+      L&#39;examen intra a lieu le 21 octobre; son heure et son local restent à confirmer.
+    </p>
   </header>
+
+  <section class="calendar-table-section" aria-labelledby="calendar-table-title">
+    <div class="calendar-table-section__header">
+      <p class="calendar-flow__eyebrow">Vue d&#39;ensemble</p>
+      <h2 id="calendar-table-title" class="anchored">Calendrier détaillé</h2>
+      <p>Les liens ouvrent la page de travail correspondante. Les heures et les locaux des examens seront ajoutés dès leur publication institutionnelle.</p>
+    </div>
+    <div class="calendar-table-wrap" tabindex="0">
+
+<table class="calendar-table caption-top table">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">Activité</th>
+<th data-quarto-table-cell-role="th">Évaluation ou repère</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mercredi 2 septembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-01-introduction/index.html">Module 01 - Introduction</a></td>
+<td>Début du parcours</td>
+</tr>
+<tr class="even">
+<td>Mercredi 9 septembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-02-r-quarto/index.html">Module 02 - R et Quarto</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Mercredi 16 septembre, 9 h à 11 h 50</td>
+<td>Laboratoire</td>
+<td><a href="modules/atelier-01-r/index.html">Laboratoire 01 - Explorer un tableau</a></td>
+<td>Palasis-Prince 3213</td>
+</tr>
+<tr class="even">
+<td>Mercredi 23 septembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-03-regression-lineaire/index.html">Module 03 - Régression linéaire</a></td>
+<td><a href="evaluations/questionnaire-regression.html">Questionnaire formatif</a></td>
+</tr>
+<tr class="odd">
+<td>Mercredi 30 septembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-04-regression-nonlineaire/index.html">Module 04 - Régression non linéaire</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Mercredi 7 octobre, 9 h à 11 h 50</td>
+<td>Laboratoire</td>
+<td><a href="modules/atelier-02-regression/index.html">Laboratoire 02 - Régression</a></td>
+<td><a href="evaluations/mini-rapport-1.html">Mini-rapport 1</a>; préparer l&#39;intra du 8 au 20 octobre</td>
+</tr>
+<tr class="odd">
+<td>Mercredi 14 octobre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-06-series-chronologiques-intro/index.html">Module 06 - Introduction aux séries chronologiques</a></td>
+<td>Le module 05 reste disponible pour la préparation à l&#39;intra</td>
+</tr>
+<tr class="even">
+<td>Mercredi 21 octobre</td>
+<td>Examen en personne</td>
+<td><a href="evaluations/examen-intra.html">Examen intra</a></td>
+<td>Heure et local à confirmer</td>
+</tr>
+<tr class="odd">
+<td>Du 26 au 30 octobre</td>
+<td>Relâche</td>
+<td>Aucune activité prévue</td>
+<td>Semaine de lecture</td>
+</tr>
+<tr class="even">
+<td>Mercredi 4 novembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-07-lissage/index.html">Module 07 - Lissage et erreurs</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Mercredi 11 novembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-08-tendance-saisonnalite/index.html">Module 08 - Tendance et saisonnalité</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Mercredi 18 novembre, 9 h à 11 h 50</td>
+<td>Laboratoire</td>
+<td><a href="modules/atelier-03-series-chronologiques/index.html">Laboratoire 03 - Prévoir la demande</a></td>
+<td>Point de contrôle du <a href="evaluations/mini-rapport-2.html">mini-rapport 2</a></td>
+</tr>
+<tr class="odd">
+<td>Mercredi 25 novembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-09-variables-externes-autocorrelation/index.html">Module 09 - Variables externes et autocorrélation</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Mercredi 2 décembre</td>
+<td>Autoapprentissage</td>
+<td><a href="modules/semaine-10-classification-modeles-avances/index.html">Module 10 - Classification</a></td>
+<td><a href="evaluations/questionnaire-series-chronologiques.html">Questionnaire formatif</a>; remise du mini-rapport 2</td>
+</tr>
+<tr class="odd">
+<td>Mercredi 9 décembre, 9 h à 11 h 50</td>
+<td>Laboratoire</td>
+<td><a href="modules/atelier-04-recapitulation/index.html">Laboratoire 04 - Intégration</a></td>
+<td>Révision finale, Palasis-Prince 3213</td>
+</tr>
+<tr class="even">
+<td>Du 14 au 20 décembre</td>
+<td>Examen en personne</td>
+<td><a href="evaluations/examen-final.html">Examen final</a></td>
+<td>Date, heure et local à confirmer</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+  </section>
 
   <div class="calendar-blocks" aria-label="Déroulement par blocs">
     <article class="calendar-block">
@@ -6837,14 +7185,26 @@ display: none;
       <ol class="calendar-weeks">
         <li>
           <span class="calendar-week__number">01</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-09-02">2 septembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-01-introduction/index.html">Introduction</a>
         </li>
         <li>
           <span class="calendar-week__number">02</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-09-09">9 septembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-02-r-quarto/index.html">R et Quarto</a>
         </li>
         <li>
           <span class="calendar-week__number">03</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-09-16">16 septembre</time>
+            <span class="calendar-week__mode calendar-week__mode--workshop">Atelier en classe</span>
+          </div>
           <a href="modules/atelier-01-r/index.html">Atelier 01 - Explorer un tableau</a>
         </li>
       </ol>
@@ -6858,22 +7218,29 @@ display: none;
       <ol class="calendar-weeks" start="4">
         <li>
           <span class="calendar-week__number">04</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-09-23">23 septembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-03-regression-lineaire/index.html">Régression linéaire</a>
           <a href="evaluations/questionnaire-regression.html">Questionnaire formatif</a>
         </li>
         <li>
           <span class="calendar-week__number">05</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-09-30">30 septembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-04-regression-nonlineaire/index.html">Régression non linéaire</a>
         </li>
         <li>
           <span class="calendar-week__number">06</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-10-07">7 octobre</time>
+            <span class="calendar-week__mode calendar-week__mode--workshop">Atelier en classe</span>
+          </div>
           <a href="modules/atelier-02-regression/index.html">Atelier 02 - Régression</a>
           <a href="evaluations/mini-rapport-1.html">Mini-rapport 1</a>
-        </li>
-        <li>
-          <span class="calendar-week__number">07</span>
-          <a href="modules/semaine-05-preparation-intra/index.html">Préparation intra</a>
-          <a href="evaluations/examen-intra.html">Examen intra</a>
         </li>
       </ol>
     </article>
@@ -6883,25 +7250,55 @@ display: none;
         <span>Bloc 3</span>
         <h2 class="anchored">Prévoir des séries chronologiques</h2>
       </header>
-      <ol class="calendar-weeks" start="8">
+      <ol class="calendar-weeks" start="7">
+        <li>
+          <span class="calendar-week__number">07</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-10-14">14 octobre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
+          <a href="modules/semaine-06-series-chronologiques-intro/index.html">Module 06 - Introduction aux séries chronologiques</a>
+          <a href="modules/semaine-05-preparation-intra/index.html">Préparation à l&#39;intra : ressource disponible jusqu&#39;au 20 octobre</a>
+        </li>
         <li>
           <span class="calendar-week__number">08</span>
-          <a href="modules/semaine-06-series-chronologiques-intro/index.html">Séries chronologiques</a>
+          <div class="calendar-week__meta">
+            <time datetime="2026-10-21">21 octobre</time>
+            <span class="calendar-week__mode calendar-week__mode--exam">Examen en personne</span>
+          </div>
+          <a href="evaluations/examen-intra.html">Examen intra</a>
+          <span class="calendar-week__plain">Heure et local à confirmer</span>
         </li>
         <li>
           <span class="calendar-week__number">09</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-10-28">26 au 30 octobre</time>
+            <span class="calendar-week__mode calendar-week__mode--break">Semaine de lecture</span>
+          </div>
           <span class="calendar-week__plain">Relâche</span>
         </li>
         <li>
           <span class="calendar-week__number">10</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-11-04">4 novembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-07-lissage/index.html">Lissage et erreurs</a>
         </li>
         <li>
           <span class="calendar-week__number">11</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-11-11">11 novembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-08-tendance-saisonnalite/index.html">Tendance et saisonnalité</a>
         </li>
         <li>
           <span class="calendar-week__number">12</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-11-18">18 novembre</time>
+            <span class="calendar-week__mode calendar-week__mode--workshop">Atelier en classe</span>
+          </div>
           <a href="modules/atelier-03-series-chronologiques/index.html">Atelier 03 - Prévoir la demande</a>
           <a href="evaluations/mini-rapport-2.html">Point de contrôle mini-rapport 2</a>
         </li>
@@ -6916,25 +7313,59 @@ display: none;
       <ol class="calendar-weeks" start="13">
         <li>
           <span class="calendar-week__number">13</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-11-25">25 novembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-09-variables-externes-autocorrelation/index.html">Variables externes et autocorrélation</a>
         </li>
         <li>
           <span class="calendar-week__number">14</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-12-02">2 décembre</time>
+            <span class="calendar-week__mode calendar-week__mode--auto">Autoapprentissage</span>
+          </div>
           <a href="modules/semaine-10-classification-modeles-avances/index.html">Classification</a>
           <a href="evaluations/questionnaire-series-chronologiques.html">Questionnaire formatif</a>
           <a href="evaluations/mini-rapport-2.html">Remise mini-rapport 2</a>
         </li>
         <li>
           <span class="calendar-week__number">15</span>
+          <div class="calendar-week__meta">
+            <time datetime="2026-12-09">9 décembre</time>
+            <span class="calendar-week__mode calendar-week__mode--workshop">Atelier en classe</span>
+          </div>
           <a href="modules/atelier-04-recapitulation/index.html">Atelier 04 - Intégration</a>
-        </li>
-        <li>
-          <span class="calendar-week__number">16</span>
-          <a href="evaluations/examen-final.html">Examen final</a>
         </li>
       </ol>
     </article>
   </div>
+
+  <section class="calendar-exams" aria-labelledby="calendar-exams-title">
+    <div class="calendar-exams__header">
+      <p class="calendar-flow__eyebrow">Évaluations individuelles</p>
+      <h2 id="calendar-exams-title" class="anchored">Examens en personne</h2>
+      <p>
+        Les examens ne remplacent pas les ateliers. Ils sont planifiés dans les périodes
+        facultaires et peuvent avoir lieu le soir ou la fin de semaine.
+      </p>
+    </div>
+    <div class="calendar-exam-grid">
+      <article class="calendar-exam-card">
+        <span class="calendar-week__mode calendar-week__mode--exam">Examen en personne</span>
+        <h3 class="anchored"><a href="evaluations/examen-intra.html">Examen intra</a></h3>
+        <p>Mercredi 21 octobre 2026.</p>
+        <p class="calendar-exam-card__status">Heure, durée et local à confirmer dans l&#39;horaire institutionnel.</p>
+      </article>
+      <article class="calendar-exam-card">
+        <span class="calendar-week__mode calendar-week__mode--exam">Examen en personne</span>
+        <h3 class="anchored"><a href="evaluations/examen-final.html">Examen final</a></h3>
+        <p>Après l&#39;atelier intégrateur du 9 décembre. La période universitaire réservée va du 14 au 20 décembre.</p>
+        <p class="calendar-exam-card__status">Date, heure et local à confirmer dans l&#39;horaire institutionnel.</p>
+      </article>
+    </div>
+  </section>
+
 </section>
 
 
@@ -7023,7 +7454,7 @@ display: none;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -7043,11 +7474,11 @@ display: none;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7124,7 +7555,7 @@ display: none;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7199,7 +7630,7 @@ display: none;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7227,7 +7658,7 @@ display: none;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7251,7 +7682,7 @@ display: none;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7291,7 +7722,7 @@ display: none;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7417,7 +7848,7 @@ display: none;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>   
+</div>
     <div class="nav-footer-center">
        
     </div>

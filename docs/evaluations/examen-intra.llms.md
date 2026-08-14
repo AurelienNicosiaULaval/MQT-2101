@@ -14,7 +14,7 @@ Pondération : 30 %.
 - Feuille de référence du cours permise, sans pages supplémentaires.
 - Réponses justifiées : une valeur sans unité ou interprétation peut être incomplète.
 
-La date, le local et la durée sont publiés dans l’horaire institutionnel de la session.
+L’examen a lieu le mercredi 21 octobre 2026. L’heure, le local et la durée sont publiés dans l’horaire institutionnel de la session.
 
 ## Structure de l’examen
 

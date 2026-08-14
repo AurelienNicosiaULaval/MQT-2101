@@ -118,18 +118,18 @@ summary(modele_simple)
     lm(formula = ventes ~ achalandage, data = performance)
 
     Residuals:
-         Min       1Q   Median       3Q      Max 
-    -18695.7  -4922.6   -294.8   5934.3  18386.3 
+         Min       1Q   Median       3Q      Max
+    -18695.7  -4922.6   -294.8   5934.3  18386.3
 
     Coefficients:
-                Estimate Std. Error t value Pr(>|t|)    
+                Estimate Std. Error t value Pr(>|t|)
     (Intercept) 50540.53    5526.11   9.146 1.43e-13 ***
     achalandage    63.12       3.31  19.069  < 2e-16 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Residual standard error: 8433 on 70 degrees of freedom
-    Multiple R-squared:  0.8386,    Adjusted R-squared:  0.8363 
+    Multiple R-squared:  0.8386,    Adjusted R-squared:  0.8363
     F-statistic: 363.6 on 1 and 70 DF,  p-value: < 2.2e-16
 
 La pente du modèle simple indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel.
@@ -138,8 +138,8 @@ La pente du modèle simple indique la variation moyenne estimée des ventes pour
 coef(modele_simple)["achalandage"]
 ```
 
-    achalandage 
-       63.12511 
+    achalandage
+       63.12511
 
 > **TIP:**
 >
@@ -160,16 +160,16 @@ summary(modele_enrichi)
 
 
     Call:
-    lm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel + 
+    lm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel +
         ruptures_stock, data = performance)
 
     Residuals:
-        Min      1Q  Median      3Q     Max 
-    -8940.3 -2956.8  -437.2  2763.3 12110.6 
+        Min      1Q  Median      3Q     Max
+    -8940.3 -2956.8  -437.2  2763.3 12110.6
 
     Coefficients:
-                         Estimate Std. Error t value Pr(>|t|)    
-    (Intercept)         5098.7691  9382.6231   0.543    0.589    
+                         Estimate Std. Error t value Pr(>|t|)
+    (Intercept)         5098.7691  9382.6231   0.543    0.589
     achalandage           34.7889     3.6456   9.543 4.12e-14 ***
     depenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***
     heures_personnel     131.4254    25.6218   5.129 2.68e-06 ***
@@ -178,7 +178,7 @@ summary(modele_enrichi)
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Residual standard error: 4995 on 67 degrees of freedom
-    Multiple R-squared:  0.9458,    Adjusted R-squared:  0.9426 
+    Multiple R-squared:  0.9458,    Adjusted R-squared:  0.9426
     F-statistic: 292.3 on 4 and 67 DF,  p-value: < 2.2e-16
 
 Les coefficients du modèle enrichi se lisent en gardant constantes les autres variables incluses dans la formule. Cette formulation est importante, car elle évite de comparer naïvement des succursales qui n’ont pas le même achalandage ou la même dotation en personnel.

@@ -53,8 +53,8 @@ Ajustez `ses()` sur les 91 premières semaines. Relevez la valeur estimée de al
 > modele$model$par["alpha"]
 > ```
 >
->         alpha 
->     0.3711818 
+>         alpha
+>     0.3711818
 >
 > Plus alpha est proche de 1, plus le niveau estimé réagit à la dernière observation.
 
