@@ -4,7 +4,7 @@ Plan de cours
 
 ## Analyser des données d'affaires avec rigueur et jugement
 
-Ce cours présente des méthodes d'analyse et de modélisation des données utilisées en appui à la prise de décision d'affaires. Les dates précises seront confirmées dans le plan de cours institutionnel.
+Ce cours présente des méthodes d'analyse et de modélisation des données utilisées en appui à la prise de décision d'affaires. La modalité générale du cours est hybride.
 
 Langage principal R
 
@@ -67,25 +67,25 @@ Les mini-rapports développent l'analyse reproductible; les examens vérifient l
 
 ### Mini-rapport 1
 
-Analyse de données, exploration et régression, en équipe de 2 à 3. Remise à la fin de la semaine 06.
+Analyse de données, exploration et régression, en équipe de 2 à 3. Remise le 7 octobre à 23 h 59.
 
 30 %
 
 ### Examen intra
 
-Évaluation individuelle en personne sur le bloc régression, le mercredi 21 octobre 2026. L'heure et le local sont à confirmer.
+Évaluation individuelle en personne sur le bloc régression, le dimanche 25 octobre 2026, de 9 h à 11 h 50. Le local reste à confirmer.
 
 15 %
 
 ### Mini-rapport 2
 
-Prévision temporelle ou classification, en équipe de 2 à 3. Remise à la fin du module 10, avant l'atelier intégrateur.
+Prévision temporelle ou classification, en équipe de 2 à 3. Remise le 2 décembre à 23 h 59.
 
 40 %
 
 ### Examen final
 
-Évaluation individuelle en personne en fin de session.
+Évaluation individuelle en personne le lundi 14 décembre 2026, de 18 h 30 à 21 h 20. Le local reste à confirmer.
 
 Les questionnaires sur la régression et les séries chronologiques sont conservés comme exercices formatifs non évalués.
 

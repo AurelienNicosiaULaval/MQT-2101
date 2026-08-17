@@ -10,9 +10,9 @@ Pondération : 15 % de la note finale.
 
 - Proposition et validation du jeu de données : au plus tard à la fin du module 08.
 - Point de contrôle sur la validation : pendant l’atelier 03.
-- Remise : à la fin du module 10, avant l’atelier 04 et l’examen final.
+- Remise : le mercredi 2 décembre 2026 à 23 h 59.
 
-La date et l’heure civiles sont celles du calendrier institutionnel de la session.
+Le dépôt se fait dans Brio. Il est recommandé de vérifier l’archive avant la dernière heure.
 
 ## Modalité
 
