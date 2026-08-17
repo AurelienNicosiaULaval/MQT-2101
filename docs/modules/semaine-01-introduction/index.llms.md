@@ -52,7 +52,7 @@ Méthode une démarche descriptive
 
 Arrivée un diagnostic statistique prudent
 
-Le fil conducteur reste appliqué à des données utiles en administration : comprendre une structure de données, comparer des indicateurs, choisir une échelle pertinente et expliquer ce que les résultats permettent ou non de conclure.
+Le fil conducteur mobilise des données utiles en administration et en génie : comprendre une structure de données, comparer des indicateurs, choisir une échelle pertinente et expliquer ce que les résultats permettent ou non de conclure.
 
 À la fin de la semaine
 

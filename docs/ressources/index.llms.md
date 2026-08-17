@@ -30,7 +30,7 @@ Les liens ci-dessous mènent directement aux pages étudiantes du site.
 
 Repères généraux, lectures, règles d'utilisation de l'IA et déclaration à inclure au besoin.
 
-[Lectures et ressourcesLectures obligatoires, lectures facultatives et ressources externes.](lectures.llms.md) [IA et apprentissageUsages permis, usages interdits et responsabilités.](ia.llms.md) [Déclaration IAModèle à utiliser lorsque l'IA influence un livrable.](declaration-ia.llms.md)
+[Lectures et ressourcesLectures obligatoires, lectures facultatives et ressources externes.](lectures.llms.md) [Foire aux questionsRéponses rapides sur l'organisation, les outils, les vidéos et les évaluations.](faq.llms.md) [IA et apprentissageUsages permis, usages interdits et responsabilités.](ia.llms.md) [Déclaration IAModèle à utiliser lorsque l'IA influence un livrable.](declaration-ia.llms.md)
 
 ### Travailler avec R et Quarto
 

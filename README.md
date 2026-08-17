@@ -74,6 +74,21 @@ source("scripts/99_render_site.R")
 
 Les fichiers HTML seront créés dans `docs/`.
 
+## Valider avant une publication
+
+Exécuter les trois contrôles depuis la racine du projet :
+
+```bash
+Rscript scripts/12_validate_module_coherence.R
+Rscript scripts/13_validate_data_assets.R
+Rscript scripts/14_validate_site_output.R
+```
+
+Ils vérifient la structure pédagogique, les jeux de données, les fichiers
+générés, les références locales et l'absence de solutions publiées. Le même
+contrôle est exécuté automatiquement par GitHub Actions à chaque demande de
+fusion et à chaque mise à jour de la branche principale.
+
 ## Publier avec GitHub Pages
 
 Procédure recommandée :
@@ -120,5 +135,7 @@ La correspondance entre l'ancien matériel et la nouvelle structure est document
 - Les deux mini-rapports, les deux examens et les questionnaires formatifs sont documentés.
 - Les jeux de données publics ou simulés sont intégrés au site.
 - Les supports écrits des capsules sont utilisables de façon autonome.
+- Une foire aux questions de démarrage est publiée dans les ressources.
+- Les données et le rendu du site sont couverts par des validations automatiques.
 - Les prochaines capsules vidéo seront ajoutées sans modifier le parcours écrit.
 - Les dates, heures et locaux d'examen non publiés institutionnellement demeurent indiqués comme étant à confirmer.

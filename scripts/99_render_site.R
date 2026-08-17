@@ -8,7 +8,7 @@ quarto::quarto_render(input = ".")
 
 docs_files <- list.files(
   "docs",
-  pattern = "\\.(html|json|css)$",
+  pattern = "\\.(html|json|css|js|xml|md)$",
   recursive = TRUE,
   full.names = TRUE
 )

@@ -1,0 +1,48 @@
+# Foire aux questions
+
+## Où commencer?
+
+Commencez par la [page d’installation](../installation.llms.md), puis suivez le [calendrier](../calendrier.llms.md) dans l’ordre. Chaque module propose un parcours, des capsules écrites, des démonstrations, des exercices et une auto-vérification.
+
+## Où se trouvent les dates officielles?
+
+Brio demeure la référence pour les échéances civiles, les heures de remise, les locaux et les communications officielles. Le site présente le parcours pédagogique et les dates déjà confirmées. Un paramètre indiqué « à confirmer » ne doit pas être deviné.
+
+## Les vidéos sont-elles obligatoires?
+
+Non. Le support écrit est la référence et permet de réaliser chaque activité même lorsqu’une capsule vidéo n’est pas encore disponible. Les vidéos ajoutent une explication guidée, mais aucune notion évaluée ne doit dépendre uniquement d’une vidéo.
+
+## Quel logiciel faut-il installer?
+
+Il faut R, RStudio ou Positron, Quarto et les packages indiqués dans la [page d’installation](../installation.llms.md). RStudio et Positron sont deux choix possibles; un seul des deux suffit.
+
+## Que faire si un fichier CSV est introuvable?
+
+1.  ouvrez le projet ou le dossier du travail à sa racine;
+2.  vérifiez le nom et l’extension du fichier;
+3.  utilisez un chemin relatif;
+4.  ouvrez la section [Données](../donnees/index.llms.md) et téléchargez de nouveau le fichier au besoin.
+
+## Que remettre pour un mini-rapport?
+
+La consigne exige une archive contenant le fichier `.qmd`, le HTML autonome, les données autorisées ou un script d’importation, un court `README.md`, la déclaration de contribution et la déclaration d’usage de l’IA ou la mention explicite de non-usage. Consultez les [consignes d’évaluation](../evaluations/index.llms.md) avant chaque remise.
+
+## L’IA est-elle obligatoire?
+
+Non. Aucun compte payant ni outil d’IA n’est requis. L’IA est interdite pendant les examens. Pour les mini-rapports, elle est permise avec déclaration lorsqu’elle influence le livrable. Un travail réalisé sans IA n’est pas pénalisé. Consultez les [règles détaillées](../ressources/ia.llms.md).
+
+## Peut-on utiliser ses propres données?
+
+Oui, après validation selon la [procédure prévue](../evaluations/validation-donnees.llms.md). Les données personnelles, confidentielles ou obtenues sans droit clair d’utilisation sont interdites. Les jeux simulés publiés sur le site sont déjà autorisés.
+
+## Que faire si le site ou Internet est indisponible?
+
+Téléchargez avant un laboratoire les pages, données et gabarits nécessaires. Les activités peuvent être réalisées localement dans R et Quarto. En cas de panne qui touche une remise, attendez la communication officielle dans Brio plutôt que d’envoyer un travail par un canal non autorisé.
+
+## Où poser une question?
+
+Utilisez le canal général annoncé dans Brio pour une question utile à tout le groupe. Pour une situation personnelle, une mesure d’accommodement ou un problème confidentiel, utilisez uniquement le canal institutionnel privé indiqué par l’équipe enseignante.
+
+## Comment demander une aide technique utile?
+
+Indiquez le résultat attendu, le code minimal, le message d’erreur complet et l’étape déjà tentée. Ne transmettez jamais de données personnelles ou confidentielles dans un forum ou un outil d’IA.
