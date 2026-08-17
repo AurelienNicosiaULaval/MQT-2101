@@ -154,10 +154,41 @@ for (i in seq_len(nrow(course_modules))) {
     if (!has_path) add_warning(paste0(module_id, " : parcours étudiant à rendre explicite."))
     if (!has_self_check) add_warning(paste0(module_id, " : auto-vérification à ajouter ou justifier."))
   }
+
+  module_paths <- list.files(directory, pattern = "[.]qmd$", full.names = TRUE)
+  module_text <- paste(vapply(module_paths, read_text, character(1)), collapse = "\n")
+  has_concrete_trace <- any(vapply(
+    c("Trace finale", "Production attendue", "À produire", ">Production<"),
+    grepl,
+    logical(1),
+    x = module_text,
+    fixed = TRUE
+  ))
+
+  if (!has_concrete_trace) {
+    add_error(paste0(module_id, " : aucune trace ou production concrète annoncée."))
+  }
 }
 
 for (workshop in workshops) {
   check_required_files(workshop, required_workshop_files)
+}
+
+all_student_text <- paste(vapply(
+  list.files("modules", pattern = "[.]qmd$", recursive = TRUE, full.names = TRUE),
+  read_text,
+  character(1)
+), collapse = "\n")
+
+audience_markers <- c(
+  administration = "administr",
+  genie = "génie|ingénier"
+)
+
+for (audience in names(audience_markers)) {
+  if (!grepl(audience_markers[[audience]], all_student_text, ignore.case = TRUE, perl = TRUE)) {
+    add_error(paste0("Public insuffisamment représenté dans les modules : ", audience, "."))
+  }
 }
 
 transition_checks <- c(

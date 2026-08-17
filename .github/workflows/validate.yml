@@ -1,0 +1,31 @@
+name: Valider le site MQT-2101
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extraire le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Vérifier la cohérence pédagogique
+        run: Rscript scripts/12_validate_module_coherence.R
+
+      - name: Vérifier les données publiées
+        run: Rscript scripts/13_validate_data_assets.R
+
+      - name: Vérifier le site rendu
+        run: Rscript scripts/14_validate_site_output.R
+
+      - name: Vérifier le format du diff
+        run: git diff --check
