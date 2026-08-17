@@ -27,6 +27,22 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m09-c01
+#| include: false
+library(tidyverse)
+library(forecast)
+data_candidates <- c("data/ventes_promotions_quebec.csv", "../../data/ventes_promotions_quebec.csv", "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
+train <- ventes |> slice_head(n = 60)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label, data = train)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,30 +62,40 @@ Avant d'ajouter un prédicteur, il faut vérifier son statut au point d'origine.
 ::: {.keypoints}
 - Classer un prédicteur selon sa disponibilité future.
 - Repérer une fuite d'information.
+- Classer les prédicteurs selon leur disponibilité future.
 :::
 
-## L'idée centrale
+## Un bon prédicteur peut être inutilisable en production
 
 ::: {.keypoints}
 - Le calendrier et une promotion approuvée peuvent être connus.
 - Un prix envisagé doit être scénarisé.
-- La cible future ne peut jamais être un prédicteur.
+- La cible future observée est indisponible, mais ses valeurs retardées peuvent être connues.
 :::
 
-## Décision ou exemple
+## Promotion connue, météo prévue, ventes inconnues
 
 ::: {.example-box}
-Une promotion approuvée est connue. La météo est prévue séparément. Les ventes réelles du mois prochain sont la cible.
+Une promotion approuvée est connue. La météo est prévue séparément. Les ventes réelles du mois prochain sont la cible et restent inconnues au point d'origine.
 :::
 
-## Le geste en R
+## Documenter la disponibilité des prédicteurs
 
 ```{r}
-#| eval: false
-predicteurs |> count(statut_disponibilite)
+#| label: code-m09-c01
+#| echo: true
+#| eval: true
+predicteurs <- tribble(
+  ~variable, ~statut,
+  "promotion approuvée", "connue",
+  "météo du mois prochain", "prévue séparément",
+  "ventes du mois prochain", "inconnues",
+  "ventes du mois courant", "connues et retardées"
+)
+predicteurs
 ```
 
-## Piège fréquent
+## Une variable future observée crée une fuite
 
 ::: {.warning-box}
 Utiliser les ventes observées du mois prochain comme variable explicative améliore artificiellement la performance sans aider la décision réelle.
@@ -77,13 +103,48 @@ Utiliser les ventes observées du mois prochain comme variable explicative amél
 
 ## À retenir
 
-::: {.keypoints}
-- La disponibilité future est une condition de validité.
-- Un scénario doit être annoncé comme tel.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La disponibilité future est une condition de validité.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Un scénario doit être annoncé comme tel.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 9.1
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 9.1
 
 ::: {.lead}
-Classez une promotion approuvée, la météo du mois prochain et les ventes du mois prochain.
+Classez une promotion approuvée, la météo du mois prochain, les ventes du mois prochain et les ventes du mois courant.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

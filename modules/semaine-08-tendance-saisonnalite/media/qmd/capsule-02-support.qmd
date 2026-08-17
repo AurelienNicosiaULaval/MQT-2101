@@ -27,6 +27,21 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m08-c02
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
+train <- ventes |> slice_head(n = 60)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +61,16 @@ Un indice de temps porte la tendance et un facteur mois porte les différences s
 ::: {.keypoints}
 - Créer un indice de temps et un facteur mois.
 - Interpréter une catégorie de référence.
+- Fixer explicitement la catégorie de référence.
 :::
 
-## L'idée centrale
+## Le vrai coefficient de décembre
+
+::: {.example-box}
+Dans les 60 mois d'entraînement, décembre est associé à environ 32 700 $ de ventes supplémentaires par rapport à janvier, à tendance égale.
+:::
+
+## Janvier ne devient référence que si on le demande
 
 ::: {.keypoints}
 - L'indice de temps augmente d'une unité par période.
@@ -56,21 +78,22 @@ Un indice de temps porte la tendance et un facteur mois porte les différences s
 - La référence fixe la comparaison, elle n'est pas la meilleure catégorie.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Avec janvier comme référence, un coefficient de décembre de 80 000 représente une différence moyenne conditionnelle au temps dans le modèle.
-:::
-
-## Le geste en R
+## Fixer janvier avant d'interpréter
 
 ```{r}
-#| eval: false
-ventes <- ventes |> mutate(mois_label = factor(mois_label))
-contrasts(ventes$mois_label)
+#| label: code-m08-c02
+#| echo: true
+#| eval: true
+ventes <- ventes |>
+  mutate(mois_label = factor(mois_label, levels = mois_fr))
+modele_calendrier <- lm(ventes ~ indice_temps + mois_label, data = train)
+tibble(
+  reference = levels(train$mois_label)[1],
+  coefficient_decembre = coef(modele_calendrier)[["mois_labeldécembre"]]
+)
 ```
 
-## Piège fréquent
+## La référence implicite change l'interprétation
 
 ::: {.warning-box}
 Présenter un coefficient de mois comme un effet causal du calendrier dépasse un modèle observationnel.
@@ -78,13 +101,48 @@ Présenter un coefficient de mois comme un effet causal du calendrier dépasse u
 
 ## À retenir
 
-::: {.keypoints}
-- La référence est un point de comparaison.
-- Les coefficients se lisent conditionnellement au modèle.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La référence est un point de comparaison.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Les coefficients se lisent conditionnellement au modèle.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 8.2
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 8.2
 
 ::: {.lead}
-Interprétez un coefficient de décembre de 80 000 avec les mots « à tendance égale ».
+Interprétez le coefficient de décembre affiché avec les mots « à tendance égale ».
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

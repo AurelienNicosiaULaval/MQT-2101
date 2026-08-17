@@ -27,13 +27,44 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-module-04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
+entrainement <- saturation |> slice(id_entrainement)
+test <- saturation |> slice(-id_entrainement)
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Un choix à défendre
+:::
+
+::: {.question-line}
+Pourriez-vous justifier le modèle retenu sans montrer une seule ligne de code?
+:::
+
+::: {.note-box}
+La direction a besoin d'une forme observée, d'une comparaison hors échantillon, d'une conséquence et d'une limite. Une conclusion utile reste plus simple que le calcul qui la soutient.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Justifier un choix de modèle.
 - Relier le choix au contexte d'affaires.
 - Écrire une conclusion courte.
 - Nommer une limite et une suite possible.
-
+:::
 ## Structure de justification
 
 - Ce que montre le graphique.
@@ -63,12 +94,48 @@ Les ventes augmentent avec l'achalandage, mais la relation semble ralentir aux n
 - Limite d'extrapolation.
 - Conclusion liée à la décision.
 
-## Activité 4.6
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Un modèle non linéaire sert à mieux décrire une forme.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La communication doit rester plus simple que le calcul.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La recommandation doit être orientée vers l'action et défendable.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+:::
+## Production autonome 4.6
 
 Rédigez une conclusion de cinq phrases maximum : forme observée, modèle retenu, argument, décision possible et limite.
 
-## À retenir
 
-- Un modèle non linéaire sert à mieux décrire une forme.
-- La communication doit rester plus simple que le calcul.
-- La recommandation doit être orientée vers l'action et défendable.
+### Auto-vérification
+
+::: {.self-check}
+- Les modèles sont comparés sur les mêmes données test.
+- La forme retenue est visible et interprétable.
+- La prédiction reste dans la plage observée et son incertitude est indiquée.
+:::

@@ -27,6 +27,22 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m07-c02
+#| include: false
+library(tidyverse)
+library(slider)
+library(forecast)
+data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+demande <- readr::read_csv(data_path, show_col_types = FALSE)
+demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
+horizon <- 13
+train <- demande |> slice_head(n = nrow(demande) - horizon)
+test <- demande |> slice_tail(n = horizon)
+serie <- ts(train$demande, frequency = 52)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +62,16 @@ Le lissage exponentiel met à jour un niveau estimé en pondérant la dernière 
 ::: {.keypoints}
 - Expliquer le rôle de alpha.
 - Choisir le lissage simple seulement lorsque sa structure est plausible.
+- Distinguer estimation du paramètre et évaluation du modèle.
 :::
 
-## L'idée centrale
+## Une hausse récente révèle l'effet d'alpha
+
+::: {.example-box}
+Avec une demande en hausse, alpha = 0,8 se rapproche beaucoup plus vite de la dernière observation que alpha = 0,2.
+:::
+
+## Alpha est estimé avant d'être évalué
 
 ::: {.keypoints}
 - Un alpha élevé réagit plus vite.
@@ -56,35 +79,68 @@ Le lissage exponentiel met à jour un niveau estimé en pondérant la dernière 
 - Le lissage simple n'est pas adapté à une forte tendance non modélisée.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Avec une demande en hausse, alpha = 0,8 se rapproche beaucoup plus vite de la dernière observation que alpha = 0,2.
-:::
-
-## Le geste en R
+## Ajuster le lissage sur l'entraînement
 
 ```{r}
-#| eval: false
-fit <- forecast::ses(train$demande, h = nrow(test))
-autoplot(fit)
+#| label: code-m07-c02
+#| echo: true
+#| eval: true
+fit <- forecast::ses(serie, h = horizon)
+autoplot(fit) +
+  labs(x = "Semaine", y = "Demande (unités)") +
+  theme_minimal(base_size = 14)
 ```
 
-## Piège fréquent
+## Le test ne sert pas à choisir alpha
 
 ::: {.warning-box}
-Présenter alpha comme une constante universellement bonne masque qu'il doit être évalué sur une période test.
+Alpha est estimé sur les données d'entraînement. La méthode est ensuite évaluée une seule fois sur la période test; le test ne sert pas à choisir alpha.
 :::
 
 ## À retenir
 
-::: {.keypoints}
-- Le niveau lissé est une prévision révisable.
-- La méthode doit être comparée à une référence.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Le niveau lissé est une prévision révisable.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La méthode doit être comparée à une référence.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 7.2
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 7.2
 
 ::: {.lead}
 Comparez qualitativement les effets de alpha = 0,2 et alpha = 0,8 pour une demande récente en hausse.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

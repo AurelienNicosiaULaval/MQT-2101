@@ -110,9 +110,11 @@ for (i in seq_len(nrow(course_modules))) {
     deck_text <- read_text(deck_path)
     expected_sections <- c(
       "revealjs",
+      "## Pourquoi ça compte",
       "## Objectifs de la capsule",
       "## À retenir",
-      "## Activité"
+      "## Production autonome",
+      "### Auto-vérification"
     )
     missing_sections <- expected_sections[
       !vapply(expected_sections, grepl, logical(1), x = deck_text, fixed = TRUE)

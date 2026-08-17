@@ -50,6 +50,10 @@ Ce guide alterne cinq types d'activités.
 
 Temps estimé : 2 h 30 à 3 h en classe, avec finalisation possible après la séance.
 
+::: {.callout-note title="Parcours essentiel et prolongements"}
+Le parcours essentiel comprend les tâches 1, 2 et 4 à 8. La tâche 3, qui construit un dictionnaire détaillé, et la tâche 9, qui propose une seconde formulation de la suite, sont des prolongements facultatifs. La mise en commun de l'épisode 10 se fait si le temps le permet. Cette distinction permet de terminer une trace cohérente pendant la séance.
+:::
+
 ## Données et préparation
 
 Fichier : <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.
@@ -173,7 +177,7 @@ dictionnaire_variables |>
   knitr::kable()
 ```
 
-::: {.callout-tip title="À vous 3 - Choisir les variables clés"}
+::: {.callout-tip title="Prolongement facultatif 3 - Choisir les variables clés"}
 Dans votre rapport, choisissez cinq variables utiles pour la direction. Pour chacune, indiquez son rôle : performance commerciale, clientèle, marketing, opérations ou satisfaction.
 :::
 
@@ -244,7 +248,7 @@ synthese_succursales <- ventes |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
     ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
@@ -351,7 +355,7 @@ priorite_marketing <- ventes |>
     observations = n(),
     ventes_moyennes = mean(ventes, na.rm = TRUE),
     depenses_marketing_moyennes = mean(depenses_marketing, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = sum(ventes, na.rm = TRUE) / sum(clients, na.rm = TRUE),
     .groups = "drop"
   ) |>
   mutate(
@@ -451,7 +455,7 @@ Options possibles :
 - comparer les succursales à clientèle comparable;
 - analyser les périodes de haute saison séparément.
 
-::: {.callout-tip title="À vous 9 - Formuler la prochaine analyse"}
+::: {.callout-tip title="Prolongement facultatif 9 - Formuler une seconde version"}
 Écrivez trois phrases :
 
 1. Les données suggèrent que...
@@ -478,13 +482,14 @@ Votre trace finale prend la forme d'un fichier Quarto court. Elle doit contenir 
 
 1. Question d'analyse.
 2. Description du tableau.
-3. Dictionnaire rapide des variables clés.
-4. Diagnostic des valeurs manquantes.
-5. Tableau synthèse par succursale.
-6. Graphique 1 : ventes par succursale.
-7. Graphique 2 : indicateur opérationnel ou satisfaction.
-8. Trois constats.
-9. Recommandation de prochaine analyse.
+3. Diagnostic des valeurs manquantes.
+4. Tableau synthèse par succursale.
+5. Graphique 1 : ventes par succursale.
+6. Graphique 2 : indicateur opérationnel ou satisfaction.
+7. Trois constats.
+8. Recommandation de prochaine analyse.
+
+Le dictionnaire détaillé et la seconde formulation de la recommandation sont des prolongements facultatifs.
 
 ## Grille formative
 

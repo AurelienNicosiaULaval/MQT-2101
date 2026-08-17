@@ -74,15 +74,17 @@ Notez explicitement la dernière date d’entraînement et la première date de 
 
 ``` r
 serie <- ts(entrainement$demande, frequency = 52)
+prevision_holt <- holt(serie, h = horizon, damped = TRUE, level = c(80, 95))
 
 previsions <- test |>
   transmute(
     semaine,
     observe = demande,
     naive = tail(entrainement$demande, 1),
+    saison_naive = as.numeric(snaive(serie, h = horizon)$mean),
     moyenne_4 = mean(tail(entrainement$demande, 4)),
     SES = as.numeric(ses(serie, h = horizon)$mean),
-    Holt = as.numeric(holt(serie, h = horizon, damped = TRUE)$mean)
+    Holt = as.numeric(prevision_holt$mean)
   )
 ```
 
@@ -107,13 +109,14 @@ tableau_mesures <- evaluation |>
 tableau_mesures
 ```
 
-    # A tibble: 4 × 5
-      methode     MAE  RMSE biais erreur_max
-      <chr>     <dbl> <dbl> <dbl>      <dbl>
-    1 moyenne_4  100.  128.  82.6       264.
-    2 SES        114.  144. 106.        287.
-    3 Holt       152.  189. 152.        354.
-    4 naive      185.  209. 185.        366
+    # A tibble: 5 × 5
+      methode        MAE  RMSE biais erreur_max
+      <chr>        <dbl> <dbl> <dbl>      <dbl>
+    1 moyenne_4     100.  128.  82.6       264.
+    2 SES           114.  144. 106.        287.
+    3 Holt          152.  189. 152.        354.
+    4 saison_naive  179.  194. 143.        298
+    5 naive         185.  209. 185.        366
 
 ``` r
 evaluation |>
@@ -129,6 +132,41 @@ evaluation |>
 > **TIP:**
 >
 > Choisissez une méthode et citez au moins deux mesures. Expliquez une raison de ne pas suivre aveuglément le classement.
+
+## Étape 5b - Rendre l’incertitude visible
+
+``` r
+tibble(
+  semaine = test$semaine,
+  prevision = as.numeric(prevision_holt$mean),
+  borne_80_inf = prevision_holt$lower[, "80%"],
+  borne_80_sup = prevision_holt$upper[, "80%"],
+  borne_95_inf = prevision_holt$lower[, "95%"],
+  borne_95_sup = prevision_holt$upper[, "95%"]
+) |>
+  mutate(across(where(is.numeric), ~ round(.x))) |>
+  knitr::kable()
+```
+
+| semaine    | prevision | borne_80_inf | borne_80_sup | borne_95_inf | borne_95_sup |
+|:-----------|----------:|-------------:|-------------:|-------------:|-------------:|
+| 2025-09-29 |      1280 |         1160 |         1401 |         1096 |         1464 |
+| 2025-10-06 |      1272 |         1148 |         1395 |         1082 |         1461 |
+| 2025-10-13 |      1264 |         1136 |         1392 |         1068 |         1460 |
+| 2025-10-20 |      1257 |         1123 |         1390 |         1053 |         1461 |
+| 2025-10-27 |      1251 |         1111 |         1390 |         1037 |         1464 |
+| 2025-11-03 |      1245 |         1099 |         1392 |         1021 |         1469 |
+| 2025-11-10 |      1240 |         1086 |         1394 |         1005 |         1476 |
+| 2025-11-17 |      1236 |         1074 |         1398 |          989 |         1483 |
+| 2025-11-24 |      1232 |         1062 |         1402 |          972 |         1492 |
+| 2025-12-01 |      1229 |         1050 |         1407 |          956 |         1501 |
+| 2025-12-08 |      1226 |         1039 |         1412 |          940 |         1511 |
+| 2025-12-15 |      1223 |         1027 |         1418 |          924 |         1522 |
+| 2025-12-22 |      1220 |         1016 |         1424 |          908 |         1532 |
+
+> **NOTE:**
+>
+> La prévision centrale sert à planifier, tandis que les intervalles décrivent des plages plausibles sous les hypothèses du modèle de Holt. Un intervalle à 95 % est plus large qu’un intervalle à 80 %. Ces bandes ne corrigent pas une rupture structurelle ou une promotion future inconnue.
 
 ## Étape 6 - Traduire en décision
 
@@ -146,13 +184,14 @@ couts <- evaluation |>
 couts
 ```
 
-    # A tibble: 4 × 2
-      methode   cout_total
-      <chr>          <dbl>
-    1 moyenne_4     21944.
-    2 SES           25997.
-    3 Holt          35578.
-    4 naive         43254
+    # A tibble: 5 × 2
+      methode      cout_total
+      <chr>             <dbl>
+    1 moyenne_4        21944.
+    2 SES              25997.
+    3 Holt             35578.
+    4 saison_naive     38780
+    5 naive            43254
 
 > **IMPORTANT:**
 >
@@ -166,6 +205,10 @@ Les dates et unités sont explicites.
 
 La période test n’a pas servi à l’ajustement.
 
+La méthode saisonnière naïve est incluse comme référence.
+
 Le graphique et le tableau racontent la même histoire.
+
+L’incertitude d’une méthode est montrée par des intervalles de prévision.
 
 La recommandation tient compte du coût asymétrique.

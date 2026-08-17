@@ -133,8 +133,10 @@ tickets <- rpois(n_clients, lambda = 1.5)
 satisfaction <- pmin(10, pmax(1, round(rnorm(n_clients, 7.3 - 0.22 * tickets, 1.2), 1)))
 contrat <- sample(c("mensuel", "annuel"), n_clients, replace = TRUE, prob = c(0.62, 0.38))
 rabais <- sample(c("aucun", "fidélité", "rétention"), n_clients, replace = TRUE, prob = c(0.56, 0.32, 0.12))
-logit_depart <- -0.7 - 0.025 * anciennete - 0.12 * utilisation + 0.42 * tickets -
-  0.33 * satisfaction + 0.85 * (contrat == "mensuel") + 0.40 * (rabais == "rétention")
+# Le taux de départ est volontairement assez élevé pour permettre une vraie
+# comparaison de seuils en classe, tout en restant minoritaire.
+logit_depart <- 2.10 - 0.030 * anciennete - 0.10 * utilisation + 0.55 * tickets -
+  0.38 * satisfaction + 1.00 * (contrat == "mensuel") + 0.55 * (rabais == "rétention")
 prob_depart <- plogis(logit_depart)
 
 fidelisation_clients <- tibble(
@@ -154,7 +156,7 @@ write_course_csv(
   "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv"
 )
 
-# Atelier 04 : cas intégrateur permettant régression, prévision ou classification.
+# Atelier 04 : cas intégrateur permettant prévision ou classification.
 succursales <- tibble(
   succursale = c("Québec", "Montréal", "Sherbrooke", "Gatineau"),
   capacite = c(2400, 3300, 1850, 2100),
@@ -183,15 +185,19 @@ cas_integrateur <- tidyr::crossing(date = dates_mensuelles, succursales) |>
       45000 + 66 * achalandage + effet_local +
         if_else(promotion == "oui", 18000, 0) - 2600 * ruptures_stock + rnorm(n(), 0, 6500)
     ),
-    niveau_service_insuffisant = rbinom(
-      n(), 1, plogis(-5.2 + 0.62 * temps_attente + 0.30 * ruptures_stock - 0.18 * satisfaction)
+    taux_utilisation = achalandage / capacite,
+    service_insuffisant_mois_suivant = rbinom(
+      n(), 1, plogis(
+        -3.70 + 0.62 * temps_attente + 0.32 * ruptures_stock -
+          0.16 * satisfaction + 0.35 * (promotion == "oui")
+      )
     )
   ) |>
   ungroup() |>
   select(
     date, succursale, indice_temps, promotion, capacite, achalandage,
-    ruptures_stock, temps_attente, satisfaction, ventes,
-    niveau_service_insuffisant
+    ruptures_stock, temps_attente, satisfaction, taux_utilisation, ventes,
+    service_insuffisant_mois_suivant
   )
 
 write_course_csv(

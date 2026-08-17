@@ -27,20 +27,53 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-module-04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
+entrainement <- saturation |> slice(id_entrainement)
+test <- saturation |> slice(-id_entrainement)
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une forme à choisir
+:::
+
+::: {.question-line}
+Quelle courbe résume la saturation sans perdre le lien avec la décision?
+:::
+
+::: {.note-box}
+Le terme quadratique et le logarithme n'imposent pas la même forme. Les comparer oblige à relier le choix mathématique au nuage de points et à l'échelle des ventes.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Comprendre le rôle d'une transformation.
 - Utiliser un terme quadratique.
 - Utiliser un logarithme lorsque le contexte le justifie.
 - Garder le lien avec l'échelle originale.
-
+:::
 ## Transformation : définition pratique
 
 Une transformation change la forme utilisée par le modèle. Elle ne change pas la question d'analyse : elle change la façon de résumer la relation.
 
 ## Modèle quadratique
 
-```r
+```{r}
+#| label: code-quadratique-module-04
+#| echo: true
 modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = saturation)
 ```
 
@@ -48,7 +81,9 @@ Le terme `I(achalandage^2)` permet à la relation estimée de se courber.
 
 ## Modèle logarithmique
 
-```r
+```{r}
+#| label: code-logarithmique-module-04
+#| echo: true
 modele_log <- lm(ventes ~ log(achalandage), data = saturation)
 ```
 
@@ -65,12 +100,48 @@ Le logarithme peut représenter une augmentation rapide au début, puis plus len
 
 Une transformation peut améliorer l'ajustement tout en rendant l'interprétation moins directe. Il faut donc revenir à des phrases concrètes sur les ventes et l'achalandage.
 
-## Activité 4.3
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Une transformation est un choix de forme.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Le choix doit être justifié par les données et le contexte.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+L'interprétation doit revenir à l'échelle de la décision d'affaires.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+:::
+## Production autonome 4.3
 
 Écrivez une phrase qui explique pourquoi un modèle transformé peut être plus réaliste qu'une droite dans le cas d'une succursale saturée.
 
-## À retenir
 
-- Une transformation est un choix de forme.
-- Le choix doit être justifié par les données et le contexte.
-- L'interprétation doit revenir à l'échelle de la décision d'affaires.
+### Auto-vérification
+
+::: {.self-check}
+- Les modèles sont comparés sur les mêmes données test.
+- La forme retenue est visible et interprétable.
+- La prédiction reste dans la plage observée et son incertitude est indiquée.
+:::

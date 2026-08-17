@@ -73,6 +73,7 @@ Un fichier importé sans vérification, c'est un calcul juste sur un tableau mal
 ```{r}
 #| label: capsule-04-importer
 #| eval: false
+#| echo: true
 
 library(tidyverse)
 library(janitor)
@@ -86,24 +87,20 @@ ventes_operations <- readr::read_csv(
 
 ## Pourquoi `clean_names()`?
 
-::: {.concept-grid}
-::: {.concept-card}
-::: {.tag}
-Avant
+::: {.note-box}
+Dans le fichier fourni, les noms sont déjà normalisés : `clean_names()` ne les modifie pas. L'appel reste utile comme vérification reproductible et protège le code si une version future contient des espaces, des majuscules ou des caractères spéciaux.
 :::
-::: {.text}
-`Panier Moyen ($)`, `Délai Livraison` - espaces, accents, majuscules.
-:::
-:::
-::: {.concept-card .accent}
-::: {.tag}
-Après
-:::
-::: {.text}
-`panier_moyen`, `delai_livraison_jours` - code plus simple et plus stable.
-:::
-:::
-:::
+
+```{r}
+#| label: capsule-04-verifier-noms
+
+tibble(
+  avant = names(readr::read_csv(data_path, show_col_types = FALSE)),
+  apres = names(ventes_operations),
+  identique = avant == apres
+) |>
+  knitr::kable()
+```
 
 ## Inspecter avec `glimpse()`
 
@@ -167,7 +164,8 @@ L'unité d'observation se nomme avant toute analyse.
 :::
 :::
 
-## Activité 2.4
+
+## Production autonome 2.4
 
 ::: {.lead}
 Importez `ventes_operations_quebec.csv` et décrivez le tableau.
@@ -175,4 +173,12 @@ Importez `ventes_operations_quebec.csv` et décrivez le tableau.
 
 ::: {.keypoints}
 Indiquez : le code d'importation, le nombre de lignes, le nombre de colonnes et ce que représente une ligne.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Le document se rend du début à la fin sans intervention manuelle.
+- Les valeurs manquantes et les unités sont signalées.
+- Chaque résultat est accompagné d'une phrase d'interprétation.
 :::

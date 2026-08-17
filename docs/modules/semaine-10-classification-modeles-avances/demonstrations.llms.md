@@ -36,8 +36,8 @@ clients |>
     # A tibble: 2 × 3
       depart_90j     n proportion
            <dbl> <int>      <dbl>
-    1          0   631     0.971
-    2          1    19     0.0292
+    1          0   452      0.695
+    2          1   198      0.305
 
 ## 2. Ajuster une régression logistique
 
@@ -56,13 +56,13 @@ tidy(modele, conf.int = TRUE, exponentiate = TRUE) |>
     # A tibble: 7 × 7
       term                   estimate std.error statistic p.value conf.low conf.high
       <chr>                     <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
-    1 anciennete_mois           0.987    0.0178    -0.717 0.473      0.950     1.02
-    2 utilisation_mensuelle     0.875    0.0612    -2.19  0.0285     0.771     0.981
-    3 tickets_service_6m        1.11     0.238      0.448 0.654      0.688     1.77
-    4 satisfaction              0.614    0.238     -2.04  0.0410     0.377     0.968
-    5 type_contratmensuel       1.23     0.622      0.330 0.741      0.385     4.71
-    6 rabais_actuelfidélité     3.39     0.703      1.74  0.0826     0.850    14.6
-    7 rabais_actuelrétention    6.46     0.711      2.63  0.00866    1.59     28.1
+    1 anciennete_mois           0.970   0.00752    -4.08  4.54e-5    0.955     0.984
+    2 utilisation_mensuelle     0.907   0.0230     -4.26  2.02e-5    0.866     0.948
+    3 tickets_service_6m        1.63    0.0962      5.10  3.47e-7    1.36      1.98
+    4 satisfaction              0.679   0.0966     -4.01  5.95e-5    0.559     0.817
+    5 type_contratmensuel       2.26    0.250       3.26  1.13e-3    1.40      3.74
+    6 rabais_actuelfidélité     1.26    0.252       0.929 3.53e-1    0.769     2.07
+    7 rabais_actuelrétention    1.81    0.315       1.88  5.94e-2    0.973     3.36
 
 Les valeurs exponentiées sont des rapports de cotes, pas des différences directes de probabilité.
 
@@ -83,7 +83,7 @@ evaluation |>
     # A tibble: 1 × 3
       probabilite_min probabilite_mediane probabilite_max
                 <dbl>               <dbl>           <dbl>
-    1         0.00110              0.0166           0.516
+    1         0.00760               0.266           0.896
 
 ## 4. Calculer les mesures à un seuil
 
@@ -116,8 +116,8 @@ bind_rows(
     # A tibble: 2 × 10
       seuil    VP    FP    VN    FN exactitude sensibilite specificite precision
       <dbl> <int> <int> <int> <int>      <dbl>       <dbl>       <dbl>     <dbl>
-    1   0.3     0     2   156     5      0.957           0       0.987         0
-    2   0.5     0     1   157     5      0.963           0       0.994         0
+    1   0.3    41    35    78     9      0.730        0.82       0.690     0.539
+    2   0.5    23     6   107    27      0.798        0.46       0.947     0.793
     # ℹ 1 more variable: proportion_ciblee <dbl>
 
 ## 5. Relier le seuil à une capacité
@@ -129,9 +129,9 @@ mesures_seuil(evaluation, seuil_capacite)
 ```
 
     # A tibble: 1 × 10
-       seuil    VP    FP    VN    FN exactitude sensibilite specificite precision
-       <dbl> <int> <int> <int> <int>      <dbl>       <dbl>       <dbl>     <dbl>
-    1 0.0716     0    25   133     5      0.816           0       0.842         0
+      seuil    VP    FP    VN    FN exactitude sensibilite specificite precision
+      <dbl> <int> <int> <int> <int>      <dbl>       <dbl>       <dbl>     <dbl>
+    1 0.532    19     6   107    31      0.773        0.38       0.947      0.76
     # ℹ 1 more variable: proportion_ciblee <dbl>
 
 ## 6. Vérifier sommairement la calibration
@@ -151,11 +151,11 @@ evaluation |>
     # A tibble: 5 × 4
       groupe_risque probabilite_moyenne frequence_observee clients
               <int>               <dbl>              <dbl>   <int>
-    1             1             0.00313             0           33
-    2             2             0.00915             0           33
-    3             3             0.0177              0.0909      33
-    4             4             0.0378              0.0312      32
-    5             5             0.124               0.0312      32
+    1             1              0.0664              0          33
+    2             2              0.170               0.152      33
+    3             3              0.286               0.242      33
+    4             4              0.410               0.375      32
+    5             5              0.672               0.781      32
 
 ## Interprétation
 

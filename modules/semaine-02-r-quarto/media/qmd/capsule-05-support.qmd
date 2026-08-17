@@ -62,11 +62,11 @@ Une décision concrète
 :::
 
 ::: {.question-line}
-Cette succursale a-t-elle vraiment les meilleures ventes, ou des données manquantes faussent-elles le portrait?
+Le délai moyen et la satisfaction décrivent-ils toutes les observations, ou seulement les lignes complètes?
 :::
 
 ::: {.note-box}
-Un classement bâti sur des colonnes incomplètes peut désigner le mauvais gagnant. Avant de comparer, il faut préparer les types de variables et repérer ce qui manque.
+Les ventes et le nombre de clients sont complets dans ce fichier, mais le délai de livraison et la satisfaction contiennent quelques valeurs manquantes. Avant de comparer ces indicateurs, il faut rendre explicite le nombre d'observations réellement utilisées.
 :::
 
 ## Objectifs de la capsule
@@ -151,7 +151,7 @@ resume_succursales <- ventes_preparees |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
@@ -204,7 +204,8 @@ Un tableau descriptif se rattache à une question et à une limite.
 :::
 :::
 
-## Activité 2.5
+
+## Production autonome 2.5
 
 ::: {.lead}
 Diagnostiquez et résumez le tableau préparé.
@@ -212,4 +213,12 @@ Diagnostiquez et résumez le tableau préparé.
 
 ::: {.keypoints}
 Ajoutez : un tableau de diagnostic des valeurs manquantes, un tableau descriptif par succursale ou par canal, et une phrase qui précise une limite d'interprétation.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Le document se rend du début à la fin sans intervention manuelle.
+- Les valeurs manquantes et les unités sont signalées.
+- Chaque résultat est accompagné d'une phrase d'interprétation.
 :::

@@ -27,19 +27,55 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-module-04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
+entrainement <- saturation |> slice(id_entrainement)
+test <- saturation |> slice(-id_entrainement)
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une comparaison loyale
+:::
+
+::: {.question-line}
+Quel modèle prédit le mieux des observations qu'il n'a pas utilisées pour s'ajuster?
+:::
+
+::: {.note-box}
+Une erreur calculée sur les données d'entraînement mesure surtout l'ajustement. Une période ou un échantillon test séparé permet une comparaison plus crédible des prédictions.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Comparer plusieurs modèles sur les mêmes données.
 - Utiliser un graphique de prédictions.
 - Calculer une mesure d'erreur.
 - Éviter de choisir automatiquement le modèle le plus complexe.
-
+:::
 ## Trois modèles candidats
 
-```r
-modele_lin <- lm(ventes ~ achalandage, data = saturation)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = saturation)
-modele_log <- lm(ventes ~ log(achalandage), data = saturation)
+```{r}
+#| label: code-candidats-module-04
+#| echo: true
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(
+  ventes ~ achalandage + I(achalandage^2),
+  data = entrainement
+)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
 ```
 
 ## Critères utiles
@@ -51,29 +87,82 @@ modele_log <- lm(ventes ~ log(achalandage), data = saturation)
 
 ## RMSE
 
-La RMSE résume l'erreur typique de prédiction dans l'unité de la variable réponse. Plus elle est faible, plus les prédictions sont proches des valeurs observées, toutes choses égales par ailleurs.
+La RMSE test résume l'erreur typique sur des observations qui n'ont pas servi à ajuster les modèles. Elle s'exprime ici en dollars de ventes. Plus elle est faible, plus les prédictions hors échantillon sont proches des valeurs observées, pour cette séparation précise.
 
-## Code indicatif
+## Résultat hors échantillon
 
-```r
-rmse <- function(modele) sqrt(mean(residuals(modele)^2))
+```{r}
+#| label: resultat-rmse-module-04
+#| echo: false
+rmse_test <- function(modele, nouvelles_donnees) {
+  prediction <- predict(modele, newdata = nouvelles_donnees)
+  sqrt(mean((nouvelles_donnees$ventes - prediction)^2))
+}
 
 tibble(
   modele = c("lineaire", "quadratique", "logarithmique"),
-  rmse = c(rmse(modele_lin), rmse(modele_quad), rmse(modele_log))
-)
+  rmse_test = c(
+    rmse_test(modele_lin, test),
+    rmse_test(modele_quad, test),
+    rmse_test(modele_log, test)
+  )
+) |>
+  mutate(rmse_test = scales::dollar(
+    rmse_test,
+    prefix = "",
+    suffix = " $",
+    big.mark = " ",
+    accuracy = 1
+  )) |>
+  knitr::kable()
 ```
 
 ## Piège fréquent
 
-Le modèle qui obtient la meilleure mesure numérique n'est pas automatiquement le meilleur pour communiquer une recommandation.
-
-## Activité 4.4
-
-Préparez une grille de comparaison avec trois colonnes : graphique, erreur et interprétation.
+Le modèle quadratique obtient la plus faible RMSE sur cette séparation, environ 8 367 $. Ce résultat dépend toutefois de l'échantillon test; il doit être lu avec le graphique, les résidus et l'interprétabilité.
 
 ## À retenir
 
-- Comparer, c'est croiser plusieurs indices.
-- Un chiffre ne suffit pas.
-- Le meilleur modèle est celui qui résume bien les données et reste interprétable.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Comparer, c'est croiser plusieurs indices.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Un chiffre ne suffit pas.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Le meilleur modèle est celui qui résume bien les données et reste interprétable.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+:::
+## Production autonome 4.4
+
+Préparez une grille de comparaison avec trois colonnes : graphique, erreur et interprétation.
+
+
+### Auto-vérification
+
+::: {.self-check}
+- Les modèles sont comparés sur les mêmes données test.
+- La forme retenue est visible et interprétable.
+- La prédiction reste dans la plage observée et son incertitude est indiquée.
+:::

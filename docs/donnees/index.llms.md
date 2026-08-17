@@ -130,7 +130,7 @@ Atelier 04 - Intégration
 
 Données mensuelles simulées pour quatre succursales avec réponses continue et binaire.
 
-288 observations · 11 variables
+288 observations · 12 variables
 
 [Télécharger le CSV](../modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv)
 

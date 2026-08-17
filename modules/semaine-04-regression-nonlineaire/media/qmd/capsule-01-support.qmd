@@ -27,13 +27,44 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-module-04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
+entrainement <- saturation |> slice(id_entrainement)
+test <- saturation |> slice(-id_entrainement)
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une forme qui change la décision
+:::
+
+::: {.question-line}
+Une droite peut-elle recommander toujours plus de clients quand la succursale est déjà saturée?
+:::
+
+::: {.note-box}
+Le nuage de points permet de voir si chaque client additionnel est associé au même gain de ventes. Une courbure ignorée peut transformer un ajustement commode en recommandation irréaliste.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Repérer une courbure dans un nuage de points.
 - Comprendre la notion de saturation.
 - Expliquer pourquoi une droite peut devenir insuffisante.
 - Préparer la comparaison de modèles.
-
+:::
 ## L'idée centrale
 
 Une relation est non linéaire lorsque l'effet moyen de `x` sur `y` change selon le niveau de `x`. Par exemple, une hausse de 100 clients peut avoir un effet différent lorsque l'achalandage est faible ou déjà très élevé.
@@ -54,25 +85,63 @@ Une relation est non linéaire lorsque l'effet moyen de `x` sur `y` change selon
 
 ## Code minimal
 
-```r
-library(tidyverse)
-
-saturation <- read_csv("data/achalandage_saturation_quebec.csv")
-
+```{r}
+#| label: code-nuage-module-04
+#| echo: true
 ggplot(saturation, aes(x = achalandage, y = ventes)) +
-  geom_point(alpha = 0.7)
+  geom_point(alpha = 0.65, color = "#0B4F6C") +
+  geom_smooth(method = "loess", se = FALSE, color = "#E69F00", linewidth = 1.2) +
+  scale_y_continuous(labels = scales::label_dollar(suffix = " $")) +
+  labs(x = "Achalandage mensuel", y = "Ventes mensuelles") +
+  theme_minimal(base_size = 14)
 ```
 
 ## Piège fréquent
 
 Ajuster une droite sans regarder le graphique peut donner une réponse techniquement correcte, mais trompeuse sur le fond.
 
-## Activité 4.1
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La non-linéarité est d'abord une question de forme.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La saturation est une explication opérationnelle plausible.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Le graphique aide à juger si la droite mérite confiance.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+:::
+## Production autonome 4.1
 
 Expliquez en deux phrases pourquoi une succursale très achalandée peut ne pas convertir chaque client additionnel en ventes proportionnelles.
 
-## À retenir
 
-- La non-linéarité est d'abord une question de forme.
-- La saturation est une explication opérationnelle plausible.
-- Le graphique aide à juger si la droite mérite confiance.
+### Auto-vérification
+
+::: {.self-check}
+- Les modèles sont comparés sur les mêmes données test.
+- La forme retenue est visible et interprétable.
+- La prédiction reste dans la plage observée et son incertitude est indiquée.
+:::

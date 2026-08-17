@@ -7208,6 +7208,19 @@ display: none;
 </tbody>
 </table>
 <p>Temps estimé : 2 h 30 à 3 h en classe, avec finalisation possible après la séance.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Parcours essentiel et prolongements">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Parcours essentiel et prolongements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le parcours essentiel comprend les tâches 1, 2 et 4 à 8. La tâche 3, qui construit un dictionnaire détaillé, et la tâche 9, qui propose une seconde formulation de la suite, sont des prolongements facultatifs. La mise en commun de l’épisode 10 se fait si le temps le permet. Cette distinction permet de terminer une trace cohérente pendant la séance.</p>
+</div>
+</div>
 </section>
 <section id="données-et-préparation" class="level2">
 <h2 class="anchored" data-anchor-id="données-et-préparation">Données et préparation</h2>
@@ -7505,13 +7518,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 </table>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 3 - Choisir les variables clés">
+<div class="callout callout-style-default callout-tip callout-titled" title="Prolongement facultatif 3 - Choisir les variables clés">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 3 - Choisir les variables clés
+<span class="screen-reader-only">Astuce</span>Prolongement facultatif 3 - Choisir les variables clés
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -7668,7 +7681,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> ventes_totales <span class="sc">/</span> clients_totaux,</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -7714,7 +7727,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Montréal</td>
 <td style="text-align: left;">1 923 795 $</td>
 <td style="text-align: right;">31351</td>
-<td style="text-align: left;">61,27 $</td>
+<td style="text-align: left;">61,36 $</td>
 <td style="text-align: right;">7.7</td>
 <td style="text-align: right;">2.5</td>
 <td style="text-align: right;">25</td>
@@ -7724,7 +7737,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Capitale-Nationale</td>
 <td style="text-align: left;">1 740 846 $</td>
 <td style="text-align: right;">27586</td>
-<td style="text-align: left;">63,02 $</td>
+<td style="text-align: left;">63,11 $</td>
 <td style="text-align: right;">7.8</td>
 <td style="text-align: right;">2.8</td>
 <td style="text-align: right;">23</td>
@@ -7734,7 +7747,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Estrie</td>
 <td style="text-align: left;">1 453 016 $</td>
 <td style="text-align: right;">23858</td>
-<td style="text-align: left;">60,82 $</td>
+<td style="text-align: left;">60,90 $</td>
 <td style="text-align: right;">7.6</td>
 <td style="text-align: right;">2.7</td>
 <td style="text-align: right;">28</td>
@@ -7744,7 +7757,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Outaouais</td>
 <td style="text-align: left;">1 442 128 $</td>
 <td style="text-align: right;">24166</td>
-<td style="text-align: left;">59,59 $</td>
+<td style="text-align: left;">59,68 $</td>
 <td style="text-align: right;">7.7</td>
 <td style="text-align: right;">2.8</td>
 <td style="text-align: right;">28</td>
@@ -7754,7 +7767,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Mauricie</td>
 <td style="text-align: left;">1 403 919 $</td>
 <td style="text-align: right;">22334</td>
-<td style="text-align: left;">62,92 $</td>
+<td style="text-align: left;">62,86 $</td>
 <td style="text-align: right;">7.4</td>
 <td style="text-align: right;">2.6</td>
 <td style="text-align: right;">29</td>
@@ -7907,7 +7920,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_moyennes =</span> <span class="fu">mean</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">depenses_marketing_moyennes =</span> <span class="fu">mean</span>(depenses_marketing, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -7942,14 +7955,14 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: right;">36</td>
 <td style="text-align: left;">129 813 $</td>
 <td style="text-align: left;">3 706,06 $</td>
-<td style="text-align: left;">61,70 $</td>
+<td style="text-align: left;">61,84 $</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">oui</td>
 <td style="text-align: right;">24</td>
 <td style="text-align: left;">137 102 $</td>
 <td style="text-align: left;">5 230,50 $</td>
-<td style="text-align: left;">61,26 $</td>
+<td style="text-align: left;">61,24 $</td>
 </tr>
 </tbody>
 </table>
@@ -8155,13 +8168,13 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <li>comparer les succursales à clientèle comparable;</li>
 <li>analyser les périodes de haute saison séparément.</li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="À vous 9 - Formuler la prochaine analyse">
+<div class="callout callout-style-default callout-tip callout-titled" title="Prolongement facultatif 9 - Formuler une seconde version">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>À vous 9 - Formuler la prochaine analyse
+<span class="screen-reader-only">Astuce</span>Prolongement facultatif 9 - Formuler une seconde version
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -8192,7 +8205,6 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <ol type="1">
 <li>Question d’analyse.</li>
 <li>Description du tableau.</li>
-<li>Dictionnaire rapide des variables clés.</li>
 <li>Diagnostic des valeurs manquantes.</li>
 <li>Tableau synthèse par succursale.</li>
 <li>Graphique 1 : ventes par succursale.</li>
@@ -8200,6 +8212,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <li>Trois constats.</li>
 <li>Recommandation de prochaine analyse.</li>
 </ol>
+<p>Le dictionnaire détaillé et la seconde formulation de la recommandation sont des prolongements facultatifs.</p>
 </section>
 <section id="grille-formative" class="level2">
 <h2 class="anchored" data-anchor-id="grille-formative">Grille formative</h2>

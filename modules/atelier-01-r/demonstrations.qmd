@@ -226,7 +226,7 @@ synthese_succursales <- ventes |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
     ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
@@ -344,7 +344,7 @@ priorite_marketing <- ventes |>
     observations = n(),
     ventes_moyennes = mean(ventes, na.rm = TRUE),
     depenses_marketing_moyennes = mean(depenses_marketing, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = sum(ventes, na.rm = TRUE) / sum(clients, na.rm = TRUE),
     .groups = "drop"
   ) |>
   mutate(

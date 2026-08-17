@@ -27,6 +27,22 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m07-c01
+#| include: false
+library(tidyverse)
+library(slider)
+library(forecast)
+data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+demande <- readr::read_csv(data_path, show_col_types = FALSE)
+demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
+horizon <- 13
+train <- demande |> slice_head(n = nrow(demande) - horizon)
+test <- demande |> slice_tail(n = horizon)
+serie <- ts(train$demande, frequency = 52)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +62,10 @@ Une moyenne mobile arrière utilise uniquement des observations déjà disponibl
 ::: {.keypoints}
 - Calculer une moyenne mobile arrière.
 - Expliquer l'effet d'une fenêtre courte ou longue.
+- Comparer la réactivité de plusieurs fenêtres.
 :::
 
-## L'idée centrale
+## La fenêtre règle le compromis réactivité-stabilité
 
 ::: {.keypoints}
 - Une fenêtre courte réagit vite.
@@ -56,21 +73,27 @@ Une moyenne mobile arrière utilise uniquement des observations déjà disponibl
 - Pour prévoir, la fenêtre doit être arrière.
 :::
 
-## Décision ou exemple
+## Quatre semaines donnent 1 050 unités
 
 ::: {.example-box}
 Les quatre dernières demandes 980, 1 020, 1 080 et 1 120 donnent une moyenne mobile de 1 050 unités.
 :::
 
-## Le geste en R
+## Calculer une moyenne mobile arrière
 
 ```{r}
-#| eval: false
-demande |> mutate(mm4 = slider::slide_dbl(
-  demande, mean, .before = 3, .complete = TRUE))
+#| label: code-m07-c01
+#| echo: true
+#| eval: true
+demande |>
+  mutate(mm4 = slider::slide_dbl(
+    demande, mean, .before = 3, .complete = TRUE
+  )) |>
+  select(semaine, demande, mm4) |>
+  slice_tail(n = 6)
 ```
 
-## Piège fréquent
+## Une fenêtre centrée utilise demain
 
 ::: {.warning-box}
 Une moyenne mobile centrée peut être utile pour décrire, mais elle utilise des valeurs futures et ne convient pas à une prévision en temps réel.
@@ -78,13 +101,48 @@ Une moyenne mobile centrée peut être utile pour décrire, mais elle utilise de
 
 ## À retenir
 
-::: {.keypoints}
-- La fenêtre détermine la réactivité.
-- Une moyenne mobile ne modélise pas automatiquement la tendance ou la saisonnalité.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La fenêtre détermine la réactivité.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Une moyenne mobile ne modélise pas automatiquement la tendance ou la saisonnalité.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 7.1
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 7.1
 
 ::: {.lead}
 Calculez la moyenne mobile des quatre dernières demandes et nommez ce qu'elle ignore.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

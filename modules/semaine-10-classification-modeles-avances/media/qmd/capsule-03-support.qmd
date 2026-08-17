@@ -27,6 +27,20 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m10-c03
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/fidelisation_clients_quebec.csv", "../../data/fidelisation_clients_quebec.csv", "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+clients <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+train <- clients |> group_by(depart_90j) |> slice_sample(prop = 0.80) |> ungroup()
+test <- anti_join(clients, train, by = "client_id")
+modele <- glm(depart_90j ~ anciennete_mois + utilisation_mensuelle + tickets_service_6m + satisfaction + type_contrat, family = binomial(), data = train)
+probabilite <- predict(modele, newdata = test, type = "response")
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +60,10 @@ Le seuil crée des vrais positifs, faux positifs, vrais négatifs et faux négat
 ::: {.keypoints}
 - Construire une matrice de confusion.
 - Interpréter sensibilité, spécificité et précision.
+- Calculer les mesures adaptées aux deux types d'erreur.
 :::
 
-## L'idée centrale
+## L'exactitude seule masque les départs manqués
 
 ::: {.keypoints}
 - La sensibilité mesure les départs détectés.
@@ -56,21 +71,28 @@ Le seuil crée des vrais positifs, faux positifs, vrais négatifs et faux négat
 - La précision décrit la part des clients ciblés qui partent réellement.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Avec un événement rare, prédire toujours la classe majoritaire peut donner une exactitude élevée tout en ratant les clients à retenir.
-:::
-
-## Le geste en R
+## Construire la matrice de confusion
 
 ```{r}
-#| eval: false
-table(observe = test$depart_90j,
-      predit = as.integer(probabilite >= seuil))
+#| label: code-m10-c03
+#| echo: true
+#| eval: true
+seuil <- 0.30
+prediction <- as.integer(probabilite >= seuil)
+table(observe = test$depart_90j, predit = prediction)
+tibble(
+  sensibilite = sum(prediction == 1 & test$depart_90j == 1) / sum(test$depart_90j == 1),
+  precision = sum(prediction == 1 & test$depart_90j == 1) / sum(prediction == 1)
+)
 ```
 
-## Piège fréquent
+## Le coût d'un départ non détecté
+
+::: {.example-box}
+Avec une classe positive minoritaire, prédire toujours la classe majoritaire peut donner une exactitude élevée tout en ratant les clients à retenir.
+:::
+
+## L'exactitude favorise la classe majoritaire
 
 ::: {.warning-box}
 Rapporter seulement l'exactitude peut masquer une méthode incapable de détecter la classe positive.
@@ -78,13 +100,49 @@ Rapporter seulement l'exactitude peut masquer une méthode incapable de détecte
 
 ## À retenir
 
-::: {.keypoints}
-- La matrice montre le type d'erreur.
-- La mesure choisie doit servir la décision.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La matrice montre le type d'erreur.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La mesure choisie doit servir la décision.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 10.3
+::: {.notes}
+[Sources]
+- R Core Team. Documentation de stats::glm. https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
+- Tidymodels. Classification metrics. https://yardstick.tidymodels.org/
+:::
+
+## Production autonome 10.3
 
 ::: {.lead}
 Nommez l'erreur associée à un client qui part sans être ciblé et son coût possible.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J'ai défini la classe positive et la période test.
+- J'ai rapporté les deux types d'erreur, pas seulement l'exactitude.
+- Ma règle respecte la capacité et évite une interprétation individuelle certaine.
 :::

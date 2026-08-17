@@ -27,6 +27,18 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m06-c02
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+train <- ventes |> filter(date < as.Date("2025-01-01"))
+test <- ventes |> filter(date >= as.Date("2025-01-01"))
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +58,16 @@ Un graphique temporel permet de voir le niveau, la tendance, les motifs récurre
 ::: {.keypoints}
 - Construire un graphique qui respecte l'ordre temporel.
 - Distinguer tendance, saisonnalité et variation irrégulière.
+- Relier un motif visuel à une question de prévision.
 :::
 
-## L'idée centrale
+## Décembre élevé ou véritable saisonnalité?
+
+::: {.example-box}
+Un décembre élevé une seule année peut être une observation inhabituelle. Il faut comparer plusieurs décembres.
+:::
+
+## Un motif doit se répéter pour devenir crédible
 
 ::: {.keypoints}
 - La tendance est un mouvement de long terme.
@@ -56,21 +75,19 @@ Un graphique temporel permet de voir le niveau, la tendance, les motifs récurre
 - Une pointe isolée ne prouve pas une saisonnalité.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Un décembre élevé une seule année peut être une observation inhabituelle. Il faut comparer plusieurs décembres.
-:::
-
-## Le geste en R
+## Tracer la série avant de modéliser
 
 ```{r}
-#| eval: false
+#| label: code-m06-c02
+#| echo: true
+#| eval: true
 ventes |> ggplot(aes(date, ventes)) +
-  geom_line() + geom_point()
+  geom_line(colour = "#0B4F6C", linewidth = 0.8) +
+  labs(x = NULL, y = "Ventes mensuelles ($)") +
+  theme_minimal(base_size = 14)
 ```
 
-## Piège fréquent
+## Voir ensemble ne signifie pas causer
 
 ::: {.warning-box}
 Attribuer une hausse à une promotion seulement parce que les deux apparaissent au même moment dépasse ce que montre le graphique.
@@ -78,13 +95,48 @@ Attribuer une hausse à une promotion seulement parce que les deux apparaissent 
 
 ## À retenir
 
-::: {.keypoints}
-- Décrire un motif n'est pas expliquer sa cause.
-- Chercher aussi les données manquantes et les changements de variabilité.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Décrire un motif n'est pas expliquer sa cause.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Chercher aussi les données manquantes et les changements de variabilité.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 6.2
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 6.2
 
 ::: {.lead}
 Tracez les ventes selon la date, puis nommez deux motifs visibles et une question qui reste ouverte.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J'ai nommé la variable, l'unité, la période et l'horizon.
+- Je n'ai utilisé aucune information future.
+- Ma conclusion contient une limite explicite.
 :::

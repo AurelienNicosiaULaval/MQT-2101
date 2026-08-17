@@ -27,6 +27,22 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m07-c04
+#| include: false
+library(tidyverse)
+library(slider)
+library(forecast)
+data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+demande <- readr::read_csv(data_path, show_col_types = FALSE)
+demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
+horizon <- 13
+train <- demande |> slice_head(n = nrow(demande) - horizon)
+test <- demande |> slice_tail(n = horizon)
+serie <- ts(train$demande, frequency = 52)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +62,41 @@ La même origine, le même horizon, la même période test et les mêmes mesures
 ::: {.keypoints}
 - Construire une période test commune.
 - Choisir une méthode selon l'erreur et l'usage.
+- Défendre un choix de méthode avec un protocole commun.
 :::
 
-## L'idée centrale
+## Un gain de 1 % peut coûter trop cher
+
+::: {.example-box}
+Une réduction de MAE de 1 % peut ne pas justifier un outil coûteux ou fragile.
+:::
+
+## Comparer quatre méthodes sur les mêmes semaines
+
+```{r}
+#| label: code-m07-c04
+#| echo: true
+#| eval: true
+previsions <- test |>
+  transmute(
+    observe = demande,
+    naive = tail(train$demande, 1),
+    moyenne_4 = mean(tail(train$demande, 4)),
+    SES = as.numeric(forecast::ses(serie, h = horizon)$mean),
+    Holt = as.numeric(forecast::holt(serie, h = horizon, damped = TRUE)$mean)
+  )
+previsions |>
+  pivot_longer(-observe, names_to = "methode", values_to = "prevision") |>
+  group_by(methode) |>
+  summarise(
+    MAE = mean(abs(observe - prevision)),
+    RMSE = sqrt(mean((observe - prevision)^2)),
+    .groups = "drop"
+  ) |>
+  arrange(MAE)
+```
+
+## Le protocole commun précède le classement
 
 ::: {.keypoints}
 - Toutes les méthodes prédisent les mêmes semaines.
@@ -56,20 +104,7 @@ La même origine, le même horizon, la même période test et les mêmes mesures
 - La stabilité et le coût de maintenance comptent.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Une réduction de MAE de 1 % peut ne pas justifier un outil coûteux ou fragile.
-:::
-
-## Le geste en R
-
-```{r}
-#| eval: false
-comparaison |> arrange(MAE, RMSE) |> select(methode, MAE, RMSE)
-```
-
-## Piège fréquent
+## Changer d'horizon invalide la comparaison
 
 ::: {.warning-box}
 Comparer les erreurs sur des horizons ou des semaines différents invalide le classement.
@@ -77,13 +112,48 @@ Comparer les erreurs sur des horizons ou des semaines différents invalide le cl
 
 ## À retenir
 
-::: {.keypoints}
-- Comparer d'abord à protocole constant.
-- Choisir ensuite la solution qui sert réellement la décision.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Comparer d'abord à protocole constant.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Choisir ensuite la solution qui sert réellement la décision.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 7.4
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 7.4
 
 ::: {.lead}
 Formulez une décision prudente lorsqu'une méthode améliore peu la MAE mais augmente fortement les coûts de maintenance.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

@@ -27,6 +27,18 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m06-c04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+train <- ventes |> filter(date < as.Date("2025-01-01"))
+test <- ventes |> filter(date >= as.Date("2025-01-01"))
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -47,9 +59,30 @@ L'évaluation doit reproduire la situation réelle : le futur n'était pas dispo
 - Séparer entraînement et test dans l'ordre du temps.
 - Comparer un modèle à une référence naïve.
 - Interpréter la MAE dans l'unité de la cible.
+- Justifier une séparation chronologique des données.
 :::
 
-## L'idée centrale
+## Douze mois vraiment hors échantillon
+
+::: {.example-box}
+Une méthode complexe qui ne bat pas la méthode naïve n'a pas encore démontré une valeur pratique supplémentaire.
+:::
+
+## Geler la période test
+
+```{r}
+#| label: code-m06-c04
+#| echo: true
+#| eval: true
+tibble(
+  periode = c("Entraînement", "Test"),
+  debut = c(min(train$date), min(test$date)),
+  fin = c(max(train$date), max(test$date)),
+  mois = c(nrow(train), nrow(test))
+)
+```
+
+## Le test doit vraiment représenter le futur
 
 ::: {.keypoints}
 - Le test vient après l'entraînement.
@@ -57,21 +90,7 @@ L'évaluation doit reproduire la situation réelle : le futur n'était pas dispo
 - La MAE mesure une erreur moyenne dans l'unité de la cible.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Une méthode complexe qui ne bat pas la méthode naïve n'a pas encore démontré une valeur pratique supplémentaire.
-:::
-
-## Le geste en R
-
-```{r}
-#| eval: false
-train <- ventes |> filter(date < as.Date("2025-01-01"))
-test <- ventes |> filter(date >= as.Date("2025-01-01"))
-```
-
-## Piège fréquent
+## Le mélange aléatoire regarde vers le futur
 
 ::: {.warning-box}
 Mélanger aléatoirement les mois donne au modèle une information qui aurait été future au point d'origine.
@@ -79,13 +98,48 @@ Mélanger aléatoirement les mois donne au modèle une information qui aurait é
 
 ## À retenir
 
-::: {.keypoints}
-- L'évaluation temporelle protège contre la fuite vers le futur.
-- La référence simple est un seuil minimal de valeur.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+L'évaluation temporelle protège contre la fuite vers le futur.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La référence simple est un seuil minimal de valeur.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 6.4
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 6.4
 
 ::: {.lead}
 Expliquez en deux phrases pourquoi une séparation aléatoire des mois est irréaliste.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J'ai nommé la variable, l'unité, la période et l'horizon.
+- Je n'ai utilisé aucune information future.
+- Ma conclusion contient une limite explicite.
 :::

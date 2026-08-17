@@ -7065,6 +7065,7 @@ display: none;
   <ul class="collapse">
   <li><a href="#modèle-et-seuil-de-capacité" id="toc-modèle-et-seuil-de-capacité" class="nav-link" data-scroll-target="#modèle-et-seuil-de-capacité">Modèle et seuil de capacité</a></li>
   <li><a href="#matrice-et-mesures" id="toc-matrice-et-mesures" class="nav-link" data-scroll-target="#matrice-et-mesures">Matrice et mesures</a></li>
+  <li><a href="#vérifier-la-répartition-de-lintervention" id="toc-vérifier-la-répartition-de-lintervention" class="nav-link" data-scroll-target="#vérifier-la-répartition-de-lintervention">Vérifier la répartition de l’intervention</a></li>
   </ul></li>
   <li><a href="#étape-finale---formuler-la-recommandation" id="toc-étape-finale---formuler-la-recommandation" class="nav-link" data-scroll-target="#étape-finale---formuler-la-recommandation">Étape finale - Formuler la recommandation</a></li>
   <li><a href="#vérification-finale" id="toc-vérification-finale" class="nav-link" data-scroll-target="#vérification-finale">Vérification finale</a></li>
@@ -7098,24 +7099,26 @@ display: none;
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span>)) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>cas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">as.Date</span>(date),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">promotion =</span> <span class="fu">factor</span>(promotion, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>))</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date, succursale)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>date_coupure <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> cas <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&lt;</span> date_coupure)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> cas <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&gt;=</span> date_coupure)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span>)) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">as.Date</span>(date),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">promotion =</span> <span class="fu">factor</span>(promotion, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>)),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois =</span> <span class="fu">factor</span>(<span class="fu">month</span>(date), <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date, succursale)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>date_coupure <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> cas <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&lt;</span> date_coupure)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> cas <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&gt;=</span> date_coupure)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="étape-1---auditer-la-structure" class="level2">
@@ -7175,17 +7178,18 @@ display: none;
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_moyennes =</span> <span class="fu">mean</span>(ventes),</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">attente_moyenne =</span> <span class="fu">mean</span>(temps_attente),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux_service_insuffisant =</span> <span class="fu">mean</span>(niveau_service_insuffisant),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux_service_insuffisant_mois_suivant =</span> <span class="fu">mean</span>(service_insuffisant_mois_suivant),</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
-  succursale ventes_moyennes attente_moyenne taux_service_insuffisant
-  &lt;fct&gt;                &lt;dbl&gt;           &lt;dbl&gt;                    &lt;dbl&gt;
-1 Gatineau           170130.            4.30                   0.0694
-2 Montréal           257110.            4.28                   0
-3 Québec             195407.            4.35                   0.0556
-4 Sherbrooke         147373.            4.44                   0.0278</code></pre>
+  succursale ventes_moyennes attente_moyenne taux_service_insuffisant_mois_sui…¹
+  &lt;fct&gt;                &lt;dbl&gt;           &lt;dbl&gt;                               &lt;dbl&gt;
+1 Gatineau           170130.            4.30                              0.0833
+2 Montréal           257110.            4.28                              0.125
+3 Québec             195407.            4.35                              0.25
+4 Sherbrooke         147373.            4.44                              0.208
+# ℹ abbreviated name: ¹​taux_service_insuffisant_mois_suivant</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Trace 2">
@@ -7208,38 +7212,54 @@ display: none;
 <h3 class="anchored" data-anchor-id="modèle-et-référence">Modèle et référence</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>modele_ventes <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  ventes <span class="sc">~</span> indice_temps <span class="sc">+</span> succursale <span class="sc">+</span> achalandage <span class="sc">+</span> promotion <span class="sc">+</span> ruptures_stock,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  ventes <span class="sc">~</span> indice_temps <span class="sc">+</span> succursale <span class="sc">+</span> mois <span class="sc">+</span> promotion,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> entrainement</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>reference_succursale <span class="ot">&lt;-</span> entrainement <span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reference =</span> <span class="fu">mean</span>(ventes), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>evaluation_ventes <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prevision_modele =</span> <span class="fu">predict</span>(modele_ventes, <span class="at">newdata =</span> test)) <span class="sc">|&gt;</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(reference_succursale, <span class="at">by =</span> <span class="st">&quot;succursale&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(prevision_modele, reference),</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;methode&quot;</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;prevision&quot;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">erreur =</span> ventes <span class="sc">-</span> prevision)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>evaluation_ventes <span class="sc">|&gt;</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(methode) <span class="sc">|&gt;</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(erreur)),</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(erreur<span class="sc">^</span><span class="dv">2</span>)),</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">biais =</span> <span class="fu">mean</span>(erreur),</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>reference_saisonniere <span class="ot">&lt;-</span> cas <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> date <span class="sc">%m+%</span> <span class="fu">years</span>(<span class="dv">1</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    succursale,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">reference_saisonniere =</span> ventes</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>evaluation_ventes <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prevision_modele =</span> <span class="fu">predict</span>(modele_ventes, <span class="at">newdata =</span> test)) <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(reference_saisonniere, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;succursale&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(prevision_modele, reference_saisonniere),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;methode&quot;</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;prevision&quot;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">erreur =</span> ventes <span class="sc">-</span> prevision)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>evaluation_ventes <span class="sc">|&gt;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(methode) <span class="sc">|&gt;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(erreur)),</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(erreur<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">biais =</span> <span class="fu">mean</span>(erreur),</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  methode             MAE   RMSE  biais
-  &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 prevision_modele  5302.  6360. -1318.
-2 reference        20025. 26512. 15259.</code></pre>
+  methode                  MAE   RMSE  biais
+  &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 prevision_modele       8949. 11942. -1566.
+2 reference_saisonniere 23669  28501.  4928.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Prédicteurs disponibles au moment de prévoir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Prédicteurs disponibles au moment de prévoir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La voie A utilise seulement le temps, la succursale, le mois et une promotion planifiée. L’achalandage et les ruptures de stock du mois à prévoir ne sont pas encore observés et créeraient une fuite d’information. Si la promotion n’est pas décidée à l’origine de la prévision, elle doit être fixée selon un scénario explicite.</p>
 </div>
 </div>
 </section>
@@ -7247,14 +7267,13 @@ display: none;
 <h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(modele_ventes, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;achalandage&quot;</span>, <span class="st">&quot;promotionoui&quot;</span>, <span class="st">&quot;ruptures_stock&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;indice_temps&quot;</span>, <span class="st">&quot;promotionoui&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 7
-  term           estimate std.error statistic  p.value conf.low conf.high
-  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 achalandage        67.3      4.37     15.4  2.70e-37     58.7      75.9
-2 promotionoui    18212.    1575.       11.6  1.03e-24  15108.    21315.
-3 ruptures_stock  -3192.     328.       -9.72 5.85e-19  -3839.    -2545. </code></pre>
+<pre><code># A tibble: 2 × 7
+  term         estimate std.error statistic  p.value conf.low conf.high
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 indice_temps     426.      38.5      11.0 6.37e-23     350.      502.
+2 promotionoui   35840.    1488.       24.1 5.59e-64   32907.    38772.</code></pre>
 </div>
 </div>
 <p>Les coefficients décrivent des associations conditionnelles. Ils ne démontrent pas qu’imposer une promotion ou réduire artificiellement une variable produira exactement le changement estimé.</p>
@@ -7266,8 +7285,8 @@ display: none;
 <h3 class="anchored" data-anchor-id="modèle-et-seuil-de-capacité">Modèle et seuil de capacité</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>modele_service <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  niveau_service_insuffisant <span class="sc">~</span> temps_attente <span class="sc">+</span> ruptures_stock <span class="sc">+</span> satisfaction <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    achalandage <span class="sc">+</span> succursale,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  service_insuffisant_mois_suivant <span class="sc">~</span> temps_attente <span class="sc">+</span> ruptures_stock <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    satisfaction <span class="sc">+</span> taux_utilisation,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> entrainement,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -7286,23 +7305,24 @@ display: none;
 <h3 class="anchored" data-anchor-id="matrice-et-mesures">Matrice et mesures</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>matrice <span class="ot">&lt;-</span> evaluation_service <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">observe =</span> niveau_service_insuffisant, prediction)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">observe =</span> service_insuffisant_mois_suivant, prediction)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>matrice</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
+<pre><code># A tibble: 4 × 3
   observe prediction     n
     &lt;dbl&gt;      &lt;int&gt; &lt;int&gt;
-1       0          0    37
-2       0          1    10
-3       1          0     1</code></pre>
+1       0          0    36
+2       0          1     4
+3       1          0     2
+4       1          1     6</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>evaluation_service <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">VP =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> niveau_service_insuffisant <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">FP =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> niveau_service_insuffisant <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">VN =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> niveau_service_insuffisant <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">FN =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> niveau_service_insuffisant <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">VP =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> service_insuffisant_mois_suivant <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">FP =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> service_insuffisant_mois_suivant <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">VN =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> service_insuffisant_mois_suivant <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">FN =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> service_insuffisant_mois_suivant <span class="sc">==</span> <span class="dv">1</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">sensibilite =</span> VP <span class="sc">/</span> (VP <span class="sc">+</span> FN),</span>
@@ -7314,7 +7334,48 @@ display: none;
 <pre><code># A tibble: 1 × 8
      VP    FP    VN    FN sensibilite specificite precision proportion_ciblee
   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
-1     0    10    37     1           0       0.787         0             0.208</code></pre>
+1     6     4    36     2        0.75         0.9       0.6             0.208</code></pre>
+</div>
+</div>
+<p>Le modèle utilise les conditions observées pendant le mois courant pour estimer le risque de service insuffisant au mois suivant. La cible est donc postérieure aux prédicteurs, ce qui correspond à une décision préventive.</p>
+</section>
+<section id="vérifier-la-répartition-de-lintervention" class="level3">
+<h3 class="anchored" data-anchor-id="vérifier-la-répartition-de-lintervention">Vérifier la répartition de l’intervention</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>evaluation_service <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">proportion_ciblee =</span> <span class="fu">mean</span>(prediction),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux_observe =</span> <span class="fu">mean</span>(service_insuffisant_mois_suivant),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">precision =</span> <span class="fu">if_else</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(prediction) <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> service_insuffisant_mois_suivant <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="fu">sum</span>(prediction),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NA_real_</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  succursale observations proportion_ciblee taux_observe precision
+  &lt;fct&gt;             &lt;int&gt;             &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+1 Gatineau             12            0.25         0            0
+2 Montréal             12            0.167        0.0833       0.5
+3 Québec               12            0.0833       0.25         1
+4 Sherbrooke           12            0.333        0.333        1  </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Proportionnalité et équité">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Proportionnalité et équité
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une règle de ciblage peut concentrer les interventions dans une succursale. Avant de la déployer, comparez les taux de ciblage et la précision par succursale, documentez les faux positifs et vérifiez que l’intervention proposée est proportionnée au risque. Le modèle sert à prioriser une vérification, pas à sanctionner automatiquement une équipe.</p>
 </div>
 </div>
 </section>

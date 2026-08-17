@@ -11,6 +11,7 @@ format:
 #| label: setup-atelier-04
 library(tidyverse)
 library(broom)
+library(lubridate)
 
 data_path <- if (file.exists("data/cas_integrateur_quebec.csv")) {
   "data/cas_integrateur_quebec.csv"
@@ -22,7 +23,8 @@ cas <- read_csv(data_path, show_col_types = FALSE) |>
   mutate(
     date = as.Date(date),
     succursale = factor(succursale),
-    promotion = factor(promotion, levels = c("non", "oui"))
+    promotion = factor(promotion, levels = c("non", "oui")),
+    mois = factor(month(date), levels = 1:12)
   ) |>
   arrange(date, succursale)
 
@@ -67,7 +69,7 @@ cas |>
   summarise(
     ventes_moyennes = mean(ventes),
     attente_moyenne = mean(temps_attente),
-    taux_service_insuffisant = mean(niveau_service_insuffisant),
+    taux_service_insuffisant_mois_suivant = mean(service_insuffisant_mois_suivant),
     .groups = "drop"
   )
 ```
@@ -82,19 +84,22 @@ Conservez un graphique et un tableau qui répondent directement à votre questio
 
 ```{r}
 modele_ventes <- lm(
-  ventes ~ indice_temps + succursale + achalandage + promotion + ruptures_stock,
+  ventes ~ indice_temps + succursale + mois + promotion,
   data = entrainement
 )
 
-reference_succursale <- entrainement |>
-  group_by(succursale) |>
-  summarise(reference = mean(ventes), .groups = "drop")
+reference_saisonniere <- cas |>
+  transmute(
+    date = date %m+% years(1),
+    succursale,
+    reference_saisonniere = ventes
+  )
 
 evaluation_ventes <- test |>
   mutate(prevision_modele = predict(modele_ventes, newdata = test)) |>
-  left_join(reference_succursale, by = "succursale") |>
+  left_join(reference_saisonniere, by = c("date", "succursale")) |>
   pivot_longer(
-    c(prevision_modele, reference),
+    c(prevision_modele, reference_saisonniere),
     names_to = "methode",
     values_to = "prevision"
   ) |>
@@ -110,11 +115,15 @@ evaluation_ventes |>
   )
 ```
 
+::: {.callout-warning title="Prédicteurs disponibles au moment de prévoir"}
+La voie A utilise seulement le temps, la succursale, le mois et une promotion planifiée. L'achalandage et les ruptures de stock du mois à prévoir ne sont pas encore observés et créeraient une fuite d'information. Si la promotion n'est pas décidée à l'origine de la prévision, elle doit être fixée selon un scénario explicite.
+:::
+
 ### Interprétation
 
 ```{r}
 tidy(modele_ventes, conf.int = TRUE) |>
-  filter(term %in% c("achalandage", "promotionoui", "ruptures_stock"))
+  filter(term %in% c("indice_temps", "promotionoui"))
 ```
 
 Les coefficients décrivent des associations conditionnelles. Ils ne démontrent pas qu'imposer une promotion ou réduire artificiellement une variable produira exactement le changement estimé.
@@ -125,8 +134,8 @@ Les coefficients décrivent des associations conditionnelles. Ils ne démontrent
 
 ```{r}
 modele_service <- glm(
-  niveau_service_insuffisant ~ temps_attente + ruptures_stock + satisfaction +
-    achalandage + succursale,
+  service_insuffisant_mois_suivant ~ temps_attente + ruptures_stock +
+    satisfaction + taux_utilisation,
   data = entrainement,
   family = binomial()
 )
@@ -145,16 +154,16 @@ evaluation_service <- evaluation_service |>
 
 ```{r}
 matrice <- evaluation_service |>
-  count(observe = niveau_service_insuffisant, prediction)
+  count(observe = service_insuffisant_mois_suivant, prediction)
 
 matrice
 
 evaluation_service |>
   summarise(
-    VP = sum(prediction == 1 & niveau_service_insuffisant == 1),
-    FP = sum(prediction == 1 & niveau_service_insuffisant == 0),
-    VN = sum(prediction == 0 & niveau_service_insuffisant == 0),
-    FN = sum(prediction == 0 & niveau_service_insuffisant == 1)
+    VP = sum(prediction == 1 & service_insuffisant_mois_suivant == 1),
+    FP = sum(prediction == 1 & service_insuffisant_mois_suivant == 0),
+    VN = sum(prediction == 0 & service_insuffisant_mois_suivant == 0),
+    FN = sum(prediction == 0 & service_insuffisant_mois_suivant == 1)
   ) |>
   mutate(
     sensibilite = VP / (VP + FN),
@@ -163,6 +172,30 @@ evaluation_service |>
     proportion_ciblee = (VP + FP) / (VP + FP + VN + FN)
   )
 ```
+
+Le modèle utilise les conditions observées pendant le mois courant pour estimer le risque de service insuffisant au mois suivant. La cible est donc postérieure aux prédicteurs, ce qui correspond à une décision préventive.
+
+### Vérifier la répartition de l'intervention
+
+```{r}
+evaluation_service |>
+  group_by(succursale) |>
+  summarise(
+    observations = n(),
+    proportion_ciblee = mean(prediction),
+    taux_observe = mean(service_insuffisant_mois_suivant),
+    precision = if_else(
+      sum(prediction) > 0,
+      sum(prediction == 1 & service_insuffisant_mois_suivant == 1) / sum(prediction),
+      NA_real_
+    ),
+    .groups = "drop"
+  )
+```
+
+::: {.callout-warning title="Proportionnalité et équité"}
+Une règle de ciblage peut concentrer les interventions dans une succursale. Avant de la déployer, comparez les taux de ciblage et la précision par succursale, documentez les faux positifs et vérifiez que l'intervention proposée est proportionnée au risque. Le modèle sert à prioriser une vérification, pas à sanctionner automatiquement une équipe.
+:::
 
 ## Étape finale - Formuler la recommandation
 

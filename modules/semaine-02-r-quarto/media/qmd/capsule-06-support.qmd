@@ -66,7 +66,7 @@ resume_succursales <- ventes_preparees |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
@@ -222,7 +222,8 @@ Les constats restent descriptifs; la question finale prépare la suite.
 :::
 :::
 
-## Activité 2.6
+
+## Production autonome 2.6
 
 ::: {.lead}
 Produisez le mini-rapport Quarto et vérifiez qu'il se rend sans erreur.
@@ -230,4 +231,12 @@ Produisez le mini-rapport Quarto et vérifiez qu'il se rend sans erreur.
 
 ::: {.keypoints}
 Avant de conclure, relisez le code d'importation, le diagnostic, le tableau, le graphique, les deux constats et la question à approfondir.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Le document se rend du début à la fin sans intervention manuelle.
+- Les valeurs manquantes et les unités sont signalées.
+- Chaque résultat est accompagné d'une phrase d'interprétation.
 :::

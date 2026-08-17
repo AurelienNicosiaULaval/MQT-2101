@@ -186,7 +186,7 @@ resume_succursales <- ventes_preparees |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
@@ -203,10 +203,10 @@ resume_succursales |>
 
 | succursale | region | ventes_totales | clients_totaux | panier_moyen | satisfaction_moyenne |
 |:---|:---|:---|---:|:---|---:|
-| Montréal | Montréal | 831 777 \$ | 14057 | 59,24 \$ | 8.1 |
-| Québec | Capitale-Nationale | 677 971 \$ | 11464 | 59,02 \$ | 8.1 |
-| Sherbrooke | Estrie | 589 922 \$ | 9565 | 61,71 \$ | 7.9 |
-| Trois-Rivières | Mauricie | 515 975 \$ | 8589 | 60,35 \$ | 8.2 |
+| Montréal | Montréal | 831 777 \$ | 14057 | 59,17 \$ | 8.1 |
+| Québec | Capitale-Nationale | 677 971 \$ | 11464 | 59,14 \$ | 8.1 |
+| Sherbrooke | Estrie | 589 922 \$ | 9565 | 61,68 \$ | 7.9 |
+| Trois-Rivières | Mauricie | 515 975 \$ | 8589 | 60,07 \$ | 8.2 |
 
 Comment lire la sortie :
 

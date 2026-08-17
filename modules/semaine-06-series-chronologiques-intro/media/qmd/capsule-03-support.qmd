@@ -27,6 +27,18 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m06-c03
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+train <- ventes |> filter(date < as.Date("2025-01-01"))
+test <- ventes |> filter(date >= as.Date("2025-01-01"))
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +58,10 @@ La cible, l'origine, la fréquence et l'horizon doivent être définis avant l'a
 ::: {.keypoints}
 - Distinguer cible, origine et horizon.
 - Formuler une prévision liée à une décision.
+- Choisir un horizon compatible avec le délai de décision.
 :::
 
-## L'idée centrale
+## La prévision commence par une date d'origine
 
 ::: {.keypoints}
 - La cible est la valeur future à prévoir.
@@ -56,21 +69,24 @@ La cible, l'origine, la fréquence et l'horizon doivent être définis avant l'a
 - La fréquence doit être compatible avec la décision.
 :::
 
-## Décision ou exemple
+## Écrire la cible, l'origine et l'horizon
+
+```{r}
+#| label: code-m06-c03
+#| echo: true
+#| eval: true
+origine <- as.Date("2025-12-01")
+horizon_mois <- 3
+tibble(cible = "ventes mensuelles", origine, horizon_mois)
+```
+
+## Prévoir le trimestre au moment utile
 
 ::: {.example-box}
 À la fin de décembre, prévoir les ventes mensuelles de janvier à mars pour planifier les achats du trimestre.
 :::
 
-## Le geste en R
-
-```{r}
-#| eval: false
-origine <- as.Date("2025-12-01")
-horizon_mois <- 3
-```
-
-## Piège fréquent
+## Une cible sans horizon reste ambiguë
 
 ::: {.warning-box}
 Dire seulement « prévoir les ventes » ne précise ni la période, ni le moment où la prévision est produite, ni son usage.
@@ -78,13 +94,48 @@ Dire seulement « prévoir les ventes » ne précise ni la période, ni le momen
 
 ## À retenir
 
-::: {.keypoints}
-- Une formulation précise évite une évaluation ambiguë.
-- L'horizon dépend du délai réel de décision.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Une formulation précise évite une évaluation ambiguë.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+L'horizon dépend du délai réel de décision.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 6.3
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 6.3
 
 ::: {.lead}
 Formulez une cible compatible avec un délai de commande de six semaines.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J'ai nommé la variable, l'unité, la période et l'horizon.
+- Je n'ai utilisé aucune information future.
+- Ma conclusion contient une limite explicite.
 :::

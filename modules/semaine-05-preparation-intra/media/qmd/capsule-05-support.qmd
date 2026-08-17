@@ -27,13 +27,28 @@ execute:
 editor: visual
 ---
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Un choix sous contrainte
+:::
+
+::: {.question-line}
+Le modèle le plus complexe reste-t-il le meilleur lorsqu'il doit prévoir de nouvelles observations?
+:::
+
+::: {.note-box}
+Les modèles doivent être comparés sur la même cible et les mêmes données test. L'erreur hors échantillon, la forme et l'interprétabilité répondent à des questions complémentaires.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Comparer deux modèles avec plusieurs critères.
 - Justifier un choix sans se limiter au `R²`.
 - Nommer la limite d'extrapolation.
 - Communiquer le choix simplement.
-
+:::
 ## Quand comparer?
 
 On compare des modèles lorsque plusieurs formes peuvent répondre à la question : une droite, une courbe quadratique, un logarithme ou un modèle enrichi.
@@ -41,18 +56,18 @@ On compare des modèles lorsque plusieurs formes peuvent répondre à la questio
 ## Critères
 
 - Graphique : la forme suit-elle les données?
-- Erreur : les prédictions sont-elles proches?
+- Erreur hors échantillon : les prédictions sont-elles proches sur les mêmes données test?
 - Résidus : reste-t-il une structure?
 - Interprétation : le modèle est-il défendable?
 - Prudence : le modèle extrapole-t-il trop?
 
 ## Phrase utile
 
-Le modèle quadratique décrit mieux la courbure observée que la droite, mais son utilisation doit rester limitée à la plage d'achalandage observée.
+Sur la séparation utilisée au module 04, le modèle quadratique obtient une RMSE test d'environ 8 367 $, contre 11 101 $ pour la droite. Il décrit mieux la courbure observée, mais son utilisation doit rester limitée à la plage d'achalandage représentée dans les données.
 
 ## Erreur fréquente
 
-Choisir le modèle le plus complexe sans expliquer ce qu'il apporte réellement à la question.
+Comparer une erreur d'entraînement d'un modèle à une erreur test d'un autre, ou choisir le modèle le plus complexe sans expliquer son apport réel à la question.
 
 ## Réponse attendue
 
@@ -62,12 +77,48 @@ Choisir le modèle le plus complexe sans expliquer ce qu'il apporte réellement 
 - Conclure en fonction de la décision.
 - Ajouter une limite.
 
-## Activité 5.5
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Comparer un modèle, c'est justifier un choix.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Un bon choix est à la fois statistique et interprétable.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+L'extrapolation est une limite majeure.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- Wickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023). R for Data Science, 2e éd. https://r4ds.hadley.nz/
+:::
+## Production autonome 5.5
 
 Rédigez une justification de modèle en cinq phrases maximum à partir du module 04.
 
-## À retenir
 
-- Comparer un modèle, c'est justifier un choix.
-- Un bon choix est à la fois statistique et interprétable.
-- L'extrapolation est une limite majeure.
+### Auto-vérification
+
+::: {.self-check}
+- La méthode répond au verbe de la question.
+- Le résultat, le diagnostic et les unités sont présents.
+- La conclusion distingue description, prédiction et causalité.
+:::

@@ -194,7 +194,7 @@ resume_succursales <- ventes |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     delai_livraison_moyen = mean(delai_livraison_jours, na.rm = TRUE),
     ruptures_stock_totales = sum(ruptures_stock, na.rm = TRUE),

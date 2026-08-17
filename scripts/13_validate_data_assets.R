@@ -10,7 +10,7 @@ specifications <- list(
   list(path = "modules/atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv", rows = 104L, missing = 0L,
        columns = c("semaine", "numero_semaine", "promotion", "prix_moyen", "demande")),
   list(path = "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv", rows = 288L, missing = 0L,
-       columns = c("date", "succursale", "indice_temps", "promotion", "capacite", "achalandage", "ruptures_stock", "temps_attente", "satisfaction", "ventes", "niveau_service_insuffisant")),
+       columns = c("date", "succursale", "indice_temps", "promotion", "capacite", "achalandage", "ruptures_stock", "temps_attente", "satisfaction", "taux_utilisation", "ventes", "service_insuffisant_mois_suivant")),
   list(path = "modules/semaine-01-introduction/data/birth_us.csv", rows = 3652L, missing = 0L,
        columns = c("year", "month", "date_of_month", "day_of_week", "births")),
   list(path = "modules/semaine-01-introduction/data/safety_airlines.csv", rows = 56L, missing = 0L,

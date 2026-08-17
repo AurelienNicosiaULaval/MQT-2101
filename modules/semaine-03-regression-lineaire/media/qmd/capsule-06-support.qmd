@@ -92,13 +92,25 @@ Le R² résume la part de variation des ventes captée par la droite. Il aide à
 
 nouveaux <- tibble(budget_marketing = c(3000, 4500, 6000))
 
-nouveaux |>
-  mutate(ventes_predites = round(predict(modele, newdata = nouveaux))) |>
+predictions <- predict(
+  modele,
+  newdata = nouveaux,
+  interval = "prediction",
+  level = 0.95
+)
+
+bind_cols(nouveaux, as_tibble(predictions)) |>
+  transmute(
+    budget_marketing,
+    prediction = round(fit),
+    borne_inferieure = round(lwr),
+    borne_superieure = round(upr)
+  ) |>
   knitr::kable()
 ```
 
 ::: {.visual-note}
-Une prédiction est plus défendable lorsqu'elle reste dans la plage de budgets observée.
+Une prédiction est plus défendable lorsqu'elle reste dans la plage de budgets observée. L'intervalle de prédiction à 95 % décrit l'incertitude pour une nouvelle campagne, pas seulement l'incertitude sur la moyenne.
 :::
 
 ## Trois notions à ne pas confondre
@@ -217,7 +229,8 @@ La prudence est une compétence, pas une faiblesse.
 :::
 :::
 
-## Activité 3.6
+
+## Production autonome 3.6
 
 ::: {.lead}
 Rédigez une conclusion de quatre phrases.
@@ -225,4 +238,12 @@ Rédigez une conclusion de quatre phrases.
 
 ::: {.keypoints}
 Une phrase par élément : question, pente, diagnostic (résidus/ajustement), limite.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- La pente est interprétée avec ses variables et ses unités.
+- J'ai distingué erreur du modèle et résidu observé.
+- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
 :::

@@ -49,8 +49,8 @@ Ajustez un modèle avec `satisfaction`, `tickets_service_6m` et `type_contrat`. 
 >     # A tibble: 2 × 4
 >       satisfaction tickets_service_6m type_contrat prob_depart
 >              <dbl>              <dbl> <fct>              <dbl>
->     1            4                  2 mensuel           0.0718
->     2            8                  2 mensuel           0.0225
+>     1            4                  2 mensuel            0.668
+>     2            8                  2 mensuel            0.280
 >
 > La différence est conditionnelle au modèle et ne prouve pas qu’une modification isolée de satisfaction causerait la même variation.
 

@@ -232,7 +232,7 @@ synthese_succursales <- ventes |>
   summarise(
     ventes_totales = sum(ventes, na.rm = TRUE),
     clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = ventes_totales / clients_totaux,
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
     ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
@@ -252,11 +252,11 @@ synthese_succursales |>
 
 | succursale | region | ventes_totales | clients_totaux | panier_moyen | satisfaction_moyenne | delai_moyen | ruptures_stock |
 |:---|:---|:---|---:|:---|---:|---:|---:|
-| Montréal | Montréal | 1 923 795 \$ | 31351 | 61,27 \$ | 7.7 | 2.5 | 25 |
-| Québec | Capitale-Nationale | 1 740 846 \$ | 27586 | 63,02 \$ | 7.8 | 2.8 | 23 |
-| Sherbrooke | Estrie | 1 453 016 \$ | 23858 | 60,82 \$ | 7.6 | 2.7 | 28 |
-| Gatineau | Outaouais | 1 442 128 \$ | 24166 | 59,59 \$ | 7.7 | 2.8 | 28 |
-| Trois-Rivières | Mauricie | 1 403 919 \$ | 22334 | 62,92 \$ | 7.4 | 2.6 | 29 |
+| Montréal | Montréal | 1 923 795 \$ | 31351 | 61,36 \$ | 7.7 | 2.5 | 25 |
+| Québec | Capitale-Nationale | 1 740 846 \$ | 27586 | 63,11 \$ | 7.8 | 2.8 | 23 |
+| Sherbrooke | Estrie | 1 453 016 \$ | 23858 | 60,90 \$ | 7.6 | 2.7 | 28 |
+| Gatineau | Outaouais | 1 442 128 \$ | 24166 | 59,68 \$ | 7.7 | 2.8 | 28 |
+| Trois-Rivières | Mauricie | 1 403 919 \$ | 22334 | 62,86 \$ | 7.4 | 2.6 | 29 |
 
 À observer :
 
@@ -342,7 +342,7 @@ priorite_marketing <- ventes |>
     observations = n(),
     ventes_moyennes = mean(ventes, na.rm = TRUE),
     depenses_marketing_moyennes = mean(depenses_marketing, na.rm = TRUE),
-    panier_moyen = mean(panier_moyen, na.rm = TRUE),
+    panier_moyen = sum(ventes, na.rm = TRUE) / sum(clients, na.rm = TRUE),
     .groups = "drop"
   ) |>
   mutate(
@@ -357,8 +357,8 @@ priorite_marketing |>
 
 | campagne_locale | observations | ventes_moyennes | depenses_marketing_moyennes | panier_moyen |
 |:---|---:|:---|:---|:---|
-| non | 36 | 129 813 \$ | 3 706,06 \$ | 61,70 \$ |
-| oui | 24 | 137 102 \$ | 5 230,50 \$ | 61,26 \$ |
+| non | 36 | 129 813 \$ | 3 706,06 \$ | 61,84 \$ |
+| oui | 24 | 137 102 \$ | 5 230,50 \$ | 61,24 \$ |
 
 Ce résultat aide à formuler une question pour la suite sur les campagnes locales. Il ne démontre pas l’effet du marketing, parce que les mois avec campagne peuvent différer des autres mois pour plusieurs raisons.
 

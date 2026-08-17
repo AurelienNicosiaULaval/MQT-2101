@@ -73,15 +73,17 @@ Notez explicitement la dernière date d'entraînement et la première date de te
 
 ```{r}
 serie <- ts(entrainement$demande, frequency = 52)
+prevision_holt <- holt(serie, h = horizon, damped = TRUE, level = c(80, 95))
 
 previsions <- test |>
   transmute(
     semaine,
     observe = demande,
     naive = tail(entrainement$demande, 1),
+    saison_naive = as.numeric(snaive(serie, h = horizon)$mean),
     moyenne_4 = mean(tail(entrainement$demande, 4)),
     SES = as.numeric(ses(serie, h = horizon)$mean),
-    Holt = as.numeric(holt(serie, h = horizon, damped = TRUE)$mean)
+    Holt = as.numeric(prevision_holt$mean)
   )
 ```
 
@@ -119,6 +121,25 @@ evaluation |>
 Choisissez une méthode et citez au moins deux mesures. Expliquez une raison de ne pas suivre aveuglément le classement.
 :::
 
+## Étape 5b - Rendre l'incertitude visible
+
+```{r}
+tibble(
+  semaine = test$semaine,
+  prevision = as.numeric(prevision_holt$mean),
+  borne_80_inf = prevision_holt$lower[, "80%"],
+  borne_80_sup = prevision_holt$upper[, "80%"],
+  borne_95_inf = prevision_holt$lower[, "95%"],
+  borne_95_sup = prevision_holt$upper[, "95%"]
+) |>
+  mutate(across(where(is.numeric), ~ round(.x))) |>
+  knitr::kable()
+```
+
+::: {.callout-note title="Interpréter l'intervalle"}
+La prévision centrale sert à planifier, tandis que les intervalles décrivent des plages plausibles sous les hypothèses du modèle de Holt. Un intervalle à 95 % est plus large qu'un intervalle à 80 %. Ces bandes ne corrigent pas une rupture structurelle ou une promotion future inconnue.
+:::
+
 ## Étape 6 - Traduire en décision
 
 Supposez qu'une unité sous-prévue coûte 18 dollars en urgence et qu'une unité sur-prévue coûte 5 dollars en stockage.
@@ -144,5 +165,7 @@ Votre recommandation doit nommer la méthode, la preuve test, le coût simulé, 
 - [ ] Le fichier se rend en HTML.
 - [ ] Les dates et unités sont explicites.
 - [ ] La période test n'a pas servi à l'ajustement.
+- [ ] La méthode saisonnière naïve est incluse comme référence.
 - [ ] Le graphique et le tableau racontent la même histoire.
+- [ ] L'incertitude d'une méthode est montrée par des intervalles de prévision.
 - [ ] La recommandation tient compte du coût asymétrique.

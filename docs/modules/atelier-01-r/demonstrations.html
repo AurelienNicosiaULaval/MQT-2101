@@ -7515,7 +7515,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> ventes_totales <span class="sc">/</span> clients_totaux,</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_moyen =</span> <span class="fu">mean</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ruptures_stock =</span> <span class="fu">sum</span>(ruptures_stock, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -7561,7 +7561,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Montréal</td>
 <td style="text-align: left;">1 923 795 $</td>
 <td style="text-align: right;">31351</td>
-<td style="text-align: left;">61,27 $</td>
+<td style="text-align: left;">61,36 $</td>
 <td style="text-align: right;">7.7</td>
 <td style="text-align: right;">2.5</td>
 <td style="text-align: right;">25</td>
@@ -7571,7 +7571,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Capitale-Nationale</td>
 <td style="text-align: left;">1 740 846 $</td>
 <td style="text-align: right;">27586</td>
-<td style="text-align: left;">63,02 $</td>
+<td style="text-align: left;">63,11 $</td>
 <td style="text-align: right;">7.8</td>
 <td style="text-align: right;">2.8</td>
 <td style="text-align: right;">23</td>
@@ -7581,7 +7581,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Estrie</td>
 <td style="text-align: left;">1 453 016 $</td>
 <td style="text-align: right;">23858</td>
-<td style="text-align: left;">60,82 $</td>
+<td style="text-align: left;">60,90 $</td>
 <td style="text-align: right;">7.6</td>
 <td style="text-align: right;">2.7</td>
 <td style="text-align: right;">28</td>
@@ -7591,7 +7591,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Outaouais</td>
 <td style="text-align: left;">1 442 128 $</td>
 <td style="text-align: right;">24166</td>
-<td style="text-align: left;">59,59 $</td>
+<td style="text-align: left;">59,68 $</td>
 <td style="text-align: right;">7.7</td>
 <td style="text-align: right;">2.8</td>
 <td style="text-align: right;">28</td>
@@ -7601,7 +7601,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: left;">Mauricie</td>
 <td style="text-align: left;">1 403 919 $</td>
 <td style="text-align: right;">22334</td>
-<td style="text-align: left;">62,92 $</td>
+<td style="text-align: left;">62,86 $</td>
 <td style="text-align: right;">7.4</td>
 <td style="text-align: right;">2.6</td>
 <td style="text-align: right;">29</td>
@@ -7709,7 +7709,7 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_moyennes =</span> <span class="fu">mean</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">depenses_marketing_moyennes =</span> <span class="fu">mean</span>(depenses_marketing, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -7744,14 +7744,14 @@ $ taux_retour           &lt;dbl&gt; 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.
 <td style="text-align: right;">36</td>
 <td style="text-align: left;">129 813 $</td>
 <td style="text-align: left;">3 706,06 $</td>
-<td style="text-align: left;">61,70 $</td>
+<td style="text-align: left;">61,84 $</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">oui</td>
 <td style="text-align: right;">24</td>
 <td style="text-align: left;">137 102 $</td>
 <td style="text-align: left;">5 230,50 $</td>
-<td style="text-align: left;">61,26 $</td>
+<td style="text-align: left;">61,24 $</td>
 </tr>
 </tbody>
 </table>

@@ -7319,7 +7319,7 @@ $ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_totales =</span> <span class="fu">sum</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients_totaux =</span> <span class="fu">sum</span>(clients, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> <span class="fu">mean</span>(panier_moyen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">panier_moyen =</span> ventes_totales <span class="sc">/</span> clients_totaux,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_moyenne =</span> <span class="fu">mean</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
@@ -7358,7 +7358,7 @@ $ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 
 <td style="text-align: left;">Montréal</td>
 <td style="text-align: left;">831 777 $</td>
 <td style="text-align: right;">14057</td>
-<td style="text-align: left;">59,24 $</td>
+<td style="text-align: left;">59,17 $</td>
 <td style="text-align: right;">8.1</td>
 </tr>
 <tr class="even">
@@ -7366,7 +7366,7 @@ $ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 
 <td style="text-align: left;">Capitale-Nationale</td>
 <td style="text-align: left;">677 971 $</td>
 <td style="text-align: right;">11464</td>
-<td style="text-align: left;">59,02 $</td>
+<td style="text-align: left;">59,14 $</td>
 <td style="text-align: right;">8.1</td>
 </tr>
 <tr class="odd">
@@ -7374,7 +7374,7 @@ $ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 
 <td style="text-align: left;">Estrie</td>
 <td style="text-align: left;">589 922 $</td>
 <td style="text-align: right;">9565</td>
-<td style="text-align: left;">61,71 $</td>
+<td style="text-align: left;">61,68 $</td>
 <td style="text-align: right;">7.9</td>
 </tr>
 <tr class="even">
@@ -7382,7 +7382,7 @@ $ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 
 <td style="text-align: left;">Mauricie</td>
 <td style="text-align: left;">515 975 $</td>
 <td style="text-align: right;">8589</td>
-<td style="text-align: left;">60,35 $</td>
+<td style="text-align: left;">60,07 $</td>
 <td style="text-align: right;">8.2</td>
 </tr>
 </tbody>

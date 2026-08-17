@@ -27,28 +27,90 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-module-04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
+entrainement <- saturation |> slice(id_entrainement)
+test <- saturation |> slice(-id_entrainement)
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une promesse à borner
+:::
+
+::: {.question-line}
+Que vaut une prévision lorsque l'achalandage sort de la plage observée?
+:::
+
+::: {.note-box}
+Une courbe peut se prolonger très vite hors des données. La plage observée et l'intervalle de prédiction rendent cette incertitude visible avant une décision de capacité.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Produire des prédictions sur une grille de valeurs.
 - Comprendre la plage observée.
 - Identifier l'extrapolation.
 - Formuler une limite claire.
-
+:::
 ## Prédire sur une grille
 
-```r
+```{r}
+#| label: graphique-intervalle-module-04
+#| echo: false
 grille <- tibble(
-  achalandage = seq(min(saturation$achalandage),
-                    max(saturation$achalandage),
+  achalandage = seq(min(entrainement$achalandage),
+                    max(entrainement$achalandage),
                     length.out = 100)
 )
 
-grille$ventes_predites <- predict(modele_quad, newdata = grille)
+intervalle <- predict(
+  modele_quad,
+  newdata = grille,
+  interval = "prediction",
+  level = 0.95
+)
+
+grille <- bind_cols(grille, as_tibble(intervalle))
+
+ggplot() +
+  geom_ribbon(
+    data = grille,
+    aes(x = achalandage, ymin = lwr, ymax = upr),
+    fill = "#E69F00",
+    alpha = 0.2
+  ) +
+  geom_line(
+    data = grille,
+    aes(x = achalandage, y = fit),
+    color = "#0B4F6C",
+    linewidth = 1.2
+  ) +
+  geom_point(
+    data = entrainement,
+    aes(x = achalandage, y = ventes),
+    alpha = 0.55
+  ) +
+  scale_y_continuous(labels = scales::label_dollar(suffix = " $")) +
+  labs(x = "Achalandage mensuel", y = "Ventes mensuelles") +
+  theme_minimal(base_size = 14)
 ```
 
 ## Plage observée
 
-Une prédiction est plus crédible lorsqu'elle reste dans les valeurs d'achalandage réellement observées. Hors de cette plage, le modèle prolonge une forme sans preuve directe dans les données.
+Une prédiction est plus crédible lorsqu'elle reste dans les valeurs d'achalandage réellement observées. La bande représente un intervalle de prédiction à 95 % pour une nouvelle observation. Hors de cette plage, le modèle prolonge une forme sans preuve directe dans les données.
 
 ## Pourquoi est-ce risqué?
 
@@ -65,12 +127,48 @@ Le modèle décrit bien la relation dans la plage observée, mais il ne devrait 
 
 Si la décision concerne une situation nouvelle, il faut chercher des données supplémentaires, simuler des scénarios ou ajouter des variables opérationnelles.
 
-## Activité 4.5
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Prédire n'est pas extrapoler sans justification.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La plage observée protège l'interprétation.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+L'extrapolation doit être nommée explicitement.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+:::
+## Production autonome 4.5
 
 Rédigez une limite d'extrapolation en deux phrases, adaptée à une recommandation de capacité en succursale.
 
-## À retenir
 
-- Prédire n'est pas extrapoler sans justification.
-- La plage observée protège l'interprétation.
-- L'extrapolation doit être nommée explicitement.
+### Auto-vérification
+
+::: {.self-check}
+- Les modèles sont comparés sur les mêmes données test.
+- La forme retenue est visible et interprétable.
+- La prédiction reste dans la plage observée et son incertitude est indiquée.
+:::

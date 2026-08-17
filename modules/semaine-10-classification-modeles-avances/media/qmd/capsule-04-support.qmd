@@ -27,6 +27,20 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m10-c04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/fidelisation_clients_quebec.csv", "../../data/fidelisation_clients_quebec.csv", "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+clients <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+train <- clients |> group_by(depart_90j) |> slice_sample(prop = 0.80) |> ungroup()
+test <- anti_join(clients, train, by = "client_id")
+modele <- glm(depart_90j ~ anciennete_mois + utilisation_mensuelle + tickets_service_6m + satisfaction + type_contrat, family = binomial(), data = train)
+probabilite <- predict(modele, newdata = test, type = "response")
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,31 +60,42 @@ Un seuil plus bas cible davantage de clients et augmente souvent la sensibilité
 ::: {.keypoints}
 - Comparer des seuils sur une période test.
 - Relier le seuil à la capacité et au coût des erreurs.
+- Vérifier la proportionnalité et l'équité avant le déploiement.
+- Vérifier une règle de capacité sur des données test.
 :::
 
-## L'idée centrale
-
-::: {.keypoints}
-- Le seuil transforme une probabilité en intervention.
-- La capacité de contact peut définir une règle réaliste.
-- La règle doit être validée hors échantillon.
-:::
-
-## Décision ou exemple
+## Cibler les 15 % les plus à risque
 
 ::: {.example-box}
 Si l'équipe peut contacter 15 % des clients, elle peut ordonner les probabilités et cibler les 15 % les plus élevés, puis vérifier cette règle sur le test.
 :::
 
-## Le geste en R
+## Tester une règle de capacité
 
 ```{r}
-#| eval: false
+#| label: code-m10-c04
+#| echo: true
+#| eval: true
 seuil <- quantile(probabilite, probs = 0.85)
 cible <- probabilite >= seuil
+tibble(
+  clients_test = nrow(test),
+  clients_cibles = sum(cible),
+  departs_detectes = sum(cible & test$depart_90j == 1),
+  precision = mean(test$depart_90j[cible])
+)
 ```
 
-## Piège fréquent
+## La capacité de contact définit une règle testable
+
+::: {.keypoints}
+- Le seuil transforme une probabilité en intervention.
+- La capacité de contact peut définir une règle réaliste.
+- La règle doit être validée hors échantillon.
+- Le suivi doit comparer la qualité de service entre les groupes pertinents et prévoir un recours humain.
+:::
+
+## Le seuil de 0,5 n'a rien d'automatique
 
 ::: {.warning-box}
 Fixer 0,5 sans regarder la capacité, la valeur d'un client ou le coût des faux négatifs donne une décision arbitraire.
@@ -78,13 +103,49 @@ Fixer 0,5 sans regarder la capacité, la valeur d'un client ou le coût des faux
 
 ## À retenir
 
-::: {.keypoints}
-- Un seuil est un choix explicite de gestion.
-- Il doit être justifié et testé.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Un seuil est un choix explicite de gestion.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Il doit être justifié et testé.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+L'intervention doit rester proportionnée et révisable.
+:::
+:::
 :::
 
-## Activité 10.4
+::: {.notes}
+[Sources]
+- R Core Team. Documentation de stats::glm. https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
+- Tidymodels. Classification metrics. https://yardstick.tidymodels.org/
+:::
+
+## Production autonome 10.4
 
 ::: {.lead}
-Proposez une règle de ciblage lorsque l'équipe peut contacter seulement 15 % des clients.
+Proposez une règle de ciblage lorsque l'équipe peut contacter seulement 15 % des clients, puis nommez une vérification d'équité à effectuer avant le déploiement.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J'ai défini la classe positive et la période test.
+- J'ai rapporté les deux types d'erreur, pas seulement l'exactitude.
+- Ma règle respecte la capacité et évite une interprétation individuelle certaine.
 :::

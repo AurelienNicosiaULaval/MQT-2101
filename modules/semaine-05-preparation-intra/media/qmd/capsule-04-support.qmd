@@ -27,13 +27,28 @@ execute:
 editor: visual
 ---
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Une pente à traduire
+:::
+
+::: {.question-line}
+Que doit contenir une réponse de régression pour être vérifiable et interprétable?
+:::
+
+::: {.note-box}
+La formule seule ne suffit pas. Les unités, la qualité de l'ajustement, la structure des résidus et une limite causale transforment une sortie R en réponse statistique.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Identifier la variable réponse et les explicatives.
 - Présenter le graphique avant le modèle.
 - Interpréter la pente.
 - Mentionner un diagnostic et une limite.
-
+:::
 ## Structure de réponse
 
 - Question.
@@ -47,31 +62,67 @@ editor: visual
 ## Code minimal
 
 ```r
-modele <- lm(y ~ x, data = donnees)
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
 summary(modele)
 ```
 
 ## Interpréter la pente
 
-Lorsque `x` augmente d'une unité, la valeur moyenne prédite de `y` varie de [pente] unités, dans ces données et selon ce modèle.
+Lorsque le budget marketing augmente de 1 $, les ventes moyennes prédites augmentent d'environ 13,58 $, dans ces données et selon ce modèle.
 
 ## Diagnostic minimal
 
 - Le nuage de points soutient-il une relation linéaire?
-- Les résidus sont-ils centrés autour de zéro?
-- Y a-t-il une structure claire dans les résidus?
+- Les résidus présentent-ils une courbure, une dispersion changeante ou des valeurs extrêmes?
+- La taille et le signe des résidus sont-ils plausibles dans le contexte?
 - La prédiction reste-t-elle dans la plage observée?
 
 ## Limite causale
 
 Une pente positive ne prouve pas que `x` cause `y`. Elle décrit une association conditionnelle au modèle et aux données observées.
 
-## Activité 5.4
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La pente sans unités est incomplète.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Le diagnostic fait partie de la réponse.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La causalité doit être nommée avec prudence.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- Wickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023). R for Data Science, 2e éd. https://r4ds.hadley.nz/
+:::
+## Production autonome 5.4
 
 À partir d'un modèle du module 03, rédigez une réponse de six lignes maximum : question, pente, ajustement, diagnostic, limite, conclusion.
 
-## À retenir
 
-- La pente sans unités est incomplète.
-- Le diagnostic fait partie de la réponse.
-- La causalité doit être nommée avec prudence.
+### Auto-vérification
+
+::: {.self-check}
+- La méthode répond au verbe de la question.
+- Le résultat, le diagnostic et les unités sont présents.
+- La conclusion distingue description, prédiction et causalité.
+:::

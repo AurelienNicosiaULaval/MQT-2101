@@ -27,6 +27,21 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m08-c04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
+train <- ventes |> slice_head(n = 60)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +61,29 @@ Une prévision ponctuelle donne une valeur centrale. L'intervalle de prédiction
 ::: {.keypoints}
 - Produire une prévision ponctuelle et un intervalle.
 - Relier l'incertitude à un scénario budgétaire.
+- Distinguer valeur centrale et plage de prévision.
 :::
 
-## L'idée centrale
+## Trois scénarios plutôt qu'un chiffre certain
+
+::: {.example-box}
+Un budget peut utiliser une valeur centrale, un scénario prudent et un scénario de capacité élevée plutôt qu'un seul chiffre présenté comme certain.
+:::
+
+## Produire un intervalle de prédiction
+
+```{r}
+#| label: code-m08-c04
+#| echo: true
+#| eval: true
+pred <- as.data.frame(
+  predict(modele, newdata = test, interval = "prediction")
+)
+bind_cols(test |> select(date), pred) |>
+  slice_head(n = 4)
+```
+
+## Une prévision utile montre aussi son incertitude
 
 ::: {.keypoints}
 - L'intervalle de prédiction concerne une nouvelle observation.
@@ -56,21 +91,7 @@ Une prévision ponctuelle donne une valeur centrale. L'intervalle de prédiction
 - La décision peut prévoir des scénarios de capacité.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Un budget peut utiliser une valeur centrale, un scénario prudent et un scénario de capacité élevée plutôt qu'un seul chiffre présenté comme certain.
-:::
-
-## Le geste en R
-
-```{r}
-#| eval: false
-pred <- predict(modele, newdata = test, interval = "prediction")
-head(pred)
-```
-
-## Piège fréquent
+## La valeur centrale seule masque le risque
 
 ::: {.warning-box}
 Communiquer seulement la valeur centrale masque la variabilité qui compte pour les stocks, les équipes et la capacité.
@@ -78,13 +99,48 @@ Communiquer seulement la valeur centrale masque la variabilité qui compte pour 
 
 ## À retenir
 
-::: {.keypoints}
-- Une prévision doit être accompagnée de son incertitude.
-- Une décision robuste prévoit des scénarios.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Une prévision doit être accompagnée de son incertitude.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Une décision robuste prévoit des scénarios.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 8.4
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 8.4
 
 ::: {.lead}
 Expliquez pourquoi l'intervalle de prédiction est plus large que l'intervalle de confiance de la moyenne.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

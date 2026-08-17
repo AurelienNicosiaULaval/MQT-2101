@@ -27,20 +27,36 @@ execute:
 editor: visual
 ---
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Un diagnostic avant le calcul
+:::
+
+::: {.question-line}
+Une ligne, une variable ou une valeur manquante pourraient-elles changer votre conclusion?
+:::
+
+::: {.note-box}
+Nommer l'unité d'observation et les types de variables fixe le sens de chaque calcul. Le diagnostic minimal évite de découvrir une limite après avoir interprété le résultat.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Nommer l'unité d'observation.
 - Identifier les types de variables.
 - Repérer les valeurs manquantes.
 - Documenter les limites de préparation.
-
+:::
 ## Unité d'observation
 
 Une ligne représente quoi? Une journée, une succursale, une campagne, une combinaison mois-région? Cette réponse guide toute l'interprétation.
 
 ## Types de variables
 
-- Numérique continue : ventes, budget, achalandage.
+- Numérique continue : montant des ventes, budget, durée.
+- Numérique discrète : achalandage, nombre de transactions, ruptures de stock.
 - Catégorielle : région, canal, saison.
 - Date ou période : mois, semaine, jour.
 - Code : parfois numérique, mais pas une quantité.
@@ -60,14 +76,50 @@ Une valeur manquante, une variable mal typée ou une mauvaise unité d'observati
 
 ## Phrase utile
 
-Chaque ligne représente [unité]. Les variables centrales sont [réponse] et [explicative]. Les valeurs manquantes touchent surtout [variable], ce qui limite [aspect].
-
-## Activité 5.2
-
-Préparez une phrase de diagnostic minimal pour un fichier du module 02, 03 ou 04.
+Dans `ventes_operations_quebec.csv`, chaque ligne représente une succursale pendant un mois. Les ventes et les dépenses marketing sont numériques; le délai de livraison et la satisfaction comportent respectivement une et deux valeurs manquantes, ce qui réduit le nombre d'observations disponibles pour résumer ces deux indicateurs.
 
 ## À retenir
 
-- Un diagnostic court vaut mieux qu'une analyse aveugle.
-- L'unité d'observation est la base de l'interprétation.
-- Les limites doivent apparaître avant la conclusion.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Un diagnostic court vaut mieux qu'une analyse aveugle.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+L'unité d'observation est la base de l'interprétation.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Les limites doivent apparaître avant la conclusion.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- Wickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023). R for Data Science, 2e éd. https://r4ds.hadley.nz/
+:::
+## Production autonome 5.2
+
+Préparez une phrase de diagnostic minimal pour un fichier du module 02, 03 ou 04.
+
+
+### Auto-vérification
+
+::: {.self-check}
+- La méthode répond au verbe de la question.
+- Le résultat, le diagnostic et les unités sont présents.
+- La conclusion distingue description, prédiction et causalité.
+:::

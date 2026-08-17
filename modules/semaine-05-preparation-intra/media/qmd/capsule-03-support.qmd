@@ -27,13 +27,28 @@ execute:
 editor: visual
 ---
 
+## Pourquoi ça compte
+
+::: {.kicker}
+Décrire sans expliquer
+:::
+
+::: {.question-line}
+Comment comparer deux groupes sans transformer un écart observé en cause?
+:::
+
+::: {.note-box}
+Un tableau, un graphique et une phrase peuvent suffire si les effectifs valides et les valeurs manquantes sont visibles. La description reste alors utile sans dépasser les données.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Choisir un résumé descriptif.
 - Choisir un graphique adapté.
 - Formuler un constat court.
 - Distinguer description et explication.
-
+:::
 ## Structure descriptive
 
 - Question.
@@ -51,7 +66,9 @@ donnees |>
   summarise(
     moyenne = mean(valeur, na.rm = TRUE),
     mediane = median(valeur, na.rm = TRUE),
-    n = n()
+    n_total = n(),
+    n_valide = sum(!is.na(valeur)),
+    n_manquant = sum(is.na(valeur))
   )
 ```
 
@@ -66,16 +83,52 @@ Dans ces données, le groupe A présente une moyenne plus élevée que le groupe
 ## Erreurs fréquentes
 
 - Ne pas dire quelle variable est comparée.
-- Comparer des moyennes sans mentionner le nombre d'observations.
+- Comparer des moyennes sans mentionner le nombre de valeurs réellement utilisées.
 - Oublier les valeurs manquantes.
 - Transformer une description en causalité.
 
-## Activité 5.3
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Une réponse descriptive doit rester descriptive.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Le graphique et le tableau doivent raconter la même histoire.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La limite protège la conclusion.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- Wickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023). R for Data Science, 2e éd. https://r4ds.hadley.nz/
+:::
+## Production autonome 5.3
 
 Rédigez une réponse descriptive en quatre phrases : méthode, résultat, constat, limite.
 
-## À retenir
 
-- Une réponse descriptive doit rester descriptive.
-- Le graphique et le tableau doivent raconter la même histoire.
-- La limite protège la conclusion.
+### Auto-vérification
+
+::: {.self-check}
+- La méthode répond au verbe de la question.
+- Le résultat, le diagnostic et les unités sont présents.
+- La conclusion distingue description, prédiction et causalité.
+:::

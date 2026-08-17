@@ -27,13 +27,44 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-module-04
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+set.seed(2101)
+id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
+entrainement <- saturation |> slice(id_entrainement)
+test <- saturation |> slice(-id_entrainement)
+modele_lin <- lm(ventes ~ achalandage, data = entrainement)
+modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
+modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+```
+
+## Pourquoi ça compte
+
+::: {.kicker}
+Une contrainte à rendre visible
+:::
+
+::: {.question-line}
+Le ralentissement des ventes vient-il de la demande ou de la capacité à la servir?
+:::
+
+::: {.note-box}
+Le taux d'occupation, l'attente et les ruptures de stock donnent un sens opérationnel à la courbure. Ils suggèrent des mécanismes à vérifier sans, à eux seuls, les prouver.
+:::
+
 ## Objectifs de la capsule
 
+::: {.keypoints}
 - Relier la courbure aux contraintes opérationnelles.
 - Nommer des indicateurs de saturation.
 - Distinguer achalandage et capacité.
 - Préparer une interprétation appliquée.
-
+:::
 ## Saturation : intuition
 
 La saturation apparaît lorsqu'une ressource approche sa limite. Plus de demande peut rester souhaitable, mais l'organisation ne transforme plus cette demande aussi efficacement.
@@ -44,6 +75,25 @@ La saturation apparaît lorsqu'une ressource approche sa limite. Plus de demande
 - `temps_attente_minutes` : friction pour les clients.
 - `ruptures_stock` : incapacité à répondre à la demande.
 - `ventes` : résultat observé dans les données.
+
+```{r}
+#| label: capsule-04-02-indices
+#| echo: false
+
+saturation |>
+  summarise(
+    occupation_min = min(taux_occupation),
+    occupation_max = max(taux_occupation),
+    attente_mediane = median(temps_attente_minutes),
+    ruptures_max = max(ruptures_stock)
+  ) |>
+  mutate(across(everything(), ~ round(.x, 2))) |>
+  knitr::kable()
+```
+
+::: {.warning-box}
+Le `taux_occupation` est calculé par rapport à une capacité de référence mensuelle. Il peut donc dépasser 1 : une valeur de 1,20 signifie un achalandage équivalant à 120 % de cette référence, pas une occupation physique simultanée de 120 %.
+:::
 
 ## Phrase utile
 
@@ -60,12 +110,48 @@ Les ventes augmentent avec l'achalandage, mais la relation semble ralentir lorsq
 
 Si la saturation est plausible, la recommandation peut porter sur la capacité, la gestion des files, les stocks ou les horaires, et pas seulement sur l'acquisition de clients.
 
-## Activité 4.2
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La courbure doit être interprétée dans le contexte.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Augmenter l'achalandage et améliorer la capacité ne sont pas la même décision.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+Une bonne analyse relie une forme statistique à une question de gestion.
+:::
+:::
+:::
+
+::: {.notes}
+[Sources]
+- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+:::
+## Production autonome 4.2
 
 Choisissez deux variables du fichier qui pourraient appuyer l'hypothèse de saturation et expliquez leur rôle en une phrase chacune.
 
-## À retenir
 
-- La courbure doit être interprétée dans le contexte.
-- Augmenter l'achalandage et améliorer la capacité ne sont pas la même décision.
-- Une bonne analyse relie une forme statistique à une question de gestion.
+### Auto-vérification
+
+::: {.self-check}
+- Les modèles sont comparés sur les mêmes données test.
+- La forme retenue est visible et interprétable.
+- La prédiction reste dans la plage observée et son incertitude est indiquée.
+:::

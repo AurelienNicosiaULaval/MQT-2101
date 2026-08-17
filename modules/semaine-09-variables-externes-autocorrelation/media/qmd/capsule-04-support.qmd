@@ -27,6 +27,22 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m09-c04
+#| include: false
+library(tidyverse)
+library(forecast)
+data_candidates <- c("data/ventes_promotions_quebec.csv", "../../data/ventes_promotions_quebec.csv", "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
+train <- ventes |> slice_head(n = 60)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label, data = train)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +62,32 @@ Un modèle avec erreurs AR(1) ajoute une dépendance entre les erreurs. Pour l'u
 ::: {.keypoints}
 - Comparer une régression ordinaire et une régression avec erreurs AR.
 - Communiquer une prévision conditionnelle à un scénario.
+- Nommer les hypothèses d'un scénario de prévision.
 :::
 
-## L'idée centrale
+## Avril sous promotion maintenue
+
+::: {.example-box}
+Une prévision pour avril suppose ici qu'une promotion est maintenue et que le prix reste stable. Ces hypothèses font partie du résultat.
+:::
+
+## Ajuster une régression avec erreurs AR
+
+```{r}
+#| label: code-m09-c04
+#| echo: true
+#| eval: true
+xreg_train <- model.matrix(
+  ~ promotion + prix_moyen, data = train
+)[, -1, drop = FALSE]
+modele_ar <- forecast::Arima(
+  train$ventes, order = c(1, 0, 0), xreg = xreg_train
+)
+tibble(parametre = names(coef(modele_ar)), estimation = coef(modele_ar)) |>
+  slice_head(n = 4)
+```
+
+## Une prévision conditionnelle inclut ses hypothèses
 
 ::: {.keypoints}
 - AR(1) relie une erreur à l'erreur précédente.
@@ -56,21 +95,7 @@ Un modèle avec erreurs AR(1) ajoute une dépendance entre les erreurs. Pour l'u
 - Le résultat n'est pas une prévision inconditionnelle.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Une prévision pour avril suppose ici qu'une promotion est maintenue et que le prix reste stable. Ces hypothèses font partie du résultat.
-:::
-
-## Le geste en R
-
-```{r}
-#| eval: false
-modele_ar <- forecast::Arima(train$ventes, order = c(1, 0, 0),
-  xreg = model.matrix(~ promotion + prix_moyen, train)[, -1])
-```
-
-## Piège fréquent
+## Un scénario oublié devient une fausse certitude
 
 ::: {.warning-box}
 Omettre les hypothèses sur prix et promotion donne l'impression trompeuse que le modèle connaît automatiquement le futur.
@@ -78,13 +103,48 @@ Omettre les hypothèses sur prix et promotion donne l'impression trompeuse que l
 
 ## À retenir
 
-::: {.keypoints}
-- Les scénarios sont des intrants du modèle.
-- Une recommandation doit nommer ses hypothèses.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Les scénarios sont des intrants du modèle.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Une recommandation doit nommer ses hypothèses.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 9.4
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 9.4
 
 ::: {.lead}
 Rédigez une phrase complète présentant une prévision sous un scénario de promotion maintenue et de prix stable.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

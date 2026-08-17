@@ -27,6 +27,21 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m08-c01
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
+train <- ventes |> slice_head(n = 60)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +61,10 @@ La tendance change graduellement le niveau. La saisonnalité est un motif récur
 ::: {.keypoints}
 - Définir tendance et saisonnalité.
 - Chercher une récurrence sur plusieurs cycles.
+- Comparer les mêmes mois sur plusieurs années.
 :::
 
-## L'idée centrale
+## Tendance et saisonnalité répondent à deux questions
 
 ::: {.keypoints}
 - Une seule année ne prouve pas la saisonnalité.
@@ -56,21 +72,23 @@ La tendance change graduellement le niveau. La saisonnalité est un motif récur
 - La tendance peut modifier le niveau général.
 :::
 
-## Décision ou exemple
+## Comparer janvier avec janvier
 
 ::: {.example-box}
 Regrouper les observations de janvier permet de comparer janvier d'une année à l'autre malgré une tendance globale.
 :::
 
-## Le geste en R
+## Visualiser les mois sur plusieurs années
 
 ```{r}
-#| eval: false
+#| label: code-m08-c01
+#| echo: true
+#| eval: true
 ventes |> ggplot(aes(mois_label, ventes)) +
   geom_boxplot()
 ```
 
-## Piège fréquent
+## Une seule année ne prouve pas une saisonnalité
 
 ::: {.warning-box}
 Interpréter une hausse de janvier à décembre dans une seule année comme une saisonnalité confond un trajet unique et un motif récurrent.
@@ -78,13 +96,48 @@ Interpréter une hausse de janvier à décembre dans une seule année comme une 
 
 ## À retenir
 
-::: {.keypoints}
-- La tendance est un mouvement de long terme.
-- La saisonnalité revient selon un calendrier.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+La tendance est un mouvement de long terme.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+La saisonnalité revient selon un calendrier.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 8.1
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 8.1
 
 ::: {.lead}
 Expliquez pourquoi il est utile de comparer toutes les observations de janvier.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

@@ -65,6 +65,7 @@ Fichier : <a class="data-link" href="../../donnees/#performance-de-succursales-q
 ```{r}
 #| label: setup-atelier-02-guide
 library(tidyverse)
+library(broom)
 
 data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
   "data/performance_succursales_quebec.csv"
@@ -295,12 +296,33 @@ approfondir.
 
 ```{r}
 #| label: coefficients-priorites-guide
-coef(modele_enrichi)
+variations_realistes <- tribble(
+  ~term, ~variation, ~scenario,
+  "achalandage", 100, "+100 visites mensuelles",
+  "depenses_marketing", 500, "+500 $ de dépenses marketing",
+  "heures_personnel", 40, "+40 heures de personnel",
+  "ruptures_stock", 1, "+1 rupture de stock"
+)
+
+broom::tidy(modele_enrichi, conf.int = TRUE) |>
+  inner_join(variations_realistes, by = "term") |>
+  transmute(
+    facteur = term,
+    scenario,
+    variation_ventes_estimee = estimate * variation,
+    borne_inferieure = conf.low * variation,
+    borne_superieure = conf.high * variation
+  ) |>
+  mutate(across(where(is.numeric), ~ round(.x))) |>
+  knitr::kable()
 ```
 
+::: {.callout-warning title="Des coefficients bruts non comparables"}
+Un coefficient pour 1 dollar, 1 visite, 1 heure ou 1 rupture n'est pas sur la même échelle. Ne classez pas les facteurs par la valeur absolue des coefficients bruts. Comparez plutôt des variations réalistes, leurs intervalles de confiance, la possibilité d'agir sur le facteur et le coût de l'action.
+:::
+
 ::: {.callout-tip title="À vous 7 - Choisir une priorité"}
-Choisissez une variable prioritaire. Justifiez-la avec un résultat du modèle et
-un élément de contexte. Ajoutez immédiatement une limite.
+Choisissez une variable prioritaire. Justifiez-la par l'effet estimé d'une variation réaliste, son intervalle de confiance et un élément de contexte. Ajoutez immédiatement une limite.
 :::
 
 ## Étape 8 - Rédiger la recommandation

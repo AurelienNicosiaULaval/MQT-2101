@@ -77,6 +77,7 @@ Fichier : [performance_succursales_quebec.csv](../../donnees/#performance-de-suc
 
 ``` r
 library(tidyverse)
+library(broom)
 
 data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
   "data/performance_succursales_quebec.csv"
@@ -350,17 +351,41 @@ ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
 Le modèle enrichi peut suggérer plusieurs pistes : achalandage, marketing, capacité de service, ruptures de stock. Votre rôle n’est pas de transformer un coefficient en certitude, mais de choisir une piste raisonnable à tester ou à approfondir.
 
 ``` r
-coef(modele_enrichi)
+variations_realistes <- tribble(
+  ~term, ~variation, ~scenario,
+  "achalandage", 100, "+100 visites mensuelles",
+  "depenses_marketing", 500, "+500 $ de dépenses marketing",
+  "heures_personnel", 40, "+40 heures de personnel",
+  "ruptures_stock", 1, "+1 rupture de stock"
+)
+
+broom::tidy(modele_enrichi, conf.int = TRUE) |>
+  inner_join(variations_realistes, by = "term") |>
+  transmute(
+    facteur = term,
+    scenario,
+    variation_ventes_estimee = estimate * variation,
+    borne_inferieure = conf.low * variation,
+    borne_superieure = conf.high * variation
+  ) |>
+  mutate(across(where(is.numeric), ~ round(.x))) |>
+  knitr::kable()
 ```
 
-           (Intercept)        achalandage depenses_marketing   heures_personnel
-           5098.769070          34.788875           5.945467         131.425422
-        ruptures_stock
-          -1947.275885
+| facteur | scenario | variation_ventes_estimee | borne_inferieure | borne_superieure |
+|:---|:---|---:|---:|---:|
+| achalandage | +100 visites mensuelles | 3479 | 2751 | 4207 |
+| depenses_marketing | +500 \$ de dépenses marketing | 2973 | 2342 | 3603 |
+| heures_personnel | +40 heures de personnel | 5257 | 3211 | 7303 |
+| ruptures_stock | +1 rupture de stock | -1947 | -2755 | -1139 |
+
+> **WARNING:**
+>
+> Un coefficient pour 1 dollar, 1 visite, 1 heure ou 1 rupture n’est pas sur la même échelle. Ne classez pas les facteurs par la valeur absolue des coefficients bruts. Comparez plutôt des variations réalistes, leurs intervalles de confiance, la possibilité d’agir sur le facteur et le coût de l’action.
 
 > **TIP:**
 >
-> Choisissez une variable prioritaire. Justifiez-la avec un résultat du modèle et un élément de contexte. Ajoutez immédiatement une limite.
+> Choisissez une variable prioritaire. Justifiez-la par l’effet estimé d’une variation réaliste, son intervalle de confiance et un élément de contexte. Ajoutez immédiatement une limite.
 
 ## Étape 8 - Rédiger la recommandation
 

@@ -27,6 +27,22 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m09-c02
+#| include: false
+library(tidyverse)
+library(forecast)
+data_candidates <- c("data/ventes_promotions_quebec.csv", "../../data/ventes_promotions_quebec.csv", "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
+train <- ventes |> slice_head(n = 60)
+test <- ventes |> slice_tail(n = 12)
+modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label, data = train)
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +62,16 @@ Le coefficient d'une variable externe décrit une association conditionnelle aux
 ::: {.keypoints}
 - Ajuster une régression temporelle avec prédicteurs externes.
 - Employer un langage conditionnel et non causal.
+- Formuler une interprétation conditionnelle et non causale.
 :::
 
-## L'idée centrale
+## Promotion oui n'est pas une expérience aléatoire
+
+::: {.example-box}
+Comparer « promotion oui » et « promotion non » dans un modèle observationnel ne reproduit pas une expérimentation aléatoire.
+:::
+
+## Le coefficient dépend du scénario et du modèle
 
 ::: {.keypoints}
 - Le modèle combine tendance, calendrier et prédicteurs.
@@ -56,21 +79,21 @@ Le coefficient d'une variable externe décrit une association conditionnelle aux
 - Les prédictions sont conditionnelles au scénario.
 :::
 
-## Décision ou exemple
-
-::: {.example-box}
-Comparer « promotion oui » et « promotion non » dans un modèle observationnel ne reproduit pas une expérimentation aléatoire.
-:::
-
-## Le geste en R
+## Ajuster une régression conditionnelle
 
 ```{r}
-#| eval: false
-modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label,
-  data = train)
+#| label: code-m09-c02
+#| echo: true
+#| eval: true
+modele <- lm(
+  ventes ~ tendance + promotion + prix_moyen + mois_label,
+  data = train
+)
+broom::tidy(modele) |>
+  filter(term %in% c("promotionoui", "prix_moyen"))
 ```
 
-## Piège fréquent
+## Association estimée n'est pas effet causal
 
 ::: {.warning-box}
 Transformer une association estimée en promesse d'effet causal peut produire une recommandation injustifiée.
@@ -78,13 +101,48 @@ Transformer une association estimée en promesse d'effet causal peut produire un
 
 ## À retenir
 
-::: {.keypoints}
-- Les coefficients sont conditionnels au modèle.
-- Une question causale exige un autre plan d'étude.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Les coefficients sont conditionnels au modèle.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+Une question causale exige un autre plan d'étude.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 9.2
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 9.2
 
 ::: {.lead}
 Expliquez pourquoi deux prévisions sous des niveaux de promotion différents ne prouvent pas automatiquement un effet causal.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Toutes les méthodes utilisent la même période test.
+- J'ai interprété l'erreur dans son unité.
+- J'ai relié le résultat à une décision et à une limite.
 :::

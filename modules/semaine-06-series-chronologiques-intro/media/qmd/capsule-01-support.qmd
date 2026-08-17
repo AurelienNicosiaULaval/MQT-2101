@@ -27,6 +27,18 @@ execute:
 editor: visual
 ---
 
+```{r}
+#| label: setup-m06-c01
+#| include: false
+library(tidyverse)
+data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
+data_path <- data_candidates[file.exists(data_candidates)][1]
+ventes <- readr::read_csv(data_path, show_col_types = FALSE)
+ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
+train <- ventes |> filter(date < as.Date("2025-01-01"))
+test <- ventes |> filter(date >= as.Date("2025-01-01"))
+```
+
 ## Pourquoi ça compte
 
 ::: {.kicker}
@@ -46,9 +58,10 @@ L'ordre des observations porte de l'information. Une ligne de mars ne peut pas �
 ::: {.keypoints}
 - Nommer l'unité d'observation, la fréquence et la période.
 - Distinguer données transversales et données temporelles.
+- Vérifier que l'ordre des lignes respecte la chronologie.
 :::
 
-## L'idée centrale
+## Le temps change l'unité d'analyse
 
 ::: {.keypoints}
 - Une série est repérée dans le temps.
@@ -56,21 +69,23 @@ L'ordre des observations porte de l'information. Une ligne de mars ne peut pas �
 - La chronologie ne doit pas être détruite.
 :::
 
-## Décision ou exemple
+## Une ligne, deux identifiants
 
 ::: {.example-box}
 Une ligne peut représenter un mois-succursale, mais seulement si la date et la succursale sont toutes deux identifiées.
 :::
 
-## Le geste en R
+## Vérifier l'ordre et la fréquence en R
 
 ```{r}
-#| eval: false
+#| label: code-m06-c01
+#| echo: true
+#| eval: true
 library(tidyverse)
 ventes |> arrange(date) |> glimpse()
 ```
 
-## Piège fréquent
+## Quand un tri alphabétique détruit le temps
 
 ::: {.warning-box}
 Trier une date stockée comme texte peut produire un ordre faux. Vérifiez toujours la classe de la date.
@@ -78,13 +93,48 @@ Trier une date stockée comme texte peut produire un ordre faux. Vérifiez toujo
 
 ## À retenir
 
-::: {.keypoints}
-- Une unité, une variable, une fréquence et une période définissent la série.
-- L'ordre temporel est une information, pas une colonne décorative.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+Une unité, une variable, une fréquence et une période définissent la série.
+:::
+:::
+::: {.metric}
+::: {.value}
+2
+:::
+::: {.label}
+L'ordre temporel est une information, pas une colonne décorative.
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+La décision reste liée aux données disponibles.
+:::
+:::
 :::
 
-## Activité 6.1
+::: {.notes}
+[Sources]
+- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+:::
+
+## Production autonome 6.1
 
 ::: {.lead}
 Pour chaque situation, indiquez si elle décrit une série chronologique et justifiez votre réponse.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J'ai nommé la variable, l'unité, la période et l'horizon.
+- Je n'ai utilisé aucune information future.
+- Ma conclusion contient une limite explicite.
 :::
