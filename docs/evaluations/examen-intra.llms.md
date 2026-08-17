@@ -10,11 +10,10 @@ Pondération : 30 %.
 
 - Examen individuel et en personne.
 - Aucun outil d’IA, accès Internet ou appareil connecté.
-- Calculatrice non connectée permise.
-- Feuille de référence du cours permise, sans pages supplémentaires.
+- Le matériel permis sera confirmé dans Brio avant l’examen.
 - Réponses justifiées : une valeur sans unité ou interprétation peut être incomplète.
 
-L’examen a lieu le mercredi 21 octobre 2026. L’heure, le local et la durée sont publiés dans l’horaire institutionnel de la session.
+L’examen a lieu le dimanche 25 octobre 2026, de 9 h à 11 h 50. Cette date et cette plage horaire proviennent du département et sont confirmées dans Brio. Le local, la durée pédagogique et le matériel permis seront précisés avant l’examen.
 
 ## Structure de l’examen
 

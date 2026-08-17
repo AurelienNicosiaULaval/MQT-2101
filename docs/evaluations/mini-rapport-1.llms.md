@@ -10,9 +10,9 @@ Pondération : 15 % de la note finale.
 
 - Proposition du jeu de données : au plus tard au début du module 04.
 - Validation du jeu de données : avant de commencer la modélisation.
-- Remise : à la fin de la semaine 06 du calendrier, avant la préparation à l’intra.
+- Remise : le mercredi 7 octobre 2026 à 23 h 59.
 
-La date et l’heure civiles sont celles du calendrier institutionnel de la session. Cette séquence ne change pas d’une session à l’autre.
+Le dépôt se fait dans Brio. Il est recommandé de vérifier l’archive avant la dernière heure.
 
 ## Modalité
 

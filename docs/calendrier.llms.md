@@ -4,7 +4,7 @@ Automne 2026
 
 # Calendrier
 
-Le cours alterne des semaines d'autoapprentissage et quatre ateliers en classe. Les examens sont individuels, en personne et organisés séparément des ateliers.
+Le cours est offert en modalité hybride et alterne des semaines d'autoapprentissage et quatre ateliers en classe. Les examens sont individuels, en personne et organisés séparément des ateliers.
 
 10 modules d'autoapprentissage
 
@@ -14,13 +14,13 @@ Le cours alterne des semaines d'autoapprentissage et quatre ateliers en classe. 
 
 Autoapprentissage Atelier en classe Examen en personne Semaine de lecture
 
-Les laboratoires sont planifiés le mercredi de 9 h à 11 h 50 au pavillon Palasis-Prince, local 3213. L'examen intra a lieu le 21 octobre; son heure et son local restent à confirmer.
+Les laboratoires sont planifiés le mercredi de 9 h à 11 h 50 au pavillon Palasis-Prince, local 3213. L'examen intra a lieu le dimanche 25 octobre, de 9 h à 11 h 50.
 
 Vue d'ensemble
 
 ## Calendrier détaillé
 
-Les liens ouvrent la page de travail correspondante. Les heures et les locaux des examens seront ajoutés dès leur publication institutionnelle.
+Les liens ouvrent la page de travail correspondante. Les locaux, le matériel permis et les autres paramètres encore ouverts seront ajoutés après leur confirmation.
 
 | Date | Type | Activité | Évaluation ou repère |
 |----|----|----|----|
@@ -29,17 +29,17 @@ Les liens ouvrent la page de travail correspondante. Les heures et les locaux de
 | Mercredi 16 septembre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 01 - Explorer un tableau](modules/atelier-01-r/index.llms.md) | Palasis-Prince 3213 |
 | Mercredi 23 septembre | Autoapprentissage | [Module 03 - Régression linéaire](modules/semaine-03-regression-lineaire/index.llms.md) | [Questionnaire formatif](evaluations/questionnaire-regression.llms.md) |
 | Mercredi 30 septembre | Autoapprentissage | [Module 04 - Régression non linéaire](modules/semaine-04-regression-nonlineaire/index.llms.md) |  |
-| Mercredi 7 octobre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 02 - Régression](modules/atelier-02-regression/index.llms.md) | [Mini-rapport 1](evaluations/mini-rapport-1.llms.md); préparer l'intra du 8 au 20 octobre |
+| Mercredi 7 octobre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 02 - Régression](modules/atelier-02-regression/index.llms.md) | [Mini-rapport 1](evaluations/mini-rapport-1.llms.md) à remettre à 23 h 59; préparer l'intra |
 | Mercredi 14 octobre | Autoapprentissage | [Module 06 - Introduction aux séries chronologiques](modules/semaine-06-series-chronologiques-intro/index.llms.md) | Le module 05 reste disponible pour la préparation à l'intra |
-| Mercredi 21 octobre | Examen en personne | [Examen intra](evaluations/examen-intra.llms.md) | Heure et local à confirmer |
+| Dimanche 25 octobre, 9 h à 11 h 50 | Examen en personne | [Examen intra](evaluations/examen-intra.llms.md) | Local et paramètres restants à confirmer |
 | Du 26 au 30 octobre | Relâche | Aucune activité prévue | Semaine de lecture |
 | Mercredi 4 novembre | Autoapprentissage | [Module 07 - Lissage et erreurs](modules/semaine-07-lissage/index.llms.md) |  |
 | Mercredi 11 novembre | Autoapprentissage | [Module 08 - Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) |  |
 | Mercredi 18 novembre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 03 - Prévoir la demande](modules/atelier-03-series-chronologiques/index.llms.md) | Point de contrôle du [mini-rapport 2](evaluations/mini-rapport-2.llms.md) |
 | Mercredi 25 novembre | Autoapprentissage | [Module 09 - Variables externes et autocorrélation](modules/semaine-09-variables-externes-autocorrelation/index.llms.md) |  |
-| Mercredi 2 décembre | Autoapprentissage | [Module 10 - Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) | [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md); remise du mini-rapport 2 |
+| Mercredi 2 décembre | Autoapprentissage | [Module 10 - Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) | [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md); remise du mini-rapport 2 à 23 h 59 |
 | Mercredi 9 décembre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 04 - Intégration](modules/atelier-04-recapitulation/index.llms.md) | Révision finale, Palasis-Prince 3213 |
-| Du 14 au 20 décembre | Examen en personne | [Examen final](evaluations/examen-final.llms.md) | Date, heure et local à confirmer |
+| Lundi 14 décembre, 18 h 30 à 21 h 20 | Examen en personne | [Examen final](evaluations/examen-final.llms.md) | Local et paramètres restants à confirmer |
 
 Bloc 1
 
@@ -82,11 +82,11 @@ Bloc 3
 7.  07
     14 octobre Autoapprentissage
 
-    [Module 06 - Introduction aux séries chronologiques](modules/semaine-06-series-chronologiques-intro/index.llms.md) [Préparation à l'intra : ressource disponible jusqu'au 20 octobre](modules/semaine-05-preparation-intra/index.llms.md)
+    [Module 06 - Introduction aux séries chronologiques](modules/semaine-06-series-chronologiques-intro/index.llms.md) [Préparation à l'intra : ressource disponible jusqu'au 24 octobre](modules/semaine-05-preparation-intra/index.llms.md)
 8.  08
-    21 octobre Examen en personne
+    25 octobre Examen en personne
 
-    [Examen intra](evaluations/examen-intra.llms.md) Heure et local à confirmer
+    [Examen intra](evaluations/examen-intra.llms.md) 9 h à 11 h 50; local à confirmer
 9.  09
     26 au 30 octobre Semaine de lecture
 
@@ -131,14 +131,14 @@ Examen en personne
 
 ### [Examen intra](evaluations/examen-intra.llms.md)
 
-Mercredi 21 octobre 2026.
+Dimanche 25 octobre 2026, de 9 h à 11 h 50.
 
-Heure, durée et local à confirmer dans l'horaire institutionnel.
+Local, matériel permis et paramètres restants à confirmer.
 
 Examen en personne
 
 ### [Examen final](evaluations/examen-final.llms.md)
 
-Après l'atelier intégrateur du 9 décembre. La période universitaire réservée va du 14 au 20 décembre.
+Lundi 14 décembre 2026, de 18 h 30 à 21 h 20.
 
-Date, heure et local à confirmer dans l'horaire institutionnel.
+Local, matériel permis et paramètres restants à confirmer.

@@ -73,7 +73,9 @@ Développer la capacité d'analyser des données d'affaires avec R, de construir
 
 ## Progression du cours
 
-Le calendrier est préparé pour la session d'automne 2026. Les dates précises et les échéances doivent être vérifiées dans le plan de cours institutionnel et dans les consignes diffusées aux étudiantes et étudiants.
+Le calendrier est préparé pour la session d'automne 2026. La modalité générale
+est hybride. Brio demeure la source officielle pour les communications et les
+paramètres institutionnels.
 
 | Semaine | Type | Contenu principal | Évaluation ou trace |
 |---|---|---|---|
@@ -82,17 +84,17 @@ Le calendrier est préparé pour la session d'automne 2026. Les dates précises 
 | 3 | Atelier | Explorer un tableau de données et produire de premières synthèses | Trace finale d'atelier |
 | 4 | Module | Régression linéaire pour expliquer une variable d'intérêt | Questionnaire formatif sur la régression |
 | 5 | Module | Régression non linéaire, transformations et interprétation | Préparation du mini-rapport 1 |
-| 6 | Atelier | Étude de cas appliquée en régression | Mini-rapport 1 en préparation |
-| 7 | Préparation | Consolidation des notions de régression | Examen intra individuel en personne |
-| 8 | Module | Introduction à la prévision et aux séries chronologiques | Démarrage du bloc prévision |
-| 9 | Pause pédagogique | Consolidation et finalisation du mini-rapport 1 | Remise du mini-rapport 1 après la relâche |
+| 6 | Atelier | Étude de cas appliquée en régression | Mini-rapport 1 remis le 7 octobre à 23 h 59 |
+| 7 | Module et préparation | Introduction aux séries chronologiques et consolidation de la régression | Préparation de l'intra |
+| 8 | Évaluation | Examen intra le 25 octobre, de 9 h à 11 h 50 | Examen individuel en personne |
+| 9 | Pause pédagogique | Semaine de lecture du 26 au 30 octobre | Aucune activité planifiée |
 | 10 | Module | Méthodes de lissage pour la prévision à court terme | Questionnaire formatif sur les séries chronologiques |
 | 11 | Module | Modèles avec tendance et saisonnalité | Préparation du mini-rapport 2 |
 | 12 | Atelier | Prévision des ventes, de la demande ou d'une mesure opérationnelle | Mini-rapport 2 en préparation |
 | 13 | Module | Prévision avec variables externes, autocorrélation et interprétation | Validation des choix de prévision |
-| 14 | Module | Résultats binaires, classification et modèles avancés | Ouverture classification pour le mini-rapport 2 |
+| 14 | Module | Résultats binaires, classification et modèles avancés | Mini-rapport 2 remis le 2 décembre à 23 h 59 |
 | 15 | Atelier | Atelier intégrateur, récapitulation et préparation finale | Préparation finale |
-| 16 | Évaluation | Examen final individuel en personne | Remise du mini-rapport 2 après l'examen final, selon le calendrier de référence |
+| 16 | Évaluation | Examen final le 14 décembre, de 18 h 30 à 21 h 20 | Examen individuel en personne |
 
 ## Évaluations prévues
 
