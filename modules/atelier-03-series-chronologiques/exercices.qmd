@@ -5,26 +5,100 @@ format:
     embed-resources: true
 ---
 
+## Préparation
+
+Les exercices forment un cas indépendant du guide sur la demande hebdomadaire.
+Ils utilisent une série mensuelle avec tendance, saisonnalité et cible budgétaire.
+
+Jeu de données de transfert :
+<a class="data-link" href="../../donnees/#ventes_saisonnieres_quebec">ventes_saisonnieres_quebec.csv</a>.
+
+```{r}
+#| eval: false
+
+library(tidyverse)
+library(broom)
+
+data_path <- if (file.exists("../semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")) {
+  "../semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv"
+} else {
+  "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv"
+}
+
+ventes <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    date = as.Date(date),
+    mois = factor(mois)
+  ) |>
+  arrange(date)
+```
+
 ## Exercice 1 - Détecter une fuite
 
-Une personne choisit la fenêtre de moyenne mobile qui minimise la MAE sur les treize semaines test, puis rapporte cette même MAE comme performance finale. Expliquez le problème et proposez une correction.
+Une analyste essaie six modèles sur les douze derniers mois, choisit celui dont
+la MAE est la plus faible, puis annonce cette même MAE comme performance finale.
 
-::: {.callout-tip collapse="true" title="Solution"}
-La période test a servi au choix de la méthode et n'est plus indépendante. Il faut choisir la fenêtre avec une validation située dans l'entraînement, puis utiliser le test une seule fois pour l'évaluation finale.
-:::
+Expliquez précisément :
+
+- quelle décision a utilisé la période test;
+- pourquoi la performance annoncée est optimiste;
+- comment créer une validation chronologique à l'intérieur de l'entraînement;
+- quand les douze derniers mois peuvent enfin être utilisés.
+
+Ajoutez un exemple de variable dont la valeur future ne devrait jamais être
+calculée à partir des ventes réalisées après l'origine de prévision.
 
 ## Exercice 2 - Changer le coût
 
-Recalculez le classement si une sous-prévision coûte 30 dollars et une sur-prévision 3 dollars par unité. Expliquez pourquoi le meilleur choix peut changer sans modification de MAE.
+Comparez les erreurs de prévision au `budget_cible`. Une sous-prévision de 1 000
+dollars coûte 1 500 dollars en ajustements tardifs, alors qu'une sur-prévision
+de 1 000 dollars coûte 400 dollars en capacité inutilisée.
 
-::: {.callout-tip collapse="true" title="Solution"}
-Le coût pondère différemment le signe des erreurs, alors que la MAE traite sous-prévision et sur-prévision symétriquement.
-:::
+```{r}
+#| eval: false
+
+cout_asymetrique <- function(observe, prevision) {
+  erreur <- observe - prevision
+
+  if_else(
+    erreur > 0,
+    1.5 * erreur,
+    0.4 * abs(erreur)
+  )
+}
+
+evaluation_budget <- ventes |>
+  mutate(
+    prevision_budget = budget_cible,
+    erreur = ventes - prevision_budget,
+    cout = cout_asymetrique(ventes, prevision_budget)
+  )
+
+evaluation_budget |>
+  summarise(
+    MAE = mean(abs(erreur)),
+    biais = mean(erreur),
+    cout_total = sum(cout)
+  )
+```
+
+Expliquez pourquoi la cible ayant la meilleure MAE n'est pas nécessairement la
+moins coûteuse pour l'organisation.
 
 ## Exercice 3 - Plan de surveillance
 
-Proposez trois indicateurs mensuels de surveillance : erreur moyenne récente, grande erreur maximale et dérive du niveau de la demande. Indiquez une règle de révision du modèle.
+Proposez quatre indicateurs mensuels : MAE récente, biais récent, couverture des
+intervalles et erreur par mois de calendrier. Pour chacun, fixez un seuil de
+révision et indiquez l'action déclenchée.
+
+Ajoutez une vérification particulière pour décembre afin de détecter une dérive
+du motif saisonnier.
 
 ## Exercice de synthèse
 
-Transformez la trace de l'atelier en une note de décision de 250 mots maximum avec un graphique, un tableau et une recommandation.
+Transformez le cas en une note de décision de 250 mots maximum avec un graphique
+des erreurs dans le temps, un tableau de coûts et une recommandation. La note ne
+doit pas reprendre la demande hebdomadaire ni le choix de fenêtre du guide.

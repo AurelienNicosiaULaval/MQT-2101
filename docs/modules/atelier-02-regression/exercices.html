@@ -7090,249 +7090,113 @@ display: none;
 
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Lien avec le guide complet">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Lien avec le guide complet
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pendant la séance, ouvrez d’abord le <a href="guide-atelier.html">guide complet</a>. Utilisez cette page pour pratiquer les gestes essentiels, vérifier votre interprétation et préparer la trace finale.</p>
-</div>
-</div>
+<p>Réaliser une analyse de transfert après l’atelier guidé. Le guide utilise la performance des succursales; cette page utilise plutôt des campagnes marketing et cherche à expliquer les visites du site, non les ventes des succursales.</p>
+<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#campagnes-marketing-québécoises-fictives">campagnes_marketing_quebec.csv</a>.</p>
 </section>
 <section id="préparation" class="level2">
 <h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="st">&quot;modules/atelier-02-regression/data/performance_succursales_quebec.csv&quot;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv&quot;</span>)) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>campagnes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  data_path,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois =</span> <span class="fu">as.Date</span>(mois),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">canal =</span> <span class="fu">factor</span>(canal),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">region =</span> <span class="fu">factor</span>(region)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exercice-1---question-et-variables" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---question-et-variables">Exercice 1 - Question et variables</h2>
-<p>Pour la question « Quels facteurs sont associés aux ventes mensuelles des succursales? », identifiez :</p>
-<ul>
-<li>la variable réponse;</li>
-<li>deux variables explicatives plausibles;</li>
-<li>une variable qui pourrait confondre l’interprétation;</li>
-<li>une limite du tableau.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>La variable réponse est <code>ventes</code>. Des variables explicatives plausibles sont <code>achalandage</code>, <code>depenses_marketing</code>, <code>heures_personnel</code> et <code>ruptures_stock</code>. Une variable de contexte comme <code>succursale</code>, <code>region</code> ou <code>saison</code> peut influencer l’interprétation. Une limite est que les observations ne proviennent pas d’une expérience contrôlée.</p>
-</div>
-</div>
-</div>
+<p>La question est : « Comment le budget marketing est-il associé au nombre de visites du site, et cette association paraît-elle différente selon le canal? »</p>
+<p>Identifiez la réponse, la variable explicative principale, le rôle de <code>canal</code>, l’unité d’observation et une limite causale.</p>
 </section>
 <section id="exercice-2---graphique-exploratoire" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-2---graphique-exploratoire">Exercice 2 - Graphique exploratoire</h2>
-<p>Produisez un graphique des ventes selon l’achalandage, avec une couleur par succursale.</p>
+<p>Produisez un nuage de points avec une couleur et une droite distinctes par canal.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(performance, <span class="fu">aes</span>(<span class="at">x =</span> achalandage, <span class="at">y =</span> ventes, <span class="at">colour =</span> succursale)) <span class="sc">+</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Ventes selon l&#39;achalandage&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Achalandage mensuel&quot;</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Ventes&quot;</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Succursale&quot;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  campagnes,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> budget_marketing, <span class="at">y =</span> visites_site, <span class="at">colour =</span> canal)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Budget marketing&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Visites du site&quot;</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Canal&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Le graphique doit permettre de vérifier si une relation positive existe et si certaines succursales semblent systématiquement au-dessus ou au-dessous de la tendance générale.</p>
-</div>
-</div>
-</div>
+<p>Décrivez ce qui est commun aux canaux et ce qui semble différent. N’interprétez pas encore ces écarts comme des effets certains.</p>
 </section>
 <section id="exercice-3---modèle-simple" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---modèle-simple">Exercice 3 - Modèle simple</h2>
-<p>Ajustez un modèle simple avec <code>achalandage</code> comme variable explicative.</p>
+<p>Ajustez <code>visites_site ~ budget_marketing</code>. Interprétez la pente pour une hausse de 1 000 dollars et donnez son intervalle de confiance.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modele_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> achalandage, <span class="at">data =</span> performance)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modele_simple)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Interprétez la pente en une phrase.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>La pente indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel. Il faut préciser l’unité et éviter de dire que l’achalandage cause automatiquement les ventes.</p>
-</div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modele_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  visites_site <span class="sc">~</span> budget_marketing,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> campagnes</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(modele_simple, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modele_simple)[[<span class="st">&quot;budget_marketing&quot;</span>]] <span class="sc">*</span> <span class="dv">1000</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exercice-4---modèle-enrichi" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---modèle-enrichi">Exercice 4 - Modèle enrichi</h2>
-<p>Ajustez le modèle suivant :</p>
+<p>Ajoutez le canal, le rabais et la saison. Comparez la pente du budget entre les deux modèles.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>modele_enrichi <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  ventes <span class="sc">~</span> achalandage <span class="sc">+</span> depenses_marketing <span class="sc">+</span> heures_personnel <span class="sc">+</span> ruptures_stock,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> performance</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  visites_site <span class="sc">~</span> budget_marketing <span class="sc">+</span> canal <span class="sc">+</span> rabais <span class="sc">+</span> saison,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> campagnes</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modele_enrichi)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(modele_simple) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">modele =</span> <span class="st">&quot;Simple&quot;</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(modele_enrichi) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">modele =</span> <span class="st">&quot;Enrichi&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">&quot;budget_marketing&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(modele, estimate, std.error, p.value)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Choisissez un coefficient et interprétez-le dans le contexte.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Un coefficient du modèle enrichi se lit en gardant constantes les autres variables incluses dans le modèle. Par exemple, le coefficient de <code>depenses_marketing</code> décrit l’association moyenne avec les ventes pour des observations ayant le même achalandage, les mêmes heures de personnel et le même nombre de ruptures de stock, selon le modèle.</p>
-</div>
-</div>
-</div>
+<p>Expliquez pourquoi le changement de pente peut révéler un mélange entre budget, canal, rabais et saison.</p>
 </section>
 <section id="exercice-5---recommandation" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-5---recommandation">Exercice 5 - Recommandation</h2>
-<p>Rédigez une recommandation de cinq à sept lignes pour une direction régionale. Votre texte doit inclure :</p>
-<ul>
-<li>le facteur prioritaire;</li>
-<li>un résultat de modèle;</li>
-<li>une limite;</li>
-<li>une prochaine vérification.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>La recommandation doit être défendable sans être excessive. Une bonne réponse peut recommander de prioriser l’analyse de l’achalandage, de surveiller les ruptures de stock ou de tester des actions marketing, mais elle doit préciser que le modèle décrit une association observée.</p>
-</div>
-</div>
-</div>
+<p>La direction veut augmenter les visites du site. Recommandez une prochaine vérification, et non une hausse automatique du budget. Votre texte doit citer la pente, le rôle du canal, une limite observationnelle et une option de validation.</p>
 </section>
 <section id="exercice-6---diagnostic-des-résidus" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-6---diagnostic-des-résidus">Exercice 6 - Diagnostic des résidus</h2>
-<p>Créez les valeurs prédites et les résidus du modèle enrichi, puis produisez un graphique des résidus selon les ventes prédites.</p>
+<p>Examinez les résidus dans le temps et par canal.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>performance_modele <span class="ot">&lt;-</span> performance <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_predites =</span> <span class="fu">predict</span>(modele_enrichi),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">residu =</span> <span class="fu">residuals</span>(modele_enrichi)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(performance_modele, <span class="fu">aes</span>(<span class="at">x =</span> ventes_predites, <span class="at">y =</span> residu)) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Résidus selon les ventes prédites&quot;</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Ventes prédites&quot;</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Résidu&quot;</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>diagnostic <span class="ot">&lt;-</span> <span class="fu">augment</span>(modele_enrichi, <span class="at">data =</span> campagnes)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostic, <span class="fu">aes</span>(<span class="at">x =</span> mois, <span class="at">y =</span> .resid, <span class="at">colour =</span> canal)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(region, canal)), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Résidu&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Canal&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Rédigez une phrase sur ce que le graphique permet de vérifier.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>On cherche surtout à voir si les résidus sont répartis autour de zéro sans motif évident. Si les résidus montrent une courbe, une dispersion qui augmente ou quelques points très éloignés, il faut le mentionner comme limite.</p>
-</div>
-</div>
-</div>
+<p>Repérez une structure temporelle, une différence de dispersion ou un point atypique qui mériterait une vérification.</p>
 </section>
 <section id="exercice-7---mini-recommandation-complète" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-7---mini-recommandation-complète">Exercice 7 - Mini-recommandation complète</h2>
-<p>Rédigez une mini-recommandation de huit lignes maximum. Elle doit contenir :</p>
-<ul>
-<li>la question d’affaires;</li>
-<li>le facteur prioritaire;</li>
-<li>le résultat qui appuie ce choix;</li>
-<li>une interprétation avec les unités;</li>
-<li>un diagnostic ou une vérification;</li>
-<li>une limite causale;</li>
-<li>une prochaine étape.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Une bonne recommandation reste utile pour l’action sans devenir trop forte. Elle peut proposer de prioriser l’achalandage, les dépenses marketing, la capacité de service ou les ruptures de stock, mais elle doit préciser que le modèle soutient une association observée. Une prochaine étape réaliste serait de valider la piste avec des données supplémentaires, une expérimentation ou une analyse plus ciblée.</p>
-</div>
-</div>
-</div>
+<p>Rédigez huit lignes maximum : question, graphique, pente, comparaison des modèles, diagnostic, limite, décision possible et validation proposée.</p>
 </section>
 <section id="trace-finale-courte" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale-courte">Trace finale courte</h2>
-<p>Votre trace finale doit rassembler les éléments des exercices dans un court fichier Quarto :</p>
-<ol type="1">
-<li>question d’affaires;</li>
-<li>description des données;</li>
-<li>graphique exploratoire;</li>
-<li>modèle simple ou enrichi;</li>
-<li>coefficient interprété;</li>
-<li>diagnostic des résidus;</li>
-<li>recommandation prudente;</li>
-<li>limite.</li>
-</ol>
-<p>Avant de terminer, relisez votre trace comme si une autre personne devait la comprendre sans votre code ouvert dans la console.</p>
+<p>La trace doit être une mini-analyse du trafic numérique. Elle ne doit reprendre ni <code>performance_succursales_quebec.csv</code>, ni le modèle de ventes du guide de l’atelier.</p>
 
 
 </section>

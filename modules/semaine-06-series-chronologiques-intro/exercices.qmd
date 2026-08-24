@@ -7,77 +7,143 @@ format:
 
 ## Préparation
 
+Les capsules utilisent des ventes mensuelles. Le cas de transfert porte plutôt
+sur une demande hebdomadaire, son prix et ses périodes de promotion.
+
+Jeu de données de transfert :
+<a class="data-link" href="../../donnees/#demande_hebdomadaire_quebec">demande_hebdomadaire_quebec.csv</a>.
+
 ```{r}
-#| label: setup-exercices-module-06
+#| eval: false
+
 library(tidyverse)
 
-data_path <- if (file.exists("data/ventes_mensuelles_quebec.csv")) {
-  "data/ventes_mensuelles_quebec.csv"
+data_path <- if (file.exists("../atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv")) {
+  "../atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv"
 } else {
-  "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv"
+  "modules/atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv"
 }
 
-ventes <- read_csv(data_path, show_col_types = FALSE) |>
-  mutate(date = as.Date(date)) |>
-  arrange(date)
+demande <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    semaine = as.Date(semaine),
+    promotion = factor(promotion)
+  ) |>
+  arrange(semaine)
 ```
 
 ## Exercice 1 - Décrire la structure temporelle
 
-Indiquez l'unité d'observation, la fréquence, la période couverte, la cible potentielle et deux vérifications de qualité nécessaires.
+Auditez la régularité du calendrier plutôt que de simplement déclarer qu'il
+s'agit d'une série chronologique.
 
-::: {.callout-tip collapse="true" title="Solution"}
-Chaque ligne représente un mois. La fréquence est mensuelle et la période va de janvier 2020 à décembre 2025. Une cible possible est la vente mensuelle future. Il faut notamment vérifier l'unicité des dates, les valeurs manquantes, les intervalles réguliers et la plausibilité des valeurs.
-:::
+```{r}
+#| eval: false
+
+audit_calendrier <- demande |>
+  summarise(
+    debut = min(semaine),
+    fin = max(semaine),
+    observations = n(),
+    dates_dupliquees = sum(duplicated(semaine)),
+    pas_minimal_jours = min(diff(semaine)),
+    pas_maximal_jours = max(diff(semaine))
+  )
+
+audit_calendrier
+```
+
+À partir du résultat, nommez la fréquence, une cible prévisible et deux anomalies
+qui auraient rendu l'analyse temporelle fragile si elles avaient été détectées.
 
 ## Exercice 2 - Visualiser et annoter
 
-Produisez un graphique temporel et ajoutez une ligne verticale au début de 2025.
+Produisez un graphique où les semaines de promotion sont visibles, puis un second
+graphique reliant prix et demande.
 
-::: {.callout-tip collapse="true" title="Solution"}
 ```{r}
-ggplot(ventes, aes(date, ventes)) +
+#| eval: false
+
+ggplot(demande, aes(x = semaine, y = demande)) +
   geom_line(colour = "#0B4F6C") +
-  geom_vline(xintercept = as.Date("2025-01-01"), linetype = "dashed") +
+  geom_point(aes(colour = promotion), size = 2) +
   labs(
-    title = "Ventes mensuelles et début de la période test",
     x = NULL,
-    y = "Ventes"
+    y = "Demande hebdomadaire",
+    colour = "Promotion"
+  ) +
+  theme_minimal(base_size = 12)
+
+ggplot(demande, aes(x = prix_moyen, y = demande, colour = promotion)) +
+  geom_point(alpha = 0.75) +
+  labs(
+    x = "Prix moyen",
+    y = "Demande hebdomadaire",
+    colour = "Promotion"
   ) +
   theme_minimal(base_size = 12)
 ```
-:::
+
+Formulez deux constats et une autre explication possible de l'association
+observée. Le graphique ne permet pas d'isoler l'effet causal du prix ou de la
+promotion.
 
 ## Exercice 3 - Comparer deux horizons
 
-Pour chacune des décisions suivantes, proposez une cible et un horizon : planifier le personnel du mois prochain; négocier un contrat d'approvisionnement annuel.
+Une équipe ajuste le personnel deux semaines à l'avance, alors que son principal
+fournisseur exige une commande huit semaines à l'avance.
 
-::: {.callout-tip collapse="true" title="Solution"}
-Le personnel exige une prévision à court terme, par exemple les ventes ou l'achalandage du prochain mois. Le contrat annuel exige plusieurs mois, idéalement une trajectoire mensuelle ou un total annuel avec incertitude. La même méthode n'est pas automatiquement optimale pour les deux décisions.
-:::
+Pour chaque décision, précisez :
+
+- l'origine de la prévision;
+- l'horizon;
+- la quantité à prévoir;
+- le niveau d'agrégation utile;
+- une conséquence opérationnelle d'une sous-prévision.
+
+Expliquez pourquoi une seule valeur « pour la prochaine période » ne répond pas
+aux deux besoins.
 
 ## Exercice 4 - Évaluer la prévision naïve
 
-Utilisez les douze derniers mois comme test. Calculez MAE et RMSE pour une prévision égale à la dernière valeur d'entraînement.
+Comparez, sur les treize dernières semaines, une prévision à un pas fondée sur
+la semaine précédente et une prévision saisonnière fondée sur la même semaine de
+l'année précédente.
 
-::: {.callout-tip collapse="true" title="Solution"}
 ```{r}
-entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
-test <- ventes |> slice_tail(n = 12)
-reference <- tail(entrainement$ventes, 1)
+#| eval: false
 
-test |>
+evaluation <- demande |>
   mutate(
-    prevision = reference,
-    erreur = ventes - prevision
+    prevision_naive = lag(demande, 1),
+    prevision_saisonniere = lag(demande, 52)
   ) |>
+  slice_tail(n = 13) |>
+  pivot_longer(
+    cols = starts_with("prevision_"),
+    names_to = "methode",
+    values_to = "prevision"
+  ) |>
+  mutate(erreur = demande - prevision)
+
+evaluation |>
+  group_by(methode) |>
   summarise(
-    MAE = mean(abs(erreur)),
-    RMSE = sqrt(mean(erreur^2))
+    MAE = mean(abs(erreur), na.rm = TRUE),
+    RMSE = sqrt(mean(erreur^2, na.rm = TRUE)),
+    biais = mean(erreur, na.rm = TRUE),
+    .groups = "drop"
   )
 ```
-:::
+
+Choisissez une référence pour chacun des deux horizons de l'exercice 3 et
+justifiez pourquoi ce choix devra être réévalué sur plusieurs origines.
 
 ## Exercice de synthèse
 
-Rédigez une recommandation de cinq phrases maximum expliquant si la méthode naïve suffit pour une décision de budget mensuel. Votre réponse doit citer une mesure d'erreur, une caractéristique graphique et une limite.
+Rédigez une note de planification de six phrases maximum. Elle doit mentionner le
+calendrier, la cible, les deux horizons, la meilleure référence observée, une
+limite causale et une règle de réévaluation.

@@ -7018,7 +7018,8 @@ display: none;
     <h2 id="toc-title">Sur cette page</h2>
 
   <ul>
-  <li><a href="#exercice-1---aligner-question-et-mesure" id="toc-exercice-1---aligner-question-et-mesure" class="nav-link active" data-scroll-target="#exercice-1---aligner-question-et-mesure">Exercice 1 - Aligner question et mesure</a></li>
+  <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
+  <li><a href="#exercice-1---aligner-question-et-mesure" id="toc-exercice-1---aligner-question-et-mesure" class="nav-link" data-scroll-target="#exercice-1---aligner-question-et-mesure">Exercice 1 - Aligner question et mesure</a></li>
   <li><a href="#exercice-2---critiquer-une-conclusion" id="toc-exercice-2---critiquer-une-conclusion" class="nav-link" data-scroll-target="#exercice-2---critiquer-une-conclusion">Exercice 2 - Critiquer une conclusion</a></li>
   <li><a href="#exercice-3---critiquer-une-classification" id="toc-exercice-3---critiquer-une-classification" class="nav-link" data-scroll-target="#exercice-3---critiquer-une-classification">Exercice 3 - Critiquer une classification</a></li>
   <li><a href="#exercice-4---plan-de-mise-à-jour" id="toc-exercice-4---plan-de-mise-à-jour" class="nav-link" data-scroll-target="#exercice-4---plan-de-mise-à-jour">Exercice 4 - Plan de mise à jour</a></li>
@@ -7048,76 +7049,54 @@ display: none;
 </header>
 
 
+<section id="préparation" class="level2">
+<h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
+<p>Le guide de récapitulation utilise un cas mensuel de succursales. Les exercices utilisent plutôt des profils de fidélisation afin de vérifier le transfert vers une nouvelle unité d’observation et une nouvelle décision.</p>
+<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#fidelisation_clients_quebec">fidelisation_clients_quebec.csv</a>.</p>
+</section>
 <section id="exercice-1---aligner-question-et-mesure" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---aligner-question-et-mesure">Exercice 1 - Aligner question et mesure</h2>
-<p>Associez chaque question à une cible et à deux mesures : prévoir les ventes; repérer les mois de service insuffisant; quantifier l’erreur budgétaire.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Ventes et erreur budgétaire utilisent une réponse continue, avec MAE, RMSE ou biais. Le service insuffisant utilise une réponse binaire, avec sensibilité, spécificité, précision et proportion ciblée.</p>
-</div>
-</div>
-</div>
+<p>Associez chaque question à une cible, à une séparation de validation et à deux mesures :</p>
+<ol type="1">
+<li>estimer la valeur mensuelle moyenne des contrats;</li>
+<li>prévoir un départ dans les 90 jours;</li>
+<li>classer seulement les 15 % de clients les plus prioritaires;</li>
+<li>vérifier si la performance diffère selon le type de contrat.</li>
+</ol>
+<p>Expliquez pourquoi la MAE ne convient pas directement à la deuxième question et pourquoi l’exactitude seule ne répond pas à la troisième.</p>
 </section>
 <section id="exercice-2---critiquer-une-conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-2---critiquer-une-conclusion">Exercice 2 - Critiquer une conclusion</h2>
 <blockquote class="blockquote">
-<p>Le coefficient de promotion est positif; l’organisation doit donc lancer une promotion chaque mois.</p>
+<p>Le coefficient du contrat mensuel est positif dans le modèle de départ. Il faut donc convertir tous les clients aux contrats annuels pour empêcher les départs.</p>
 </blockquote>
-<p>Relevez au moins trois problèmes.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Le coefficient est observationnel et conditionnel, les coûts ne sont pas considérés, la validité hors échantillon n’est pas mentionnée, une promotion permanente peut modifier les comportements et le modèle n’établit pas un effet causal.</p>
-</div>
-</div>
-</div>
+<p>Relevez au moins quatre problèmes concernant causalité, faisabilité, sélection des clients, coûts et validité future. Réécrivez la conclusion comme une action de validation limitée.</p>
 </section>
 <section id="exercice-3---critiquer-une-classification" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---critiquer-une-classification">Exercice 3 - Critiquer une classification</h2>
-<p>Un modèle atteint 92 % d’exactitude, mais seulement 10 % de sensibilité. Expliquez pourquoi il peut être inutile si l’objectif est de prévenir les défaillances de service.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Il manque 90 % des événements positifs. L’exactitude est dominée par les mois sans défaillance et ne répond pas au coût principal des faux négatifs.</p>
-</div>
-</div>
-</div>
+<p>Deux modèles ont la même exactitude. Le premier détecte 75 % des départs et cible 30 % des clients. Le second détecte 55 % des départs et cible 12 % des clients.</p>
+<p>Choisissez un modèle dans chacun des contextes suivants :</p>
+<ul>
+<li>l’équipe peut contacter 15 % des clients;</li>
+<li>un départ non détecté coûte beaucoup plus cher qu’un contact inutile.</li>
+</ul>
+<p>Nommez l’information manquante avant une décision définitive.</p>
 </section>
 <section id="exercice-4---plan-de-mise-à-jour" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---plan-de-mise-à-jour">Exercice 4 - Plan de mise à jour</h2>
-<p>Proposez une fréquence de surveillance, deux indicateurs de dérive et un déclencheur de réentraînement.</p>
+<p>Proposez :</p>
+<ul>
+<li>une fréquence de mesure de la sensibilité et de la précision;</li>
+<li>une vérification de calibration des probabilités;</li>
+<li>une comparaison par type de contrat;</li>
+<li>un indicateur de dérive des variables;</li>
+<li>un déclencheur de réentraînement;</li>
+<li>une règle suspendant le ciblage si les données deviennent incomplètes.</li>
+</ul>
 </section>
 <section id="exercice-de-synthèse" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-de-synthèse">Exercice de synthèse</h2>
-<p>Relisez votre livrable avec la grille suivante : alignement, reproductibilité, validation, interprétation, décision, limites. Corrigez le point le plus faible avant la remise.</p>
+<p>Rédigez une fiche de gouvernance de modèle en six rubriques : objectif, données, validation, décision, surveillance et limites. Le livrable doit être indépendant du cas de succursales traité pendant l’atelier.</p>
 
 
 </section>

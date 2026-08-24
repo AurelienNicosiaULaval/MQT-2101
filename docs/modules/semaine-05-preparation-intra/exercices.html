@@ -7088,229 +7088,126 @@ display: none;
 
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Ces exercices servent à vérifier votre autonomie avant l’examen intra. Travaillez d’abord sans ouvrir les solutions, puis comparez votre démarche. L’objectif est de pratiquer une réponse courte, claire et défendable.</p>
+<p>Vérifier l’autonomie avant l’examen avec un cas qui n’est utilisé dans aucune capsule de préparation. Plusieurs questions contiennent volontairement une erreur de raisonnement ou de méthode à repérer.</p>
+<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.</p>
 </section>
 <section id="préparation" class="level2">
 <h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
-<p>Les exercices réutilisent les jeux de données des modules 03 et 04.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>campagnes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv&quot;</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>saturation <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv&quot;</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;../atelier-01-r/data/ventes_pme_quebec.csv&quot;</span>)) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;../atelier-01-r/data/ventes_pme_quebec.csv&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-01-r/data/ventes_pme_quebec.csv&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pme <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  data_path,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">as.Date</span>(mois))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exercice-1---identifier-la-question" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---identifier-la-question">Exercice 1 - Identifier la question</h2>
-<p>Pour chacune des formulations suivantes, dites s’il s’agit surtout de description, d’association, de prédiction ou de causalité. Ajoutez une phrase qui explique ce que vous feriez comme première étape.</p>
+<p>Pour chaque demande, indiquez le type de question et la première production pertinente. Les quatre réponses ne doivent pas être identiques.</p>
 <ol type="1">
-<li>Décrire les ventes moyennes par succursale.</li>
-<li>Étudier la relation entre budget marketing et ventes.</li>
-<li>Estimer les ventes attendues pour un nouveau niveau d’achalandage.</li>
-<li>Conclure qu’une hausse de budget cause une hausse des ventes.</li>
+<li>Comparer le taux de retour médian entre les saisons.</li>
+<li>Étudier l’association entre le nombre de clients et les ventes.</li>
+<li>Prévoir les ventes d’une succursale pour un volume de clients donné.</li>
+<li>Affirmer qu’une réduction du délai de livraison augmentera la satisfaction.</li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Description : commencer par un tableau ou un graphique par succursale.</li>
-<li>Association : produire un nuage de points et ajuster un modèle si la forme le justifie.</li>
-<li>Prédiction : vérifier la plage observée avant d’utiliser un modèle pour un nouveau cas.</li>
-<li>Causalité : une simple régression observationnelle ne suffit pas; il faudrait un plan d’analyse permettant de soutenir une conclusion causale.</li>
-</ol>
-</div>
-</div>
-</div>
+<p>Pour la quatrième demande, expliquez pourquoi le fichier seul ne permet pas de répondre comme si une intervention avait été réalisée.</p>
 </section>
 <section id="exercice-2---diagnostic-minimal" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-2---diagnostic-minimal">Exercice 2 - Diagnostic minimal</h2>
-<p>Avec <code>campagnes</code>, produisez un diagnostic minimal avant toute modélisation :</p>
-<ul>
-<li>nombre de lignes et de colonnes;</li>
-<li>unité d’observation;</li>
-<li>variables principales;</li>
-<li>valeurs manquantes;</li>
-<li>graphique de départ.</li>
-</ul>
+<p>Une personne commence son analyse avec ce code :</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(campagnes)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(campagnes)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>campagnes <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;nb_manquantes&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(campagnes, <span class="fu">aes</span>(<span class="at">x =</span> budget_marketing, <span class="at">y =</span> ventes)) <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pme_incomplete <span class="ot">&lt;-</span> pme <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ventes, clients, satisfaction)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pme_incomplete)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Une bonne réponse nomme l’unité d’observation avant de commenter les résultats. Elle précise ensuite que <code>ventes</code> est la variable réponse et que <code>budget_marketing</code> est une variable explicative possible. Le graphique sert à vérifier la forme de la relation avant d’ajuster une droite.</p>
-</div>
-</div>
+<p>Repérez au moins quatre informations perdues ou décisions non justifiées. Proposez ensuite un diagnostic minimal qui conserve les dates, les groupes et le détail des valeurs manquantes avant toute suppression.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants <span class="ot">&lt;-</span> pme <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;valeurs_manquantes&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(valeurs_manquantes))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>diagnostic_manquants</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exercice-3---réponse-descriptive-courte" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---réponse-descriptive-courte">Exercice 3 - Réponse descriptive courte</h2>
-<p>À partir de <code>campagnes</code>, produisez un résumé des ventes par région et rédigez une réponse descriptive de quatre phrases maximum.</p>
+<p>Comparez <code>taux_retour</code> selon <code>saison</code> en utilisant une médiane, un intervalle interquartile et le nombre d’observations.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ventes_region <span class="ot">&lt;-</span> campagnes <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_moyennes =</span> <span class="fu">mean</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_medianes =</span> <span class="fu">median</span>(ventes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">nb_observations =</span> <span class="fu">n</span>(),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ventes_moyennes))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>ventes_region</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>retours_saison <span class="ot">&lt;-</span> pme <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(saison) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediane =</span> <span class="fu">median</span>(taux_retour, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">q1 =</span> <span class="fu">quantile</span>(taux_retour, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">q3 =</span> <span class="fu">quantile</span>(taux_retour, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>retours_saison</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>La réponse doit rester descriptive. Elle peut comparer les ventes moyennes entre régions, mais elle ne doit pas conclure qu’une région cause de meilleures ventes. Elle doit mentionner la variable résumée, le regroupement utilisé et une limite de l’interprétation.</p>
-</div>
-</div>
-</div>
+<p>Rédigez une réponse de quatre phrases : question, méthode, constat et limite.</p>
 </section>
 <section id="exercice-4---interpréter-une-pente" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---interpréter-une-pente">Exercice 4 - Interpréter une pente</h2>
-<p>Ajustez une régression linéaire simple avec <code>campagnes</code>, puis rédigez une interprétation de la pente pour une hausse de 1 000 dollars de budget marketing.</p>
+<p>Ajustez <code>ventes ~ clients</code> et interprétez la pente pour 100 clients supplémentaires.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>modele_campagnes <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> budget_marketing, <span class="at">data =</span> campagnes)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modele_campagnes)[<span class="st">&quot;budget_marketing&quot;</span>] <span class="sc">*</span> <span class="dv">1000</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modele_campagnes)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>modele_clients <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> clients, <span class="at">data =</span> pme)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(modele_clients, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modele_clients)[[<span class="st">&quot;clients&quot;</span>]] <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>La phrase doit indiquer qu’une hausse de 1 000 dollars du budget marketing est associée à une variation moyenne estimée des ventes, selon le modèle ajusté. Elle doit éviter de dire que le budget cause nécessairement cette variation.</p>
-</div>
-</div>
-</div>
+<p>Ajoutez une phrase expliquant pourquoi l’augmentation du nombre de clients ne peut pas être isolée de la taille de la succursale ou du panier moyen dans cette analyse simple.</p>
 </section>
 <section id="exercice-5---choisir-entre-deux-modèles" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-5---choisir-entre-deux-modèles">Exercice 5 - Choisir entre deux modèles</h2>
-<p>Avec <code>saturation</code>, comparez un modèle linéaire et un modèle quadratique. Votre réponse doit utiliser au moins deux critères parmi les suivants : graphique, <code>R²</code>, RMSE, résidus, interprétation, extrapolation.</p>
+<p>Comparez une droite et une courbe quadratique pour la relation entre clients et ventes. Le modèle complexe doit être rejeté si son gain hors échantillon est négligeable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>modele_lineaire <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> achalandage, <span class="at">data =</span> saturation)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>modele_quadratique <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  ventes <span class="sc">~</span> achalandage <span class="sc">+</span> <span class="fu">I</span>(achalandage<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> saturation</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="cf">function</span>(modele) {</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>(<span class="fu">residuals</span>(modele)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">modele =</span> <span class="fu">c</span>(<span class="st">&quot;Linéaire&quot;</span>, <span class="st">&quot;Quadratique&quot;</span>),</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">r2 =</span> <span class="fu">c</span>(</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(modele_lineaire)<span class="sc">$</span>r.squared,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(modele_quadratique)<span class="sc">$</span>r.squared</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">rmse =</span> <span class="fu">c</span>(<span class="fu">rmse</span>(modele_lineaire), <span class="fu">rmse</span>(modele_quadratique))</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> pme <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mois <span class="sc">&lt;</span> <span class="fu">max</span>(mois))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> pme <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mois <span class="sc">==</span> <span class="fu">max</span>(mois))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>modele_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> clients, <span class="at">data =</span> entrainement)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>modele_courbe <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> clients <span class="sc">+</span> <span class="fu">I</span>(clients<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> entrainement)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="cf">function</span>(observe, predit) {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>((observe <span class="sc">-</span> predit)<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">modele =</span> <span class="fu">c</span>(<span class="st">&quot;Simple&quot;</span>, <span class="st">&quot;Quadratique&quot;</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMSE_test =</span> <span class="fu">c</span>(</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rmse</span>(test<span class="sc">$</span>ventes, <span class="fu">predict</span>(modele_simple, <span class="at">newdata =</span> test)),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rmse</span>(test<span class="sc">$</span>ventes, <span class="fu">predict</span>(modele_courbe, <span class="at">newdata =</span> test))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Une comparaison solide ne repose pas sur un seul chiffre. Le modèle retenu doit être appuyé par la forme du graphique, la taille des erreurs, les résidus et l’interprétation dans le contexte de saturation. Une limite d’extrapolation doit être mentionnée.</p>
-</div>
-</div>
-</div>
+<p>Justifiez le choix avec la RMSE, la forme graphique et l’interprétabilité.</p>
 </section>
 <section id="exercice-6---mini-réponse-complète" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-6---mini-réponse-complète">Exercice 6 - Mini-réponse complète</h2>
-<p>Rédigez une réponse de six à huit lignes à partir de cette situation :</p>
+<p>Corrigez la réponse suivante sans dépasser huit lignes :</p>
 <blockquote class="blockquote">
-<p>Une succursale veut savoir si l’achalandage est associé aux ventes mensuelles. Le graphique montre une relation positive avec un léger ralentissement aux niveaux élevés d’achalandage. Le modèle quadratique réduit la RMSE par rapport au modèle linéaire. Les résidus du modèle quadratique ne montrent pas de structure évidente.</p>
+<p>Le modèle quadratique est forcément meilleur parce qu’il contient plus de termes. Il prouve que l’ajout de clients augmente les ventes. On peut donc l’utiliser pour n’importe quelle taille de succursale.</p>
 </blockquote>
-<p>Votre réponse doit contenir :</p>
-<ul>
-<li>la question reformulée;</li>
-<li>la méthode utilisée;</li>
-<li>le résultat principal;</li>
-<li>un diagnostic ou une justification du modèle;</li>
-<li>une limite.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Une réponse complète doit dire que la question porte sur l’association entre achalandage et ventes. Elle doit expliquer que la relation observée est positive, mais qu’elle semble ralentir aux niveaux élevés. Le modèle quadratique est défendable si la RMSE est plus faible et si les résidus ne montrent pas de structure évidente. La conclusion doit rester prudente : le modèle ne prouve pas que l’achalandage cause les ventes, et les prédictions hors de la plage observée seraient fragiles.</p>
-</div>
-</div>
-</div>
+<p>La version corrigée doit contenir la question, les modèles comparés, le résultat hors échantillon, une limite causale et une limite d’extrapolation.</p>
 
 
 </section>

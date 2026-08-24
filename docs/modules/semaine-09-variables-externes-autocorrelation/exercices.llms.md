@@ -2,62 +2,114 @@
 
 ## Préparation
 
+Les capsules utilisent une seule série de ventes et des scénarios de prix. Le cas de transfert porte sur plusieurs succursales et demande de détecter des variables qui ne seraient connues qu’après le mois à prévoir.
+
+Jeu de données de transfert : [cas_integrateur_quebec.csv](../../donnees/#cas_integrateur_quebec).
+
 ``` r
 library(tidyverse)
 library(broom)
-library(forecast)
 
-data_path <- if (file.exists("data/ventes_promotions_quebec.csv")) {
-  "data/ventes_promotions_quebec.csv"
+data_path <- if (file.exists("../atelier-04-recapitulation/data/cas_integrateur_quebec.csv")) {
+  "../atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
 } else {
-  "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
+  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
 }
 
-ventes <- read_csv(data_path, show_col_types = FALSE) |>
-  mutate(date = as.Date(date), promotion = factor(promotion), mois = factor(mois)) |>
-  arrange(date)
+service <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    date = as.Date(date),
+    succursale = factor(succursale),
+    promotion = factor(promotion)
+  ) |>
+  arrange(succursale, date) |>
+  group_by(succursale) |>
+  mutate(ventes_retard_1 = lag(ventes)) |>
+  ungroup()
 ```
 
 ## Exercice 1 - Audit de disponibilité
 
-Pour `promotion`, `prix_moyen`, `indice_confiance`, `budget_marketing` et `mois`, indiquez : connu, scénarisé, prévu séparément ou indisponible à l’horizon choisi.
+Une équipe propose de prévoir les ventes du mois suivant avec `promotion`, `capacite`, `achalandage`, `ruptures_stock`, `temps_attente`, `satisfaction` et `ventes_retard_1`.
 
-> **TIP:**
->
-> Le mois est connu. Promotion et budget peuvent être connus s’ils sont planifiés. Le prix peut être connu ou scénarisé. L’indice de confiance doit généralement être prévu séparément ou remplacé par des scénarios. La réponse dépend du processus réel et doit être documentée.
+Construisez un tableau indiquant pour chaque variable :
+
+- le moment où elle devient réellement connue;
+- si elle est planifiée, observée, retardée ou prévue séparément;
+- si son utilisation créerait une fuite d’information;
+- la solution de remplacement possible.
+
+L’équipe doit notamment repérer que les mesures opérationnelles du mois à prévoir ne sont pas disponibles au début de ce mois.
 
 ## Exercice 2 - Résidus et autocorrélation
 
-Ajustez une régression sans variable de mois. Comparez son ACF résiduelle à celle du modèle avec mois.
+Ajustez un modèle de base sur les observations antérieures à 2025, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale.
 
-> **TIP:**
->
-> ``` r
-> train <- ventes |> slice_head(n = nrow(ventes) - 12)
-> sans_mois <- lm(ventes ~ tendance + promotion + prix_moyen + indice_confiance, data = train)
-> avec_mois <- lm(ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois, data = train)
->
-> par(mfrow = c(1, 2))
-> acf(residuals(sans_mois), main = "Sans mois")
-> acf(residuals(avec_mois), main = "Avec mois")
-> ```
->
-> ![](exercices_files/figure-html/unnamed-chunk-2-1.png)
->
-> ``` r
-> par(mfrow = c(1, 1))
-> ```
->
-> La comparaison montre si une partie de la dépendance provenait d’une saisonnalité omise.
+``` r
+entrainement <- service |>
+  filter(date < as.Date("2025-01-01"))
+
+modele_base <- lm(
+  ventes ~ indice_temps + promotion + succursale,
+  data = entrainement
+)
+
+diagnostic <- augment(modele_base, data = entrainement) |>
+  arrange(succursale, date) |>
+  group_by(succursale) |>
+  summarise(
+    autocorrelation_rang_1 = cor(.resid, lag(.resid), use = "complete.obs"),
+    .groups = "drop"
+  )
+
+diagnostic
+```
+
+Expliquez pourquoi une moyenne résiduelle proche de zéro ne suffit pas si les erreurs positives ou négatives se suivent dans le temps.
 
 ## Exercice 3 - Scénarios
 
-À partir du dernier mois, créez deux scénarios pour le mois suivant : promotion non et promotion oui, avec le même prix et le même indice de confiance. Comparez les prévisions et formulez la limite causale.
+Créez un modèle de scénario qui n’utilise que la tendance, une promotion planifiée, la capacité annoncée et les ventes du mois courant. Comparez ensuite un scénario de capacité inchangée à un scénario de hausse de capacité de 5 %.
 
-> **TIP:**
->
-> Créez deux lignes ayant les mêmes valeurs sauf `promotion`. La différence est une comparaison conditionnelle au modèle. Elle ne démontre pas l’effet causal réel d’une future promotion.
+``` r
+modele_scenario <- lm(
+  ventes ~ indice_temps + promotion + capacite + ventes_retard_1,
+  data = entrainement
+)
+
+profil_reference <- service |>
+  filter(succursale == "Québec") |>
+  slice_max(date, n = 1, with_ties = FALSE) |>
+  transmute(
+    indice_temps = indice_temps + 1,
+    promotion = factor("non", levels = levels(service$promotion)),
+    capacite,
+    ventes_retard_1 = ventes
+  )
+
+scenarios <- bind_rows(
+  profil_reference |>
+    mutate(scenario = "Capacité inchangée"),
+  profil_reference |>
+    mutate(
+      capacite = capacite * 1.05,
+      scenario = "Capacité augmentée de 5 %"
+    )
+)
+
+scenarios <- scenarios |>
+  mutate(
+    prevision = predict(modele_scenario, newdata = scenarios)
+  )
+
+scenarios
+```
+
+Expliquez pourquoi la différence entre les deux prévisions est une implication conditionnelle du modèle, et non une estimation certaine de l’effet de la nouvelle capacité.
 
 ## Exercice de synthèse
 
-Rédigez une recommandation expliquant si l’organisation doit utiliser les variables externes. Mentionnez la disponibilité future, la performance test, l’autocorrélation et le coût de maintenance.
+Rédigez une recommandation qui distingue trois décisions : retirer les variables indisponibles, surveiller l’autocorrélation par succursale et présenter les changements de capacité comme des scénarios. Ajoutez une limite d’extrapolation.

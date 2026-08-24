@@ -2,70 +2,137 @@
 
 ## Préparation
 
+Les capsules classent des clients selon leur risque de départ. Le cas de transfert classe plutôt des mois de succursale selon le risque de service insuffisant le mois suivant.
+
+Jeu de données de transfert : [cas_integrateur_quebec.csv](../../donnees/#cas_integrateur_quebec).
+
 ``` r
 library(tidyverse)
 
-data_path <- if (file.exists("data/fidelisation_clients_quebec.csv")) {
-  "data/fidelisation_clients_quebec.csv"
+data_path <- if (file.exists("../atelier-04-recapitulation/data/cas_integrateur_quebec.csv")) {
+  "../atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
 } else {
-  "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv"
+  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
 }
 
-clients <- read_csv(data_path, show_col_types = FALSE) |>
-  mutate(type_contrat = factor(type_contrat), rabais_actuel = factor(rabais_actuel))
+service <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    date = as.Date(date),
+    succursale = factor(succursale),
+    cible = service_insuffisant_mois_suivant
+  ) |>
+  arrange(date, succursale)
+
+entrainement <- service |>
+  filter(date < as.Date("2025-01-01"))
+
+test <- service |>
+  filter(date >= as.Date("2025-01-01"))
 ```
 
 ## Exercice 1 - Définir le problème
 
-Définissez l’unité d’observation, la classe positive, l’horizon et deux coûts d’erreur.
+Définissez précisément :
 
-> **TIP:**
->
-> L’unité est un client. La classe positive est un départ dans les 90 jours. Un faux négatif perd une occasion de rétention; un faux positif consomme une intervention et peut importuner une personne qui n’aurait pas quitté.
+- l’unité d’observation;
+- la classe positive;
+- la date à laquelle les variables explicatives sont mesurées;
+- l’horizon de la cible;
+- le coût opérationnel d’un faux négatif;
+- le coût d’un faux positif.
+
+Expliquez pourquoi l’intitulé « succursale à risque » serait trop vague.
 
 ## Exercice 2 - Probabilités et coefficients
 
-Ajustez un modèle avec `satisfaction`, `tickets_service_6m` et `type_contrat`. Comparez la probabilité prédite de deux profils identiques sauf pour la satisfaction.
+Ajustez une régression logistique avec des mesures du mois courant, puis comparez deux profils qui diffèrent seulement par le nombre de ruptures de stock.
 
-> **TIP:**
->
-> ``` r
-> modele <- glm(
->   depart_90j ~ satisfaction + tickets_service_6m + type_contrat,
->   data = clients,
->   family = binomial()
-> )
->
-> profils <- tibble(
->   satisfaction = c(4, 8),
->   tickets_service_6m = c(2, 2),
->   type_contrat = factor(c("mensuel", "mensuel"), levels = levels(clients$type_contrat))
-> )
->
-> profils |>
->   mutate(prob_depart = predict(modele, newdata = profils, type = "response"))
-> ```
->
->     # A tibble: 2 × 4
->       satisfaction tickets_service_6m type_contrat prob_depart
->              <dbl>              <dbl> <fct>              <dbl>
->     1            4                  2 mensuel            0.668
->     2            8                  2 mensuel            0.280
->
-> La différence est conditionnelle au modèle et ne prouve pas qu’une modification isolée de satisfaction causerait la même variation.
+``` r
+modele_service <- glm(
+  cible ~ taux_utilisation + ruptures_stock + temps_attente + satisfaction,
+  data = entrainement,
+  family = binomial()
+)
+
+profils <- tibble(
+  taux_utilisation = c(0.90, 0.90),
+  ruptures_stock = c(0, 5),
+  temps_attente = c(5, 5),
+  satisfaction = c(7, 7)
+)
+
+profils |>
+  mutate(
+    probabilite_predite = predict(
+      modele_service,
+      newdata = profils,
+      type = "response"
+    )
+  )
+```
+
+Interprétez la différence comme une comparaison conditionnelle au modèle, sans la présenter comme une certitude individuelle ni comme un effet causal.
 
 ## Exercice 3 - Deux seuils
 
-Avec une séparation entraînement-test, comparez les seuils 0,25 et 0,50. Expliquez le compromis entre sensibilité, précision et proportion ciblée.
+Comparez les seuils 0,25 et 0,50 sur l’année 2025.
 
-> **TIP:**
->
-> Un seuil plus faible cible davantage de clients et augmente généralement la sensibilité, mais peut réduire la précision et augmenter les faux positifs. Les mesures doivent être calculées sur le test.
+``` r
+mesures_seuil <- function(observe, probabilite, seuil) {
+  predit <- if_else(probabilite >= seuil, 1, 0)
+
+  vp <- sum(observe == 1 & predit == 1)
+  vn <- sum(observe == 0 & predit == 0)
+  fp <- sum(observe == 0 & predit == 1)
+  fn <- sum(observe == 1 & predit == 0)
+
+  tibble(
+    seuil = seuil,
+    sensibilite = vp / (vp + fn),
+    specificite = vn / (vn + fp),
+    precision = vp / (vp + fp),
+    proportion_ciblee = mean(predit == 1),
+    faux_negatifs = fn,
+    faux_positifs = fp
+  )
+}
+
+evaluation <- test |>
+  mutate(
+    probabilite = predict(
+      modele_service,
+      newdata = test,
+      type = "response"
+    )
+  )
+
+bind_rows(
+  mesures_seuil(evaluation$cible, evaluation$probabilite, 0.25),
+  mesures_seuil(evaluation$cible, evaluation$probabilite, 0.50)
+)
+```
+
+Choisissez un seuil lorsque manquer un mois de service insuffisant coûte quatre fois plus cher qu’une intervention inutile.
 
 ## Exercice 4 - Règle de capacité
 
-Proposez une règle pour une équipe capable de contacter 100 clients par semaine. Expliquez pourquoi la capacité doit être vérifiée sur les volumes réels à venir.
+L’équipe peut intervenir dans deux succursales par mois. Construisez une règle qui retient les deux probabilités les plus élevées à chaque date.
+
+``` r
+ciblage_capacite <- evaluation |>
+  group_by(date) |>
+  slice_max(probabilite, n = 2, with_ties = FALSE) |>
+  ungroup() |>
+  select(date, succursale, probabilite, cible)
+
+ciblage_capacite
+```
+
+Comparez cette règle au seuil choisi dans l’exercice 3. Vérifiez si une succursale est systématiquement priorisée et proposez une surveillance de cette concentration.
 
 ## Exercice de synthèse
 
-Rédigez une recommandation de ciblage en huit lignes maximum. Elle doit nommer la classe positive, le seuil ou la capacité, deux mesures, un coût d’erreur et une limite éthique ou opérationnelle.
+Rédigez une recommandation de huit lignes maximum. Elle doit nommer la cible et l’horizon, choisir entre seuil et capacité, rapporter les deux types d’erreur, indiquer le coût prioritaire et prévoir une vérification de stabilité entre les succursales.

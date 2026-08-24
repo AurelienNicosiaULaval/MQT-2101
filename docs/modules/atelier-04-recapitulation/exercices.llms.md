@@ -1,35 +1,50 @@
 # Exercices - Atelier 04
 
+## Préparation
+
+Le guide de récapitulation utilise un cas mensuel de succursales. Les exercices utilisent plutôt des profils de fidélisation afin de vérifier le transfert vers une nouvelle unité d’observation et une nouvelle décision.
+
+Jeu de données de transfert : [fidelisation_clients_quebec.csv](../../donnees/#fidelisation_clients_quebec).
+
 ## Exercice 1 - Aligner question et mesure
 
-Associez chaque question à une cible et à deux mesures : prévoir les ventes; repérer les mois de service insuffisant; quantifier l’erreur budgétaire.
+Associez chaque question à une cible, à une séparation de validation et à deux mesures :
 
-> **TIP:**
->
-> Ventes et erreur budgétaire utilisent une réponse continue, avec MAE, RMSE ou biais. Le service insuffisant utilise une réponse binaire, avec sensibilité, spécificité, précision et proportion ciblée.
+1.  estimer la valeur mensuelle moyenne des contrats;
+2.  prévoir un départ dans les 90 jours;
+3.  classer seulement les 15 % de clients les plus prioritaires;
+4.  vérifier si la performance diffère selon le type de contrat.
+
+Expliquez pourquoi la MAE ne convient pas directement à la deuxième question et pourquoi l’exactitude seule ne répond pas à la troisième.
 
 ## Exercice 2 - Critiquer une conclusion
 
-> Le coefficient de promotion est positif; l’organisation doit donc lancer une promotion chaque mois.
+> Le coefficient du contrat mensuel est positif dans le modèle de départ. Il faut donc convertir tous les clients aux contrats annuels pour empêcher les départs.
 
-Relevez au moins trois problèmes.
-
-> **TIP:**
->
-> Le coefficient est observationnel et conditionnel, les coûts ne sont pas considérés, la validité hors échantillon n’est pas mentionnée, une promotion permanente peut modifier les comportements et le modèle n’établit pas un effet causal.
+Relevez au moins quatre problèmes concernant causalité, faisabilité, sélection des clients, coûts et validité future. Réécrivez la conclusion comme une action de validation limitée.
 
 ## Exercice 3 - Critiquer une classification
 
-Un modèle atteint 92 % d’exactitude, mais seulement 10 % de sensibilité. Expliquez pourquoi il peut être inutile si l’objectif est de prévenir les défaillances de service.
+Deux modèles ont la même exactitude. Le premier détecte 75 % des départs et cible 30 % des clients. Le second détecte 55 % des départs et cible 12 % des clients.
 
-> **TIP:**
->
-> Il manque 90 % des événements positifs. L’exactitude est dominée par les mois sans défaillance et ne répond pas au coût principal des faux négatifs.
+Choisissez un modèle dans chacun des contextes suivants :
+
+- l’équipe peut contacter 15 % des clients;
+- un départ non détecté coûte beaucoup plus cher qu’un contact inutile.
+
+Nommez l’information manquante avant une décision définitive.
 
 ## Exercice 4 - Plan de mise à jour
 
-Proposez une fréquence de surveillance, deux indicateurs de dérive et un déclencheur de réentraînement.
+Proposez :
+
+- une fréquence de mesure de la sensibilité et de la précision;
+- une vérification de calibration des probabilités;
+- une comparaison par type de contrat;
+- un indicateur de dérive des variables;
+- un déclencheur de réentraînement;
+- une règle suspendant le ciblage si les données deviennent incomplètes.
 
 ## Exercice de synthèse
 
-Relisez votre livrable avec la grille suivante : alignement, reproductibilité, validation, interprétation, décision, limites. Corrigez le point le plus faible avant la remise.
+Rédigez une fiche de gouvernance de modèle en six rubriques : objectif, données, validation, décision, surveillance et limites. Le livrable doit être indépendant du cas de succursales traité pendant l’atelier.

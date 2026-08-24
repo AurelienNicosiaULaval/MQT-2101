@@ -7,76 +7,156 @@ format:
 
 ## Préparation
 
+Le cas de transfert utilise des ventes influencées par des promotions et le prix.
+La question n'est plus seulement de détecter une saison, mais de vérifier si le
+motif saisonnier demeure après la prise en compte de variables commerciales.
+
+Jeu de données de transfert :
+<a class="data-link" href="../../donnees/#ventes_promotions_quebec">ventes_promotions_quebec.csv</a>.
+
 ```{r}
+#| eval: false
+
 library(tidyverse)
 library(broom)
 
-data_path <- if (file.exists("data/ventes_saisonnieres_quebec.csv")) {
-  "data/ventes_saisonnieres_quebec.csv"
+data_path <- if (file.exists("../semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")) {
+  "../semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
 } else {
-  "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv"
+  "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
 }
 
-ventes <- read_csv(data_path, show_col_types = FALSE) |>
-  mutate(date = as.Date(date), mois_label = factor(mois_label)) |>
+ventes <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    date = as.Date(date),
+    mois = factor(mois),
+    promotion = factor(promotion)
+  ) |>
   arrange(date)
 ```
 
 ## Exercice 1 - Isoler la tendance
 
-Ajustez `ventes ~ indice_temps` sans mois. Examinez les résidus dans le temps et décrivez le motif manquant.
+Ajustez d'abord un modèle avec tendance, promotion et prix, mais sans mois.
+Examinez les résidus par mois de calendrier.
 
-::: {.callout-tip collapse="true" title="Solution"}
 ```{r}
-modele_tendance <- lm(ventes ~ indice_temps, data = ventes)
+#| eval: false
 
-augment(modele_tendance, data = ventes) |>
-  ggplot(aes(date, .resid)) +
+modele_sans_saison <- lm(
+  ventes ~ tendance + promotion + prix_moyen,
+  data = ventes
+)
+
+augment(modele_sans_saison, data = ventes) |>
+  group_by(mois) |>
+  summarise(
+    residu_moyen = mean(.resid),
+    residu_median = median(.resid),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(x = mois, y = residu_moyen, group = 1)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_line(colour = "#0B4F6C") +
+  geom_point(colour = "#0B4F6C") +
+  labs(x = "Mois", y = "Résidu moyen") +
   theme_minimal(base_size = 12)
 ```
 
-Un motif récurrent selon les mois indique que la tendance seule est insuffisante.
-:::
+Repérez les mois systématiquement sous-prévus ou sur-prévus. Expliquez pourquoi
+ce motif soutient l'ajout d'une composante de calendrier.
 
 ## Exercice 2 - Interpréter une saison
 
-Fixez janvier comme référence, ajustez tendance et mois, puis interprétez les coefficients de juillet et décembre.
+Comparez les coefficients mensuels d'un modèle sans variables commerciales et
+d'un modèle qui contrôle la promotion et le prix.
 
-::: {.callout-tip collapse="true" title="Solution"}
 ```{r}
-ventes <- ventes |>
-  mutate(mois_label = relevel(factor(mois_label), ref = "janvier"))
+#| eval: false
 
-modele_saisonnier <- lm(ventes ~ indice_temps + mois_label, data = ventes)
-tidy(modele_saisonnier) |>
-  filter(term %in% c("mois_labeljuillet", "mois_labeldécembre"))
+ventes <- ventes |>
+  mutate(mois = relevel(mois, ref = "1"))
+
+modele_calendrier <- lm(
+  ventes ~ tendance + mois,
+  data = ventes
+)
+
+modele_complet <- lm(
+  ventes ~ tendance + mois + promotion + prix_moyen,
+  data = ventes
+)
+
+bind_rows(
+  tidy(modele_calendrier) |> mutate(modele = "Calendrier"),
+  tidy(modele_complet) |> mutate(modele = "Calendrier et contexte")
+) |>
+  filter(term %in% c("mois7", "mois12")) |>
+  select(modele, term, estimate, std.error)
 ```
 
-Chaque coefficient est une différence moyenne avec janvier, à indice de temps égal.
-:::
+Interprétez décembre par rapport à janvier et expliquez pourquoi le coefficient
+peut changer lorsque promotion et prix sont ajoutés.
 
 ## Exercice 3 - Tester le modèle
 
-Réservez les douze derniers mois, calculez MAE et taux de couverture de l'intervalle de prédiction à 95 %.
+Réservez les douze derniers mois. Comparez les deux modèles et calculez la MAE
+séparément pour les mois avec et sans promotion.
 
-::: {.callout-tip collapse="true" title="Solution"}
 ```{r}
-entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ indice_temps + mois_label, data = entrainement)
-pred <- as_tibble(predict(modele, newdata = test, interval = "prediction")) |>
-  bind_cols(test |> select(ventes))
+#| eval: false
 
-pred |>
+entrainement <- ventes |>
+  slice_head(n = nrow(ventes) - 12)
+
+test <- ventes |>
+  slice_tail(n = 12)
+
+modele_test_calendrier <- lm(
+  ventes ~ tendance + mois,
+  data = entrainement
+)
+
+modele_test_complet <- lm(
+  ventes ~ tendance + mois + promotion + prix_moyen,
+  data = entrainement
+)
+
+evaluation <- bind_rows(
+  test |>
+    transmute(
+      promotion,
+      observe = ventes,
+      prevision = predict(modele_test_calendrier, newdata = test),
+      modele = "Calendrier"
+    ),
+  test |>
+    transmute(
+      promotion,
+      observe = ventes,
+      prevision = predict(modele_test_complet, newdata = test),
+      modele = "Calendrier et contexte"
+    )
+)
+
+evaluation |>
+  group_by(modele, promotion) |>
   summarise(
-    MAE = mean(abs(ventes - fit)),
-    couverture = mean(ventes >= lwr & ventes <= upr)
+    observations = n(),
+    MAE = mean(abs(observe - prevision)),
+    biais = mean(observe - prevision),
+    .groups = "drop"
   )
 ```
-:::
+
+Choisissez un modèle en considérant la stabilité entre les deux types de mois,
+et non seulement la moyenne globale.
 
 ## Exercice de synthèse
 
-Comparez les prévisions au `budget_cible`. Indiquez les mois où le budget semble le plus risqué et proposez une règle de révision mensuelle.
+Rédigez une note expliquant ce qui relève de la tendance, du calendrier et du
+contexte commercial. Ajoutez le résultat hors échantillon, une limite causale et
+une règle de mise à jour lorsque le plan de promotion change.

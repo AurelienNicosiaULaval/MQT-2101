@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -7054,132 +7089,99 @@ display: none;
 
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Ces exercices accompagnent le travail en classe. Ils servent à produire les éléments du court rapport Quarto attendu.</p>
-<p>Ils ne forment pas un deuxième parcours séparé. Ils correspondent aux moments « À vous » du <a href="guide-atelier.html">guide complet de l’atelier</a> : après avoir vu une démonstration, vous faites l’exercice associé, puis vous gardez le résultat utile dans votre trace finale.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Lien avec le guide complet">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Lien avec le guide complet
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pendant la séance, ouvrez d’abord le guide complet. Utilisez cette page comme liste de vérification des productions attendues : description du tableau, dictionnaire, diagnostic des valeurs manquantes, tableau synthèse, graphiques, constats et recommandation.</p>
-</div>
+<p>Ces exercices sont une pratique indépendante à réaliser après le parcours guidé. Ils ne reprennent ni les données, ni les productions « À vous » du guide. Le cas de transfert porte sur la fiabilité du service dans quatre succursales.</p>
+<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;../semaine-02-r-quarto/data/ventes_operations_quebec.csv&quot;</span>)) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;../semaine-02-r-quarto/data/ventes_operations_quebec.csv&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>operations <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  data_path,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois =</span> <span class="fu">as.Date</span>(mois),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_par_client =</span> ventes <span class="sc">/</span> clients</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exercice-1---décrire-le-tableau" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---décrire-le-tableau">Exercice 1 - Décrire le tableau</h2>
-<p>À partir de <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a> :</p>
 <ul>
-<li>importez le fichier;</li>
-<li>indiquez le nombre de lignes et de colonnes;</li>
+<li>vérifiez les dimensions et la période couverte;</li>
 <li>nommez l’unité d’observation;</li>
-<li>classez cinq variables selon leur type.</li>
+<li>identifiez les variables de service, de clientèle et de performance;</li>
+<li>expliquez pourquoi deux lignes de la même succursale ne sont pas des doublons si elles correspondent à des mois différents.</li>
 </ul>
 </section>
 <section id="exercice-2---construire-un-dictionnaire-rapide" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-2---construire-un-dictionnaire-rapide">Exercice 2 - Construire un dictionnaire rapide</h2>
-<p>Produisez un tableau qui contient, pour chaque variable :</p>
-<ul>
-<li>le nom de la variable;</li>
-<li>son type;</li>
-<li>le nombre de valeurs manquantes;</li>
-<li>un exemple de valeur observée.</li>
-</ul>
-<p>À écrire :</p>
-<ul>
-<li>cinq variables utiles pour une décision de gestion;</li>
-<li>le rôle de chacune : performance commerciale, clientèle, marketing, opérations ou satisfaction.</li>
-</ul>
+<p>Construisez un dictionnaire pour <code>mois</code>, <code>region</code>, <code>canal_principal</code>, <code>clients</code>, <code>delai_livraison_jours</code>, <code>satisfaction</code> et <code>ventes_par_client</code>.</p>
+<p>Le dictionnaire doit contenir : type, unité, rôle dans une décision de service et précaution d’interprétation. Les catégories codées ne doivent pas être traitées comme des quantités.</p>
 </section>
 <section id="exercice-3---diagnostiquer-les-valeurs-manquantes" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---diagnostiquer-les-valeurs-manquantes">Exercice 3 - Diagnostiquer les valeurs manquantes</h2>
-<p>Produisez un tableau qui indique, pour chaque variable, le nombre de valeurs manquantes.</p>
-<p>À écrire :</p>
-<ul>
-<li>quelles variables sont touchées;</li>
-<li>pourquoi cela peut influencer certains indicateurs;</li>
-<li>la précaution à prendre dans les résumés.</li>
-</ul>
-<p>Comparez aussi au moins une moyenne calculée avec et sans <code>na.rm = TRUE</code>, puis expliquez pourquoi le résultat change ou devient manquant.</p>
+<p>Produisez un tableau donnant le nombre et la proportion de valeurs manquantes. Comparez ensuite le nombre de lignes disponibles pour une analyse de la satisfaction et pour une analyse conjointe satisfaction-délai.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>disponibilite <span class="ot">&lt;-</span> operations <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">lignes_totales =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_disponible =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(satisfaction)),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_disponible =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(delai_livraison_jours)),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">analyse_conjointe =</span> <span class="fu">sum</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(satisfaction) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(delai_livraison_jours)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>disponibilite</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Expliquez pourquoi chaque résultat doit annoncer son propre nombre d’observations.</p>
 </section>
 <section id="exercice-4---résumer-par-succursale" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---résumer-par-succursale">Exercice 4 - Résumer par succursale</h2>
-<p>Produisez un tableau synthèse par succursale contenant :</p>
-<ul>
-<li>les ventes totales;</li>
-<li>le nombre total de clients;</li>
-<li>le panier moyen;</li>
-<li>la satisfaction moyenne;</li>
-<li>le délai moyen de livraison;</li>
-<li>le nombre total de ruptures de stock.</li>
-</ul>
-<p>À écrire :</p>
-<ul>
-<li>deux résultats qui ressortent du tableau;</li>
-<li>une limite de comparaison.</li>
-</ul>
+<p>Résumez plutôt par région et canal principal, afin de répondre à une question différente de celle du guide.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>resume_service <span class="ot">&lt;-</span> operations <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, canal_principal) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_median =</span> <span class="fu">median</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_mediane =</span> <span class="fu">median</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_par_client =</span> <span class="fu">sum</span>(ventes) <span class="sc">/</span> <span class="fu">sum</span>(clients),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>resume_service</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Repérez un groupe à surveiller et nommez une limite liée au petit nombre d’observations.</p>
 </section>
 <section id="exercice-5---produire-deux-graphiques" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-5---produire-deux-graphiques">Exercice 5 - Produire deux graphiques</h2>
-<p>Graphique obligatoire :</p>
-<ul>
-<li>ventes totales par succursale.</li>
-</ul>
-<p>Graphique au choix :</p>
-<ul>
-<li>satisfaction et ruptures de stock;</li>
-<li>ventes et dépenses marketing;</li>
-<li>satisfaction et délai de livraison;</li>
-<li>ventes selon la saison.</li>
-</ul>
-<p>Chaque graphique doit avoir un titre, des axes clairs et une phrase d’interprétation.</p>
+<p>Produisez :</p>
+<ol type="1">
+<li>un nuage de points satisfaction-délai, avec une couleur par région;</li>
+<li>un graphique de ventes par client selon le canal principal.</li>
+</ol>
+<p>Chaque graphique doit répondre à une question écrite avant le code. Un titre ne remplace pas l’interprétation.</p>
 </section>
 <section id="exercice-6---choisir-une-priorité-de-prochaine-analyse" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-6---choisir-une-priorité-de-prochaine-analyse">Exercice 6 - Choisir une priorité de prochaine analyse</h2>
-<p>La direction hésite entre trois priorités :</p>
-<ul>
-<li>marketing;</li>
-<li>opérations;</li>
-<li>saisonnalité.</li>
-</ul>
-<p>Choisissez une seule priorité et appuyez-la avec un tableau ou un graphique.</p>
-<p>À écrire :</p>
-<ul>
-<li>la priorité choisie;</li>
-<li>le résultat descriptif qui appuie cette priorité;</li>
-<li>une limite d’interprétation;</li>
-<li>ce qu’il faudrait vérifier avec une méthode plus avancée.</li>
-</ul>
+<p>Choisissez une priorité parmi la réduction des délais, l’amélioration de la satisfaction ou l’analyse des écarts de ventes par client. Appuyez votre choix avec un résultat, puis indiquez l’information qui manque pour passer de la description à une décision d’intervention.</p>
 </section>
 <section id="exercice-7---préparer-la-suite" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-7---préparer-la-suite">Exercice 7 - Préparer la suite</h2>
-<p>Choisissez une paire de variables qui pourrait être étudiée plus tard avec une régression ou une autre méthode de modélisation.</p>
-<p>À écrire :</p>
-<ul>
-<li>la variable à expliquer ou à prévoir;</li>
-<li>la variable explicative envisagée;</li>
-<li>la question descriptive actuelle;</li>
-<li>ce qu’il faudrait vérifier avant d’aller plus loin.</li>
-</ul>
+<p>Formulez une future question de régression avec <code>satisfaction</code> comme réponse et <code>delai_livraison_jours</code> comme variable explicative. Ajoutez une variable de contexte, une limite causale et un diagnostic graphique à prévoir.</p>
 </section>
 <section id="trace-finale-courte" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale-courte">Trace finale courte</h2>
-<p>La trace finale attendue est un court rapport Quarto contenant :</p>
-<ul>
-<li>le code d’importation;</li>
-<li>une inspection du tableau;</li>
-<li>un dictionnaire rapide des variables clés;</li>
-<li>un diagnostic des valeurs manquantes;</li>
-<li>un tableau synthèse;</li>
-<li>deux graphiques;</li>
-<li>trois constats descriptifs;</li>
-<li>une limite d’interprétation;</li>
-<li>une recommandation de prochaine analyse.</li>
-</ul>
+<p>Produisez une note Quarto autonome sur la fiabilité du service : dictionnaire ciblé, audit des données manquantes, tableau région-canal, deux graphiques, trois constats, priorité et prochaine analyse. N’utilisez pas le fichier <code>ventes_pme_quebec.csv</code> du guide.</p>
 
 
 </section>

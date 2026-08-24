@@ -176,6 +176,81 @@ for (workshop in workshops) {
   check_required_files(workshop, required_workshop_files)
 }
 
+extract_csv_names <- function(text) {
+  matches <- regmatches(
+    text,
+    gregexpr("[A-Za-z0-9_-]+[.]csv", text, perl = TRUE)
+  )[[1]]
+
+  if (identical(matches, -1L)) character() else unique(matches)
+}
+
+extract_transfer_dataset <- function(path) {
+  lines <- readLines(path, warn = FALSE)
+  marker <- grep("Jeu de données de transfert", lines, fixed = TRUE)
+
+  if (length(marker) != 1L) {
+    return(character())
+  }
+
+  following_lines <- lines[seq.int(marker[[1]], min(length(lines), marker[[1]] + 2L))]
+  extract_csv_names(paste(following_lines, collapse = "\n"))
+}
+
+learning_units <- c(course_modules$id, workshops)
+published_csv <- basename(list.files(
+  "modules",
+  pattern = "[.]csv$",
+  recursive = TRUE,
+  full.names = TRUE
+))
+
+for (unit_id in learning_units) {
+  directory <- file.path("modules", unit_id)
+  exercise_path <- file.path(directory, "exercices.qmd")
+
+  if (!file.exists(exercise_path)) {
+    next
+  }
+
+  transfer_dataset <- extract_transfer_dataset(exercise_path)
+  if (length(transfer_dataset) != 1L) {
+    add_error(paste0(unit_id, " : un seul jeu de données de transfert doit être annoncé."))
+    next
+  }
+
+  if (!transfer_dataset %in% published_csv) {
+    add_error(paste0(
+      unit_id,
+      " : jeu de données de transfert introuvable : ",
+      transfer_dataset,
+      "."
+    ))
+  }
+
+  guided_paths <- c(
+    file.path(directory, "capsules.qmd"),
+    file.path(directory, "guide-atelier.qmd"),
+    list.files(
+      file.path(directory, "media", "qmd"),
+      pattern = "^capsule-[0-9]{2}-support[.]qmd$",
+      full.names = TRUE
+    )
+  )
+  guided_paths <- guided_paths[file.exists(guided_paths)]
+  guided_text <- paste(vapply(guided_paths, read_text, character(1)), collapse = "\n")
+  guided_datasets <- extract_csv_names(guided_text)
+
+  if (transfer_dataset %in% guided_datasets) {
+    add_error(paste0(
+      unit_id,
+      " : le jeu de données de transfert est déjà utilisé dans le parcours guidé : ",
+      transfer_dataset,
+      "."
+    ))
+  }
+}
+
 all_student_text <- paste(vapply(
   list.files("modules", pattern = "[.]qmd$", recursive = TRUE, full.names = TRUE),
   read_text,
@@ -240,6 +315,7 @@ cat("Validation de cohérence MQT-2101\n")
 cat("Modules vérifiés :", nrow(course_modules), "\n")
 cat("Ateliers vérifiés :", length(workshops), "\n")
 cat("Decks RevealJS vérifiés :", sum(course_modules$capsules), "\n")
+cat("Cas de transfert vérifiés :", length(learning_units), "\n")
 cat("Packages employés :", paste(sort(used_packages), collapse = ", "), "\n")
 cat("Erreurs :", length(errors), "\n")
 cat("Avertissements :", length(warnings), "\n")

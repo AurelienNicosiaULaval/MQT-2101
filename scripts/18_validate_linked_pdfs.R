@@ -4,15 +4,15 @@
 
 pdf_files <- sort(list.files(
   "modules",
-  pattern = "capsule-[0-9]{2}-support\\.pdf$",
+  pattern = "capsule-[0-9]{2}-support(-annote)?\\.pdf$",
   recursive = TRUE,
   full.names = TRUE
 ))
 
 pdf_files <- pdf_files[grepl("modules/semaine-0[1-5].*/media/pdf/", pdf_files)]
 
-if (length(pdf_files) != 30L) {
-  stop("30 PDF liés étaient attendus; ", length(pdf_files), " ont été trouvés.")
+if (length(pdf_files) != 36L) {
+  stop("36 PDF liés étaient attendus; ", length(pdf_files), " ont été trouvés.")
 }
 
 errors <- character()

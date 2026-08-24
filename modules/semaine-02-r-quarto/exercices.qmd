@@ -7,151 +7,158 @@ format:
 
 ## Objectif
 
-Créer un premier rapport Quarto reproductible à partir d'un tableau de données d'affaires.
+Créer un rapport Quarto reproductible à partir d'un nouveau cas. Les capsules
+utilisent `ventes_operations_quebec.csv`; les exercices utilisent plutôt les
+ventes mensuelles d'une PME fictive et portent sur la qualité opérationnelle.
 
-Chaque exercice produit un élément de la trace finale courte. L'objectif n'est pas de faire cinq productions séparées, mais de construire progressivement le mini-rapport Quarto de la semaine 02.
+Jeu de données de transfert :
+<a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.
 
 ## Exercice 1 - Créer le projet et importer les données
 
-Fichier : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.
+Créez un projet distinct nommé `diagnostic-retours-pme`, ajoutez un dossier
+`data`, puis importez le fichier.
 
 ```{r}
 #| eval: false
+
 library(tidyverse)
 library(janitor)
 
-data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
-  "data/ventes_operations_quebec.csv"
-} else {
-  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
-}
-
-ventes_operations <- readr::read_csv(
-  data_path,
+ventes_pme <- read_csv(
+  "data/ventes_pme_quebec.csv",
   show_col_types = FALSE
 ) |>
-  clean_names()
+  clean_names() |>
+  mutate(mois = as.Date(mois))
 
-glimpse(ventes_operations)
+glimpse(ventes_pme)
 ```
 
 À faire :
 
-- créer un projet R;
-- placer le fichier dans le dossier `data`;
-- importer le fichier;
-- vérifier le nombre de lignes et de colonnes;
-- nommer l'unité d'observation.
+- vérifier les dimensions du tableau;
+- confirmer que chaque ligne correspond à une succursale pour un mois;
+- vérifier l'étendue des dates;
+- rédiger une phrase expliquant pourquoi le chemin relatif rend le projet plus
+  facile à partager.
 
 ## Exercice 2 - Identifier les types de variables
 
-Classer les variables suivantes :
+Classez `mois`, `saison`, `succursale`, `campagne_locale`, `clients`,
+`delai_livraison_jours`, `satisfaction` et `taux_retour`.
 
-- `mois`;
-- `succursale`;
-- `region`;
-- `campagne_locale`;
-- `canal_principal`;
-- `clients`;
-- `panier_moyen`;
-- `ventes`;
-- `satisfaction`.
+Ajoutez ensuite deux décisions de préparation :
 
-À faire :
+- quelles variables convertir en facteurs;
+- quelles variables conserver numériques même si elles prennent peu de valeurs.
 
-- distinguer variables numériques, catégorielles et dates;
-- factoriser les variables catégorielles;
-- expliquer pourquoi cette étape est utile.
+Votre justification doit s'appuyer sur le sens des variables, et non seulement
+sur leur apparence dans R.
 
 ## Exercice 3 - Repérer les valeurs manquantes
 
+Produisez un audit qui donne à la fois le nombre et la proportion de valeurs
+manquantes.
+
 ```{r}
 #| eval: false
-ventes_operations |>
-  summarise(across(everything(), \(x) sum(is.na(x)))) |>
+
+audit_manquants <- ventes_pme |>
+  summarise(
+    across(
+      everything(),
+      list(
+        nombre = ~ sum(is.na(.x)),
+        proportion = ~ mean(is.na(.x))
+      )
+    )
+  ) |>
   pivot_longer(
     cols = everything(),
-    names_to = "variable",
-    values_to = "valeurs_manquantes"
+    names_to = c("variable", ".value"),
+    names_pattern = "(.*)_(nombre|proportion)$"
   ) |>
-  filter(valeurs_manquantes > 0)
+  filter(nombre > 0)
+
+audit_manquants
 ```
 
-À faire :
-
-- nommer les variables incomplètes;
-- expliquer une conséquence possible sur le diagnostic;
-- indiquer comment signaler ce problème dans un rapport.
+Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait modifier
+plus d'une analyse, même si une seule variable est étudiée au départ.
 
 ## Exercice 4 - Produire un tableau descriptif
 
+La question est maintenant : « Les retours et les délais sont-ils plus élevés
+pendant la haute saison? »
+
 ```{r}
 #| eval: false
-ventes_operations |>
-  group_by(succursale) |>
+
+resume_saison <- ventes_pme |>
+  group_by(saison) |>
   summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
-    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    observations = n(),
+    taux_retour_median = median(taux_retour, na.rm = TRUE),
+    delai_median = median(delai_livraison_jours, na.rm = TRUE),
+    satisfaction_mediane = median(satisfaction, na.rm = TRUE),
     .groups = "drop"
   )
+
+resume_saison
 ```
 
-À faire :
-
-- produire un tableau par succursale;
-- interpréter deux résultats;
-- nommer une limite.
+Rédigez deux constats descriptifs et une limite. Ne transformez pas la saison en
+explication causale.
 
 ## Exercice 5 - Produire un graphique
 
+Choisissez un seul des deux graphiques suivants selon la question posée :
+
+1. comparer la distribution du taux de retour entre les saisons;
+2. étudier la relation entre le délai de livraison et la satisfaction.
+
 ```{r}
 #| eval: false
-ventes_operations |>
-  group_by(canal_principal) |>
-  summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  ggplot(aes(ventes_totales, canal_principal)) +
-  geom_col() +
+
+graphique_saisons <- ggplot(
+  ventes_pme,
+  aes(x = saison, y = taux_retour)
+) +
+  geom_boxplot(fill = "#0B4F6C", alpha = 0.8) +
+  labs(x = NULL, y = "Taux de retour") +
+  theme_minimal(base_size = 12)
+
+graphique_service <- ventes_pme |>
+  filter(!is.na(delai_livraison_jours), !is.na(satisfaction)) |>
+  ggplot(aes(x = delai_livraison_jours, y = satisfaction)) +
+  geom_point(aes(colour = saison), alpha = 0.8) +
   labs(
-    title = "Ventes par canal principal",
-    x = "Ventes",
-    y = NULL
-  )
+    x = "Délai de livraison, en jours",
+    y = "Satisfaction",
+    colour = "Saison"
+  ) +
+  theme_minimal(base_size = 12)
 ```
 
-À faire :
-
-- ajouter un titre clair;
-- vérifier les axes;
-- écrire un constat descriptif.
+Présentez le graphique choisi, justifiez votre choix en une phrase et écrivez un
+constat qui ne répète pas simplement le titre.
 
 ## Trace finale courte
 
-Produire un mini-rapport Quarto contenant :
+Produisez un mini-rapport Quarto sur la qualité opérationnelle contenant :
 
-- une courte introduction;
-- le code d'importation;
-- une inspection du tableau;
-- un diagnostic des valeurs manquantes;
-- un tableau descriptif;
-- un graphique;
-- deux constats descriptifs;
-- une question que vous aimeriez approfondir.
+- le code d'importation et une vérification des dimensions;
+- un audit des valeurs manquantes;
+- le tableau par saison;
+- un graphique choisi en fonction d'une question précise;
+- deux constats, une limite et une prochaine vérification.
+
+Le rapport ne doit reprendre ni le fichier, ni le tableau par succursale, ni le
+graphique par canal utilisés dans les capsules.
 
 ## Modèle de solution cachée à utiliser
 
-Les solutions doivent rester cachées par défaut pour encourager une vraie tentative avant consultation.
-
-::: {.callout-tip collapse="true"}
-### Solution
-
-La solution détaillée sera ajoutée dans le fichier de solution hors rendu public après la séance.
-
-```{r}
-#| eval: false
-# Les solutions publiques ne sont pas affichées dans cette page.
-```
-:::
+Les solutions détaillées restent dans la page réservée aux solutions. Avant de
+la consulter, le fichier `.qmd` de l'étudiant doit se rendre sans erreur du début
+à la fin.

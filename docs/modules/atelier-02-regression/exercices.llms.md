@@ -2,157 +2,119 @@
 
 ## Objectif
 
-Ces exercices accompagnent le guide de l’atelier. Ils servent à préparer la mini-analyse finale.
+Réaliser une analyse de transfert après l’atelier guidé. Le guide utilise la performance des succursales; cette page utilise plutôt des campagnes marketing et cherche à expliquer les visites du site, non les ventes des succursales.
 
-> **NOTE:**
->
-> Pendant la séance, ouvrez d’abord le [guide complet](guide-atelier.llms.md). Utilisez cette page pour pratiquer les gestes essentiels, vérifier votre interprétation et préparer la trace finale.
+Jeu de données de transfert : [campagnes_marketing_quebec.csv](../../donnees/#campagnes-marketing-québécoises-fictives).
 
 ## Préparation
 
 ``` r
 library(tidyverse)
+library(broom)
 
-data_path <- "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
-performance <- read_csv(data_path, show_col_types = FALSE)
+data_path <- if (file.exists("../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")) {
+  "../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+} else {
+  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+}
+
+campagnes <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    mois = as.Date(mois),
+    canal = factor(canal),
+    region = factor(region)
+  )
 ```
 
 ## Exercice 1 - Question et variables
 
-Pour la question « Quels facteurs sont associés aux ventes mensuelles des succursales? », identifiez :
+La question est : « Comment le budget marketing est-il associé au nombre de visites du site, et cette association paraît-elle différente selon le canal? »
 
-- la variable réponse;
-- deux variables explicatives plausibles;
-- une variable qui pourrait confondre l’interprétation;
-- une limite du tableau.
-
-> **TIP:**
->
-> La variable réponse est `ventes`. Des variables explicatives plausibles sont `achalandage`, `depenses_marketing`, `heures_personnel` et `ruptures_stock`. Une variable de contexte comme `succursale`, `region` ou `saison` peut influencer l’interprétation. Une limite est que les observations ne proviennent pas d’une expérience contrôlée.
+Identifiez la réponse, la variable explicative principale, le rôle de `canal`, l’unité d’observation et une limite causale.
 
 ## Exercice 2 - Graphique exploratoire
 
-Produisez un graphique des ventes selon l’achalandage, avec une couleur par succursale.
+Produisez un nuage de points avec une couleur et une droite distinctes par canal.
 
 ``` r
-ggplot(performance, aes(x = achalandage, y = ventes, colour = succursale)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE, colour = "black") +
+ggplot(
+  campagnes,
+  aes(x = budget_marketing, y = visites_site, colour = canal)
+) +
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE) +
   labs(
-    title = "Ventes selon l'achalandage",
-    x = "Achalandage mensuel",
-    y = "Ventes",
-    colour = "Succursale"
+    x = "Budget marketing",
+    y = "Visites du site",
+    colour = "Canal"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 12)
 ```
 
-> **TIP:**
->
-> Le graphique doit permettre de vérifier si une relation positive existe et si certaines succursales semblent systématiquement au-dessus ou au-dessous de la tendance générale.
+Décrivez ce qui est commun aux canaux et ce qui semble différent. N’interprétez pas encore ces écarts comme des effets certains.
 
 ## Exercice 3 - Modèle simple
 
-Ajustez un modèle simple avec `achalandage` comme variable explicative.
+Ajustez `visites_site ~ budget_marketing`. Interprétez la pente pour une hausse de 1 000 dollars et donnez son intervalle de confiance.
 
 ``` r
-modele_simple <- lm(ventes ~ achalandage, data = performance)
-summary(modele_simple)
+modele_simple <- lm(
+  visites_site ~ budget_marketing,
+  data = campagnes
+)
+
+tidy(modele_simple, conf.int = TRUE)
+coef(modele_simple)[["budget_marketing"]] * 1000
 ```
-
-Interprétez la pente en une phrase.
-
-> **TIP:**
->
-> La pente indique la variation moyenne estimée des ventes pour une unité supplémentaire d’achalandage mensuel. Il faut préciser l’unité et éviter de dire que l’achalandage cause automatiquement les ventes.
 
 ## Exercice 4 - Modèle enrichi
 
-Ajustez le modèle suivant :
+Ajoutez le canal, le rabais et la saison. Comparez la pente du budget entre les deux modèles.
 
 ``` r
 modele_enrichi <- lm(
-  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
-  data = performance
+  visites_site ~ budget_marketing + canal + rabais + saison,
+  data = campagnes
 )
 
-summary(modele_enrichi)
+bind_rows(
+  tidy(modele_simple) |> mutate(modele = "Simple"),
+  tidy(modele_enrichi) |> mutate(modele = "Enrichi")
+) |>
+  filter(term == "budget_marketing") |>
+  select(modele, estimate, std.error, p.value)
 ```
 
-Choisissez un coefficient et interprétez-le dans le contexte.
-
-> **TIP:**
->
-> Un coefficient du modèle enrichi se lit en gardant constantes les autres variables incluses dans le modèle. Par exemple, le coefficient de `depenses_marketing` décrit l’association moyenne avec les ventes pour des observations ayant le même achalandage, les mêmes heures de personnel et le même nombre de ruptures de stock, selon le modèle.
+Expliquez pourquoi le changement de pente peut révéler un mélange entre budget, canal, rabais et saison.
 
 ## Exercice 5 - Recommandation
 
-Rédigez une recommandation de cinq à sept lignes pour une direction régionale. Votre texte doit inclure :
-
-- le facteur prioritaire;
-- un résultat de modèle;
-- une limite;
-- une prochaine vérification.
-
-> **TIP:**
->
-> La recommandation doit être défendable sans être excessive. Une bonne réponse peut recommander de prioriser l’analyse de l’achalandage, de surveiller les ruptures de stock ou de tester des actions marketing, mais elle doit préciser que le modèle décrit une association observée.
+La direction veut augmenter les visites du site. Recommandez une prochaine vérification, et non une hausse automatique du budget. Votre texte doit citer la pente, le rôle du canal, une limite observationnelle et une option de validation.
 
 ## Exercice 6 - Diagnostic des résidus
 
-Créez les valeurs prédites et les résidus du modèle enrichi, puis produisez un graphique des résidus selon les ventes prédites.
+Examinez les résidus dans le temps et par canal.
 
 ``` r
-performance_modele <- performance |>
-  mutate(
-    ventes_predites = predict(modele_enrichi),
-    residu = residuals(modele_enrichi)
-  )
+diagnostic <- augment(modele_enrichi, data = campagnes)
 
-ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0) +
+ggplot(diagnostic, aes(x = mois, y = .resid, colour = canal)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_line(aes(group = interaction(region, canal)), alpha = 0.5) +
   geom_point() +
-  labs(
-    title = "Résidus selon les ventes prédites",
-    x = "Ventes prédites",
-    y = "Résidu"
-  ) +
-  theme_minimal()
+  labs(x = NULL, y = "Résidu", colour = "Canal") +
+  theme_minimal(base_size = 12)
 ```
 
-Rédigez une phrase sur ce que le graphique permet de vérifier.
-
-> **TIP:**
->
-> On cherche surtout à voir si les résidus sont répartis autour de zéro sans motif évident. Si les résidus montrent une courbe, une dispersion qui augmente ou quelques points très éloignés, il faut le mentionner comme limite.
+Repérez une structure temporelle, une différence de dispersion ou un point atypique qui mériterait une vérification.
 
 ## Exercice 7 - Mini-recommandation complète
 
-Rédigez une mini-recommandation de huit lignes maximum. Elle doit contenir :
-
-- la question d’affaires;
-- le facteur prioritaire;
-- le résultat qui appuie ce choix;
-- une interprétation avec les unités;
-- un diagnostic ou une vérification;
-- une limite causale;
-- une prochaine étape.
-
-> **TIP:**
->
-> Une bonne recommandation reste utile pour l’action sans devenir trop forte. Elle peut proposer de prioriser l’achalandage, les dépenses marketing, la capacité de service ou les ruptures de stock, mais elle doit préciser que le modèle soutient une association observée. Une prochaine étape réaliste serait de valider la piste avec des données supplémentaires, une expérimentation ou une analyse plus ciblée.
+Rédigez huit lignes maximum : question, graphique, pente, comparaison des modèles, diagnostic, limite, décision possible et validation proposée.
 
 ## Trace finale courte
 
-Votre trace finale doit rassembler les éléments des exercices dans un court fichier Quarto :
-
-1.  question d’affaires;
-2.  description des données;
-3.  graphique exploratoire;
-4.  modèle simple ou enrichi;
-5.  coefficient interprété;
-6.  diagnostic des résidus;
-7.  recommandation prudente;
-8.  limite.
-
-Avant de terminer, relisez votre trace comme si une autre personne devait la comprendre sans votre code ouvert dans la console.
+La trace doit être une mini-analyse du trafic numérique. Elle ne doit reprendre ni `performance_succursales_quebec.csv`, ni le modèle de ventes du guide de l’atelier.

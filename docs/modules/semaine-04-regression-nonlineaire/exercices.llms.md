@@ -2,103 +2,143 @@
 
 ## Objectif
 
-Ces exercices servent à choisir et justifier un modèle lorsque la relation n’est pas bien résumée par une droite.
+Décider si une courbe est réellement nécessaire dans un nouveau cas. Contrairement à l’exemple de saturation des capsules, les exercices ne supposent pas d’avance que le modèle le plus complexe sera préférable.
+
+Jeu de données de transfert : [cas_integrateur_quebec.csv](../../donnees/#cas_integrateur_quebec).
 
 ## Préparation
 
 ``` r
 library(tidyverse)
+library(broom)
 
-data_path <- "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv"
-saturation <- read_csv(data_path, show_col_types = FALSE)
+data_path <- if (file.exists("../atelier-04-recapitulation/data/cas_integrateur_quebec.csv")) {
+  "../atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
+} else {
+  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
+}
+
+service <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    date = as.Date(date),
+    succursale = factor(succursale)
+  ) |>
+  arrange(date, succursale)
 ```
 
 ## Exercice 1 - Lire le graphique
 
-Produisez un graphique des ventes selon l’achalandage avec une droite linéaire et une courbe quadratique.
+La question porte sur le temps d’attente lorsque le taux d’utilisation augmente. Superposez une droite et une courbe quadratique, puis séparez visuellement les succursales.
 
 ``` r
-ggplot(saturation, aes(x = achalandage, y = ventes)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE) +
-  theme_minimal()
+ggplot(
+  service,
+  aes(x = taux_utilisation, y = temps_attente, colour = succursale)
+) +
+  geom_point(alpha = 0.65) +
+  geom_smooth(
+    aes(group = 1),
+    method = "lm",
+    se = FALSE,
+    colour = "black"
+  ) +
+  geom_smooth(
+    aes(group = 1),
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    colour = "#D55E00"
+  ) +
+  labs(
+    x = "Taux d'utilisation",
+    y = "Temps d'attente",
+    colour = "Succursale"
+  ) +
+  theme_minimal(base_size = 12)
 ```
 
-Que suggère le graphique?
-
-> **TIP:**
->
-> Le graphique suggère une relation positive, mais possiblement courbée. Les ventes augmentent avec l’achalandage, puis la hausse semble ralentir lorsque l’achalandage devient élevé.
+Indiquez si la courbure paraît assez importante pour justifier un modèle plus complexe. N’utilisez pas le mot « saturation » sans l’appuyer par le graphique.
 
 ## Exercice 2 - Ajuster deux modèles
 
-Ajustez un modèle linéaire et un modèle quadratique.
+Ajustez les deux modèles sur les observations antérieures à 2025.
 
 ``` r
-modele_lineaire <- lm(ventes ~ achalandage, data = saturation)
+entrainement <- service |>
+  filter(date < as.Date("2025-01-01"))
 
-modele_quadratique <- lm(
-  ventes ~ achalandage + I(achalandage^2),
-  data = saturation
+test <- service |>
+  filter(date >= as.Date("2025-01-01"))
+
+modele_lineaire <- lm(
+  temps_attente ~ taux_utilisation,
+  data = entrainement
 )
 
-summary(modele_lineaire)
-summary(modele_quadratique)
+modele_quadratique <- lm(
+  temps_attente ~ taux_utilisation + I(taux_utilisation^2),
+  data = entrainement
+)
+
+glance(modele_lineaire) |>
+  select(r.squared, adj.r.squared, AIC)
+
+glance(modele_quadratique) |>
+  select(r.squared, adj.r.squared, AIC)
 ```
 
-Comparez les deux modèles avec le `R²`.
-
-> **TIP:**
->
-> Le modèle quadratique devrait expliquer davantage de variation si la courbure est réelle. Le `R²` ne suffit toutefois pas à lui seul : il faut aussi regarder le graphique des prédictions et les résidus.
+Comparez le gain d’ajustement à la complexité ajoutée. Un `R²` légèrement plus grand ne constitue pas à lui seul une justification.
 
 ## Exercice 3 - Calculer la RMSE
 
-Créez une fonction `rmse()` et comparez les erreurs des deux modèles.
+Comparez les erreurs sur les observations de 2025, qui n’ont pas servi à l’ajustement.
 
 ``` r
-rmse <- function(modele) {
-  sqrt(mean(residuals(modele)^2))
+rmse <- function(observe, predit) {
+  sqrt(mean((observe - predit)^2, na.rm = TRUE))
 }
 
-tibble(
+comparaison_test <- tibble(
   modele = c("Linéaire", "Quadratique"),
-  erreur_rmse = c(rmse(modele_lineaire), rmse(modele_quadratique))
+  RMSE = c(
+    rmse(
+      test$temps_attente,
+      predict(modele_lineaire, newdata = test)
+    ),
+    rmse(
+      test$temps_attente,
+      predict(modele_quadratique, newdata = test)
+    )
+  )
 )
+
+comparaison_test
 ```
 
-> **TIP:**
->
-> Une RMSE plus faible indique que les erreurs typiques sont plus petites sur l’échelle des ventes. Si le modèle quadratique a une RMSE plus faible et des résidus mieux répartis, il devient plus défendable.
+Expliquez pourquoi l’erreur sur de nouvelles observations est plus utile que l’erreur calculée uniquement sur les données d’entraînement.
 
 ## Exercice 4 - Interpréter la saturation
 
-Expliquez en cinq lignes pourquoi la saturation opérationnelle peut produire une relation non linéaire entre achalandage et ventes.
+Une analyste affirme : « Toute relation entre utilisation et attente doit être quadratique. » Critiquez cette affirmation à partir de trois éléments :
 
-> **TIP:**
->
-> Lorsque l’achalandage augmente, les ventes augmentent généralement aussi. Mais à haut niveau d’achalandage, les files d’attente, les ruptures de stock, la fatigue du personnel ou les limites de capacité peuvent réduire l’effet marginal de clients supplémentaires. La relation peut alors ralentir.
+- la forme graphique observée;
+- la comparaison des erreurs sur le test;
+- le rôle possible de `succursale`, `ruptures_stock` ou `capacite`.
+
+Votre réponse doit admettre la possibilité que la droite soit suffisante pour ce cas, même si une courbe était utile dans les capsules.
 
 ## Exercice 5 - Conclusion prudente
 
-Rédigez une conclusion qui recommande un modèle et mentionne une limite d’extrapolation.
+Recommandez le modèle le plus défendable pour ce jeu de données. Votre conclusion doit préciser :
 
-> **TIP:**
->
-> Une réponse acceptable doit justifier le choix du modèle par la forme graphique, les résidus ou une mesure d’erreur. Elle doit aussi préciser que la conclusion est valable surtout pour les niveaux d’achalandage observés et qu’une prédiction hors de cette plage serait fragile.
+- la différence réelle entre les erreurs;
+- le prix de la complexité;
+- la plage de taux d’utilisation observée;
+- une variable omise à vérifier.
 
 ## Exercice 6 - Mini-trace de comparaison
 
-Préparez une mini-trace finale de comparaison de modèles. Elle doit contenir :
-
-- la forme observée dans le graphique;
-- les modèles comparés;
-- un argument graphique;
-- un argument numérique ou un diagnostic;
-- le modèle retenu;
-- une limite d’extrapolation.
-
-> **TIP:**
->
-> Une réponse solide ne dit pas seulement que le modèle quadratique a un meilleur `R²`. Elle explique que la relation observée semble ralentir, que le modèle avec courbure décrit mieux cette forme, que les erreurs ou les résidus appuient ce choix, puis que les prédictions doivent rester dans la plage d’achalandage observée.
+Produisez un encadré de décision comportant le graphique, le tableau de RMSE, le modèle retenu et une règle claire : conserver la forme simple à moins qu’une amélioration hors échantillon soit suffisamment importante et stable.

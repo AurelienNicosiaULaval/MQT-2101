@@ -2,112 +2,101 @@
 
 ## Objectif
 
-Ces exercices préparent la première trace finale. Ils portent sur la lecture d’une base, les variables, les statistiques descriptives et les limites d’interprétation. Aucun code n’est attendu dans cette séance.
+Ces exercices constituent un cas de transfert. Ils utilisent les données de ventes et d’opérations de succursales québécoises, et non les bases étudiées dans les capsules. Aucun code n’est attendu cette semaine.
+
+Jeu de données de transfert : [ventes_operations_quebec.csv](../../donnees/#ventes-et-opérations-de-succursales-québécoises).
 
 ## Exercice 1 - Lire la structure d’une base
 
-Base : [birth_us.csv](../../donnees/#naissances-quotidiennes-aux-états-unis).
+Une direction souhaite comparer la qualité du service entre les régions. Elle propose le dictionnaire incomplet suivant :
 
-À partir de la page Données et des démonstrations statistiques, préparez un court tableau avec quatre colonnes :
+| Variable                | Type proposé | Rôle proposé              |
+|-------------------------|--------------|---------------------------|
+| `mois`                  | catégorie    | identifiant de succursale |
+| `succursale`            | nombre       | mesure de performance     |
+| `canal_principal`       | catégorie    | contexte de vente         |
+| `delai_livraison_jours` | nombre       | mesure opérationnelle     |
+| `satisfaction`          | nombre       | mesure de perception      |
 
-| Nom de variable | Type de variable | Rôle possible | Précaution d’interprétation |
-|-----------------|------------------|---------------|-----------------------------|
-| `year`          |                  |               |                             |
-| `month`         |                  |               |                             |
-| `date_of_month` |                  |               |                             |
-| `day_of_week`   |                  |               |                             |
-| `births`        |                  |               |                             |
+À faire :
 
-À vérifier dans votre réponse :
-
-- l’unité d’observation est nommée clairement;
-- `births` est reconnu comme une variable numérique;
-- `day_of_week` est reconnu comme un code de catégorie;
-- les variables liées au temps sont identifiées.
+- corriger les deux lignes manifestement erronées;
+- nommer l’unité d’observation du fichier;
+- indiquer quelle variable permet de former les groupes régionaux;
+- nommer une précaution concernant `satisfaction`;
+- expliquer pourquoi `mois` doit conserver un sens temporel.
 
 ## Exercice 2 - Lire une analyse univariée
 
-Variable : `births` dans [birth_us.csv](../../donnees/#naissances-quotidiennes-aux-états-unis).
+Voici un résumé de `delai_livraison_jours`.
 
-À partir du tableau descriptif et de l’histogramme présentés dans les démonstrations statistiques :
+| minimum | moyenne | mediane | maximum | valeurs_manquantes |
+|--------:|--------:|--------:|--------:|-------------------:|
+|     1.8 |     3.3 |     3.5 |     4.6 |                  1 |
 
-- recopiez les quatre repères utiles : minimum, moyenne, médiane et maximum;
-- décrivez en une phrase ce que l’histogramme montre;
-- expliquez en une phrase pourquoi la moyenne et la médiane ne jouent pas exactement le même rôle;
-- ajoutez une limite d’interprétation.
+![](exercices_files/figure-html/histogramme-delai-livraison-semaine-01-1.png)
 
-Réponse attendue : un court paragraphe descriptif. Il doit décrire la variable sans expliquer les causes des variations observées.
+Distribution des délais de livraison observés
+
+Rédigez trois phrases :
+
+1.  une phrase qui situe le délai habituel sans se limiter au minimum;
+2.  une phrase qui décrit la forme visible de la distribution;
+3.  une phrase qui explique l’effet des valeurs manquantes sur la portée du résumé.
 
 ## Exercice 3 - Comparer des groupes et des indicateurs
 
-Bases : [birth_us.csv](../../donnees/#naissances-quotidiennes-aux-états-unis) et [safety_airlines.csv](../../donnees/#sécurité-aérienne-par-compagnie).
+Une gestionnaire hésite entre deux indicateurs pour comparer les canaux de vente : les ventes totales et les ventes par client.
 
-Partie A : comparer les naissances selon le jour de la semaine.
+| canal_principal | observations | ventes_totales | clients_totaux | ventes_par_client | satisfaction_moyenne |
+|:---|---:|---:|---:|---:|---:|
+| magasin | 11 | 1106155 | 19335 | 57.21 | 8.12 |
+| telephone | 3 | 351375 | 6044 | 58.14 | 8.13 |
+| web | 10 | 1158115 | 18296 | 63.30 | 7.94 |
 
-- Nommez la variable numérique comparée.
-- Nommez la variable qui définit les groupes.
-- Écrivez un constat descriptif prudent.
-- Expliquez pourquoi le graphique ne suffit pas à démontrer une cause.
+À faire :
 
-Partie B : comparer un nombre brut à un taux indicatif.
-
-- Expliquez ce que mesure `incidents_00_14`.
-- Expliquez pourquoi un taux indicatif peut être plus comparable qu’un nombre brut.
-- Indiquez une limite du taux indicatif.
+- expliquer pourquoi les ventes totales et les ventes par client ne répondent pas à la même question;
+- choisir l’indicateur le plus pertinent pour comparer la valeur moyenne d’une transaction client et justifier ce choix;
+- formuler un constat prudent sur la satisfaction;
+- nommer une variable de contexte qui pourrait modifier la comparaison;
+- expliquer pourquoi le tableau ne démontre pas qu’un canal cause un niveau de satisfaction donné.
 
 ## Exercice 4 - Modèles et diagnostic de compétences
 
-Répondez en quelques lignes :
+Une note de gestion contient les deux affirmations suivantes :
 
-- ce qu’un modèle mathématique ou statistique simplifie;
-- pourquoi la formulation du problème vient avant le calcul;
-- quelle notion statistique est la plus claire pour vous;
-- quelle notion doit être revue;
-- quelle compétence de lecture des données sera utile dès la semaine 02;
-- quelle erreur d’interprétation faut-il éviter.
+> Le canal ayant les ventes totales les plus élevées est nécessairement le plus efficace. Comme sa satisfaction moyenne est aussi différente, changer toutes les ventes vers ce canal améliorera la satisfaction.
+
+Repérez au moins trois problèmes dans ce raisonnement. Réécrivez ensuite la note en quatre phrases maximum en distinguant :
+
+- la description fournie par les données;
+- le choix d’un indicateur pertinent;
+- ce qui demeure inconnu;
+- l’information supplémentaire nécessaire avant une décision.
 
 ## Consolidation des réponses
 
-Avant de préparer la trace finale, relisez les exercices 1 à 3.
+Choisissez une réponse parmi les exercices 2 à 4 et améliorez-la à l’aide de la liste suivante :
 
-À vérifier :
-
-- les variables sont nommées avec leur nom exact;
-- l’unité d’observation est claire;
-- les tableaux et graphiques répondent à la question posée;
-- les constats restent descriptifs;
-- les limites d’interprétation sont explicites.
-
-Si un point demeure fragile, consultez les lectures ciblées du module avant de réviser votre réponse. Les exercices facultatifs proposés dans la page [Lectures](../../modules/semaine-01-introduction/lectures.llms.md) peuvent aussi servir de pratique supplémentaire.
-
-À produire :
-
-- deux constats descriptifs révisés;
-- une correction à faire avant la trace finale;
-- une question restante, si un point demeure fragile.
+- l’unité et les variables sont nommées;
+- l’indicateur répond à la question;
+- le constat est descriptif;
+- une limite précise est formulée;
+- aucune conclusion causale n’est ajoutée.
 
 ## Trace finale courte
 
-Produire une première trace finale d’une page maximum.
+Produisez une note d’une page maximum destinée à la direction des opérations. Elle doit contenir :
 
-Ordre suggéré :
+- l’unité d’observation et trois variables classées correctement;
+- un constat sur le délai de livraison;
+- une comparaison entre ventes totales et ventes par client;
+- une recommandation sur l’indicateur à surveiller;
+- une limite et une question à approfondir.
 
-- une synthèse du diagnostic de compétences;
-- une phrase expliquant le rôle d’un modèle mathématique ou statistique;
-- un tableau de variables classées par type;
-- un tableau descriptif et un graphique tirés des démonstrations statistiques;
-- deux constats descriptifs;
-- une limite d’interprétation;
-- une notion à revoir avant la semaine 02.
-
-La trace doit être courte. Elle sert à montrer votre démarche, pas à recopier toutes les réponses des exercices.
+La trace doit être compréhensible sans avoir vu les capsules ni leurs exemples.
 
 ## Conseils de vérification
 
-Avant de considérer l’exercice terminé, vérifiez que votre réponse :
-
-- nomme les variables utilisées;
-- s’appuie sur un tableau ou un graphique précis;
-- distingue clairement description et interprétation;
-- ne formule pas de conclusion causale;
-- inclut une limite lorsque vous comparez deux indicateurs.
+Avant de terminer, vérifiez que votre note répond à une nouvelle question de gestion et qu’elle n’utilise ni `birth_us.csv`, ni `safety_airlines.csv`.

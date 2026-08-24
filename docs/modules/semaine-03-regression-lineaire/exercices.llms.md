@@ -2,118 +2,125 @@
 
 ## Objectif
 
-Ces exercices servent à pratiquer la régression linéaire simple avec les données du module. Essayez chaque question avant d’ouvrir la solution.
+Pratiquer la régression linéaire dans un autre contexte que les campagnes marketing des capsules. Le cas de transfert porte sur le délai de service et la satisfaction dans des succursales fictives.
+
+Jeu de données de transfert : [performance_succursales_quebec.csv](../../donnees/#performance-de-succursales-québécoises-fictives).
 
 ## Préparation
 
 ``` r
 library(tidyverse)
+library(broom)
 
-data_path <- "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
-campagnes <- read_csv(data_path, show_col_types = FALSE)
+data_path <- if (file.exists("../atelier-02-regression/data/performance_succursales_quebec.csv")) {
+  "../atelier-02-regression/data/performance_succursales_quebec.csv"
+} else {
+  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
+}
+
+performance <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  mutate(
+    mois = as.Date(mois),
+    campagne_locale = factor(campagne_locale)
+  )
 ```
 
 ## Exercice 1 - Identifier les variables
 
-Pour la question « Les ventes moyennes sont-elles plus élevées lorsque le budget marketing est plus élevé? », identifiez :
+La direction demande : « Un délai de service plus long est-il associé à une satisfaction mensuelle plus faible? »
+
+Identifiez :
 
 - la variable réponse;
-- la variable explicative;
+- la variable explicative principale;
 - l’unité d’observation;
-- une limite possible de l’analyse.
-
-> **TIP:**
->
-> La variable réponse est `ventes`. La variable explicative principale est `budget_marketing`. L’unité d’observation est une combinaison mois-région. Une limite importante est que l’association observée ne prouve pas que le budget cause directement les ventes, car d’autres facteurs peuvent intervenir.
+- une variable de contexte susceptible de modifier l’interprétation;
+- une information qu’il faudrait obtenir avant d’attribuer une cause au délai.
 
 ## Exercice 2 - Nuage de points
 
-Produisez un nuage de points des ventes selon le budget marketing. Ajoutez une droite de régression.
+Produisez un nuage de points de la satisfaction selon le délai de service. La couleur doit indiquer si une campagne locale était active.
 
 ``` r
-ggplot(campagnes, aes(x = budget_marketing, y = ventes)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
+ggplot(
+  performance,
+  aes(
+    x = delai_service_minutes,
+    y = satisfaction,
+    colour = campagne_locale
+  )
+) +
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, colour = "black") +
   labs(
-    title = "Ventes selon le budget marketing",
-    x = "Budget marketing",
-    y = "Ventes"
+    title = "Satisfaction selon le délai de service",
+    x = "Délai de service, en minutes",
+    y = "Satisfaction",
+    colour = "Campagne locale"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 12)
 ```
 
-> **TIP:**
->
-> Le graphique doit montrer la direction générale de la relation. Ici, on s’attend à une association positive. Avant de commenter les coefficients, il faut vérifier que la relation semble raisonnablement linéaire.
+Décrivez la direction, la dispersion et un éventuel chevauchement entre les deux groupes. Ne commentez pas les ventes ni le budget marketing.
 
 ## Exercice 3 - Ajuster le modèle
 
-Ajustez le modèle suivant :
+Ajustez le modèle simple suivant, puis interprétez la pente pour une augmentation de deux minutes du délai.
 
 ``` r
-modele <- lm(ventes ~ budget_marketing, data = campagnes)
-summary(modele)
+modele_service <- lm(
+  satisfaction ~ delai_service_minutes,
+  data = performance
+)
+
+tidy(modele_service, conf.int = TRUE)
+coef(modele_service)[["delai_service_minutes"]] * 2
 ```
 
-Interprétez la pente en une phrase.
-
-> **TIP:**
->
-> La pente décrit la variation moyenne estimée des ventes lorsque le budget marketing augmente d’une unité. Comme l’unité est le dollar, il est souvent plus clair de multiplier la pente par 1 000 pour interpréter une hausse de budget de 1 000 dollars.
->
-> ``` r
-> coef(modele)["budget_marketing"] * 1000
-> ```
+Votre phrase doit contenir la réponse, la variable explicative, le mot « moyenne » et les unités. Elle ne doit pas employer le verbe « causer ».
 
 ## Exercice 4 - Examiner les résidus
 
-Créez une colonne de valeurs prédites et une colonne de résidus. Produisez un graphique des résidus selon les valeurs prédites.
+Vérifiez d’abord le graphique résidus contre valeurs prédites. Examinez ensuite si les résidus moyens diffèrent entre les succursales.
 
 ``` r
-campagnes_modele <- campagnes |>
-  mutate(
-    ventes_predites = predict(modele),
-    residu = residuals(modele)
-  )
+diagnostic_service <- augment(modele_service, data = performance)
 
-ggplot(campagnes_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0) +
-  geom_point() +
+ggplot(diagnostic_service, aes(x = .fitted, y = .resid)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_point(aes(colour = succursale), alpha = 0.8) +
   labs(
-    title = "Résidus selon les ventes prédites",
-    x = "Ventes prédites",
-    y = "Résidu"
+    title = "Résidus du modèle de satisfaction",
+    x = "Satisfaction prédite",
+    y = "Résidu",
+    colour = "Succursale"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 12)
+
+diagnostic_service |>
+  group_by(succursale) |>
+  summarise(
+    residu_moyen = mean(.resid),
+    erreur_absolue_moyenne = mean(abs(.resid)),
+    .groups = "drop"
+  )
 ```
 
-> **TIP:**
->
-> On cherche des résidus répartis autour de zéro, sans structure forte. Un motif en courbe, une dispersion qui augmente ou quelques points très éloignés signaleraient que le modèle simple mérite d’être questionné.
+Expliquez pourquoi un motif par succursale signalerait une limite du modèle simple, même si la pente est différente de zéro.
 
 ## Exercice 5 - Conclusion courte
 
-Rédigez une conclusion de quatre phrases :
+Rédigez une conclusion de cinq phrases maximum :
 
 1.  question étudiée;
-2.  direction de la relation;
-3.  interprétation de la pente;
-4.  limite de l’analyse.
-
-> **TIP:**
->
-> Une réponse acceptable doit éviter de conclure trop vite à la causalité. Elle peut dire que les ventes sont positivement associées au budget marketing dans le jeu de données, que la pente quantifie cette association moyenne et que d’autres variables pourraient aussi expliquer les ventes.
+2.  direction observée;
+3.  interprétation de la pente pour deux minutes;
+4.  résultat du diagnostic;
+5.  limite et prochaine information à recueillir.
 
 ## Exercice 6 - Mini-trace finale
 
-Préparez une mini-trace finale qui tient en un court paragraphe et qui pourrait être relue sans voir votre code. Elle doit contenir :
-
-- la question d’analyse;
-- le sens de la relation observée dans le graphique;
-- l’interprétation de la pente avec les unités;
-- une phrase sur les résidus ou la qualité d’ajustement;
-- une limite causale.
-
-> **TIP:**
->
-> Une mini-trace acceptable ne cherche pas à tout dire. Elle doit montrer que vous avez compris la question, le modèle et sa limite. Elle peut par exemple dire que les ventes sont plus élevées, en moyenne, lorsque le budget marketing est plus élevé, que la pente mesure cette association moyenne, que les résidus ne signalent pas de problème majeur pour une première analyse et que le modèle ne prouve pas à lui seul un effet causal du budget.
+Préparez une note destinée à la responsable du service. Elle doit inclure le graphique, le coefficient avec son intervalle de confiance, le diagnostic par succursale et une action de collecte de données. La note doit rester utile même si la relation observée ne permet pas encore une décision causale.

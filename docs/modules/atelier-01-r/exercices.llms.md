@@ -2,118 +2,101 @@
 
 ## Objectif
 
-Ces exercices accompagnent le travail en classe. Ils servent à produire les éléments du court rapport Quarto attendu.
+Ces exercices sont une pratique indépendante à réaliser après le parcours guidé. Ils ne reprennent ni les données, ni les productions « À vous » du guide. Le cas de transfert porte sur la fiabilité du service dans quatre succursales.
 
-Ils ne forment pas un deuxième parcours séparé. Ils correspondent aux moments « À vous » du [guide complet de l’atelier](guide-atelier.llms.md) : après avoir vu une démonstration, vous faites l’exercice associé, puis vous gardez le résultat utile dans votre trace finale.
+Jeu de données de transfert : [ventes_operations_quebec.csv](../../donnees/#ventes-et-opérations-de-succursales-québécoises).
 
-> **NOTE:**
->
-> Pendant la séance, ouvrez d’abord le guide complet. Utilisez cette page comme liste de vérification des productions attendues : description du tableau, dictionnaire, diagnostic des valeurs manquantes, tableau synthèse, graphiques, constats et recommandation.
+``` r
+library(tidyverse)
+library(janitor)
+
+data_path <- if (file.exists("../semaine-02-r-quarto/data/ventes_operations_quebec.csv")) {
+  "../semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+} else {
+  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
+}
+
+operations <- read_csv(
+  data_path,
+  show_col_types = FALSE
+) |>
+  clean_names() |>
+  mutate(
+    mois = as.Date(mois),
+    ventes_par_client = ventes / clients
+  )
+```
 
 ## Exercice 1 - Décrire le tableau
 
-À partir de [ventes_pme_quebec.csv](../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive) :
-
-- importez le fichier;
-- indiquez le nombre de lignes et de colonnes;
+- vérifiez les dimensions et la période couverte;
 - nommez l’unité d’observation;
-- classez cinq variables selon leur type.
+- identifiez les variables de service, de clientèle et de performance;
+- expliquez pourquoi deux lignes de la même succursale ne sont pas des doublons si elles correspondent à des mois différents.
 
 ## Exercice 2 - Construire un dictionnaire rapide
 
-Produisez un tableau qui contient, pour chaque variable :
+Construisez un dictionnaire pour `mois`, `region`, `canal_principal`, `clients`, `delai_livraison_jours`, `satisfaction` et `ventes_par_client`.
 
-- le nom de la variable;
-- son type;
-- le nombre de valeurs manquantes;
-- un exemple de valeur observée.
-
-À écrire :
-
-- cinq variables utiles pour une décision de gestion;
-- le rôle de chacune : performance commerciale, clientèle, marketing, opérations ou satisfaction.
+Le dictionnaire doit contenir : type, unité, rôle dans une décision de service et précaution d’interprétation. Les catégories codées ne doivent pas être traitées comme des quantités.
 
 ## Exercice 3 - Diagnostiquer les valeurs manquantes
 
-Produisez un tableau qui indique, pour chaque variable, le nombre de valeurs manquantes.
+Produisez un tableau donnant le nombre et la proportion de valeurs manquantes. Comparez ensuite le nombre de lignes disponibles pour une analyse de la satisfaction et pour une analyse conjointe satisfaction-délai.
 
-À écrire :
+``` r
+disponibilite <- operations |>
+  summarise(
+    lignes_totales = n(),
+    satisfaction_disponible = sum(!is.na(satisfaction)),
+    delai_disponible = sum(!is.na(delai_livraison_jours)),
+    analyse_conjointe = sum(
+      !is.na(satisfaction) & !is.na(delai_livraison_jours)
+    )
+  )
 
-- quelles variables sont touchées;
-- pourquoi cela peut influencer certains indicateurs;
-- la précaution à prendre dans les résumés.
+disponibilite
+```
 
-Comparez aussi au moins une moyenne calculée avec et sans `na.rm = TRUE`, puis expliquez pourquoi le résultat change ou devient manquant.
+Expliquez pourquoi chaque résultat doit annoncer son propre nombre d’observations.
 
 ## Exercice 4 - Résumer par succursale
 
-Produisez un tableau synthèse par succursale contenant :
+Résumez plutôt par région et canal principal, afin de répondre à une question différente de celle du guide.
 
-- les ventes totales;
-- le nombre total de clients;
-- le panier moyen;
-- la satisfaction moyenne;
-- le délai moyen de livraison;
-- le nombre total de ruptures de stock.
+``` r
+resume_service <- operations |>
+  group_by(region, canal_principal) |>
+  summarise(
+    observations = n(),
+    delai_median = median(delai_livraison_jours, na.rm = TRUE),
+    satisfaction_mediane = median(satisfaction, na.rm = TRUE),
+    ventes_par_client = sum(ventes) / sum(clients),
+    .groups = "drop"
+  )
 
-À écrire :
+resume_service
+```
 
-- deux résultats qui ressortent du tableau;
-- une limite de comparaison.
+Repérez un groupe à surveiller et nommez une limite liée au petit nombre d’observations.
 
 ## Exercice 5 - Produire deux graphiques
 
-Graphique obligatoire :
+Produisez :
 
-- ventes totales par succursale.
+1.  un nuage de points satisfaction-délai, avec une couleur par région;
+2.  un graphique de ventes par client selon le canal principal.
 
-Graphique au choix :
-
-- satisfaction et ruptures de stock;
-- ventes et dépenses marketing;
-- satisfaction et délai de livraison;
-- ventes selon la saison.
-
-Chaque graphique doit avoir un titre, des axes clairs et une phrase d’interprétation.
+Chaque graphique doit répondre à une question écrite avant le code. Un titre ne remplace pas l’interprétation.
 
 ## Exercice 6 - Choisir une priorité de prochaine analyse
 
-La direction hésite entre trois priorités :
-
-- marketing;
-- opérations;
-- saisonnalité.
-
-Choisissez une seule priorité et appuyez-la avec un tableau ou un graphique.
-
-À écrire :
-
-- la priorité choisie;
-- le résultat descriptif qui appuie cette priorité;
-- une limite d’interprétation;
-- ce qu’il faudrait vérifier avec une méthode plus avancée.
+Choisissez une priorité parmi la réduction des délais, l’amélioration de la satisfaction ou l’analyse des écarts de ventes par client. Appuyez votre choix avec un résultat, puis indiquez l’information qui manque pour passer de la description à une décision d’intervention.
 
 ## Exercice 7 - Préparer la suite
 
-Choisissez une paire de variables qui pourrait être étudiée plus tard avec une régression ou une autre méthode de modélisation.
-
-À écrire :
-
-- la variable à expliquer ou à prévoir;
-- la variable explicative envisagée;
-- la question descriptive actuelle;
-- ce qu’il faudrait vérifier avant d’aller plus loin.
+Formulez une future question de régression avec `satisfaction` comme réponse et `delai_livraison_jours` comme variable explicative. Ajoutez une variable de contexte, une limite causale et un diagnostic graphique à prévoir.
 
 ## Trace finale courte
 
-La trace finale attendue est un court rapport Quarto contenant :
-
-- le code d’importation;
-- une inspection du tableau;
-- un dictionnaire rapide des variables clés;
-- un diagnostic des valeurs manquantes;
-- un tableau synthèse;
-- deux graphiques;
-- trois constats descriptifs;
-- une limite d’interprétation;
-- une recommandation de prochaine analyse.
+Produisez une note Quarto autonome sur la fiabilité du service : dictionnaire ciblé, audit des données manquantes, tableau région-canal, deux graphiques, trois constats, priorité et prochaine analyse. N’utilisez pas le fichier `ventes_pme_quebec.csv` du guide.
