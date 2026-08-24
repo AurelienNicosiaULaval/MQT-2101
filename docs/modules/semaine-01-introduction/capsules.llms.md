@@ -58,7 +58,15 @@ Cette capsule montre pourquoi le type d’une variable influence les calculs, le
 
 Cette capsule insiste sur les vérifications à faire avant de calculer : unité d’observation, noms de variables, dates, catégories et valeurs incohérentes.
 
-[](media/qmd/capsule-04-support.llms.md "HTML") [](media/pdf/capsule-04-support.pdf "PDF")
+## Vidéo
+
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+
+## PDF
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
+
+## PDF annoté
 
 À faire après la capsule : nommer ce que représente une ligne de `birth_us.csv` et expliquer pourquoi `day_of_week` ne doit pas être traité comme une quantité continue.
 
@@ -66,7 +74,15 @@ Cette capsule insiste sur les vérifications à faire avant de calculer : unité
 
 Cette capsule présente les premiers résumés d’une variable : minimum, moyenne, médiane, maximum, histogramme et interprétation prudente.
 
-[](media/qmd/capsule-05-support.llms.md "HTML") [](media/pdf/capsule-05-support.pdf "PDF")
+## Vidéo
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## PDF
+
+[Ouvrir le PDF annoté](media/pdf/capsule-05-support-annote.pdf)
+
+## PDF annoté
 
 À faire après la capsule : produire un court constat descriptif sur la variable `births`, puis ajouter une limite d’interprétation.
 
@@ -74,7 +90,15 @@ Cette capsule présente les premiers résumés d’une variable : minimum, moyen
 
 Cette capsule sert à éviter une erreur classique : transformer une comparaison descriptive en explication causale. Elle rappelle aussi l’importance de l’échelle et de l’exposition.
 
-[](media/qmd/capsule-06-support.llms.md "HTML") [](media/pdf/capsule-06-support.pdf "PDF")
+## Vidéo
+
+[Ouvrir le PDF](media/pdf/capsule-06-support.pdf)
+
+## PDF
+
+[Ouvrir le PDF annoté](media/pdf/capsule-06-support-annote.pdf)
+
+## PDF annoté
 
 À faire après la capsule : formuler une comparaison descriptive et préciser ce qu’elle ne permet pas encore de conclure.
 
