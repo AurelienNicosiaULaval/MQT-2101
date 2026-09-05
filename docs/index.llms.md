@@ -22,7 +22,7 @@ Travaux 2 mini-rapports
 
 Les liens utiles pour s'orienter, installer l'environnement de travail et accéder aux ressources du cours.
 
-[R Installer l'environnement Préparer R, RStudio ou Positron et Quarto.](installation.llms.md) [CSV Explorer les données Télécharger les jeux de données utilisés dans les modules.](donnees/index.llms.md) [PDF Lire les références Accéder aux ouvrages et ressources recommandés.](ressources/lectures.llms.md) [IA Utiliser l'IA correctement Comprendre ce qui est permis, déclaré ou interdit.](ressources/ia.llms.md)
+[R Installer l'environnement Installer R et RStudio pas à pas, puis vérifier que tout fonctionne.](installation.llms.md) [CSV Explorer les données Télécharger les jeux de données utilisés dans les modules.](donnees/index.llms.md) [PDF Lire les références Accéder aux ouvrages et ressources recommandés.](ressources/lectures.llms.md) [IA Utiliser l'IA correctement Comprendre ce qui est permis, déclaré ou interdit.](ressources/ia.llms.md)
 
 ## Le parcours du cours
 

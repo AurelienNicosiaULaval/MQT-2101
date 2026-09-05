@@ -1,5 +1,5 @@
 ---
-title: "Guide RStudio ou Positron"
+title: "Guide RStudio"
 body-classes: page-resource
 format:
   html:
@@ -11,10 +11,9 @@ format:
 <div class="resource-page">
   <section class="resource-hero" aria-labelledby="rstudio-title">
     <div>
-      <h1 id="rstudio-title">Travailler dans RStudio ou Positron</h1>
+      <h1 id="rstudio-title">Faire ses premiers pas dans RStudio</h1>
       <p>
-        Le but est de garder un environnement de travail propre : fichiers au bon endroit,
-        code facile à relancer et erreurs plus faciles à comprendre.
+        Commencez par le <a href="../installation.html">guide d'installation pas à pas</a> si R et RStudio ne sont pas encore prêts. Cette page vous aide ensuite à retrouver les boutons utilisés dans les capsules.
       </p>
       <div class="resource-actions" aria-label="Accès rapides">
         <a class="home-action home-action--primary" href="#routine">Routine de travail</a>
@@ -39,22 +38,22 @@ format:
       <li>
         <span>01</span>
         <div>
-          <h3>Ouvrir le dossier du cours</h3>
-          <p>Ouvrez le dossier qui contient les fichiers du cours avant de lancer votre script ou votre document Quarto.</p>
+          <h3>Créer ou rouvrir votre projet</h3>
+          <p>À la capsule 3, choisissez File &gt; New Project &gt; New Directory &gt; New Project. Nommez le dossier <code>projet-semaine-02</code>, choisissez son emplacement avec Browse, puis cliquez sur Create Project. Aux séances suivantes, rouvrez le fichier <code>projet-semaine-02.Rproj</code> dans ce dossier.</p>
         </div>
       </li>
       <li>
         <span>02</span>
         <div>
           <h3>Créer un fichier de travail</h3>
-          <p>Utilisez un script <code>.R</code> pour explorer ou un fichier <code>.qmd</code> pour produire une trace reproductible.</p>
+          <p>Pour le rapport du module 2 : File &gt; New File &gt; Quarto Document, choisissez HTML, puis Create. Enregistrez le fichier sous le nom <code>rapport_semaine_02.qmd</code>, dans le même dossier que le fichier <code>.Rproj</code>. Pour un script R : File &gt; New File &gt; R Script.</p>
         </div>
       </li>
       <li>
         <span>03</span>
         <div>
           <h3>Exécuter le code du haut vers le bas</h3>
-          <p>Relancez les bibliothèques, l'importation, le nettoyage, les graphiques et les modèles dans l'ordre.</p>
+          <p>Dans un script R, cliquez sur une ligne, puis sur Run pour l'exécuter. Dans un document Quarto, utilisez le triangle à droite du bloc R. Relancez les blocs dans l'ordre, du haut vers le bas. Le bouton Render exécute tout le document pour produire le rapport.</p>
         </div>
       </li>
       <li>
@@ -69,49 +68,40 @@ format:
 
   <section class="resource-section resource-split" aria-labelledby="packages-title">
     <div>
-      <h2 id="packages-title">Packages</h2>
+      <h2 id="packages-title">Charger les extensions déjà installées</h2>
       <p>
-        Un package doit être installé une seule fois sur l'ordinateur, puis chargé à chaque nouvelle session.
-        Les scripts et rapports doivent toujours charger explicitement les bibliothèques utilisées.
+        Une extension, ou package, doit être installée une fois, puis chargée à chaque nouvelle séance avec <code>library(...)</code>. Pour l'installation par les menus, suivez <a href="../installation.html#packages-title">l'étape 3 du guide</a>. Placez les lignes ci-contre au début de votre script ou du premier bloc R de votre rapport.
       </p>
     </div>
     <div class="resource-code-card" aria-label="Code R pour les packages">
       <span>Console R</span>
-      <pre><code>install.packages("tidyverse")
-install.packages("janitor")
-
-library(tidyverse)
-library(janitor)</code></pre>
+      <pre><code>library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)</code></pre>
     </div>
   </section>
 
   <section class="resource-section resource-split" aria-labelledby="minimal-title">
     <div>
-      <h2 id="minimal-title">Script minimal</h2>
+      <h2 id="minimal-title">Un premier script à exécuter</h2>
       <p>
-        Un bon script garde toujours les mêmes blocs : bibliothèques, importation, inspection,
-        préparation, analyse et interprétation.
+        Cliquez sur File &gt; New File &gt; R Script. Copiez le code ci-contre dans le document, sélectionnez-le, puis cliquez sur Run. Il utilise trois valeurs fictives; aucun fichier de données n'est nécessaire. Vous devez obtenir une moyenne d’environ 128 167.
       </p>
     </div>
     <div class="resource-code-card" aria-label="Script R minimal">
       <span>Fichier analyse.R</span>
-      <pre><code># Load libraries
+      <pre><code># Charger les fonctions nécessaires.
 library(tidyverse)
-library(janitor)
 
-# Import data
-donnees &lt;- read_csv("data/fichier.csv", show_col_types = FALSE) |&gt;
-  clean_names()
+# Créer trois valeurs fictives pour essayer R.
+ventes &lt;- tibble(
+  montant = c(125000, 131000, 128500)
+)
 
-# Inspect data
-glimpse(donnees)
-
-# Summarise
-donnees |&gt;
-  summarise(
-    n = n(),
-    moyenne = mean(variable, na.rm = TRUE)
-  )</code></pre>
+# Calculer la moyenne.
+ventes |&gt;
+  summarise(moyenne = mean(montant))</code></pre>
     </div>
   </section>
 

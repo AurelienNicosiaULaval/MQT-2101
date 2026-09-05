@@ -4,7 +4,9 @@ Cette page rassemble les lectures utiles pour consolider les gestes techniques d
 
 ## Commencer avec les guides du cours
 
-Ces deux ressources en français suffisent pour retrouver les gestes du module : [guide RStudio](../../ressources/guide-rstudio.llms.md) et [guide Quarto](../../ressources/guide-quarto.llms.md). Les références ci-dessous, en anglais, permettent d’approfondir un point précis.
+Pour installer les logiciels, commencez par le [guide d’installation pas à pas](../../installation.llms.md).
+
+Ces deux ressources en français permettent ensuite de retrouver les gestes du module : [guide RStudio](../../ressources/guide-rstudio.llms.md) et [guide Quarto](../../ressources/guide-quarto.llms.md). Les références ci-dessous, en anglais, permettent d’approfondir un point précis.
 
 ## Lectures ciblées pour la consolidation
 

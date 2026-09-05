@@ -1,0 +1,60 @@
+---
+title: "Mon installation fonctionne"
+lang: fr
+format:
+  html:
+    embed-resources: true
+    toc: false
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+Ce document vérifie que R, les extensions du module 2 et Quarto fonctionnent ensemble. Les trois valeurs de ventes ci-dessous sont fictives et servent uniquement au test.
+
+## Un premier calcul
+
+Le résultat attendu est 2.
+
+```{r}
+1 + 1
+```
+
+## Un tableau de trois mois
+
+```{r}
+# Charger les extensions utilisées dans le module 2.
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)
+
+# Créer les données du test, sans fichier à télécharger.
+ventes_test <- tibble(
+  mois = c("Janvier", "Février", "Mars"),
+  ventes = c(125000, 131000, 128500)
+) |>
+  clean_names() |>
+  mutate(mois = factor(mois, levels = c("Janvier", "Février", "Mars")))
+
+knitr::kable(ventes_test, col.names = c("Mois", "Ventes ($)"))
+```
+
+## Un graphique à trois points
+
+```{r}
+#| fig-alt: "Ventes fictives de 125 000 dollars en janvier, 131 000 en février et 128 500 en mars."
+
+ggplot(ventes_test, aes(x = mois, y = ventes, group = 1)) +
+  geom_line(colour = "#0B4F6C", linewidth = 1) +
+  geom_point(colour = "#0B4F6C", size = 3) +
+  scale_y_continuous(labels = label_number(big.mark = " ", decimal.mark = ",")) +
+  labs(x = NULL, y = "Ventes ($)") +
+  theme_minimal(base_size = 14)
+```
+
+## Test terminé
+
+Si vous voyez le résultat 2, le tableau et le graphique, le rendu de ce document a fonctionné. Vous pouvez commencer le module 2. Ce fichier de test n'est pas à remettre.

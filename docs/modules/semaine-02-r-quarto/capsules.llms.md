@@ -6,9 +6,13 @@ Cette page rassemble les supports des six capsules du module 02. Les vidéos ser
 
 Les capsules 1 à 3 préparent votre environnement et votre projet. Conservez ensuite les imports et les calculs dans votre fichier Quarto, créé à la capsule 3 et complété à la capsule 6. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome.
 
+> **NOTE:**
+>
+> Suivez le [guide d’installation pour débuter sur Windows ou Mac](../../installation.llms.md). Si vos logiciels sont déjà installés, faites simplement les tests du guide. Revenez ensuite à cette page : les capsules vous montrent comment utiliser vos outils.
+
 ## Capsule 1 - Préparer son environnement de travail
 
-Cette capsule vérifie que R et les packages de base fonctionnent correctement. Le premier rendu Quarto est vérifié à la capsule 6. Les démonstrations utilisent RStudio.
+Cette capsule vérifie que R et les packages de base fonctionnent correctement. Le rendu de votre propre mini-rapport sera vérifié à la capsule 6. Les démonstrations utilisent RStudio.
 
 [](media/qmd/capsule-01-support.llms.md "HTML") [](media/pdf/capsule-01-support.pdf "PDF")
 

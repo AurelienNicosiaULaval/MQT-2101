@@ -2,7 +2,7 @@
 
 # Produire un rapport Quarto
 
-Quarto permet de combiner texte, code R, tableaux, graphiques et interprétation dans un même document. C'est le format recommandé pour les mini-rapports.
+Quarto permet de combiner texte, code R, tableaux, graphiques et interprétation dans un même document. Le [test Quarto du guide d'installation](../installation.llms.md#quarto) permet de vérifier le bouton Render avec un fichier déjà prêt. Vous apprendrez ensuite à construire votre propre mini-rapport dans le module 2.
 
 [Structure minimale](#structure) [Mini-rapport 1](gabarit-mini-rapport-1.llms.md) [Mini-rapport 2](gabarit-mini-rapport-2.llms.md)
 

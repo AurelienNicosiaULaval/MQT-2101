@@ -36,7 +36,7 @@ Repères généraux, lectures, règles d'utilisation de l'IA et déclaration à 
 
 Guides pratiques pour ouvrir un projet, exécuter du code et produire un rapport reproductible.
 
-[Guide RStudio ou PositronOuvrir un projet, lancer du code et lire les erreurs courantes.](guide-rstudio.llms.md) [Guide QuartoCréer un fichier .qmd, gérer les chemins et rendre un rapport HTML.](guide-quarto.llms.md) [Aide-mémoire RImporter, transformer, résumer, visualiser et modéliser.](aide-memoire-r.llms.md)
+[Guide RStudioOuvrir un projet, lancer du code et lire les erreurs courantes.](guide-rstudio.llms.md) [Guide QuartoCréer un fichier .qmd, gérer les chemins et rendre un rapport HTML.](guide-quarto.llms.md) [Aide-mémoire RImporter, transformer, résumer, visualiser et modéliser.](aide-memoire-r.llms.md)
 
 ### Analyser et interpréter
 

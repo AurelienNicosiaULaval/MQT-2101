@@ -14,7 +14,7 @@ Non. Le support écrit est la référence et permet de réaliser chaque activit�
 
 ## Quel logiciel faut-il installer?
 
-Il faut R, RStudio ou Positron, Quarto et les packages indiqués dans la [page d’installation](../installation.llms.md). RStudio et Positron sont deux choix possibles; un seul des deux suffit.
+Pour suivre les démonstrations du module 2, installez R, puis RStudio Desktop gratuit. Quarto est inclus dans les versions récentes de RStudio. La [page d’installation pas à pas](../installation.llms.md) donne les étapes pour Windows et Mac, les extensions à ajouter dans RStudio et trois vérifications pour savoir quand vous êtes prêt·e.
 
 ## Que faire si un fichier CSV est introuvable?
 

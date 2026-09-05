@@ -56,7 +56,13 @@ Le parcours ci-dessous construit un rapport guidé avec `ventes_operations_quebe
 
 Les productions autonomes des supports reprennent les activités du parcours : il n’est pas nécessaire de les refaire deux fois. Les activités 2.1 à 2.10 détaillent les gestes présentés dans les six capsules.
 
-Avant de commencer, consultez la [page Installation](../../installation.llms.md) si vos outils ne sont pas prêts. La durée indiquée est un repère; prévoyez du temps supplémentaire en cas d’installation ou de dépannage.
+> **NOTE:**
+>
+> Vous débutez avec R? Suivez le [guide d’installation pas à pas pour Windows ou Mac](../../installation.llms.md). Il précise les boutons à utiliser, les extensions à ajouter et les résultats attendus. R et RStudio sont gratuits; Quarto est inclus dans les versions récentes de RStudio.
+>
+> Votre point d’arrêt : RStudio s’ouvre, `1 + 1` donne `2`, les quatre packages se chargent et le petit fichier de test produit une page HTML. Revenez ensuite ici pour commencer la capsule 1. Ce test d’installation ne remplace pas votre mini-rapport, qui sera construit dans le parcours ci-dessous.
+
+La durée indiquée pour le module est un repère; prévoyez du temps supplémentaire pour l’installation ou le dépannage.
 
 > **NOTE:**
 >
@@ -260,7 +266,9 @@ J’ai formulé deux constats descriptifs.
 
 ## Je suis bloqué·e
 
-Avant de demander de l’aide, vérifiez dans l’ordre :
+Si vous êtes bloqué·e pendant l’installation, ouvrez le [dépannage du guide](../../installation.llms.md#depannage).
+
+Pour le travail sur les données, vérifiez dans l’ordre :
 
 1.  le dossier du projet;
 2.  le chemin du fichier [ventes_operations_quebec.csv](../../donnees/#ventes-et-opérations-de-succursales-québécoises);

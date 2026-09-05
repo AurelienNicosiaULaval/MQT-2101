@@ -5,161 +5,199 @@ format:
   html:
     embed-resources: true
     toc: false
+    css: assets/css/installation.css
 ---
 
 ```{=html}
 <section class="install-hero" aria-labelledby="install-title">
   <div class="install-hero__content">
-    <h1 id="install-title">Installer l'environnement de travail</h1>
-    <p>
-      L'objectif est simple : ouvrir un projet, exécuter du code R, produire des graphiques
-      et rendre un document Quarto sans friction technique.
-    </p>
+    <h1 id="install-title">Installer R et RStudio, pas à pas</h1>
+    <p>Commencez ici avant le module 2. Aucune expérience en programmation n'est nécessaire : suivez les quatre étapes, dans l'ordre, puis vérifiez les résultats indiqués.</p>
     <div class="install-actions" aria-label="Accès rapides">
-      <a class="home-action home-action--primary" href="#verification">Vérifier l'installation</a>
-      <a class="home-action" href="ressources/guide-rstudio.html">Guide RStudio</a>
-      <a class="home-action" href="ressources/guide-quarto.html">Guide Quarto</a>
+      <a class="home-action home-action--primary" href="#logiciels">1. Installer les logiciels</a>
+      <a class="home-action" href="#console">Déjà installés? Faire les tests</a>
+      <a class="home-action" href="#depannage">J'ai besoin d'aide</a>
     </div>
   </div>
-  <div class="install-check-panel" aria-label="Parcours d'installation">
-    <div><span>01</span><p>Installer R</p></div>
-    <div><span>02</span><p>Choisir RStudio ou Positron</p></div>
-    <div><span>03</span><p>Installer Quarto</p></div>
-    <div><span>04</span><p>Vérifier les packages</p></div>
+  <div class="install-check-panel" aria-label="Les quatre étapes">
+    <div><span>01</span><p>Installer R, puis RStudio</p></div>
+    <div><span>02</span><p>Obtenir le résultat 2</p></div>
+    <div><span>03</span><p>Ajouter les extensions du module</p></div>
+    <div><span>04</span><p>Ouvrir un premier document HTML</p></div>
   </div>
 </section>
 
-<section class="install-section" aria-labelledby="tools-title">
-  <div class="install-section__header">
-    <h2 id="tools-title">Les outils à avoir sur son ordinateur</h2>
-    <p>Installez les logiciels dans cet ordre. Les liens pointent vers les pages officielles.</p>
-  </div>
-  <div class="install-tool-grid">
-    <article class="install-tool">
-      <span class="install-tool__mark">R</span>
-      <h3>R</h3>
-      <p>Le moteur statistique utilisé pour importer, transformer, visualiser et modéliser les données.</p>
-      <a href="https://cran.r-project.org/" target="_blank" rel="noopener">Télécharger R</a>
-    </article>
-    <article class="install-tool">
-      <span class="install-tool__mark">IDE</span>
-      <h3>RStudio ou Positron</h3>
-      <p>L'interface de travail pour écrire du code, gérer les fichiers et exécuter les analyses.</p>
-      <div class="install-tool__links">
-        <a href="https://posit.co/downloads/" target="_blank" rel="noopener">RStudio</a>
-        <a href="https://positron.posit.co/download.html" target="_blank" rel="noopener">Positron</a>
-      </div>
-    </article>
-    <article class="install-tool">
-      <span class="install-tool__mark">Q</span>
-      <h3>Quarto</h3>
-      <p>Le système de rédaction reproductible utilisé pour combiner texte, code, tableaux et graphiques.</p>
-      <a href="https://quarto.org/docs/get-started/" target="_blank" rel="noopener">Installer Quarto</a>
-    </article>
-    <article class="install-tool">
-      <span class="install-tool__mark">Pkg</span>
-      <h3>Packages R</h3>
-      <p>Les bibliothèques nécessaires aux analyses, graphiques, documents Quarto et modèles du cours.</p>
-      <a href="#packages-title">Installer les packages</a>
-    </article>
-  </div>
+<section class="install-section install-beginner" aria-labelledby="avant-title">
+  <h2 id="avant-title">Avant de commencer</h2>
+  <p>Utilisez un ordinateur Windows ou Mac, connecté à Internet. Un iPad ou un téléphone permet de consulter les capsules, mais ne permet pas de suivre cette installation de RStudio Desktop.</p>
+  <p>R effectue les calculs. RStudio est la fenêtre dans laquelle vous travaillerez. Les deux logiciels sont gratuits; aucun compte ni abonnement n'est nécessaire pour les utiliser. Dans le module 2, les démonstrations se font dans RStudio.</p>
+  <p>Quarto sert à produire vos rapports. Il est déjà inclus dans les versions récentes de RStudio : nous le vérifierons à l'étape 4. Vous n'avez pas à télécharger le site du cours ni à configurer GitHub pour cette installation.</p>
+  <p>R et RStudio sont déjà installés? Commencez à l'étape 2. Si les tests réussissent, gardez votre installation actuelle.</p>
 </section>
 
-<section class="install-section install-runway" aria-labelledby="runway-title">
-  <div class="install-section__header">
-    <h2 id="runway-title">Ordre recommandé</h2>
-    <p>Suivez la séquence ci-dessous avant le premier atelier. Elle évite la plupart des problèmes classiques.</p>
-  </div>
-  <ol class="install-steps">
-    <li>
-      <span>01</span>
-      <div>
-        <h3>Installer R en premier</h3>
-        <p>R doit être installé avant l'environnement de développement pour être détecté correctement.</p>
+<section class="install-section install-beginner" id="logiciels" aria-labelledby="logiciels-title">
+  <h2 id="logiciels-title">1. Installer R, puis RStudio</h2>
+  <p>Ouvrez uniquement les instructions correspondant à votre ordinateur. Télécharger un fichier ne suffit pas : il faut ensuite l'ouvrir pour installer le logiciel.</p>
+
+  <details class="install-choice" id="windows">
+    <summary>J'utilise Windows</summary>
+    <div class="install-choice-body">
+      <p>Le téléchargement RStudio proposé ici est prévu pour Windows 11. Si votre ordinateur utilise Windows 10, Windows en mode S ou un autre système, consultez <a href="#ordinateur-ancien">l'aide pour votre ordinateur</a> avant de poursuivre.</p>
+      <h3>Installer R</h3>
+      <ol class="install-clicks">
+        <li>Ouvrez la <a href="https://cran.r-project.org/bin/windows/base/" target="_blank" rel="noopener">page officielle de R pour Windows</a>.</li>
+        <li>Cliquez sur le lien « Download R-… for Windows », tout en haut de la page.</li>
+        <li>Ouvrez le dossier Téléchargements de votre ordinateur, puis double-cliquez sur le fichier qui commence par <code>R-</code> et se termine par <code>.exe</code>.</li>
+        <li>Suivez les fenêtres d'installation. Gardez les choix proposés et le dossier proposé, puis cliquez sur Terminer à la fin. Si Windows demande une autorisation d'installation, vérifiez qu'elle concerne bien le fichier R que vous venez de télécharger.</li>
+      </ol>
+      <h3>Installer RStudio</h3>
+      <ol class="install-clicks">
+        <li><a href="https://download1.rstudio.org/electron/windows/RStudio-2026.08.2-200.exe">Téléchargez RStudio Desktop gratuit pour Windows 11</a>.</li>
+        <li>Dans Téléchargements, double-cliquez sur le fichier <code>RStudio-2026.08.2-200.exe</code>.</li>
+        <li>Suivez les fenêtres d'installation, en gardant les choix proposés, jusqu'à la fin.</li>
+        <li>Ouvrez le menu Démarrer, tapez <code>RStudio</code>, puis ouvrez l'application RStudio.</li>
+      </ol>
+      <p class="install-result">Vous devez voir la fenêtre RStudio, avec un onglet Console. Passez à l'étape 2 ci-dessous.</p>
+    </div>
+  </details>
+
+  <details class="install-choice" id="mac">
+    <summary>J'utilise un Mac</summary>
+    <div class="install-choice-body">
+      <p>Les téléchargements proposés ici conviennent à macOS 14 (Sonoma) ou plus récent. Pour connaître votre version et votre type de Mac, cliquez sur le menu Pomme, en haut à gauche, puis sur À propos de ce Mac.</p>
+      <p>Si votre version de macOS est plus ancienne, consultez <a href="#ordinateur-ancien">l'aide pour votre ordinateur</a> avant de poursuivre.</p>
+      <h3>Installer R</h3>
+      <ol class="install-clicks">
+        <li>Dans À propos de ce Mac, repérez la ligne Puce ou Processeur. Choisissez un seul des deux téléchargements ci-dessous.</li>
+      </ol>
+      <div class="install-downloads">
+        <a class="home-action" href="https://cran.r-project.org/bin/macosx/sonoma-arm64/base/R-4.6.1-arm64.pkg">La ligne Puce indique Apple : télécharger R</a>
+        <a class="home-action" href="https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.6.1-x86_64.pkg">La ligne Processeur indique Intel : télécharger R</a>
       </div>
-    </li>
-    <li>
-      <span>02</span>
-      <div>
-        <h3>Installer RStudio ou Positron</h3>
-        <p>Un seul des deux suffit. RStudio est le choix le plus classique; Positron est une option moderne compatible avec R.</p>
-      </div>
-    </li>
-    <li>
-      <span>03</span>
-      <div>
-        <h3>Installer Quarto</h3>
-        <p>Après l'installation, redémarrez l'environnement de développement pour que Quarto soit reconnu.</p>
-      </div>
-    </li>
-    <li>
-      <span>04</span>
-      <div>
-        <h3>Installer les packages du cours</h3>
-        <p>À partir de la racine du projet, exécutez le script d'installation fourni avec le site.</p>
-      </div>
-    </li>
+      <ol class="install-clicks" start="2">
+        <li>Dans le Finder, ouvrez Téléchargements, puis double-cliquez sur le fichier R qui se termine par <code>.pkg</code>.</li>
+        <li>Suivez les fenêtres d'installation : Continuer, puis Installer. Gardez les choix proposés. Si macOS le demande, utilisez le mot de passe qui sert à ouvrir votre session sur ce Mac.</li>
+        <li>Attendez le message de fin d'installation, puis fermez la fenêtre.</li>
+      </ol>
+      <h3>Installer RStudio</h3>
+      <ol class="install-clicks">
+        <li><a href="https://download1.rstudio.org/electron/macos/RStudio-2026.08.2-200.dmg">Téléchargez RStudio Desktop gratuit pour Mac</a>.</li>
+        <li>Dans Téléchargements, double-cliquez sur <code>RStudio-2026.08.2-200.dmg</code>.</li>
+        <li>Dans la fenêtre qui s'ouvre, faites glisser l'icône RStudio vers le dossier Applications.</li>
+        <li>Dans le Finder, ouvrez Applications, puis double-cliquez sur RStudio. Si macOS demande de confirmer l'ouverture de l'application téléchargée, cliquez sur Ouvrir. Si une fenêtre propose d'installer Rosetta, suivez ses instructions.</li>
+      </ol>
+      <p class="install-result">Vous devez voir la fenêtre RStudio, avec un onglet Console. Passez à l'étape 2 ci-dessous.</p>
+    </div>
+  </details>
+  <p class="install-small">Liens vérifiés le 5 septembre 2026 : R 4.6.1 et RStudio Desktop 2026.08.2. Les pages officielles de <a href="https://cran.r-project.org/bin/macosx/" target="_blank" rel="noopener">R pour Mac</a> et de <a href="https://docs.posit.co/ide/user/#direct-downloads-open-source" target="_blank" rel="noopener">RStudio Desktop</a> permettent de retrouver les téléchargements.</p>
+</section>
+
+<section class="install-section install-beginner" id="console" aria-labelledby="console-title">
+  <h2 id="console-title">2. Faire votre premier calcul dans RStudio</h2>
+  <p>À partir de maintenant, ouvrez RStudio pour travailler. L'application R peut rester fermée.</p>
+  <ol class="install-clicks">
+    <li>Dans RStudio, cliquez sur l'onglet Console, généralement à gauche. Le signe <code>&gt;</code> indique où écrire. Choisissez bien Console, et non Terminal.</li>
+    <li>Cliquez après le signe <code>&gt;</code>, tapez <code>1 + 1</code>, puis appuyez sur Entrée.</li>
   </ol>
+  <div class="install-console-example" aria-label="Résultat attendu dans la console">
+    <span>Ce que vous devez voir</span>
+    <pre><samp>&gt; 1 + 1
+[1] 2
+&gt;</samp></pre>
+  </div>
+  <p class="install-result">Le résultat est 2 et le signe <code>&gt;</code> revient. R et RStudio communiquent correctement. Le <code>[1]</code> fait partie de l'affichage normal.</p>
 </section>
 
-<section class="install-section install-code-section" aria-labelledby="packages-title">
-  <div>
-    <h2 id="packages-title">Packages R du cours</h2>
-    <p>
-      Le dépôt contient un script qui vérifie les packages nécessaires et installe ceux qui manquent.
-      Lancez-le depuis la racine du projet.
-    </p>
+<section class="install-section install-beginner" id="packages-title" aria-labelledby="extensions-title">
+  <h2 id="extensions-title">3. Ajouter les extensions nécessaires au module 2</h2>
+  <p>Une extension, appelée « package » dans RStudio, ajoute des fonctions à R. Cette installation se fait une fois; elle peut prendre plusieurs minutes.</p>
+  <ol class="install-clicks">
+    <li>Dans la barre de menus de RStudio, cliquez sur Tools, puis sur Install Packages…</li>
+    <li>Dans Install from, gardez Package Repository (CRAN).</li>
+    <li>Copiez les cinq noms ci-dessous avec le bouton Copier, puis collez-les dans le champ Packages. Sous Windows, le raccourci pour coller est Ctrl + V; sur Mac, c'est ⌘ + V.</li>
+  </ol>
+  <div class="install-code-card" aria-label="Noms à coller dans le champ Packages">
+    <span>Champ Packages</span>
+    <pre><code>tidyverse janitor lubridate scales rmarkdown</code></pre>
   </div>
-  <div class="install-code-card" aria-label="Commande d'installation des packages R">
-    <span>Console R</span>
-    <pre><code>source("scripts/00_install_packages.R")</code></pre>
-  </div>
-  <p class="resource-fallback">
-    <a href="scripts/00_install_packages.R" download>Télécharger le script d'installation</a>
-  </p>
-</section>
-
-<section class="install-section" id="verification" aria-labelledby="verification-title">
-  <div class="install-section__header">
-    <h2 id="verification-title">Vérification rapide</h2>
-    <p>Si ce code s'exécute et produit un graphique, l'environnement de base est prêt pour le cours.</p>
-  </div>
-  <div class="install-code-card install-code-card--wide" aria-label="Code R de vérification">
-    <span>Test minimal</span>
+  <ol class="install-clicks" start="4">
+    <li>Laissez Install dependencies coché et cliquez sur Install.</li>
+    <li>Laissez RStudio travailler. Beaucoup de lignes vont défiler dans Console. Attendez que le signe <code>&gt;</code> réapparaisse. Si R propose de créer une bibliothèque personnelle, acceptez : il s'agit du dossier de vos extensions.</li>
+  </ol>
+  <p>Les quatre premiers packages servent aux analyses du module. Le package <code>rmarkdown</code> installe aussi les outils nécessaires pour exécuter le code R dans les rapports Quarto.</p>
+  <p>Vérifiez maintenant les quatre packages de la capsule 1 : cliquez sur Copier ci-dessous, collez le bloc dans Console, puis appuyez sur Entrée si nécessaire.</p>
+  <div class="install-code-card" aria-label="Code à coller dans la console pour vérifier les packages">
+    <span>Console de RStudio</span>
     <pre><code>library(tidyverse)
-
-tibble(
-  mois = c("janvier", "février", "mars"),
-  ventes = c(125000, 131000, 128500)
-) |&gt;
-  ggplot(aes(mois, ventes, group = 1)) +
-  geom_line() +
-  geom_point()</code></pre>
+library(janitor)
+library(lubridate)
+library(scales)</code></pre>
   </div>
+  <p class="install-result">La console revient à <code>&gt;</code> sans message « Error » ou « Erreur ». Des messages comme « Attaching packages » ou « Conflicts » peuvent apparaître : ils annoncent les fonctions chargées et ne signifient pas que l'installation a échoué.</p>
+  <p>À chaque nouvelle séance, les lignes <code>library(...)</code> chargent les extensions déjà installées. Il n'est pas nécessaire de refaire l'installation à chaque fois.</p>
 </section>
 
-<section class="install-section install-troubleshooting" aria-labelledby="troubleshooting-title">
-  <div>
-    <h2 id="troubleshooting-title">Dépannage express</h2>
-    <p>Les messages d'erreur d'installation sont souvent causés par l'ordre d'installation, le dossier de travail ou un redémarrage oublié.</p>
-  </div>
-  <div class="install-troubleshooting__list">
-    <article>
-      <h3>R n'est pas détecté</h3>
-      <p>Installez R, puis redémarrez RStudio ou Positron. Si le problème persiste, vérifiez que l'application utilise bien la version de R installée.</p>
-    </article>
-    <article>
-      <h3>Quarto n'est pas trouvé</h3>
-      <p>Redémarrez l'environnement de développement et exécutez <code>quarto check</code> dans un terminal.</p>
-    </article>
-    <article>
-      <h3>Le script est introuvable</h3>
-      <p>Ouvrez le projet à sa racine avant d'exécuter <code>source("scripts/00_install_packages.R")</code>.</p>
-    </article>
-    <article>
-      <h3>Un package ne compile pas sous Windows</h3>
-      <p>Si R demande des outils de compilation, consultez la page officielle <a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank" rel="noopener">Rtools</a>.</p>
-    </article>
-  </div>
+<section class="install-section install-beginner" id="quarto" aria-labelledby="quarto-title">
+  <h2 id="quarto-title">4. Vérifier Quarto avec un fichier prêt à ouvrir</h2>
+  <p>Quarto est inclus dans les versions récentes de RStudio. Ce petit test produit une page HTML, c'est-à-dire un document qui s'ouvre dans un navigateur. Vous n'avez pas encore à écrire votre propre rapport.</p>
+  <ol class="install-clicks">
+    <li><a href="assets/exemples/test-installation.qmd" download="test-installation.qmd">Téléchargez le fichier test-installation.qmd</a>. Il contient toutes les données de son exemple : aucun autre fichier n'est nécessaire.</li>
+    <li>Dans RStudio, cliquez sur File, puis Open File… Choisissez <code>test-installation.qmd</code> dans Téléchargements et cliquez sur Open. Ouvrez-le depuis RStudio, même si votre ordinateur ne reconnaît pas l'icône du fichier.</li>
+    <li>Le fichier s'ouvre dans un onglet. Cliquez sur Render, en haut du document. Si RStudio propose d'installer un package manquant, acceptez et attendez la fin de l'installation.</li>
+    <li>Attendez l'ouverture de l'aperçu, dans RStudio ou dans votre navigateur.</li>
+  </ol>
+  <p class="install-result">Vous devez voir le titre « Mon installation fonctionne », le résultat 2, un tableau de trois mois et un graphique à trois points. Le fichier <code>test-installation.html</code> est créé à côté du fichier téléchargé.</p>
+  <p>Ce document sert uniquement à tester vos outils. Votre propre mini-rapport commencera à la capsule 3 et sera complété à la capsule 6.</p>
+</section>
+
+<section class="install-section install-beginner install-finish" id="verification" aria-labelledby="verification-title">
+  <h2 id="verification-title">C'est terminé lorsque…</h2>
+  <ul class="install-checklist">
+    <li><label><input type="checkbox"> RStudio s'ouvre et <code>1 + 1</code> donne <code>2</code>.</label></li>
+    <li><label><input type="checkbox"> Les quatre lignes <code>library(...)</code> fonctionnent sans erreur.</label></li>
+    <li><label><input type="checkbox"> Le fichier de test affiche le résultat, le tableau et le graphique après un clic sur Render.</label></li>
+  </ul>
+  <p>Les trois vérifications réussissent? Votre installation est prête pour commencer le module 2. Gardez le fichier de test pour pouvoir refaire cette vérification au besoin. Vous n'avez rien à remettre pour ce test.</p>
+  <a class="home-action home-action--primary" href="modules/semaine-02-r-quarto/index.html">Commencer le module 2</a>
+</section>
+
+<section class="install-section install-beginner" id="depannage" aria-labelledby="troubleshooting-title">
+  <h2 id="troubleshooting-title">Si une étape bloque</h2>
+  <p>Ouvrez le cas qui correspond à ce que vous voyez. Si le problème persiste, demandez de l'aide avec les renseignements indiqués à la fin de cette page.</p>
+  <details class="install-choice" id="ordinateur-ancien">
+    <summary>Mon ordinateur est ancien, géré par un employeur, ou ce n'est pas un Windows ou un Mac</summary>
+    <div class="install-choice-body">
+      <p>Notez votre système et sa version. Sur Mac : menu Pomme, puis À propos de ce Mac. Sous Windows : Paramètres, puis Système, puis Informations système (ou À propos).</p>
+      <p>Si les tests des étapes 2 à 4 réussissent avec une installation existante, vous pouvez la garder. Sinon, contactez l'équipe enseignante avant de changer de système ou d'acheter du matériel. Précisez aussi si l'installation exige un mot de passe administrateur que vous n'avez pas.</p>
+      <p>Les versions récentes de RStudio ont des exigences précises. La <a href="https://docs.posit.co/supported-versions/rstudio.html" target="_blank" rel="noopener">page de compatibilité de Posit</a> servira à trouver une version adaptée avec vous. Si vous utilisez Linux, un Chromebook ou seulement une tablette, signalez-le également.</p>
+    </div>
+  </details>
+  <details class="install-choice">
+    <summary>RStudio indique que R est introuvable</summary>
+    <div class="install-choice-body"><p>Vérifiez que vous avez bien ouvert le fichier d'installation de R et terminé son installation à l'étape 1. Quittez ensuite complètement RStudio, puis rouvrez-le. R et RStudio sont deux installations distinctes.</p></div>
+  </details>
+  <details class="install-choice">
+    <summary>Je vois un signe + dans la console, ou ma commande ne donne rien</summary>
+    <div class="install-choice-body"><p>Un <code>+</code> en début de ligne signifie que R attend la suite d'une commande. Appuyez sur Échap pour retrouver <code>&gt;</code>, puis recopiez la commande complète. Ne recopiez pas le signe <code>&gt;</code>. Vérifiez aussi que vous êtes dans Console.</p></div>
+  </details>
+  <details class="install-choice">
+    <summary>Je vois « there is no package called… » ou « aucun package nommé… »</summary>
+    <div class="install-choice-body"><p>L'extension indiquée manque. Reprenez Tools, puis Install Packages… à l'étape 3 et entrez son nom exact. Quand l'installation est terminée, relancez les quatre lignes <code>library(...)</code>, puis le test Quarto.</p></div>
+  </details>
+  <details class="install-choice">
+    <summary>L'installation des packages demande une compilation ou affiche une erreur</summary>
+    <div class="install-choice-body"><p>Si R demande « Do you want to install from sources the packages which need compilation? », choisissez Non, ou tapez <code>n</code> puis Entrée. Pour commencer, utilisez les versions déjà préparées pour votre ordinateur. Si aucune version compatible n'est proposée ou si l'installation échoue, copiez le message complet pour demander de l'aide.</p><p>Un avertissement mentionnant Rtools ne suffit pas, à lui seul, à conclure que l'installation a échoué : vérifiez les lignes <code>library(...)</code> et le test Quarto. N'ajoutez pas d'autres outils au hasard.</p></div>
+  </details>
+  <details class="install-choice">
+    <summary>Je ne trouve pas Render, ou Quarto ne démarre pas</summary>
+    <div class="install-choice-body"><p>Vérifiez le nom de l'onglet ouvert : il doit se terminer par <code>.qmd</code>. Le bouton Render se trouve au-dessus de ce document. Utilisez File, puis Open File… pour l'ouvrir à nouveau dans RStudio.</p><p>Si Quarto est explicitement signalé comme introuvable, quittez puis rouvrez RStudio. Si cela ne suffit pas, consultez l'équipe enseignante. Elle pourra vérifier votre version de RStudio ou vous accompagner avec <a href="https://quarto.org/docs/download/" target="_blank" rel="noopener">l'installation officielle de Quarto</a>.</p><p>Si le rendu se termine mais qu'aucun aperçu n'apparaît, ouvrez <code>test-installation.html</code> dans Téléchargements avec votre navigateur.</p></div>
+  </details>
+  <h3>Pour demander de l'aide</h3>
+  <p>Dans le forum du cours sur Brio, indiquez : votre système (Windows ou Mac et sa version), le numéro de l'étape qui bloque, le bouton utilisé et le message d'erreur complet. Une capture montrant la fenêtre concernée peut aider. Si vous ne connaissez pas un renseignement, dites-le simplement.</p>
+</section>
+
+<section class="install-section install-beginner install-small" aria-labelledby="sources-title">
+  <h2 id="sources-title">Sources officielles</h2>
+  <p>Consignes vérifiées le 5 septembre 2026 auprès du <a href="https://cran.r-project.org/bin/windows/base/" target="_blank" rel="noopener">projet R (Windows)</a>, du <a href="https://cran.r-project.org/bin/macosx/" target="_blank" rel="noopener">projet R (Mac)</a>, de <a href="https://docs.posit.co/ide/user/" target="_blank" rel="noopener">Posit (RStudio)</a> et d'<a href="https://support.apple.com/fr-ca/116943" target="_blank" rel="noopener">Apple (type de Mac)</a>. L'inclusion de Quarto dans RStudio est décrite par <a href="https://docs.posit.co/ide/user/ide/guide/documents/quarto-project.html#installing-quarto" target="_blank" rel="noopener">Posit</a>; les packages nécessaires au rendu R sont précisés dans la <a href="https://quarto.org/docs/computations/r.html#installation" target="_blank" rel="noopener">documentation de Quarto</a>.</p>
 </section>
 ```

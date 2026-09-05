@@ -1,8 +1,8 @@
-# Guide RStudio ou Positron
+# Guide RStudio
 
-# Travailler dans RStudio ou Positron
+# Faire ses premiers pas dans RStudio
 
-Le but est de garder un environnement de travail propre : fichiers au bon endroit, code facile à relancer et erreurs plus faciles à comprendre.
+Commencez par le [guide d'installation pas à pas](../installation.llms.md) si R et RStudio ne sont pas encore prêts. Cette page vous aide ensuite à retrouver les boutons utilisés dans les capsules.
 
 [Routine de travail](#routine) [Guide Quarto](guide-quarto.llms.md) [Aide-mémoire R](aide-memoire-r.llms.md)
 
@@ -27,57 +27,50 @@ Lire les messages d'erreur
 Cette séquence évite la majorité des problèmes de chemins, de fichiers introuvables et de code non reproductible.
 
 1.  01
-    ### Ouvrir le dossier du cours
+    ### Créer ou rouvrir votre projet
 
-    Ouvrez le dossier qui contient les fichiers du cours avant de lancer votre script ou votre document Quarto.
+    À la capsule 3, choisissez File \> New Project \> New Directory \> New Project. Nommez le dossier `projet-semaine-02`, choisissez son emplacement avec Browse, puis cliquez sur Create Project. Aux séances suivantes, rouvrez le fichier `projet-semaine-02.Rproj` dans ce dossier.
 2.  02
     ### Créer un fichier de travail
 
-    Utilisez un script `.R` pour explorer ou un fichier `.qmd` pour produire une trace reproductible.
+    Pour le rapport du module 2 : File \> New File \> Quarto Document, choisissez HTML, puis Create. Enregistrez le fichier sous le nom `rapport_semaine_02.qmd`, dans le même dossier que le fichier `.Rproj`. Pour un script R : File \> New File \> R Script.
 3.  03
     ### Exécuter le code du haut vers le bas
 
-    Relancez les bibliothèques, l'importation, le nettoyage, les graphiques et les modèles dans l'ordre.
+    Dans un script R, cliquez sur une ligne, puis sur Run pour l'exécuter. Dans un document Quarto, utilisez le triangle à droite du bloc R. Relancez les blocs dans l'ordre, du haut vers le bas. Le bouton Render exécute tout le document pour produire le rapport.
 4.  04
     ### Vérifier les objets créés
 
     Après une importation ou une transformation, inspectez les données avec `glimpse()`, `count()` ou `summary()`.
 
-## Packages
+## Charger les extensions déjà installées
 
-Un package doit être installé une seule fois sur l'ordinateur, puis chargé à chaque nouvelle session. Les scripts et rapports doivent toujours charger explicitement les bibliothèques utilisées.
+Une extension, ou package, doit être installée une fois, puis chargée à chaque nouvelle séance avec `library(...)`. Pour l'installation par les menus, suivez [l'étape 3 du guide](../installation.llms.md#packages-title). Placez les lignes ci-contre au début de votre script ou du premier bloc R de votre rapport.
 
 Console R
 
-    install.packages("tidyverse")
-    install.packages("janitor")
-
     library(tidyverse)
     library(janitor)
+    library(lubridate)
+    library(scales)
 
-## Script minimal
+## Un premier script à exécuter
 
-Un bon script garde toujours les mêmes blocs : bibliothèques, importation, inspection, préparation, analyse et interprétation.
+Cliquez sur File \> New File \> R Script. Copiez le code ci-contre dans le document, sélectionnez-le, puis cliquez sur Run. Il utilise trois valeurs fictives; aucun fichier de données n'est nécessaire. Vous devez obtenir une moyenne d’environ 128 167.
 
 Fichier analyse.R
 
-    # Load libraries
+    # Charger les fonctions nécessaires.
     library(tidyverse)
-    library(janitor)
 
-    # Import data
-    donnees <- read_csv("data/fichier.csv", show_col_types = FALSE) |>
-      clean_names()
+    # Créer trois valeurs fictives pour essayer R.
+    ventes <- tibble(
+      montant = c(125000, 131000, 128500)
+    )
 
-    # Inspect data
-    glimpse(donnees)
-
-    # Summarise
-    donnees |>
-      summarise(
-        n = n(),
-        moyenne = mean(variable, na.rm = TRUE)
-      )
+    # Calculer la moyenne.
+    ventes |>
+      summarise(moyenne = mean(montant))
 
 ## Lire une erreur sans paniquer
 
