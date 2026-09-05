@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: ../module02-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -34,11 +36,11 @@ Une décision concrète
 :::
 
 ::: {.question-line}
-Voulez-vous que vos premiers obstacles soient des problèmes d'installation, ou de vraies questions d'analyse?
+Comment vérifier que vos outils sont prêts pour analyser les données?
 :::
 
 ::: {.note-box}
-Un poste mal préparé fait perdre des heures sur des fichiers introuvables et des packages manquants. Cette capsule stabilise l'environnement dès le départ, pour que le reste du cours porte sur les données plutôt que sur les problèmes techniques.
+Avant de commencer, vérifions que R répond et que les packages du module se chargent. Vous pourrez ensuite vous concentrer sur l'analyse.
 :::
 
 ## Objectifs de la capsule
@@ -65,16 +67,16 @@ L'interface pour écrire, organiser, exécuter le code et inspecter les résulta
 ::: {.column width="32%"}
 ### Quarto
 
-Le format qui réunit texte, code, tableaux, graphiques et interprétation.
+Le système de publication qui transforme un fichier `.qmd` en rapport ou en présentation.
 :::
 :::
 
 ## Vérifier que tout fonctionne
 
 ::: {.keypoints}
-- RStudio s'ouvre; la console répond;
-- `tidyverse` se charge sans erreur;
-- Quarto est accessible; le dossier de travail est repéré.
+- Ouvrez RStudio et repérez la Console.
+- Tapez la commande ci-dessous, puis appuyez sur Entrée.
+- Si RStudio ne s'ouvre pas, consultez la [page Installation](../../../../installation.html).
 :::
 
 ``` r
@@ -149,7 +151,7 @@ Obtenir un graphique en cliquant ou en copiant un résultat, mais ne pas garder 
 :::
 
 ::: {.note-box}
-Dans ce cours, le code fait partie de la preuve : il doit pouvoir être relu et réexécuté.
+Dans ce cours, le code documente la démarche : il doit pouvoir être relu et réexécuté.
 :::
 
 ## À retenir
@@ -189,13 +191,13 @@ Vérifiez que votre environnement est prêt et gardez-en une trace.
 :::
 
 ::: {.keypoints}
-Exécutez `1 + 1`, chargez `tidyverse`, puis notez : le résultat obtenu, un package chargé et un problème à régler, s'il y en a un.
+Exécutez `1 + 1`, puis les quatre appels à `library()` présentés. Notez le résultat obtenu et tout message d'erreur à résoudre. Le premier rendu Quarto sera vérifié à la capsule 6.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Le document se rend du début à la fin sans intervention manuelle.
-- Les valeurs manquantes et les unités sont signalées.
-- Chaque résultat est accompagné d'une phrase d'interprétation.
+- La console affiche `2` après `1 + 1`.
+- Les quatre packages se chargent sans erreur.
+- Je sais distinguer une installation et un chargement.
 :::

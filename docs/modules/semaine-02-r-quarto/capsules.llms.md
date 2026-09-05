@@ -1,18 +1,18 @@
-# Capsules - Semaine 02
+# Capsules - Module 02
 
 ## Objectif
 
-Cette page rassemble les six capsules de la semaine 02. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.
+Cette page rassemble les supports des six capsules du module 02. Les vidéos seront ajoutées après leur enregistrement. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.
 
-Chaque capsule doit mener à une action concrète dans votre propre fichier Quarto. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome.
+Les capsules 1 à 3 préparent votre environnement et votre projet. Conservez ensuite les imports et les calculs dans votre fichier Quarto, créé à la capsule 3 et complété à la capsule 6. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome.
 
 ## Capsule 1 - Préparer son environnement de travail
 
-Cette capsule vérifie que R, RStudio ou Positron, Quarto et les packages de base fonctionnent correctement.
+Cette capsule vérifie que R et les packages de base fonctionnent correctement. Le premier rendu Quarto est vérifié à la capsule 6. Les démonstrations utilisent RStudio.
 
 [](media/qmd/capsule-01-support.llms.md "HTML") [](media/pdf/capsule-01-support.pdf "PDF")
 
-À faire après la capsule : ouvrir RStudio ou Positron, exécuter `1 + 1`, puis charger `tidyverse`.
+À faire après la capsule : ouvrir RStudio, exécuter `1 + 1`, puis charger `tidyverse`, `janitor`, `lubridate` et `scales`.
 
 ## Capsule 2 - Se repérer dans RStudio
 
@@ -28,7 +28,7 @@ Cette capsule montre pourquoi un projet R réduit les erreurs de chemins et aide
 
 [](media/qmd/capsule-03-support.llms.md "HTML") [](media/pdf/capsule-03-support.pdf "PDF")
 
-À faire après la capsule : créer ou ouvrir un projet R, puis vérifier où se trouve le dossier de données utilisé par le module.
+À faire après la capsule : créer ou ouvrir un projet R, placer le CSV dans `data/` et créer `rapport_semaine_02.qmd` à la racine du projet.
 
 ## Capsule 4 - Importer et inspecter un tableau
 
@@ -36,7 +36,7 @@ Cette capsule présente l’importation d’un fichier CSV et les premières vé
 
 [](media/qmd/capsule-04-support.llms.md "HTML") [](media/pdf/capsule-04-support.pdf "PDF")
 
-À faire après la capsule : importer `ventes_operations_quebec.csv`, puis écrire ce que représente une ligne du tableau.
+À faire après la capsule : importer `ventes_operations_quebec.csv`, vérifier les 24 lignes et les 12 colonnes, puis écrire ce que représente une ligne du tableau.
 
 ## Capsule 5 - Résumer et diagnostiquer les données
 
@@ -56,4 +56,4 @@ Cette capsule rassemble les gestes précédents dans un document `.qmd` : titre,
 
 ## Après les capsules
 
-Poursuivez avec les [démonstrations R](demonstrations.llms.md), puis les [exercices](exercices.llms.md). Les capsules donnent les repères; les démonstrations montrent la démarche complète; les exercices servent à construire le mini-rapport.
+Poursuivez avec les [démonstrations R](demonstrations.llms.md), puis les [exercices](exercices.llms.md). Les capsules donnent les repères; les démonstrations montrent la démarche complète sur le même fichier. Les exercices appliquent ensuite la démarche à un autre fichier, sur les retours et les délais d’une PME fictive.

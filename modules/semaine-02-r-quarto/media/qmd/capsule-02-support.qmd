@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: ../module02-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -34,11 +36,11 @@ Une décision concrète
 :::
 
 ::: {.question-line}
-Dans RStudio, savez-vous où se retrouve ce que vous faites?
+Où écrire une commande et où retrouver son résultat?
 :::
 
 ::: {.note-box}
-Où écrire le rapport, où exécuter une commande, où retrouver un fichier ou un graphique : connaître les zones de l'interface évite la plupart des erreurs de début. Quelques minutes ici en font gagner beaucoup ensuite.
+L'éditeur conserve le code; la console l'exécute; les autres volets permettent d'inspecter les objets et les fichiers. Repérez ces zones dans votre propre fenêtre RStudio.
 :::
 
 ## Objectifs de la capsule
@@ -49,10 +51,17 @@ Où écrire le rapport, où exécuter une commande, où retrouver un fichier ou 
 - Repérer les fichiers et les graphiques produits.
 :::
 
-## RStudio comme poste de travail
+## Un premier objet dans la Console
 
-::: {.lead}
-RStudio réunit plusieurs outils dans une même fenêtre. Chaque zone répond à un besoin précis.
+``` r
+resultat <- 1 + 1
+resultat
+```
+
+::: {.keypoints}
+- `<-` conserve le résultat sous le nom `resultat`.
+- La Console affiche `2`; l'objet apparaît dans Environment.
+- Un objet dans Environment n'est pas un fichier enregistré.
 :::
 
 ## Les zones essentielles
@@ -139,6 +148,7 @@ Un graphique affiché ne suffit pas : le code qui le produit doit rester dans le
 ## Chercher une fonction
 
 ``` r
+library(tidyverse)
 ?read_csv
 ?ggplot
 ```
@@ -171,7 +181,7 @@ Les objets se vérifient dans Environment, les fichiers dans Files.
 3
 :::
 ::: {.label}
-Un graphique est utile seulement si son code reste dans le rapport.
+Conservez le code du graphique pour pouvoir le reproduire.
 :::
 :::
 :::
@@ -190,7 +200,7 @@ Associez chaque zone de RStudio à une action concrète.
 ### Auto-vérification
 
 ::: {.self-check}
-- Le document se rend du début à la fin sans intervention manuelle.
-- Les valeurs manquantes et les unités sont signalées.
-- Chaque résultat est accompagné d'une phrase d'interprétation.
+- Je retrouve Source, Console, Environment et Files.
+- Je sais où conserver le code de mon analyse.
+- Je distingue un objet R d'un fichier enregistré.
 :::

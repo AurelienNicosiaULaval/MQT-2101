@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: ../module02-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -38,7 +40,7 @@ Votre analyse fonctionnera-t-elle sur un autre ordinateur que le vôtre?
 :::
 
 ::: {.note-box}
-Les mini-rapports se font en équipe. Si votre code pointe vers un dossier qui n'existe que sur votre ordinateur, il risque de planter chez une autre personne. Un projet R bien organisé rend l'analyse transférable.
+Si votre code utilise un dossier qui n'existe que sur votre ordinateur, une autre personne ne pourra pas retrouver le fichier. Regrouper le rapport et les données dans un projet facilite le partage.
 :::
 
 ## Objectifs de la capsule
@@ -57,7 +59,7 @@ Les mini-rapports se font en équipe. Si votre code pointe vers un dossier qui n
 Reproductible
 :::
 ::: {.text}
-`data/ventes_operations_quebec.csv` - relatif au projet, valide partout.
+`data/ventes_operations_quebec.csv` - relatif au dossier de travail.
 :::
 :::
 ::: {.concept-card}
@@ -71,8 +73,15 @@ Fragile
 :::
 
 ::: {.note-box}
-Un chemin relatif reste valide tant que le dossier du projet est déplacé comme un tout.
+Ici, le `.qmd` est à la racine du projet. Le chemin reste valide si vous partagez tout le dossier en conservant sa structure.
 :::
+
+## Créer le projet dans RStudio
+
+1. Choisissez File > New Project > New Directory > New Project.
+2. Nommez le dossier `projet-semaine-02`, puis cliquez sur Create Project.
+3. Dans Files, cliquez sur New Folder et nommez le dossier `data`.
+4. Téléchargez le CSV et placez-le dans `data/`.
 
 ## Le rôle du projet R
 
@@ -88,11 +97,23 @@ Un chemin relatif reste valide tant que le dossier du projet est déplacé comme
 projet-semaine-02/
   data/
     ventes_operations_quebec.csv
-  rapport.qmd
+  projet-semaine-02.Rproj
+  rapport_semaine_02.qmd
 ```
 
 ::: {.note-box}
-Cette structure suffit pour produire la trace finale du module 2.
+Le fichier `.Rproj` ouvre le projet dans RStudio. Le `.qmd` et le dossier `data/` sont au même niveau.
+:::
+
+## Créer le fichier de travail
+
+1. Choisissez File > New File > Quarto Document.
+2. Sélectionnez HTML, puis cliquez sur Create.
+3. Enregistrez `rapport_semaine_02.qmd` à la racine du projet.
+4. Utilisez Insert > Code Chunk > R pour ajouter un bloc de code R.
+
+::: {.note-box}
+Gardez l’en-tête entre les deux lignes `---`. Remplacez le contenu d’exemple par vos propres sections et blocs de code. Le bouton Render sera expliqué à la capsule 6.
 :::
 
 ## Lire le fichier par chemin relatif
@@ -169,7 +190,7 @@ Notez : le nom du projet, l'emplacement du dossier `data/`, et une phrase expliq
 ### Auto-vérification
 
 ::: {.self-check}
-- Le document se rend du début à la fin sans intervention manuelle.
-- Les valeurs manquantes et les unités sont signalées.
-- Chaque résultat est accompagné d'une phrase d'interprétation.
+- Le projet contient un fichier `.Rproj` et un dossier `data/`.
+- Le CSV est dans `data/`; le `.qmd` est à la racine du projet.
+- Mon chemin ne contient pas le nom de mon ordinateur.
 :::

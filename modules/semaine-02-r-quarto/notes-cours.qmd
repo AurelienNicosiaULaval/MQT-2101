@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: media/module02-capsules.css
     theme:
       - default
       - ../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -71,8 +73,7 @@ reproductible.
 :::
 
 ::: {.note-box}
-Le résultat attendu est un mini-rapport Quarto individuel qui montre le code,
-les résultats et deux constats descriptifs.
+Le parcours guidé construit un mini-rapport Quarto sur les ventes. Les exercices appliquent ensuite la démarche à un autre fichier, sur les retours et les délais.
 :::
 
 ::: {.note-box}
@@ -93,24 +94,32 @@ mêmes gestes avec le code complet, les sorties et leur interprétation.
 
 ## De la donnée au rapport
 
-```{=html}
-<div class="outcome-strip" aria-label="Flux de travail de la semaine 02">
-  <div class="outcome-item">
-    <span class="outcome-label">Départ</span>
-    <span class="outcome-value">CSV</span>
-  </div>
-  <div class="outcome-arrow" aria-hidden="true">→</div>
-  <div class="outcome-item">
-    <span class="outcome-label">Méthode</span>
-    <span class="outcome-value">code R</span>
-  </div>
-  <div class="outcome-arrow" aria-hidden="true">→</div>
-  <div class="outcome-item">
-    <span class="outcome-label">Arrivée</span>
-    <span class="outcome-value">QMD rendu</span>
-  </div>
-</div>
-```
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+CSV
+:::
+::: {.label}
+les données de départ
+:::
+:::
+::: {.metric}
+::: {.value}
+QMD
+:::
+::: {.label}
+le texte et le code
+:::
+:::
+::: {.metric}
+::: {.value}
+HTML
+:::
+::: {.label}
+le rapport à lire
+:::
+:::
+:::
 
 ## Projet minimal
 
@@ -118,6 +127,7 @@ mêmes gestes avec le code complet, les sorties et leur interprétation.
 projet-semaine-02/
   data/
     ventes_operations_quebec.csv
+  projet-semaine-02.Rproj
   rapport_semaine_02.qmd
 ```
 
@@ -130,7 +140,7 @@ l'interprétation.
 
 ::: {.keypoints}
 - Le dossier `data/` contient les fichiers importés.
-- Le fichier `.qmd` contient le texte, le code et les résultats.
+- Le fichier `.qmd` contient le texte et le code; le HTML affiche les résultats calculés.
 - Les chemins relatifs évitent de dépendre d'un ordinateur précis.
 - Le rapport HTML peut être régénéré à partir du même code.
 :::
@@ -140,14 +150,35 @@ Une analyse reproductible ne repose pas sur des clics invisibles. Elle repose
 sur des fichiers organisés et sur du code que l'on peut relire.
 :::
 
+## Charger et importer
+
+``` r
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(scales)
+```
+
+::: {.note-box}
+Le code suppose que le `.qmd` est à la racine du projet et que le CSV se trouve dans `data/`.
+:::
+
 ## Importer le tableau
 
 ```{r}
 #| label: importer-semaine-02-notes
+#| eval: false
 
-ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
+ventes_operations <- readr::read_csv(
+  "data/ventes_operations_quebec.csv",
+  show_col_types = FALSE
+) |>
   clean_names()
+```
 
+## Inspecter le tableau
+
+```{r}
 glimpse(ventes_operations)
 ```
 
@@ -179,6 +210,7 @@ tableau?
 
 ```{r}
 #| label: preparer-semaine-02-notes
+#| results: hide
 
 ventes_preparees <- ventes_operations |>
   mutate(
@@ -189,6 +221,12 @@ ventes_preparees <- ventes_operations |>
     canal_principal = factor(canal_principal)
   )
 
+```
+
+## Vérifier la structure préparée
+
+```{r}
+#| results: hide
 ventes_preparees |>
   summarise(
     nb_lignes = n(),
@@ -199,6 +237,10 @@ ventes_preparees |>
     mois_max = max(mois, na.rm = TRUE)
   )
 ```
+
+::: {.visual-note}
+Le tableau contient 24 lignes, 4 succursales, 4 régions et 3 canaux, de janvier à juin 2025.
+:::
 
 ## Pourquoi préparer les variables
 
@@ -258,19 +300,30 @@ rester prudent. Les stratégies de traitement plus avancées viendront plus tard
 resume_succursales <- ventes_preparees |>
   group_by(succursale, region) |>
   summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
+    ventes_totales = sum(ventes),
+    clients_totaux = sum(clients),
     panier_moyen = ventes_totales / clients_totaux,
+    nb_mois_satisfaction = sum(!is.na(satisfaction)),
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
   arrange(desc(ventes_totales))
 
+```
+
+## Le tableau obtenu
+
+```{r}
+#| echo: false
 resume_succursales |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    panier_moyen = currency_ca(panier_moyen),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  transmute(
+    Succursale = succursale,
+    `Ventes ($ CA)` = currency_ca(ventes_totales),
+    `Panier ($ CA)` = currency_ca(panier_moyen),
+    `Mois utilisés` = nb_mois_satisfaction,
+    `Satisfaction (/10)` = format(
+      round(satisfaction_moyenne, 2), decimal.mark = ",", nsmall = 2
+    )
   ) |>
   knitr::kable()
 ```
@@ -280,8 +333,8 @@ resume_succursales |>
 ::: {.keypoints}
 - `ventes_totales` compare le volume observé par succursale.
 - `clients_totaux` aide à interpréter les écarts de ventes.
-- `panier_moyen` décrit la valeur moyenne des achats.
-- `satisfaction_moyenne` doit être lue avec le diagnostic des valeurs manquantes.
+- `panier_moyen` est le rapport des ventes totales au total de clients.
+- `satisfaction_moyenne` est la moyenne non pondérée des scores mensuels disponibles; `nb_mois_satisfaction` donne leur nombre.
 :::
 
 ::: {.note-box}
@@ -295,18 +348,32 @@ Un tableau descriptif résume. Il ne démontre pas une cause.
 #| fig-width: 9
 #| fig-height: 4.8
 #| out-width: "100%"
+#| fig-show: hide
 
-resume_succursales |>
+graphique_ventes <- resume_succursales |>
   mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
   ggplot(aes(x = ventes_totales, y = succursale)) +
   geom_col(fill = "#0B4F6C") +
-  scale_x_continuous(labels = currency_ca) +
+  scale_x_continuous(labels = scales::label_dollar(
+    prefix = "", suffix = " $", big.mark = " ", decimal.mark = ","
+  )) +
   labs(
     title = "Ventes totales par succursale",
-    x = "Ventes",
+    x = "Ventes totales ($ CA)",
     y = NULL
   ) +
   theme_minimal(base_size = 14)
+
+graphique_ventes
+```
+
+## Le graphique obtenu
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.8
+graphique_ventes
 ```
 
 ## Lire le graphique
@@ -334,15 +401,10 @@ format:
 ---
 
 ## Introduction
-
 ## Importation
-
 ## Inspection et diagnostic
-
 ## Résumé descriptif
-
 ## Graphique
-
 ## Constats
 ```
 
@@ -412,14 +474,11 @@ Quarto garde ensemble texte, code et résultats.
 :::
 :::
 
-## Clôture {.closing-slide}
+## Passer aux exercices
 
-::: {.kicker}
-MQT-2101
+::: {.keypoints}
+- Reprenez la démarche sur le fichier de la PME fictive.
+- Étudiez les retours et les délais selon la saison.
+- Terminez le rapport, puis vérifiez le rendu HTML.
+- En cas de blocage, conservez le code tenté et le message d’erreur.
 :::
-
-## Questions?
-
-Faculté des sciences de l'administration
-
-Université Laval

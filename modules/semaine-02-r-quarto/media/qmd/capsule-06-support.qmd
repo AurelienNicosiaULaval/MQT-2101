@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: ../module02-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -64,9 +66,10 @@ ventes_preparees <- readr::read_csv(data_path, show_col_types = FALSE) |>
 resume_succursales <- ventes_preparees |>
   group_by(succursale, region) |>
   summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
+    ventes_totales = sum(ventes),
+    clients_totaux = sum(clients),
     panier_moyen = ventes_totales / clients_totaux,
+    nb_mois_satisfaction = sum(!is.na(satisfaction)),
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
@@ -80,11 +83,11 @@ Une décision concrète
 :::
 
 ::: {.question-line}
-Pourriez-vous reproduire votre analyse du début à la fin, sans un seul clic manuel?
+Le bouton Render peut-il refaire toute votre analyse à partir du fichier CSV?
 :::
 
 ::: {.note-box}
-C'est l'épreuve du mini-rapport : un document Quarto qui peut être rendu du début à la fin, du fichier brut aux constats. S'il se rend sur votre ordinateur, il devrait aussi se rendre chez la personne qui corrige et dans votre équipe.
+Le `.qmd` doit contenir tous les packages, importations et calculs nécessaires. Pour reprendre l'analyse ailleurs, il faut aussi partager les données et disposer des logiciels et packages compatibles.
 :::
 
 ## Objectifs de la capsule
@@ -95,6 +98,17 @@ C'est l'épreuve du mini-rapport : un document Quarto qui peut être rendu du d�
 - Formuler deux constats descriptifs et une question à approfondir.
 :::
 
+## Assembler le document dans RStudio
+
+1. Ouvrez `rapport_semaine_02.qmd`, créé à la capsule 3.
+2. Conservez l’importation et les calculs des capsules 4 et 5, dans l’ordre.
+3. Ajoutez les sections, le graphique et les phrases d’interprétation.
+4. Vérifiez que les appels à `library()` figurent au début du document.
+
+::: {.visual-note}
+Le code R va dans les blocs de code; vos explications vont à l’extérieur des blocs.
+:::
+
 ## Créer un graphique
 
 ```{r}
@@ -102,18 +116,32 @@ C'est l'épreuve du mini-rapport : un document Quarto qui peut être rendu du d�
 #| fig-width: 9
 #| fig-height: 4.8
 #| out-width: "100%"
+#| fig-show: hide
 
-resume_succursales |>
+graphique_ventes <- resume_succursales |>
   mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
   ggplot(aes(x = ventes_totales, y = succursale)) +
   geom_col(fill = "#0B4F6C") +
-  scale_x_continuous(labels = currency_ca) +
+  scale_x_continuous(labels = scales::label_dollar(
+    prefix = "", suffix = " $", big.mark = " ", decimal.mark = ","
+  )) +
   labs(
     title = "Ventes totales par succursale",
-    x = "Ventes",
+    x = "Ventes totales ($ CA)",
     y = NULL
   ) +
   theme_minimal(base_size = 14)
+
+graphique_ventes
+```
+
+## Le graphique obtenu
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.8
+graphique_ventes
 ```
 
 ## Un graphique doit être lisible
@@ -136,15 +164,10 @@ format:
 ---
 
 ## Introduction
-
 ## Importation
-
 ## Inspection et diagnostic
-
 ## Résumé descriptif
-
 ## Graphique
-
 ## Constats
 ```
 
@@ -154,9 +177,9 @@ format:
 Dans RStudio, le bouton Render produit la page HTML du rapport.
 :::
 
-``` bash
-quarto render rapport_semaine_02.qmd
-```
+1. Enregistrez le `.qmd`, puis cliquez sur Render.
+2. Si une erreur survient, corrigez le premier bloc qui échoue.
+3. Cliquez de nouveau sur Render après la correction.
 
 ::: {.note-box}
 Après le rendu, ouvrez le fichier HTML et vérifiez que le texte, les tableaux, le graphique et les constats apparaissent correctement.
@@ -170,7 +193,7 @@ Après le rendu, ouvrez le fichier HTML et vérifiez que le texte, les tableaux,
 Constat descriptif
 :::
 ::: {.text}
-La succursale aux ventes totales les plus élevées n'a pas forcément le panier moyen le plus élevé.
+De janvier à juin 2025, Montréal a les ventes totales les plus élevées; Sherbrooke a le panier moyen le plus élevé.
 :::
 :::
 ::: {.statement-card .warning}
@@ -186,7 +209,7 @@ La succursale aux ventes totales les plus élevées n'a pas forcément le panier
 ## Question à approfondir
 
 ::: {.example-box}
-La relation entre les dépenses marketing et les ventes reste-t-elle visible lorsqu'on compare les succursales et les mois?
+Les mois avec une campagne locale présentent-ils des ventes plus élevées au sein d'une même succursale?
 :::
 
 ::: {.visual-note}
@@ -201,7 +224,7 @@ La dernière phrase du rapport ouvre vers une analyse future : c'est le pont ver
 1
 :::
 ::: {.label}
-Le rapport doit pouvoir être rendu de nouveau, sans clic manuel.
+Render doit recalculer le rapport sans commandes préalables dans la Console.
 :::
 :::
 ::: {.metric}
@@ -236,7 +259,7 @@ Avant de conclure, relisez le code d'importation, le diagnostic, le tableau, le 
 ### Auto-vérification
 
 ::: {.self-check}
-- Le document se rend du début à la fin sans intervention manuelle.
-- Les valeurs manquantes et les unités sont signalées.
-- Chaque résultat est accompagné d'une phrase d'interprétation.
+- Le bouton Render produit le HTML sans erreur.
+- Les packages et les données sont chargés dans le `.qmd`.
+- Le HTML contient le diagnostic, le tableau, le graphique et mes constats.
 :::

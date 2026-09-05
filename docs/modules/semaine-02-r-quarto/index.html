@@ -7020,6 +7020,7 @@ display: none;
   <ul>
   <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
   <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a></li>
   <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
@@ -7092,7 +7093,7 @@ R, RStudio, Quarto
 </div>
 <div>
 <div class="fact-label">
-Données
+Données du parcours guidé
 </div>
 <div class="fact-value">
 <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>
@@ -7159,6 +7160,9 @@ Mini-rapport Quarto
 </section>
 <section id="votre-parcours" class="level2">
 <h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Le parcours ci-dessous construit un rapport guidé avec <code>ventes_operations_quebec.csv</code>. Après l’étape 9, passez aux exercices d’application : vous utiliserez <code>ventes_pme_quebec.csv</code> dans un projet distinct pour étudier les retours et les délais. Les deux fichiers sont simulés.</p>
+<p>Les productions autonomes des supports reprennent les activités du parcours : il n’est pas nécessaire de les refaire deux fois. Les activités 2.1 à 2.10 détaillent les gestes présentés dans les six capsules.</p>
+<p>Avant de commencer, consultez la <a href="../../installation.html">page Installation</a> si vos outils ne sont pas prêts. La durée indiquée est un repère; prévoyez du temps supplémentaire en cas d’installation ou de dépannage.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Notes de cours">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7183,13 +7187,13 @@ Mini-rapport Quarto
       <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
     </summary>
     <div class="step-detail">
-      <p><span class="step-label">Objectif</span> S&#39;assurer que R, RStudio, Quarto et les packages nécessaires fonctionnent.</p>
+      <p><span class="step-label">Objectif</span> Vérifier R et les packages nécessaires; le rendu Quarto sera testé à la capsule 6.</p>
       <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-1---préparer-son-environnement-de-travail">Capsule 1</a></p>
-      <p><span class="step-label">Action</span> Ouvrir RStudio, exécuter une commande simple dans la console et charger <code>tidyverse</code>.</p>
+      <p><span class="step-label">Action</span> Ouvrir RStudio, exécuter une commande simple dans la console et charger les quatre packages de la capsule 1.</p>
 
       <div class="ae-box">
         <p class="ae-title">Activité 2.1 - Vérifier que R fonctionne</p>
-        <p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>. Notez le résultat obtenu.</p>
+        <p>Dans la console, exécutez une commande simple, par exemple <code>1 + 1</code>, puis chargez <code>tidyverse</code>, <code>janitor</code>, <code>lubridate</code> et <code>scales</code>. Notez le résultat et les éventuelles erreurs.</p>
       </div>
     </div>
   </details>
@@ -7225,7 +7229,7 @@ Mini-rapport Quarto
     <div class="step-detail">
       <p><span class="step-label">Objectif</span> Comprendre pourquoi le projet R est la base de la reproductibilité.</p>
       <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-3---organiser-un-projet-reproductible">Capsule 3</a></p>
-      <p><span class="step-label">Action</span> Créer ou ouvrir un projet R, puis vérifier où se trouve le dossier <code>data</code>.</p>
+      <p><span class="step-label">Action</span> Créer un projet R, placer le CSV dans <code>data</code> et créer le fichier <code>rapport_semaine_02.qmd</code> à la racine du projet.</p>
 
       <div class="ae-box">
         <p class="ae-title">Activité 2.3 - Expliquer l&#39;utilité d&#39;un projet R</p>
@@ -7259,12 +7263,12 @@ Mini-rapport Quarto
       <span class="path-number">5</span>
       <span class="path-title">Inspecter le tableau</span>
       <span class="path-preview">Identifier les lignes, les colonnes et les types de variables.</span>
-      <span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1---créer-le-projet-et-importer-les-données">Ex. 1</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2---identifier-les-types-de-variables">Ex. 2</a></span>
+      <span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a></span>
       <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
     </summary>
     <div class="step-detail">
       <p><span class="step-label">Objectif</span> Comprendre la structure du tableau avant de calculer des résultats.</p>
-      <p><span class="step-label">Ressource</span> <a class="resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a> <a class="resource-link exercise-link" href="exercices.html#exercice-1---créer-le-projet-et-importer-les-données">Exercice 1</a> <a class="resource-link exercise-link" href="exercices.html#exercice-2---identifier-les-types-de-variables">Exercice 2</a></p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link demo-link" href="demonstrations.html#démonstration-1---inspecter-le-tableau">Démo 1</a>  </p>
       <p><span class="step-label">Action</span> Identifier l&#39;unité d&#39;observation, les variables numériques, les variables catégorielles et les variables de date ou de période.</p>
 
       <div class="ae-box">
@@ -7279,12 +7283,12 @@ Mini-rapport Quarto
       <span class="path-number">6</span>
       <span class="path-title">Diagnostiquer les données</span>
       <span class="path-preview">Repérer les valeurs manquantes et signaler les précautions nécessaires.</span>
-      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes">Démo 3</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3---repérer-les-valeurs-manquantes">Ex. 3</a></span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes">Démo 3</a></span>
       <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
     </summary>
     <div class="step-detail">
       <p><span class="step-label">Objectif</span> Produire un diagnostic simple des données absentes avant de présenter les résultats descriptifs.</p>
-      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-2---préparer-les-variables">Démo 2</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes">Démo 3</a> <a class="resource-link exercise-link" href="exercices.html#exercice-3---repérer-les-valeurs-manquantes">Exercice 3</a></p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-2---préparer-les-variables">Démo 2</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes">Démo 3</a> </p>
       <p><span class="step-label">Action</span> Utiliser <code>is.na()</code>, <code>summarise()</code> et <code>pivot_longer()</code> pour compter les valeurs manquantes et indiquer quelles variables sont touchées.</p>
 
       <div class="ae-box">
@@ -7299,12 +7303,12 @@ Mini-rapport Quarto
       <span class="path-number">7</span>
       <span class="path-title">Produire les premiers résultats descriptifs</span>
       <span class="path-preview">Créer un tableau descriptif, un graphique simple et un premier constat.</span>
-      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a><a class="summary-resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-4---résumer-un-tableau">Démo 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-5---créer-un-graphique">Démo 5</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4---produire-un-tableau-descriptif">Ex. 4</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5---produire-un-graphique">Ex. 5</a></span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a><a class="summary-resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-4---résumer-un-tableau">Démo 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#démonstration-5---créer-un-graphique">Démo 5</a></span>
       <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
     </summary>
     <div class="step-detail">
       <p><span class="step-label">Objectif</span> Produire un tableau descriptif et un graphique simple.</p>
-      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a> <a class="resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-4---résumer-un-tableau">Démo 4</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-5---créer-un-graphique">Démo 5</a> <a class="resource-link exercise-link" href="exercices.html#exercice-4---produire-un-tableau-descriptif">Exercice 4</a> <a class="resource-link exercise-link" href="exercices.html#exercice-5---produire-un-graphique">Exercice 5</a></p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---résumer-et-diagnostiquer-les-données">Capsule 5</a> <a class="resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-4---résumer-un-tableau">Démo 4</a> <a class="resource-link demo-link" href="demonstrations.html#démonstration-5---créer-un-graphique">Démo 5</a>  </p>
       <p><span class="step-label">Action</span> Résumer les ventes par succursale ou par canal principal, puis construire un graphique avec <code>ggplot()</code> pour appuyer un premier constat descriptif.</p>
 
       <div class="ae-box">
@@ -7322,18 +7326,18 @@ Mini-rapport Quarto
     <summary>
       <span class="path-number">8</span>
       <span class="path-title">Structurer le fichier QMD</span>
-      <span class="path-preview">Créer le document Quarto qui rassemble texte, code et résultats.</span>
+      <span class="path-preview">Organiser le document Quarto commencé à l’étape 3.</span>
       <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a><a class="summary-resource-link reading-link" href="../../ressources/guide-quarto.html">Guide Quarto</a></span>
       <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
     </summary>
     <div class="step-detail">
       <p><span class="step-label">Objectif</span> Construire un fichier Quarto lisible avant de produire la version HTML.</p>
-      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a> <a class="resource-link reading-link" href="../../ressources/guide-quarto.html">Guide Quarto</a> <a class="resource-link exercise-link" href="exercices.html#trace-finale-courte">Trace finale courte</a></p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a> <a class="resource-link reading-link" href="../../ressources/guide-quarto.html">Guide Quarto</a> </p>
       <p><span class="step-label">Action</span> Créer un fichier <code>.qmd</code> avec un titre, une courte introduction, des blocs de code R et des phrases d&#39;interprétation.</p>
 
       <div class="ae-box">
         <p class="ae-title">Activité 2.9 - Structurer le fichier QMD</p>
-        <p>Créez le squelette du mini-rapport Quarto : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.</p>
+        <p>Complétez les sections du mini-rapport Quarto commencé à l’étape 3 : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.</p>
       </div>
     </div>
   </details>
@@ -7343,13 +7347,13 @@ Mini-rapport Quarto
       <span class="path-number">9</span>
       <span class="path-title">Finaliser le mini-rapport</span>
       <span class="path-preview">Produire le HTML final et vérifier que le document se relit bien.</span>
-      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a><a class="summary-resource-link exercise-link" href="exercices.html#trace-finale-courte">Trace finale</a></span>
+      <span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a></span>
       <span class="path-toggle"><span class="closed-label">Ouvrir l&#39;étape</span><span class="open-label">Réduire</span></span>
     </summary>
     <div class="step-detail">
       <p><span class="step-label">Objectif</span> Vérifier que le rapport est reproductible et compréhensible.</p>
-      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a> <a class="resource-link exercise-link" href="exercices.html#trace-finale-courte">Trace finale courte</a> <a class="resource-link reading-link" href="lectures.html">Lectures</a></p>
-      <p><span class="step-label">Action</span> Rendre le document avec Render ou <code>quarto render</code>, puis relire le HTML produit.</p>
+      <p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---produire-un-mini-rapport-quarto">Capsule 6</a>  <a class="resource-link reading-link" href="lectures.html">Lectures</a></p>
+      <p><span class="step-label">Action</span> Cliquer sur Render dans RStudio, puis relire le HTML produit.</p>
 
       <div class="ae-box">
         <p class="ae-title">Activité 2.10 - Formuler deux constats descriptifs</p>
@@ -7358,6 +7362,10 @@ Mini-rapport Quarto
     </div>
   </details>
 </div>
+</section>
+<section id="exercices-dapplication" class="level2">
+<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
+<p>Une fois le rapport guidé terminé, réalisez les <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices 1 à 5</a>. Ils reprennent les mêmes gestes sur un autre fichier, avec une question sur la qualité opérationnelle. Gardez ce deuxième rapport dans le projet <code>diagnostic-retours-pme</code>.</p>
 </section>
 <section id="ressources-du-module" class="level2">
 <h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
@@ -7372,7 +7380,7 @@ Mini-rapport Quarto
   </a>
   <a class="resource-row" href="exercices.html">
     <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Pratiquer sans regarder la solution, puis comparer votre démarche après une vraie tentative.</span></span>
+    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Appliquer la démarche à un nouveau cas sur les retours et les délais, puis vérifier les critères proposés.</span></span>
   </a>
   <a class="resource-row" href="lectures.html">
     <span class="resource-row-icon reading-icon" aria-hidden="true"></span>
@@ -7402,6 +7410,7 @@ Mini-rapport Quarto
 </section>
 <section id="trace-finale" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
+<p>Le parcours guidé aboutit à <code>rapport_semaine_02.qmd</code> sur les ventes. Les exercices aboutissent à <code>rapport_retours_pme.qmd</code> sur la qualité opérationnelle. Il s’agit d’entraînements pour ce module; les consignes des mini-rapports évalués se trouvent dans la section <a href="../../evaluations/index.html">Évaluations</a>.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Objectif du mini-rapport">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7420,7 +7429,7 @@ Mini-rapport Quarto
   <h3 class="anchored">Je peux reprendre l&#39;analyse du début à la fin.</h3>
   <p>
     Une autre personne doit pouvoir ouvrir votre fichier Quarto, exécuter le code,
-    voir les mêmes résultats et comprendre vos deux constats descriptifs.
+    retrouver les données dans le projet, recalculer les résultats avec les packages nécessaires et comprendre vos deux constats descriptifs.
   </p>
   <div class="production-flow">
     <span>Importer</span>

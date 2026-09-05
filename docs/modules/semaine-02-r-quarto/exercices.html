@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Exercices - Semaine 02 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Exercices - Module 02 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7058,9 +7058,12 @@ display: none;
   <li><a href="#exercice-2---identifier-les-types-de-variables" id="toc-exercice-2---identifier-les-types-de-variables" class="nav-link" data-scroll-target="#exercice-2---identifier-les-types-de-variables">Exercice 2 - Identifier les types de variables</a></li>
   <li><a href="#exercice-3---repérer-les-valeurs-manquantes" id="toc-exercice-3---repérer-les-valeurs-manquantes" class="nav-link" data-scroll-target="#exercice-3---repérer-les-valeurs-manquantes">Exercice 3 - Repérer les valeurs manquantes</a></li>
   <li><a href="#exercice-4---produire-un-tableau-descriptif" id="toc-exercice-4---produire-un-tableau-descriptif" class="nav-link" data-scroll-target="#exercice-4---produire-un-tableau-descriptif">Exercice 4 - Produire un tableau descriptif</a></li>
-  <li><a href="#exercice-5---produire-un-graphique" id="toc-exercice-5---produire-un-graphique" class="nav-link" data-scroll-target="#exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</a></li>
+  <li><a href="#exercice-5---produire-un-graphique" id="toc-exercice-5---produire-un-graphique" class="nav-link" data-scroll-target="#exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</a>
+  <ul class="collapse">
+  <li><a href="#pour-approfondir-facultatif" id="toc-pour-approfondir-facultatif" class="nav-link" data-scroll-target="#pour-approfondir-facultatif">Pour approfondir, facultatif</a></li>
+  </ul></li>
   <li><a href="#trace-finale-courte" id="toc-trace-finale-courte" class="nav-link" data-scroll-target="#trace-finale-courte">Trace finale courte</a></li>
-  <li><a href="#modèle-de-solution-cachée-à-utiliser" id="toc-modèle-de-solution-cachée-à-utiliser" class="nav-link" data-scroll-target="#modèle-de-solution-cachée-à-utiliser">Modèle de solution cachée à utiliser</a></li>
+  <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
   </ul>
 </nav>
     </div>
@@ -7069,7 +7072,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercices - Semaine 02</h1>
+<h1 class="title">Exercices - Module 02</h1>
 </div>
 
 
@@ -7088,130 +7091,175 @@ display: none;
 
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Créer un rapport Quarto reproductible à partir d’un nouveau cas. Les capsules utilisent <code>ventes_operations_quebec.csv</code>; les exercices utilisent plutôt les ventes mensuelles d’une PME fictive et portent sur la qualité opérationnelle.</p>
-<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.</p>
+<p>Appliquer les gestes du parcours guidé à un nouveau cas : une PME québécoise fictive souhaite décrire les retours et les délais de livraison selon la saison. Vous produirez un rapport Quarto court, avec du code, un tableau, un graphique et des constats.</p>
+<p>Les capsules utilisent <code>ventes_operations_quebec.csv</code>.</p>
+<p>Jeu de données de transfert : <a href="../atelier-01-r/data/ventes_pme_quebec.csv">ventes_pme_quebec.csv</a>, dont le <a href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">dictionnaire est disponible dans la page Données</a>.</p>
+<p>Les cinq exercices se suivent et alimentent un seul rapport. Les blocs fournis sont des points de départ : exécutez-les, vérifiez les sorties et rédigez vos propres interprétations.</p>
 </section>
 <section id="exercice-1---créer-le-projet-et-importer-les-données" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---créer-le-projet-et-importer-les-données">Exercice 1 - Créer le projet et importer les données</h2>
-<p>Créez un projet distinct nommé <code>diagnostic-retours-pme</code>, ajoutez un dossier <code>data</code>, puis importez le fichier.</p>
+<ol type="1">
+<li>Dans RStudio, choisissez File &gt; New Project &gt; New Directory &gt; New Project et nommez le projet <code>diagnostic-retours-pme</code>.</li>
+<li>Dans Files, créez un dossier <code>data</code>, puis placez-y le CSV téléchargé.</li>
+<li>Choisissez File &gt; New File &gt; Quarto Document, sélectionnez HTML et enregistrez le document sous <code>rapport_retours_pme.qmd</code>, à la racine du projet.</li>
+<li>Conservez l’en-tête ci-dessous, puis insérez les blocs de code R avec Insert &gt; Code Chunk &gt; R.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Retours et délais d’une PME fictive&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ventes_pme <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/ventes_pme_quebec.csv&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">as.Date</span>(mois))</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes_pme)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Charger les packages et importer le fichier</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ventes_pme <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/ventes_pme_quebec.csv&quot;</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">as.Date</span>(mois))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ventes_pme)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ventes_pme)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(ventes_pme<span class="sc">$</span>mois)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>À faire :</p>
-<ul>
-<li>vérifier les dimensions du tableau;</li>
-<li>confirmer que chaque ligne correspond à une succursale pour un mois;</li>
-<li>vérifier l’étendue des dates;</li>
-<li>rédiger une phrase expliquant pourquoi le chemin relatif rend le projet plus facile à partager.</li>
-</ul>
+<p>Indiquez ce que représente une ligne du tableau et la période couverte. Expliquez en une phrase pourquoi le chemin relatif facilite le partage du projet.</p>
+<p>Repère de vérification : vous devez obtenir 60 lignes et 15 colonnes, de janvier à décembre 2025. Le tableau contient une observation par succursale et par mois, pour cinq succursales.</p>
 </section>
 <section id="exercice-2---identifier-les-types-de-variables" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-2---identifier-les-types-de-variables">Exercice 2 - Identifier les types de variables</h2>
-<p>Classez <code>mois</code>, <code>saison</code>, <code>succursale</code>, <code>campagne_locale</code>, <code>clients</code>, <code>delai_livraison_jours</code>, <code>satisfaction</code> et <code>taux_retour</code>.</p>
-<p>Ajoutez ensuite deux décisions de préparation :</p>
+<p>Classez <code>mois</code>, <code>saison</code>, <code>succursale</code>, <code>campagne_locale</code>, <code>clients</code>, <code>delai_livraison_jours</code>, <code>satisfaction</code> et <code>taux_retour</code> en dates, catégories ou variables numériques. Appuyez votre réponse sur le sens des variables.</p>
+<p>Repères utiles :</p>
 <ul>
-<li>quelles variables convertir en facteurs;</li>
-<li>quelles variables conserver numériques même si elles prennent peu de valeurs.</li>
+<li><code>campagne_locale</code> vaut 0 pour une absence de campagne et 1 pour une présence;</li>
+<li><code>saison</code> désigne ici un niveau d’activité, pas une saison météorologique : <code>haute</code> pour novembre et décembre, <code>moyenne</code> pour janvier, février et juillet, <code>reguliere</code> pour les autres mois;</li>
+<li><code>delai_livraison_jours</code> est un délai mensuel moyen en jours;</li>
+<li><code>satisfaction</code> est un score mensuel moyen sur 10;</li>
+<li><code>taux_retour</code> est une proportion : 0,04 correspond à 4 %.</li>
 </ul>
-<p>Votre justification doit s’appuyer sur le sens des variables, et non seulement sur leur apparence dans R.</p>
+<p>Préparez les catégories :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ventes_pme <span class="ot">&lt;-</span> ventes_pme <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">saison =</span> <span class="fu">factor</span>(saison, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;reguliere&quot;</span>, <span class="st">&quot;moyenne&quot;</span>, <span class="st">&quot;haute&quot;</span>)),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">campagne_locale =</span> <span class="fu">factor</span>(campagne_locale, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Expliquez pourquoi <code>campagne_locale</code> peut être un facteur alors que <code>clients</code> doit rester numérique. Le nombre de valeurs différentes ne suffit pas, à lui seul, à choisir le type.</p>
 </section>
 <section id="exercice-3---repérer-les-valeurs-manquantes" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---repérer-les-valeurs-manquantes">Exercice 3 - Repérer les valeurs manquantes</h2>
-<p>Produisez un audit qui donne à la fois le nombre et la proportion de valeurs manquantes.</p>
+<p>Produisez un diagnostic donnant le nombre et la proportion de valeurs manquantes pour chaque variable incomplète.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>audit_manquants <span class="ot">&lt;-</span> ventes_pme <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">everything</span>(),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">nombre =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">proportion =</span> <span class="sc">~</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(.x))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;.value&quot;</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">&quot;(.*)_(nombre|proportion)$&quot;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nombre <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>audit_manquants</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compter les valeurs absentes dans chaque colonne</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>audit_manquants <span class="ot">&lt;-</span> ventes_pme <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;nombre&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> nombre <span class="sc">/</span> <span class="fu">nrow</span>(ventes_pme)) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nombre <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>audit_manquants</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait modifier plus d’une analyse, même si une seule variable est étudiée au départ.</p>
+<p>Le dénominateur de chaque proportion est le nombre total de lignes. Par exemple, une proportion de 0,05 signifie que 5 % des valeurs de cette colonne sont absentes.</p>
+<p>Nommez les variables touchées. Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait aussi enlever des valeurs disponibles pour d’autres variables. Dans ces exercices, conservez les lignes et signalez les exclusions faites pour chaque calcul.</p>
 </section>
 <section id="exercice-4---produire-un-tableau-descriptif" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---produire-un-tableau-descriptif">Exercice 4 - Produire un tableau descriptif</h2>
-<p>La question est maintenant : « Les retours et les délais sont-ils plus élevés pendant la haute saison? »</p>
+<p>Question : « Les taux de retour et les délais de livraison observés sont-ils plus élevés pendant la haute saison? »</p>
+<p>Comparez les médianes par saison. Ici, la médiane résume les valeurs mensuelles des succursales; elle ne décrit pas directement l’ensemble des livraisons individuelles.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>resume_saison <span class="ot">&lt;-</span> ventes_pme <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(saison) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux_retour_median =</span> <span class="fu">median</span>(taux_retour, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_median =</span> <span class="fu">median</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_mediane =</span> <span class="fu">median</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>resume_saison</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>resume_saison <span class="ot">&lt;-</span> ventes_pme <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(saison) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux_retour_median =</span> <span class="fu">median</span>(taux_retour),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">delais_utilises =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(delai_livraison_jours)),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">delai_median =</span> <span class="fu">median</span>(delai_livraison_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">scores_utilises =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(satisfaction)),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">satisfaction_mediane =</span> <span class="fu">median</span>(satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>resume_saison</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Rédigez deux constats descriptifs et une limite. Ne transformez pas la saison en explication causale.</p>
+<p><code>taux_retour</code> est complet dans ce fichier. Pour le délai et la satisfaction, <code>na.rm = TRUE</code> exclut uniquement les valeurs absentes du calcul concerné; les colonnes d’effectifs indiquent combien de valeurs restent.</p>
+<p>Rédigez deux constats chiffrés et une limite. Répondez séparément pour les retours et pour les délais : les deux indicateurs ne donnent pas nécessairement le même classement. Une association observée ne démontre pas que la saison cause l’écart.</p>
 </section>
 <section id="exercice-5---produire-un-graphique" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-5---produire-un-graphique">Exercice 5 - Produire un graphique</h2>
-<p>Choisissez un seul des deux graphiques suivants selon la question posée :</p>
-<ol type="1">
-<li>comparer la distribution du taux de retour entre les saisons;</li>
-<li>étudier la relation entre le délai de livraison et la satisfaction.</li>
-</ol>
+<p>Pour répondre à la même question, représentez le délai médian par saison. Ce graphique reprend la démarche de la capsule 6, avec une autre variable et une autre unité.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>graphique_saisons <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  ventes_pme,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> saison, <span class="at">y =</span> taux_retour)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#0B4F6C&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Taux de retour&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>graphique_service <span class="ot">&lt;-</span> ventes_pme <span class="sc">|&gt;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(delai_livraison_jours), <span class="sc">!</span><span class="fu">is.na</span>(satisfaction)) <span class="sc">|&gt;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> delai_livraison_jours, <span class="at">y =</span> satisfaction)) <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> saison), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Délai de livraison, en jours&quot;</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Satisfaction&quot;</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;Saison&quot;</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>graphique_delais <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  resume_saison,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> saison, <span class="at">y =</span> delai_median)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#0B4F6C&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">reguliere =</span> <span class="st">&quot;Régulière&quot;</span>, <span class="at">moyenne =</span> <span class="st">&quot;Moyenne&quot;</span>, <span class="at">haute =</span> <span class="st">&quot;Haute&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Délai de livraison médian selon la saison&quot;</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;PME fictive, année 2025&quot;</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Niveau d’activité&quot;</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Délai médian (jours)&quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher le graphique dans le rapport</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>graphique_delais</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Présentez le graphique choisi, justifiez votre choix en une phrase et écrivez un constat qui ne répète pas simplement le titre.</p>
+<p>Écrivez un constat qui mentionne une comparaison et son unité. Précisez que le graphique montre des médianes et ne montre pas toute la dispersion des délais.</p>
+<section id="pour-approfondir-facultatif" class="level3">
+<h3 class="anchored" data-anchor-id="pour-approfondir-facultatif">Pour approfondir, facultatif</h3>
+<p>Si vous souhaitez étudier une autre question, comparez la distribution des taux de retour entre les saisons ou la relation entre le délai et la satisfaction. Ces graphiques demandent de nouveaux gestes et ne sont pas requis pour terminer le module.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution des taux de retour</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>graphique_retours <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ventes_pme, <span class="fu">aes</span>(saison, taux_retour)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;#0B4F6C&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">reguliere =</span> <span class="st">&quot;Régulière&quot;</span>, <span class="at">moyenne =</span> <span class="st">&quot;Moyenne&quot;</span>, <span class="at">haute =</span> <span class="st">&quot;Haute&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution des taux de retour&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Saison&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Taux de retour (%)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>graphique_retours</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
 </section>
 <section id="trace-finale-courte" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale-courte">Trace finale courte</h2>
-<p>Produisez un mini-rapport Quarto sur la qualité opérationnelle contenant :</p>
-<ul>
-<li>le code d’importation et une vérification des dimensions;</li>
-<li>un audit des valeurs manquantes;</li>
-<li>le tableau par saison;</li>
-<li>un graphique choisi en fonction d’une question précise;</li>
-<li>deux constats, une limite et une prochaine vérification.</li>
-</ul>
-<p>Le rapport ne doit reprendre ni le fichier, ni le tableau par succursale, ni le graphique par canal utilisés dans les capsules.</p>
+<p>Terminez <code>rapport_retours_pme.qmd</code> et cliquez sur Render. Le rapport doit contenir :</p>
+<ol type="1">
+<li>une courte introduction et la question sur les retours et les délais;</li>
+<li>le code d’importation, les dimensions et l’unité d’observation;</li>
+<li>le diagnostic des valeurs manquantes;</li>
+<li>le tableau par saison avec les effectifs utilisés;</li>
+<li>le graphique du délai médian, avec ses unités;</li>
+<li>deux constats chiffrés, une limite et une question à approfondir.</li>
+</ol>
+<p>Ouvrez le HTML produit et vérifiez que le tableau et le graphique y apparaissent. Pour partager une analyse reproductible, conservez le <code>.qmd</code>, le CSV et l’organisation du projet. Le HTML permet de lire le rapport sans exécuter le code.</p>
+<p>Arrêtez-vous lorsque ces six éléments sont présents et que Render termine sans erreur. L’approfondissement facultatif peut attendre.</p>
 </section>
-<section id="modèle-de-solution-cachée-à-utiliser" class="level2">
-<h2 class="anchored" data-anchor-id="modèle-de-solution-cachée-à-utiliser">Modèle de solution cachée à utiliser</h2>
-<p>Les solutions détaillées restent dans la page réservée aux solutions. Avant de la consulter, le fichier <code>.qmd</code> de l’étudiant doit se rendre sans erreur du début à la fin.</p>
+<section id="auto-vérification" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Les packages et l’importation figurent dans mon <code>.qmd</code>.</label></li>
+<li><label><input type="checkbox">Je retrouve 60 observations; le diagnostic signale deux délais et trois scores de satisfaction manquants.</label></li>
+<li><label><input type="checkbox">Je distingue nombre total de lignes et nombre de valeurs utilisées.</label></li>
+<li><label><input type="checkbox">Je lis les proportions comme des proportions et j’indique les unités.</label></li>
+<li><label><input type="checkbox">Mes constats s’appuient sur les valeurs calculées et restent descriptifs.</label></li>
+<li><label><input type="checkbox">Le HTML contient les sorties attendues.</label></li>
+</ul>
+<p>Les corrigés détaillés ne sont pas accessibles sur cette page. Si vous restez bloqué·e après une première tentative, utilisez les <a href="../../modules/semaine-02-r-quarto/demonstrations.html">démonstrations</a> ou posez une question sur le forum en joignant le code tenté et le message d’erreur.</p>
 
 
 </section>

@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: ../module02-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -62,7 +64,7 @@ Une décision concrète
 :::
 
 ::: {.question-line}
-Le délai moyen et la satisfaction décrivent-ils toutes les observations, ou seulement les lignes complètes?
+Le délai moyen et la satisfaction décrivent-ils toutes les observations, ou seulement les valeurs disponibles de chaque variable?
 :::
 
 ::: {.note-box}
@@ -77,10 +79,24 @@ Les ventes et le nombre de clients sont complets dans ce fichier, mais le délai
 - Produire un tableau descriptif par groupe et l'interpréter prudemment.
 :::
 
+## Reprendre le travail de la capsule 4
+
+::: {.keypoints}
+- Ouvrez le même projet et reprenez le code d’importation.
+- `ventes_operations` contient le tableau importé.
+- Chargez les packages nécessaires avant les transformations.
+:::
+
+``` r
+library(tidyverse)
+library(janitor)
+library(lubridate)
+```
+
 ## Préparer avant de résumer
 
 ::: {.lead}
-Un résumé est plus fiable quand les types de variables sont explicites.
+Vérifiez les types avant de calculer. Une conversion ne remplace pas cette vérification.
 :::
 
 ```{r}
@@ -96,10 +112,20 @@ ventes_preparees <- ventes_operations |>
   )
 ```
 
+## Comprendre `mutate()` et `factor()`
+
+::: {.keypoints}
+- `mutate()` crée ou transforme des colonnes.
+- `ymd()` reconnaît une date année-mois-jour; ici, `mois` est déjà une date.
+- `factor()` représente des catégories; les nombres de clients restent numériques.
+- La conversion en facteur ne modifie pas les valeurs observées.
+:::
+
 ## Vérifier la structure préparée
 
 ```{r}
 #| label: capsule-05-verifier
+#| results: hide
 
 ventes_preparees |>
   summarise(
@@ -112,10 +138,23 @@ ventes_preparees |>
   )
 ```
 
+::: {.visual-note}
+Le tableau contient 24 lignes, 4 succursales, 4 régions et 3 canaux, de janvier à juin 2025.
+:::
+
+## Comprendre le diagnostic
+
+::: {.keypoints}
+- `is.na(x)` indique quelles valeurs sont absentes.
+- `sum(is.na(x))` compte ces valeurs.
+- `across(everything(), ...)` répète le calcul sur chaque colonne.
+- `pivot_longer()` donne une ligne par variable; `filter()` garde les variables incomplètes.
+:::
+
 ## Repérer les valeurs manquantes
 
 ::: {.note-box}
-Une valeur manquante peut modifier une moyenne, un total ou une conclusion. Cette semaine, on ne les impute pas encore : on les repère et on les signale.
+Une valeur manquante peut modifier une moyenne, un total ou une conclusion. Dans ce module, on les repère et on les signale, sans les remplacer par des valeurs estimées.
 :::
 
 ```{r}
@@ -143,28 +182,52 @@ diagnostic_manquants
 
 ## Résumer par succursale
 
+::: {.visual-note}
+`group_by()` forme les groupes; `summarise()` calcule une ligne par groupe; `arrange(desc(...))` trie du plus grand au plus petit.
+:::
+
 ```{r}
 #| label: capsule-05-resume
 
 resume_succursales <- ventes_preparees |>
   group_by(succursale, region) |>
   summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
+    ventes_totales = sum(ventes),
+    clients_totaux = sum(clients),
     panier_moyen = ventes_totales / clients_totaux,
+    nb_mois_satisfaction = sum(!is.na(satisfaction)),
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
   arrange(desc(ventes_totales))
 
+```
+
+## Le tableau obtenu
+
+```{r}
+#| echo: false
 resume_succursales |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    panier_moyen = currency_ca(panier_moyen),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  transmute(
+    Succursale = succursale,
+    `Ventes ($ CA)` = currency_ca(ventes_totales),
+    `Panier ($ CA)` = currency_ca(panier_moyen),
+    `Mois utilisés` = nb_mois_satisfaction,
+    `Satisfaction (/10)` = format(
+      round(satisfaction_moyenne, 2), decimal.mark = ",", nsmall = 2
+    )
   ) |>
   knitr::kable()
 ```
+
+## Ce que les moyennes résument
+
+::: {.keypoints}
+- Panier moyen : ventes totales divisées par le total de clients.
+- Satisfaction : moyenne des scores mensuels disponibles, sans pondération par le nombre de clients.
+- `na.rm = TRUE` exclut les valeurs absentes de ce calcul; il ne les remplace pas par zéro.
+- Montréal et Québec : 5 mois utilisés; Sherbrooke et Trois-Rivières : 6.
+:::
 
 ## Lire un tableau descriptif
 
@@ -218,7 +281,7 @@ Ajoutez : un tableau de diagnostic des valeurs manquantes, un tableau descriptif
 ### Auto-vérification
 
 ::: {.self-check}
-- Le document se rend du début à la fin sans intervention manuelle.
-- Les valeurs manquantes et les unités sont signalées.
-- Chaque résultat est accompagné d'une phrase d'interprétation.
+- Le diagnostic repère un délai et deux scores de satisfaction manquants.
+- Le tableau indique le nombre de mois utilisés pour la satisfaction.
+- Je précise les unités et une limite de comparaison.
 :::

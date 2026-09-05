@@ -3084,7 +3084,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#pourquoi-ça-compte",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nPourriez-vous reproduire votre analyse du début à la fin, sans un seul clic manuel?\n\n\nC’est l’épreuve du mini-rapport : un document Quarto qui peut être rendu du début à la fin, du fichier brut aux constats. S’il se rend sur votre ordinateur, il devrait aussi se rendre chez la personne qui corrige et dans votre équipe."
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nLe bouton Render peut-il refaire toute votre analyse à partir du fichier CSV?\n\n\nLe .qmd doit contenir tous les packages, importations et calculs nécessaires. Pour reprendre l’analyse ailleurs, il faut aussi partager les données et disposer des logiciels et packages compatibles."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#objectifs-de-la-capsule",
@@ -3098,7 +3098,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#créer-un-graphique",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Créer un graphique",
-    "text": "Créer un graphique"
+    "text": "Créer un graphique\n\ngraphique_ventes &lt;- resume_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(x = ventes_totales, y = succursale)) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_continuous(labels = scales::label_dollar(\n    prefix = \"\", suffix = \" $\", big.mark = \" \", decimal.mark = \",\"\n  )) +\n  labs(\n    title = \"Ventes totales par succursale\",\n    x = \"Ventes totales ($ CA)\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 14)\n\ngraphique_ventes"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#un-graphique-doit-être-lisible",
@@ -3112,49 +3112,49 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#structure-minimale-du-qmd",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Structure minimale du QMD",
-    "text": "Structure minimale du QMD\n---\ntitle: \"Mini-rapport - Module 2\"\nformat:\n  html:\n    embed-resources: true\n---\n\n## Introduction\n\n## Importation\n\n## Inspection et diagnostic\n\n## Résumé descriptif\n\n## Graphique\n\n## Constats"
+    "text": "Structure minimale du QMD\n---\ntitle: \"Mini-rapport - Module 2\"\nformat:\n  html:\n    embed-resources: true\n---\n\n## Introduction\n## Importation\n## Inspection et diagnostic\n## Résumé descriptif\n## Graphique\n## Constats"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#rendre-le-document",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#rendre-le-document",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Rendre le document",
-    "text": "Rendre le document\n\nDans RStudio, le bouton Render produit la page HTML du rapport.\n\nquarto render rapport_semaine_02.qmd\n\nAprès le rendu, ouvrez le fichier HTML et vérifiez que le texte, les tableaux, le graphique et les constats apparaissent correctement."
+    "text": "Rendre le document\n\nDans RStudio, le bouton Render produit la page HTML du rapport.\n\n\nEnregistrez le .qmd, puis cliquez sur Render.\nSi une erreur survient, corrigez le premier bloc qui échoue.\nCliquez de nouveau sur Render après la correction.\n\n\nAprès le rendu, ouvrez le fichier HTML et vérifiez que le texte, les tableaux, le graphique et les constats apparaissent correctement."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#écrire-un-constat-éviter-une-cause",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#écrire-un-constat-éviter-une-cause",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Écrire un constat, éviter une cause",
-    "text": "Écrire un constat, éviter une cause\n\n\n\nConstat descriptif\n\n\nLa succursale aux ventes totales les plus élevées n’a pas forcément le panier moyen le plus élevé.\n\n\n\n\nÀ éviter\n\n\n« La campagne locale cause des ventes plus élevées » : cette analyse ne permet qu’une description."
+    "text": "Écrire un constat, éviter une cause\n\n\n\nConstat descriptif\n\n\nDe janvier à juin 2025, Montréal a les ventes totales les plus élevées; Sherbrooke a le panier moyen le plus élevé.\n\n\n\n\nÀ éviter\n\n\n« La campagne locale cause des ventes plus élevées » : cette analyse ne permet qu’une description."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#question-à-approfondir",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#question-à-approfondir",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Question à approfondir",
-    "text": "Question à approfondir\n\nLa relation entre les dépenses marketing et les ventes reste-t-elle visible lorsqu’on compare les succursales et les mois?\n\n\nLa dernière phrase du rapport ouvre vers une analyse future : c’est le pont vers la régression."
+    "text": "Question à approfondir\n\nLes mois avec une campagne locale présentent-ils des ventes plus élevées au sein d’une même succursale?\n\n\nLa dernière phrase du rapport ouvre vers une analyse future : c’est le pont vers la régression."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#à-retenir",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#à-retenir",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nLe rapport doit pouvoir être rendu de nouveau, sans clic manuel.\n\n\n\n\n2\n\n\nLe code et les résultats restent ensemble.\n\n\n\n\n3\n\n\nLes constats restent descriptifs; la question finale prépare la suite."
+    "text": "À retenir\n\n\n\n1\n\n\nRender doit recalculer le rapport sans commandes préalables dans la Console.\n\n\n\n\n2\n\n\nLe code et les résultats restent ensemble.\n\n\n\n\n3\n\n\nLes constats restent descriptifs; la question finale prépare la suite."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#production-autonome-2.6",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#production-autonome-2.6",
     "title": "Capsule 6 - Produire un mini-rapport Quarto",
     "section": "Production autonome 2.6",
-    "text": "Production autonome 2.6\n\nProduisez le mini-rapport Quarto et vérifiez qu’il se rend sans erreur.\n\n\nAvant de conclure, relisez le code d’importation, le diagnostic, le tableau, le graphique, les deux constats et la question à approfondir.\n\nAuto-vérification\n\n\nLe document se rend du début à la fin sans intervention manuelle.\nLes valeurs manquantes et les unités sont signalées.\nChaque résultat est accompagné d’une phrase d’interprétation."
+    "text": "Production autonome 2.6\n\nProduisez le mini-rapport Quarto et vérifiez qu’il se rend sans erreur.\n\n\nAvant de conclure, relisez le code d’importation, le diagnostic, le tableau, le graphique, les deux constats et la question à approfondir.\n\nAuto-vérification\n\n\nLe bouton Render produit le HTML sans erreur.\nLes packages et les données sont chargés dans le .qmd.\nLe HTML contient le diagnostic, le tableau, le graphique et mes constats."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nComment savoir si R a vraiment lu ce que vous croyez avoir importé?\n\n\nUn fichier importé sans vérification, c’est un calcul juste sur un tableau mal connu. Avant toute moyenne, il faut savoir combien il y a de lignes, combien il y a de colonnes, quels sont les types de variables et ce que représente une ligne."
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nComment savoir si R a vraiment lu ce que vous croyez avoir importé?\n\n\nUne importation sans erreur ne garantit pas que le tableau a été lu comme prévu. Vérifiez ses dimensions, les types de variables et ce que représente une ligne avant de calculer."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
@@ -3175,21 +3175,21 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#pourquoi-clean_names",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Pourquoi clean_names()?",
-    "text": "Pourquoi clean_names()?\n\nDans le fichier fourni, les noms sont déjà normalisés : clean_names() ne les modifie pas. L’appel reste utile comme vérification reproductible et protège le code si une version future contient des espaces, des majuscules ou des caractères spéciaux.\n\n\n\n\n\n\navant\napres\nidentique\n\n\n\n\nmois\nmois\nTRUE\n\n\nmois_nom\nmois_nom\nTRUE\n\n\nsuccursale\nsuccursale\nTRUE\n\n\nregion\nregion\nTRUE\n\n\nsurface_m2\nsurface_m2\nTRUE\n\n\ncampagne_locale\ncampagne_locale\nTRUE\n\n\ncanal_principal\ncanal_principal\nTRUE\n\n\nclients\nclients\nTRUE\n\n\npanier_moyen\npanier_moyen\nTRUE\n\n\nventes\nventes\nTRUE\n\n\ndelai_livraison_jours\ndelai_livraison_jours\nTRUE\n\n\nsatisfaction\nsatisfaction\nTRUE"
+    "text": "Pourquoi clean_names()?\n\nCette fonction normalise les noms de colonnes : espaces, majuscules et accents deviennent plus faciles à gérer dans le code. Elle ne nettoie pas les valeurs du tableau.\n\n\n# Exemple miniature pour voir la transformation des noms\ntibble(\"Délai moyen\" = 3, \"Ventes CAD\" = 100) |&gt;\n  clean_names() |&gt;\n  knitr::kable()\n\n\n\n\ndelai_moyen\nventes_cad\n\n\n\n\n3\n100\n\n\n\n\n\n\nDans notre CSV, les noms sont déjà normalisés : clean_names() les conserve."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#inspecter-avec-glimpse",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#inspecter-avec-glimpse",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Inspecter avec glimpse()",
-    "text": "Inspecter avec glimpse()\n\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…\n\n\n\nglimpse() montre en un coup d’oeil les colonnes, leurs types et quelques valeurs."
+    "text": "Inspecter avec glimpse()\n\nglimpse(ventes_operations)\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…\n\n\n\nglimpse() montre en un coup d’œil les colonnes, leurs types et quelques valeurs."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#dimensions-et-unité-dobservation",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#dimensions-et-unité-dobservation",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Dimensions et unité d’observation",
-    "text": "Dimensions et unité d’observation\n\n\n[1] 24 12\n\n\n\nPremière valeur : le nombre de lignes. Deuxième valeur : le nombre de colonnes. Ici, une ligne correspond à une succursale pour un mois."
+    "text": "Dimensions et unité d’observation\n\ndim(ventes_operations)\n\n[1] 24 12\n\n\n\nPremière valeur : le nombre de lignes. Deuxième valeur : le nombre de colonnes. Ici, une ligne correspond à une succursale pour un mois."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#types-de-variables-à-repérer",
@@ -3210,14 +3210,14 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#production-autonome-2.4",
     "title": "Capsule 4 - Importer et inspecter un tableau",
     "section": "Production autonome 2.4",
-    "text": "Production autonome 2.4\n\nImportez ventes_operations_quebec.csv et décrivez le tableau.\n\n\nIndiquez : le code d’importation, le nombre de lignes, le nombre de colonnes et ce que représente une ligne.\n\nAuto-vérification\n\n\nLe document se rend du début à la fin sans intervention manuelle.\nLes valeurs manquantes et les unités sont signalées.\nChaque résultat est accompagné d’une phrase d’interprétation."
+    "text": "Production autonome 2.4\n\nImportez ventes_operations_quebec.csv et décrivez le tableau.\n\n\nIndiquez : le code d’importation, le nombre de lignes, le nombre de colonnes et ce que représente une ligne.\n\nAuto-vérification\n\n\nLe tableau contient 24 lignes et 12 colonnes.\nUne ligne représente une succursale pendant un mois.\nJe distingue le type informatique et le sens d’une variable."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nDans RStudio, savez-vous où se retrouve ce que vous faites?\n\n\nOù écrire le rapport, où exécuter une commande, où retrouver un fichier ou un graphique : connaître les zones de l’interface évite la plupart des erreurs de début. Quelques minutes ici en font gagner beaucoup ensuite."
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nOù écrire une commande et où retrouver son résultat?\n\n\nL’éditeur conserve le code; la console l’exécute; les autres volets permettent d’inspecter les objets et les fichiers. Repérez ces zones dans votre propre fenêtre RStudio."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
@@ -3252,112 +3252,112 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#chercher-une-fonction",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "Chercher une fonction",
-    "text": "Chercher une fonction\n?read_csv\n?ggplot\n\nL’aide intégrée montre les arguments d’une fonction et un exemple minimal."
+    "text": "Chercher une fonction\nlibrary(tidyverse)\n?read_csv\n?ggplot\n\nL’aide intégrée montre les arguments d’une fonction et un exemple minimal."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#à-retenir",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#à-retenir",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nLe rapport s’écrit dans Source; les essais se font dans la Console.\n\n\n\n\n2\n\n\nLes objets se vérifient dans Environment, les fichiers dans Files.\n\n\n\n\n3\n\n\nUn graphique est utile seulement si son code reste dans le rapport."
+    "text": "À retenir\n\n\n\n1\n\n\nLe rapport s’écrit dans Source; les essais se font dans la Console.\n\n\n\n\n2\n\n\nLes objets se vérifient dans Environment, les fichiers dans Files.\n\n\n\n\n3\n\n\nConservez le code du graphique pour pouvoir le reproduire."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#production-autonome-2.2",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#production-autonome-2.2",
     "title": "Capsule 2 - Se repérer dans RStudio",
     "section": "Production autonome 2.2",
-    "text": "Production autonome 2.2\n\nAssociez chaque zone de RStudio à une action concrète.\n\n\nÉcrire le rapport, exécuter du code, voir les objets, trouver les fichiers, afficher un graphique. Ensuite, écrivez une phrase sur le rôle de deux zones utiles.\n\nAuto-vérification\n\n\nLe document se rend du début à la fin sans intervention manuelle.\nLes valeurs manquantes et les unités sont signalées.\nChaque résultat est accompagné d’une phrase d’interprétation."
+    "text": "Production autonome 2.2\n\nAssociez chaque zone de RStudio à une action concrète.\n\n\nÉcrire le rapport, exécuter du code, voir les objets, trouver les fichiers, afficher un graphique. Ensuite, écrivez une phrase sur le rôle de deux zones utiles.\n\nAuto-vérification\n\n\nJe retrouve Source, Console, Environment et Files.\nJe sais où conserver le code de mon analyse.\nJe distingue un objet R d’un fichier enregistré."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/lectures.html",
     "href": "modules/semaine-02-r-quarto/lectures.html",
-    "title": "Lectures - Semaine 02",
+    "title": "Lectures - Module 02",
     "section": "",
     "text": "Cette page rassemble les lectures utiles pour consolider les gestes techniques de la semaine 02. Il ne faut pas tout lire intégralement : utilisez les sections indiquées pour régler un problème précis ou renforcer une partie de la trace finale."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/lectures.html#lectures-ciblées-pour-la-consolidation",
     "href": "modules/semaine-02-r-quarto/lectures.html#lectures-ciblées-pour-la-consolidation",
-    "title": "Lectures - Semaine 02",
+    "title": "Lectures - Module 02",
     "section": "Lectures ciblées pour la consolidation",
-    "text": "Lectures ciblées pour la consolidation\n\n\n\nBesoin\nLecture ciblée\n\n\n\n\nComprendre l’interface, les scripts et les projets RStudio\nPosit (2026), RStudio IDE User Guide, sections sur les scripts, les projets et l’organisation du code\n\n\nOrganiser un projet et utiliser des chemins relatifs\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 6, Workflow: scripts and projects\n\n\nImporter un fichier CSV\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 7, Data import\n\n\nProduire un graphique simple avec ggplot2\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 1, Data visualization, et chapitre 11, Communication\n\n\nStructurer et rendre un rapport Quarto\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 28, Quarto; Quarto (2026), Guide officiel"
+    "text": "Lectures ciblées pour la consolidation\n\n\n\nBesoin\nLecture ciblée\n\n\n\n\nComprendre l’interface, les scripts et les projets RStudio\nPosit (documentation en ligne, consultée le 5 septembre 2026), RStudio IDE User Guide, organisation des volets et projets RStudio\n\n\nOrganiser un projet et utiliser des chemins relatifs\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 6, Workflow: scripts and projects\n\n\nImporter un fichier CSV\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 7, Data import\n\n\nProduire un graphique simple avec ggplot2\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 1, Data visualization, et chapitre 11, Communication\n\n\nStructurer et rendre un rapport Quarto\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 28, Quarto; Quarto (documentation en ligne, consultée le 5 septembre 2026), Guide officiel"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/lectures.html#lectures-facultatives",
     "href": "modules/semaine-02-r-quarto/lectures.html#lectures-facultatives",
-    "title": "Lectures - Semaine 02",
+    "title": "Lectures - Module 02",
     "section": "Lectures facultatives",
-    "text": "Lectures facultatives\nCes lectures sont utiles si vous voulez renforcer la trace finale ou préparer l’atelier 01 :\n\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 2, Workflow: basics, pour revoir les gestes élémentaires dans R;\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 3, Data transformation, pour comprendre les premiers verbes de manipulation;\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 18, Missing values, pour approfondir les valeurs manquantes;\nQuarto (2026), Using R, pour comprendre comment Quarto exécute les blocs de code R."
+    "text": "Lectures facultatives\nCes lectures sont utiles si vous voulez renforcer la trace finale ou préparer l’atelier 01 :\n\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 2, Workflow: basics, pour revoir les gestes élémentaires dans R;\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 3, Data transformation, pour comprendre les premiers verbes de manipulation;\nWickham, Çetinkaya-Rundel et Grolemund (2023), R for Data Science (2e), chapitre 18, Missing values, pour approfondir les valeurs manquantes;\nQuarto (documentation en ligne, consultée le 5 septembre 2026), Using R, pour comprendre comment Quarto exécute les blocs de code R."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/lectures.html#comment-utiliser-ces-lectures",
     "href": "modules/semaine-02-r-quarto/lectures.html#comment-utiliser-ces-lectures",
-    "title": "Lectures - Semaine 02",
+    "title": "Lectures - Module 02",
     "section": "Comment utiliser ces lectures",
     "text": "Comment utiliser ces lectures\nPour la semaine 02, les lectures servent surtout à résoudre un blocage :\n\nsi le fichier ne s’importe pas, consultez les sections sur les projets et l’importation;\nsi le graphique ne s’affiche pas, consultez les sections sur ggplot2;\nsi le document ne se rend pas, consultez les sections sur Quarto;\nsi une valeur manquante vous surprend, consultez la section sur les valeurs manquantes.\n\nPour la trace finale, ne recopiez pas les lectures. Utilisez-les pour améliorer votre code, clarifier votre interprétation ou formuler une question plus précise pour la suite."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/lectures.html#ressources-externes",
     "href": "modules/semaine-02-r-quarto/lectures.html#ressources-externes",
-    "title": "Lectures - Semaine 02",
+    "title": "Lectures - Module 02",
     "section": "Ressources externes",
-    "text": "Ressources externes\n\nPosit (2026), RStudio IDE User Guide.\nQuarto (2026), Documentation officielle.\nWickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023), R for Data Science (2e), O’Reilly."
+    "text": "Ressources externes\n\nPosit (documentation en ligne, consultée le 5 septembre 2026), RStudio IDE User Guide.\nQuarto (documentation en ligne, consultée le 5 septembre 2026), Documentation officielle.\nWickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023), R for Data Science (2e), O’Reilly."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html",
     "href": "modules/semaine-02-r-quarto/exercices.html",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "",
-    "text": "Créer un rapport Quarto reproductible à partir d’un nouveau cas. Les capsules utilisent ventes_operations_quebec.csv; les exercices utilisent plutôt les ventes mensuelles d’une PME fictive et portent sur la qualité opérationnelle.\nJeu de données de transfert : ventes_pme_quebec.csv."
+    "text": "Appliquer les gestes du parcours guidé à un nouveau cas : une PME québécoise fictive souhaite décrire les retours et les délais de livraison selon la saison. Vous produirez un rapport Quarto court, avec du code, un tableau, un graphique et des constats.\nLes capsules utilisent ventes_operations_quebec.csv.\nJeu de données de transfert : ventes_pme_quebec.csv, dont le dictionnaire est disponible dans la page Données.\nLes cinq exercices se suivent et alimentent un seul rapport. Les blocs fournis sont des points de départ : exécutez-les, vérifiez les sorties et rédigez vos propres interprétations."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#objectif",
     "href": "modules/semaine-02-r-quarto/exercices.html#objectif",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "",
-    "text": "Créer un rapport Quarto reproductible à partir d’un nouveau cas. Les capsules utilisent ventes_operations_quebec.csv; les exercices utilisent plutôt les ventes mensuelles d’une PME fictive et portent sur la qualité opérationnelle.\nJeu de données de transfert : ventes_pme_quebec.csv."
+    "text": "Appliquer les gestes du parcours guidé à un nouveau cas : une PME québécoise fictive souhaite décrire les retours et les délais de livraison selon la saison. Vous produirez un rapport Quarto court, avec du code, un tableau, un graphique et des constats.\nLes capsules utilisent ventes_operations_quebec.csv.\nJeu de données de transfert : ventes_pme_quebec.csv, dont le dictionnaire est disponible dans la page Données.\nLes cinq exercices se suivent et alimentent un seul rapport. Les blocs fournis sont des points de départ : exécutez-les, vérifiez les sorties et rédigez vos propres interprétations."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-1---créer-le-projet-et-importer-les-données",
     "href": "modules/semaine-02-r-quarto/exercices.html#exercice-1---créer-le-projet-et-importer-les-données",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "Exercice 1 - Créer le projet et importer les données",
-    "text": "Exercice 1 - Créer le projet et importer les données\nCréez un projet distinct nommé diagnostic-retours-pme, ajoutez un dossier data, puis importez le fichier.\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes_pme &lt;- read_csv(\n  \"data/ventes_pme_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names() |&gt;\n  mutate(mois = as.Date(mois))\n\nglimpse(ventes_pme)\n\nÀ faire :\n\nvérifier les dimensions du tableau;\nconfirmer que chaque ligne correspond à une succursale pour un mois;\nvérifier l’étendue des dates;\nrédiger une phrase expliquant pourquoi le chemin relatif rend le projet plus facile à partager."
+    "text": "Exercice 1 - Créer le projet et importer les données\n\nDans RStudio, choisissez File &gt; New Project &gt; New Directory &gt; New Project et nommez le projet diagnostic-retours-pme.\nDans Files, créez un dossier data, puis placez-y le CSV téléchargé.\nChoisissez File &gt; New File &gt; Quarto Document, sélectionnez HTML et enregistrez le document sous rapport_retours_pme.qmd, à la racine du projet.\nConservez l’en-tête ci-dessous, puis insérez les blocs de code R avec Insert &gt; Code Chunk &gt; R.\n\n---\ntitle: \"Retours et délais d’une PME fictive\"\nformat:\n  html:\n    embed-resources: true\n---\n\n# Charger les packages et importer le fichier\nlibrary(tidyverse)\nlibrary(janitor)\n\nventes_pme &lt;- read_csv(\n  \"data/ventes_pme_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names() |&gt;\n  mutate(mois = as.Date(mois))\n\nglimpse(ventes_pme)\ndim(ventes_pme)\nrange(ventes_pme$mois)\n\nIndiquez ce que représente une ligne du tableau et la période couverte. Expliquez en une phrase pourquoi le chemin relatif facilite le partage du projet.\nRepère de vérification : vous devez obtenir 60 lignes et 15 colonnes, de janvier à décembre 2025. Le tableau contient une observation par succursale et par mois, pour cinq succursales."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-2---identifier-les-types-de-variables",
     "href": "modules/semaine-02-r-quarto/exercices.html#exercice-2---identifier-les-types-de-variables",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "Exercice 2 - Identifier les types de variables",
-    "text": "Exercice 2 - Identifier les types de variables\nClassez mois, saison, succursale, campagne_locale, clients, delai_livraison_jours, satisfaction et taux_retour.\nAjoutez ensuite deux décisions de préparation :\n\nquelles variables convertir en facteurs;\nquelles variables conserver numériques même si elles prennent peu de valeurs.\n\nVotre justification doit s’appuyer sur le sens des variables, et non seulement sur leur apparence dans R."
+    "text": "Exercice 2 - Identifier les types de variables\nClassez mois, saison, succursale, campagne_locale, clients, delai_livraison_jours, satisfaction et taux_retour en dates, catégories ou variables numériques. Appuyez votre réponse sur le sens des variables.\nRepères utiles :\n\ncampagne_locale vaut 0 pour une absence de campagne et 1 pour une présence;\nsaison désigne ici un niveau d’activité, pas une saison météorologique : haute pour novembre et décembre, moyenne pour janvier, février et juillet, reguliere pour les autres mois;\ndelai_livraison_jours est un délai mensuel moyen en jours;\nsatisfaction est un score mensuel moyen sur 10;\ntaux_retour est une proportion : 0,04 correspond à 4 %.\n\nPréparez les catégories :\n\nventes_pme &lt;- ventes_pme |&gt;\n  mutate(\n    saison = factor(saison, levels = c(\"reguliere\", \"moyenne\", \"haute\")),\n    succursale = factor(succursale),\n    campagne_locale = factor(campagne_locale, levels = c(0, 1))\n  )\n\nExpliquez pourquoi campagne_locale peut être un facteur alors que clients doit rester numérique. Le nombre de valeurs différentes ne suffit pas, à lui seul, à choisir le type."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-3---repérer-les-valeurs-manquantes",
     "href": "modules/semaine-02-r-quarto/exercices.html#exercice-3---repérer-les-valeurs-manquantes",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "Exercice 3 - Repérer les valeurs manquantes",
-    "text": "Exercice 3 - Repérer les valeurs manquantes\nProduisez un audit qui donne à la fois le nombre et la proportion de valeurs manquantes.\n\naudit_manquants &lt;- ventes_pme |&gt;\n  summarise(\n    across(\n      everything(),\n      list(\n        nombre = ~ sum(is.na(.x)),\n        proportion = ~ mean(is.na(.x))\n      )\n    )\n  ) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = c(\"variable\", \".value\"),\n    names_pattern = \"(.*)_(nombre|proportion)$\"\n  ) |&gt;\n  filter(nombre &gt; 0)\n\naudit_manquants\n\nExpliquez pourquoi supprimer toutes les lignes incomplètes pourrait modifier plus d’une analyse, même si une seule variable est étudiée au départ."
+    "text": "Exercice 3 - Repérer les valeurs manquantes\nProduisez un diagnostic donnant le nombre et la proportion de valeurs manquantes pour chaque variable incomplète.\n\n# Compter les valeurs absentes dans chaque colonne\naudit_manquants &lt;- ventes_pme |&gt;\n  summarise(across(everything(), ~ sum(is.na(.x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"nombre\"\n  ) |&gt;\n  mutate(proportion = nombre / nrow(ventes_pme)) |&gt;\n  filter(nombre &gt; 0)\n\naudit_manquants\n\nLe dénominateur de chaque proportion est le nombre total de lignes. Par exemple, une proportion de 0,05 signifie que 5 % des valeurs de cette colonne sont absentes.\nNommez les variables touchées. Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait aussi enlever des valeurs disponibles pour d’autres variables. Dans ces exercices, conservez les lignes et signalez les exclusions faites pour chaque calcul."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-4---produire-un-tableau-descriptif",
     "href": "modules/semaine-02-r-quarto/exercices.html#exercice-4---produire-un-tableau-descriptif",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "Exercice 4 - Produire un tableau descriptif",
-    "text": "Exercice 4 - Produire un tableau descriptif\nLa question est maintenant : « Les retours et les délais sont-ils plus élevés pendant la haute saison? »\n\nresume_saison &lt;- ventes_pme |&gt;\n  group_by(saison) |&gt;\n  summarise(\n    observations = n(),\n    taux_retour_median = median(taux_retour, na.rm = TRUE),\n    delai_median = median(delai_livraison_jours, na.rm = TRUE),\n    satisfaction_mediane = median(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\nresume_saison\n\nRédigez deux constats descriptifs et une limite. Ne transformez pas la saison en explication causale."
+    "text": "Exercice 4 - Produire un tableau descriptif\nQuestion : « Les taux de retour et les délais de livraison observés sont-ils plus élevés pendant la haute saison? »\nComparez les médianes par saison. Ici, la médiane résume les valeurs mensuelles des succursales; elle ne décrit pas directement l’ensemble des livraisons individuelles.\n\nresume_saison &lt;- ventes_pme |&gt;\n  group_by(saison) |&gt;\n  summarise(\n    observations = n(),\n    taux_retour_median = median(taux_retour),\n    delais_utilises = sum(!is.na(delai_livraison_jours)),\n    delai_median = median(delai_livraison_jours, na.rm = TRUE),\n    scores_utilises = sum(!is.na(satisfaction)),\n    satisfaction_mediane = median(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\nresume_saison\n\ntaux_retour est complet dans ce fichier. Pour le délai et la satisfaction, na.rm = TRUE exclut uniquement les valeurs absentes du calcul concerné; les colonnes d’effectifs indiquent combien de valeurs restent.\nRédigez deux constats chiffrés et une limite. Répondez séparément pour les retours et pour les délais : les deux indicateurs ne donnent pas nécessairement le même classement. Une association observée ne démontre pas que la saison cause l’écart."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#exercice-5---produire-un-graphique",
     "href": "modules/semaine-02-r-quarto/exercices.html#exercice-5---produire-un-graphique",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "Exercice 5 - Produire un graphique",
-    "text": "Exercice 5 - Produire un graphique\nChoisissez un seul des deux graphiques suivants selon la question posée :\n\ncomparer la distribution du taux de retour entre les saisons;\nétudier la relation entre le délai de livraison et la satisfaction.\n\n\ngraphique_saisons &lt;- ggplot(\n  ventes_pme,\n  aes(x = saison, y = taux_retour)\n) +\n  geom_boxplot(fill = \"#0B4F6C\", alpha = 0.8) +\n  labs(x = NULL, y = \"Taux de retour\") +\n  theme_minimal(base_size = 12)\n\ngraphique_service &lt;- ventes_pme |&gt;\n  filter(!is.na(delai_livraison_jours), !is.na(satisfaction)) |&gt;\n  ggplot(aes(x = delai_livraison_jours, y = satisfaction)) +\n  geom_point(aes(colour = saison), alpha = 0.8) +\n  labs(\n    x = \"Délai de livraison, en jours\",\n    y = \"Satisfaction\",\n    colour = \"Saison\"\n  ) +\n  theme_minimal(base_size = 12)\n\nPrésentez le graphique choisi, justifiez votre choix en une phrase et écrivez un constat qui ne répète pas simplement le titre."
+    "text": "Exercice 5 - Produire un graphique\nPour répondre à la même question, représentez le délai médian par saison. Ce graphique reprend la démarche de la capsule 6, avec une autre variable et une autre unité.\n\ngraphique_delais &lt;- ggplot(\n  resume_saison,\n  aes(x = saison, y = delai_median)\n) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_discrete(labels = c(\n    reguliere = \"Régulière\", moyenne = \"Moyenne\", haute = \"Haute\"\n  )) +\n  labs(\n    title = \"Délai de livraison médian selon la saison\",\n    subtitle = \"PME fictive, année 2025\",\n    x = \"Niveau d’activité\",\n    y = \"Délai médian (jours)\"\n  ) +\n  theme_minimal(base_size = 12)\n\n# Afficher le graphique dans le rapport\ngraphique_delais\n\nÉcrivez un constat qui mentionne une comparaison et son unité. Précisez que le graphique montre des médianes et ne montre pas toute la dispersion des délais.\n\nPour approfondir, facultatif\nSi vous souhaitez étudier une autre question, comparez la distribution des taux de retour entre les saisons ou la relation entre le délai et la satisfaction. Ces graphiques demandent de nouveaux gestes et ne sont pas requis pour terminer le module.\n\n# Distribution des taux de retour\ngraphique_retours &lt;- ggplot(ventes_pme, aes(saison, taux_retour)) +\n  geom_boxplot(fill = \"#0B4F6C\", alpha = 0.8) +\n  scale_y_continuous(labels = scales::label_percent(decimal.mark = \",\")) +\n  scale_x_discrete(labels = c(\n    reguliere = \"Régulière\", moyenne = \"Moyenne\", haute = \"Haute\"\n  )) +\n  labs(title = \"Distribution des taux de retour\", x = \"Saison\", y = \"Taux de retour (%)\") +\n  theme_minimal(base_size = 12)\n\ngraphique_retours"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#trace-finale-courte",
     "href": "modules/semaine-02-r-quarto/exercices.html#trace-finale-courte",
-    "title": "Exercices - Semaine 02",
+    "title": "Exercices - Module 02",
     "section": "Trace finale courte",
-    "text": "Trace finale courte\nProduisez un mini-rapport Quarto sur la qualité opérationnelle contenant :\n\nle code d’importation et une vérification des dimensions;\nun audit des valeurs manquantes;\nle tableau par saison;\nun graphique choisi en fonction d’une question précise;\ndeux constats, une limite et une prochaine vérification.\n\nLe rapport ne doit reprendre ni le fichier, ni le tableau par succursale, ni le graphique par canal utilisés dans les capsules."
+    "text": "Trace finale courte\nTerminez rapport_retours_pme.qmd et cliquez sur Render. Le rapport doit contenir :\n\nune courte introduction et la question sur les retours et les délais;\nle code d’importation, les dimensions et l’unité d’observation;\nle diagnostic des valeurs manquantes;\nle tableau par saison avec les effectifs utilisés;\nle graphique du délai médian, avec ses unités;\ndeux constats chiffrés, une limite et une question à approfondir.\n\nOuvrez le HTML produit et vérifiez que le tableau et le graphique y apparaissent. Pour partager une analyse reproductible, conservez le .qmd, le CSV et l’organisation du projet. Le HTML permet de lire le rapport sans exécuter le code.\nArrêtez-vous lorsque ces six éléments sont présents et que Render termine sans erreur. L’approfondissement facultatif peut attendre."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/exercices.html#modèle-de-solution-cachée-à-utiliser",
@@ -3369,65 +3369,65 @@
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html",
     "href": "modules/semaine-02-r-quarto/capsules.html",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "",
-    "text": "Cette page rassemble les six capsules de la semaine 02. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.\nChaque capsule doit mener à une action concrète dans votre propre fichier Quarto. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome."
+    "text": "Cette page rassemble les supports des six capsules du module 02. Les vidéos seront ajoutées après leur enregistrement. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.\nLes capsules 1 à 3 préparent votre environnement et votre projet. Conservez ensuite les imports et les calculs dans votre fichier Quarto, créé à la capsule 3 et complété à la capsule 6. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#objectif",
     "href": "modules/semaine-02-r-quarto/capsules.html#objectif",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "",
-    "text": "Cette page rassemble les six capsules de la semaine 02. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.\nChaque capsule doit mener à une action concrète dans votre propre fichier Quarto. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome."
+    "text": "Cette page rassemble les supports des six capsules du module 02. Les vidéos seront ajoutées après leur enregistrement. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.\nLes capsules 1 à 3 préparent votre environnement et votre projet. Conservez ensuite les imports et les calculs dans votre fichier Quarto, créé à la capsule 3 et complété à la capsule 6. Les supports HTML et PDF contiennent les repères à consulter pendant la séance autonome."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-1---préparer-son-environnement-de-travail",
     "href": "modules/semaine-02-r-quarto/capsules.html#capsule-1---préparer-son-environnement-de-travail",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Capsule 1 - Préparer son environnement de travail",
-    "text": "Capsule 1 - Préparer son environnement de travail\nCette capsule vérifie que R, RStudio ou Positron, Quarto et les packages de base fonctionnent correctement.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : ouvrir RStudio ou Positron, exécuter 1 + 1, puis charger tidyverse."
+    "text": "Capsule 1 - Préparer son environnement de travail\nCette capsule vérifie que R et les packages de base fonctionnent correctement. Le premier rendu Quarto est vérifié à la capsule 6. Les démonstrations utilisent RStudio.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : ouvrir RStudio, exécuter 1 + 1, puis charger tidyverse, janitor, lubridate et scales."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-2---se-repérer-dans-rstudio",
     "href": "modules/semaine-02-r-quarto/capsules.html#capsule-2---se-repérer-dans-rstudio",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Capsule 2 - Se repérer dans RStudio",
     "text": "Capsule 2 - Se repérer dans RStudio\nCette capsule sert à reconnaître les zones de travail : console, éditeur, environnement, fichiers, graphiques et sortie Quarto.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : associer chaque zone de l’interface à une action concrète, par exemple écrire, exécuter, afficher un objet ou trouver un fichier."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-3---organiser-un-projet-reproductible",
     "href": "modules/semaine-02-r-quarto/capsules.html#capsule-3---organiser-un-projet-reproductible",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Capsule 3 - Organiser un projet reproductible",
-    "text": "Capsule 3 - Organiser un projet reproductible\nCette capsule montre pourquoi un projet R réduit les erreurs de chemins et aide à reprendre une analyse plus tard.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : créer ou ouvrir un projet R, puis vérifier où se trouve le dossier de données utilisé par le module."
+    "text": "Capsule 3 - Organiser un projet reproductible\nCette capsule montre pourquoi un projet R réduit les erreurs de chemins et aide à reprendre une analyse plus tard.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : créer ou ouvrir un projet R, placer le CSV dans data/ et créer rapport_semaine_02.qmd à la racine du projet."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-4---importer-et-inspecter-un-tableau",
     "href": "modules/semaine-02-r-quarto/capsules.html#capsule-4---importer-et-inspecter-un-tableau",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Capsule 4 - Importer et inspecter un tableau",
-    "text": "Capsule 4 - Importer et inspecter un tableau\nCette capsule présente l’importation d’un fichier CSV et les premières vérifications : dimensions, noms de variables, types et unité d’observation.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : importer ventes_operations_quebec.csv, puis écrire ce que représente une ligne du tableau."
+    "text": "Capsule 4 - Importer et inspecter un tableau\nCette capsule présente l’importation d’un fichier CSV et les premières vérifications : dimensions, noms de variables, types et unité d’observation.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : importer ventes_operations_quebec.csv, vérifier les 24 lignes et les 12 colonnes, puis écrire ce que représente une ligne du tableau."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-5---résumer-et-diagnostiquer-les-données",
     "href": "modules/semaine-02-r-quarto/capsules.html#capsule-5---résumer-et-diagnostiquer-les-données",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Capsule 5 - Résumer et diagnostiquer les données",
     "text": "Capsule 5 - Résumer et diagnostiquer les données\nCette capsule montre comment repérer les valeurs manquantes et produire de premiers indicateurs descriptifs.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : produire un tableau de valeurs manquantes et un premier résumé descriptif par succursale ou par canal principal."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#capsule-6---produire-un-mini-rapport-quarto",
     "href": "modules/semaine-02-r-quarto/capsules.html#capsule-6---produire-un-mini-rapport-quarto",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Capsule 6 - Produire un mini-rapport Quarto",
     "text": "Capsule 6 - Produire un mini-rapport Quarto\nCette capsule rassemble les gestes précédents dans un document .qmd : titre, texte, code, sorties, graphiques et constats descriptifs.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : rendre le fichier Quarto en HTML, puis vérifier que le document contient le code d’importation, un diagnostic, un tableau, un graphique et deux constats."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/capsules.html#après-les-capsules",
     "href": "modules/semaine-02-r-quarto/capsules.html#après-les-capsules",
-    "title": "Capsules - Semaine 02",
+    "title": "Capsules - Module 02",
     "section": "Après les capsules",
-    "text": "Après les capsules\nPoursuivez avec les démonstrations R, puis les exercices. Les capsules donnent les repères; les démonstrations montrent la démarche complète; les exercices servent à construire le mini-rapport."
+    "text": "Après les capsules\nPoursuivez avec les démonstrations R, puis les exercices. Les capsules donnent les repères; les démonstrations montrent la démarche complète sur le même fichier. Les exercices appliquent ensuite la démarche à un autre fichier, sur les retours et les délais d’une PME fictive."
   },
   {
     "objectID": "modules/semaine-01-introduction/media/qmd/capsule-06-support.html#pourquoi-ça-compte",
@@ -4393,7 +4393,7 @@
     "href": "modules/semaine-02-r-quarto/demonstrations.html#préparation",
     "title": "Démonstrations R - Semaine 02",
     "section": "Préparation",
-    "text": "Préparation\nLe bloc suivant charge les packages et importe les données. Il est placé au début de la démonstration parce que tous les blocs suivants en dépendent.\n\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(scales)\n\ndata_path &lt;- if (file.exists(\"data/ventes_operations_quebec.csv\")) {\n  \"data/ventes_operations_quebec.csv\"\n} else {\n  \"modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv\"\n}\n\nventes_operations &lt;- readr::read_csv(data_path, show_col_types = FALSE) |&gt;\n  clean_names()\n\ncurrency_ca &lt;- scales::label_dollar(\n  prefix = \"\",\n  suffix = \" $\",\n  big.mark = \" \",\n  decimal.mark = \",\"\n)\n\nÀ lire dans ce bloc :\n\nread_csv() lit le fichier CSV;\nclean_names() standardise les noms de variables;\ncurrency_ca servira plus tard à afficher les montants en dollars canadiens."
+    "text": "Préparation\nCréez le projet avec File &gt; New Project. Placez le CSV dans data/ et votre fichier rapport_semaine_02.qmd à la racine du projet. Conservez les blocs ci-dessous dans leur ordre d’apparition.\nLe bloc suivant charge les packages et importe les données. Il est placé au début de la démonstration parce que tous les blocs suivants en dépendent.\n\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(scales)\n\ndata_path &lt;- \"data/ventes_operations_quebec.csv\"\n\nventes_operations &lt;- readr::read_csv(data_path, show_col_types = FALSE) |&gt;\n  clean_names()\n\ncurrency_ca &lt;- scales::label_dollar(\n  prefix = \"\",\n  suffix = \" $\",\n  big.mark = \" \",\n  decimal.mark = \",\"\n)\n\nÀ lire dans ce bloc :\n\nread_csv() lit le fichier CSV;\nclean_names() standardise les noms de variables;\ncurrency_ca servira plus tard à afficher les montants en dollars canadiens."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/demonstrations.html#démonstration-1---inspecter-le-tableau",
@@ -4407,7 +4407,7 @@
     "href": "modules/semaine-02-r-quarto/demonstrations.html#démonstration-2---préparer-les-variables",
     "title": "Démonstrations R - Semaine 02",
     "section": "Démonstration 2 - Préparer les variables",
-    "text": "Démonstration 2 - Préparer les variables\nCertaines variables doivent être transformées avant d’être utilisées dans les résumés ou les graphiques. Par exemple, mois doit être traité comme une date, tandis que succursale, region, campagne_locale et canal_principal sont des catégories.\n\nventes_preparees &lt;- ventes_operations |&gt;\n  mutate(\n    mois = ymd(mois),\n    succursale = factor(succursale),\n    region = factor(region),\n    campagne_locale = factor(campagne_locale),\n    canal_principal = factor(canal_principal)\n  )\n\nventes_preparees |&gt;\n  summarise(\n    nb_lignes = n(),\n    nb_succursales = n_distinct(succursale),\n    nb_regions = n_distinct(region),\n    nb_canaux = n_distinct(canal_principal),\n    mois_min = min(mois, na.rm = TRUE),\n    mois_max = max(mois, na.rm = TRUE)\n  ) |&gt;\n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\nnb_lignes\nnb_succursales\nnb_regions\nnb_canaux\nmois_min\nmois_max\n\n\n\n\n24\n4\n4\n3\n2025-01-01\n2025-06-01\n\n\n\n\n\nComment lire la sortie :\n\nnb_lignes confirme la taille du tableau;\nnb_succursales, nb_regions et nb_canaux indiquent combien de groupes peuvent être comparés;\nmois_min et mois_max indiquent la période couverte.\n\nÀ retenir pour la trace finale :\n\nexpliquer pourquoi certaines variables sont catégorielles;\nindiquer la période couverte par les données;\ngarder les transformations dans le code, plutôt que de modifier le CSV à la main."
+    "text": "Démonstration 2 - Préparer les variables\nVérifiez les types avant les résumés et les graphiques. Ici, read_csv() reconnaît déjà mois comme une date; ymd() conserve ce type. La conversion en facteurs rend explicite le rôle des catégories. Par exemple, mois doit être traité comme une date, tandis que succursale, region, campagne_locale et canal_principal sont des catégories.\n\nventes_preparees &lt;- ventes_operations |&gt;\n  mutate(\n    mois = ymd(mois),\n    succursale = factor(succursale),\n    region = factor(region),\n    campagne_locale = factor(campagne_locale),\n    canal_principal = factor(canal_principal)\n  )\n\nventes_preparees |&gt;\n  summarise(\n    nb_lignes = n(),\n    nb_succursales = n_distinct(succursale),\n    nb_regions = n_distinct(region),\n    nb_canaux = n_distinct(canal_principal),\n    mois_min = min(mois, na.rm = TRUE),\n    mois_max = max(mois, na.rm = TRUE)\n  ) |&gt;\n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\nnb_lignes\nnb_succursales\nnb_regions\nnb_canaux\nmois_min\nmois_max\n\n\n\n\n24\n4\n4\n3\n2025-01-01\n2025-06-01\n\n\n\n\n\nComment lire la sortie :\n\nnb_lignes confirme la taille du tableau;\nnb_succursales, nb_regions et nb_canaux indiquent combien de groupes peuvent être comparés;\nmois_min et mois_max indiquent la période couverte.\n\nÀ retenir pour la trace finale :\n\nexpliquer pourquoi certaines variables sont catégorielles;\nindiquer la période couverte par les données;\ngarder les transformations dans le code, plutôt que de modifier le CSV à la main."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/demonstrations.html#démonstration-3---vérifier-les-valeurs-manquantes",
@@ -4421,28 +4421,28 @@
     "href": "modules/semaine-02-r-quarto/demonstrations.html#démonstration-4---résumer-un-tableau",
     "title": "Démonstrations R - Semaine 02",
     "section": "Démonstration 4 - Résumer un tableau",
-    "text": "Démonstration 4 - Résumer un tableau\nUn tableau descriptif sert à transformer plusieurs lignes en quelques indicateurs lisibles. Ici, on résume les ventes par succursale.\n\nresume_succursales &lt;- ventes_preparees |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes, na.rm = TRUE),\n    clients_totaux = sum(clients, na.rm = TRUE),\n    panier_moyen = ventes_totales / clients_totaux,\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\nresume_succursales |&gt;\n  mutate(\n    ventes_totales = currency_ca(ventes_totales),\n    panier_moyen = currency_ca(panier_moyen),\n    satisfaction_moyenne = round(satisfaction_moyenne, 1)\n  ) |&gt;\n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\nsuccursale\nregion\nventes_totales\nclients_totaux\npanier_moyen\nsatisfaction_moyenne\n\n\n\n\nMontréal\nMontréal\n831 777 $\n14057\n59,17 $\n8.1\n\n\nQuébec\nCapitale-Nationale\n677 971 $\n11464\n59,14 $\n8.1\n\n\nSherbrooke\nEstrie\n589 922 $\n9565\n61,68 $\n7.9\n\n\nTrois-Rivières\nMauricie\n515 975 $\n8589\n60,07 $\n8.2\n\n\n\n\n\nComment lire la sortie :\n\nventes_totales compare le volume de ventes total observé;\nclients_totaux donne le volume de clientèle observé;\npanier_moyen résume la valeur moyenne d’un achat;\nsatisfaction_moyenne résume l’expérience client moyenne;\nle tri permet de repérer rapidement les succursales avec le plus de ventes.\n\nPrudence :\n\nune succursale peut avoir plus de ventes parce qu’elle a plus de clients;\nune moyenne peut être influencée par des valeurs manquantes;\nce tableau décrit des écarts, il ne les explique pas."
+    "text": "Démonstration 4 - Résumer un tableau\nUn tableau descriptif sert à transformer plusieurs lignes en quelques indicateurs lisibles. Ici, on résume les ventes par succursale.\n\nresume_succursales &lt;- ventes_preparees |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes),\n    clients_totaux = sum(clients),\n    panier_moyen = ventes_totales / clients_totaux,\n    nb_mois_satisfaction = sum(!is.na(satisfaction)),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))\n\nresume_succursales |&gt;\n  transmute(\n    Succursale = succursale,\n    `Ventes ($ CA)` = currency_ca(ventes_totales),\n    `Panier ($ CA)` = currency_ca(panier_moyen),\n    `Mois utilisés` = nb_mois_satisfaction,\n    `Satisfaction (/10)` = format(\n      round(satisfaction_moyenne, 2), decimal.mark = \",\", nsmall = 2\n    )\n  ) |&gt;\n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\nSuccursale\nVentes ($ CA)\nPanier ($ CA)\nMois utilisés\nSatisfaction (/10)\n\n\n\n\nMontréal\n831 777 $\n59,17 $\n5\n8,08\n\n\nQuébec\n677 971 $\n59,14 $\n5\n8,06\n\n\nSherbrooke\n589 922 $\n61,68 $\n6\n7,88\n\n\nTrois-Rivières\n515 975 $\n60,07 $\n6\n8,18\n\n\n\n\n\nComment lire la sortie :\n\nventes_totales compare le volume de ventes total observé;\nclients_totaux, conservé dans l’objet R, additionne les nombres mensuels de clients; il ne compte pas nécessairement des personnes distinctes sur six mois;\npanier_moyen est le rapport des ventes totales au total de clients;\nsatisfaction_moyenne est la moyenne des scores mensuels disponibles, sans pondération par le nombre de clients;\nnb_mois_satisfaction compte les mois utilisés pour cette moyenne; le tableau l’affiche sous « Mois utilisés »;\nle tri permet de repérer rapidement les succursales avec le plus de ventes.\n\nPrudence :\n\nune succursale peut avoir plus de ventes parce qu’elle a plus de clients;\nla satisfaction repose sur 5 mois à Montréal et à Québec, contre 6 à Sherbrooke et à Trois-Rivières;\nles ventes et les nombres de clients sont complets ici; na.rm = TRUE est utilisé seulement pour la satisfaction;\nce tableau décrit des écarts, il ne les explique pas."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/demonstrations.html#démonstration-5---créer-un-graphique",
     "href": "modules/semaine-02-r-quarto/demonstrations.html#démonstration-5---créer-un-graphique",
     "title": "Démonstrations R - Semaine 02",
     "section": "Démonstration 5 - Créer un graphique",
-    "text": "Démonstration 5 - Créer un graphique\nUn graphique ne remplace pas le tableau. Il aide à voir plus rapidement une comparaison.\n\nresume_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes totales par succursale\",\n    x = \"Ventes\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nComment lire le graphique :\n\nchaque barre représente une succursale;\nla longueur de la barre représente les ventes totales;\nles succursales sont ordonnées pour faciliter la comparaison;\nle titre et l’axe horizontal indiquent ce qui est mesuré.\n\nConstat descriptif possible :\n\nLes ventes totales varient entre les succursales, et certaines succursales contribuent davantage au volume total observé.\n\nCe constat est descriptif. Il ne dit pas pourquoi ces différences existent."
+    "text": "Démonstration 5 - Créer un graphique\nUn graphique ne remplace pas le tableau. Il aide à voir plus rapidement une comparaison.\n\nresume_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(ventes_totales, succursale)) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_continuous(labels = currency_ca) +\n  labs(\n    title = \"Ventes totales par succursale\",\n    x = \"Ventes totales ($ CA)\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nComment lire le graphique :\n\nchaque barre représente une succursale;\nla longueur de la barre représente les ventes totales;\nles succursales sont ordonnées pour faciliter la comparaison;\nle titre et l’axe horizontal indiquent ce qui est mesuré.\n\nConstat descriptif possible :\n\nDe janvier à juin 2025, Montréal totalise 831 777 $ CA de ventes, contre 515 975 $ CA pour Trois-Rivières. Ces montants décrivent les données simulées du module.\n\nCe constat est descriptif. Il ne dit pas pourquoi ces différences existent."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/demonstrations.html#synthèse-pour-la-trace-finale",
     "href": "modules/semaine-02-r-quarto/demonstrations.html#synthèse-pour-la-trace-finale",
     "title": "Démonstrations R - Semaine 02",
     "section": "Synthèse pour la trace finale",
-    "text": "Synthèse pour la trace finale\nLa trace finale de la semaine 02 doit montrer que l’analyse peut être reprise. Elle devrait donc contenir :\n\nle code d’importation;\nune description de l’unité d’observation;\nun diagnostic des valeurs manquantes;\nun tableau descriptif;\nun graphique;\ndeux constats descriptifs;\nune question à approfondir.\n\nAvant de considérer la trace terminée, vérifiez que le fichier Quarto se rend sans erreur et que chaque résultat important est produit par du code présent dans le document."
+    "text": "Synthèse pour la trace finale\nLe rapport guidé doit montrer que l’analyse peut être reprise. Les exercices vous demandent ensuite d’appliquer ces gestes à un autre fichier. Elle devrait donc contenir :\n\nle code d’importation;\nune description de l’unité d’observation;\nun diagnostic des valeurs manquantes;\nun tableau descriptif;\nun graphique;\ndeux constats descriptifs;\nune question à approfondir.\n\nAvant de considérer la trace terminée, vérifiez que le fichier Quarto se rend sans erreur et que chaque résultat important est produit par du code présent dans le document."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html",
     "href": "modules/semaine-02-r-quarto/index.html",
     "title": "Module 02",
     "section": "",
-    "text": "Séance autonome\n\n\nImporter, inspecter, résumer et visualiser un premier tableau de données. Cette semaine sert à installer les bases techniques nécessaires pour travailler de façon reproductible avec R. Le parcours vous guide depuis l’environnement de travail jusqu’à la production d’un mini-rapport Quarto.\n\n\n\n\n\n\n\nDurée estimée\n\n\n2 h 30 à 3 h\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio, Quarto\n\n\n\n\n\n\n\n\n\nDonnées\n\n\nventes_operations_quebec.csv\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nMini-rapport Quarto"
+    "text": "Séance autonome\n\n\nImporter, inspecter, résumer et visualiser un premier tableau de données. Cette semaine sert à installer les bases techniques nécessaires pour travailler de façon reproductible avec R. Le parcours vous guide depuis l’environnement de travail jusqu’à la production d’un mini-rapport Quarto.\n\n\n\n\n\n\n\nDurée estimée\n\n\n2 h 30 à 3 h\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio, Quarto\n\n\n\n\n\n\n\n\n\nDonnées du parcours guidé\n\n\nventes_operations_quebec.csv\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nMini-rapport Quarto"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#on-passe-au-concret",
@@ -4456,21 +4456,21 @@
     "href": "modules/semaine-02-r-quarto/index.html#votre-parcours",
     "title": "Module 02",
     "section": "Votre parcours",
-    "text": "Votre parcours\n\n\n\n\n\n\nNoteNotes de cours\n\n\n\nLe support global de notes de cours est disponible en HTML et en PDF. Il sert de synthèse du module; les supports détaillés sont associés aux capsules.\n\n\nRevenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.\n\n  \n    \n      1\n      Préparer son environnement de travail\n      Vérifier que R, RStudio et les packages essentiels fonctionnent.\n      Capsule 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif S'assurer que R, RStudio, Quarto et les packages nécessaires fonctionnent.\n      Ressource Capsule 1\n      Action Ouvrir RStudio, exécuter une commande simple dans la console et charger tidyverse.\n\n      \n        Activité 2.1 - Vérifier que R fonctionne\n        Dans la console, exécutez une commande simple, par exemple 1 + 1, puis chargez tidyverse. Notez le résultat obtenu.\n      \n    \n  \n\n  \n    \n      2\n      Se repérer dans RStudio\n      Repérer la console, l'éditeur, l'environnement, les fichiers et les graphiques.\n      Capsule 2\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Reconnaître les principales zones de l'interface.\n      Ressource Capsule 2\n      Action Identifier la console, l'éditeur, l'environnement, l'onglet Files et l'onglet Plots.\n\n      \n        Activité 2.2 - Identifier les zones de RStudio\n        Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers ou afficher un graphique.\n      \n    \n  \n\n  \n    \n      3\n      Organiser un projet reproductible\n      Utiliser un projet R et des chemins relatifs.\n      Capsule 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Comprendre pourquoi le projet R est la base de la reproductibilité.\n      Ressource Capsule 3\n      Action Créer ou ouvrir un projet R, puis vérifier où se trouve le dossier data.\n\n      \n        Activité 2.3 - Expliquer l'utilité d'un projet R\n        Expliquez en deux ou trois phrases pourquoi un projet R réduit les erreurs de chemins et facilite la reprise d'une analyse.\n      \n    \n  \n\n  \n    \n      4\n      Importer et inspecter un tableau\n      Lire le fichier CSV et vérifier les dimensions du tableau.\n      Capsule 4Démo 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Lire le fichier CSV dans R.\n      Ressource Capsule 4 Préparation R Démo 1\n      Action Exécuter le code d'importation et vérifier les dimensions du tableau.\n\n      \n        Activité 2.4 - Importer les données\n        Importez le fichier ventes_operations_quebec.csv, puis indiquez le nombre de lignes et de colonnes du tableau.\n      \n    \n  \n\n  \n    \n      5\n      Inspecter le tableau\n      Identifier les lignes, les colonnes et les types de variables.\n      Démo 1Ex. 1Ex. 2\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Comprendre la structure du tableau avant de calculer des résultats.\n      Ressource Démo 1 Exercice 1 Exercice 2\n      Action Identifier l'unité d'observation, les variables numériques, les variables catégorielles et les variables de date ou de période.\n\n      \n        Activité 2.5 - Inspecter les lignes, colonnes et types de variables\n        Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.\n      \n    \n  \n\n  \n    \n      6\n      Diagnostiquer les données\n      Repérer les valeurs manquantes et signaler les précautions nécessaires.\n      Capsule 5Démo 3Ex. 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Produire un diagnostic simple des données absentes avant de présenter les résultats descriptifs.\n      Ressource Capsule 5 Démo 2 Démo 3 Exercice 3\n      Action Utiliser is.na(), summarise() et pivot_longer() pour compter les valeurs manquantes et indiquer quelles variables sont touchées.\n\n      \n        Activité 2.6 - Repérer les valeurs manquantes\n        Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.\n      \n    \n  \n\n  \n    \n      7\n      Produire les premiers résultats descriptifs\n      Créer un tableau descriptif, un graphique simple et un premier constat.\n      Capsule 5Capsule 6Démo 4Démo 5Ex. 4Ex. 5\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Produire un tableau descriptif et un graphique simple.\n      Ressource Capsule 5 Capsule 6 Démo 4 Démo 5 Exercice 4 Exercice 5\n      Action Résumer les ventes par succursale ou par canal principal, puis construire un graphique avec ggplot() pour appuyer un premier constat descriptif.\n\n      \n        Activité 2.7 - Produire un tableau descriptif\n        Produisez un tableau descriptif par succursale ou par canal principal, puis interprétez un résultat.\n      \n      \n        Activité 2.8 - Produire un graphique\n        Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.\n      \n    \n  \n\n  \n    \n      8\n      Structurer le fichier QMD\n      Créer le document Quarto qui rassemble texte, code et résultats.\n      Capsule 6Guide Quarto\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Construire un fichier Quarto lisible avant de produire la version HTML.\n      Ressource Capsule 6 Guide Quarto Trace finale courte\n      Action Créer un fichier .qmd avec un titre, une courte introduction, des blocs de code R et des phrases d'interprétation.\n\n      \n        Activité 2.9 - Structurer le fichier QMD\n        Créez le squelette du mini-rapport Quarto : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.\n      \n    \n  \n\n  \n    \n      9\n      Finaliser le mini-rapport\n      Produire le HTML final et vérifier que le document se relit bien.\n      Capsule 6Trace finale\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Vérifier que le rapport est reproductible et compréhensible.\n      Ressource Capsule 6 Trace finale courte Lectures\n      Action Rendre le document avec Render ou quarto render, puis relire le HTML produit.\n\n      \n        Activité 2.10 - Formuler deux constats descriptifs\n        À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée."
+    "text": "Votre parcours\nLe parcours ci-dessous construit un rapport guidé avec ventes_operations_quebec.csv. Après l’étape 9, passez aux exercices d’application : vous utiliserez ventes_pme_quebec.csv dans un projet distinct pour étudier les retours et les délais. Les deux fichiers sont simulés.\nLes productions autonomes des supports reprennent les activités du parcours : il n’est pas nécessaire de les refaire deux fois. Les activités 2.1 à 2.10 détaillent les gestes présentés dans les six capsules.\nAvant de commencer, consultez la page Installation si vos outils ne sont pas prêts. La durée indiquée est un repère; prévoyez du temps supplémentaire en cas d’installation ou de dépannage.\n\n\n\n\n\n\nNoteNotes de cours\n\n\n\nLe support global de notes de cours est disponible en HTML et en PDF. Il sert de synthèse du module; les supports détaillés sont associés aux capsules.\n\n\nRevenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.\n\n  \n    \n      1\n      Préparer son environnement de travail\n      Vérifier que R, RStudio et les packages essentiels fonctionnent.\n      Capsule 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Vérifier R et les packages nécessaires; le rendu Quarto sera testé à la capsule 6.\n      Ressource Capsule 1\n      Action Ouvrir RStudio, exécuter une commande simple dans la console et charger les quatre packages de la capsule 1.\n\n      \n        Activité 2.1 - Vérifier que R fonctionne\n        Dans la console, exécutez une commande simple, par exemple 1 + 1, puis chargez tidyverse, janitor, lubridate et scales. Notez le résultat et les éventuelles erreurs.\n      \n    \n  \n\n  \n    \n      2\n      Se repérer dans RStudio\n      Repérer la console, l'éditeur, l'environnement, les fichiers et les graphiques.\n      Capsule 2\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Reconnaître les principales zones de l'interface.\n      Ressource Capsule 2\n      Action Identifier la console, l'éditeur, l'environnement, l'onglet Files et l'onglet Plots.\n\n      \n        Activité 2.2 - Identifier les zones de RStudio\n        Associez chaque zone de RStudio à une action : écrire le rapport, exécuter du code, voir les objets, trouver les fichiers ou afficher un graphique.\n      \n    \n  \n\n  \n    \n      3\n      Organiser un projet reproductible\n      Utiliser un projet R et des chemins relatifs.\n      Capsule 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Comprendre pourquoi le projet R est la base de la reproductibilité.\n      Ressource Capsule 3\n      Action Créer un projet R, placer le CSV dans data et créer le fichier rapport_semaine_02.qmd à la racine du projet.\n\n      \n        Activité 2.3 - Expliquer l'utilité d'un projet R\n        Expliquez en deux ou trois phrases pourquoi un projet R réduit les erreurs de chemins et facilite la reprise d'une analyse.\n      \n    \n  \n\n  \n    \n      4\n      Importer et inspecter un tableau\n      Lire le fichier CSV et vérifier les dimensions du tableau.\n      Capsule 4Démo 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Lire le fichier CSV dans R.\n      Ressource Capsule 4 Préparation R Démo 1\n      Action Exécuter le code d'importation et vérifier les dimensions du tableau.\n\n      \n        Activité 2.4 - Importer les données\n        Importez le fichier ventes_operations_quebec.csv, puis indiquez le nombre de lignes et de colonnes du tableau.\n      \n    \n  \n\n  \n    \n      5\n      Inspecter le tableau\n      Identifier les lignes, les colonnes et les types de variables.\n      Démo 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Comprendre la structure du tableau avant de calculer des résultats.\n      Ressource Démo 1  \n      Action Identifier l'unité d'observation, les variables numériques, les variables catégorielles et les variables de date ou de période.\n\n      \n        Activité 2.5 - Inspecter les lignes, colonnes et types de variables\n        Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.\n      \n    \n  \n\n  \n    \n      6\n      Diagnostiquer les données\n      Repérer les valeurs manquantes et signaler les précautions nécessaires.\n      Capsule 5Démo 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Produire un diagnostic simple des données absentes avant de présenter les résultats descriptifs.\n      Ressource Capsule 5 Démo 2 Démo 3 \n      Action Utiliser is.na(), summarise() et pivot_longer() pour compter les valeurs manquantes et indiquer quelles variables sont touchées.\n\n      \n        Activité 2.6 - Repérer les valeurs manquantes\n        Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.\n      \n    \n  \n\n  \n    \n      7\n      Produire les premiers résultats descriptifs\n      Créer un tableau descriptif, un graphique simple et un premier constat.\n      Capsule 5Capsule 6Démo 4Démo 5\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Produire un tableau descriptif et un graphique simple.\n      Ressource Capsule 5 Capsule 6 Démo 4 Démo 5  \n      Action Résumer les ventes par succursale ou par canal principal, puis construire un graphique avec ggplot() pour appuyer un premier constat descriptif.\n\n      \n        Activité 2.7 - Produire un tableau descriptif\n        Produisez un tableau descriptif par succursale ou par canal principal, puis interprétez un résultat.\n      \n      \n        Activité 2.8 - Produire un graphique\n        Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.\n      \n    \n  \n\n  \n    \n      8\n      Structurer le fichier QMD\n      Organiser le document Quarto commencé à l’étape 3.\n      Capsule 6Guide Quarto\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Construire un fichier Quarto lisible avant de produire la version HTML.\n      Ressource Capsule 6 Guide Quarto \n      Action Créer un fichier .qmd avec un titre, une courte introduction, des blocs de code R et des phrases d'interprétation.\n\n      \n        Activité 2.9 - Structurer le fichier QMD\n        Complétez les sections du mini-rapport Quarto commencé à l’étape 3 : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.\n      \n    \n  \n\n  \n    \n      9\n      Finaliser le mini-rapport\n      Produire le HTML final et vérifier que le document se relit bien.\n      Capsule 6\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Vérifier que le rapport est reproductible et compréhensible.\n      Ressource Capsule 6  Lectures\n      Action Cliquer sur Render dans RStudio, puis relire le HTML produit.\n\n      \n        Activité 2.10 - Formuler deux constats descriptifs\n        À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#ressources-du-module",
     "href": "modules/semaine-02-r-quarto/index.html#ressources-du-module",
     "title": "Module 02",
     "section": "Ressources du module",
-    "text": "Ressources du module\n\n  \n    \n    CapsulesComprendre les gestes de base avant de les reproduire dans R.\n  \n  \n    \n    Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.\n  \n  \n    \n    ExercicesPratiquer sans regarder la solution, puis comparer votre démarche après une vraie tentative.\n  \n  \n    \n    LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.\n  \n\n\n\n\n\n\n\nAvertissementErreurs fréquentes à éviter\n\n\n\n\nTravailler sans projet R.\nUtiliser un chemin absolu propre à un ordinateur.\nOublier de charger les packages nécessaires.\nInterpréter NA comme une valeur numérique.\nModifier le CSV à la main sans garder de trace.\nCopier un graphique sans conserver le code."
+    "text": "Ressources du module\n\n  \n    \n    CapsulesComprendre les gestes de base avant de les reproduire dans R.\n  \n  \n    \n    Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.\n  \n  \n    \n    ExercicesAppliquer la démarche à un nouveau cas sur les retours et les délais, puis vérifier les critères proposés.\n  \n  \n    \n    LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.\n  \n\n\n\n\n\n\n\nAvertissementErreurs fréquentes à éviter\n\n\n\n\nTravailler sans projet R.\nUtiliser un chemin absolu propre à un ordinateur.\nOublier de charger les packages nécessaires.\nInterpréter NA comme une valeur numérique.\nModifier le CSV à la main sans garder de trace.\nCopier un graphique sans conserver le code."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#trace-finale",
     "href": "modules/semaine-02-r-quarto/index.html#trace-finale",
     "title": "Module 02",
     "section": "Trace finale",
-    "text": "Trace finale\n\n\n\n\n\n\nImportantObjectif du mini-rapport\n\n\n\nLe mini-rapport sert à montrer que vous pouvez transformer un fichier CSV en une première analyse reproductible. Il ne s’agit pas d’un long texte : le document doit rendre visibles les gestes essentiels du parcours, du code d’importation jusqu’aux constats descriptifs.\n\n\n\n  Ce que le rapport doit démontrer\n  Je peux reprendre l'analyse du début à la fin.\n  \n    Une autre personne doit pouvoir ouvrir votre fichier Quarto, exécuter le code,\n    voir les mêmes résultats et comprendre vos deux constats descriptifs.\n  \n  \n    Importer\n    Inspecter\n    Diagnostiquer\n    Résumer\n    Visualiser\n    Structurer le QMD\n    Rendre\n    Constater\n  \n\nVotre mini-rapport doit contenir :\n\nune courte introduction;\nle code d’importation;\nune inspection du tableau;\nun court diagnostic des valeurs manquantes;\nun tableau descriptif;\nun graphique;\ndeux constats descriptifs;\nune question que vous aimeriez approfondir.\n\nLa trace sert à montrer ce que vous savez faire à la fin de la semaine. Elle n’a pas besoin d’être longue."
+    "text": "Trace finale\nLe parcours guidé aboutit à rapport_semaine_02.qmd sur les ventes. Les exercices aboutissent à rapport_retours_pme.qmd sur la qualité opérationnelle. Il s’agit d’entraînements pour ce module; les consignes des mini-rapports évalués se trouvent dans la section Évaluations.\n\n\n\n\n\n\nImportantObjectif du mini-rapport\n\n\n\nLe mini-rapport sert à montrer que vous pouvez transformer un fichier CSV en une première analyse reproductible. Il ne s’agit pas d’un long texte : le document doit rendre visibles les gestes essentiels du parcours, du code d’importation jusqu’aux constats descriptifs.\n\n\n\n  Ce que le rapport doit démontrer\n  Je peux reprendre l'analyse du début à la fin.\n  \n    Une autre personne doit pouvoir ouvrir votre fichier Quarto, exécuter le code,\n    retrouver les données dans le projet, recalculer les résultats avec les packages nécessaires et comprendre vos deux constats descriptifs.\n  \n  \n    Importer\n    Inspecter\n    Diagnostiquer\n    Résumer\n    Visualiser\n    Structurer le QMD\n    Rendre\n    Constater\n  \n\nVotre mini-rapport doit contenir :\n\nune courte introduction;\nle code d’importation;\nune inspection du tableau;\nun court diagnostic des valeurs manquantes;\nun tableau descriptif;\nun graphique;\ndeux constats descriptifs;\nune question que vous aimeriez approfondir.\n\nLa trace sert à montrer ce que vous savez faire à la fin de la semaine. Elle n’a pas besoin d’être longue."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/index.html#auto-vérification",
@@ -4498,7 +4498,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nVoulez-vous que vos premiers obstacles soient des problèmes d’installation, ou de vraies questions d’analyse?\n\n\nUn poste mal préparé fait perdre des heures sur des fichiers introuvables et des packages manquants. Cette capsule stabilise l’environnement dès le départ, pour que le reste du cours porte sur les données plutôt que sur les problèmes techniques."
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nComment vérifier que vos outils sont prêts pour analyser les données?\n\n\nAvant de commencer, vérifions que R répond et que les packages du module se chargent. Vous pourrez ensuite vous concentrer sur l’analyse."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
@@ -4512,14 +4512,14 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#trois-outils-trois-rôles",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Trois outils, trois rôles",
-    "text": "Trois outils, trois rôles\n\n\nR\nLe langage qui exécute les commandes et produit les résultats.\n\nRStudio\nL’interface pour écrire, organiser, exécuter le code et inspecter les résultats.\n\nQuarto\nLe format qui réunit texte, code, tableaux, graphiques et interprétation."
+    "text": "Trois outils, trois rôles\n\n\nR\nLe langage qui exécute les commandes et produit les résultats.\n\nRStudio\nL’interface pour écrire, organiser, exécuter le code et inspecter les résultats.\n\nQuarto\nLe système de publication qui transforme un fichier .qmd en rapport ou en présentation."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#vérifier-que-tout-fonctionne",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#vérifier-que-tout-fonctionne",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Vérifier que tout fonctionne",
-    "text": "Vérifier que tout fonctionne\n\n\nRStudio s’ouvre; la console répond;\ntidyverse se charge sans erreur;\nQuarto est accessible; le dossier de travail est repéré.\n\n\n1 + 1\n\nSi la console retourne 2, R exécute correctement une commande."
+    "text": "Vérifier que tout fonctionne\n\n\nOuvrez RStudio et repérez la Console.\nTapez la commande ci-dessous, puis appuyez sur Entrée.\nSi RStudio ne s’ouvre pas, consultez la page Installation.\n\n\n1 + 1\n\nSi la console retourne 2, R exécute correctement une commande."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#charger-les-packages-de-base",
@@ -4540,7 +4540,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#lerreur-fréquente",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "L’erreur fréquente",
-    "text": "L’erreur fréquente\n\nObtenir un graphique en cliquant ou en copiant un résultat, mais ne pas garder le code qui l’a produit.\n\n\nDans ce cours, le code fait partie de la preuve : il doit pouvoir être relu et réexécuté."
+    "text": "L’erreur fréquente\n\nObtenir un graphique en cliquant ou en copiant un résultat, mais ne pas garder le code qui l’a produit.\n\n\nDans ce cours, le code documente la démarche : il doit pouvoir être relu et réexécuté."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#à-retenir",
@@ -4554,14 +4554,14 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-01-support.html#production-autonome-2.1",
     "title": "Capsule 1 - Préparer son environnement de travail",
     "section": "Production autonome 2.1",
-    "text": "Production autonome 2.1\n\nVérifiez que votre environnement est prêt et gardez-en une trace.\n\n\nExécutez 1 + 1, chargez tidyverse, puis notez : le résultat obtenu, un package chargé et un problème à régler, s’il y en a un.\n\nAuto-vérification\n\n\nLe document se rend du début à la fin sans intervention manuelle.\nLes valeurs manquantes et les unités sont signalées.\nChaque résultat est accompagné d’une phrase d’interprétation."
+    "text": "Production autonome 2.1\n\nVérifiez que votre environnement est prêt et gardez-en une trace.\n\n\nExécutez 1 + 1, puis les quatre appels à library() présentés. Notez le résultat obtenu et tout message d’erreur à résoudre. Le premier rendu Quarto sera vérifié à la capsule 6.\n\nAuto-vérification\n\n\nLa console affiche 2 après 1 + 1.\nLes quatre packages se chargent sans erreur.\nJe sais distinguer une installation et un chargement."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nVotre analyse fonctionnera-t-elle sur un autre ordinateur que le vôtre?\n\n\nLes mini-rapports se font en équipe. Si votre code pointe vers un dossier qui n’existe que sur votre ordinateur, il risque de planter chez une autre personne. Un projet R bien organisé rend l’analyse transférable."
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nVotre analyse fonctionnera-t-elle sur un autre ordinateur que le vôtre?\n\n\nSi votre code utilise un dossier qui n’existe que sur votre ordinateur, une autre personne ne pourra pas retrouver le fichier. Regrouper le rapport et les données dans un projet facilite le partage."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
@@ -4575,7 +4575,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#le-problème-des-chemins",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Le problème des chemins",
-    "text": "Le problème des chemins\n\n\n\nReproductible\n\n\ndata/ventes_operations_quebec.csv - relatif au projet, valide partout.\n\n\n\n\nFragile\n\n\n/Users/nom/Desktop/cours/donnees.csv - lié à un seul ordinateur.\n\n\n\n\nUn chemin relatif reste valide tant que le dossier du projet est déplacé comme un tout."
+    "text": "Le problème des chemins\n\n\n\nReproductible\n\n\ndata/ventes_operations_quebec.csv - relatif au dossier de travail.\n\n\n\n\nFragile\n\n\n/Users/nom/Desktop/cours/donnees.csv - lié à un seul ordinateur.\n\n\n\n\nIci, le .qmd est à la racine du projet. Le chemin reste valide si vous partagez tout le dossier en conservant sa structure."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#le-rôle-du-projet-r",
@@ -4589,7 +4589,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#structure-minimale",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Structure minimale",
-    "text": "Structure minimale\nprojet-semaine-02/\n  data/\n    ventes_operations_quebec.csv\n  rapport.qmd\n\nCette structure suffit pour produire la trace finale du module 2."
+    "text": "Structure minimale\nprojet-semaine-02/\n  data/\n    ventes_operations_quebec.csv\n  projet-semaine-02.Rproj\n  rapport_semaine_02.qmd\n\nLe fichier .Rproj ouvre le projet dans RStudio. Le .qmd et le dossier data/ sont au même niveau."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#lire-le-fichier-par-chemin-relatif",
@@ -4617,14 +4617,14 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#production-autonome-2.3",
     "title": "Capsule 3 - Organiser un projet reproductible",
     "section": "Production autonome 2.3",
-    "text": "Production autonome 2.3\n\nCréez ou ouvrez un projet R pour le module 2.\n\n\nNotez : le nom du projet, l’emplacement du dossier data/, et une phrase expliquant pourquoi les chemins relatifs facilitent la reprise par une autre personne.\n\nAuto-vérification\n\n\nLe document se rend du début à la fin sans intervention manuelle.\nLes valeurs manquantes et les unités sont signalées.\nChaque résultat est accompagné d’une phrase d’interprétation."
+    "text": "Production autonome 2.3\n\nCréez ou ouvrez un projet R pour le module 2.\n\n\nNotez : le nom du projet, l’emplacement du dossier data/, et une phrase expliquant pourquoi les chemins relatifs facilitent la reprise par une autre personne.\n\nAuto-vérification\n\n\nLe projet contient un fichier .Rproj et un dossier data/.\nLe CSV est dans data/; le .qmd est à la racine du projet.\nMon chemin ne contient pas le nom de mon ordinateur."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nLe délai moyen et la satisfaction décrivent-ils toutes les observations, ou seulement les lignes complètes?\n\n\nLes ventes et le nombre de clients sont complets dans ce fichier, mais le délai de livraison et la satisfaction contiennent quelques valeurs manquantes. Avant de comparer ces indicateurs, il faut rendre explicite le nombre d’observations réellement utilisées."
+    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nLe délai moyen et la satisfaction décrivent-ils toutes les observations, ou seulement les valeurs disponibles de chaque variable?\n\n\nLes ventes et le nombre de clients sont complets dans ce fichier, mais le délai de livraison et la satisfaction contiennent quelques valeurs manquantes. Avant de comparer ces indicateurs, il faut rendre explicite le nombre d’observations réellement utilisées."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
@@ -4638,21 +4638,21 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#préparer-avant-de-résumer",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Préparer avant de résumer",
-    "text": "Préparer avant de résumer\n\nUn résumé est plus fiable quand les types de variables sont explicites."
+    "text": "Préparer avant de résumer\n\nVérifiez les types avant de calculer. Une conversion ne remplace pas cette vérification.\n\n\nventes_preparees &lt;- ventes_operations |&gt;\n  mutate(\n    mois = ymd(mois),\n    succursale = factor(succursale),\n    region = factor(region),\n    campagne_locale = factor(campagne_locale),\n    canal_principal = factor(canal_principal)\n  )"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#vérifier-la-structure-préparée",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#vérifier-la-structure-préparée",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Vérifier la structure préparée",
-    "text": "Vérifier la structure préparée\n\n\n# A tibble: 1 × 6\n  nb_lignes nb_succursales nb_regions nb_canaux mois_min   mois_max  \n      &lt;int&gt;          &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;date&gt;     &lt;date&gt;    \n1        24              4          4         3 2025-01-01 2025-06-01"
+    "text": "Vérifier la structure préparée\n\nventes_preparees |&gt;\n  summarise(\n    nb_lignes = n(),\n    nb_succursales = n_distinct(succursale),\n    nb_regions = n_distinct(region),\n    nb_canaux = n_distinct(canal_principal),\n    mois_min = min(mois, na.rm = TRUE),\n    mois_max = max(mois, na.rm = TRUE)\n  )\n\n\nLe tableau contient 24 lignes, 4 succursales, 4 régions et 3 canaux, de janvier à juin 2025."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#repérer-les-valeurs-manquantes",
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#repérer-les-valeurs-manquantes",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Repérer les valeurs manquantes",
-    "text": "Repérer les valeurs manquantes\n\nUne valeur manquante peut modifier une moyenne, un total ou une conclusion. Cette semaine, on ne les impute pas encore : on les repère et on les signale.\n\n\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2"
+    "text": "Repérer les valeurs manquantes\n\nUne valeur manquante peut modifier une moyenne, un total ou une conclusion. Dans ce module, on les repère et on les signale, sans les remplacer par des valeurs estimées.\n\n\ndiagnostic_manquants &lt;- ventes_preparees |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0)\n\ndiagnostic_manquants\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#interpréter-le-diagnostic",
@@ -4666,7 +4666,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#résumer-par-succursale",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Résumer par succursale",
-    "text": "Résumer par succursale\n\n\n\n\n\n\n\n\n\n\n\n\n\nsuccursale\nregion\nventes_totales\nclients_totaux\npanier_moyen\nsatisfaction_moyenne\n\n\n\n\nMontréal\nMontréal\n831 777 $\n14057\n59,17 $\n8.1\n\n\nQuébec\nCapitale-Nationale\n677 971 $\n11464\n59,14 $\n8.1\n\n\nSherbrooke\nEstrie\n589 922 $\n9565\n61,68 $\n7.9\n\n\nTrois-Rivières\nMauricie\n515 975 $\n8589\n60,07 $\n8.2"
+    "text": "Résumer par succursale\n\ngroup_by() forme les groupes; summarise() calcule une ligne par groupe; arrange(desc(...)) trie du plus grand au plus petit.\n\n\nresume_succursales &lt;- ventes_preparees |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes),\n    clients_totaux = sum(clients),\n    panier_moyen = ventes_totales / clients_totaux,\n    nb_mois_satisfaction = sum(!is.na(satisfaction)),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#lire-un-tableau-descriptif",
@@ -4687,7 +4687,7 @@
     "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#production-autonome-2.5",
     "title": "Capsule 5 - Résumer et diagnostiquer les données",
     "section": "Production autonome 2.5",
-    "text": "Production autonome 2.5\n\nDiagnostiquez et résumez le tableau préparé.\n\n\nAjoutez : un tableau de diagnostic des valeurs manquantes, un tableau descriptif par succursale ou par canal, et une phrase qui précise une limite d’interprétation.\n\nAuto-vérification\n\n\nLe document se rend du début à la fin sans intervention manuelle.\nLes valeurs manquantes et les unités sont signalées.\nChaque résultat est accompagné d’une phrase d’interprétation."
+    "text": "Production autonome 2.5\n\nDiagnostiquez et résumez le tableau préparé.\n\n\nAjoutez : un tableau de diagnostic des valeurs manquantes, un tableau descriptif par succursale ou par canal, et une phrase qui précise une limite d’interprétation.\n\nAuto-vérification\n\n\nLe diagnostic repère un délai et deux scores de satisfaction manquants.\nLe tableau indique le nombre de mois utilisés pour la satisfaction.\nJe précise les unités et une limite de comparaison."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#objectifs-de-la-séance",
@@ -4701,7 +4701,7 @@
     "href": "modules/semaine-02-r-quarto/notes-cours.html#le-fil-conducteur",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Le fil conducteur",
-    "text": "Le fil conducteur\n\nLa semaine 02 transforme la lecture descriptive de la semaine 01 en démarche reproductible.\n\n\nLe résultat attendu est un mini-rapport Quarto individuel qui montre le code, les résultats et deux constats descriptifs.\n\n\nCes notes donnent la vue d’ensemble. La page des démonstrations reprend les mêmes gestes avec le code complet, les sorties et leur interprétation."
+    "text": "Le fil conducteur\n\nLa semaine 02 transforme la lecture descriptive de la semaine 01 en démarche reproductible.\n\n\nLe parcours guidé construit un mini-rapport Quarto sur les ventes. Les exercices appliquent ensuite la démarche à un autre fichier, sur les retours et les délais.\n\n\nCes notes donnent la vue d’ensemble. La page des démonstrations reprend les mêmes gestes avec le code complet, les sorties et leur interprétation."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#les-six-capsules",
@@ -4715,28 +4715,28 @@
     "href": "modules/semaine-02-r-quarto/notes-cours.html#de-la-donnée-au-rapport",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "De la donnée au rapport",
-    "text": "De la donnée au rapport\n\n  \n    Départ\n    CSV\n  \n  →\n  \n    Méthode\n    code R\n  \n  →\n  \n    Arrivée\n    QMD rendu"
+    "text": "De la donnée au rapport\n\n\n\nCSV\n\n\nles données de départ\n\n\n\n\nQMD\n\n\nle texte et le code\n\n\n\n\nHTML\n\n\nle rapport à lire"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#projet-minimal",
     "href": "modules/semaine-02-r-quarto/notes-cours.html#projet-minimal",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Projet minimal",
-    "text": "Projet minimal\nprojet-semaine-02/\n  data/\n    ventes_operations_quebec.csv\n  rapport_semaine_02.qmd\n\nUn projet garde ensemble les données, le code, les résultats et l’interprétation."
+    "text": "Projet minimal\nprojet-semaine-02/\n  data/\n    ventes_operations_quebec.csv\n  projet-semaine-02.Rproj\n  rapport_semaine_02.qmd\n\nUn projet garde ensemble les données, le code, les résultats et l’interprétation."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#pourquoi-cette-structure-suffit",
     "href": "modules/semaine-02-r-quarto/notes-cours.html#pourquoi-cette-structure-suffit",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Pourquoi cette structure suffit",
-    "text": "Pourquoi cette structure suffit\n\n\nLe dossier data/ contient les fichiers importés.\nLe fichier .qmd contient le texte, le code et les résultats.\nLes chemins relatifs évitent de dépendre d’un ordinateur précis.\nLe rapport HTML peut être régénéré à partir du même code.\n\n\n\nUne analyse reproductible ne repose pas sur des clics invisibles. Elle repose sur des fichiers organisés et sur du code que l’on peut relire."
+    "text": "Pourquoi cette structure suffit\n\n\nLe dossier data/ contient les fichiers importés.\nLe fichier .qmd contient le texte et le code; le HTML affiche les résultats calculés.\nLes chemins relatifs évitent de dépendre d’un ordinateur précis.\nLe rapport HTML peut être régénéré à partir du même code.\n\n\n\nUne analyse reproductible ne repose pas sur des clics invisibles. Elle repose sur des fichiers organisés et sur du code que l’on peut relire."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#importer-le-tableau",
     "href": "modules/semaine-02-r-quarto/notes-cours.html#importer-le-tableau",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Importer le tableau",
-    "text": "Importer le tableau\n\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…"
+    "text": "Importer le tableau\n\nventes_operations &lt;- readr::read_csv(\n  \"data/ventes_operations_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  clean_names()"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#lire-la-sortie-de-glimpse",
@@ -4757,7 +4757,7 @@
     "href": "modules/semaine-02-r-quarto/notes-cours.html#préparer-les-variables",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Préparer les variables",
-    "text": "Préparer les variables\n\n\n# A tibble: 1 × 6\n  nb_lignes nb_succursales nb_regions nb_canaux mois_min   mois_max  \n      &lt;int&gt;          &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;date&gt;     &lt;date&gt;    \n1        24              4          4         3 2025-01-01 2025-06-01"
+    "text": "Préparer les variables\n\nventes_preparees &lt;- ventes_operations |&gt;\n  mutate(\n    mois = ymd(mois),\n    succursale = factor(succursale),\n    region = factor(region),\n    campagne_locale = factor(campagne_locale),\n    canal_principal = factor(canal_principal)\n  )"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#pourquoi-préparer-les-variables",
@@ -4771,7 +4771,7 @@
     "href": "modules/semaine-02-r-quarto/notes-cours.html#diagnostiquer-les-valeurs-manquantes",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Diagnostiquer les valeurs manquantes",
-    "text": "Diagnostiquer les valeurs manquantes\n\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2\n\n\n\nUne valeur manquante doit être signalée avant d’interpréter un résumé ou un graphique."
+    "text": "Diagnostiquer les valeurs manquantes\n\ndiagnostic_manquants &lt;- ventes_preparees |&gt;\n  summarise(across(everything(), \\(x) sum(is.na(x)))) |&gt;\n  pivot_longer(\n    cols = everything(),\n    names_to = \"variable\",\n    values_to = \"valeurs_manquantes\"\n  ) |&gt;\n  filter(valeurs_manquantes &gt; 0)\n\ndiagnostic_manquants\n\n# A tibble: 2 × 2\n  variable              valeurs_manquantes\n  &lt;chr&gt;                              &lt;int&gt;\n1 delai_livraison_jours                  1\n2 satisfaction                           2\n\n\n\nUne valeur manquante doit être signalée avant d’interpréter un résumé ou un graphique."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#interpréter-le-diagnostic",
@@ -4785,21 +4785,21 @@
     "href": "modules/semaine-02-r-quarto/notes-cours.html#résumer-par-succursale",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Résumer par succursale",
-    "text": "Résumer par succursale\n\n\n\n\n\n\n\n\n\n\n\n\n\nsuccursale\nregion\nventes_totales\nclients_totaux\npanier_moyen\nsatisfaction_moyenne\n\n\n\n\nMontréal\nMontréal\n831 777 $\n14057\n59,17 $\n8.1\n\n\nQuébec\nCapitale-Nationale\n677 971 $\n11464\n59,14 $\n8.1\n\n\nSherbrooke\nEstrie\n589 922 $\n9565\n61,68 $\n7.9\n\n\nTrois-Rivières\nMauricie\n515 975 $\n8589\n60,07 $\n8.2"
+    "text": "Résumer par succursale\n\nresume_succursales &lt;- ventes_preparees |&gt;\n  group_by(succursale, region) |&gt;\n  summarise(\n    ventes_totales = sum(ventes),\n    clients_totaux = sum(clients),\n    panier_moyen = ventes_totales / clients_totaux,\n    nb_mois_satisfaction = sum(!is.na(satisfaction)),\n    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(ventes_totales))"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#lire-le-tableau-descriptif",
     "href": "modules/semaine-02-r-quarto/notes-cours.html#lire-le-tableau-descriptif",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Lire le tableau descriptif",
-    "text": "Lire le tableau descriptif\n\n\nventes_totales compare le volume observé par succursale.\nclients_totaux aide à interpréter les écarts de ventes.\npanier_moyen décrit la valeur moyenne des achats.\nsatisfaction_moyenne doit être lue avec le diagnostic des valeurs manquantes.\n\n\n\nUn tableau descriptif résume. Il ne démontre pas une cause."
+    "text": "Lire le tableau descriptif\n\n\nventes_totales compare le volume observé par succursale.\nclients_totaux aide à interpréter les écarts de ventes.\npanier_moyen est le rapport des ventes totales au total de clients.\nsatisfaction_moyenne est la moyenne non pondérée des scores mensuels disponibles; nb_mois_satisfaction donne leur nombre.\n\n\n\nUn tableau descriptif résume. Il ne démontre pas une cause."
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#visualiser-un-résultat",
     "href": "modules/semaine-02-r-quarto/notes-cours.html#visualiser-un-résultat",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Visualiser un résultat",
-    "text": "Visualiser un résultat"
+    "text": "Visualiser un résultat\n\ngraphique_ventes &lt;- resume_succursales |&gt;\n  mutate(succursale = fct_reorder(succursale, ventes_totales)) |&gt;\n  ggplot(aes(x = ventes_totales, y = succursale)) +\n  geom_col(fill = \"#0B4F6C\") +\n  scale_x_continuous(labels = scales::label_dollar(\n    prefix = \"\", suffix = \" $\", big.mark = \" \", decimal.mark = \",\"\n  )) +\n  labs(\n    title = \"Ventes totales par succursale\",\n    x = \"Ventes totales ($ CA)\",\n    y = NULL\n  ) +\n  theme_minimal(base_size = 14)\n\ngraphique_ventes"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#lire-le-graphique",
@@ -4813,7 +4813,7 @@
     "href": "modules/semaine-02-r-quarto/notes-cours.html#structure-de-la-trace-finale",
     "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
     "section": "Structure de la trace finale",
-    "text": "Structure de la trace finale\n---\ntitle: \"Mini-rapport - Semaine 02\"\nformat:\n  html:\n    embed-resources: true\n---\n\n## Introduction\n\n## Importation\n\n## Inspection et diagnostic\n\n## Résumé descriptif\n\n## Graphique\n\n## Constats"
+    "text": "Structure de la trace finale\n---\ntitle: \"Mini-rapport - Semaine 02\"\nformat:\n  html:\n    embed-resources: true\n---\n\n## Introduction\n## Importation\n## Inspection et diagnostic\n## Résumé descriptif\n## Graphique\n## Constats"
   },
   {
     "objectID": "modules/semaine-02-r-quarto/notes-cours.html#ce-que-la-trace-doit-démontrer",
@@ -8671,5 +8671,159 @@
     "title": "Lectures et ressources",
     "section": "Logiciels et environnement",
     "text": "Logiciels et environnement\n\n\n  \n    R\n    Langage principal utilisé dans le cours.\n    Télécharger R\n  \n\n  \n    RStudio Desktop\n    Environnement recommandé pour travailler avec R et Quarto.\n    Télécharger RStudio\n  \n\n  \n    Positron\n    Environnement moderne compatible avec R et les workflows de science des données.\n    Découvrir Positron\n  \n\n\n\n  Bibliothèque de packages R\n  Cette section rassemble les principaux packages R utilisés dans les exemples, démonstrations et travaux du cours.\n\n  \n    \n      \n      \n        tidyverse\n        Écosystème pour importer, transformer, visualiser et modéliser des données.\n      \n    \n\n    \n      \n      \n        ggplot2\n        Visualisation statistique avec la grammaire des graphiques.\n      \n    \n\n    \n      \n      \n        dplyr\n        Manipulation de tableaux avec des verbes lisibles.\n      \n    \n\n    \n      \n      \n        forecast\n        Méthodes classiques de prévision et séries temporelles dans R.\n      \n    \n\n    \n      \n      \n        fable\n        Modélisation et prévision avec l'écosystème tidyverts.\n      \n    \n\n    \n      \n      \n        tsibble\n        Structure de données tidy pour séries temporelles."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/notes-cours.html#charger-et-importer",
+    "href": "modules/semaine-02-r-quarto/notes-cours.html#charger-et-importer",
+    "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
+    "section": "Charger et importer",
+    "text": "Charger et importer\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(scales)\n\nLe code suppose que le .qmd est à la racine du projet et que le CSV se trouve dans data/."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/notes-cours.html#inspecter-le-tableau",
+    "href": "modules/semaine-02-r-quarto/notes-cours.html#inspecter-le-tableau",
+    "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
+    "section": "Inspecter le tableau",
+    "text": "Inspecter le tableau\n\nglimpse(ventes_operations)\n\nRows: 24\nColumns: 12\n$ mois                  &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…\n$ mois_nom              &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"fév…\n$ succursale            &lt;chr&gt; \"Montréal\", \"Québec\", \"Sherbrooke\", \"Trois-Riviè…\n$ region                &lt;chr&gt; \"Montréal\", \"Capitale-Nationale\", \"Estrie\", \"Mau…\n$ surface_m2            &lt;dbl&gt; 540, 420, 360, 335, 540, 420, 360, 335, 540, 420…\n$ campagne_locale       &lt;chr&gt; \"non\", \"oui\", \"non\", \"non\", \"non\", \"non\", \"oui\",…\n$ canal_principal       &lt;chr&gt; \"magasin\", \"magasin\", \"web\", \"web\", \"web\", \"maga…\n$ clients               &lt;dbl&gt; 2254, 1858, 1506, 1199, 2162, 1682, 1585, 1458, …\n$ panier_moyen          &lt;dbl&gt; 53.11, 59.40, 63.31, 68.21, 66.53, 55.20, 58.44,…\n$ ventes                &lt;dbl&gt; 119710, 110365, 95345, 81784, 143838, 92846, 926…\n$ delai_livraison_jours &lt;dbl&gt; 2.2, 3.8, 4.5, 3.5, 3.6, 1.8, 3.5, 2.6, NA, 3.9,…\n$ satisfaction          &lt;dbl&gt; 8.3, 8.6, 7.3, 8.1, NA, 7.9, 7.8, 8.0, 7.7, 7.9,…"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/notes-cours.html#le-tableau-obtenu",
+    "href": "modules/semaine-02-r-quarto/notes-cours.html#le-tableau-obtenu",
+    "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
+    "section": "Le tableau obtenu",
+    "text": "Le tableau obtenu\n\n\n\n\n\n\n\n\n\n\n\n\nSuccursale\nVentes ($ CA)\nPanier ($ CA)\nMois utilisés\nSatisfaction (/10)\n\n\n\n\nMontréal\n831 777 $\n59,17 $\n5\n8,08\n\n\nQuébec\n677 971 $\n59,14 $\n5\n8,06\n\n\nSherbrooke\n589 922 $\n61,68 $\n6\n7,88\n\n\nTrois-Rivières\n515 975 $\n60,07 $\n6\n8,18"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/notes-cours.html#le-graphique-obtenu",
+    "href": "modules/semaine-02-r-quarto/notes-cours.html#le-graphique-obtenu",
+    "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
+    "section": "Le graphique obtenu",
+    "text": "Le graphique obtenu"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/notes-cours.html#passer-aux-exercices",
+    "href": "modules/semaine-02-r-quarto/notes-cours.html#passer-aux-exercices",
+    "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
+    "section": "Passer aux exercices",
+    "text": "Passer aux exercices\n\n\nReprenez la démarche sur le fichier de la PME fictive.\nÉtudiez les retours et les délais selon la saison.\nTerminez le rapport, puis vérifiez le rendu HTML.\nEn cas de blocage, conservez le code tenté et le message d’erreur."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#reprendre-le-travail-de-la-capsule-4",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#reprendre-le-travail-de-la-capsule-4",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Reprendre le travail de la capsule 4",
+    "text": "Reprendre le travail de la capsule 4\n\n\nOuvrez le même projet et reprenez le code d’importation.\nventes_operations contient le tableau importé.\nChargez les packages nécessaires avant les transformations.\n\n\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#comprendre-mutate-et-factor",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#comprendre-mutate-et-factor",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Comprendre mutate() et factor()",
+    "text": "Comprendre mutate() et factor()\n\n\nmutate() crée ou transforme des colonnes.\nymd() reconnaît une date année-mois-jour; ici, mois est déjà une date.\nfactor() représente des catégories; les nombres de clients restent numériques.\nLa conversion en facteur ne modifie pas les valeurs observées."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#comprendre-le-diagnostic",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#comprendre-le-diagnostic",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Comprendre le diagnostic",
+    "text": "Comprendre le diagnostic\n\n\nis.na(x) indique quelles valeurs sont absentes.\nsum(is.na(x)) compte ces valeurs.\nacross(everything(), ...) répète le calcul sur chaque colonne.\npivot_longer() donne une ligne par variable; filter() garde les variables incomplètes."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#le-tableau-obtenu",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#le-tableau-obtenu",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Le tableau obtenu",
+    "text": "Le tableau obtenu\n\n\n\n\n\n\n\n\n\n\n\n\nSuccursale\nVentes ($ CA)\nPanier ($ CA)\nMois utilisés\nSatisfaction (/10)\n\n\n\n\nMontréal\n831 777 $\n59,17 $\n5\n8,08\n\n\nQuébec\n677 971 $\n59,14 $\n5\n8,06\n\n\nSherbrooke\n589 922 $\n61,68 $\n6\n7,88\n\n\nTrois-Rivières\n515 975 $\n60,07 $\n6\n8,18"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#ce-que-les-moyennes-résument",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-05-support.html#ce-que-les-moyennes-résument",
+    "title": "Capsule 5 - Résumer et diagnostiquer les données",
+    "section": "Ce que les moyennes résument",
+    "text": "Ce que les moyennes résument\n\n\nPanier moyen : ventes totales divisées par le total de clients.\nSatisfaction : moyenne des scores mensuels disponibles, sans pondération par le nombre de clients.\nna.rm = TRUE exclut les valeurs absentes de ce calcul; il ne les remplace pas par zéro.\nMontréal et Québec : 5 mois utilisés; Sherbrooke et Trois-Rivières : 6."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#créer-le-projet-dans-rstudio",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#créer-le-projet-dans-rstudio",
+    "title": "Capsule 3 - Organiser un projet reproductible",
+    "section": "Créer le projet dans RStudio",
+    "text": "Créer le projet dans RStudio\n\nChoisissez File &gt; New Project &gt; New Directory &gt; New Project.\nNommez le dossier projet-semaine-02, puis cliquez sur Create Project.\nDans Files, cliquez sur New Folder et nommez le dossier data.\nTéléchargez le CSV et placez-le dans data/."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/index.html#exercices-dapplication",
+    "href": "modules/semaine-02-r-quarto/index.html#exercices-dapplication",
+    "title": "Module 02",
+    "section": "Exercices d’application",
+    "text": "Exercices d’application\nUne fois le rapport guidé terminé, réalisez les exercices 1 à 5. Ils reprennent les mêmes gestes sur un autre fichier, avec une question sur la qualité opérationnelle. Gardez ce deuxième rapport dans le projet diagnostic-retours-pme."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/exercices.html#auto-vérification",
+    "href": "modules/semaine-02-r-quarto/exercices.html#auto-vérification",
+    "title": "Exercices - Module 02",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\nLes packages et l’importation figurent dans mon .qmd.\nJe retrouve 60 observations; le diagnostic signale deux délais et trois scores de satisfaction manquants.\nJe distingue nombre total de lignes et nombre de valeurs utilisées.\nJe lis les proportions comme des proportions et j’indique les unités.\nMes constats s’appuient sur les valeurs calculées et restent descriptifs.\nLe HTML contient les sorties attendues.\n\nLes corrigés détaillés ne sont pas accessibles sur cette page. Si vous restez bloqué·e après une première tentative, utilisez les démonstrations ou posez une question sur le forum en joignant le code tenté et le message d’erreur."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/lectures.html#commencer-avec-les-guides-du-cours",
+    "href": "modules/semaine-02-r-quarto/lectures.html#commencer-avec-les-guides-du-cours",
+    "title": "Lectures - Module 02",
+    "section": "Commencer avec les guides du cours",
+    "text": "Commencer avec les guides du cours\nCes deux ressources en français suffisent pour retrouver les gestes du module : guide RStudio et guide Quarto. Les références ci-dessous, en anglais, permettent d’approfondir un point précis."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#un-premier-objet-dans-la-console",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-02-support.html#un-premier-objet-dans-la-console",
+    "title": "Capsule 2 - Se repérer dans RStudio",
+    "section": "Un premier objet dans la Console",
+    "text": "Un premier objet dans la Console\nresultat &lt;- 1 + 1\nresultat\n\n\n&lt;- conserve le résultat sous le nom resultat.\nLa Console affiche 2; l’objet apparaît dans Environment.\nUn objet dans Environment n’est pas un fichier enregistré."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#le-tableau-utilisé",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#le-tableau-utilisé",
+    "title": "Capsule 4 - Importer et inspecter un tableau",
+    "section": "Le tableau utilisé",
+    "text": "Le tableau utilisé\n\n\nDonnées simulées pour quatre succursales fictives au Québec.\nSix mois, de janvier à juin 2025.\nUne ligne représente une succursale pendant un mois.\nVentes en dollars canadiens; satisfaction sur 10."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#lire-une-chaîne-de-commandes",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-04-support.html#lire-une-chaîne-de-commandes",
+    "title": "Capsule 4 - Importer et inspecter un tableau",
+    "section": "Lire une chaîne de commandes",
+    "text": "Lire une chaîne de commandes\n\n\n&lt;- enregistre le résultat dans un objet nommé.\n|&gt; transmet le résultat de gauche à la fonction suivante.\nIci, R lit le CSV, nettoie les noms, puis crée ventes_operations.\nshow_col_types = FALSE masque le message de types, pas les données."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#créer-le-document-dans-rstudio",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#créer-le-document-dans-rstudio",
+    "title": "Capsule 6 - Produire un mini-rapport Quarto",
+    "section": "Créer le document dans RStudio",
+    "text": "Créer le document dans RStudio\n\nDans votre projet, choisissez File &gt; New File &gt; Quarto Document.\nChoisissez HTML, puis Create.\nEnregistrez rapport_semaine_02.qmd à côté du dossier data/.\nUtilisez Insert &gt; Code Chunk &gt; R pour insérer un bloc de code R.\n\n\nReprenez les imports et les calculs des capsules 4 et 5 dans ce document, dans le même ordre."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#le-graphique-obtenu",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#le-graphique-obtenu",
+    "title": "Capsule 6 - Produire un mini-rapport Quarto",
+    "section": "Le graphique obtenu",
+    "text": "Le graphique obtenu"
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/notes-cours.html#vérifier-la-structure-préparée",
+    "href": "modules/semaine-02-r-quarto/notes-cours.html#vérifier-la-structure-préparée",
+    "title": "Semaine 02 - Premiers pas avec R, RStudio et Quarto",
+    "section": "Vérifier la structure préparée",
+    "text": "Vérifier la structure préparée\n\nventes_preparees |&gt;\n  summarise(\n    nb_lignes = n(),\n    nb_succursales = n_distinct(succursale),\n    nb_regions = n_distinct(region),\n    nb_canaux = n_distinct(canal_principal),\n    mois_min = min(mois, na.rm = TRUE),\n    mois_max = max(mois, na.rm = TRUE)\n  )\n\n\nLe tableau contient 24 lignes, 4 succursales, 4 régions et 3 canaux, de janvier à juin 2025."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#créer-le-fichier-de-travail",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-03-support.html#créer-le-fichier-de-travail",
+    "title": "Capsule 3 - Organiser un projet reproductible",
+    "section": "Créer le fichier de travail",
+    "text": "Créer le fichier de travail\n\nChoisissez File &gt; New File &gt; Quarto Document.\nSélectionnez HTML, puis cliquez sur Create.\nEnregistrez rapport_semaine_02.qmd à la racine du projet.\nUtilisez Insert &gt; Code Chunk &gt; R pour ajouter un bloc de code R.\n\n\nGardez l’en-tête entre les deux lignes ---. Remplacez le contenu d’exemple par vos propres sections et blocs de code. Le bouton Render sera expliqué à la capsule 6."
+  },
+  {
+    "objectID": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#assembler-le-document-dans-rstudio",
+    "href": "modules/semaine-02-r-quarto/media/qmd/capsule-06-support.html#assembler-le-document-dans-rstudio",
+    "title": "Capsule 6 - Produire un mini-rapport Quarto",
+    "section": "Assembler le document dans RStudio",
+    "text": "Assembler le document dans RStudio\n\nOuvrez rapport_semaine_02.qmd, créé à la capsule 3.\nConservez l’importation et les calculs des capsules 4 et 5, dans l’ordre.\nAjoutez les sections, le graphique et les phrases d’interprétation.\nVérifiez que les appels à library() figurent au début du document.\n\n\nLe code R va dans les blocs de code; vos explications vont à l’extérieur des blocs."
   }
 ]

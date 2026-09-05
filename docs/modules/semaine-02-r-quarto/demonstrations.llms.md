@@ -26,6 +26,8 @@ Ce fichier contient des observations mensuelles pour des succursales fictives au
 
 ## Préparation
 
+Créez le projet avec File \> New Project. Placez le CSV dans `data/` et votre fichier `rapport_semaine_02.qmd` à la racine du projet. Conservez les blocs ci-dessous dans leur ordre d’apparition.
+
 Le bloc suivant charge les packages et importe les données. Il est placé au début de la démonstration parce que tous les blocs suivants en dépendent.
 
 ``` r
@@ -34,11 +36,7 @@ library(janitor)
 library(lubridate)
 library(scales)
 
-data_path <- if (file.exists("data/ventes_operations_quebec.csv")) {
-  "data/ventes_operations_quebec.csv"
-} else {
-  "modules/semaine-02-r-quarto/data/ventes_operations_quebec.csv"
-}
+data_path <- "data/ventes_operations_quebec.csv"
 
 ventes_operations <- readr::read_csv(data_path, show_col_types = FALSE) |>
   clean_names()
@@ -97,7 +95,7 @@ Dans ce fichier, une ligne correspond à une succursale pour un mois donné. Ce 
 
 ## Démonstration 2 - Préparer les variables
 
-Certaines variables doivent être transformées avant d’être utilisées dans les résumés ou les graphiques. Par exemple, `mois` doit être traité comme une date, tandis que `succursale`, `region`, `campagne_locale` et `canal_principal` sont des catégories.
+Vérifiez les types avant les résumés et les graphiques. Ici, `read_csv()` reconnaît déjà `mois` comme une date; `ymd()` conserve ce type. La conversion en facteurs rend explicite le rôle des catégories. Par exemple, `mois` doit être traité comme une date, tandis que `succursale`, `region`, `campagne_locale` et `canal_principal` sont des catégories.
 
 ``` r
 ventes_preparees <- ventes_operations |>
@@ -184,42 +182,49 @@ Un tableau descriptif sert à transformer plusieurs lignes en quelques indicateu
 resume_succursales <- ventes_preparees |>
   group_by(succursale, region) |>
   summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
+    ventes_totales = sum(ventes),
+    clients_totaux = sum(clients),
     panier_moyen = ventes_totales / clients_totaux,
+    nb_mois_satisfaction = sum(!is.na(satisfaction)),
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
     .groups = "drop"
   ) |>
   arrange(desc(ventes_totales))
 
 resume_succursales |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    panier_moyen = currency_ca(panier_moyen),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1)
+  transmute(
+    Succursale = succursale,
+    `Ventes ($ CA)` = currency_ca(ventes_totales),
+    `Panier ($ CA)` = currency_ca(panier_moyen),
+    `Mois utilisés` = nb_mois_satisfaction,
+    `Satisfaction (/10)` = format(
+      round(satisfaction_moyenne, 2), decimal.mark = ",", nsmall = 2
+    )
   ) |>
   knitr::kable()
 ```
 
-| succursale | region | ventes_totales | clients_totaux | panier_moyen | satisfaction_moyenne |
-|:---|:---|:---|---:|:---|---:|
-| Montréal | Montréal | 831 777 \$ | 14057 | 59,17 \$ | 8.1 |
-| Québec | Capitale-Nationale | 677 971 \$ | 11464 | 59,14 \$ | 8.1 |
-| Sherbrooke | Estrie | 589 922 \$ | 9565 | 61,68 \$ | 7.9 |
-| Trois-Rivières | Mauricie | 515 975 \$ | 8589 | 60,07 \$ | 8.2 |
+| Succursale | Ventes (\$ CA) | Panier (\$ CA) | Mois utilisés | Satisfaction (/10) |
+|:---|:---|:---|---:|:---|
+| Montréal | 831 777 \$ | 59,17 \$ | 5 | 8,08 |
+| Québec | 677 971 \$ | 59,14 \$ | 5 | 8,06 |
+| Sherbrooke | 589 922 \$ | 61,68 \$ | 6 | 7,88 |
+| Trois-Rivières | 515 975 \$ | 60,07 \$ | 6 | 8,18 |
 
 Comment lire la sortie :
 
 - `ventes_totales` compare le volume de ventes total observé;
-- `clients_totaux` donne le volume de clientèle observé;
-- `panier_moyen` résume la valeur moyenne d’un achat;
-- `satisfaction_moyenne` résume l’expérience client moyenne;
+- `clients_totaux`, conservé dans l’objet R, additionne les nombres mensuels de clients; il ne compte pas nécessairement des personnes distinctes sur six mois;
+- `panier_moyen` est le rapport des ventes totales au total de clients;
+- `satisfaction_moyenne` est la moyenne des scores mensuels disponibles, sans pondération par le nombre de clients;
+- `nb_mois_satisfaction` compte les mois utilisés pour cette moyenne; le tableau l’affiche sous « Mois utilisés »;
 - le tri permet de repérer rapidement les succursales avec le plus de ventes.
 
 Prudence :
 
 - une succursale peut avoir plus de ventes parce qu’elle a plus de clients;
-- une moyenne peut être influencée par des valeurs manquantes;
+- la satisfaction repose sur 5 mois à Montréal et à Québec, contre 6 à Sherbrooke et à Trois-Rivières;
+- les ventes et les nombres de clients sont complets ici; `na.rm = TRUE` est utilisé seulement pour la satisfaction;
 - ce tableau décrit des écarts, il ne les explique pas.
 
 ## Démonstration 5 - Créer un graphique
@@ -234,7 +239,7 @@ resume_succursales |>
   scale_x_continuous(labels = currency_ca) +
   labs(
     title = "Ventes totales par succursale",
-    x = "Ventes",
+    x = "Ventes totales ($ CA)",
     y = NULL
   ) +
   theme_minimal(base_size = 12)
@@ -251,13 +256,13 @@ Comment lire le graphique :
 
 Constat descriptif possible :
 
-> Les ventes totales varient entre les succursales, et certaines succursales contribuent davantage au volume total observé.
+> De janvier à juin 2025, Montréal totalise 831 777 \$ CA de ventes, contre 515 975 \$ CA pour Trois-Rivières. Ces montants décrivent les données simulées du module.
 
 Ce constat est descriptif. Il ne dit pas pourquoi ces différences existent.
 
 ## Synthèse pour la trace finale
 
-La trace finale de la semaine 02 doit montrer que l’analyse peut être reprise. Elle devrait donc contenir :
+Le rapport guidé doit montrer que l’analyse peut être reprise. Les exercices vous demandent ensuite d’appliquer ces gestes à un autre fichier. Elle devrait donc contenir :
 
 - le code d’importation;
 - une description de l’unité d’observation;

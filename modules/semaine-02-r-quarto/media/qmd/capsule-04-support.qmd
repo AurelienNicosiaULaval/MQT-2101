@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    css: ../module02-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,6 +23,7 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
@@ -57,7 +59,7 @@ Comment savoir si R a vraiment lu ce que vous croyez avoir importé?
 :::
 
 ::: {.note-box}
-Un fichier importé sans vérification, c'est un calcul juste sur un tableau mal connu. Avant toute moyenne, il faut savoir combien il y a de lignes, combien il y a de colonnes, quels sont les types de variables et ce que représente une ligne.
+Une importation sans erreur ne garantit pas que le tableau a été lu comme prévu. Vérifiez ses dimensions, les types de variables et ce que représente une ligne avant de calculer.
 :::
 
 ## Objectifs de la capsule
@@ -66,6 +68,15 @@ Un fichier importé sans vérification, c'est un calcul juste sur un tableau mal
 - Importer un fichier CSV dans R.
 - Nettoyer les noms de variables.
 - Inspecter les dimensions, les types et l'unité d'observation.
+:::
+
+## Le tableau utilisé
+
+::: {.keypoints}
+- Données simulées pour quatre succursales fictives au Québec.
+- Six mois, de janvier à juin 2025.
+- Une ligne représente une succursale pendant un mois.
+- Ventes en dollars canadiens; satisfaction sur 10.
 :::
 
 ## Importer le fichier
@@ -88,19 +99,20 @@ ventes_operations <- readr::read_csv(
 ## Pourquoi `clean_names()`?
 
 ::: {.note-box}
-Dans le fichier fourni, les noms sont déjà normalisés : `clean_names()` ne les modifie pas. L'appel reste utile comme vérification reproductible et protège le code si une version future contient des espaces, des majuscules ou des caractères spéciaux.
+Cette fonction normalise les noms de colonnes : espaces, majuscules et accents deviennent plus faciles à gérer dans le code. Elle ne nettoie pas les valeurs du tableau.
 :::
 
 ```{r}
 #| label: capsule-04-verifier-noms
-
-tibble(
-  avant = names(readr::read_csv(data_path, show_col_types = FALSE)),
-  apres = names(ventes_operations),
-  identique = avant == apres
-) |>
+# Exemple miniature pour voir la transformation des noms
+tibble("Délai moyen" = 3, "Ventes CAD" = 100) |>
+  clean_names() |>
   knitr::kable()
 ```
+
+::: {.visual-note}
+Dans notre CSV, les noms sont déjà normalisés : `clean_names()` les conserve.
+:::
 
 ## Inspecter avec `glimpse()`
 
@@ -111,7 +123,7 @@ glimpse(ventes_operations)
 ```
 
 ::: {.visual-note}
-`glimpse()` montre en un coup d'oeil les colonnes, leurs types et quelques valeurs.
+`glimpse()` montre en un coup d’œil les colonnes, leurs types et quelques valeurs.
 :::
 
 ## Dimensions et unité d'observation
@@ -124,6 +136,15 @@ dim(ventes_operations)
 
 ::: {.note-box}
 Première valeur : le nombre de lignes. Deuxième valeur : le nombre de colonnes. Ici, une ligne correspond à une succursale pour un mois.
+:::
+
+## Lire une chaîne de commandes
+
+::: {.keypoints}
+- `<-` enregistre le résultat dans un objet nommé.
+- `|>` transmet le résultat de gauche à la fonction suivante.
+- Ici, R lit le CSV, nettoie les noms, puis crée `ventes_operations`.
+- `show_col_types = FALSE` masque le message de types, pas les données.
 :::
 
 ## Types de variables à repérer
@@ -178,7 +199,7 @@ Indiquez : le code d'importation, le nombre de lignes, le nombre de colonnes et 
 ### Auto-vérification
 
 ::: {.self-check}
-- Le document se rend du début à la fin sans intervention manuelle.
-- Les valeurs manquantes et les unités sont signalées.
-- Chaque résultat est accompagné d'une phrase d'interprétation.
+- Le tableau contient 24 lignes et 12 colonnes.
+- Une ligne représente une succursale pendant un mois.
+- Je distingue le type informatique et le sens d'une variable.
 :::

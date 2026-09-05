@@ -16,7 +16,7 @@ Outils
 
 R, RStudio, Quarto
 
-Données
+Données du parcours guidé
 
 [ventes_operations_quebec.csv](../../donnees/#ventes-et-opérations-de-succursales-québécoises)
 
@@ -52,6 +52,12 @@ Vous devriez pouvoir importer le fichier [ventes_operations_quebec.csv](../../do
 
 ## Votre parcours
 
+Le parcours ci-dessous construit un rapport guidé avec `ventes_operations_quebec.csv`. Après l’étape 9, passez aux exercices d’application : vous utiliserez `ventes_pme_quebec.csv` dans un projet distinct pour étudier les retours et les délais. Les deux fichiers sont simulés.
+
+Les productions autonomes des supports reprennent les activités du parcours : il n’est pas nécessaire de les refaire deux fois. Les activités 2.1 à 2.10 détaillent les gestes présentés dans les six capsules.
+
+Avant de commencer, consultez la [page Installation](../../installation.llms.md) si vos outils ne sont pas prêts. La durée indiquée est un repère; prévoyez du temps supplémentaire en cas d’installation ou de dépannage.
+
 > **NOTE:**
 >
 > Le support global de notes de cours est disponible en [HTML](../../modules/semaine-02-r-quarto/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
@@ -60,15 +66,15 @@ Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ou
 
 1 Préparer son environnement de travail Vérifier que R, RStudio et les packages essentiels fonctionnent. [Capsule 1](capsules.llms.md#capsule-1---préparer-son-environnement-de-travail) Ouvrir l'étapeRéduire
 
-Objectif S'assurer que R, RStudio, Quarto et les packages nécessaires fonctionnent.
+Objectif Vérifier R et les packages nécessaires; le rendu Quarto sera testé à la capsule 6.
 
 Ressource [Capsule 1](capsules.llms.md#capsule-1---préparer-son-environnement-de-travail)
 
-Action Ouvrir RStudio, exécuter une commande simple dans la console et charger `tidyverse`.
+Action Ouvrir RStudio, exécuter une commande simple dans la console et charger les quatre packages de la capsule 1.
 
 Activité 2.1 - Vérifier que R fonctionne
 
-Dans la console, exécutez une commande simple, par exemple `1 + 1`, puis chargez `tidyverse`. Notez le résultat obtenu.
+Dans la console, exécutez une commande simple, par exemple `1 + 1`, puis chargez `tidyverse`, `janitor`, `lubridate` et `scales`. Notez le résultat et les éventuelles erreurs.
 
 2 Se repérer dans RStudio Repérer la console, l'éditeur, l'environnement, les fichiers et les graphiques. [Capsule 2](capsules.llms.md#capsule-2---se-repérer-dans-rstudio) Ouvrir l'étapeRéduire
 
@@ -88,7 +94,7 @@ Objectif Comprendre pourquoi le projet R est la base de la reproductibilité.
 
 Ressource [Capsule 3](capsules.llms.md#capsule-3---organiser-un-projet-reproductible)
 
-Action Créer ou ouvrir un projet R, puis vérifier où se trouve le dossier `data`.
+Action Créer un projet R, placer le CSV dans `data` et créer le fichier `rapport_semaine_02.qmd` à la racine du projet.
 
 Activité 2.3 - Expliquer l'utilité d'un projet R
 
@@ -106,11 +112,11 @@ Activité 2.4 - Importer les données
 
 Importez le fichier [ventes_operations_quebec.csv](../../donnees/#ventes-et-opérations-de-succursales-québécoises), puis indiquez le nombre de lignes et de colonnes du tableau.
 
-5 Inspecter le tableau Identifier les lignes, les colonnes et les types de variables. [Démo 1](demonstrations.llms.md#démonstration-1---inspecter-le-tableau)[Ex. 1](exercices.llms.md#exercice-1---créer-le-projet-et-importer-les-données)[Ex. 2](exercices.llms.md#exercice-2---identifier-les-types-de-variables) Ouvrir l'étapeRéduire
+5 Inspecter le tableau Identifier les lignes, les colonnes et les types de variables. [Démo 1](demonstrations.llms.md#démonstration-1---inspecter-le-tableau) Ouvrir l'étapeRéduire
 
 Objectif Comprendre la structure du tableau avant de calculer des résultats.
 
-Ressource [Démo 1](demonstrations.llms.md#démonstration-1---inspecter-le-tableau) [Exercice 1](exercices.llms.md#exercice-1---créer-le-projet-et-importer-les-données) [Exercice 2](exercices.llms.md#exercice-2---identifier-les-types-de-variables)
+Ressource [Démo 1](demonstrations.llms.md#démonstration-1---inspecter-le-tableau)
 
 Action Identifier l'unité d'observation, les variables numériques, les variables catégorielles et les variables de date ou de période.
 
@@ -118,11 +124,11 @@ Activité 2.5 - Inspecter les lignes, colonnes et types de variables
 
 Indiquez ce que représente une ligne du tableau, puis classez les principales variables selon leur type.
 
-6 Diagnostiquer les données Repérer les valeurs manquantes et signaler les précautions nécessaires. [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données)[Démo 3](demonstrations.llms.md#démonstration-3---vérifier-les-valeurs-manquantes)[Ex. 3](exercices.llms.md#exercice-3---repérer-les-valeurs-manquantes) Ouvrir l'étapeRéduire
+6 Diagnostiquer les données Repérer les valeurs manquantes et signaler les précautions nécessaires. [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données)[Démo 3](demonstrations.llms.md#démonstration-3---vérifier-les-valeurs-manquantes) Ouvrir l'étapeRéduire
 
 Objectif Produire un diagnostic simple des données absentes avant de présenter les résultats descriptifs.
 
-Ressource [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données) [Démo 2](demonstrations.llms.md#démonstration-2---préparer-les-variables) [Démo 3](demonstrations.llms.md#démonstration-3---vérifier-les-valeurs-manquantes) [Exercice 3](exercices.llms.md#exercice-3---repérer-les-valeurs-manquantes)
+Ressource [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données) [Démo 2](demonstrations.llms.md#démonstration-2---préparer-les-variables) [Démo 3](demonstrations.llms.md#démonstration-3---vérifier-les-valeurs-manquantes)
 
 Action Utiliser `is.na()`, `summarise()` et `pivot_longer()` pour compter les valeurs manquantes et indiquer quelles variables sont touchées.
 
@@ -130,11 +136,11 @@ Activité 2.6 - Repérer les valeurs manquantes
 
 Nommez les variables incomplètes et expliquez pourquoi ce diagnostic doit apparaître dans un rapport reproductible.
 
-7 Produire les premiers résultats descriptifs Créer un tableau descriptif, un graphique simple et un premier constat. [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données)[Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto)[Démo 4](demonstrations.llms.md#démonstration-4---résumer-un-tableau)[Démo 5](demonstrations.llms.md#démonstration-5---créer-un-graphique)[Ex. 4](exercices.llms.md#exercice-4---produire-un-tableau-descriptif)[Ex. 5](exercices.llms.md#exercice-5---produire-un-graphique) Ouvrir l'étapeRéduire
+7 Produire les premiers résultats descriptifs Créer un tableau descriptif, un graphique simple et un premier constat. [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données)[Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto)[Démo 4](demonstrations.llms.md#démonstration-4---résumer-un-tableau)[Démo 5](demonstrations.llms.md#démonstration-5---créer-un-graphique) Ouvrir l'étapeRéduire
 
 Objectif Produire un tableau descriptif et un graphique simple.
 
-Ressource [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données) [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) [Démo 4](demonstrations.llms.md#démonstration-4---résumer-un-tableau) [Démo 5](demonstrations.llms.md#démonstration-5---créer-un-graphique) [Exercice 4](exercices.llms.md#exercice-4---produire-un-tableau-descriptif) [Exercice 5](exercices.llms.md#exercice-5---produire-un-graphique)
+Ressource [Capsule 5](capsules.llms.md#capsule-5---résumer-et-diagnostiquer-les-données) [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) [Démo 4](demonstrations.llms.md#démonstration-4---résumer-un-tableau) [Démo 5](demonstrations.llms.md#démonstration-5---créer-un-graphique)
 
 Action Résumer les ventes par succursale ou par canal principal, puis construire un graphique avec `ggplot()` pour appuyer un premier constat descriptif.
 
@@ -146,33 +152,37 @@ Activité 2.8 - Produire un graphique
 
 Créez un graphique simple des ventes. Le titre et les axes doivent permettre de comprendre rapidement ce qui est comparé.
 
-8 Structurer le fichier QMD Créer le document Quarto qui rassemble texte, code et résultats. [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto)[Guide Quarto](../../ressources/guide-quarto.llms.md) Ouvrir l'étapeRéduire
+8 Structurer le fichier QMD Organiser le document Quarto commencé à l’étape 3. [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto)[Guide Quarto](../../ressources/guide-quarto.llms.md) Ouvrir l'étapeRéduire
 
 Objectif Construire un fichier Quarto lisible avant de produire la version HTML.
 
-Ressource [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) [Guide Quarto](../../ressources/guide-quarto.llms.md) [Trace finale courte](exercices.llms.md#trace-finale-courte)
+Ressource [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) [Guide Quarto](../../ressources/guide-quarto.llms.md)
 
 Action Créer un fichier `.qmd` avec un titre, une courte introduction, des blocs de code R et des phrases d'interprétation.
 
 Activité 2.9 - Structurer le fichier QMD
 
-Créez le squelette du mini-rapport Quarto : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.
+Complétez les sections du mini-rapport Quarto commencé à l’étape 3 : introduction, importation, inspection, valeurs manquantes, tableau, graphique et constats à compléter.
 
-9 Finaliser le mini-rapport Produire le HTML final et vérifier que le document se relit bien. [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto)[Trace finale](exercices.llms.md#trace-finale-courte) Ouvrir l'étapeRéduire
+9 Finaliser le mini-rapport Produire le HTML final et vérifier que le document se relit bien. [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) Ouvrir l'étapeRéduire
 
 Objectif Vérifier que le rapport est reproductible et compréhensible.
 
-Ressource [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) [Trace finale courte](exercices.llms.md#trace-finale-courte) [Lectures](lectures.llms.md)
+Ressource [Capsule 6](capsules.llms.md#capsule-6---produire-un-mini-rapport-quarto) [Lectures](lectures.llms.md)
 
-Action Rendre le document avec Render ou `quarto render`, puis relire le HTML produit.
+Action Cliquer sur Render dans RStudio, puis relire le HTML produit.
 
 Activité 2.10 - Formuler deux constats descriptifs
 
 À partir du tableau descriptif et du graphique, formulez deux constats descriptifs simples. Chaque constat doit mentionner la variable observée.
 
+## Exercices d’application
+
+Une fois le rapport guidé terminé, réalisez les [exercices 1 à 5](../../modules/semaine-02-r-quarto/exercices.llms.md). Ils reprennent les mêmes gestes sur un autre fichier, avec une question sur la qualité opérationnelle. Gardez ce deuxième rapport dans le projet `diagnostic-retours-pme`.
+
 ## Ressources du module
 
-[ CapsulesComprendre les gestes de base avant de les reproduire dans R.](capsules.llms.md) [ Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.](demonstrations.llms.md) [ ExercicesPratiquer sans regarder la solution, puis comparer votre démarche après une vraie tentative.](exercices.llms.md) [ LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.](lectures.llms.md)
+[ CapsulesComprendre les gestes de base avant de les reproduire dans R.](capsules.llms.md) [ Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.](demonstrations.llms.md) [ ExercicesAppliquer la démarche à un nouveau cas sur les retours et les délais, puis vérifier les critères proposés.](exercices.llms.md) [ LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.](lectures.llms.md)
 
 > **WARNING:**
 >
@@ -185,6 +195,8 @@ Activité 2.10 - Formuler deux constats descriptifs
 
 ## Trace finale
 
+Le parcours guidé aboutit à `rapport_semaine_02.qmd` sur les ventes. Les exercices aboutissent à `rapport_retours_pme.qmd` sur la qualité opérationnelle. Il s’agit d’entraînements pour ce module; les consignes des mini-rapports évalués se trouvent dans la section [Évaluations](../../evaluations/index.llms.md).
+
 > **IMPORTANT:**
 >
 > Le mini-rapport sert à montrer que vous pouvez transformer un fichier CSV en une première analyse reproductible. Il ne s’agit pas d’un long texte : le document doit rendre visibles les gestes essentiels du parcours, du code d’importation jusqu’aux constats descriptifs.
@@ -193,7 +205,7 @@ Ce que le rapport doit démontrer
 
 ### Je peux reprendre l'analyse du début à la fin.
 
-Une autre personne doit pouvoir ouvrir votre fichier Quarto, exécuter le code, voir les mêmes résultats et comprendre vos deux constats descriptifs.
+Une autre personne doit pouvoir ouvrir votre fichier Quarto, exécuter le code, retrouver les données dans le projet, recalculer les résultats avec les packages nécessaires et comprendre vos deux constats descriptifs.
 
 Importer Inspecter Diagnostiquer Résumer Visualiser Structurer le QMD Rendre Constater
 

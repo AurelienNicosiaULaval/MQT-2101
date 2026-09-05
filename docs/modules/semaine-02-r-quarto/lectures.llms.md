@@ -1,16 +1,20 @@
-# Lectures - Semaine 02
+# Lectures - Module 02
 
 Cette page rassemble les lectures utiles pour consolider les gestes techniques de la semaine 02. Il ne faut pas tout lire intégralement : utilisez les sections indiquées pour régler un problème précis ou renforcer une partie de la trace finale.
+
+## Commencer avec les guides du cours
+
+Ces deux ressources en français suffisent pour retrouver les gestes du module : [guide RStudio](../../ressources/guide-rstudio.llms.md) et [guide Quarto](../../ressources/guide-quarto.llms.md). Les références ci-dessous, en anglais, permettent d’approfondir un point précis.
 
 ## Lectures ciblées pour la consolidation
 
 | Besoin | Lecture ciblée |
 |----|----|
-| Comprendre l’interface, les scripts et les projets RStudio | Posit (2026), [RStudio IDE User Guide](https://docs.posit.co/ide/user/), sections sur les scripts, les projets et l’organisation du code |
+| Comprendre l’interface, les scripts et les projets RStudio | Posit (documentation en ligne, consultée le 5 septembre 2026), [RStudio IDE User Guide](https://docs.posit.co/ide/user/), [organisation des volets](https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html) et [projets RStudio](https://docs.posit.co/ide/user/ide/guide/code/projects.html) |
 | Organiser un projet et utiliser des chemins relatifs | Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 6, [Workflow: scripts and projects](https://r4ds.hadley.nz/workflow-scripts) |
 | Importer un fichier CSV | Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 7, [Data import](https://r4ds.hadley.nz/data-import) |
 | Produire un graphique simple avec `ggplot2` | Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 1, [Data visualization](https://r4ds.hadley.nz/data-visualize), et chapitre 11, [Communication](https://r4ds.hadley.nz/communication) |
-| Structurer et rendre un rapport Quarto | Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 28, [Quarto](https://r4ds.hadley.nz/quarto); Quarto (2026), [Guide officiel](https://quarto.org/docs/guide/) |
+| Structurer et rendre un rapport Quarto | Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 28, [Quarto](https://r4ds.hadley.nz/quarto); Quarto (documentation en ligne, consultée le 5 septembre 2026), [Guide officiel](https://quarto.org/docs/guide/) |
 
 ## Lectures facultatives
 
@@ -19,7 +23,7 @@ Ces lectures sont utiles si vous voulez renforcer la trace finale ou préparer l
 - Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 2, [Workflow: basics](https://r4ds.hadley.nz/workflow-basics), pour revoir les gestes élémentaires dans R;
 - Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 3, [Data transformation](https://r4ds.hadley.nz/data-transform), pour comprendre les premiers verbes de manipulation;
 - Wickham, Çetinkaya-Rundel et Grolemund (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), chapitre 18, [Missing values](https://r4ds.hadley.nz/missing-values), pour approfondir les valeurs manquantes;
-- Quarto (2026), [Using R](https://quarto.org/docs/computations/r.html), pour comprendre comment Quarto exécute les blocs de code R.
+- Quarto (documentation en ligne, consultée le 5 septembre 2026), [Using R](https://quarto.org/docs/computations/r.html), pour comprendre comment Quarto exécute les blocs de code R.
 
 ## Comment utiliser ces lectures
 
@@ -34,6 +38,6 @@ Pour la trace finale, ne recopiez pas les lectures. Utilisez-les pour améliorer
 
 ## Ressources externes
 
-- Posit (2026), [RStudio IDE User Guide](https://docs.posit.co/ide/user/).
-- Quarto (2026), [Documentation officielle](https://quarto.org/docs/guide/).
+- Posit (documentation en ligne, consultée le 5 septembre 2026), [RStudio IDE User Guide](https://docs.posit.co/ide/user/).
+- Quarto (documentation en ligne, consultée le 5 septembre 2026), [Documentation officielle](https://quarto.org/docs/guide/).
 - Wickham, H., Çetinkaya-Rundel, M. et Grolemund, G. (2023), [R for Data Science (2e)](https://r4ds.hadley.nz/), O’Reilly.

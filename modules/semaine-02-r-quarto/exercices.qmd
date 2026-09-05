@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Semaine 02"
+title: "Exercices - Module 02"
 format:
   html:
     embed-resources: true
@@ -7,21 +7,33 @@ format:
 
 ## Objectif
 
-Créer un rapport Quarto reproductible à partir d'un nouveau cas. Les capsules
-utilisent `ventes_operations_quebec.csv`; les exercices utilisent plutôt les
-ventes mensuelles d'une PME fictive et portent sur la qualité opérationnelle.
+Appliquer les gestes du parcours guidé à un nouveau cas : une PME québécoise fictive souhaite décrire les retours et les délais de livraison selon la saison. Vous produirez un rapport Quarto court, avec du code, un tableau, un graphique et des constats.
 
-Jeu de données de transfert :
-<a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.
+Les capsules utilisent `ventes_operations_quebec.csv`.
+
+Jeu de données de transfert : [ventes_pme_quebec.csv](../atelier-01-r/data/ventes_pme_quebec.csv), dont le [dictionnaire est disponible dans la page Données](../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive).
+
+Les cinq exercices se suivent et alimentent un seul rapport. Les blocs fournis sont des points de départ : exécutez-les, vérifiez les sorties et rédigez vos propres interprétations.
 
 ## Exercice 1 - Créer le projet et importer les données
 
-Créez un projet distinct nommé `diagnostic-retours-pme`, ajoutez un dossier
-`data`, puis importez le fichier.
+1. Dans RStudio, choisissez File > New Project > New Directory > New Project et nommez le projet `diagnostic-retours-pme`.
+2. Dans Files, créez un dossier `data`, puis placez-y le CSV téléchargé.
+3. Choisissez File > New File > Quarto Document, sélectionnez HTML et enregistrez le document sous `rapport_retours_pme.qmd`, à la racine du projet.
+4. Conservez l’en-tête ci-dessous, puis insérez les blocs de code R avec Insert > Code Chunk > R.
+
+```yaml
+---
+title: "Retours et délais d’une PME fictive"
+format:
+  html:
+    embed-resources: true
+---
+```
 
 ```{r}
 #| eval: false
-
+# Charger les packages et importer le fichier
 library(tidyverse)
 library(janitor)
 
@@ -33,74 +45,80 @@ ventes_pme <- read_csv(
   mutate(mois = as.Date(mois))
 
 glimpse(ventes_pme)
+dim(ventes_pme)
+range(ventes_pme$mois)
 ```
 
-À faire :
+Indiquez ce que représente une ligne du tableau et la période couverte. Expliquez en une phrase pourquoi le chemin relatif facilite le partage du projet.
 
-- vérifier les dimensions du tableau;
-- confirmer que chaque ligne correspond à une succursale pour un mois;
-- vérifier l'étendue des dates;
-- rédiger une phrase expliquant pourquoi le chemin relatif rend le projet plus
-  facile à partager.
+Repère de vérification : vous devez obtenir 60 lignes et 15 colonnes, de janvier à décembre 2025. Le tableau contient une observation par succursale et par mois, pour cinq succursales.
 
 ## Exercice 2 - Identifier les types de variables
 
-Classez `mois`, `saison`, `succursale`, `campagne_locale`, `clients`,
-`delai_livraison_jours`, `satisfaction` et `taux_retour`.
+Classez `mois`, `saison`, `succursale`, `campagne_locale`, `clients`, `delai_livraison_jours`, `satisfaction` et `taux_retour` en dates, catégories ou variables numériques. Appuyez votre réponse sur le sens des variables.
 
-Ajoutez ensuite deux décisions de préparation :
+Repères utiles :
 
-- quelles variables convertir en facteurs;
-- quelles variables conserver numériques même si elles prennent peu de valeurs.
+- `campagne_locale` vaut 0 pour une absence de campagne et 1 pour une présence;
+- `saison` désigne ici un niveau d’activité, pas une saison météorologique : `haute` pour novembre et décembre, `moyenne` pour janvier, février et juillet, `reguliere` pour les autres mois;
+- `delai_livraison_jours` est un délai mensuel moyen en jours;
+- `satisfaction` est un score mensuel moyen sur 10;
+- `taux_retour` est une proportion : 0,04 correspond à 4 %.
 
-Votre justification doit s'appuyer sur le sens des variables, et non seulement
-sur leur apparence dans R.
-
-## Exercice 3 - Repérer les valeurs manquantes
-
-Produisez un audit qui donne à la fois le nombre et la proportion de valeurs
-manquantes.
+Préparez les catégories :
 
 ```{r}
 #| eval: false
+ventes_pme <- ventes_pme |>
+  mutate(
+    saison = factor(saison, levels = c("reguliere", "moyenne", "haute")),
+    succursale = factor(succursale),
+    campagne_locale = factor(campagne_locale, levels = c(0, 1))
+  )
+```
 
+Expliquez pourquoi `campagne_locale` peut être un facteur alors que `clients` doit rester numérique. Le nombre de valeurs différentes ne suffit pas, à lui seul, à choisir le type.
+
+## Exercice 3 - Repérer les valeurs manquantes
+
+Produisez un diagnostic donnant le nombre et la proportion de valeurs manquantes pour chaque variable incomplète.
+
+```{r}
+#| eval: false
+# Compter les valeurs absentes dans chaque colonne
 audit_manquants <- ventes_pme |>
-  summarise(
-    across(
-      everything(),
-      list(
-        nombre = ~ sum(is.na(.x)),
-        proportion = ~ mean(is.na(.x))
-      )
-    )
-  ) |>
+  summarise(across(everything(), ~ sum(is.na(.x)))) |>
   pivot_longer(
     cols = everything(),
-    names_to = c("variable", ".value"),
-    names_pattern = "(.*)_(nombre|proportion)$"
+    names_to = "variable",
+    values_to = "nombre"
   ) |>
+  mutate(proportion = nombre / nrow(ventes_pme)) |>
   filter(nombre > 0)
 
 audit_manquants
 ```
 
-Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait modifier
-plus d'une analyse, même si une seule variable est étudiée au départ.
+Le dénominateur de chaque proportion est le nombre total de lignes. Par exemple, une proportion de 0,05 signifie que 5 % des valeurs de cette colonne sont absentes.
+
+Nommez les variables touchées. Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait aussi enlever des valeurs disponibles pour d’autres variables. Dans ces exercices, conservez les lignes et signalez les exclusions faites pour chaque calcul.
 
 ## Exercice 4 - Produire un tableau descriptif
 
-La question est maintenant : « Les retours et les délais sont-ils plus élevés
-pendant la haute saison? »
+Question : « Les taux de retour et les délais de livraison observés sont-ils plus élevés pendant la haute saison? »
+
+Comparez les médianes par saison. Ici, la médiane résume les valeurs mensuelles des succursales; elle ne décrit pas directement l’ensemble des livraisons individuelles.
 
 ```{r}
 #| eval: false
-
 resume_saison <- ventes_pme |>
   group_by(saison) |>
   summarise(
     observations = n(),
-    taux_retour_median = median(taux_retour, na.rm = TRUE),
+    taux_retour_median = median(taux_retour),
+    delais_utilises = sum(!is.na(delai_livraison_jours)),
     delai_median = median(delai_livraison_jours, na.rm = TRUE),
+    scores_utilises = sum(!is.na(satisfaction)),
     satisfaction_mediane = median(satisfaction, na.rm = TRUE),
     .groups = "drop"
   )
@@ -108,57 +126,79 @@ resume_saison <- ventes_pme |>
 resume_saison
 ```
 
-Rédigez deux constats descriptifs et une limite. Ne transformez pas la saison en
-explication causale.
+`taux_retour` est complet dans ce fichier. Pour le délai et la satisfaction, `na.rm = TRUE` exclut uniquement les valeurs absentes du calcul concerné; les colonnes d’effectifs indiquent combien de valeurs restent.
+
+Rédigez deux constats chiffrés et une limite. Répondez séparément pour les retours et pour les délais : les deux indicateurs ne donnent pas nécessairement le même classement. Une association observée ne démontre pas que la saison cause l’écart.
 
 ## Exercice 5 - Produire un graphique
 
-Choisissez un seul des deux graphiques suivants selon la question posée :
-
-1. comparer la distribution du taux de retour entre les saisons;
-2. étudier la relation entre le délai de livraison et la satisfaction.
+Pour répondre à la même question, représentez le délai médian par saison. Ce graphique reprend la démarche de la capsule 6, avec une autre variable et une autre unité.
 
 ```{r}
 #| eval: false
-
-graphique_saisons <- ggplot(
-  ventes_pme,
-  aes(x = saison, y = taux_retour)
+graphique_delais <- ggplot(
+  resume_saison,
+  aes(x = saison, y = delai_median)
 ) +
-  geom_boxplot(fill = "#0B4F6C", alpha = 0.8) +
-  labs(x = NULL, y = "Taux de retour") +
-  theme_minimal(base_size = 12)
-
-graphique_service <- ventes_pme |>
-  filter(!is.na(delai_livraison_jours), !is.na(satisfaction)) |>
-  ggplot(aes(x = delai_livraison_jours, y = satisfaction)) +
-  geom_point(aes(colour = saison), alpha = 0.8) +
+  geom_col(fill = "#0B4F6C") +
+  scale_x_discrete(labels = c(
+    reguliere = "Régulière", moyenne = "Moyenne", haute = "Haute"
+  )) +
   labs(
-    x = "Délai de livraison, en jours",
-    y = "Satisfaction",
-    colour = "Saison"
+    title = "Délai de livraison médian selon la saison",
+    subtitle = "PME fictive, année 2025",
+    x = "Niveau d’activité",
+    y = "Délai médian (jours)"
   ) +
   theme_minimal(base_size = 12)
+
+# Afficher le graphique dans le rapport
+graphique_delais
 ```
 
-Présentez le graphique choisi, justifiez votre choix en une phrase et écrivez un
-constat qui ne répète pas simplement le titre.
+Écrivez un constat qui mentionne une comparaison et son unité. Précisez que le graphique montre des médianes et ne montre pas toute la dispersion des délais.
+
+### Pour approfondir, facultatif
+
+Si vous souhaitez étudier une autre question, comparez la distribution des taux de retour entre les saisons ou la relation entre le délai et la satisfaction. Ces graphiques demandent de nouveaux gestes et ne sont pas requis pour terminer le module.
+
+```{r}
+#| eval: false
+# Distribution des taux de retour
+graphique_retours <- ggplot(ventes_pme, aes(saison, taux_retour)) +
+  geom_boxplot(fill = "#0B4F6C", alpha = 0.8) +
+  scale_y_continuous(labels = scales::label_percent(decimal.mark = ",")) +
+  scale_x_discrete(labels = c(
+    reguliere = "Régulière", moyenne = "Moyenne", haute = "Haute"
+  )) +
+  labs(title = "Distribution des taux de retour", x = "Saison", y = "Taux de retour (%)") +
+  theme_minimal(base_size = 12)
+
+graphique_retours
+```
 
 ## Trace finale courte
 
-Produisez un mini-rapport Quarto sur la qualité opérationnelle contenant :
+Terminez `rapport_retours_pme.qmd` et cliquez sur Render. Le rapport doit contenir :
 
-- le code d'importation et une vérification des dimensions;
-- un audit des valeurs manquantes;
-- le tableau par saison;
-- un graphique choisi en fonction d'une question précise;
-- deux constats, une limite et une prochaine vérification.
+1. une courte introduction et la question sur les retours et les délais;
+2. le code d’importation, les dimensions et l’unité d’observation;
+3. le diagnostic des valeurs manquantes;
+4. le tableau par saison avec les effectifs utilisés;
+5. le graphique du délai médian, avec ses unités;
+6. deux constats chiffrés, une limite et une question à approfondir.
 
-Le rapport ne doit reprendre ni le fichier, ni le tableau par succursale, ni le
-graphique par canal utilisés dans les capsules.
+Ouvrez le HTML produit et vérifiez que le tableau et le graphique y apparaissent. Pour partager une analyse reproductible, conservez le `.qmd`, le CSV et l’organisation du projet. Le HTML permet de lire le rapport sans exécuter le code.
 
-## Modèle de solution cachée à utiliser
+Arrêtez-vous lorsque ces six éléments sont présents et que Render termine sans erreur. L’approfondissement facultatif peut attendre.
 
-Les solutions détaillées restent dans la page réservée aux solutions. Avant de
-la consulter, le fichier `.qmd` de l'étudiant doit se rendre sans erreur du début
-à la fin.
+## Auto-vérification
+
+- [ ] Les packages et l’importation figurent dans mon `.qmd`.
+- [ ] Je retrouve 60 observations; le diagnostic signale deux délais et trois scores de satisfaction manquants.
+- [ ] Je distingue nombre total de lignes et nombre de valeurs utilisées.
+- [ ] Je lis les proportions comme des proportions et j’indique les unités.
+- [ ] Mes constats s’appuient sur les valeurs calculées et restent descriptifs.
+- [ ] Le HTML contient les sorties attendues.
+
+Les corrigés détaillés ne sont pas accessibles sur cette page. Si vous restez bloqué·e après une première tentative, utilisez les [démonstrations](demonstrations.qmd) ou posez une question sur le forum en joignant le code tenté et le message d’erreur.
