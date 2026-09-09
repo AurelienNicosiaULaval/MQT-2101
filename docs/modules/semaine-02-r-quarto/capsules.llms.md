@@ -4,9 +4,9 @@
 
 Cette page rassemble les vidéos et les supports des six capsules du module 02. Elles accompagnent les premiers gestes techniques dans R, RStudio et Quarto : préparer l’environnement, ouvrir un projet, importer un fichier CSV, inspecter un tableau, diagnostiquer les données et produire un mini-rapport reproductible.
 
-Les capsules 1 à 3 préparent votre environnement et votre projet. Conservez ensuite les imports et les calculs dans votre fichier Quarto, créé à la capsule 3 et complété à la capsule 6. Les supports HTML contiennent les repères à consulter pendant la séance autonome et permettent de copier-coller le code dans RStudio.
+Les capsules 1 à 3 préparent votre environnement et votre projet. Conservez ensuite les imports et les calculs dans votre fichier Quarto, créé à la capsule 3 et complété à la capsule 6. Les supports PDF et HTML contiennent les repères à consulter pendant la séance autonome. Les versions HTML permettent aussi de copier-coller le code dans RStudio.
 
-Regardez les capsules dans l’ordre, de 1 à 6, en gardant RStudio ouvert pour reproduire les gestes. Vous pouvez mettre la vidéo en pause et passer de l’onglet Vidéo à l’onglet HTML. Dans le support HTML, utilisez le bouton de copie d’un bloc de code ou sélectionnez le texte à copier. Le lien sous les diapositives permet d’ouvrir le support dans un nouvel onglet pour l’afficher en grand. Un lien permet aussi d’ouvrir chaque vidéo directement sur YouTube.
+Regardez les capsules dans l’ordre, de 1 à 6, en gardant RStudio ouvert pour reproduire les gestes. Vous pouvez mettre la vidéo en pause et passer entre les onglets Vidéo, PDF et HTML. Dans le support HTML, utilisez le bouton de copie d’un bloc de code ou sélectionnez le texte à copier. Le lien sous les diapositives permet d’ouvrir le support dans un nouvel onglet pour l’afficher en grand. Un lien permet aussi d’ouvrir chaque vidéo directement sur YouTube.
 
 > **NOTE:**
 >
@@ -21,6 +21,10 @@ Durée : 6 min 29 s.
 ## Vidéo
 
 [Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=Ge6PfRNMYYY)
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
 
 ## HTML
 
@@ -38,6 +42,10 @@ Durée : 7 min 24 s.
 
 [Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=0BYESd3d56Y)
 
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
+
 ## HTML
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
@@ -53,6 +61,10 @@ Durée : 11 min 27 s.
 ## Vidéo
 
 [Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=7J8mH2QqO7c)
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
 
 ## HTML
 
@@ -70,6 +82,10 @@ Durée : 7 min 07 s.
 
 [Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=n0L82uugGlM)
 
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+
 ## HTML
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
@@ -86,6 +102,10 @@ Durée : 10 min 50 s.
 
 [Ouvrir la capsule 5 sur YouTube](https://www.youtube.com/watch?v=Ju6gmv6iKy8)
 
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
 ## HTML
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
@@ -101,6 +121,10 @@ Durée : 7 min 21 s.
 ## Vidéo
 
 [Ouvrir la capsule 6 sur YouTube](https://www.youtube.com/watch?v=Ar1aJlmM39g)
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-06-support.pdf)
 
 ## HTML
 
