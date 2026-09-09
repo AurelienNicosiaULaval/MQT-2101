@@ -188,9 +188,11 @@ Activité 2.10 - Formuler deux constats descriptifs
 
 Une fois le rapport guidé terminé, réalisez les [exercices 1 à 5](../../modules/semaine-02-r-quarto/exercices.llms.md). Ils reprennent les mêmes gestes sur un autre fichier, avec une question sur la qualité opérationnelle. Gardez ce deuxième rapport dans le projet `diagnostic-retours-pme`.
 
+Après votre tentative, ouvrez la solution détaillée à la fin de chaque exercice pour comparer votre code, vos résultats et votre interprétation.
+
 ## Ressources du module
 
-[ CapsulesRegarder les six vidéos et consulter leurs supports PDF et HTML pour reproduire les gestes dans RStudio. Les versions HTML permettent de copier-coller le code.](capsules.llms.md) [ Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.](demonstrations.llms.md) [ ExercicesAppliquer la démarche à un nouveau cas sur les retours et les délais, puis vérifier les critères proposés.](exercices.llms.md) [ LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.](lectures.llms.md)
+[ CapsulesRegarder les six vidéos et consulter leurs supports PDF et HTML pour reproduire les gestes dans RStudio. Les versions HTML permettent de copier-coller le code.](capsules.llms.md) [ Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.](demonstrations.llms.md) [ Exercices et solutions détailléesÉtudier les retours et les délais, puis consulter le code R, les résultats et les explications à la fin de chaque exercice.](exercices.llms.md) [ LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.](lectures.llms.md)
 
 > **WARNING:**
 >

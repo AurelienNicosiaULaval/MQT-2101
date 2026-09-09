@@ -10,6 +10,8 @@ Jeu de données de transfert : [ventes_pme_quebec.csv](../atelier-01-r/data/vent
 
 Les cinq exercices se suivent et alimentent un seul rapport. Les blocs fournis sont des points de départ : exécutez-les, vérifiez les sorties et rédigez vos propres interprétations.
 
+Après votre tentative, ouvrez la boîte « Solution détaillée » à la fin de l’exercice. Les corrigés présentent le code, les résultats obtenus et leur interprétation. Le bouton situé en haut à droite de chaque bloc permet de copier le code. Les blocs des solutions s’exécutent dans l’ordre, de l’exercice 1 à l’exercice 5, dans le même document Quarto.
+
 ## Exercice 1 - Créer le projet et importer les données
 
 1.  Dans RStudio, choisissez File \> New Project \> New Directory \> New Project et nommez le projet `diagnostic-retours-pme`.
@@ -47,6 +49,89 @@ Indiquez ce que représente une ligne du tableau et la période couverte. Expliq
 
 Repère de vérification : vous devez obtenir 60 lignes et 15 colonnes, de janvier à décembre 2025. Le tableau contient une observation par succursale et par mois, pour cinq succursales.
 
+> **TIP:**
+>
+> ### Organiser les fichiers
+>
+> Le dossier du projet doit contenir les éléments suivants :
+>
+> ``` text
+> diagnostic-retours-pme/
+> ├── diagnostic-retours-pme.Rproj
+> ├── rapport_retours_pme.qmd
+> └── data/
+>     └── ventes_pme_quebec.csv
+> ```
+>
+> Le fichier `.Rproj` est créé par RStudio. Le document `.qmd` contient votre texte et vos blocs de code. Le fichier CSV reste dans `data/` : vous n’avez pas besoin de le modifier pour réaliser les exercices.
+>
+> ### Importer et vérifier les données
+>
+> Placez ce bloc au début de votre document, sous l’en-tête YAML :
+>
+> ``` r
+> # Charger les packages utilisés dans le rapport
+> library(tidyverse)
+> library(janitor)
+>
+> # Importer le CSV et préparer la date
+> ventes_pme <- read_csv(
+>   "data/ventes_pme_quebec.csv",
+>   show_col_types = FALSE
+> ) |>
+>   clean_names() |>
+>   mutate(mois = as.Date(mois))
+>
+> # Vérifier les dimensions et la période couverte
+> dim(ventes_pme)
+> range(ventes_pme$mois)
+> ```
+>
+>     [1] 60 15
+>     [1] "2025-01-01" "2025-12-01"
+>
+> `dim()` donne d’abord le nombre de lignes, puis le nombre de colonnes. On obtient donc 60 observations et 15 variables. `range()` donne la première et la dernière date : le fichier couvre les mois de janvier à décembre 2025. Les dates désignent des mois entiers; la dernière ligne datée du 1er décembre ne signifie pas que les données s’arrêtent au premier jour de ce mois.
+>
+> Pour examiner les variables et leurs premières valeurs :
+>
+> ``` r
+> glimpse(ventes_pme)
+> ```
+>
+>     Rows: 60
+>     Columns: 15
+>     $ mois                  <date> 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…
+>     $ mois_label            <chr> "janvier", "janvier", "janvier", "janvier", "jan…
+>     $ saison                <chr> "moyenne", "moyenne", "moyenne", "moyenne", "moy…
+>     $ succursale            <chr> "Gatineau", "Montréal", "Québec", "Sherbrooke", …
+>     $ region                <chr> "Outaouais", "Montréal", "Capitale-Nationale", "…
+>     $ surface_m2            <dbl> 410, 520, 460, 390, 360, 410, 520, 460, 390, 360…
+>     $ campagne_locale       <dbl> 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, …
+>     $ depenses_marketing    <dbl> 4799, 5755, 5646, 2367, 7671, 4771, 3070, 5029, …
+>     $ clients               <dbl> 2188, 2568, 2280, 2013, 1967, 2100, 2468, 2417, …
+>     $ panier_moyen          <dbl> 59.35, 65.66, 62.41, 59.69, 54.91, 55.02, 64.23,…
+>     $ ventes                <dbl> 129858, 168615, 142295, 120156, 108008, 115542, …
+>     $ delai_livraison_jours <dbl> 3.0, 2.5, 2.4, 2.3, 2.1, 3.5, 1.7, 2.4, 2.2, 2.2…
+>     $ ruptures_stock        <dbl> 6, 3, 1, 3, 1, 1, 0, 2, 1, 1, 1, 0, 1, 2, 0, 1, …
+>     $ satisfaction          <dbl> 7.6, 7.9, 8.7, 8.5, 7.1, 7.0, 8.5, NA, 7.4, 8.0,…
+>     $ taux_retour           <dbl> 0.076, 0.043, 0.044, 0.035, 0.037, 0.025, 0.042,…
+>
+> Dans cette sortie, `Rows` signifie « lignes » et `Columns` signifie « colonnes ». Les abréviations entre chevrons décrivent le stockage dans R : `<date>` pour une date, `<chr>` pour du texte et `<dbl>` pour des nombres. Le type affiché ne remplace pas la lecture du dictionnaire : `clients` est un dénombrement, même si R le stocke sous le type `<dbl>`.
+>
+> ### Décrire l’unité d’observation
+>
+> Une réponse possible est :
+>
+> > Chaque ligne décrit une succursale pendant un mois. Les données portent sur cinq succursales observées pendant les douze mois de 2025, soit 5 × 12 = 60 observations.
+>
+> Ce ne sont donc ni 60 clients ni 60 succursales différentes. Par exemple, la première ligne décrit la succursale de Gatineau en janvier 2025.
+>
+> ### Comprendre le chemin relatif
+>
+> Le chemin `data/ventes_pme_quebec.csv` indique où chercher le fichier à partir du dossier contenant le rapport. Il ne contient ni votre nom d’utilisateur ni l’emplacement personnel de votre dossier Documents. Une autre personne peut donc utiliser le même code si elle conserve le document et le dossier `data/` dans la même organisation.
+>
+> Si R indique que le fichier n’existe pas, vérifiez dans l’onglet Files que le CSV porte exactement ce nom et qu’il est bien dans `data/`. Envoyer le `.qmd` seul ne suffit pas : le CSV doit l’accompagner.
+
 ## Exercice 2 - Identifier les types de variables
 
 Classez `mois`, `saison`, `succursale`, `campagne_locale`, `clients`, `delai_livraison_jours`, `satisfaction` et `taux_retour` en dates, catégories ou variables numériques. Appuyez votre réponse sur le sens des variables.
@@ -72,6 +157,63 @@ ventes_pme <- ventes_pme |>
 
 Expliquez pourquoi `campagne_locale` peut être un facteur alors que `clients` doit rester numérique. Le nombre de valeurs différentes ne suffit pas, à lui seul, à choisir le type.
 
+> **TIP:**
+>
+> ### Classer les variables selon leur sens
+>
+> | Variable | Type à retenir | Justification |
+> |----|----|----|
+> | `mois` | Date | Repère le mois d’observation et permet de respecter la chronologie. |
+> | `saison` | Catégorie | Désigne le niveau d’activité : régulier, moyen ou élevé. |
+> | `succursale` | Catégorie | Identifie la ville de la succursale. |
+> | `campagne_locale` | Catégorie à deux modalités | Indique l’absence ou la présence d’une campagne locale. |
+> | `clients` | Variable numérique discrète | Compte un nombre de clients pour une succursale et un mois. |
+> | `delai_livraison_jours` | Variable numérique | Mesure un délai mensuel moyen, en jours. |
+> | `satisfaction` | Variable numérique | Donne un score mensuel moyen sur 10. |
+> | `taux_retour` | Variable numérique | Donne une proportion de retours, entre 0 et 1. |
+>
+> Une catégorie sert à former des groupes. Dans R, un facteur est une manière de représenter une variable catégorielle en précisant ses valeurs possibles, appelées modalités. On peut ainsi comparer les mois avec et sans campagne, ou les observations des trois niveaux d’activité.
+>
+> ### Préparer les facteurs
+>
+> Ce bloc reprend la préparation demandée :
+>
+> ``` r
+> ventes_pme <- ventes_pme |>
+>   mutate(
+>     saison = factor(
+>       saison,
+>       levels = c("reguliere", "moyenne", "haute")
+>     ),
+>     succursale = factor(succursale),
+>     campagne_locale = factor(campagne_locale, levels = c(0, 1))
+>   )
+>
+> # Vérifier les modalités et le nombre d'observations par niveau d'activité
+> levels(ventes_pme$saison)
+> levels(ventes_pme$campagne_locale)
+> count(ventes_pme, saison)
+> ```
+>
+>     [1] "reguliere" "moyenne"   "haute"
+>     [1] "0" "1"
+>     # A tibble: 3 × 2
+>       saison        n
+>       <fct>     <int>
+>     1 reguliere    35
+>     2 moyenne      15
+>     3 haute        10
+>
+> L’argument `levels` fixe ici l’ordre d’affichage : régulière, moyenne, haute. Il ne transforme pas ces catégories en nombres et ne signifie pas que l’écart entre deux niveaux d’activité est constant.
+>
+> On obtient 35 observations en saison régulière, 15 en saison moyenne et 10 en haute saison. Cela correspond à cinq succursales observées pendant, respectivement, sept, trois et deux mois. La « haute saison » désigne ici novembre et décembre, et non l’été.
+>
+> ### Distinguer un code d’un dénombrement
+>
+> Pour `campagne_locale`, 0 et 1 servent à distinguer deux situations : campagne absente ou présente. Le facteur convient donc pour former ces deux groupes. Pour `clients`, les nombres représentent des quantités : passer de 100 à 200 clients signifie compter 100 clients de plus. Garder cette variable numérique permet notamment de calculer un total ou une moyenne.
+>
+> Enfin, une valeur de `taux_retour` égale à 0,04 se lit 4 %, car 0,04 × 100 = 4. Il faut conserver la proportion dans les données et convertir son affichage au besoin. Une satisfaction de 8 sur 10, en revanche, n’est pas la preuve que 80 % des clients sont satisfaits : c’est un score moyen.
+
 ## Exercice 3 - Repérer les valeurs manquantes
 
 Produisez un diagnostic donnant le nombre et la proportion de valeurs manquantes pour chaque variable incomplète.
@@ -94,6 +236,76 @@ audit_manquants
 Le dénominateur de chaque proportion est le nombre total de lignes. Par exemple, une proportion de 0,05 signifie que 5 % des valeurs de cette colonne sont absentes.
 
 Nommez les variables touchées. Expliquez pourquoi supprimer toutes les lignes incomplètes pourrait aussi enlever des valeurs disponibles pour d’autres variables. Dans ces exercices, conservez les lignes et signalez les exclusions faites pour chaque calcul.
+
+> **TIP:**
+>
+> ### Compter les valeurs manquantes
+>
+> ``` r
+> audit_manquants <- ventes_pme |>
+>   summarise(across(everything(), ~ sum(is.na(.x)))) |>
+>   pivot_longer(
+>     cols = everything(),
+>     names_to = "variable",
+>     values_to = "nombre"
+>   ) |>
+>   mutate(proportion = nombre / nrow(ventes_pme)) |>
+>   filter(nombre > 0)
+>
+> # Présenter les proportions en pourcentages dans le rapport
+> audit_manquants |>
+>   transmute(
+>     Variable = variable,
+>     `Nombre de valeurs manquantes` = nombre,
+>     `Valeurs manquantes (%)` = 100 * proportion
+>   ) |>
+>   knitr::kable(digits = 2, format.args = list(decimal.mark = ","))
+> ```
+>
+> | Variable              | Nombre de valeurs manquantes | Valeurs manquantes (%) |
+> |:----------------------|-----------------------------:|-----------------------:|
+> | delai_livraison_jours |                            2 |                   3,33 |
+> | satisfaction          |                            3 |                   5,00 |
+>
+> Voici comment lire les étapes du calcul :
+>
+> 1.  `is.na()` repère les valeurs manquantes et renvoie `TRUE` à leur position.
+> 2.  `sum()` compte ces positions, car R traite `TRUE` comme 1 et `FALSE` comme 0.
+> 3.  `across(everything(), ...)` répète ce calcul pour chaque colonne.
+> 4.  `pivot_longer()` réorganise le résultat pour obtenir une ligne par variable.
+> 5.  La division par `nrow(ventes_pme)` donne la proportion de valeurs absentes dans chaque colonne; `filter(nombre > 0)` conserve les variables incomplètes.
+>
+> Le fichier contient deux délais manquants, soit 2 ÷ 60 ≈ 0,0333, ou 3,33 %, et trois scores de satisfaction manquants, soit 3 ÷ 60 = 0,05, ou 5 %. Les autres variables sont complètes. Le tableau affiche des pourcentages, mais la colonne `proportion` de `audit_manquants` conserve les proportions.
+>
+> ### Voir ce que supprimerait une suppression globale
+>
+> Ce bloc montre les lignes concernées sans les retirer des données :
+>
+> ``` r
+> ventes_pme |>
+>   filter(is.na(delai_livraison_jours) | is.na(satisfaction)) |>
+>   select(mois, succursale, delai_livraison_jours, satisfaction) |>
+>   knitr::kable(
+>     col.names = c("Mois", "Succursale", "Délai (jours)", "Satisfaction sur 10"),
+>     format.args = list(decimal.mark = ",")
+>   )
+> ```
+>
+> | Mois       | Succursale | Délai (jours) | Satisfaction sur 10 |
+> |:-----------|:-----------|--------------:|--------------------:|
+> | 2025-02-01 | Québec     |           2,4 |                  NA |
+> | 2025-04-01 | Sherbrooke |            NA |                 7,8 |
+> | 2025-06-01 | Montréal   |           2,7 |                  NA |
+> | 2025-09-01 | Québec     |           3,2 |                  NA |
+> | 2025-11-01 | Gatineau   |            NA |                 8,7 |
+>
+> Dans ce tableau, `NA` indique une valeur manquante. Les cinq valeurs manquantes se trouvent sur cinq lignes différentes. Si on supprimait toutes les lignes incomplètes, il ne resterait que 55 observations. On perdrait alors trois délais connus parce que la satisfaction est absente sur leur ligne, et deux scores de satisfaction connus parce que le délai est absent. On retirerait aussi cinq taux de retour pourtant disponibles.
+>
+> ### Choisir le traitement adapté à ces exercices
+>
+> On conserve les 60 lignes. Pour un calcul sur les délais, on utilise les 58 valeurs disponibles; pour un calcul sur la satisfaction, les 57 valeurs disponibles. Les calculs sur les taux de retour utilisent les 60 valeurs.
+>
+> L’option `na.rm = TRUE` ignore une valeur absente dans le calcul qui la contient; elle ne supprime pas la ligne du tableau `ventes_pme`. Elle ne remplace pas non plus cette valeur par zéro. On ne connaît pas la raison des absences : les signaler reste nécessaire, même si le calcul fonctionne.
 
 ## Exercice 4 - Produire un tableau descriptif
 
@@ -120,6 +332,70 @@ resume_saison
 `taux_retour` est complet dans ce fichier. Pour le délai et la satisfaction, `na.rm = TRUE` exclut uniquement les valeurs absentes du calcul concerné; les colonnes d’effectifs indiquent combien de valeurs restent.
 
 Rédigez deux constats chiffrés et une limite. Répondez séparément pour les retours et pour les délais : les deux indicateurs ne donnent pas nécessairement le même classement. Une association observée ne démontre pas que la saison cause l’écart.
+
+> **TIP:**
+>
+> ### Calculer les médianes par saison
+>
+> ``` r
+> resume_saison <- ventes_pme |>
+>   group_by(saison) |>
+>   summarise(
+>     observations = n(),
+>     taux_retour_median = median(taux_retour),
+>     delais_utilises = sum(!is.na(delai_livraison_jours)),
+>     delai_median = median(delai_livraison_jours, na.rm = TRUE),
+>     scores_utilises = sum(!is.na(satisfaction)),
+>     satisfaction_mediane = median(satisfaction, na.rm = TRUE),
+>     .groups = "drop"
+>   )
+>
+> # Mettre en forme une copie du tableau pour l'affichage
+> resume_saison |>
+>   transmute(
+>     Saison = recode(
+>       as.character(saison),
+>       reguliere = "Régulière", moyenne = "Moyenne", haute = "Haute"
+>     ),
+>     Observations = observations,
+>     `Taux de retour médian (%)` = 100 * taux_retour_median,
+>     `Délais utilisés` = delais_utilises,
+>     `Délai médian (jours)` = delai_median,
+>     `Scores utilisés` = scores_utilises,
+>     `Satisfaction médiane sur 10` = satisfaction_mediane
+>   ) |>
+>   knitr::kable(digits = 2, format.args = list(decimal.mark = ","))
+> ```
+>
+> | Saison | Observations | Taux de retour médian (%) | Délais utilisés | Délai médian (jours) | Scores utilisés | Satisfaction médiane sur 10 |
+> |:---|---:|---:|---:|---:|---:|---:|
+> | Régulière | 35 | 4,20 | 34 | 2,6 | 33 | 7,50 |
+> | Moyenne | 15 | 3,70 | 15 | 2,3 | 14 | 7,75 |
+> | Haute | 10 | 4,15 | 9 | 3,6 | 10 | 7,50 |
+>
+> `group_by(saison)` forme les trois groupes. `summarise()` produit une ligne par groupe en calculant les indicateurs demandés. `observations = n()` compte toutes les lignes du groupe, tandis que `delais_utilises` et `scores_utilises` comptent seulement les valeurs disponibles pour ces deux variables. `.groups = "drop"` indique que le résultat n’a plus besoin de rester regroupé pour les étapes suivantes.
+>
+> La médiane est la valeur centrale lorsque les observations sont classées par ordre croissant. S’il y a un nombre pair de valeurs, R prend la moyenne des deux valeurs centrales. Chaque valeur mensuelle disponible compte de la même façon : on ne donne pas davantage de poids aux mois ayant plus de clients.
+>
+> ### Répondre pour les taux de retour
+>
+> > Le taux de retour médian est de 4,15 % en haute saison, contre 4,20 % en saison régulière et 3,70 % en saison moyenne. Il est donc plus élevé en haute saison qu’en saison moyenne, mais légèrement inférieur à celui de la saison régulière.
+>
+> La réponse à la question de départ n’est donc pas un simple « oui ». Le taux de retour médian le plus élevé se trouve en saison régulière. L’écart entre les saisons régulière et haute est de 0,05 point de pourcentage. Cette petite différence descriptive ne suffit pas, à elle seule, pour justifier une décision de gestion.
+>
+> ### Répondre pour les délais
+>
+> > Le délai médian est de 3,60 jours en haute saison, contre 2,60 jours en saison régulière et 2,30 jours en saison moyenne. Il est donc plus long en haute saison dans les données disponibles.
+>
+> L’écart entre haute saison et saison régulière est de 1,00 jour. Le calcul utilise 9 délais en haute saison, 34 en saison régulière et 15 en saison moyenne. Les effectifs du tableau permettent de voir immédiatement que les trois médianes ne reposent pas sur le même nombre de valeurs.
+>
+> ### Formuler une limite
+>
+> Une limite possible est :
+>
+> > Ces résultats décrivent les observations de cinq succursales pendant une seule année. La haute saison ne couvre que novembre et décembre, et un délai y est manquant; cette comparaison ne démontre pas que la saison est la cause des écarts observés.
+>
+> Les variables sont aussi déjà des résumés mensuels. La médiane de `delai_livraison_jours` est donc une médiane de délais moyens mensuels, et non la médiane de toutes les livraisons individuelles. De même, la médiane de `taux_retour` n’est pas un taux de retour global : pour calculer ce dernier, il faudrait connaître le nombre de retours et le nombre de ventes ou de transactions auquel chaque taux se rapporte.
 
 ## Exercice 5 - Produire un graphique
 
@@ -148,6 +424,56 @@ graphique_delais
 
 Écrivez un constat qui mentionne une comparaison et son unité. Précisez que le graphique montre des médianes et ne montre pas toute la dispersion des délais.
 
+> **TIP:**
+>
+> ### Représenter les trois médianes
+>
+> Le graphique doit utiliser `resume_saison`, calculé à l’exercice 4. Ce tableau contient une seule ligne par saison, avec la médiane à représenter.
+>
+> ``` r
+> graphique_delais <- ggplot(
+>   resume_saison,
+>   aes(x = saison, y = delai_median)
+> ) +
+>   geom_col(fill = "#0B4F6C", width = 0.65) +
+>   geom_text(
+>     aes(label = scales::number(delai_median, accuracy = 0.1, decimal.mark = ",")),
+>     vjust = -0.5
+>   ) +
+>   scale_x_discrete(labels = c(
+>     reguliere = "Régulière", moyenne = "Moyenne", haute = "Haute"
+>   )) +
+>   scale_y_continuous(
+>     labels = scales::label_number(decimal.mark = ","),
+>     expand = expansion(mult = c(0, 0.15))
+>   ) +
+>   labs(
+>     title = "Délai de livraison médian selon la saison",
+>     subtitle = "PME fictive, année 2025",
+>     x = "Niveau d'activité",
+>     y = "Délai médian (jours)"
+>   ) +
+>   theme_minimal(base_size = 12)
+>
+> graphique_delais
+> ```
+>
+> ![Le délai médian est de 2,6 jours en saison régulière, 2,3 jours en saison moyenne et 3,6 jours en haute saison.](exercices_files/figure-html/solution-02-graphique-1.png)
+>
+> Médianes des délais moyens mensuels par succursale, calculées à partir des valeurs disponibles.
+>
+> `aes()` associe les saisons à l’axe horizontal et les médianes à l’axe vertical. `geom_col()` utilise les valeurs déjà calculées pour fixer la hauteur des barres. Il ne recalcule pas les médianes. `geom_text()` ajoute les valeurs au-dessus des barres pour faciliter leur lecture.
+>
+> Les libellés affichent les accents sans modifier les modalités conservées dans les données. L’axe vertical commence à zéro, ce qui permet de comparer les hauteurs des barres sans amplifier visuellement les écarts. La dernière ligne, `graphique_delais`, affiche l’objet graphique dans le rapport.
+>
+> ### Rédiger le constat
+>
+> > Le délai médian est de 3,60 jours en haute saison, soit 1,00 jour de plus qu’en saison régulière et 1,30 jour de plus qu’en saison moyenne. Ces médianes résument les délais moyens mensuels disponibles pour les succursales observées.
+>
+> Le graphique ne montre ni les valeurs minimales et maximales, ni la dispersion des délais à l’intérieur de chaque saison. Deux groupes peuvent avoir la même médiane et des distributions très différentes. Pour connaître cette dispersion, il faudrait revenir aux observations de `ventes_pme`.
+>
+> Si R indique que `resume_saison` est introuvable, vérifiez que le bloc de l’exercice 4 figure dans le document avant celui du graphique. Un objet créé uniquement dans la Console peut être disponible pendant vos essais, mais manquer lorsque Quarto exécute le rapport dans une nouvelle session.
+
 ### Pour approfondir, facultatif
 
 Si vous souhaitez étudier une autre question, comparez la distribution des taux de retour entre les saisons ou la relation entre le délai et la satisfaction. Ces graphiques demandent de nouveaux gestes et ne sont pas requis pour terminer le module.
@@ -166,6 +492,8 @@ graphique_retours <- ggplot(ventes_pme, aes(saison, taux_retour)) +
 graphique_retours
 ```
 
+> **TIP:**
+
 ## Trace finale courte
 
 Terminez `rapport_retours_pme.qmd` et cliquez sur Render. Le rapport doit contenir :
@@ -181,6 +509,53 @@ Ouvrez le HTML produit et vérifiez que le tableau et le graphique y apparaissen
 
 Arrêtez-vous lorsque ces six éléments sont présents et que Render termine sans erreur. L’approfondissement facultatif peut attendre.
 
+> **TIP:**
+>
+> ### Assembler le document Quarto
+>
+> Votre rapport peut commencer par cet en-tête. Il conserve le code visible et permet de copier les blocs dans le HTML :
+>
+> ``` yaml
+> ---
+> title: "Retours et délais d'une PME fictive"
+> lang: fr
+> format:
+>   html:
+>     embed-resources: true
+>     code-copy: true
+>     code-overflow: wrap
+> execute:
+>   echo: true
+>   message: false
+> ---
+> ```
+>
+> Sous l’en-tête, placez les sections dans cet ordre : introduction, importation, préparation des variables, valeurs manquantes, tableau par saison, graphique et interprétation. Insérez le code dans des blocs R et rédigez vos phrases à l’extérieur de ces blocs. Les solutions des exercices 1 à 5 donnent le code nécessaire; l’approfondissement reste facultatif.
+>
+> Le rapport doit contenir lui-même tous les appels à `library()` et tous les calculs dont il dépend. Il ne suffit pas de les avoir exécutés dans la Console de RStudio. Avec `embed-resources: true`, le graphique et les autres ressources nécessaires à l’affichage sont intégrés au fichier HTML.
+>
+> ### Exemple d’introduction
+>
+> > Nous cherchons à savoir si les taux de retour et les délais de livraison observés sont plus élevés pendant la haute saison. Le fichier contient 60 observations mensuelles portant sur cinq succursales d’une PME québécoise fictive en 2025. Une ligne décrit une succursale pendant un mois. Les données sont simulées; la haute saison correspond à novembre et décembre.
+>
+> ### Exemple d’interprétation
+>
+> > Deux délais de livraison et trois scores de satisfaction sont manquants. Les lignes ont été conservées, et chaque indicateur utilise les valeurs disponibles pour la variable concernée.
+> >
+> > En haute saison, le délai médian atteint 3,60 jours, contre 2,60 jours en saison régulière et 2,30 jours en saison moyenne. Les délais observés sont donc plus longs en haute saison selon cet indicateur.
+> >
+> > Le taux de retour médian est de 4,15 % en haute saison, contre 4,20 % en saison régulière et 3,70 % en saison moyenne. La haute saison ne présente donc pas le taux médian le plus élevé.
+> >
+> > La comparaison porte sur une seule année et sur des résumés mensuels par succursale. Elle ne permet pas d’attribuer les écarts à la saison. Une question à approfondir serait de vérifier si les délais plus longs en haute saison se retrouvent dans chacune des cinq succursales.
+>
+> Ces paragraphes accompagnent le diagnostic, le tableau et le graphique; ils ne les remplacent pas. Vous pouvez formuler vos constats autrement si les valeurs, les unités et les limites sont respectées.
+>
+> ### Vérifier le fichier produit
+>
+> Enregistrez `rapport_retours_pme.qmd`, puis cliquez sur Render. Ouvrez le fichier HTML obtenu et vérifiez la présence du code, du tableau et du graphique. Comparez les nombres cités dans votre texte avec ceux du tableau.
+>
+> Si le rendu échoue, commencez par lire le premier message d’erreur : un fichier introuvable invite à vérifier son nom et son emplacement; un objet introuvable invite à vérifier les blocs précédents. Gardez ensemble le `.qmd` et `data/ventes_pme_quebec.csv` pour permettre de refaire les calculs. Le HTML sert à lire le rapport; il ne remplace pas ces fichiers sources.
+
 ## Auto-vérification
 
 Les packages et l’importation figurent dans mon `.qmd`.
@@ -195,4 +570,4 @@ Mes constats s’appuient sur les valeurs calculées et restent descriptifs.
 
 Le HTML contient les sorties attendues.
 
-Les corrigés détaillés ne sont pas accessibles sur cette page. Si vous restez bloqué·e après une première tentative, utilisez les [démonstrations](../../modules/semaine-02-r-quarto/demonstrations.llms.md) ou posez une question sur le forum en joignant le code tenté et le message d’erreur.
+Après avoir comparé votre réponse au corrigé, notez une correction apportée ou une question qui reste à clarifier. Si vous restez bloqué·e, consultez les [démonstrations](../../modules/semaine-02-r-quarto/demonstrations.llms.md) ou posez une question sur le forum en joignant le code tenté et le message d’erreur.
