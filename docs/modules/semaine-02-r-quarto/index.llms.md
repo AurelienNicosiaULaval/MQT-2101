@@ -56,7 +56,7 @@ Le parcours ci-dessous construit un rapport guidé avec `ventes_operations_quebe
 
 Les productions autonomes des supports reprennent les activités du parcours : il n’est pas nécessaire de les refaire deux fois. Les activités 2.1 à 2.10 détaillent les gestes présentés dans les six capsules.
 
-Les [six capsules vidéo du module](../../modules/semaine-02-r-quarto/capsules.llms.md) sont disponibles, avec leurs supports HTML et PDF. Regardez-les dans l’ordre, de 1 à 6, en gardant RStudio ouvert pour reproduire les gestes.
+Les [six capsules vidéo du module](../../modules/semaine-02-r-quarto/capsules.llms.md) sont disponibles, avec leurs supports HTML pour copier-coller le code dans RStudio. Regardez-les dans l’ordre, de 1 à 6, en gardant RStudio ouvert pour reproduire les gestes.
 
 > **NOTE:**
 >
@@ -190,7 +190,7 @@ Une fois le rapport guidé terminé, réalisez les [exercices 1 à 5](../../modu
 
 ## Ressources du module
 
-[ CapsulesRegarder les six vidéos et consulter leurs supports HTML ou PDF pour reproduire les gestes dans RStudio.](capsules.llms.md) [ Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.](demonstrations.llms.md) [ ExercicesAppliquer la démarche à un nouveau cas sur les retours et les délais, puis vérifier les critères proposés.](exercices.llms.md) [ LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.](lectures.llms.md)
+[ CapsulesRegarder les six vidéos et consulter leurs supports HTML pour copier-coller le code et reproduire les gestes dans RStudio.](capsules.llms.md) [ Démonstrations RReproduire le code pas à pas pour importer, inspecter, résumer et visualiser.](demonstrations.llms.md) [ ExercicesAppliquer la démarche à un nouveau cas sur les retours et les délais, puis vérifier les critères proposés.](exercices.llms.md) [ LecturesClarifier les notions techniques lorsque les capsules ou les exercices soulèvent une question.](lectures.llms.md)
 
 > **WARNING:**
 >
