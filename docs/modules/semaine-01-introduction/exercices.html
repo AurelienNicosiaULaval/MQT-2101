@@ -7017,7 +7017,7 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
+  <ul class="collapse">
   <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
   <li><a href="#exercice-1---lire-la-structure-dune-base" id="toc-exercice-1---lire-la-structure-dune-base" class="nav-link" data-scroll-target="#exercice-1---lire-la-structure-dune-base">Exercice 1 - Lire la structure d’une base</a></li>
   <li><a href="#exercice-2---lire-une-analyse-univariée" id="toc-exercice-2---lire-une-analyse-univariée" class="nav-link" data-scroll-target="#exercice-2---lire-une-analyse-univariée">Exercice 2 - Lire une analyse univariée</a></li>
@@ -7054,11 +7054,14 @@ display: none;
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Ces exercices constituent un cas de transfert. Ils utilisent les données de ventes et d’opérations de succursales québécoises, et non les bases étudiées dans les capsules. Aucun code n’est attendu cette semaine.</p>
+<p>Après avoir rédigé votre réponse, cliquez sur « Solution détaillée » à la fin de l’exercice pour comparer votre démarche au corrigé. Chaque boîte est fermée à l’ouverture de la page; cliquez de nouveau sur son titre pour la refermer. Les réponses rédigées sont des exemples : une autre formulation est recevable si elle est exacte, justifiée et accompagnée des limites pertinentes.</p>
 <p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.</p>
+<p>Ces données sont simulées à des fins pédagogiques. Le <a href="../../donnees/index.html#ventes-et-opérations-de-succursales-québécoises">descriptif du fichier</a> précise le sens des variables : les délais et les scores de satisfaction sont des moyennes pour une succursale et un mois.</p>
 </section>
 <section id="exercice-1---lire-la-structure-dune-base" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---lire-la-structure-dune-base">Exercice 1 - Lire la structure d’une base</h2>
 <p>Une direction souhaite comparer la qualité du service entre les régions. Elle propose le dictionnaire incomplet suivant :</p>
+<div class="table-responsive">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -7095,6 +7098,7 @@ display: none;
 </tr>
 </tbody>
 </table>
+</div>
 <p>À faire :</p>
 <ul>
 <li>corriger les deux lignes manifestement erronées;</li>
@@ -7103,6 +7107,91 @@ display: none;
 <li>nommer une précaution concernant <code>satisfaction</code>;</li>
 <li>expliquer pourquoi <code>mois</code> doit conserver un sens temporel.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l&#39;exercice 1">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Solution détaillée de l’exercice 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="corriger-le-dictionnaire" class="level3">
+<h3 class="anchored" data-anchor-id="corriger-le-dictionnaire">1. Corriger le dictionnaire</h3>
+<div class="table-responsive">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Type à retenir</th>
+<th>Rôle dans l’analyse</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mois</code></td>
+<td>Variable temporelle, enregistrée comme une date</td>
+<td>Situer l’observation dans le temps et ordonner les mois.</td>
+</tr>
+<tr class="even">
+<td><code>succursale</code></td>
+<td>Variable catégorielle nominale</td>
+<td>Identifier la succursale observée.</td>
+</tr>
+<tr class="odd">
+<td><code>canal_principal</code></td>
+<td>Variable catégorielle nominale</td>
+<td>Décrire le principal canal de vente du mois.</td>
+</tr>
+<tr class="even">
+<td><code>delai_livraison_jours</code></td>
+<td>Variable numérique, en jours</td>
+<td>Mesurer le délai moyen de livraison de la succursale pour le mois.</td>
+</tr>
+<tr class="odd">
+<td><code>satisfaction</code></td>
+<td>Variable numérique, score moyen sur 10</td>
+<td>Résumer la satisfaction moyenne de la succursale pour le mois.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Les deux lignes manifestement erronées sont donc <code>mois</code> et <code>succursale</code>. Une date n’identifie pas une succursale : plusieurs succursales sont observées le même mois. Inversement, le nom d’une succursale ne mesure pas une performance. Même si on remplaçait les noms par des codes 1, 2, 3 et 4, ces codes resteraient des étiquettes; leur moyenne n’aurait pas de sens comme indicateur de performance.</p>
+</section>
+<section id="nommer-lunité-dobservation" class="level3">
+<h3 class="anchored" data-anchor-id="nommer-lunité-dobservation">2. Nommer l’unité d’observation</h3>
+<p>Une ligne représente une succursale pendant un mois. Par exemple, la première ligne décrit la succursale de Montréal en janvier 2025. Le fichier contient 24 lignes : 4 succursales observées pendant 6 mois, de janvier à juin 2025.</p>
+<p>Il faut donc identifier une ligne par le couple (<code>succursale</code>, <code>mois</code>). Ce ne sont ni 24 clients ni 24 succursales différentes. Une même succursale revient plusieurs fois dans le fichier.</p>
+</section>
+<section id="former-les-groupes-régionaux" class="level3">
+<h3 class="anchored" data-anchor-id="former-les-groupes-régionaux">3. Former les groupes régionaux</h3>
+<p>La variable à utiliser est <code>region</code>. Elle permet de regrouper les lignes par région administrative avant de comparer un indicateur, par exemple le délai moyen observé. Dans ce fichier, chaque région n’est représentée que par une succursale. Une différence entre régions est donc aussi une différence entre ces succursales; elle ne décrit pas toutes les entreprises de ces régions.</p>
+</section>
+<section id="interpréter-la-satisfaction-avec-précaution" class="level3">
+<h3 class="anchored" data-anchor-id="interpréter-la-satisfaction-avec-précaution">4. Interpréter la satisfaction avec précaution</h3>
+<p><code>satisfaction</code> est un score moyen, pas un nombre de personnes satisfaites. Une valeur de 8,3 signifie un score moyen de 8,3 sur 10; elle ne signifie pas que 83 % des clients sont satisfaits.</p>
+<p>Deux autres précautions sont utiles :</p>
+<ul>
+<li>2 scores mensuels sont manquants. Une valeur manquante n’est pas un score de zéro.</li>
+<li>Le fichier ne donne ni le nombre de répondants ni les réponses individuelles. Une moyenne des scores mensuels ne permet donc pas de calculer la satisfaction moyenne de l’ensemble des répondants en tenant compte de leurs effectifs.</li>
+</ul>
+</section>
+<section id="conserver-le-sens-temporel-de-mois" class="level3">
+<h3 class="anchored" data-anchor-id="conserver-le-sens-temporel-de-mois">5. Conserver le sens temporel de <code>mois</code></h3>
+<p>Le temps permet d’ordonner les observations, de suivre une évolution et de comparer les succursales sur les mêmes périodes. Si on traite les mois comme de simples étiquettes sans ordre, on peut perdre la chronologie. Le nom du mois seul ferait aussi perdre l’année si on ajoutait des observations de 2026.</p>
+<p>Le premier jour inscrit dans une date comme <code>2025-01-01</code> sert ici à désigner le mois de janvier : les ventes de la ligne concernent le mois entier. Enfin, les observations successives d’une même succursale ne doivent pas être confondues avec celles de succursales différentes.</p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="exercice-2---lire-une-analyse-univariée" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-2---lire-une-analyse-univariée">Exercice 2 - Lire une analyse univariée</h2>
@@ -7147,6 +7236,41 @@ display: none;
 <li>une phrase qui décrit la forme visible de la distribution;</li>
 <li>une phrase qui explique l’effet des valeurs manquantes sur la portée du résumé.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l&#39;exercice 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Solution détaillée de l’exercice 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="une-réponse-possible-en-trois-phrases" class="level3">
+<h3 class="anchored" data-anchor-id="une-réponse-possible-en-trois-phrases">Une réponse possible en trois phrases</h3>
+<ol type="1">
+<li>Dans les observations disponibles, le délai moyen de livraison d’une succursale pour un mois se situe autour de 3,30 jours en moyenne, avec une médiane de 3,50 jours.</li>
+<li>L’histogramme présente un seul sommet principal autour de 3,5 jours, avec des valeurs moins fréquentes aux extrémités et une extension un peu plus longue vers les petits délais.</li>
+<li>Ces résultats portent sur 23 observations sur 24, car 1 délai est manquant, et ne décrivent donc pas complètement la période étudiée.</li>
+</ol>
+</section>
+<section id="pourquoi-ces-réponses-conviennent" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-ces-réponses-conviennent">Pourquoi ces réponses conviennent</h3>
+<p>Le minimum, 1,80 jour, décrit seulement la plus petite valeur observée. Il ne suffit pas pour parler du délai habituel. La moyenne utilise les 23 valeurs disponibles :</p>
+<p>75,9 ÷ 23 = 3,30 jours.</p>
+<p>La médiane correspond à la 12e valeur lorsque les 23 délais disponibles sont rangés du plus petit au plus grand. Au moins la moitié des valeurs sont inférieures ou égales à 3,50 jours et au moins la moitié sont supérieures ou égales à cette valeur.</p>
+<p>L’histogramme complète ces indicateurs. Avec les classes affichées, la barre la plus élevée regroupe les délais entre 3,25 et 3,75 jours. L’ensemble des valeurs observées va de 1,80 à 4,60 jours. La moyenne un peu inférieure à la médiane est compatible avec l’extension visible vers les petits délais. Il n’est pas nécessaire d’affirmer que la distribution suit une loi précise.</p>
+</section>
+<section id="ce-que-change-la-valeur-manquante" class="level3">
+<h3 class="anchored" data-anchor-id="ce-que-change-la-valeur-manquante">Ce que change la valeur manquante</h3>
+<p>Le tableau et l’histogramme excluent le délai manquant. Ils ne le remplacent pas par zéro : un zéro représenterait une livraison sans délai, ce qui serait une information inventée. On ne connaît ni le délai absent ni la raison de son absence; on ne peut donc pas affirmer que son exclusion est sans effet, ni déterminer dans quel sens elle modifierait la moyenne.</p>
+<p>Enfin, chaque valeur du graphique est déjà un délai moyen pour une succursale et un mois. La moyenne de 3,30 jours donne le même poids à chaque ligne disponible. Sans le nombre de livraisons associé à chaque ligne, elle ne constitue pas nécessairement le délai moyen de l’ensemble des livraisons individuelles.</p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="exercice-3---comparer-des-groupes-et-des-indicateurs" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---comparer-des-groupes-et-des-indicateurs">Exercice 3 - Comparer des groupes et des indicateurs</h2>
@@ -7209,6 +7333,90 @@ display: none;
 <li>nommer une variable de contexte qui pourrait modifier la comparaison;</li>
 <li>expliquer pourquoi le tableau ne démontre pas qu’un canal cause un niveau de satisfaction donné.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l&#39;exercice 3">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Solution détaillée de l’exercice 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="distinguer-les-deux-questions" class="level3">
+<h3 class="anchored" data-anchor-id="distinguer-les-deux-questions">1. Distinguer les deux questions</h3>
+<p>Les ventes totales répondent à la question : « Quel volume de ventes est associé aux lignes de ce groupe pendant la période? » Elles dépendent notamment du nombre de lignes, du nombre de clients et du montant dépensé par client.</p>
+<p>Les ventes par client répondent à une autre question : « Quel montant de ventes obtient-on, en moyenne, par client comptabilisé dans ce groupe? » On divise les ventes totales du groupe par le total des clients du même groupe. L’unité est le dollar par client, tandis que les ventes totales s’expriment en dollars.</p>
+</section>
+<section id="calculer-et-choisir-lindicateur" class="level3">
+<h3 class="anchored" data-anchor-id="calculer-et-choisir-lindicateur">2. Calculer et choisir l’indicateur</h3>
+<p>Les trois calculs sont :</p>
+<ul>
+<li>Magasin : 1 106 155 $ ÷ 19 335 clients = 57,21 $ par client.</li>
+<li>Téléphone : 351 375 $ ÷ 6 044 clients = 58,14 $ par client.</li>
+<li>Web : 1 158 115 $ ÷ 18 296 clients = 63,30 $ par client.</li>
+</ul>
+<p>Parmi les deux indicateurs proposés, les ventes par client sont les plus pertinentes pour comparer le montant moyen associé à un client. Le groupe « web » présente ici le ratio le plus élevé, alors qu’il totalise moins de clients que le groupe « magasin ».</p>
+<p>Il faut toutefois préciser le sens du mot « transaction » dans la consigne. Le dénominateur du tableau est un nombre de clients. Pour calculer exactement une valeur moyenne par transaction, il faudrait connaître le nombre de transactions, ou vérifier qu’un client comptabilisé correspond à une seule transaction. Le fichier ne permet pas de vérifier cette correspondance. De même, additionner les clients de plusieurs mois ne donne pas nécessairement un nombre de personnes distinctes sur toute la période.</p>
+<p>Le ratio du tableau est une moyenne des ventes par client de chaque ligne, pondérée par son nombre de clients. Faire une moyenne simple des ratios mensuels donnerait le même poids à une ligne ayant peu de clients et à une ligne en ayant beaucoup; ce ne serait pas le même calcul.</p>
+</section>
+<section id="formuler-un-constat-prudent-sur-la-satisfaction" class="level3">
+<h3 class="anchored" data-anchor-id="formuler-un-constat-prudent-sur-la-satisfaction">3. Formuler un constat prudent sur la satisfaction</h3>
+<p>Voici les effectifs réellement utilisés pour cet indicateur :</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Canal</th>
+<th style="text-align: right;">Lignes du groupe</th>
+<th style="text-align: right;">Scores disponibles</th>
+<th style="text-align: right;">Scores manquants</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">magasin</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">telephone</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">web</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Une formulation recevable serait :</p>
+<blockquote class="blockquote">
+<p>Parmi les scores mensuels disponibles, la satisfaction moyenne est de 8,13 sur 10 dans le groupe « téléphone », de 8,12 dans le groupe « magasin » et de 7,94 dans le groupe « web »; les écarts observés restent descriptifs et reposent sur des effectifs différents, particulièrement faibles pour le téléphone.</p>
+</blockquote>
+<p>La différence entre téléphone et magasin est d’environ 0,01 point sur 10. Ce seul écart ne suffit pas pour établir une supériorité fiable ou importante en pratique. Le tableau ne fournit pas non plus le nombre de répondants associé à chaque score mensuel : il donne le même poids à chaque score disponible.</p>
+</section>
+<section id="tenir-compte-du-contexte" class="level3">
+<h3 class="anchored" data-anchor-id="tenir-compte-du-contexte">4. Tenir compte du contexte</h3>
+<p>On peut nommer, par exemple, <code>region</code>, <code>surface_m2</code>, <code>campagne_locale</code> ou <code>mois</code>. Une campagne locale peut être associée au volume de clientèle et aux achats; une répartition différente des campagnes entre les groupes pourrait donc contribuer à la comparaison observée. Il s’agit d’une possibilité à examiner, pas d’un effet démontré par ce tableau.</p>
+<p>La définition de <code>canal_principal</code> apporte une autre limite : la ligne décrit l’ensemble d’une succursale pendant un mois et indique son canal principal. Elle ne détaille pas chaque vente par canal. Les montants du tableau sont donc ceux des succursales et des mois classés dans chaque groupe; on ne peut pas attribuer toutes leurs transactions exclusivement au canal principal.</p>
+</section>
+<section id="distinguer-association-et-causalité" class="level3">
+<h3 class="anchored" data-anchor-id="distinguer-association-et-causalité">5. Distinguer association et causalité</h3>
+<p>Le tableau compare des groupes tels qu’ils apparaissent dans les données. Il ne décrit pas une expérience où l’on aurait changé uniquement le canal, toutes les autres conditions étant comparables. Les succursales, les mois, la clientèle, les campagnes et les délais peuvent aussi différer entre les groupes. Une différence de satisfaction ne démontre donc pas qu’un changement de canal produirait cette différence.</p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="exercice-4---modèles-et-diagnostic-de-compétences" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4---modèles-et-diagnostic-de-compétences">Exercice 4 - Modèles et diagnostic de compétences</h2>
@@ -7223,6 +7431,43 @@ display: none;
 <li>ce qui demeure inconnu;</li>
 <li>l’information supplémentaire nécessaire avant une décision.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l&#39;exercice 4">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Solution détaillée de l’exercice 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="les-problèmes-du-raisonnement" class="level3">
+<h3 class="anchored" data-anchor-id="les-problèmes-du-raisonnement">Les problèmes du raisonnement</h3>
+<p>Au moins trois des problèmes suivants doivent être expliqués :</p>
+<ol type="1">
+<li>Un volume de ventes élevé ne définit pas l’efficacité. Une succursale peut vendre davantage parce qu’elle a plus de clients, plus d’espace ou plus de ressources. Pour parler d’efficacité, il faut préciser le résultat visé et les ressources utilisées, par exemple les coûts ou les heures de travail.</li>
+<li>Les groupes ne couvrent pas les mêmes effectifs. Le tableau contient 11 lignes pour le magasin, 10 pour le web et 3 pour le téléphone. Les ventes totales ne tiennent pas compte de ces différences d’exposition. Les ventes par client répondent mieux à une question de montant moyen, mais ne mesurent pas, à elles seules, la rentabilité.</li>
+<li>Une satisfaction différente ne signifie pas une satisfaction meilleure. Le groupe « web », qui a les ventes totales les plus élevées, présente ici la satisfaction moyenne la plus faible des trois groupes : 7,94 sur 10. Même une satisfaction observée plus élevée ne prouverait pas un effet bénéfique du canal.</li>
+<li>Une association descriptive n’est pas un effet causal. Le tableau ne permet pas de savoir ce qui arriverait aux mêmes clients si on changeait leur canal de vente. D’autres caractéristiques peuvent expliquer les écarts.</li>
+<li>Les scores de satisfaction sont incomplets et agrégés. Il manque 2 scores mensuels et on ne connaît pas les effectifs de répondants. Cela limite la portée de la comparaison.</li>
+<li>Le canal principal n’est pas le canal de chaque transaction. Regrouper les succursales et les mois selon leur canal principal ne permet pas de mesurer directement ce que produirait le transfert de toutes les ventes vers un seul canal.</li>
+</ol>
+</section>
+<section id="une-note-corrigée-en-quatre-phrases" class="level3">
+<h3 class="anchored" data-anchor-id="une-note-corrigée-en-quatre-phrases">Une note corrigée en quatre phrases</h3>
+<blockquote class="blockquote">
+<p>Dans les données observées, les succursales et les mois classés « web » totalisent 1 158 115 $ de ventes, mais leur satisfaction moyenne disponible, 7,94 sur 10, est inférieure à celle des deux autres groupes. Pour comparer le montant moyen associé à un client, nous retenons les ventes par client, soit 63,30 $ pour le web, 58,14 $ pour le téléphone et 57,21 $ pour le magasin. Ces résultats ne permettent de déterminer ni le canal le plus rentable ni l’effet d’un changement de canal sur la satisfaction. Avant toute décision, il faudrait documenter les transactions par canal, les coûts, la clientèle et les réponses de satisfaction, puis évaluer l’effet d’un changement dans des conditions comparables, idéalement par une expérimentation appropriée.</p>
+</blockquote>
+</section>
+<section id="vérifier-la-structure-de-la-note" class="level3">
+<h3 class="anchored" data-anchor-id="vérifier-la-structure-de-la-note">Vérifier la structure de la note</h3>
+<p>La première phrase décrit les données. La deuxième choisit un indicateur en lien avec une question précise. La troisième indique ce qui demeure inconnu. La quatrième nomme l’information et la démarche supplémentaires nécessaires. La recommandation de gestion découle ainsi du raisonnement, sans transformer le tableau descriptif en promesse d’amélioration.</p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="consolidation-des-réponses" class="level2">
 <h2 class="anchored" data-anchor-id="consolidation-des-réponses">Consolidation des réponses</h2>
@@ -7234,6 +7479,74 @@ display: none;
 <li>une limite précise est formulée;</li>
 <li>aucune conclusion causale n’est ajoutée.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Exemple détaillé de consolidation">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Exemple détaillé de consolidation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="réponse-à-améliorer" class="level3">
+<h3 class="anchored" data-anchor-id="réponse-à-améliorer">Réponse à améliorer</h3>
+<blockquote class="blockquote">
+<p>Le web est meilleur, car les clients y dépensent plus et ce canal permet d’augmenter les ventes.</p>
+</blockquote>
+<p>Le mot « meilleur » ne précise aucun critère. L’unité d’observation n’est pas nommée et la fin de la phrase attribue au canal un effet que le tableau ne démontre pas.</p>
+</section>
+<section id="réponse-améliorée" class="level3">
+<h3 class="anchored" data-anchor-id="réponse-améliorée">Réponse améliorée</h3>
+<blockquote class="blockquote">
+<p>Dans les succursales et les mois classés selon leur canal principal, le groupe « web » présente des ventes par client de 63,30 $, contre 57,21 $ pour le groupe « magasin ». Le ratio des ventes totales au total des clients sert ici à comparer un montant moyen par client comptabilisé. Cette différence est descriptive : les groupes peuvent aussi différer quant à leur clientèle ou aux campagnes locales, et le fichier ne permet pas d’attribuer la différence au canal lui-même.</p>
+</blockquote>
+</section>
+<section id="passer-la-liste-de-vérification" class="level3">
+<h3 class="anchored" data-anchor-id="passer-la-liste-de-vérification">Passer la liste de vérification</h3>
+<div class="table-responsive">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Critère</th>
+<th>Ce que la réponse améliorée apporte</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Unité et variables nommées</td>
+<td>Succursale pendant un mois; canal principal, ventes et clients.</td>
+</tr>
+<tr class="even">
+<td>Indicateur adapté</td>
+<td>Un montant en dollars par client pour comparer les montants moyens.</td>
+</tr>
+<tr class="odd">
+<td>Constat descriptif</td>
+<td>Une comparaison chiffrée limitée aux groupes observés.</td>
+</tr>
+<tr class="even">
+<td>Limite précise</td>
+<td>La clientèle et les campagnes peuvent différer entre groupes.</td>
+</tr>
+<tr class="odd">
+<td>Absence de conclusion causale</td>
+<td>Aucun effet d’un changement de canal n’est affirmé.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Vous pouvez appliquer la même démarche à votre réponse à l’exercice 2 ou 4 : repérer une imprécision, la corriger, puis vérifier chaque critère.</p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="trace-finale-courte" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale-courte">Trace finale courte</h2>
@@ -7246,6 +7559,33 @@ display: none;
 <li>une limite et une question à approfondir.</li>
 </ul>
 <p>La trace doit être compréhensible sans avoir vu les capsules ni leurs exemples.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Exemple détaillé de trace finale">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Exemple détaillé de trace finale
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="exemple-de-note-destinée-à-la-direction-des-opérations" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-de-note-destinée-à-la-direction-des-opérations">Exemple de note destinée à la direction des opérations</h3>
+<p>Les données simulées décrivent quatre succursales québécoises de janvier à juin 2025, soit 24 observations. Chaque ligne représente une succursale pendant un mois. <code>mois</code> est une variable temporelle, <code>canal_principal</code> est une variable catégorielle nominale et <code>ventes</code> est une variable numérique exprimée en dollars.</p>
+<p>Parmi les 23 délais mensuels disponibles, la moyenne est de 3,30 jours et la médiane de 3,50 jours. Le délai habituel se situe donc autour de trois à trois jours et demi. Ces valeurs résument des moyennes mensuelles par succursale, sans pondération par le nombre de livraisons.</p>
+<p>Le groupe « web » totalise 1 158 115 $ de ventes, contre 1 106 155 $ pour le groupe « magasin ». Les ventes par client sont respectivement de 63,30 $ et 57,21 $; elles atteignent 58,14 $ pour le groupe « téléphone ». Les totaux décrivent le volume d’activité, tandis que les ratios décrivent un montant moyen par client comptabilisé.</p>
+<p>Pour suivre le montant moyen associé à un client, je recommande de surveiller les ventes par client, en conservant les ventes totales comme indicateur de volume. Cette recommandation ne constitue pas un classement de rentabilité, car les coûts ne figurent pas dans le fichier.</p>
+<p>Les regroupements reposent sur le canal principal d’une succursale pendant un mois, sans détail des transactions par canal. Ils ne démontrent pas l’effet d’un changement de canal. Une question à approfondir est la suivante : l’écart de ventes par client entre les groupes demeure-t-il lorsqu’on compare des périodes et des succursales de contexte comparable?</p>
+</section>
+<section id="pourquoi-cet-exemple-répond-à-la-consigne" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-cet-exemple-répond-à-la-consigne">Pourquoi cet exemple répond à la consigne</h3>
+<p>Les cinq paragraphes présentent successivement la structure du fichier, le délai de livraison, les deux indicateurs de ventes, une recommandation justifiée et une limite accompagnée d’une question. Les valeurs proviennent des tableaux des exercices, et la note précise le caractère simulé des données. Votre propre note peut retenir une autre limite ou une autre question si elle les justifie à partir du fichier.</p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="conseils-de-vérification" class="level2">
 <h2 class="anchored" data-anchor-id="conseils-de-vérification">Conseils de vérification</h2>
@@ -7734,7 +8074,7 @@ display: none;
 <p>MQT-2101 - Université Laval</p>
 </div>
     <div class="nav-footer-center">
-       
+
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>

@@ -160,7 +160,7 @@ Préparez la trace finale en suivant l'ordre proposé dans la trace finale court
 
 ## Ressources du module
 
-[ CapsulesComprendre les repères du cours, les modèles et les notions statistiques de départ.](capsules.llms.md) [ Démonstrations statistiquesLire des tableaux et des graphiques avant de passer à la programmation.](demonstrations.llms.md) [ ExercicesPratiquer la lecture d'un tableau, l'analyse descriptive, les modèles et le diagnostic de compétences.](exercices.llms.md) [ LecturesClarifier les notions qui restent fragiles après les capsules ou les exercices.](lectures.llms.md)
+[ CapsulesComprendre les repères du cours, les modèles et les notions statistiques de départ.](capsules.llms.md) [ Démonstrations statistiquesLire des tableaux et des graphiques avant de passer à la programmation.](demonstrations.llms.md) [ Exercices et solutions détailléesPratiquer la lecture d'un tableau et l'analyse descriptive, puis ouvrir le corrigé à la fin de chaque exercice.](exercices.llms.md) [ LecturesClarifier les notions qui restent fragiles après les capsules ou les exercices.](lectures.llms.md)
 
 > **WARNING:**
 >

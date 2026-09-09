@@ -85,7 +85,9 @@ Rscript scripts/14_validate_site_output.R
 ```
 
 Ils vérifient la structure pédagogique, les jeux de données, les fichiers
-générés, les références locales et l'absence de solutions publiées. Le même
+générés, les références locales et l'absence de pages de solutions séparées.
+Les corrigés du module 01 sont intégrés aux exercices dans des boîtes fermées
+par défaut. Le même
 contrôle est exécuté automatiquement par GitHub Actions à chaque demande de
 fusion et à chaque mise à jour de la branche principale.
 
