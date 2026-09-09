@@ -12,15 +12,16 @@ execute:
 
 ## Objectif
 
-Ces exercices constituent un cas de transfert. Ils utilisent les données de
-ventes et d'opérations de succursales québécoises, et non les bases étudiées
-dans les capsules. Aucun code n'est attendu cette semaine.
+Ces exercices vous invitent à appliquer les notions des capsules à un nouveau
+jeu de données sur les ventes et les activités de succursales québécoises.
+Aucun code n'est attendu cette semaine.
 
 Après avoir rédigé votre réponse, cliquez sur « Solution détaillée » à la fin
 de l'exercice pour comparer votre démarche au corrigé. Chaque boîte est fermée
 à l'ouverture de la page; cliquez de nouveau sur son titre pour la refermer.
-Les réponses rédigées sont des exemples : une autre formulation est recevable
-si elle est exacte, justifiée et accompagnée des limites pertinentes.
+Les réponses proposées sont des exemples. Vous pouvez répondre autrement,
+à condition de justifier votre réponse et de préciser ce que les données
+permettent ou ne permettent pas de conclure.
 
 ```{r}
 #| label: preparation-exercices-semaine-01
@@ -85,7 +86,7 @@ pour une succursale et un mois.
 ## Exercice 1 - Lire la structure d'une base
 
 Une direction souhaite comparer la qualité du service entre les régions. Elle
-propose le dictionnaire incomplet suivant :
+propose le dictionnaire de variables suivant, qui contient des erreurs :
 
 ::: {.table-responsive}
 
@@ -102,7 +103,7 @@ propose le dictionnaire incomplet suivant :
 À faire :
 
 - corriger les deux lignes manifestement erronées;
-- nommer l'unité d'observation du fichier;
+- nommer l'unité d'observation du fichier, c'est-à-dire ce que représente une ligne;
 - indiquer quelle variable permet de former les groupes régionaux;
 - nommer une précaution concernant `satisfaction`;
 - expliquer pourquoi `mois` doit conserver un sens temporel.
@@ -123,6 +124,10 @@ propose le dictionnaire incomplet suivant :
 
 :::
 
+Une variable catégorielle nominale sert à distinguer des catégories sans ordre
+naturel entre elles. Par exemple, les noms des succursales ne forment pas un
+classement. Une variable temporelle indique une date ou une période.
+
 Les deux lignes manifestement erronées sont donc `mois` et `succursale`.
 Une date n'identifie pas une succursale : plusieurs succursales sont observées
 le même mois. Inversement, le nom d'une succursale ne mesure pas une performance.
@@ -136,7 +141,8 @@ ligne décrit la succursale de Montréal en janvier 2025. Le fichier contient
 `r nrow(operations)` lignes : `r n_distinct(operations$succursale)` succursales
 observées pendant `r n_distinct(operations$mois)` mois, de janvier à juin 2025.
 
-Il faut donc identifier une ligne par le couple (`succursale`, `mois`).
+Pour identifier une ligne, il faut donc connaître à la fois la succursale et
+le mois, soit la combinaison (`succursale`, `mois`).
 Ce ne sont ni `r nrow(operations)` clients ni `r nrow(operations)` succursales
 différentes. Une même succursale revient plusieurs fois dans le fichier.
 
@@ -159,8 +165,9 @@ Deux autres précautions sont utiles :
 - `r sum(is.na(operations$satisfaction))` scores mensuels sont manquants. Une
   valeur manquante n'est pas un score de zéro.
 - Le fichier ne donne ni le nombre de répondants ni les réponses individuelles.
-  Une moyenne des scores mensuels ne permet donc pas de calculer la satisfaction
-  moyenne de l'ensemble des répondants en tenant compte de leurs effectifs.
+  On ne peut donc pas calculer la satisfaction moyenne de l'ensemble des
+  répondants : il faudrait connaître le nombre de personnes représentées par
+  chaque score mensuel pour donner à ce score le poids approprié.
 
 ### 5. Conserver le sens temporel de `mois`
 
@@ -184,8 +191,14 @@ Voici un résumé de `delai_livraison_jours`.
 #| label: resume-delai-livraison-semaine-01
 
 resume_delai |>
-  select(-valeurs_observees) |>
-  knitr::kable(digits = 2)
+  select(
+    `Minimum (jours)` = minimum,
+    `Moyenne (jours)` = moyenne,
+    `Médiane (jours)` = mediane,
+    `Maximum (jours)` = maximum,
+    `Valeurs manquantes` = valeurs_manquantes
+  ) |>
+  knitr::kable(digits = 2, format.args = list(decimal.mark = ",", big.mark = " "))
 ```
 
 ```{r}
@@ -208,22 +221,23 @@ Rédigez trois phrases :
 
 ### Une réponse possible en trois phrases
 
-1. Dans les observations disponibles, le délai moyen de livraison d'une
-   succursale pour un mois se situe autour de
-   `r nombre_fr(resume_delai$moyenne)` jours en moyenne, avec une médiane de
-   `r nombre_fr(resume_delai$mediane)` jours.
+1. Dans les données disponibles, les délais de livraison par succursale et
+   par mois sont en moyenne de `r nombre_fr(resume_delai$moyenne)` jours,
+   et leur médiane est de `r nombre_fr(resume_delai$mediane)` jours.
 2. L'histogramme présente un seul sommet principal autour de 3,5 jours, avec
-   des valeurs moins fréquentes aux extrémités et une extension un peu plus
-   longue vers les petits délais.
+   des valeurs moins fréquentes aux extrémités et un étalement un peu plus
+   important du côté des délais courts.
 3. Ces résultats portent sur `r resume_delai$valeurs_observees` observations
-   sur `r nrow(operations)`, car `r resume_delai$valeurs_manquantes` délai est
-   manquant, et ne décrivent donc pas complètement la période étudiée.
+   sur `r nrow(operations)` et excluent le délai manquant, dont on ne connaît
+   pas la valeur.
 
-### Pourquoi ces réponses conviennent
+### Lire les indicateurs et le graphique
 
 Le minimum, `r nombre_fr(resume_delai$minimum)` jour, décrit seulement la plus
 petite valeur observée. Il ne suffit pas pour parler du délai habituel.
-La moyenne utilise les `r resume_delai$valeurs_observees` valeurs disponibles :
+Pour calculer la moyenne, on additionne les
+`r resume_delai$valeurs_observees` délais disponibles, puis on divise cette
+somme par `r resume_delai$valeurs_observees` :
 
 `r nombre_fr(sum(operations$delai_livraison_jours, na.rm = TRUE), 1)` ÷
 `r resume_delai$valeurs_observees` = `r nombre_fr(resume_delai$moyenne)` jours.
@@ -237,8 +251,9 @@ L'histogramme complète ces indicateurs. Avec les classes affichées, la barre
 la plus élevée regroupe les délais entre 3,25 et 3,75 jours. L'ensemble des
 valeurs observées va de `r nombre_fr(resume_delai$minimum)` à
 `r nombre_fr(resume_delai$maximum)` jours. La moyenne un peu inférieure à la
-médiane est compatible avec l'extension visible vers les petits délais.
-Il n'est pas nécessaire d'affirmer que la distribution suit une loi précise.
+médiane est cohérente avec l'étalement visible du côté des délais courts.
+Cette lecture du graphique suffit : il n'est pas nécessaire d'attribuer
+une loi de probabilité à la distribution.
 
 ### Ce que change la valeur manquante
 
@@ -250,9 +265,10 @@ ni déterminer dans quel sens elle modifierait la moyenne.
 
 Enfin, chaque valeur du graphique est déjà un délai moyen pour une succursale
 et un mois. La moyenne de `r nombre_fr(resume_delai$moyenne)` jours donne le
-même poids à chaque ligne disponible. Sans le nombre de livraisons associé
-à chaque ligne, elle ne constitue pas nécessairement le délai moyen de
-l'ensemble des livraisons individuelles.
+même poids à chaque ligne disponible, même si une succursale a effectué plus
+de livraisons qu'une autre. Pour calculer le délai moyen de toutes les
+livraisons réunies, il faudrait tenir compte du nombre de livraisons
+représentées par chaque ligne. Le fichier ne fournit pas cette information.
 
 :::
 
@@ -261,20 +277,32 @@ l'ensemble des livraisons individuelles.
 Une gestionnaire hésite entre deux indicateurs pour comparer les canaux de
 vente : les ventes totales et les ventes par client.
 
+Dans le tableau, les lignes sont regroupées selon `canal_principal`. Par
+exemple, le groupe « web » rassemble les observations pour lesquelles le web
+est le principal canal de vente de la succursale pendant le mois considéré.
+
 ```{r}
 #| label: comparaison-canaux-semaine-01
 
 resume_canaux |>
-  select(-satisfaction_observee, -satisfaction_manquante) |>
-  knitr::kable(digits = 2)
+  mutate(canal_principal = recode(canal_principal, telephone = "téléphone")) |>
+  select(
+    `Canal principal` = canal_principal,
+    `Nombre de lignes` = observations,
+    `Ventes totales (dollars)` = ventes_totales,
+    `Total des clients` = clients_totaux,
+    `Ventes par client (dollars)` = ventes_par_client,
+    `Satisfaction moyenne (sur 10)` = satisfaction_moyenne
+  ) |>
+  knitr::kable(digits = 2, format.args = list(decimal.mark = ",", big.mark = " "))
 ```
 
 À faire :
 
 - expliquer pourquoi les ventes totales et les ventes par client ne répondent
   pas à la même question;
-- choisir l'indicateur le plus pertinent pour comparer la valeur moyenne d'une
-  transaction client et justifier ce choix;
+- choisir l'indicateur le plus pertinent pour comparer le montant moyen
+  dépensé par un client et justifier ce choix;
 - formuler un constat prudent sur la satisfaction;
 - nommer une variable de contexte qui pourrait modifier la comparaison;
 - expliquer pourquoi le tableau ne démontre pas qu'un canal cause un niveau de
@@ -284,9 +312,9 @@ resume_canaux |>
 
 ### 1. Distinguer les deux questions
 
-Les ventes totales répondent à la question : « Quel volume de ventes est
-associé aux lignes de ce groupe pendant la période? » Elles dépendent notamment
-du nombre de lignes, du nombre de clients et du montant dépensé par client.
+Les ventes totales répondent à la question : « Quel est le montant total des
+ventes pour les observations de ce groupe? » Elles dépendent notamment du
+nombre de lignes, du nombre de clients et du montant dépensé par client.
 
 Les ventes par client répondent à une autre question : « Quel montant de ventes
 obtient-on, en moyenne, par client comptabilisé dans ce groupe? » On divise
@@ -313,27 +341,29 @@ pertinentes pour comparer le montant moyen associé à un client. Le groupe
 « web » présente ici le ratio le plus élevé, alors qu'il totalise moins de
 clients que le groupe « magasin ».
 
-Il faut toutefois préciser le sens du mot « transaction » dans la consigne.
-Le dénominateur du tableau est un nombre de clients. Pour calculer exactement
-une valeur moyenne par transaction, il faudrait connaître le nombre de
-transactions, ou vérifier qu'un client comptabilisé correspond à une seule
-transaction. Le fichier ne permet pas de vérifier cette correspondance.
-De même, additionner les clients de plusieurs mois ne donne pas nécessairement
-un nombre de personnes distinctes sur toute la période.
+Ce montant par client ne doit pas être confondu avec un montant par transaction.
+Une transaction correspond à un achat; un même client peut en effectuer
+plusieurs. Pour calculer le montant moyen d'une transaction, il faudrait
+diviser les ventes par le nombre de transactions. Le fichier ne fournit pas
+ce nombre. De même, additionner les clients de plusieurs mois ne donne pas
+nécessairement un nombre de personnes distinctes sur toute la période : une
+personne peut revenir d'un mois à l'autre.
 
-Le ratio du tableau est une moyenne des ventes par client de chaque ligne,
-pondérée par son nombre de clients. Faire une moyenne simple des ratios
-mensuels donnerait le même poids à une ligne ayant peu de clients et à une
-ligne en ayant beaucoup; ce ne serait pas le même calcul.
+Le rapport entre les ventes totales et le total des clients tient compte du
+nombre de clients de chaque ligne. Il correspond à une moyenne pondérée des
+ventes par client : les lignes qui comptent davantage de clients ont plus de
+poids. Une moyenne simple des ratios mensuels donnerait, au contraire, le même
+poids à toutes les lignes. Ce ne serait pas le même calcul.
 
 ### 3. Formuler un constat prudent sur la satisfaction
 
-Voici les effectifs réellement utilisés pour cet indicateur :
+Voici le nombre de scores mensuels utilisés pour calculer chaque moyenne :
 
 ```{r}
 #| label: effectifs-satisfaction-solution-semaine-01
 
 resume_canaux |>
+  mutate(canal_principal = recode(canal_principal, telephone = "téléphone")) |>
   select(
     Canal = canal_principal,
     `Lignes du groupe` = observations,
@@ -343,37 +373,40 @@ resume_canaux |>
   knitr::kable()
 ```
 
-Une formulation recevable serait :
+Une réponse possible est :
 
 > Parmi les scores mensuels disponibles, la satisfaction moyenne est de
 > `r nombre_fr(telephone$satisfaction_moyenne)` sur 10 dans le groupe
 > « téléphone », de `r nombre_fr(magasin$satisfaction_moyenne)` dans le groupe
 > « magasin » et de `r nombre_fr(web$satisfaction_moyenne)` dans le groupe
-> « web »; les écarts observés restent descriptifs et reposent sur des effectifs
-> différents, particulièrement faibles pour le téléphone.
+> « web »; ces moyennes décrivent les données disponibles et reposent sur des
+> nombres de scores différents, avec seulement trois scores pour le téléphone.
 
 La différence entre téléphone et magasin est d'environ
 `r nombre_fr(telephone$satisfaction_moyenne - magasin$satisfaction_moyenne)`
-point sur 10. Ce seul écart ne suffit pas pour établir une supériorité fiable
-ou importante en pratique. Le tableau ne fournit pas non plus le nombre de
-répondants associé à chaque score mensuel : il donne le même poids à chaque
-score disponible.
+point sur 10. Ce seul écart ne suffit pas pour conclure que les clients sont
+plus satisfaits au téléphone qu'en magasin. On ne connaît pas non plus le
+nombre de répondants associé à chaque score mensuel. Dans le calcul présenté,
+chaque score disponible reçoit le même poids.
 
 ### 4. Tenir compte du contexte
 
 On peut nommer, par exemple, `region`, `surface_m2`, `campagne_locale` ou `mois`.
-Une campagne locale peut être associée au volume de clientèle et aux achats;
-une répartition différente des campagnes entre les groupes pourrait donc
-contribuer à la comparaison observée. Il s'agit d'une possibilité à examiner,
-pas d'un effet démontré par ce tableau.
+Une campagne locale peut être associée au nombre de clients et au montant
+de leurs achats. Si les campagnes sont plus fréquentes dans un groupe que
+dans un autre, elles pourraient contribuer aux écarts observés. C'est une
+explication possible à examiner, et non un effet démontré par ce tableau.
 
 La définition de `canal_principal` apporte une autre limite : la ligne décrit
 l'ensemble d'une succursale pendant un mois et indique son canal principal.
 Elle ne détaille pas chaque vente par canal. Les montants du tableau sont
-donc ceux des succursales et des mois classés dans chaque groupe; on ne peut
+donc ceux des observations classées dans chaque groupe; on ne peut
 pas attribuer toutes leurs transactions exclusivement au canal principal.
 
 ### 5. Distinguer association et causalité
+
+Observer une différence de satisfaction entre les canaux ne signifie pas
+que le canal est responsable de cette différence.
 
 Le tableau compare des groupes tels qu'ils apparaissent dans les données.
 Il ne décrit pas une expérience où l'on aurait changé uniquement le canal,
@@ -410,12 +443,13 @@ Au moins trois des problèmes suivants doivent être expliqués :
    vendre davantage parce qu'elle a plus de clients, plus d'espace ou plus de
    ressources. Pour parler d'efficacité, il faut préciser le résultat visé et
    les ressources utilisées, par exemple les coûts ou les heures de travail.
-2. Les groupes ne couvrent pas les mêmes effectifs. Le tableau contient
+2. Les groupes ne contiennent pas le même nombre d'observations. On compte
    `r magasin$observations` lignes pour le magasin,
    `r web$observations` pour le web et `r telephone$observations` pour le
-   téléphone. Les ventes totales ne tiennent pas compte de ces différences
-   d'exposition. Les ventes par client répondent mieux à une question de
-   montant moyen, mais ne mesurent pas, à elles seules, la rentabilité.
+   téléphone. Comparer directement les ventes totales ne corrige pas ces
+   différences de taille entre les groupes. Les ventes par client répondent
+   mieux à une question de montant moyen, mais ne mesurent pas, à elles seules,
+   la rentabilité.
 3. Une satisfaction différente ne signifie pas une satisfaction meilleure.
    Le groupe « web », qui a les ventes totales les plus élevées, présente ici
    la satisfaction moyenne la plus faible des trois groupes :
@@ -424,9 +458,10 @@ Au moins trois des problèmes suivants doivent être expliqués :
 4. Une association descriptive n'est pas un effet causal. Le tableau ne
    permet pas de savoir ce qui arriverait aux mêmes clients si on changeait
    leur canal de vente. D'autres caractéristiques peuvent expliquer les écarts.
-5. Les scores de satisfaction sont incomplets et agrégés. Il manque
-   `r sum(is.na(operations$satisfaction))` scores mensuels et on ne connaît
-   pas les effectifs de répondants. Cela limite la portée de la comparaison.
+5. Les scores de satisfaction ne donnent qu'une information partielle. Ce sont
+   des moyennes mensuelles dont on ne connaît pas le nombre de répondants;
+   de plus, `r sum(is.na(operations$satisfaction))` scores sont manquants.
+   On ne peut donc pas reconstituer la satisfaction de l'ensemble des clients.
 6. Le canal principal n'est pas le canal de chaque transaction. Regrouper les
    succursales et les mois selon leur canal principal ne permet pas de mesurer
    directement ce que produirait le transfert de toutes les ventes vers un
@@ -434,10 +469,11 @@ Au moins trois des problèmes suivants doivent être expliqués :
 
 ### Une note corrigée en quatre phrases
 
-> Dans les données observées, les succursales et les mois classés « web »
+> Dans le tableau, les observations du groupe « web »
 > totalisent `r nombre_fr(web$ventes_totales, 0)` $ de ventes, mais leur
-> satisfaction moyenne disponible, `r nombre_fr(web$satisfaction_moyenne)`
-> sur 10, est inférieure à celle des deux autres groupes.
+> satisfaction moyenne calculée à partir des scores disponibles,
+> `r nombre_fr(web$satisfaction_moyenne)` sur 10, est inférieure à celle
+> des deux autres groupes.
 > Pour comparer le montant moyen associé à un client, nous retenons les ventes
 > par client, soit `r nombre_fr(web$ventes_par_client)` $ pour le web,
 > `r nombre_fr(telephone$ventes_par_client)` $ pour le téléphone et
@@ -445,17 +481,17 @@ Au moins trois des problèmes suivants doivent être expliqués :
 > Ces résultats ne permettent de déterminer ni le canal le plus rentable ni
 > l'effet d'un changement de canal sur la satisfaction.
 > Avant toute décision, il faudrait documenter les transactions par canal,
-> les coûts, la clientèle et les réponses de satisfaction, puis évaluer
-> l'effet d'un changement dans des conditions comparables, idéalement par
-> une expérimentation appropriée.
+> les coûts, la clientèle et les réponses au questionnaire de satisfaction,
+> puis évaluer l'effet d'un changement dans des conditions comparables,
+> idéalement par une expérimentation appropriée.
 
 ### Vérifier la structure de la note
 
 La première phrase décrit les données. La deuxième choisit un indicateur en
 lien avec une question précise. La troisième indique ce qui demeure inconnu.
 La quatrième nomme l'information et la démarche supplémentaires nécessaires.
-La recommandation de gestion découle ainsi du raisonnement, sans transformer
-le tableau descriptif en promesse d'amélioration.
+La note précise ainsi ce qu'on observe et ce qu'il faut encore vérifier
+avant de décider.
 
 :::
 
@@ -483,17 +519,17 @@ démontre pas.
 
 ### Réponse améliorée
 
-> Dans les succursales et les mois classés selon leur canal principal, le
-> groupe « web » présente des ventes par client de
+> Dans les observations regroupées selon le canal principal de chaque
+> succursale pour un mois donné, le groupe « web » présente des ventes par client de
 > `r nombre_fr(web$ventes_par_client)` $, contre
 > `r nombre_fr(magasin$ventes_par_client)` $ pour le groupe « magasin ».
-> Le ratio des ventes totales au total des clients sert ici à comparer un
+> La division des ventes totales par le total des clients sert ici à comparer un
 > montant moyen par client comptabilisé.
 > Cette différence est descriptive : les groupes peuvent aussi différer
 > quant à leur clientèle ou aux campagnes locales, et le fichier ne permet
 > pas d'attribuer la différence au canal lui-même.
 
-### Passer la liste de vérification
+### Appliquer la liste de vérification
 
 ::: {.table-responsive}
 
@@ -537,9 +573,9 @@ exprimée en dollars.
 
 Parmi les `r resume_delai$valeurs_observees` délais mensuels disponibles, la
 moyenne est de `r nombre_fr(resume_delai$moyenne)` jours et la médiane de
-`r nombre_fr(resume_delai$mediane)` jours. Le délai habituel se situe donc
-autour de trois à trois jours et demi. Ces valeurs résument des moyennes
-mensuelles par succursale, sans pondération par le nombre de livraisons.
+`r nombre_fr(resume_delai$mediane)` jours. Ces deux indicateurs situent le délai
+habituel entre trois et trois jours et demi. Ils donnent le même poids à
+chaque moyenne mensuelle par succursale, quel que soit le nombre de livraisons.
 
 Le groupe « web » totalise `r nombre_fr(web$ventes_totales, 0)` $ de ventes,
 contre `r nombre_fr(magasin$ventes_totales, 0)` $ pour le groupe « magasin ».
@@ -561,14 +597,14 @@ l'effet d'un changement de canal. Une question à approfondir est la suivante :
 l'écart de ventes par client entre les groupes demeure-t-il lorsqu'on compare
 des périodes et des succursales de contexte comparable?
 
-### Pourquoi cet exemple répond à la consigne
+### Pour relire votre note
 
-Les cinq paragraphes présentent successivement la structure du fichier,
-le délai de livraison, les deux indicateurs de ventes, une recommandation
-justifiée et une limite accompagnée d'une question. Les valeurs proviennent
-des tableaux des exercices, et la note précise le caractère simulé des données.
-Votre propre note peut retenir une autre limite ou une autre question si
-elle les justifie à partir du fichier.
+Vérifiez que chaque nombre correspond aux tableaux des exercices et que
+votre recommandation répond à une question précise. Une personne qui n'a pas
+suivi le cours doit pouvoir comprendre ce que représente une ligne, comment
+vous comparez les groupes et pourquoi vous restez prudent dans vos conclusions.
+Vous pouvez retenir une autre limite ou une autre question, à condition de
+l'expliquer à partir des données.
 
 :::
 

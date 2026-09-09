@@ -7053,14 +7053,14 @@ display: none;
 
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Ces exercices constituent un cas de transfert. Ils utilisent les données de ventes et d’opérations de succursales québécoises, et non les bases étudiées dans les capsules. Aucun code n’est attendu cette semaine.</p>
-<p>Après avoir rédigé votre réponse, cliquez sur « Solution détaillée » à la fin de l’exercice pour comparer votre démarche au corrigé. Chaque boîte est fermée à l’ouverture de la page; cliquez de nouveau sur son titre pour la refermer. Les réponses rédigées sont des exemples : une autre formulation est recevable si elle est exacte, justifiée et accompagnée des limites pertinentes.</p>
+<p>Ces exercices vous invitent à appliquer les notions des capsules à un nouveau jeu de données sur les ventes et les activités de succursales québécoises. Aucun code n’est attendu cette semaine.</p>
+<p>Après avoir rédigé votre réponse, cliquez sur « Solution détaillée » à la fin de l’exercice pour comparer votre démarche au corrigé. Chaque boîte est fermée à l’ouverture de la page; cliquez de nouveau sur son titre pour la refermer. Les réponses proposées sont des exemples. Vous pouvez répondre autrement, à condition de justifier votre réponse et de préciser ce que les données permettent ou ne permettent pas de conclure.</p>
 <p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#ventes-et-opérations-de-succursales-québécoises">ventes_operations_quebec.csv</a>.</p>
 <p>Ces données sont simulées à des fins pédagogiques. Le <a href="../../donnees/index.html#ventes-et-opérations-de-succursales-québécoises">descriptif du fichier</a> précise le sens des variables : les délais et les scores de satisfaction sont des moyennes pour une succursale et un mois.</p>
 </section>
 <section id="exercice-1---lire-la-structure-dune-base" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1---lire-la-structure-dune-base">Exercice 1 - Lire la structure d’une base</h2>
-<p>Une direction souhaite comparer la qualité du service entre les régions. Elle propose le dictionnaire incomplet suivant :</p>
+<p>Une direction souhaite comparer la qualité du service entre les régions. Elle propose le dictionnaire de variables suivant, qui contient des erreurs :</p>
 <div class="table-responsive">
 <table class="caption-top table">
 <thead>
@@ -7102,7 +7102,7 @@ display: none;
 <p>À faire :</p>
 <ul>
 <li>corriger les deux lignes manifestement erronées;</li>
-<li>nommer l’unité d’observation du fichier;</li>
+<li>nommer l’unité d’observation du fichier, c’est-à-dire ce que représente une ligne;</li>
 <li>indiquer quelle variable permet de former les groupes régionaux;</li>
 <li>nommer une précaution concernant <code>satisfaction</code>;</li>
 <li>expliquer pourquoi <code>mois</code> doit conserver un sens temporel.</li>
@@ -7164,12 +7164,13 @@ display: none;
 </tbody>
 </table>
 </div>
+<p>Une variable catégorielle nominale sert à distinguer des catégories sans ordre naturel entre elles. Par exemple, les noms des succursales ne forment pas un classement. Une variable temporelle indique une date ou une période.</p>
 <p>Les deux lignes manifestement erronées sont donc <code>mois</code> et <code>succursale</code>. Une date n’identifie pas une succursale : plusieurs succursales sont observées le même mois. Inversement, le nom d’une succursale ne mesure pas une performance. Même si on remplaçait les noms par des codes 1, 2, 3 et 4, ces codes resteraient des étiquettes; leur moyenne n’aurait pas de sens comme indicateur de performance.</p>
 </section>
 <section id="nommer-lunité-dobservation" class="level3">
 <h3 class="anchored" data-anchor-id="nommer-lunité-dobservation">2. Nommer l’unité d’observation</h3>
 <p>Une ligne représente une succursale pendant un mois. Par exemple, la première ligne décrit la succursale de Montréal en janvier 2025. Le fichier contient 24 lignes : 4 succursales observées pendant 6 mois, de janvier à juin 2025.</p>
-<p>Il faut donc identifier une ligne par le couple (<code>succursale</code>, <code>mois</code>). Ce ne sont ni 24 clients ni 24 succursales différentes. Une même succursale revient plusieurs fois dans le fichier.</p>
+<p>Pour identifier une ligne, il faut donc connaître à la fois la succursale et le mois, soit la combinaison (<code>succursale</code>, <code>mois</code>). Ce ne sont ni 24 clients ni 24 succursales différentes. Une même succursale revient plusieurs fois dans le fichier.</p>
 </section>
 <section id="former-les-groupes-régionaux" class="level3">
 <h3 class="anchored" data-anchor-id="former-les-groupes-régionaux">3. Former les groupes régionaux</h3>
@@ -7181,7 +7182,7 @@ display: none;
 <p>Deux autres précautions sont utiles :</p>
 <ul>
 <li>2 scores mensuels sont manquants. Une valeur manquante n’est pas un score de zéro.</li>
-<li>Le fichier ne donne ni le nombre de répondants ni les réponses individuelles. Une moyenne des scores mensuels ne permet donc pas de calculer la satisfaction moyenne de l’ensemble des répondants en tenant compte de leurs effectifs.</li>
+<li>Le fichier ne donne ni le nombre de répondants ni les réponses individuelles. On ne peut donc pas calculer la satisfaction moyenne de l’ensemble des répondants : il faudrait connaître le nombre de personnes représentées par chaque score mensuel pour donner à ce score le poids approprié.</li>
 </ul>
 </section>
 <section id="conserver-le-sens-temporel-de-mois" class="level3">
@@ -7199,21 +7200,28 @@ display: none;
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 22%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">minimum</th>
-<th style="text-align: right;">moyenne</th>
-<th style="text-align: right;">mediane</th>
-<th style="text-align: right;">maximum</th>
-<th style="text-align: right;">valeurs_manquantes</th>
+<th style="text-align: right;">Minimum (jours)</th>
+<th style="text-align: right;">Moyenne (jours)</th>
+<th style="text-align: right;">Médiane (jours)</th>
+<th style="text-align: right;">Maximum (jours)</th>
+<th style="text-align: right;">Valeurs manquantes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1.8</td>
-<td style="text-align: right;">3.3</td>
-<td style="text-align: right;">3.5</td>
-<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">1,8</td>
+<td style="text-align: right;">3,3</td>
+<td style="text-align: right;">3,5</td>
+<td style="text-align: right;">4,6</td>
 <td style="text-align: right;">1</td>
 </tr>
 </tbody>
@@ -7251,22 +7259,22 @@ display: none;
 <section id="une-réponse-possible-en-trois-phrases" class="level3">
 <h3 class="anchored" data-anchor-id="une-réponse-possible-en-trois-phrases">Une réponse possible en trois phrases</h3>
 <ol type="1">
-<li>Dans les observations disponibles, le délai moyen de livraison d’une succursale pour un mois se situe autour de 3,30 jours en moyenne, avec une médiane de 3,50 jours.</li>
-<li>L’histogramme présente un seul sommet principal autour de 3,5 jours, avec des valeurs moins fréquentes aux extrémités et une extension un peu plus longue vers les petits délais.</li>
-<li>Ces résultats portent sur 23 observations sur 24, car 1 délai est manquant, et ne décrivent donc pas complètement la période étudiée.</li>
+<li>Dans les données disponibles, les délais de livraison par succursale et par mois sont en moyenne de 3,30 jours, et leur médiane est de 3,50 jours.</li>
+<li>L’histogramme présente un seul sommet principal autour de 3,5 jours, avec des valeurs moins fréquentes aux extrémités et un étalement un peu plus important du côté des délais courts.</li>
+<li>Ces résultats portent sur 23 observations sur 24 et excluent le délai manquant, dont on ne connaît pas la valeur.</li>
 </ol>
 </section>
-<section id="pourquoi-ces-réponses-conviennent" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-ces-réponses-conviennent">Pourquoi ces réponses conviennent</h3>
-<p>Le minimum, 1,80 jour, décrit seulement la plus petite valeur observée. Il ne suffit pas pour parler du délai habituel. La moyenne utilise les 23 valeurs disponibles :</p>
+<section id="lire-les-indicateurs-et-le-graphique" class="level3">
+<h3 class="anchored" data-anchor-id="lire-les-indicateurs-et-le-graphique">Lire les indicateurs et le graphique</h3>
+<p>Le minimum, 1,80 jour, décrit seulement la plus petite valeur observée. Il ne suffit pas pour parler du délai habituel. Pour calculer la moyenne, on additionne les 23 délais disponibles, puis on divise cette somme par 23 :</p>
 <p>75,9 ÷ 23 = 3,30 jours.</p>
 <p>La médiane correspond à la 12e valeur lorsque les 23 délais disponibles sont rangés du plus petit au plus grand. Au moins la moitié des valeurs sont inférieures ou égales à 3,50 jours et au moins la moitié sont supérieures ou égales à cette valeur.</p>
-<p>L’histogramme complète ces indicateurs. Avec les classes affichées, la barre la plus élevée regroupe les délais entre 3,25 et 3,75 jours. L’ensemble des valeurs observées va de 1,80 à 4,60 jours. La moyenne un peu inférieure à la médiane est compatible avec l’extension visible vers les petits délais. Il n’est pas nécessaire d’affirmer que la distribution suit une loi précise.</p>
+<p>L’histogramme complète ces indicateurs. Avec les classes affichées, la barre la plus élevée regroupe les délais entre 3,25 et 3,75 jours. L’ensemble des valeurs observées va de 1,80 à 4,60 jours. La moyenne un peu inférieure à la médiane est cohérente avec l’étalement visible du côté des délais courts. Cette lecture du graphique suffit : il n’est pas nécessaire d’attribuer une loi de probabilité à la distribution.</p>
 </section>
 <section id="ce-que-change-la-valeur-manquante" class="level3">
 <h3 class="anchored" data-anchor-id="ce-que-change-la-valeur-manquante">Ce que change la valeur manquante</h3>
 <p>Le tableau et l’histogramme excluent le délai manquant. Ils ne le remplacent pas par zéro : un zéro représenterait une livraison sans délai, ce qui serait une information inventée. On ne connaît ni le délai absent ni la raison de son absence; on ne peut donc pas affirmer que son exclusion est sans effet, ni déterminer dans quel sens elle modifierait la moyenne.</p>
-<p>Enfin, chaque valeur du graphique est déjà un délai moyen pour une succursale et un mois. La moyenne de 3,30 jours donne le même poids à chaque ligne disponible. Sans le nombre de livraisons associé à chaque ligne, elle ne constitue pas nécessairement le délai moyen de l’ensemble des livraisons individuelles.</p>
+<p>Enfin, chaque valeur du graphique est déjà un délai moyen pour une succursale et un mois. La moyenne de 3,30 jours donne le même poids à chaque ligne disponible, même si une succursale a effectué plus de livraisons qu’une autre. Pour calculer le délai moyen de toutes les livraisons réunies, il faudrait tenir compte du nombre de livraisons représentées par chaque ligne. Le fichier ne fournit pas cette information.</p>
 </section>
 </div>
 </div>
@@ -7275,51 +7283,52 @@ display: none;
 <section id="exercice-3---comparer-des-groupes-et-des-indicateurs" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3---comparer-des-groupes-et-des-indicateurs">Exercice 3 - Comparer des groupes et des indicateurs</h2>
 <p>Une gestionnaire hésite entre deux indicateurs pour comparer les canaux de vente : les ventes totales et les ventes par client.</p>
+<p>Dans le tableau, les lignes sont regroupées selon <code>canal_principal</code>. Par exemple, le groupe « web » rassemble les observations pour lesquelles le web est le principal canal de vente de la succursale pendant le mois considéré.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 13%">
-<col style="width: 15%">
-<col style="width: 15%">
+<col style="width: 11%">
+<col style="width: 12%">
 <col style="width: 18%">
-<col style="width: 21%">
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 22%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">canal_principal</th>
-<th style="text-align: right;">observations</th>
-<th style="text-align: right;">ventes_totales</th>
-<th style="text-align: right;">clients_totaux</th>
-<th style="text-align: right;">ventes_par_client</th>
-<th style="text-align: right;">satisfaction_moyenne</th>
+<th style="text-align: left;">Canal principal</th>
+<th style="text-align: right;">Nombre de lignes</th>
+<th style="text-align: right;">Ventes totales (dollars)</th>
+<th style="text-align: right;">Total des clients</th>
+<th style="text-align: right;">Ventes par client (dollars)</th>
+<th style="text-align: right;">Satisfaction moyenne (sur 10)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">magasin</td>
 <td style="text-align: right;">11</td>
-<td style="text-align: right;">1106155</td>
-<td style="text-align: right;">19335</td>
-<td style="text-align: right;">57.21</td>
-<td style="text-align: right;">8.12</td>
+<td style="text-align: right;">1 106 155</td>
+<td style="text-align: right;">19 335</td>
+<td style="text-align: right;">57,21</td>
+<td style="text-align: right;">8,12</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">telephone</td>
+<td style="text-align: left;">téléphone</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">351375</td>
-<td style="text-align: right;">6044</td>
-<td style="text-align: right;">58.14</td>
-<td style="text-align: right;">8.13</td>
+<td style="text-align: right;">351 375</td>
+<td style="text-align: right;">6 044</td>
+<td style="text-align: right;">58,14</td>
+<td style="text-align: right;">8,13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">web</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">1158115</td>
-<td style="text-align: right;">18296</td>
-<td style="text-align: right;">63.30</td>
-<td style="text-align: right;">7.94</td>
+<td style="text-align: right;">1 158 115</td>
+<td style="text-align: right;">18 296</td>
+<td style="text-align: right;">63,30</td>
+<td style="text-align: right;">7,94</td>
 </tr>
 </tbody>
 </table>
@@ -7328,7 +7337,7 @@ display: none;
 <p>À faire :</p>
 <ul>
 <li>expliquer pourquoi les ventes totales et les ventes par client ne répondent pas à la même question;</li>
-<li>choisir l’indicateur le plus pertinent pour comparer la valeur moyenne d’une transaction client et justifier ce choix;</li>
+<li>choisir l’indicateur le plus pertinent pour comparer le montant moyen dépensé par un client et justifier ce choix;</li>
 <li>formuler un constat prudent sur la satisfaction;</li>
 <li>nommer une variable de contexte qui pourrait modifier la comparaison;</li>
 <li>expliquer pourquoi le tableau ne démontre pas qu’un canal cause un niveau de satisfaction donné.</li>
@@ -7347,7 +7356,7 @@ display: none;
 <div class="callout-body-container callout-body">
 <section id="distinguer-les-deux-questions" class="level3">
 <h3 class="anchored" data-anchor-id="distinguer-les-deux-questions">1. Distinguer les deux questions</h3>
-<p>Les ventes totales répondent à la question : « Quel volume de ventes est associé aux lignes de ce groupe pendant la période? » Elles dépendent notamment du nombre de lignes, du nombre de clients et du montant dépensé par client.</p>
+<p>Les ventes totales répondent à la question : « Quel est le montant total des ventes pour les observations de ce groupe? » Elles dépendent notamment du nombre de lignes, du nombre de clients et du montant dépensé par client.</p>
 <p>Les ventes par client répondent à une autre question : « Quel montant de ventes obtient-on, en moyenne, par client comptabilisé dans ce groupe? » On divise les ventes totales du groupe par le total des clients du même groupe. L’unité est le dollar par client, tandis que les ventes totales s’expriment en dollars.</p>
 </section>
 <section id="calculer-et-choisir-lindicateur" class="level3">
@@ -7359,12 +7368,12 @@ display: none;
 <li>Web : 1 158 115 $ ÷ 18 296 clients = 63,30 $ par client.</li>
 </ul>
 <p>Parmi les deux indicateurs proposés, les ventes par client sont les plus pertinentes pour comparer le montant moyen associé à un client. Le groupe « web » présente ici le ratio le plus élevé, alors qu’il totalise moins de clients que le groupe « magasin ».</p>
-<p>Il faut toutefois préciser le sens du mot « transaction » dans la consigne. Le dénominateur du tableau est un nombre de clients. Pour calculer exactement une valeur moyenne par transaction, il faudrait connaître le nombre de transactions, ou vérifier qu’un client comptabilisé correspond à une seule transaction. Le fichier ne permet pas de vérifier cette correspondance. De même, additionner les clients de plusieurs mois ne donne pas nécessairement un nombre de personnes distinctes sur toute la période.</p>
-<p>Le ratio du tableau est une moyenne des ventes par client de chaque ligne, pondérée par son nombre de clients. Faire une moyenne simple des ratios mensuels donnerait le même poids à une ligne ayant peu de clients et à une ligne en ayant beaucoup; ce ne serait pas le même calcul.</p>
+<p>Ce montant par client ne doit pas être confondu avec un montant par transaction. Une transaction correspond à un achat; un même client peut en effectuer plusieurs. Pour calculer le montant moyen d’une transaction, il faudrait diviser les ventes par le nombre de transactions. Le fichier ne fournit pas ce nombre. De même, additionner les clients de plusieurs mois ne donne pas nécessairement un nombre de personnes distinctes sur toute la période : une personne peut revenir d’un mois à l’autre.</p>
+<p>Le rapport entre les ventes totales et le total des clients tient compte du nombre de clients de chaque ligne. Il correspond à une moyenne pondérée des ventes par client : les lignes qui comptent davantage de clients ont plus de poids. Une moyenne simple des ratios mensuels donnerait, au contraire, le même poids à toutes les lignes. Ce ne serait pas le même calcul.</p>
 </section>
 <section id="formuler-un-constat-prudent-sur-la-satisfaction" class="level3">
 <h3 class="anchored" data-anchor-id="formuler-un-constat-prudent-sur-la-satisfaction">3. Formuler un constat prudent sur la satisfaction</h3>
-<p>Voici les effectifs réellement utilisés pour cet indicateur :</p>
+<p>Voici le nombre de scores mensuels utilisés pour calculer chaque moyenne :</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -7384,7 +7393,7 @@ display: none;
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">telephone</td>
+<td style="text-align: left;">téléphone</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">0</td>
@@ -7399,19 +7408,20 @@ display: none;
 </table>
 </div>
 </div>
-<p>Une formulation recevable serait :</p>
+<p>Une réponse possible est :</p>
 <blockquote class="blockquote">
-<p>Parmi les scores mensuels disponibles, la satisfaction moyenne est de 8,13 sur 10 dans le groupe « téléphone », de 8,12 dans le groupe « magasin » et de 7,94 dans le groupe « web »; les écarts observés restent descriptifs et reposent sur des effectifs différents, particulièrement faibles pour le téléphone.</p>
+<p>Parmi les scores mensuels disponibles, la satisfaction moyenne est de 8,13 sur 10 dans le groupe « téléphone », de 8,12 dans le groupe « magasin » et de 7,94 dans le groupe « web »; ces moyennes décrivent les données disponibles et reposent sur des nombres de scores différents, avec seulement trois scores pour le téléphone.</p>
 </blockquote>
-<p>La différence entre téléphone et magasin est d’environ 0,01 point sur 10. Ce seul écart ne suffit pas pour établir une supériorité fiable ou importante en pratique. Le tableau ne fournit pas non plus le nombre de répondants associé à chaque score mensuel : il donne le même poids à chaque score disponible.</p>
+<p>La différence entre téléphone et magasin est d’environ 0,01 point sur 10. Ce seul écart ne suffit pas pour conclure que les clients sont plus satisfaits au téléphone qu’en magasin. On ne connaît pas non plus le nombre de répondants associé à chaque score mensuel. Dans le calcul présenté, chaque score disponible reçoit le même poids.</p>
 </section>
 <section id="tenir-compte-du-contexte" class="level3">
 <h3 class="anchored" data-anchor-id="tenir-compte-du-contexte">4. Tenir compte du contexte</h3>
-<p>On peut nommer, par exemple, <code>region</code>, <code>surface_m2</code>, <code>campagne_locale</code> ou <code>mois</code>. Une campagne locale peut être associée au volume de clientèle et aux achats; une répartition différente des campagnes entre les groupes pourrait donc contribuer à la comparaison observée. Il s’agit d’une possibilité à examiner, pas d’un effet démontré par ce tableau.</p>
-<p>La définition de <code>canal_principal</code> apporte une autre limite : la ligne décrit l’ensemble d’une succursale pendant un mois et indique son canal principal. Elle ne détaille pas chaque vente par canal. Les montants du tableau sont donc ceux des succursales et des mois classés dans chaque groupe; on ne peut pas attribuer toutes leurs transactions exclusivement au canal principal.</p>
+<p>On peut nommer, par exemple, <code>region</code>, <code>surface_m2</code>, <code>campagne_locale</code> ou <code>mois</code>. Une campagne locale peut être associée au nombre de clients et au montant de leurs achats. Si les campagnes sont plus fréquentes dans un groupe que dans un autre, elles pourraient contribuer aux écarts observés. C’est une explication possible à examiner, et non un effet démontré par ce tableau.</p>
+<p>La définition de <code>canal_principal</code> apporte une autre limite : la ligne décrit l’ensemble d’une succursale pendant un mois et indique son canal principal. Elle ne détaille pas chaque vente par canal. Les montants du tableau sont donc ceux des observations classées dans chaque groupe; on ne peut pas attribuer toutes leurs transactions exclusivement au canal principal.</p>
 </section>
 <section id="distinguer-association-et-causalité" class="level3">
 <h3 class="anchored" data-anchor-id="distinguer-association-et-causalité">5. Distinguer association et causalité</h3>
+<p>Observer une différence de satisfaction entre les canaux ne signifie pas que le canal est responsable de cette différence.</p>
 <p>Le tableau compare des groupes tels qu’ils apparaissent dans les données. Il ne décrit pas une expérience où l’on aurait changé uniquement le canal, toutes les autres conditions étant comparables. Les succursales, les mois, la clientèle, les campagnes et les délais peuvent aussi différer entre les groupes. Une différence de satisfaction ne démontre donc pas qu’un changement de canal produirait cette différence.</p>
 </section>
 </div>
@@ -7448,22 +7458,22 @@ display: none;
 <p>Au moins trois des problèmes suivants doivent être expliqués :</p>
 <ol type="1">
 <li>Un volume de ventes élevé ne définit pas l’efficacité. Une succursale peut vendre davantage parce qu’elle a plus de clients, plus d’espace ou plus de ressources. Pour parler d’efficacité, il faut préciser le résultat visé et les ressources utilisées, par exemple les coûts ou les heures de travail.</li>
-<li>Les groupes ne couvrent pas les mêmes effectifs. Le tableau contient 11 lignes pour le magasin, 10 pour le web et 3 pour le téléphone. Les ventes totales ne tiennent pas compte de ces différences d’exposition. Les ventes par client répondent mieux à une question de montant moyen, mais ne mesurent pas, à elles seules, la rentabilité.</li>
+<li>Les groupes ne contiennent pas le même nombre d’observations. On compte 11 lignes pour le magasin, 10 pour le web et 3 pour le téléphone. Comparer directement les ventes totales ne corrige pas ces différences de taille entre les groupes. Les ventes par client répondent mieux à une question de montant moyen, mais ne mesurent pas, à elles seules, la rentabilité.</li>
 <li>Une satisfaction différente ne signifie pas une satisfaction meilleure. Le groupe « web », qui a les ventes totales les plus élevées, présente ici la satisfaction moyenne la plus faible des trois groupes : 7,94 sur 10. Même une satisfaction observée plus élevée ne prouverait pas un effet bénéfique du canal.</li>
 <li>Une association descriptive n’est pas un effet causal. Le tableau ne permet pas de savoir ce qui arriverait aux mêmes clients si on changeait leur canal de vente. D’autres caractéristiques peuvent expliquer les écarts.</li>
-<li>Les scores de satisfaction sont incomplets et agrégés. Il manque 2 scores mensuels et on ne connaît pas les effectifs de répondants. Cela limite la portée de la comparaison.</li>
+<li>Les scores de satisfaction ne donnent qu’une information partielle. Ce sont des moyennes mensuelles dont on ne connaît pas le nombre de répondants; de plus, 2 scores sont manquants. On ne peut donc pas reconstituer la satisfaction de l’ensemble des clients.</li>
 <li>Le canal principal n’est pas le canal de chaque transaction. Regrouper les succursales et les mois selon leur canal principal ne permet pas de mesurer directement ce que produirait le transfert de toutes les ventes vers un seul canal.</li>
 </ol>
 </section>
 <section id="une-note-corrigée-en-quatre-phrases" class="level3">
 <h3 class="anchored" data-anchor-id="une-note-corrigée-en-quatre-phrases">Une note corrigée en quatre phrases</h3>
 <blockquote class="blockquote">
-<p>Dans les données observées, les succursales et les mois classés « web » totalisent 1 158 115 $ de ventes, mais leur satisfaction moyenne disponible, 7,94 sur 10, est inférieure à celle des deux autres groupes. Pour comparer le montant moyen associé à un client, nous retenons les ventes par client, soit 63,30 $ pour le web, 58,14 $ pour le téléphone et 57,21 $ pour le magasin. Ces résultats ne permettent de déterminer ni le canal le plus rentable ni l’effet d’un changement de canal sur la satisfaction. Avant toute décision, il faudrait documenter les transactions par canal, les coûts, la clientèle et les réponses de satisfaction, puis évaluer l’effet d’un changement dans des conditions comparables, idéalement par une expérimentation appropriée.</p>
+<p>Dans le tableau, les observations du groupe « web » totalisent 1 158 115 $ de ventes, mais leur satisfaction moyenne calculée à partir des scores disponibles, 7,94 sur 10, est inférieure à celle des deux autres groupes. Pour comparer le montant moyen associé à un client, nous retenons les ventes par client, soit 63,30 $ pour le web, 58,14 $ pour le téléphone et 57,21 $ pour le magasin. Ces résultats ne permettent de déterminer ni le canal le plus rentable ni l’effet d’un changement de canal sur la satisfaction. Avant toute décision, il faudrait documenter les transactions par canal, les coûts, la clientèle et les réponses au questionnaire de satisfaction, puis évaluer l’effet d’un changement dans des conditions comparables, idéalement par une expérimentation appropriée.</p>
 </blockquote>
 </section>
 <section id="vérifier-la-structure-de-la-note" class="level3">
 <h3 class="anchored" data-anchor-id="vérifier-la-structure-de-la-note">Vérifier la structure de la note</h3>
-<p>La première phrase décrit les données. La deuxième choisit un indicateur en lien avec une question précise. La troisième indique ce qui demeure inconnu. La quatrième nomme l’information et la démarche supplémentaires nécessaires. La recommandation de gestion découle ainsi du raisonnement, sans transformer le tableau descriptif en promesse d’amélioration.</p>
+<p>La première phrase décrit les données. La deuxième choisit un indicateur en lien avec une question précise. La troisième indique ce qui demeure inconnu. La quatrième nomme l’information et la démarche supplémentaires nécessaires. La note précise ainsi ce qu’on observe et ce qu’il faut encore vérifier avant de décider.</p>
 </section>
 </div>
 </div>
@@ -7501,11 +7511,11 @@ display: none;
 <section id="réponse-améliorée" class="level3">
 <h3 class="anchored" data-anchor-id="réponse-améliorée">Réponse améliorée</h3>
 <blockquote class="blockquote">
-<p>Dans les succursales et les mois classés selon leur canal principal, le groupe « web » présente des ventes par client de 63,30 $, contre 57,21 $ pour le groupe « magasin ». Le ratio des ventes totales au total des clients sert ici à comparer un montant moyen par client comptabilisé. Cette différence est descriptive : les groupes peuvent aussi différer quant à leur clientèle ou aux campagnes locales, et le fichier ne permet pas d’attribuer la différence au canal lui-même.</p>
+<p>Dans les observations regroupées selon le canal principal de chaque succursale pour un mois donné, le groupe « web » présente des ventes par client de 63,30 $, contre 57,21 $ pour le groupe « magasin ». La division des ventes totales par le total des clients sert ici à comparer un montant moyen par client comptabilisé. Cette différence est descriptive : les groupes peuvent aussi différer quant à leur clientèle ou aux campagnes locales, et le fichier ne permet pas d’attribuer la différence au canal lui-même.</p>
 </blockquote>
 </section>
-<section id="passer-la-liste-de-vérification" class="level3">
-<h3 class="anchored" data-anchor-id="passer-la-liste-de-vérification">Passer la liste de vérification</h3>
+<section id="appliquer-la-liste-de-vérification" class="level3">
+<h3 class="anchored" data-anchor-id="appliquer-la-liste-de-vérification">Appliquer la liste de vérification</h3>
 <div class="table-responsive">
 <table class="caption-top table">
 <colgroup>
@@ -7574,14 +7584,14 @@ display: none;
 <section id="exemple-de-note-destinée-à-la-direction-des-opérations" class="level3">
 <h3 class="anchored" data-anchor-id="exemple-de-note-destinée-à-la-direction-des-opérations">Exemple de note destinée à la direction des opérations</h3>
 <p>Les données simulées décrivent quatre succursales québécoises de janvier à juin 2025, soit 24 observations. Chaque ligne représente une succursale pendant un mois. <code>mois</code> est une variable temporelle, <code>canal_principal</code> est une variable catégorielle nominale et <code>ventes</code> est une variable numérique exprimée en dollars.</p>
-<p>Parmi les 23 délais mensuels disponibles, la moyenne est de 3,30 jours et la médiane de 3,50 jours. Le délai habituel se situe donc autour de trois à trois jours et demi. Ces valeurs résument des moyennes mensuelles par succursale, sans pondération par le nombre de livraisons.</p>
+<p>Parmi les 23 délais mensuels disponibles, la moyenne est de 3,30 jours et la médiane de 3,50 jours. Ces deux indicateurs situent le délai habituel entre trois et trois jours et demi. Ils donnent le même poids à chaque moyenne mensuelle par succursale, quel que soit le nombre de livraisons.</p>
 <p>Le groupe « web » totalise 1 158 115 $ de ventes, contre 1 106 155 $ pour le groupe « magasin ». Les ventes par client sont respectivement de 63,30 $ et 57,21 $; elles atteignent 58,14 $ pour le groupe « téléphone ». Les totaux décrivent le volume d’activité, tandis que les ratios décrivent un montant moyen par client comptabilisé.</p>
 <p>Pour suivre le montant moyen associé à un client, je recommande de surveiller les ventes par client, en conservant les ventes totales comme indicateur de volume. Cette recommandation ne constitue pas un classement de rentabilité, car les coûts ne figurent pas dans le fichier.</p>
 <p>Les regroupements reposent sur le canal principal d’une succursale pendant un mois, sans détail des transactions par canal. Ils ne démontrent pas l’effet d’un changement de canal. Une question à approfondir est la suivante : l’écart de ventes par client entre les groupes demeure-t-il lorsqu’on compare des périodes et des succursales de contexte comparable?</p>
 </section>
-<section id="pourquoi-cet-exemple-répond-à-la-consigne" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-cet-exemple-répond-à-la-consigne">Pourquoi cet exemple répond à la consigne</h3>
-<p>Les cinq paragraphes présentent successivement la structure du fichier, le délai de livraison, les deux indicateurs de ventes, une recommandation justifiée et une limite accompagnée d’une question. Les valeurs proviennent des tableaux des exercices, et la note précise le caractère simulé des données. Votre propre note peut retenir une autre limite ou une autre question si elle les justifie à partir du fichier.</p>
+<section id="pour-relire-votre-note" class="level3">
+<h3 class="anchored" data-anchor-id="pour-relire-votre-note">Pour relire votre note</h3>
+<p>Vérifiez que chaque nombre correspond aux tableaux des exercices et que votre recommandation répond à une question précise. Une personne qui n’a pas suivi le cours doit pouvoir comprendre ce que représente une ligne, comment vous comparez les groupes et pourquoi vous restez prudent dans vos conclusions. Vous pouvez retenir une autre limite ou une autre question, à condition de l’expliquer à partir des données.</p>
 </section>
 </div>
 </div>
