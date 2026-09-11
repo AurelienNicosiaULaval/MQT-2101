@@ -16,8 +16,6 @@
 - MAE, RMSE et biais;
 - une recommandation de stock et une règle de surveillance.
 
-Temps indicatif en classe : 2 h 30.
-
 ## Préparation avant la séance
 
 1.  Téléchargez [`demande_hebdomadaire_quebec.csv`](data/demande_hebdomadaire_quebec.csv).

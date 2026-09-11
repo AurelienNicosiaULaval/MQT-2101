@@ -81,7 +81,7 @@ Si votre version de macOS est plus ancienne, consultez [l'aide pour votre ordina
 
 Vous devez voir la fenêtre RStudio, avec un onglet Console. Passez à l'étape 2 ci-dessous.
 
-Liens vérifiés le 5 septembre 2026 : R 4.6.1 et RStudio Desktop 2026.08.2. Les pages officielles de [R pour Mac](https://cran.r-project.org/bin/macosx/) et de [RStudio Desktop](https://docs.posit.co/ide/user/#direct-downloads-open-source) permettent de retrouver les téléchargements.
+Versions proposées par les liens ci-dessus : R 4.6.1 et RStudio Desktop 2026.08.2. Les pages officielles de [R pour Mac](https://cran.r-project.org/bin/macosx/) et de [RStudio Desktop](https://docs.posit.co/ide/user/#direct-downloads-open-source) permettent de retrouver les téléchargements.
 
 ## 2. Faire votre premier calcul dans RStudio
 
@@ -197,4 +197,4 @@ Dans le forum du cours sur Brio, indiquez : votre système (Windows ou Mac et sa
 
 ## Sources officielles
 
-Consignes vérifiées le 5 septembre 2026 auprès du [projet R (Windows)](https://cran.r-project.org/bin/windows/base/), du [projet R (Mac)](https://cran.r-project.org/bin/macosx/), de [Posit (RStudio)](https://docs.posit.co/ide/user/) et d'[Apple (type de Mac)](https://support.apple.com/fr-ca/116943). L'inclusion de Quarto dans RStudio est décrite par [Posit](https://docs.posit.co/ide/user/ide/guide/documents/quarto-project.html#installing-quarto); les packages nécessaires au rendu R sont précisés dans la [documentation de Quarto](https://quarto.org/docs/computations/r.html#installation).
+Consignes fondées sur les documentations du [projet R (Windows)](https://cran.r-project.org/bin/windows/base/), du [projet R (Mac)](https://cran.r-project.org/bin/macosx/), de [Posit (RStudio)](https://docs.posit.co/ide/user/) et d'[Apple (type de Mac)](https://support.apple.com/fr-ca/116943). L'inclusion de Quarto dans RStudio est décrite par [Posit](https://docs.posit.co/ide/user/ide/guide/documents/quarto-project.html#installing-quarto); les packages nécessaires au rendu R sont précisés dans la [documentation de Quarto](https://quarto.org/docs/computations/r.html#installation).

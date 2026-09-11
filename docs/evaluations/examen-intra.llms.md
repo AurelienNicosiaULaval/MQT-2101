@@ -13,7 +13,7 @@ Pondération : 30 %.
 - Le matériel permis sera confirmé dans Brio avant l’examen.
 - Réponses justifiées : une valeur sans unité ou interprétation peut être incomplète.
 
-L’examen a lieu le dimanche 25 octobre 2026, de 9 h à 11 h 50. Cette date et cette plage horaire proviennent du département et sont confirmées dans Brio. Le local, la durée pédagogique et le matériel permis seront précisés avant l’examen.
+Consultez le [calendrier du cours](../calendrier.llms.md) pour la séance d’examen. Les modalités pratiques sont précisées dans Brio.
 
 ## Structure de l’examen
 

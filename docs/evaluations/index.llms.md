@@ -22,8 +22,8 @@ Chaque bloc mène vers une page de consignes plus détaillée.
 
 Analyse reproductible allant de la préparation des données à une première modélisation par régression.
 
-Moment
-7 octobre 2026 à 23 h 59
+Échéancier
+[Consulter le calendrier](../calendrier.llms.md)
 
 IA
 Permise avec déclaration
@@ -36,8 +36,8 @@ Permise avec déclaration
 
 Évaluation individuelle sur les données, l'exploration, la visualisation, la régression et l'interprétation.
 
-Moment
-Dimanche 25 octobre 2026, de 9 h à 11 h 50; local à confirmer
+Échéancier
+[Consulter le calendrier](../calendrier.llms.md)
 
 IA
 Non permise
@@ -50,8 +50,8 @@ Non permise
 
 Analyse reproductible portant sur la prévision, les séries chronologiques ou une ouverture vers la classification.
 
-Moment
-2 décembre 2026 à 23 h 59
+Échéancier
+[Consulter le calendrier](../calendrier.llms.md)
 
 IA
 Permise avec déclaration
@@ -64,8 +64,8 @@ Permise avec déclaration
 
 Évaluation individuelle sur la prévision, les séries chronologiques, la validation, la classification et l'interprétation.
 
-Moment
-Lundi 14 décembre 2026, de 18 h 30 à 21 h 20; local à confirmer
+Échéancier
+[Consulter le calendrier](../calendrier.llms.md)
 
 IA
 Non permise

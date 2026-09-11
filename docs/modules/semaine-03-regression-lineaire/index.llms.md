@@ -8,9 +8,9 @@ Séance autonome
 
 Comprendre, ajuster et interpréter une droite de régression dans un contexte d’affaires. Le module part d’une question simple: lorsqu’un indicateur augmente, que peut-on dire de la valeur moyenne d’un autre indicateur?
 
-Durée estimée
+Organisation
 
-2 h 30 à 3 h
+À votre rythme
 
 Outils
 

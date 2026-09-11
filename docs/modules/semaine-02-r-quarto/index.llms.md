@@ -8,9 +8,9 @@ Séance autonome
 
 Importer, inspecter, résumer et visualiser un premier tableau de données. Cette semaine sert à installer les bases techniques nécessaires pour travailler de façon reproductible avec R. Le parcours vous guide depuis l’environnement de travail jusqu’à la production d’un mini-rapport Quarto.
 
-Durée estimée
+Organisation
 
-2 h 30 à 3 h
+À votre rythme
 
 Outils
 

@@ -8,9 +8,9 @@ Séance autonome
 
 Reconnaître une relation qui n’est pas bien résumée par une droite, choisir une transformation simple et comparer plusieurs modèles sans perdre l’interprétation d’affaires.
 
-Durée estimée
+Organisation
 
-2 h 30 à 3 h
+À votre rythme
 
 Outils
 

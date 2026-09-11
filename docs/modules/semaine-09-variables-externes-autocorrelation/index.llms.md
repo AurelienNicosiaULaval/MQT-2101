@@ -19,8 +19,6 @@ Le module 08 a modélisé tendance et calendrier à partir du passé de la séri
 - comparer une régression ordinaire à une régression avec erreurs AR(1);
 - formuler une prévision conditionnelle à un scénario.
 
-Temps de travail indicatif : 3 heures.
-
 ## Données
 
 Le fichier [`ventes_promotions_quebec.csv`](data/ventes_promotions_quebec.csv) contient 72 mois fictifs de ventes, promotions, prix moyen, budget marketing et indice de confiance.

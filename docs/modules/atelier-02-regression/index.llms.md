@@ -10,7 +10,7 @@ Cet atelier prolonge le module 3. Vous allez utiliser la régression pour analys
 
 Pendant
 
-2 h 30 à 3 h en classe
+Travail en classe
 
 Outils
 

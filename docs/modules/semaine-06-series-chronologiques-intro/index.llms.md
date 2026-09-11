@@ -19,8 +19,6 @@ Les modules 01 à 04 ont développé la lecture d’un tableau, la régression e
 - séparer chronologiquement les données d’entraînement et de test;
 - comparer une prévision à une méthode naïve.
 
-Temps de travail indicatif : 2 h 30 à 3 h, incluant les exercices et la trace finale.
-
 ## Données du module
 
 Le fichier [`ventes_mensuelles_quebec.csv`](data/ventes_mensuelles_quebec.csv) contient 72 mois de ventes fictives d’une organisation québécoise. Chaque ligne représente un mois. Les données sont simulées et ne décrivent aucune organisation réelle.

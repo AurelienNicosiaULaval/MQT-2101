@@ -8,9 +8,9 @@ Séance de révision
 
 Consolider les compétences des modules 01 à 04 : lire un tableau, produire une analyse descriptive, ajuster un modèle, vérifier les diagnostics et communiquer une conclusion prudente.
 
-Durée estimée
+Organisation
 
-2 h à 3 h
+À votre rythme
 
 Outils
 
@@ -221,7 +221,7 @@ Avant de demander de l’aide, vérifiez dans l’ordre :
 
 Le bloc suivant ne repart pas de zéro. Vous conserverez les mêmes réflexes : définir une question, lire les données, choisir une représentation utile, vérifier ce qui est observable et formuler une limite. Le changement important est que le temps devient une contrainte centrale : une prévision doit être construite sans utiliser le futur.
 
-Le [module 06 sur les séries chronologiques](../../modules/semaine-06-series-chronologiques-intro/index.llms.md) commence le 14 octobre. Il introduit le bloc suivant, mais l’examen intra du 25 octobre porte sur les compétences de régression travaillées dans les modules 01 à 04.
+Le [module 06 sur les séries chronologiques](../../modules/semaine-06-series-chronologiques-intro/index.llms.md) introduit le bloc suivant. L’examen intra porte sur les compétences de régression travaillées dans les modules 01 à 04. Consultez le [calendrier](../../calendrier.llms.md) pour l’ordre des séances et des évaluations.
 
 ## Pour aller plus loin
 

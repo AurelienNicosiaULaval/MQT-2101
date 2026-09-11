@@ -61,31 +61,31 @@ Chaque compétence est travaillée dans les modules, consolidée en atelier et v
 
 ## Évaluations
 
-Les mini-rapports développent l'analyse reproductible; les examens vérifient les compétences individuelles.
+Les mini-rapports développent l'analyse reproductible; les examens vérifient les compétences individuelles. Consultez le [calendrier](calendrier.llms.md) pour les échéances et les séances d'examen.
 
 15 %
 
 ### Mini-rapport 1
 
-Analyse de données, exploration et régression, en équipe de 2 à 3. Remise le 7 octobre à 23 h 59.
+Analyse de données, exploration et régression, en équipe de 2 à 3.
 
 30 %
 
 ### Examen intra
 
-Évaluation individuelle en personne sur le bloc régression, le dimanche 25 octobre 2026, de 9 h à 11 h 50. Le local reste à confirmer.
+Évaluation individuelle en personne sur le bloc régression.
 
 15 %
 
 ### Mini-rapport 2
 
-Prévision temporelle ou classification, en équipe de 2 à 3. Remise le 2 décembre à 23 h 59.
+Prévision temporelle ou classification, en équipe de 2 à 3.
 
 40 %
 
 ### Examen final
 
-Évaluation individuelle en personne le lundi 14 décembre 2026, de 18 h 30 à 21 h 20. Le local reste à confirmer.
+Évaluation individuelle en personne sur la prévision et la classification.
 
 Les questionnaires sur la régression et les séries chronologiques sont conservés comme exercices formatifs non évalués.
 

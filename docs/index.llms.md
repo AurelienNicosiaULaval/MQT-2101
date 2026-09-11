@@ -10,7 +10,7 @@ Un parcours appliqué pour passer d'un tableau de données à une analyse reprod
 
 ![Logo MQT-2101](assets/images/mqt-2101-logo.svg)
 
-Session Automne 2026
+Session [Consulter le calendrier](calendrier.llms.md)
 
 Outils R, RStudio, Quarto
 

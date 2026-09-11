@@ -24,8 +24,6 @@ Vous conservez les principes de question claire, de séparation entraînement-te
 - choisir un seuil selon le coût des erreurs;
 - distinguer performance statistique et utilité décisionnelle.
 
-Temps de travail indicatif : 3 heures.
-
 ## Données
 
 Le fichier [`fidelisation_clients_quebec.csv`](data/fidelisation_clients_quebec.csv) décrit 650 clients fictifs et leur départ éventuel dans les 90 jours.

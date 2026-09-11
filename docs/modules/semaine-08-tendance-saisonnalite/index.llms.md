@@ -19,8 +19,6 @@ Après les méthodes de lissage du module 07, vous cherchez maintenant une struc
 - produire des prévisions et intervalles pour une période test;
 - comparer le modèle à une référence saisonnière naïve.
 
-Temps de travail indicatif : 2 h 30 à 3 h.
-
 ## Données
 
 Le fichier [`ventes_saisonnieres_quebec.csv`](data/ventes_saisonnieres_quebec.csv) contient 72 mois de ventes et de budgets fictifs.

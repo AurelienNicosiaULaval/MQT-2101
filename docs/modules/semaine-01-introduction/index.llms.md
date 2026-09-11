@@ -8,9 +8,9 @@ Séance autonome
 
 Observer, classer, décrire et interpréter prudemment un premier tableau de données. Cette semaine installe les repères du cours : ce qu’est un modèle, ce que représente une ligne, ce que mesure une variable, comment produire un premier résumé et comment éviter une interprétation trop rapide.
 
-Durée estimée
+Organisation
 
-2 h à 2 h 30
+À votre rythme
 
 Outils
 

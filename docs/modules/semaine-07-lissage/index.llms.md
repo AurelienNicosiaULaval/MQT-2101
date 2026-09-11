@@ -18,8 +18,6 @@ Le module 06 a défini la cible, l’horizon et une période test chronologique.
 - comparer des méthodes sur une période test avec MAE et RMSE;
 - choisir une méthode selon son erreur et son utilité opérationnelle.
 
-Temps de travail indicatif : 2 h 30 à 3 h.
-
 ## Données
 
 Le fichier [`demande_hebdomadaire_quebec.csv`](data/demande_hebdomadaire_quebec.csv) contient 104 semaines de demande fictive, avec prix moyen et indicateur de promotion. Chaque ligne représente une semaine.
