@@ -2940,90 +2940,6 @@
     "text": "À revoir après l’atelier\nRelisez les notions qui ont posé problème pendant la séance, puis complétez le rapport Quarto avant la remise."
   },
   {
-    "objectID": "modules/atelier-01-r/guide-atelier.html",
-    "href": "modules/atelier-01-r/guide-atelier.html",
-    "title": "Mission du laboratoire 01",
-    "section": "",
-    "text": "La direction d’une PME québécoise fictive dispose d’un tableau mensuel décrivant ses cinq succursales. Elle souhaite consacrer sa prochaine analyse à une seule priorité : le marketing, les opérations ou la saisonnalité.\nVous jouez le rôle de l’équipe d’analyse. La direction vous demande un premier diagnostic pour répondre à cette question :\n\nQuelle priorité de prochaine analyse recommandez-vous, et quels résultats descriptifs justifient votre choix?\n\nVotre réponse doit préciser une succursale, une période ou une comparaison à examiner. Appuyez votre choix sur au moins deux résultats de votre rapport et indiquez une information supplémentaire à obtenir avant de proposer une intervention.\n\n\n\n\n\n\nImportantLe niveau attendu après les modules 1 et 2\n\n\n\nVous devez comprendre le tableau, vérifier sa qualité, calculer des indicateurs, visualiser et interpréter. Une régression, un test statistique ou une prévision ne sont pas demandés. Plusieurs priorités peuvent être défendables : c’est la cohérence entre la question, les résultats et la conclusion qui sera discutée."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#votre-mission",
-    "href": "modules/atelier-01-r/guide-atelier.html#votre-mission",
-    "title": "Mission du laboratoire 01",
-    "section": "",
-    "text": "La direction d’une PME québécoise fictive dispose d’un tableau mensuel décrivant ses cinq succursales. Elle souhaite consacrer sa prochaine analyse à une seule priorité : le marketing, les opérations ou la saisonnalité.\nVous jouez le rôle de l’équipe d’analyse. La direction vous demande un premier diagnostic pour répondre à cette question :\n\nQuelle priorité de prochaine analyse recommandez-vous, et quels résultats descriptifs justifient votre choix?\n\nVotre réponse doit préciser une succursale, une période ou une comparaison à examiner. Appuyez votre choix sur au moins deux résultats de votre rapport et indiquez une information supplémentaire à obtenir avant de proposer une intervention.\n\n\n\n\n\n\nImportantLe niveau attendu après les modules 1 et 2\n\n\n\nVous devez comprendre le tableau, vérifier sa qualité, calculer des indicateurs, visualiser et interpréter. Une régression, un test statistique ou une prévision ne sont pas demandés. Plusieurs priorités peuvent être défendables : c’est la cohérence entre la question, les résultats et la conclusion qui sera discutée."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#organisation-du-travail",
-    "href": "modules/atelier-01-r/guide-atelier.html#organisation-du-travail",
-    "title": "Mission du laboratoire 01",
-    "section": "Organisation du travail",
-    "text": "Organisation du travail\nLa séance commence par une présentation de 10 à 15 minutes. Vous travaillez ensuite dans votre rapport, avec l’accompagnement de l’enseignant. Le déroulement horaire réserve deux moments à la rétroaction.\nTravaillez en binômes, avec un rapport par binôme. Alternez la personne au clavier après le premier point de rétroaction. Chaque personne doit pouvoir expliquer l’importation, un indicateur et la priorité retenue. Si vous travaillez seul, les mêmes productions sont attendues.\nLe laboratoire est formatif, sans points dans la note finale. Il prépare la démarche des mini-rapports évalués, dont les consignes sont séparées."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#dossier-de-départ",
-    "href": "modules/atelier-01-r/guide-atelier.html#dossier-de-départ",
-    "title": "Mission du laboratoire 01",
-    "section": "Dossier de départ",
-    "text": "Dossier de départ\nTélécharger le dossier du laboratoire\nDécompressez l’archive avant de l’ouvrir. Elle contient :\nlaboratoire-01/\n  laboratoire-01.Rproj\n  rapport-labo-01.qmd\n  LIRE-MOI.txt\n  data/\n    ventes_pme_quebec.csv\n\nOuvrez laboratoire-01.Rproj dans RStudio ou Positron.\nOuvrez rapport-labo-01.qmd et remplacez le nom de l’auteur par vos noms.\nCliquez sur Render. Vous obtenez rapport-labo-01.html dans le même dossier.\nComplétez les sections et les blocs de code au fil de la mission, puis relancez Render régulièrement.\n\nL’importation est déjà écrite avec le chemin relatif data/ventes_pme_quebec.csv. Gardez le CSV dans data/ et le .qmd à la racine du dossier. N’ajoutez pas install.packages() au rapport : l’installation se fait une fois dans la Console, au besoin.\nLe CSV seul reste téléchargeable. Il s’agit de données simulées pour le cours, déjà utilisées dans les exercices du module 2. Ici, vous les mobilisez pour comparer les succursales et défendre une priorité, au-delà de la comparaison guidée par saison."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-1-comprendre-et-vérifier-les-données",
-    "href": "modules/atelier-01-r/guide-atelier.html#étape-1-comprendre-et-vérifier-les-données",
-    "title": "Mission du laboratoire 01",
-    "section": "Étape 1 : comprendre et vérifier les données",
-    "text": "Étape 1 : comprendre et vérifier les données\nÀ faire entre 9 h 15 et 10 h, avec l’étape 2.\nDans la section « Données et qualité » du rapport :\n\nVérifiez les dimensions et les dates minimale et maximale. Expliquez ce que représente une ligne.\nChoisissez trois variables utiles à la mission. Précisez leur sens, leur type statistique et leur unité, s’il y a lieu. Un dictionnaire de toutes les colonnes n’est pas demandé.\nComptez les valeurs manquantes par variable. Nommez les variables concernées et expliquez votre traitement.\n\n\n\n\n\n\n\nAstuceIndice : inspection et valeurs manquantes\n\n\n\n\n\nRetrouvez les fonctions glimpse(), dim(), range() et is.na(). Les exercices 1 et 3 du module 2 montrent leur utilisation. Pour compter les valeurs absentes de chaque colonne, vous pouvez combiner summarise() et across().\nna.rm = TRUE calcule un résumé à partir des valeurs disponibles. Il ne remplace pas les valeurs manquantes et ne garantit pas que les valeurs disponibles représentent bien l’ensemble des mois."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-2-comparer-les-succursales",
-    "href": "modules/atelier-01-r/guide-atelier.html#étape-2-comparer-les-succursales",
-    "title": "Mission du laboratoire 01",
-    "section": "Étape 2 : comparer les succursales",
-    "text": "Étape 2 : comparer les succursales\nConstruisez un tableau contenant, pour chaque succursale :\n\nle nombre de mois observés;\nles ventes totales sur la période, en dollars canadiens;\nles ventes par client sur la période, calculées par sum(ventes) / sum(clients);\nun indicateur de service choisi parmi le délai moyen de livraison, la satisfaction moyenne ou le nombre total de ruptures de stock.\n\nSi votre indicateur comporte des valeurs manquantes, ajoutez le nombre de mois effectivement utilisés dans son calcul. Comparez deux succursales dans une courte phrase chiffrée. Le classement change-t-il lorsqu’on passe des ventes totales aux ventes par client?\n\n\n\n\n\n\nAstuceIndice : un indicateur adapté à la question\n\n\n\n\n\ngroup_by(succursale) forme les groupes et summarise() calcule une ligne par succursale. n() compte les lignes du groupe et sum(!is.na(satisfaction)) compte les scores disponibles.\nLe ratio des ventes totales au nombre total de clients pondère les mois par leur nombre de clients. La moyenne simple des paniers mensuels donne le même poids à chaque mois. Ces deux calculs ne répondent pas exactement à la même question.\nPour le délai et la satisfaction, une moyenne des valeurs mensuelles disponibles donne le même poids à chaque mois. Elle ne représente pas une moyenne calculée sur toutes les livraisons ou toutes les réponses individuelles. Utilisez des noms distincts pour les colonnes sources et les indicateurs calculés, par exemple satisfaction_moyenne.\n\n\n\n\n\n\n\n\n\nNotePoint de rétroaction 1, vers 10 h\n\n\n\nMontrez votre tableau et votre diagnostic. Préparez une explication de l’unité d’observation et du nombre de valeurs utilisées pour un indicateur. Repérez avec l’enseignant une vérification à faire ou une correction à apporter avant de poursuivre."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-3-produire-deux-graphiques-utiles",
-    "href": "modules/atelier-01-r/guide-atelier.html#étape-3-produire-deux-graphiques-utiles",
-    "title": "Mission du laboratoire 01",
-    "section": "Étape 3 : produire deux graphiques utiles",
-    "text": "Étape 3 : produire deux graphiques utiles\nÀ faire après la pause, de 10 h 20 à 10 h 55.\nLe premier graphique compare les ventes totales par succursale. Le second explore une dimension utile à votre priorité. Choisissez une seule piste dans ce tableau.\n\n\n\n\n\n\n\n\nPiste\nExemple de question pour le second graphique\nGraphique possible\n\n\n\n\nMarketing\nComment les dépenses marketing et les ventes varient-elles ensemble?\nNuage de points, une observation mensuelle par succursale\n\n\nOpérations\nComment comparer les délais ou la satisfaction entre succursales?\nBarres à partir d’un résumé, ou nuage de points délai-satisfaction\n\n\nSaisonnalité\nÀ quels mois les ventes sont-elles les plus élevées, et le profil est-il semblable entre succursales?\nCourbes des ventes mensuelles, une par succursale\n\n\n\nPour chaque graphique, écrivez la question, indiquez les unités sur les axes et ajoutez une ou deux phrases d’interprétation sous le résultat. Vous pouvez choisir une autre représentation si vous expliquez son utilité. Aucune droite de régression n’est nécessaire.\n\n\n\n\n\n\nAstuceIndice : choisir les bonnes données pour le graphique\n\n\n\n\n\ngeom_col() représente des valeurs déjà calculées, par exemple les ventes totales du tableau synthèse. geom_point() montre les observations du tableau mensuel. geom_line() peut relier les mois d’une même succursale avec color = succursale.\nSi le graphique utilise deux variables incomplètes, comptez les lignes pour lesquelles les deux valeurs sont disponibles. Signalez le nombre de points exclus. Pour une courbe de ventes, vérifiez que mois est une date et que les succursales sont distinguées."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-4-répondre-à-la-direction",
-    "href": "modules/atelier-01-r/guide-atelier.html#étape-4-répondre-à-la-direction",
-    "title": "Mission du laboratoire 01",
-    "section": "Étape 4 : répondre à la direction",
-    "text": "Étape 4 : répondre à la direction\nÀ rédiger de 10 h 55 à 11 h 20, à partir des résultats déjà obtenus.\nÉcrivez trois constats chiffrés au total. Ils peuvent reprendre vos commentaires du tableau et des graphiques : il n’est pas nécessaire de les recopier dans une autre section. Chaque constat nomme une comparaison, une valeur ou un écart, avec son unité.\nTerminez par un paragraphe qui répond directement à la mission :\n\nChoisissez une priorité de prochaine analyse et précisez la succursale, la période ou la comparaison visée.\nRenvoyez à au moins deux résultats de votre tableau ou de vos graphiques pour justifier ce choix.\nExpliquez une limite qui pourrait changer l’interprétation.\nFormulez une question de prochaine analyse et nommez une information supplémentaire à recueillir.\n\n\n\n\n\n\n\nNoteUne conclusion descriptive et prudente\n\n\n\nUne association entre marketing et ventes ne démontre pas un effet de la campagne. Un total de ruptures peut dépendre du volume d’activité. Un profil observé pendant une seule année ne suffit pas à établir une saisonnalité récurrente. Choisissez la limite qui concerne réellement votre analyse et expliquez sa conséquence."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#rapport-attendu",
-    "href": "modules/atelier-01-r/guide-atelier.html#rapport-attendu",
-    "title": "Mission du laboratoire 01",
-    "section": "Rapport attendu",
-    "text": "Rapport attendu\nLe gabarit suit cette structure. Le rapport doit rester compréhensible pour une personne qui n’a pas votre session R sous les yeux.\n\n\n\n\n\n\n\nSection du gabarit\nContenu attendu\n\n\n\n\n1. Mission\nQuestion reformulée et objectif du diagnostic\n\n\n2. Données et qualité\nImportation, dimensions, période, unité d’observation, trois variables et diagnostic des valeurs manquantes\n\n\n3. Comparaison des succursales\nTableau synthèse avec unités, effectifs nécessaires et commentaire\n\n\n4. Deux graphiques\nQuestions, titres, axes et commentaires liés à la mission\n\n\n5. Réponse à la direction\nPriorité justifiée par deux résultats, limite et prochaine question\n\n\n6. Bilan formatif\nRétroaction reçue, correction apportée et point à retravailler\n\n\n\nVisez environ 400 à 600 mots hors code et tableaux, avec trois constats chiffrés répartis dans le rapport. Gardez le code visible pour faciliter la rétroaction. Les résultats doivent provenir du code exécuté dans le .qmd."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#rétroaction-formative",
-    "href": "modules/atelier-01-r/guide-atelier.html#rétroaction-formative",
-    "title": "Mission du laboratoire 01",
-    "section": "Rétroaction formative",
-    "text": "Rétroaction formative\nDe 11 h 20 à 11 h 35, échangez votre HTML avec un autre binôme. Chaque binôme relève un point réussi et propose une amélioration précise en s’appuyant sur la grille. L’enseignant vous accompagne pour vérifier les points qui restent incertains.\nPour chaque critère, indiquez « Acquis », « À consolider » ou « À reprendre ». Ces repères servent à choisir une correction, sans calcul de note.\n\n\n\n\n\n\n\nCritère\nCe qui permet de dire « Acquis »\n\n\n\n\nCompréhension des données\nLa période, l’unité d’observation et les trois variables sont correctement décrites\n\n\nQualité et calculs\nLes valeurs manquantes sont repérées, les unités sont correctes et les effectifs utiles sont indiqués\n\n\nTableau et graphiques\nLe tableau et les deux graphiques répondent à des questions identifiables et se lisent sans deviner les unités\n\n\nRaisonnement\nTrois constats chiffrés sont présents et la priorité s’appuie sur deux résultats cohérents\n\n\nLimites\nUne limite précise encadre la conclusion et conduit à une question ou à un besoin d’information\n\n\nReproductibilité et bilan\nRender refait l’analyse à partir du CSV, et le bilan nomme une correction ou un point à reprendre\n\n\n\nUne rétroaction utile précise où intervenir : « Ajoutez le nombre de mois disponibles à côté de la satisfaction moyenne » est plus exploitable que « Améliorez le tableau »."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#fin-de-séance",
-    "href": "modules/atelier-01-r/guide-atelier.html#fin-de-séance",
-    "title": "Mission du laboratoire 01",
-    "section": "Fin de séance",
-    "text": "Fin de séance\nDe 11 h 35 à 11 h 50 :\n\nAppliquez une amélioration issue de la relecture et complétez le bilan.\nEnregistrez le .qmd. Redémarrez R, puis cliquez sur Render sans exécuter de commandes préparatoires dans la Console.\nOuvrez le HTML produit et vérifiez les tableaux, les deux graphiques et la réponse à la mission.\nConservez le dossier complet avec le .qmd, le .html et le CSV. Les modalités de transmission du rapport seront précisées en classe.\n\nSi vous n’avez pas terminé, gardez les éléments réalisés et indiquez le blocage dans le bilan. Si le rendu échoue, montrez le premier message d’erreur pour recevoir de l’aide. L’objectif formatif est de repérer la prochaine étape qui vous permettra de progresser."
-  },
-  {
-    "objectID": "modules/atelier-01-r/guide-atelier.html#aide-pendant-la-mission",
-    "href": "modules/atelier-01-r/guide-atelier.html#aide-pendant-la-mission",
-    "title": "Mission du laboratoire 01",
-    "section": "Aide pendant la mission",
-    "text": "Aide pendant la mission\nConsultez d’abord la consigne et tentez le calcul. Si nécessaire, utilisez les indices repliés de ce guide, les exercices corrigés du module 2 ou une démonstration R. Adaptez le code à votre question et vérifiez le résultat obtenu.\nPour demander de l’aide, montrez le bloc essayé, le résultat ou le message d’erreur, et ce que vous cherchez à obtenir. Le GPT du cours peut servir de tuteur, conformément aux règles du cours, après une première tentative. Vous devez pouvoir expliquer le code et les constats conservés. Notez dans votre bilan l’aide utilisée et ce que vous avez vérifié.\nLes exercices complémentaires sont facultatifs. Ils ne constituent pas un second rapport à produire pendant cette séance."
-  },
-  {
     "objectID": "modules/atelier-01-r/demonstrations.html",
     "href": "modules/atelier-01-r/demonstrations.html",
     "title": "Démonstrations R - Atelier 01",
@@ -5129,97 +5045,6 @@
     "title": "Exercices complémentaires - Atelier 01",
     "section": "Trace finale facultative",
     "text": "Trace finale facultative\nProduisez une note Quarto autonome sur la fiabilité du service : dictionnaire ciblé, audit des données manquantes, tableau région-canal, deux graphiques, trois constats, priorité et prochaine analyse. N’utilisez pas le fichier ventes_pme_quebec.csv du guide."
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html",
-    "href": "modules/atelier-01-r/index.html",
-    "title": "Laboratoire 01",
-    "section": "",
-    "text": "Premier laboratoire en classe\n\n\nAprès une courte présentation, vous explorerez les données d’une PME québécoise fictive. Votre mission sera de choisir une priorité de prochaine analyse et de la justifier dans un court rapport Quarto.\nMercredi 16 septembre 2026, de 9 h à 11 h 50, au pavillon Palasis-Prince, local 3213, selon le calendrier du cours."
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html#avant-latelier",
-    "href": "modules/atelier-01-r/index.html#avant-latelier",
-    "title": "Laboratoire 01",
-    "section": "Avant l’atelier",
-    "text": "Avant l’atelier\nPrévoyez environ 10 minutes pour préparer vos fichiers. La mission commence en classe.\n\nApportez votre ordinateur et son chargeur.\nVérifiez que R, RStudio ou Positron et Quarto fonctionnent, à l’aide de la page Installation.\nVérifiez que library(tidyverse) et library(janitor) s’exécutent.\nTéléchargez le dossier de départ du laboratoire, puis décompressez-le.\nOuvrez laboratoire-01.Rproj, puis rapport-labo-01.qmd et cliquez sur Render. Le gabarit doit produire un HTML avant même que vous commenciez l’analyse.\n\nEn cas de difficulté, consultez le guide Quarto. Si le problème persiste, venez avec vos fichiers et le message d’erreur pour le signaler dès votre arrivée.\nLes notions utiles sont l’unité d’observation, les types de variables, les valeurs manquantes, les résumés descriptifs et les graphiques. Les exercices corrigés du module 2 restent disponibles pour revoir un geste précis."
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html#pendant-latelier",
-    "href": "modules/atelier-01-r/index.html#pendant-latelier",
-    "title": "Laboratoire 01",
-    "section": "Pendant l’atelier",
-    "text": "Pendant l’atelier\nOuvrez le guide de la mission. Il rassemble les consignes, les étapes, le contenu du rapport et la grille formative. Gardez-le à côté de votre document Quarto pendant le travail.\n\n\n\n\n\n\n\n\nHoraire\nActivité\nRésultat visé\n\n\n\n\n9 h à 9 h 15\nCourte présentation et lancement de la mission\nComprendre la question et le rapport attendu\n\n\n9 h 15 à 9 h 30\nPrise en main du dossier\nPremier HTML, importation et unité d’observation\n\n\n9 h 30 à 10 h\nDiagnostic et tableau synthèse\nDonnées vérifiées et comparaison des succursales\n\n\n10 h à 10 h 10\nPremier point de rétroaction\nUne vérification ou une correction à appliquer\n\n\n10 h 10 à 10 h 20\nPause\nReprise à 10 h 20\n\n\n10 h 20 à 10 h 55\nDeux graphiques et choix d’une priorité\nRésultats utiles à la mission\n\n\n10 h 55 à 11 h 20\nRédaction de la réponse à la direction\nTrois constats chiffrés, une priorité et une limite\n\n\n11 h 20 à 11 h 35\nRelecture croisée et rétroaction\nUn point réussi et une amélioration précise\n\n\n11 h 35 à 11 h 50\nCorrections, Render et bilan\nRapport lisible et prochaine étape personnelle\n\n\n\nCes repères permettent d’avancer ensemble. Si vous bloquez, demandez de l’aide en montrant votre tentative, le résultat obtenu et votre question."
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html#production-attendue",
-    "href": "modules/atelier-01-r/index.html#production-attendue",
-    "title": "Laboratoire 01",
-    "section": "Production attendue",
-    "text": "Production attendue\nUn seul rapport Quarto répond à la mission. Il réunit la description et le diagnostic des données, un tableau comparatif, deux graphiques commentés, trois constats chiffrés et une priorité de prochaine analyse justifiée. Le gabarit fourni contient déjà les sections à compléter et l’importation.\nVisez environ 400 à 600 mots, hors code et tableaux. Cette longueur est un repère pour rester concis, pas un critère de notation. Les éléments attendus et les modalités de fin de séance se trouvent dans le guide de la mission."
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html#après-latelier",
-    "href": "modules/atelier-01-r/index.html#après-latelier",
-    "title": "Laboratoire 01",
-    "section": "Après l’atelier",
-    "text": "Après l’atelier\nConservez ensemble le .qmd, le .html et le dossier data/. Reprenez le point d’amélioration relevé pendant la rétroaction et notez une question à clarifier. Cette démarche vous prépare à la rédaction du mini-rapport 1, dont les consignes et l’évaluation sont distinctes."
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html#ressources-utiles",
-    "href": "modules/atelier-01-r/index.html#ressources-utiles",
-    "title": "Laboratoire 01",
-    "section": "Ressources utiles",
-    "text": "Ressources utiles\n\n\n\nRessource\nQuand l’utiliser\n\n\n\n\nGuide de la mission\nFil principal de la séance\n\n\nPrésentation de lancement\nSupport de la courte introduction en classe\n\n\nDossier de départ : projet, QMD et CSV\nPour commencer directement dans RStudio\n\n\nDémonstrations R\nAide ponctuelle après une première tentative\n\n\nRepères conceptuels\nPour retrouver une notion des modules 1 et 2\n\n\nExercices complémentaires\nPratique facultative après la mission"
-  },
-  {
-    "objectID": "modules/atelier-01-r/index.html#auto-vérification",
-    "href": "modules/atelier-01-r/index.html#auto-vérification",
-    "title": "Laboratoire 01",
-    "section": "Auto-vérification",
-    "text": "Auto-vérification\n\nMon HTML répond à la mission avec des résultats produits dans mon .qmd.\nJe peux expliquer ce que représente une ligne et ce que mes indicateurs résument.\nJ’ai tenu compte des valeurs manquantes et nommé une limite.\nMa priorité renvoie à des résultats précis de mon rapport.\nJ’ai appliqué une correction après la rétroaction ou noté la question qui reste ouverte."
-  },
-  {
-    "objectID": "modules/atelier-01-r/presentation.html#la-mission",
-    "href": "modules/atelier-01-r/presentation.html#la-mission",
-    "title": "Premier laboratoire",
-    "section": "La mission",
-    "text": "La mission\nLa direction d’une PME fictive veut choisir sa prochaine priorité d’analyse :\n\nle marketing;\nles opérations;\nla saisonnalité.\n\n\nQuelle priorité recommandez-vous, et quels résultats descriptifs justifient votre choix?\n\nUne priorité précise, appuyée sur au moins deux résultats de votre rapport.\n\nDurée visée pour la présentation : 10 à 15 minutes, avec une minute d’accueil. Situer cette rencontre après les deux modules d’autoapprentissage. Demander de garder le guide et RStudio ouverts. Annoncer le caractère formatif, sans points. Consacrer ensuite environ deux minutes à la mission : proposer une analyse à approfondir. On ne peut pas promettre les effets d’une intervention à partir de ces seules observations. Plusieurs choix sont recevables s’ils sont argumentés."
-  },
-  {
-    "objectID": "modules/atelier-01-r/presentation.html#les-acquis-à-mobiliser",
-    "href": "modules/atelier-01-r/presentation.html#les-acquis-à-mobiliser",
-    "title": "Premier laboratoire",
-    "section": "Les acquis à mobiliser",
-    "text": "Les acquis à mobiliser\nDu module 1 : l’unité d’observation, le sens des variables et les limites d’une description.\nDu module 2 : importer, vérifier les valeurs manquantes, résumer, visualiser et rendre un document Quarto.\nQuestion de départ : que représente une ligne du fichier?\n\nEnviron deux minutes. Faire répondre une ou deux personnes. Ouvrir brièvement le gabarit et montrer où se trouvent le texte, les blocs R et Render. Ne pas dérouler une analyse complète. Les étudiants disposent des corrigés du module 2."
-  },
-  {
-    "objectID": "modules/atelier-01-r/presentation.html#le-rapport-attendu",
-    "href": "modules/atelier-01-r/presentation.html#le-rapport-attendu",
-    "title": "Premier laboratoire",
-    "section": "Le rapport attendu",
-    "text": "Le rapport attendu\n\nUne description des données et un diagnostic des valeurs manquantes.\nUn tableau par succursale et deux graphiques commentés.\nTrois constats chiffrés, répartis dans le rapport.\nUne priorité justifiée, une limite et une prochaine question.\nUn bref bilan de la rétroaction et d’une correction apportée.\n\nLe gabarit contient déjà les sections et l’importation.\n\nEnviron deux minutes. Montrer le guide à la section Rapport attendu. Expliquer que le second graphique sert leur priorité. Trois constats suffisent au total, sans répétition des mêmes paragraphes. Viser 400 à 600 mots hors code et tableaux."
-  },
-  {
-    "objectID": "modules/atelier-01-r/presentation.html#le-déroulement-de-la-matinée",
-    "href": "modules/atelier-01-r/presentation.html#le-déroulement-de-la-matinée",
-    "title": "Premier laboratoire",
-    "section": "Le déroulement de la matinée",
-    "text": "Le déroulement de la matinée\n\n\n\nHeure\nTravail\n\n\n\n\n9 h 15\nDossier, diagnostic et tableau\n\n\n10 h\nPremier point de rétroaction\n\n\n10 h 10\nPause de 10 minutes\n\n\n10 h 20\nGraphiques et choix de la priorité\n\n\n10 h 55\nRédaction de la réponse\n\n\n11 h 20\nRelecture croisée\n\n\n11 h 35\nCorrections, Render et bilan\n\n\n\n\nEnviron une minute. Annoncer le travail en binômes et un rapport par binôme. Faire alterner le clavier. Chaque personne doit savoir expliquer les calculs. Adapter le rythme aux difficultés rencontrées tout en gardant le temps de bilan."
-  },
-  {
-    "objectID": "modules/atelier-01-r/presentation.html#la-rétroaction-formative",
-    "href": "modules/atelier-01-r/presentation.html#la-rétroaction-formative",
-    "title": "Premier laboratoire",
-    "section": "La rétroaction formative",
-    "text": "La rétroaction formative\nSans points dans la note finale.\nÀ 10 h : vérifier l’unité d’observation, les valeurs manquantes et un indicateur.\nÀ 11 h 20 : faire relire le HTML et relever un point réussi et une amélioration précise.\nDans le bilan : noter ce qui a été corrigé et ce qui reste à travailler.\n\nEnviron deux minutes. Présenter les trois repères Acquis, À consolider et À reprendre. Insister sur la possibilité de corriger immédiatement. Une difficulté technique doit être montrée et expliquée pour permettre un accompagnement."
-  },
-  {
-    "objectID": "modules/atelier-01-r/presentation.html#le-démarrage",
-    "href": "modules/atelier-01-r/presentation.html#le-démarrage",
-    "title": "Premier laboratoire",
-    "section": "Le démarrage",
-    "text": "Le démarrage\n\nOuvrez le guide de la mission.\nDécompressez le dossier de départ.\nOuvrez le projet, puis rapport-labo-01.qmd.\nCliquez sur Render, puis commencez l’inspection des données.\n\nPour demander de l’aide : montrez votre tentative et expliquez votre question.\n\nEnviron deux minutes. Garder cette diapositive affichée au lancement. S’assurer que chacun a un premier HTML. Les indices du guide et les démonstrations sont des aides après une tentative. Annoncer les modalités de fin de séance et rappeler la consigne du bilan formatif."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html",
@@ -8783,5 +8608,180 @@
     "title": "Lectures et ressources",
     "section": "Logiciels et environnement",
     "text": "Logiciels et environnement\n\n\n  \n    R\n    Langage principal utilisé dans le cours.\n    Télécharger R\n  \n\n  \n    RStudio Desktop\n    Environnement recommandé pour travailler avec R et Quarto.\n    Télécharger RStudio\n  \n\n  \n    Positron\n    Environnement moderne compatible avec R et les workflows de science des données.\n    Découvrir Positron\n  \n\n\n\n  Bibliothèque de packages R\n  Cette section rassemble les principaux packages R utilisés dans les exemples, démonstrations et travaux du cours.\n\n  \n    \n      \n      \n        tidyverse\n        Écosystème pour importer, transformer, visualiser et modéliser des données.\n      \n    \n\n    \n      \n      \n        ggplot2\n        Visualisation statistique avec la grammaire des graphiques.\n      \n    \n\n    \n      \n      \n        dplyr\n        Manipulation de tableaux avec des verbes lisibles.\n      \n    \n\n    \n      \n      \n        forecast\n        Méthodes classiques de prévision et séries temporelles dans R.\n      \n    \n\n    \n      \n      \n        fable\n        Modélisation et prévision avec l'écosystème tidyverts.\n      \n    \n\n    \n      \n      \n        tsibble\n        Structure de données tidy pour séries temporelles."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html",
+    "href": "modules/atelier-01-r/index.html",
+    "title": "Laboratoire 01",
+    "section": "",
+    "text": "Premier laboratoire en classe\n\n\nAprès une courte présentation, vous explorerez les données d’une PME québécoise fictive. Votre mission sera de choisir une priorité de prochaine analyse et de la justifier dans un court rapport Quarto."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#avant-latelier",
+    "href": "modules/atelier-01-r/index.html#avant-latelier",
+    "title": "Laboratoire 01",
+    "section": "Avant l’atelier",
+    "text": "Avant l’atelier\nPréparez vos fichiers avant la séance. La mission commence en classe.\n\nApportez votre ordinateur et son chargeur.\nVérifiez que R, RStudio ou Positron et Quarto fonctionnent, à l’aide de la page Installation.\nVérifiez que library(tidyverse) et library(janitor) s’exécutent.\nTéléchargez le dossier de départ du laboratoire, puis décompressez-le.\nOuvrez laboratoire-01.Rproj, puis rapport-labo-01.qmd et cliquez sur Render. Le gabarit doit produire un HTML avant même que vous commenciez l’analyse.\n\nEn cas de difficulté, consultez le guide Quarto. Si le problème persiste, venez avec vos fichiers et le message d’erreur pour le signaler dès votre arrivée.\nLes notions utiles sont l’unité d’observation, les types de variables, les valeurs manquantes, les résumés descriptifs et les graphiques. Les exercices corrigés du module 2 restent disponibles pour revoir un geste précis."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#pendant-latelier",
+    "href": "modules/atelier-01-r/index.html#pendant-latelier",
+    "title": "Laboratoire 01",
+    "section": "Pendant l’atelier",
+    "text": "Pendant l’atelier\nOuvrez le guide de la mission. Il rassemble les consignes, les étapes, le contenu du rapport et la grille formative. Gardez-le à côté de votre document Quarto pendant le travail.\n\n\n\n\n\n\n\n\nÉtape\nActivité\nRésultat visé\n\n\n\n\n1\nCourte présentation et lancement de la mission\nComprendre la question et le rapport attendu\n\n\n2\nPrise en main du dossier\nPremier HTML, importation et unité d’observation\n\n\n3\nDiagnostic et tableau synthèse\nDonnées vérifiées et comparaison des succursales\n\n\n4\nPremier point de rétroaction\nUne vérification ou une correction à appliquer\n\n\n5\nPause\nReprendre ensuite avec les graphiques\n\n\n6\nDeux graphiques et choix d’une priorité\nRésultats utiles à la mission\n\n\n7\nRédaction de la réponse à la direction\nTrois constats chiffrés, une priorité et une limite\n\n\n8\nRelecture croisée et rétroaction\nUn point réussi et une amélioration précise\n\n\n9\nCorrections, Render et bilan\nRapport lisible et prochaine étape personnelle\n\n\n\nCes repères permettent d’avancer ensemble. Si vous bloquez, demandez de l’aide en montrant votre tentative, le résultat obtenu et votre question."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#production-attendue",
+    "href": "modules/atelier-01-r/index.html#production-attendue",
+    "title": "Laboratoire 01",
+    "section": "Production attendue",
+    "text": "Production attendue\nUn seul rapport Quarto répond à la mission. Il réunit la description et le diagnostic des données, un tableau comparatif, deux graphiques commentés, trois constats chiffrés et une priorité de prochaine analyse justifiée. Le gabarit fourni contient déjà les sections à compléter et l’importation.\nVisez environ 400 à 600 mots, hors code et tableaux. Cette longueur est un repère pour rester concis, pas un critère de notation. Les éléments attendus et les modalités de fin de séance se trouvent dans le guide de la mission."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#après-latelier",
+    "href": "modules/atelier-01-r/index.html#après-latelier",
+    "title": "Laboratoire 01",
+    "section": "Après l’atelier",
+    "text": "Après l’atelier\nConservez ensemble le .qmd, le .html et le dossier data/. Reprenez le point d’amélioration relevé pendant la rétroaction et notez une question à clarifier. Cette démarche vous prépare à la rédaction du mini-rapport 1, dont les consignes et l’évaluation sont distinctes."
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#ressources-utiles",
+    "href": "modules/atelier-01-r/index.html#ressources-utiles",
+    "title": "Laboratoire 01",
+    "section": "Ressources utiles",
+    "text": "Ressources utiles\n\n\n\nRessource\nQuand l’utiliser\n\n\n\n\nGuide de la mission\nFil principal de la séance\n\n\nPrésentation de lancement\nSupport de la courte introduction en classe\n\n\nDossier de départ : projet, QMD et CSV\nPour commencer directement dans RStudio\n\n\nDémonstrations R\nAide ponctuelle après une première tentative\n\n\nRepères conceptuels\nPour retrouver une notion des modules 1 et 2\n\n\nExercices complémentaires\nPratique facultative après la mission"
+  },
+  {
+    "objectID": "modules/atelier-01-r/index.html#auto-vérification",
+    "href": "modules/atelier-01-r/index.html#auto-vérification",
+    "title": "Laboratoire 01",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\nMon HTML répond à la mission avec des résultats produits dans mon .qmd.\nJe peux expliquer ce que représente une ligne et ce que mes indicateurs résument.\nJ’ai tenu compte des valeurs manquantes et nommé une limite.\nMa priorité renvoie à des résultats précis de mon rapport.\nJ’ai appliqué une correction après la rétroaction ou noté la question qui reste ouverte."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html",
+    "href": "modules/atelier-01-r/guide-atelier.html",
+    "title": "Mission du laboratoire 01",
+    "section": "",
+    "text": "La direction d’une PME québécoise fictive dispose d’un tableau mensuel décrivant ses cinq succursales. Elle souhaite consacrer sa prochaine analyse à une seule priorité : le marketing, les opérations ou la saisonnalité.\nVous jouez le rôle de l’équipe d’analyse. La direction vous demande un premier diagnostic pour répondre à cette question :\n\nQuelle priorité de prochaine analyse recommandez-vous, et quels résultats descriptifs justifient votre choix?\n\nVotre réponse doit préciser une succursale, une période ou une comparaison à examiner. Appuyez votre choix sur au moins deux résultats de votre rapport et indiquez une information supplémentaire à obtenir avant de proposer une intervention.\n\n\n\n\n\n\nImportantLe niveau attendu après les modules 1 et 2\n\n\n\nVous devez comprendre le tableau, vérifier sa qualité, calculer des indicateurs, visualiser et interpréter. Une régression, un test statistique ou une prévision ne sont pas demandés. Plusieurs priorités peuvent être défendables : c’est la cohérence entre la question, les résultats et la conclusion qui sera discutée."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#votre-mission",
+    "href": "modules/atelier-01-r/guide-atelier.html#votre-mission",
+    "title": "Mission du laboratoire 01",
+    "section": "",
+    "text": "La direction d’une PME québécoise fictive dispose d’un tableau mensuel décrivant ses cinq succursales. Elle souhaite consacrer sa prochaine analyse à une seule priorité : le marketing, les opérations ou la saisonnalité.\nVous jouez le rôle de l’équipe d’analyse. La direction vous demande un premier diagnostic pour répondre à cette question :\n\nQuelle priorité de prochaine analyse recommandez-vous, et quels résultats descriptifs justifient votre choix?\n\nVotre réponse doit préciser une succursale, une période ou une comparaison à examiner. Appuyez votre choix sur au moins deux résultats de votre rapport et indiquez une information supplémentaire à obtenir avant de proposer une intervention.\n\n\n\n\n\n\nImportantLe niveau attendu après les modules 1 et 2\n\n\n\nVous devez comprendre le tableau, vérifier sa qualité, calculer des indicateurs, visualiser et interpréter. Une régression, un test statistique ou une prévision ne sont pas demandés. Plusieurs priorités peuvent être défendables : c’est la cohérence entre la question, les résultats et la conclusion qui sera discutée."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#organisation-du-travail",
+    "href": "modules/atelier-01-r/guide-atelier.html#organisation-du-travail",
+    "title": "Mission du laboratoire 01",
+    "section": "Organisation du travail",
+    "text": "Organisation du travail\nLa séance commence par une courte présentation. Vous travaillez ensuite dans votre rapport, avec l’accompagnement de l’enseignant. Le déroulement du laboratoire réserve deux moments à la rétroaction.\nTravaillez en binômes, avec un rapport par binôme. Alternez la personne au clavier après le premier point de rétroaction. Chaque personne doit pouvoir expliquer l’importation, un indicateur et la priorité retenue. Si vous travaillez seul, les mêmes productions sont attendues.\nLe laboratoire est formatif, sans points dans la note finale. Il prépare la démarche des mini-rapports évalués, dont les consignes sont séparées."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#dossier-de-départ",
+    "href": "modules/atelier-01-r/guide-atelier.html#dossier-de-départ",
+    "title": "Mission du laboratoire 01",
+    "section": "Dossier de départ",
+    "text": "Dossier de départ\nTélécharger le dossier du laboratoire\nDécompressez l’archive avant de l’ouvrir. Elle contient :\nlaboratoire-01/\n  laboratoire-01.Rproj\n  rapport-labo-01.qmd\n  LIRE-MOI.txt\n  data/\n    ventes_pme_quebec.csv\n\nOuvrez laboratoire-01.Rproj dans RStudio ou Positron.\nOuvrez rapport-labo-01.qmd et remplacez le nom de l’auteur par vos noms.\nCliquez sur Render. Vous obtenez rapport-labo-01.html dans le même dossier.\nComplétez les sections et les blocs de code au fil de la mission, puis relancez Render régulièrement.\n\nL’importation est déjà écrite avec le chemin relatif data/ventes_pme_quebec.csv. Gardez le CSV dans data/ et le .qmd à la racine du dossier. N’ajoutez pas install.packages() au rapport : l’installation se fait une fois dans la Console, au besoin.\nLe CSV seul reste téléchargeable. Il s’agit de données simulées pour le cours, déjà utilisées dans les exercices du module 2. Ici, vous les mobilisez pour comparer les succursales et défendre une priorité, au-delà de la comparaison guidée par saison."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-1-comprendre-et-vérifier-les-données",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-1-comprendre-et-vérifier-les-données",
+    "title": "Mission du laboratoire 01",
+    "section": "Étape 1 : comprendre et vérifier les données",
+    "text": "Étape 1 : comprendre et vérifier les données\nCommencez par cette étape, puis poursuivez avec le tableau synthèse de l’étape 2.\nDans la section « Données et qualité » du rapport :\n\nVérifiez les dimensions et les dates minimale et maximale. Expliquez ce que représente une ligne.\nChoisissez trois variables utiles à la mission. Précisez leur sens, leur type statistique et leur unité, s’il y a lieu. Un dictionnaire de toutes les colonnes n’est pas demandé.\nComptez les valeurs manquantes par variable. Nommez les variables concernées et expliquez votre traitement.\n\n\n\n\n\n\n\nAstuceIndice : inspection et valeurs manquantes\n\n\n\n\n\nRetrouvez les fonctions glimpse(), dim(), range() et is.na(). Les exercices 1 et 3 du module 2 montrent leur utilisation. Pour compter les valeurs absentes de chaque colonne, vous pouvez combiner summarise() et across().\nna.rm = TRUE calcule un résumé à partir des valeurs disponibles. Il ne remplace pas les valeurs manquantes et ne garantit pas que les valeurs disponibles représentent bien l’ensemble des mois."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-2-comparer-les-succursales",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-2-comparer-les-succursales",
+    "title": "Mission du laboratoire 01",
+    "section": "Étape 2 : comparer les succursales",
+    "text": "Étape 2 : comparer les succursales\nConstruisez un tableau contenant, pour chaque succursale :\n\nle nombre de mois observés;\nles ventes totales sur la période, en dollars canadiens;\nles ventes par client sur la période, calculées par sum(ventes) / sum(clients);\nun indicateur de service choisi parmi le délai moyen de livraison, la satisfaction moyenne ou le nombre total de ruptures de stock.\n\nSi votre indicateur comporte des valeurs manquantes, ajoutez le nombre de mois effectivement utilisés dans son calcul. Comparez deux succursales dans une courte phrase chiffrée. Le classement change-t-il lorsqu’on passe des ventes totales aux ventes par client?\n\n\n\n\n\n\nAstuceIndice : un indicateur adapté à la question\n\n\n\n\n\ngroup_by(succursale) forme les groupes et summarise() calcule une ligne par succursale. n() compte les lignes du groupe et sum(!is.na(satisfaction)) compte les scores disponibles.\nLe ratio des ventes totales au nombre total de clients pondère les mois par leur nombre de clients. La moyenne simple des paniers mensuels donne le même poids à chaque mois. Ces deux calculs ne répondent pas exactement à la même question.\nPour le délai et la satisfaction, une moyenne des valeurs mensuelles disponibles donne le même poids à chaque mois. Elle ne représente pas une moyenne calculée sur toutes les livraisons ou toutes les réponses individuelles. Utilisez des noms distincts pour les colonnes sources et les indicateurs calculés, par exemple satisfaction_moyenne.\n\n\n\n\n\n\n\n\n\nNotePremier point de rétroaction\n\n\n\nMontrez votre tableau et votre diagnostic. Préparez une explication de l’unité d’observation et du nombre de valeurs utilisées pour un indicateur. Repérez avec l’enseignant une vérification à faire ou une correction à apporter avant de poursuivre."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-3-produire-deux-graphiques-utiles",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-3-produire-deux-graphiques-utiles",
+    "title": "Mission du laboratoire 01",
+    "section": "Étape 3 : produire deux graphiques utiles",
+    "text": "Étape 3 : produire deux graphiques utiles\nReprenez le travail après la pause avec les graphiques.\nLe premier graphique compare les ventes totales par succursale. Le second explore une dimension utile à votre priorité. Choisissez une seule piste dans ce tableau.\n\n\n\n\n\n\n\n\nPiste\nExemple de question pour le second graphique\nGraphique possible\n\n\n\n\nMarketing\nComment les dépenses marketing et les ventes varient-elles ensemble?\nNuage de points, une observation mensuelle par succursale\n\n\nOpérations\nComment comparer les délais ou la satisfaction entre succursales?\nBarres à partir d’un résumé, ou nuage de points délai-satisfaction\n\n\nSaisonnalité\nÀ quels mois les ventes sont-elles les plus élevées, et le profil est-il semblable entre succursales?\nCourbes des ventes mensuelles, une par succursale\n\n\n\nPour chaque graphique, écrivez la question, indiquez les unités sur les axes et ajoutez une ou deux phrases d’interprétation sous le résultat. Vous pouvez choisir une autre représentation si vous expliquez son utilité. Aucune droite de régression n’est nécessaire.\n\n\n\n\n\n\nAstuceIndice : choisir les bonnes données pour le graphique\n\n\n\n\n\ngeom_col() représente des valeurs déjà calculées, par exemple les ventes totales du tableau synthèse. geom_point() montre les observations du tableau mensuel. geom_line() peut relier les mois d’une même succursale avec color = succursale.\nSi le graphique utilise deux variables incomplètes, comptez les lignes pour lesquelles les deux valeurs sont disponibles. Signalez le nombre de points exclus. Pour une courbe de ventes, vérifiez que mois est une date et que les succursales sont distinguées."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#étape-4-répondre-à-la-direction",
+    "href": "modules/atelier-01-r/guide-atelier.html#étape-4-répondre-à-la-direction",
+    "title": "Mission du laboratoire 01",
+    "section": "Étape 4 : répondre à la direction",
+    "text": "Étape 4 : répondre à la direction\nRédigez votre réponse à partir des résultats déjà obtenus.\nÉcrivez trois constats chiffrés au total. Ils peuvent reprendre vos commentaires du tableau et des graphiques : il n’est pas nécessaire de les recopier dans une autre section. Chaque constat nomme une comparaison, une valeur ou un écart, avec son unité.\nTerminez par un paragraphe qui répond directement à la mission :\n\nChoisissez une priorité de prochaine analyse et précisez la succursale, la période ou la comparaison visée.\nRenvoyez à au moins deux résultats de votre tableau ou de vos graphiques pour justifier ce choix.\nExpliquez une limite qui pourrait changer l’interprétation.\nFormulez une question de prochaine analyse et nommez une information supplémentaire à recueillir.\n\n\n\n\n\n\n\nNoteUne conclusion descriptive et prudente\n\n\n\nUne association entre marketing et ventes ne démontre pas un effet de la campagne. Un total de ruptures peut dépendre du volume d’activité. Un profil observé pendant une seule année ne suffit pas à établir une saisonnalité récurrente. Choisissez la limite qui concerne réellement votre analyse et expliquez sa conséquence."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#rapport-attendu",
+    "href": "modules/atelier-01-r/guide-atelier.html#rapport-attendu",
+    "title": "Mission du laboratoire 01",
+    "section": "Rapport attendu",
+    "text": "Rapport attendu\nLe gabarit suit cette structure. Le rapport doit rester compréhensible pour une personne qui n’a pas votre session R sous les yeux.\n\n\n\n\n\n\n\nSection du gabarit\nContenu attendu\n\n\n\n\n1. Mission\nQuestion reformulée et objectif du diagnostic\n\n\n2. Données et qualité\nImportation, dimensions, période, unité d’observation, trois variables et diagnostic des valeurs manquantes\n\n\n3. Comparaison des succursales\nTableau synthèse avec unités, effectifs nécessaires et commentaire\n\n\n4. Deux graphiques\nQuestions, titres, axes et commentaires liés à la mission\n\n\n5. Réponse à la direction\nPriorité justifiée par deux résultats, limite et prochaine question\n\n\n6. Bilan formatif\nRétroaction reçue, correction apportée et point à retravailler\n\n\n\nVisez environ 400 à 600 mots hors code et tableaux, avec trois constats chiffrés répartis dans le rapport. Gardez le code visible pour faciliter la rétroaction. Les résultats doivent provenir du code exécuté dans le .qmd."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#rétroaction-formative",
+    "href": "modules/atelier-01-r/guide-atelier.html#rétroaction-formative",
+    "title": "Mission du laboratoire 01",
+    "section": "Rétroaction formative",
+    "text": "Rétroaction formative\nAprès la rédaction, échangez votre HTML avec un autre binôme. Chaque binôme relève un point réussi et propose une amélioration précise en s’appuyant sur la grille. L’enseignant vous accompagne pour vérifier les points qui restent incertains.\nPour chaque critère, indiquez « Acquis », « À consolider » ou « À reprendre ». Ces repères servent à choisir une correction, sans calcul de note.\n\n\n\n\n\n\n\nCritère\nCe qui permet de dire « Acquis »\n\n\n\n\nCompréhension des données\nLa période, l’unité d’observation et les trois variables sont correctement décrites\n\n\nQualité et calculs\nLes valeurs manquantes sont repérées, les unités sont correctes et les effectifs utiles sont indiqués\n\n\nTableau et graphiques\nLe tableau et les deux graphiques répondent à des questions identifiables et se lisent sans deviner les unités\n\n\nRaisonnement\nTrois constats chiffrés sont présents et la priorité s’appuie sur deux résultats cohérents\n\n\nLimites\nUne limite précise encadre la conclusion et conduit à une question ou à un besoin d’information\n\n\nReproductibilité et bilan\nRender refait l’analyse à partir du CSV, et le bilan nomme une correction ou un point à reprendre\n\n\n\nUne rétroaction utile précise où intervenir : « Ajoutez le nombre de mois disponibles à côté de la satisfaction moyenne » est plus exploitable que « Améliorez le tableau »."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#fin-de-séance",
+    "href": "modules/atelier-01-r/guide-atelier.html#fin-de-séance",
+    "title": "Mission du laboratoire 01",
+    "section": "Fin de séance",
+    "text": "Fin de séance\nAvant de terminer le laboratoire :\n\nAppliquez une amélioration issue de la relecture et complétez le bilan.\nEnregistrez le .qmd. Redémarrez R, puis cliquez sur Render sans exécuter de commandes préparatoires dans la Console.\nOuvrez le HTML produit et vérifiez les tableaux, les deux graphiques et la réponse à la mission.\nConservez le dossier complet avec le .qmd, le .html et le CSV. Les modalités de transmission du rapport seront précisées en classe.\n\nSi vous n’avez pas terminé, gardez les éléments réalisés et indiquez le blocage dans le bilan. Si le rendu échoue, montrez le premier message d’erreur pour recevoir de l’aide. L’objectif formatif est de repérer la prochaine étape qui vous permettra de progresser."
+  },
+  {
+    "objectID": "modules/atelier-01-r/guide-atelier.html#aide-pendant-la-mission",
+    "href": "modules/atelier-01-r/guide-atelier.html#aide-pendant-la-mission",
+    "title": "Mission du laboratoire 01",
+    "section": "Aide pendant la mission",
+    "text": "Aide pendant la mission\nConsultez d’abord la consigne et tentez le calcul. Si nécessaire, utilisez les indices repliés de ce guide, les exercices corrigés du module 2 ou une démonstration R. Adaptez le code à votre question et vérifiez le résultat obtenu.\nPour demander de l’aide, montrez le bloc essayé, le résultat ou le message d’erreur, et ce que vous cherchez à obtenir. Le GPT du cours peut servir de tuteur, conformément aux règles du cours, après une première tentative. Vous devez pouvoir expliquer le code et les constats conservés. Notez dans votre bilan l’aide utilisée et ce que vous avez vérifié.\nLes exercices complémentaires sont facultatifs. Ils ne constituent pas un second rapport à produire pendant cette séance."
+  },
+  {
+    "objectID": "modules/atelier-01-r/presentation.html#la-mission",
+    "href": "modules/atelier-01-r/presentation.html#la-mission",
+    "title": "Premier laboratoire",
+    "section": "La mission",
+    "text": "La mission\nLa direction d’une PME fictive veut choisir sa prochaine priorité d’analyse :\n\nle marketing;\nles opérations;\nla saisonnalité.\n\n\nQuelle priorité recommandez-vous, et quels résultats descriptifs justifient votre choix?\n\nUne priorité précise, appuyée sur au moins deux résultats de votre rapport.\n\nCommencer par un bref accueil. Situer cette rencontre après les deux modules d’autoapprentissage. Demander de garder le guide et RStudio ouverts. Annoncer le caractère formatif, sans points. Présenter ensuite la mission : proposer une analyse à approfondir. On ne peut pas promettre les effets d’une intervention à partir de ces seules observations. Plusieurs choix sont recevables s’ils sont argumentés."
+  },
+  {
+    "objectID": "modules/atelier-01-r/presentation.html#les-acquis-à-mobiliser",
+    "href": "modules/atelier-01-r/presentation.html#les-acquis-à-mobiliser",
+    "title": "Premier laboratoire",
+    "section": "Les acquis à mobiliser",
+    "text": "Les acquis à mobiliser\nDu module 1 : l’unité d’observation, le sens des variables et les limites d’une description.\nDu module 2 : importer, vérifier les valeurs manquantes, résumer, visualiser et rendre un document Quarto.\nQuestion de départ : que représente une ligne du fichier?\n\nFaire répondre une ou deux personnes. Ouvrir brièvement le gabarit et montrer où se trouvent le texte, les blocs R et Render. Ne pas dérouler une analyse complète. Les étudiants disposent des corrigés du module 2."
+  },
+  {
+    "objectID": "modules/atelier-01-r/presentation.html#le-rapport-attendu",
+    "href": "modules/atelier-01-r/presentation.html#le-rapport-attendu",
+    "title": "Premier laboratoire",
+    "section": "Le rapport attendu",
+    "text": "Le rapport attendu\n\nUne description des données et un diagnostic des valeurs manquantes.\nUn tableau par succursale et deux graphiques commentés.\nTrois constats chiffrés, répartis dans le rapport.\nUne priorité justifiée, une limite et une prochaine question.\nUn bref bilan de la rétroaction et d’une correction apportée.\n\nLe gabarit contient déjà les sections et l’importation.\n\nMontrer le guide à la section Rapport attendu. Expliquer que le second graphique sert leur priorité. Trois constats suffisent au total, sans répétition des mêmes paragraphes. Viser 400 à 600 mots hors code et tableaux."
+  },
+  {
+    "objectID": "modules/atelier-01-r/presentation.html#le-déroulement-du-laboratoire",
+    "href": "modules/atelier-01-r/presentation.html#le-déroulement-du-laboratoire",
+    "title": "Premier laboratoire",
+    "section": "Le déroulement du laboratoire",
+    "text": "Le déroulement du laboratoire\n\n\n\nÉtape\nTravail\n\n\n\n\n1\nDossier, diagnostic et tableau\n\n\n2\nPremier point de rétroaction\n\n\n3\nPause\n\n\n4\nGraphiques et choix de la priorité\n\n\n5\nRédaction de la réponse\n\n\n6\nRelecture croisée\n\n\n7\nCorrections, Render et bilan\n\n\n\n\nAnnoncer le travail en binômes et un rapport par binôme. Faire alterner le clavier. Chaque personne doit savoir expliquer les calculs. Adapter le rythme aux difficultés rencontrées tout en gardant le temps de bilan."
+  },
+  {
+    "objectID": "modules/atelier-01-r/presentation.html#la-rétroaction-formative",
+    "href": "modules/atelier-01-r/presentation.html#la-rétroaction-formative",
+    "title": "Premier laboratoire",
+    "section": "La rétroaction formative",
+    "text": "La rétroaction formative\nSans points dans la note finale.\nAprès le tableau : vérifier l’unité d’observation, les valeurs manquantes et un indicateur.\nAprès la rédaction : faire relire le HTML et relever un point réussi et une amélioration précise.\nDans le bilan : noter ce qui a été corrigé et ce qui reste à travailler.\n\nPrésenter les trois repères Acquis, À consolider et À reprendre. Insister sur la possibilité de corriger immédiatement. Une difficulté technique doit être montrée et expliquée pour permettre un accompagnement."
+  },
+  {
+    "objectID": "modules/atelier-01-r/presentation.html#le-démarrage",
+    "href": "modules/atelier-01-r/presentation.html#le-démarrage",
+    "title": "Premier laboratoire",
+    "section": "Le démarrage",
+    "text": "Le démarrage\n\nOuvrez le guide de la mission.\nDécompressez le dossier de départ.\nOuvrez le projet, puis rapport-labo-01.qmd.\nCliquez sur Render, puis commencez l’inspection des données.\n\nPour demander de l’aide : montrez votre tentative et expliquez votre question.\n\nGarder cette diapositive affichée au lancement. S’assurer que chacun a un premier HTML. Les indices du guide et les démonstrations sont des aides après une tentative. Annoncer les modalités de fin de séance et rappeler la consigne du bilan formatif."
   }
 ]

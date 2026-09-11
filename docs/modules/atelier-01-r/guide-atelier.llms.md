@@ -18,7 +18,7 @@ Votre réponse doit préciser une succursale, une période ou une comparaison à
 
 ## Organisation du travail
 
-La séance commence par une [présentation de 10 à 15 minutes](../../modules/atelier-01-r/presentation.llms.md). Vous travaillez ensuite dans votre rapport, avec l’accompagnement de l’enseignant. Le [déroulement horaire](../../modules/atelier-01-r/index.llms.md#pendant-latelier) réserve deux moments à la rétroaction.
+La séance commence par une [courte présentation](../../modules/atelier-01-r/presentation.llms.md). Vous travaillez ensuite dans votre rapport, avec l’accompagnement de l’enseignant. Le [déroulement du laboratoire](../../modules/atelier-01-r/index.llms.md#pendant-latelier) réserve deux moments à la rétroaction.
 
 Travaillez en binômes, avec un rapport par binôme. Alternez la personne au clavier après le premier point de rétroaction. Chaque personne doit pouvoir expliquer l’importation, un indicateur et la priorité retenue. Si vous travaillez seul, les mêmes productions sont attendues.
 
@@ -50,7 +50,7 @@ Le [CSV seul](data/ventes_pme_quebec.csv) reste téléchargeable. Il s’agit de
 
 ## Étape 1 : comprendre et vérifier les données
 
-À faire entre 9 h 15 et 10 h, avec l’étape 2.
+Commencez par cette étape, puis poursuivez avec le tableau synthèse de l’étape 2.
 
 Dans la section « Données et qualité » du rapport :
 
@@ -89,7 +89,7 @@ Si votre indicateur comporte des valeurs manquantes, ajoutez le nombre de mois e
 
 ## Étape 3 : produire deux graphiques utiles
 
-À faire après la pause, de 10 h 20 à 10 h 55.
+Reprenez le travail après la pause avec les graphiques.
 
 Le premier graphique compare les ventes totales par succursale. Le second explore une dimension utile à votre priorité. Choisissez une seule piste dans ce tableau.
 
@@ -109,7 +109,7 @@ Pour chaque graphique, écrivez la question, indiquez les unités sur les axes e
 
 ## Étape 4 : répondre à la direction
 
-À rédiger de 10 h 55 à 11 h 20, à partir des résultats déjà obtenus.
+Rédigez votre réponse à partir des résultats déjà obtenus.
 
 Écrivez trois constats chiffrés au total. Ils peuvent reprendre vos commentaires du tableau et des graphiques : il n’est pas nécessaire de les recopier dans une autre section. Chaque constat nomme une comparaison, une valeur ou un écart, avec son unité.
 
@@ -141,7 +141,7 @@ Visez environ 400 à 600 mots hors code et tableaux, avec trois constats chiffr�
 
 ## Rétroaction formative
 
-De 11 h 20 à 11 h 35, échangez votre HTML avec un autre binôme. Chaque binôme relève un point réussi et propose une amélioration précise en s’appuyant sur la grille. L’enseignant vous accompagne pour vérifier les points qui restent incertains.
+Après la rédaction, échangez votre HTML avec un autre binôme. Chaque binôme relève un point réussi et propose une amélioration précise en s’appuyant sur la grille. L’enseignant vous accompagne pour vérifier les points qui restent incertains.
 
 Pour chaque critère, indiquez « Acquis », « À consolider » ou « À reprendre ». Ces repères servent à choisir une correction, sans calcul de note.
 
@@ -158,7 +158,7 @@ Une rétroaction utile précise où intervenir : « Ajoutez le nombre de mois di
 
 ## Fin de séance
 
-De 11 h 35 à 11 h 50 :
+Avant de terminer le laboratoire :
 
 1.  Appliquez une amélioration issue de la relecture et complétez le bilan.
 2.  Enregistrez le `.qmd`. Redémarrez R, puis cliquez sur Render sans exécuter de commandes préparatoires dans la Console.
