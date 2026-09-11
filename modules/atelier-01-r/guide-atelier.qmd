@@ -1,530 +1,180 @@
 ---
-title: "Guide en classe - Atelier 01"
+title: "Mission du laboratoire 01"
+subtitle: "Un premier diagnostic pour la direction"
 format:
   html:
     embed-resources: true
 ---
 
-::: {.callout-note title="Pourquoi ça compte"}
-La direction d'une PME hésite entre trois pistes pour l'an prochain : marketing, opérations ou saisonnalité. Vous travaillez à partir d'un tableau de ventes mensuelles. À la fin de la séance, vous aurez transformé ce tableau en une priorité défendable, appuyée sur un résultat et assortie d'une limite claire.
+## Votre mission
+
+La direction d'une PME québécoise fictive dispose d'un tableau mensuel décrivant ses cinq succursales. Elle souhaite consacrer sa prochaine analyse à une seule priorité : le marketing, les opérations ou la saisonnalité.
+
+Vous jouez le rôle de l'équipe d'analyse. La direction vous demande un premier diagnostic pour répondre à cette question :
+
+> Quelle priorité de prochaine analyse recommandez-vous, et quels résultats descriptifs justifient votre choix?
+
+Votre réponse doit préciser une succursale, une période ou une comparaison à examiner. Appuyez votre choix sur au moins deux résultats de votre rapport et indiquez une information supplémentaire à obtenir avant de proposer une intervention.
+
+::: {.callout-important title="Le niveau attendu après les modules 1 et 2"}
+Vous devez comprendre le tableau, vérifier sa qualité, calculer des indicateurs, visualiser et interpréter. Une régression, un test statistique ou une prévision ne sont pas demandés. Plusieurs priorités peuvent être défendables : c'est la cohérence entre la question, les résultats et la conclusion qui sera discutée.
 :::
 
-::: {.callout-note title="Place dans la progression"}
-Cet atelier se fait après les modules 1 et 2. Il sert à pratiquer dans RStudio les gestes de base : importer, inspecter, résumer, visualiser et interpréter prudemment.
+## Organisation du travail
+
+La séance commence par une [présentation de 10 à 15 minutes](presentation.qmd). Vous travaillez ensuite dans votre rapport, avec l'accompagnement de l'enseignant. Le [déroulement horaire](index.qmd#pendant-latelier) réserve deux moments à la rétroaction.
+
+Travaillez en binômes, avec un rapport par binôme. Alternez la personne au clavier après le premier point de rétroaction. Chaque personne doit pouvoir expliquer l'importation, un indicateur et la priorité retenue. Si vous travaillez seul, les mêmes productions sont attendues.
+
+Le laboratoire est formatif, sans points dans la note finale. Il prépare la démarche des mini-rapports évalués, dont les consignes sont séparées.
+
+## Dossier de départ
+
+[Télécharger le dossier du laboratoire](../../assets/exemples/laboratoire-01.zip)
+
+Décompressez l'archive avant de l'ouvrir. Elle contient :
+
+```text
+laboratoire-01/
+  laboratoire-01.Rproj
+  rapport-labo-01.qmd
+  LIRE-MOI.txt
+  data/
+    ventes_pme_quebec.csv
+```
+
+1. Ouvrez `laboratoire-01.Rproj` dans RStudio ou Positron.
+2. Ouvrez `rapport-labo-01.qmd` et remplacez le nom de l'auteur par vos noms.
+3. Cliquez sur Render. Vous obtenez `rapport-labo-01.html` dans le même dossier.
+4. Complétez les sections et les blocs de code au fil de la mission, puis relancez Render régulièrement.
+
+L'importation est déjà écrite avec le chemin relatif `data/ventes_pme_quebec.csv`. Gardez le CSV dans `data/` et le `.qmd` à la racine du dossier. N'ajoutez pas `install.packages()` au rapport : l'installation se fait une fois dans la Console, au besoin.
+
+Le [CSV seul](data/ventes_pme_quebec.csv) reste téléchargeable. Il s'agit de données simulées pour le cours, déjà utilisées dans les exercices du module 2. Ici, vous les mobilisez pour comparer les succursales et défendre une priorité, au-delà de la comparaison guidée par saison.
+
+## Étape 1 : comprendre et vérifier les données
+
+À faire entre 9 h 15 et 10 h, avec l'étape 2.
+
+Dans la section « Données et qualité » du rapport :
+
+1. Vérifiez les dimensions et les dates minimale et maximale. Expliquez ce que représente une ligne.
+2. Choisissez trois variables utiles à la mission. Précisez leur sens, leur type statistique et leur unité, s'il y a lieu. Un dictionnaire de toutes les colonnes n'est pas demandé.
+3. Comptez les valeurs manquantes par variable. Nommez les variables concernées et expliquez votre traitement.
+
+::: {.callout-tip collapse="true" title="Indice : inspection et valeurs manquantes"}
+Retrouvez les fonctions `glimpse()`, `dim()`, `range()` et `is.na()`. Les exercices 1 et 3 du module 2 montrent leur utilisation. Pour compter les valeurs absentes de chaque colonne, vous pouvez combiner `summarise()` et `across()`.
+
+`na.rm = TRUE` calcule un résumé à partir des valeurs disponibles. Il ne remplace pas les valeurs manquantes et ne garantit pas que les valeurs disponibles représentent bien l'ensemble des mois.
 :::
 
-## Objectif du parcours
+## Étape 2 : comparer les succursales
 
-Cet atelier est un parcours guidé pour apprendre à explorer un tableau de ventes mensuelles dans R et à produire un court rapport Quarto.
+Construisez un tableau contenant, pour chaque succursale :
 
-Question centrale :
+- le nombre de mois observés;
+- les ventes totales sur la période, en dollars canadiens;
+- les ventes par client sur la période, calculées par `sum(ventes) / sum(clients)`;
+- un indicateur de service choisi parmi le délai moyen de livraison, la satisfaction moyenne ou le nombre total de ruptures de stock.
 
-> Qu'est-ce qu'un tableau de ventes mensuelles permet de dire, et que ne permet-il pas encore de conclure?
+Si votre indicateur comporte des valeurs manquantes, ajoutez le nombre de mois effectivement utilisés dans son calcul. Comparez deux succursales dans une courte phrase chiffrée. Le classement change-t-il lorsqu'on passe des ventes totales aux ventes par client?
 
-L'objectif n'est pas de prouver une relation causale. L'objectif est de transformer un tableau brut en premiers constats descriptifs, en distinguant clairement observation, indicateur, interprétation et limite.
+::: {.callout-tip collapse="true" title="Indice : un indicateur adapté à la question"}
+`group_by(succursale)` forme les groupes et `summarise()` calcule une ligne par succursale. `n()` compte les lignes du groupe et `sum(!is.na(satisfaction))` compte les scores disponibles.
 
-## Ce que vous allez construire
+Le ratio des ventes totales au nombre total de clients pondère les mois par leur nombre de clients. La moyenne simple des paniers mensuels donne le même poids à chaque mois. Ces deux calculs ne répondent pas exactement à la même question.
 
-À la fin du parcours, vous aurez un mini-rapport Quarto contenant :
+Pour le délai et la satisfaction, une moyenne des valeurs mensuelles disponibles donne le même poids à chaque mois. Elle ne représente pas une moyenne calculée sur toutes les livraisons ou toutes les réponses individuelles. Utilisez des noms distincts pour les colonnes sources et les indicateurs calculés, par exemple `satisfaction_moyenne`.
+:::
 
-- une question d'analyse reformulée;
-- une description du tableau;
-- un dictionnaire rapide des variables clés;
-- un diagnostic des valeurs manquantes;
-- un tableau synthèse par succursale;
-- deux visualisations;
-- trois constats;
-- une recommandation de prochaine analyse.
+::: {.callout-note title="Point de rétroaction 1, vers 10 h"}
+Montrez votre tableau et votre diagnostic. Préparez une explication de l'unité d'observation et du nombre de valeurs utilisées pour un indicateur. Repérez avec l'enseignant une vérification à faire ou une correction à apporter avant de poursuivre.
+:::
 
-## Organisation du parcours
+## Étape 3 : produire deux graphiques utiles
 
-Ce guide alterne cinq types d'activités.
+À faire après la pause, de 10 h 20 à 10 h 55.
 
-| Type | Ce que vous faites |
+Le premier graphique compare les ventes totales par succursale. Le second explore une dimension utile à votre priorité. Choisissez une seule piste dans ce tableau.
+
+| Piste | Exemple de question pour le second graphique | Graphique possible |
+|---|---|---|
+| Marketing | Comment les dépenses marketing et les ventes varient-elles ensemble? | Nuage de points, une observation mensuelle par succursale |
+| Opérations | Comment comparer les délais ou la satisfaction entre succursales? | Barres à partir d'un résumé, ou nuage de points délai-satisfaction |
+| Saisonnalité | À quels mois les ventes sont-elles les plus élevées, et le profil est-il semblable entre succursales? | Courbes des ventes mensuelles, une par succursale |
+
+Pour chaque graphique, écrivez la question, indiquez les unités sur les axes et ajoutez une ou deux phrases d'interprétation sous le résultat. Vous pouvez choisir une autre représentation si vous expliquez son utilité. Aucune droite de régression n'est nécessaire.
+
+::: {.callout-tip collapse="true" title="Indice : choisir les bonnes données pour le graphique"}
+`geom_col()` représente des valeurs déjà calculées, par exemple les ventes totales du tableau synthèse. `geom_point()` montre les observations du tableau mensuel. `geom_line()` peut relier les mois d'une même succursale avec `color = succursale`.
+
+Si le graphique utilise deux variables incomplètes, comptez les lignes pour lesquelles les deux valeurs sont disponibles. Signalez le nombre de points exclus. Pour une courbe de ventes, vérifiez que `mois` est une date et que les succursales sont distinguées.
+:::
+
+## Étape 4 : répondre à la direction
+
+À rédiger de 10 h 55 à 11 h 20, à partir des résultats déjà obtenus.
+
+Écrivez trois constats chiffrés au total. Ils peuvent reprendre vos commentaires du tableau et des graphiques : il n'est pas nécessaire de les recopier dans une autre section. Chaque constat nomme une comparaison, une valeur ou un écart, avec son unité.
+
+Terminez par un paragraphe qui répond directement à la mission :
+
+1. Choisissez une priorité de prochaine analyse et précisez la succursale, la période ou la comparaison visée.
+2. Renvoyez à au moins deux résultats de votre tableau ou de vos graphiques pour justifier ce choix.
+3. Expliquez une limite qui pourrait changer l'interprétation.
+4. Formulez une question de prochaine analyse et nommez une information supplémentaire à recueillir.
+
+::: {.callout-note title="Une conclusion descriptive et prudente"}
+Une association entre marketing et ventes ne démontre pas un effet de la campagne. Un total de ruptures peut dépendre du volume d'activité. Un profil observé pendant une seule année ne suffit pas à établir une saisonnalité récurrente. Choisissez la limite qui concerne réellement votre analyse et expliquez sa conséquence.
+:::
+
+## Rapport attendu {#rapport-attendu}
+
+Le gabarit suit cette structure. Le rapport doit rester compréhensible pour une personne qui n'a pas votre session R sous les yeux.
+
+| Section du gabarit | Contenu attendu |
 |---|---|
-| Capsule | Vous comprenez l'idée avant de coder |
-| Démonstration | Vous observez une démarche complète |
-| À vous | Vous produisez une partie de la trace finale |
-| Pause diagnostic | Vous vérifiez que vous comprenez ce que vous venez de faire |
-| Trace finale | Vous conservez une phrase ou un résultat pour votre rapport final |
+| 1. Mission | Question reformulée et objectif du diagnostic |
+| 2. Données et qualité | Importation, dimensions, période, unité d'observation, trois variables et diagnostic des valeurs manquantes |
+| 3. Comparaison des succursales | Tableau synthèse avec unités, effectifs nécessaires et commentaire |
+| 4. Deux graphiques | Questions, titres, axes et commentaires liés à la mission |
+| 5. Réponse à la direction | Priorité justifiée par deux résultats, limite et prochaine question |
+| 6. Bilan formatif | Rétroaction reçue, correction apportée et point à retravailler |
 
-Temps estimé : 2 h 30 à 3 h en classe, avec finalisation possible après la séance.
+Visez environ 400 à 600 mots hors code et tableaux, avec trois constats chiffrés répartis dans le rapport. Gardez le code visible pour faciliter la rétroaction. Les résultats doivent provenir du code exécuté dans le `.qmd`.
 
-::: {.callout-note title="Parcours essentiel et prolongements"}
-Le parcours essentiel comprend les tâches 1, 2 et 4 à 8. La tâche 3, qui construit un dictionnaire détaillé, et la tâche 9, qui propose une seconde formulation de la suite, sont des prolongements facultatifs. La mise en commun de l'épisode 10 se fait si le temps le permet. Cette distinction permet de terminer une trace cohérente pendant la séance.
-:::
+## Rétroaction formative
 
-## Données et préparation
+De 11 h 20 à 11 h 35, échangez votre HTML avec un autre binôme. Chaque binôme relève un point réussi et propose une amélioration précise en s'appuyant sur la grille. L'enseignant vous accompagne pour vérifier les points qui restent incertains.
 
-Fichier : <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>.
+Pour chaque critère, indiquez « Acquis », « À consolider » ou « À reprendre ». Ces repères servent à choisir une correction, sans calcul de note.
 
-[Télécharger le fichier CSV](data/ventes_pme_quebec.csv)
-
-```{r}
-#| label: setup-atelier-01-guide
-library(tidyverse)
-library(janitor)
-library(scales)
-
-data_path <- if (file.exists("data/ventes_pme_quebec.csv")) {
-  "data/ventes_pme_quebec.csv"
-} else {
-  "modules/atelier-01-r/data/ventes_pme_quebec.csv"
-}
-
-currency_ca <- scales::label_dollar(
-  prefix = "",
-  suffix = " $",
-  big.mark = " ",
-  decimal.mark = ","
-)
-```
-
-## Épisode 1 - Entrer dans la question
-
-::: {.callout-note title="Repère - La question centrale"}
-La première étape consiste à transformer une question générale en question descriptive assez précise pour être traitée à partir d'un tableau.
-:::
-
-Une question générale est souvent trop large pour être traitée directement. Une bonne première étape consiste à la reformuler en question analytique.
-
-Question de départ :
-
-> Qu'est-ce que les données de ventes mensuelles révèlent sur la performance des succursales?
-
-Question analytique :
-
-> Quels indicateurs descriptifs permettent de repérer les succursales ou les dimensions opérationnelles qui méritent une analyse plus poussée?
-
-::: {.callout-tip title="À vous 1 - Reformuler la question"}
-Dans votre rapport, écrivez en deux phrases ce que la question demande et ce que le diagnostic descriptif peut réellement fournir.
-:::
-
-::: {.callout-important title="Pause diagnostic"}
-À cette étape, vous ne cherchez pas encore à expliquer les ventes. Vous cherchez à comprendre le tableau et à repérer des signaux.
-:::
-
-## Épisode 2 - Importer les données
-
-::: {.callout-note title="Repère - Un tableau, une unité d'observation"}
-Avant de calculer, vérifiez ce que représente une ligne, ce que mesure chaque variable et où se trouve le fichier dans le projet R.
-:::
-
-### Démonstration 1 - Charger le fichier
-
-```{r}
-#| label: demo-importer-atelier-01
-ventes <- readr::read_csv(data_path, show_col_types = FALSE) |>
-  clean_names() |>
-  mutate(
-    mois = as.Date(mois),
-    campagne_locale = factor(
-      campagne_locale,
-      levels = c(0, 1),
-      labels = c("non", "oui")
-    )
-  )
-
-glimpse(ventes)
-```
-
-Ce que vous devez remarquer :
-
-- le tableau a `r nrow(ventes)` lignes;
-- le tableau a `r ncol(ventes)` colonnes;
-- chaque ligne représente une succursale pour un mois;
-- `mois` est traité comme une date;
-- `campagne_locale` est une variable catégorielle rendue lisible;
-- certaines variables décrivent les ventes;
-- d'autres décrivent le marketing, les opérations et la satisfaction.
-
-::: {.callout-tip title="À vous 2 - Décrire le tableau"}
-Ajoutez à votre rapport une phrase qui décrit l'unité d'observation et une phrase qui nomme trois variables utiles pour l'analyse.
-:::
-
-### Trace finale
-
-Phrase à adapter :
-
-> Le tableau contient des observations mensuelles par succursale. Il permet de comparer la performance commerciale, l'expérience client et certains enjeux opérationnels.
-
-## Épisode 3 - Construire un dictionnaire rapide
-
-::: {.callout-note title="Repère - Construire un dictionnaire rapide"}
-Avant de résumer les ventes, il faut nommer les variables importantes. Un petit dictionnaire de variables aide à vérifier les types, les valeurs manquantes et les exemples de valeurs observées.
-:::
-
-### Démonstration 2 - Décrire les variables
-
-```{r}
-#| label: demo-dictionnaire-atelier-01
-dictionnaire_variables <- tibble(
-  variable = names(ventes),
-  type = map_chr(ventes, \(x) class(x)[1]),
-  valeurs_manquantes = map_int(ventes, \(x) sum(is.na(x))),
-  exemple = map_chr(ventes, \(x) {
-    valeurs_observees <- x[!is.na(x)]
-
-    if (length(valeurs_observees) == 0) {
-      NA_character_
-    } else {
-      as.character(valeurs_observees[[1]])
-    }
-  })
-)
-
-dictionnaire_variables |>
-  knitr::kable()
-```
-
-::: {.callout-tip title="Prolongement facultatif 3 - Choisir les variables clés"}
-Dans votre rapport, choisissez cinq variables utiles pour la direction. Pour chacune, indiquez son rôle : performance commerciale, clientèle, marketing, opérations ou satisfaction.
-:::
-
-### Trace finale
-
-Phrase à adapter :
-
-> Les variables les plus utiles pour un premier diagnostic sont les ventes, les clients, le panier moyen, les ruptures de stock et la satisfaction. Elles permettent de comparer les succursales selon le volume commercial, l'expérience client et certains enjeux opérationnels.
-
-## Épisode 4 - Vérifier la qualité minimale
-
-::: {.callout-note title="Repère - Pourquoi vérifier les valeurs manquantes?"}
-Un diagnostic descriptif peut être trompeur si certaines variables sont incomplètes. Les valeurs manquantes doivent être repérées et signalées.
-:::
-
-### Démonstration 3 - Repérer les valeurs manquantes
-
-```{r}
-#| label: demo-valeurs-manquantes-atelier-01
-diagnostic_manquants <- ventes |>
-  summarise(across(everything(), \(x) sum(is.na(x)))) |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "variable",
-    values_to = "valeurs_manquantes"
-  ) |>
-  filter(valeurs_manquantes > 0) |>
-  arrange(desc(valeurs_manquantes))
-
-diagnostic_manquants |>
-  knitr::kable()
-```
-
-### Démonstration 4 - Voir l'effet de `na.rm = TRUE`
-
-```{r}
-#| label: demo-effet-na-rm-atelier-01
-ventes |>
-  summarise(
-    satisfaction_sans_na_rm = mean(satisfaction),
-    satisfaction_avec_na_rm = mean(satisfaction, na.rm = TRUE),
-    delai_sans_na_rm = mean(delai_livraison_jours),
-    delai_avec_na_rm = mean(delai_livraison_jours, na.rm = TRUE)
-  ) |>
-  knitr::kable()
-```
-
-::: {.callout-tip title="À vous 4 - Interpréter la qualité des données"}
-Dans votre rapport, nommez les variables qui contiennent des valeurs manquantes. Expliquez en une phrase pourquoi cela peut influencer le diagnostic.
-:::
-
-::: {.callout-important title="Pause diagnostic"}
-Si une variable contient des valeurs manquantes, il ne faut pas l'ignorer. Pour cet atelier, vous pouvez utiliser `na.rm = TRUE`, mais votre rapport doit signaler le problème.
-:::
-
-## Épisode 5 - Construire les premiers indicateurs
-
-::: {.callout-note title="Repère - Du tableau brut aux indicateurs"}
-Les variables brutes deviennent utiles lorsqu'elles sont transformées en indicateurs interprétables : ventes totales, clients totaux, panier moyen, satisfaction moyenne et ruptures de stock.
-:::
-
-### Démonstration 5 - Résumer par succursale
-
-```{r}
-#| label: demo-synthese-succursales-atelier-01
-synthese_succursales <- ventes |>
-  group_by(succursale, region) |>
-  summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
-    panier_moyen = ventes_totales / clients_totaux,
-    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
-    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
-    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  arrange(desc(ventes_totales))
-
-synthese_succursales |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    panier_moyen = currency_ca(panier_moyen),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1),
-    delai_moyen = round(delai_moyen, 1)
-  ) |>
-  knitr::kable()
-```
-
-::: {.callout-tip title="À vous 5 - Lire le tableau avec un regard analytique"}
-Répondez à ces questions dans votre rapport :
-
-- Quelle succursale génère le plus de ventes?
-- Quelle succursale a le panier moyen le plus élevé?
-- Quelle succursale semble avoir le plus de ruptures de stock?
-- Est-ce que la même succursale ressort pour tous les indicateurs?
-:::
-
-### Trace finale
-
-Votre rapport doit déjà contenir un tableau synthèse. Ne commentez pas toutes les colonnes. Choisissez les deux ou trois résultats qui éclairent le mieux la comparaison.
-
-## Épisode 6 - Visualiser pour comparer
-
-::: {.callout-note title="Repère - Un graphique doit porter un message"}
-Un graphique utile répond à une question simple. Le titre, les axes et les unités doivent aider à lire le résultat sans ambiguïté.
-:::
-
-### Démonstration 6 - Comparer les ventes annuelles
-
-```{r}
-#| label: demo-graphique-ventes-atelier-01
-#| fig-width: 8
-#| fig-height: 4.8
-synthese_succursales |>
-  mutate(succursale = fct_reorder(succursale, ventes_totales)) |>
-  ggplot(aes(ventes_totales, succursale)) +
-  geom_col(fill = "#2A9D8F") +
-  scale_x_continuous(labels = currency_ca) +
-  labs(
-    title = "Ventes annuelles par succursale",
-    x = "Ventes",
-    y = NULL
-  ) +
-  theme_minimal(base_size = 12)
-```
-
-Ce graphique répond à une question simple : quelles succursales contribuent le plus au chiffre d'affaires?
-
-::: {.callout-tip title="À vous 6 - Ajouter un deuxième graphique"}
-Créez un graphique qui explore une autre dimension de la performance. Choisissez une des options suivantes :
-
-- satisfaction et ruptures de stock;
-- ventes et dépenses marketing;
-- satisfaction et délai de livraison.
-:::
-
-### Démonstration 7 - Satisfaction et ruptures de stock
-
-```{r}
-#| label: demo-satisfaction-ruptures-atelier-01
-#| fig-width: 8
-#| fig-height: 5
-ventes |>
-  ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +
-  geom_point(size = 2.4, alpha = 0.8) +
-  geom_smooth(method = "lm", se = FALSE, color = "#1F2933") +
-  labs(
-    title = "Satisfaction client et ruptures de stock",
-    x = "Nombre de ruptures de stock",
-    y = "Satisfaction moyenne sur 10",
-    color = "Succursale"
-  ) +
-  theme_minimal(base_size = 12)
-```
-
-::: {.callout-important title="Pause diagnostic"}
-Ce graphique ne prouve pas que les ruptures de stock causent une baisse de satisfaction. Il suggère seulement une relation descriptive à examiner plus rigoureusement.
-:::
-
-## Épisode 7 - Enquête guidée pour la direction
-
-La direction hésite entre trois priorités : mieux comprendre le marketing, réduire les problèmes opérationnels ou examiner les saisons. Choisissez une priorité et produisez un appui descriptif.
-
-::: {.callout-note title="Repère - Une priorité, une preuve, une limite"}
-Une recommandation préliminaire doit rester prudente. Elle doit nommer un résultat observé, expliquer pourquoi il mérite une analyse plus poussée et préciser ce que l'analyse descriptive ne prouve pas.
-:::
-
-### Option A - Marketing
-
-```{r}
-#| label: demo-priorite-marketing-atelier-01
-priorite_marketing <- ventes |>
-  group_by(campagne_locale) |>
-  summarise(
-    observations = n(),
-    ventes_moyennes = mean(ventes, na.rm = TRUE),
-    depenses_marketing_moyennes = mean(depenses_marketing, na.rm = TRUE),
-    panier_moyen = sum(ventes, na.rm = TRUE) / sum(clients, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  mutate(
-    ventes_moyennes = currency_ca(ventes_moyennes),
-    depenses_marketing_moyennes = currency_ca(depenses_marketing_moyennes),
-    panier_moyen = currency_ca(panier_moyen)
-  )
-
-priorite_marketing |>
-  knitr::kable()
-```
-
-### Option B - Opérations
-
-```{r}
-#| label: demo-priorite-operations-atelier-01
-priorite_operations <- ventes |>
-  group_by(succursale) |>
-  summarise(
-    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
-    delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
-    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  arrange(desc(ruptures_stock)) |>
-  mutate(
-    delai_moyen = round(delai_moyen, 1),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1)
-  )
-
-priorite_operations |>
-  knitr::kable()
-```
-
-### Option C - Saisons
-
-```{r}
-#| label: demo-priorite-saison-atelier-01
-priorite_saison <- ventes |>
-  group_by(saison) |>
-  summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
-    ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1)
-  )
-
-priorite_saison |>
-  knitr::kable()
-```
-
-::: {.callout-tip title="À vous 7 - Choisir une priorité"}
-Choisissez une seule option. Ajoutez dans votre rapport le tableau ou le graphique qui appuie votre choix, puis écrivez une phrase qui commence par : « La prochaine analyse devrait prioriser... ».
-:::
-
-::: {.callout-important title="Pause diagnostic"}
-Une priorité d'analyse n'est pas une décision finale. Elle indique seulement où concentrer la prochaine analyse statistique.
-:::
-
-## Épisode 8 - Passer du résultat au constat
-
-::: {.callout-note title="Repère - Écrire un constat utile"}
-Un constat doit rester descriptif : il nomme un résultat observé, une comparaison et une limite possible.
-:::
-
-Un bon constat contient trois éléments :
-
-- un résultat observé;
-- une comparaison;
-- une interprétation prudente.
-
-Exemple :
-
-> Montréal génère les ventes les plus élevées, mais cette information doit être mise en relation avec le nombre de clients et le panier moyen. Le diagnostic doit donc distinguer volume d'achalandage et valeur moyenne des transactions.
-
-::: {.callout-tip title="À vous 8 - Écrire vos trois constats"}
-Dans votre rapport, écrivez :
-
-1. un constat sur les ventes;
-2. un constat sur la satisfaction, les délais ou les ruptures;
-3. un constat sur une analyse à prioriser.
-:::
-
-## Épisode 9 - Préparer la mise en commun
-
-Votre diagnostic doit finir par une recommandation de prochaine analyse. Choisissez une seule priorité.
-
-Options possibles :
-
-- analyser l'effet des dépenses marketing;
-- analyser les ruptures de stock;
-- analyser les délais de livraison;
-- comparer les succursales à clientèle comparable;
-- analyser les périodes de haute saison séparément.
-
-::: {.callout-tip title="Prolongement facultatif 9 - Formuler une seconde version"}
-Écrivez trois phrases :
-
-1. Les données suggèrent que...
-2. La prochaine analyse devrait vérifier...
-3. Cette analyse permettrait de mieux comprendre...
-:::
-
-## Épisode 10 - Mise en commun
-
-En équipe ou en petits groupes, comparez les priorités proposées.
-
-Chaque groupe présente en une minute :
-
-1. la priorité choisie;
-2. le résultat descriptif qui appuie cette priorité;
-3. une limite d'interprétation;
-4. une question à vérifier plus tard avec un modèle.
-
-Après la mise en commun, ajustez votre recommandation si un autre groupe a repéré une limite ou un indicateur plus convaincant.
-
-## Trace finale
-
-Votre trace finale prend la forme d'un fichier Quarto court. Elle doit contenir les sections suivantes :
-
-1. Question d'analyse.
-2. Description du tableau.
-3. Diagnostic des valeurs manquantes.
-4. Tableau synthèse par succursale.
-5. Graphique 1 : ventes par succursale.
-6. Graphique 2 : indicateur opérationnel ou satisfaction.
-7. Trois constats.
-8. Recommandation de prochaine analyse.
-
-Le dictionnaire détaillé et la seconde formulation de la recommandation sont des prolongements facultatifs.
-
-## Grille formative
-
-| Critère | Attendu |
+| Critère | Ce qui permet de dire « Acquis » |
 |---|---|
-| Question d'analyse | La question centrale est reformulée clairement |
-| Importation | Le fichier CSV est importé avec un chemin relatif |
-| Inspection | L'unité d'observation et les variables sont décrites |
-| Dictionnaire | Les variables clés sont nommées et classées |
-| Qualité des données | Les valeurs manquantes sont repérées et commentées |
-| Indicateurs | Les indicateurs sont calculés par succursale |
-| Graphiques | Les graphiques ont un titre, des axes clairs et un message |
-| Interprétation | Les constats sont descriptifs et leurs limites sont explicites |
-| Priorité | La recommandation de prochaine analyse s'appuie sur un résultat |
-| Reproductibilité | Le document Quarto se génère sans correction manuelle |
+| Compréhension des données | La période, l'unité d'observation et les trois variables sont correctement décrites |
+| Qualité et calculs | Les valeurs manquantes sont repérées, les unités sont correctes et les effectifs utiles sont indiqués |
+| Tableau et graphiques | Le tableau et les deux graphiques répondent à des questions identifiables et se lisent sans deviner les unités |
+| Raisonnement | Trois constats chiffrés sont présents et la priorité s'appuie sur deux résultats cohérents |
+| Limites | Une limite précise encadre la conclusion et conduit à une question ou à un besoin d'information |
+| Reproductibilité et bilan | Render refait l'analyse à partir du CSV, et le bilan nomme une correction ou un point à reprendre |
 
-## Auto-vérification assistée par IA
+Une rétroaction utile précise où intervenir : « Ajoutez le nombre de mois disponibles à côté de la satisfaction moyenne » est plus exploitable que « Améliorez le tableau ».
 
-Utilisez le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) comme tuteur pour relire votre trace finale. Son rôle est de repérer les éléments manquants, les imprécisions, les problèmes de reproductibilité et les questions à clarifier. Il ne doit pas réécrire le rapport à votre place.
+## Fin de séance
 
-Demande possible :
+De 11 h 35 à 11 h 50 :
 
-> Voici ma trace finale pour l'atelier 01. Vérifie si le document contient tous les éléments attendus, si le code semble reproductible et si mes constats sont assez clairs. Indique les éléments manquants, les passages imprécis et les questions que je devrais me poser. Ne réécris pas mon rapport à ma place.
+1. Appliquez une amélioration issue de la relecture et complétez le bilan.
+2. Enregistrez le `.qmd`. Redémarrez R, puis cliquez sur Render sans exécuter de commandes préparatoires dans la Console.
+3. Ouvrez le HTML produit et vérifiez les tableaux, les deux graphiques et la réponse à la mission.
+4. Conservez le dossier complet avec le `.qmd`, le `.html` et le CSV. Les modalités de transmission du rapport seront précisées en classe.
 
-Après cette vérification, notez une correction apportée à votre trace ou une question qui reste à clarifier.
+Si vous n'avez pas terminé, gardez les éléments réalisés et indiquez le blocage dans le bilan. Si le rendu échoue, montrez le premier message d'erreur pour recevoir de l'aide. L'objectif formatif est de repérer la prochaine étape qui vous permettra de progresser.
 
-## Fin du parcours
+## Aide pendant la mission
 
-Vous avez maintenant une première version du raisonnement qui sera utilisé tout au long du cours :
+Consultez d'abord la consigne et tentez le calcul. Si nécessaire, utilisez les indices repliés de ce guide, les [exercices corrigés du module 2](../semaine-02-r-quarto/exercices.qmd) ou une [démonstration R](demonstrations.qmd). Adaptez le code à votre question et vérifiez le résultat obtenu.
 
-1. comprendre la question;
-2. inspecter les données;
-3. produire des indicateurs;
-4. visualiser;
-5. interpréter;
-6. préparer la prochaine analyse.
+Pour demander de l'aide, montrez le bloc essayé, le résultat ou le message d'erreur, et ce que vous cherchez à obtenir. Le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) peut servir de tuteur, conformément aux [règles du cours](../../ressources/ia.qmd), après une première tentative. Vous devez pouvoir expliquer le code et les constats conservés. Notez dans votre bilan l'aide utilisée et ce que vous avez vérifié.
 
-La suite du cours ajoutera progressivement des modèles statistiques pour expliquer, prévoir et décider avec plus de rigueur.
+Les [exercices complémentaires](exercices.qmd) sont facultatifs. Ils ne constituent pas un second rapport à produire pendant cette séance.

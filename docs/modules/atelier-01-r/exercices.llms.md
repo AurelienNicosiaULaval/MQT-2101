@@ -1,8 +1,8 @@
-# Exercices - Atelier 01
+# Exercices complémentaires - Atelier 01
 
 ## Objectif
 
-Ces exercices sont une pratique indépendante à réaliser après le parcours guidé. Ils ne reprennent ni les données, ni les productions « À vous » du guide. Le cas de transfert porte sur la fiabilité du service dans quatre succursales.
+Ces exercices sont facultatifs, à réaliser après la [mission du laboratoire](../../modules/atelier-01-r/guide-atelier.llms.md). Ils ne constituent pas un second travail à remettre pendant la séance. Ils ne reprennent ni les données, ni les productions « À vous » du guide. Le cas de transfert porte sur la fiabilité du service dans quatre succursales.
 
 Jeu de données de transfert : [ventes_operations_quebec.csv](../../donnees/#ventes-et-opérations-de-succursales-québécoises).
 
@@ -60,7 +60,7 @@ disponibilite
 
 Expliquez pourquoi chaque résultat doit annoncer son propre nombre d’observations.
 
-## Exercice 4 - Résumer par succursale
+## Exercice 4 - Résumer par région et canal
 
 Résumez plutôt par région et canal principal, afin de répondre à une question différente de celle du guide.
 
@@ -95,8 +95,8 @@ Choisissez une priorité parmi la réduction des délais, l’amélioration de l
 
 ## Exercice 7 - Préparer la suite
 
-Formulez une future question de régression avec `satisfaction` comme réponse et `delai_livraison_jours` comme variable explicative. Ajoutez une variable de contexte, une limite causale et un diagnostic graphique à prévoir.
+Formulez une question sur l’association entre `satisfaction` et `delai_livraison_jours`. Ajoutez une variable de contexte et une limite causale. Vous pourrez reprendre cette question au module 3 pour découvrir la régression.
 
-## Trace finale courte
+## Trace finale facultative
 
 Produisez une note Quarto autonome sur la fiabilité du service : dictionnaire ciblé, audit des données manquantes, tableau région-canal, deux graphiques, trois constats, priorité et prochaine analyse. N’utilisez pas le fichier `ventes_pme_quebec.csv` du guide.

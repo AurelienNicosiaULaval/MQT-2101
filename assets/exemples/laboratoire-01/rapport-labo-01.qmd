@@ -1,0 +1,128 @@
+---
+title: "Laboratoire 01 : diagnostic pour la direction"
+author: "Noms des personnes participantes"
+lang: fr
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: false
+    code-copy: true
+execute:
+  echo: true
+  warning: true
+  message: false
+---
+
+<!-- Ce gabarit se rend dès l'ouverture. Complétez le texte et les blocs de code
+au fil de la mission. Les commentaires R seuls ne produisent pas de résultat.
+Le code va dans les blocs, les explications vont à l'extérieur. -->
+
+## 1. Mission
+
+À compléter : reformulez la question de la direction et l'objectif de votre diagnostic.
+
+## 2. Données et qualité
+
+Source : données simulées pour le cours MQT-2101, fichier `ventes_pme_quebec.csv`.
+
+```{r}
+#| label: importation
+
+# Charger les packages utilisés dans le rapport.
+library(tidyverse)
+library(janitor)
+
+# Importer les données avec un chemin relatif au document.
+ventes_pme <- read_csv(
+  "data/ventes_pme_quebec.csv",
+  show_col_types = FALSE
+) |>
+  clean_names() |>
+  mutate(mois = as.Date(mois))
+```
+
+```{r}
+#| label: inspection
+
+# Ajoutez les vérifications des dimensions, de la période et des types.
+```
+
+À compléter : décrivez l'unité d'observation, les dimensions et la période couverte. Choisissez trois variables et expliquez leur sens, leur type statistique et leur unité, s'il y a lieu.
+
+```{r}
+#| label: diagnostic-manquants
+
+# Comptez les valeurs manquantes par variable.
+# Affichez votre diagnostic, par exemple avec knitr::kable().
+```
+
+À compléter : nommez les variables incomplètes, expliquez le traitement retenu et une précaution pour l'interprétation.
+
+## 3. Comparaison des succursales
+
+```{r}
+#| label: synthese-succursales
+
+# Construisez le tableau synthèse par succursale.
+# Incluez le nombre de mois, les ventes totales, les ventes par client
+# et un indicateur de service. Ajoutez son effectif si des valeurs manquent.
+# Gardez des noms distincts des colonnes sources pour les nouveaux indicateurs.
+# Affichez le tableau avec ses unités.
+```
+
+À compléter : comparez deux succursales avec des valeurs et des unités. Le classement change-t-il selon l'indicateur?
+
+## 4. Deux graphiques
+
+### Graphique 1 : ventes totales par succursale
+
+Question : à compléter.
+
+```{r}
+#| label: graphique-ventes
+#| fig-width: 7
+#| fig-height: 4.5
+
+# Créez le graphique à partir du tableau synthèse.
+# Ajoutez un titre et les unités sur les axes.
+```
+
+Interprétation : à compléter avec une comparaison chiffrée.
+
+### Graphique 2 : une dimension liée à la priorité
+
+Question et piste choisie : à compléter.
+
+```{r}
+#| label: graphique-priorite
+#| fig-width: 7
+#| fig-height: 4.5
+
+# Créez un graphique utile à votre priorité : marketing, opérations ou saisons.
+# Si des observations sont exclues, comptez-les et expliquez pourquoi.
+```
+
+Interprétation : à compléter avec une comparaison chiffrée et les précautions utiles.
+
+## 5. Réponse à la direction
+
+À compléter dans un paragraphe : choisissez une priorité, précisez ce qu'il faudrait examiner, justifiez votre choix par au moins deux résultats du rapport, expliquez une limite et proposez une prochaine question avec une information supplémentaire à obtenir.
+
+Les trois constats chiffrés peuvent être répartis entre le tableau et les graphiques. Vous pouvez y faire référence ici sans les recopier intégralement.
+
+## 6. Bilan formatif
+
+- Point réussi relevé pendant la rétroaction : à compléter.
+- Amélioration proposée et correction appliquée : à compléter.
+- Question ou difficulté à retravailler : à compléter.
+- Aide utilisée et vérification effectuée : à compléter, ou indiquez « Aucune aide utilisée ».
+
+### Vérification finale
+
+- [ ] J'ai remplacé les consignes à compléter par mes réponses.
+- [ ] J'ai trois constats chiffrés, un tableau synthèse et deux graphiques commentés.
+- [ ] Ma priorité est justifiée par deux résultats et encadrée par une limite.
+- [ ] J'ai redémarré R et utilisé Render sans commandes préalables dans la Console.
+- [ ] J'ai ouvert le HTML et vérifié son contenu.
+- [ ] J'ai conservé le QMD, le HTML et le CSV dans le dossier du laboratoire.

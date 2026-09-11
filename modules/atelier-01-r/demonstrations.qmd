@@ -7,18 +7,18 @@ format:
 
 ## Objectif
 
-Cette page montre la démarche complète utilisée dans l'atelier 01. Elle ne sert
-pas seulement à copier du code : elle explique ce que chaque bloc fait, ce qu'il
-faut observer dans la sortie et ce qui peut être repris dans la trace finale.
+Cette page rassemble des exemples pour débloquer un geste précis après une
+première tentative. La [mission](guide-atelier.qmd) fixe les productions à réaliser.
+Il n'est pas nécessaire de reproduire toutes les démonstrations dans le rapport.
 
 Le parcours principal reste le [guide complet de l'atelier](guide-atelier.html).
 Cette page sert d'appui pendant ou après la séance, surtout lorsqu'il faut revoir
 une démonstration précise.
 
 ::: {.callout-note title="Comment utiliser cette page"}
-Lisez d'abord l'objectif de la démonstration, puis exécutez le bloc de code dans
-votre propre fichier Quarto. Après la sortie, vérifiez les éléments à observer et
-gardez seulement les résultats utiles pour votre trace finale.
+Repérez la démonstration qui répond à votre difficulté, puis adaptez son code
+dans votre fichier Quarto. Vérifiez la sortie et expliquez le résultat avec vos
+propres mots. Les choix d'analyse et la réponse à la direction vous appartiennent.
 :::
 
 ## Vue d'ensemble
@@ -71,6 +71,7 @@ currency_ca <- scales::label_dollar(
 
 ## Démonstration 1 - Importer et inspecter
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : lire le fichier CSV, nettoyer les noms de colonnes et vérifier que
 les variables importantes ont un type utile pour l'analyse.
 
@@ -111,8 +112,11 @@ est bien dans le dossier `data` de l'atelier ou utilisez le chemin proposé dans
 le guide.
 :::
 
+::::
+
 ## Démonstration 2 - Construire un dictionnaire rapide
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : produire un petit tableau qui décrit les variables. Ce dictionnaire
 aide à comprendre les données avant de calculer des indicateurs.
 
@@ -149,8 +153,11 @@ dictionnaire_variables |>
 Choisissez cinq variables utiles pour la direction, puis nommez leur rôle :
 performance commerciale, clientèle, marketing, opérations ou satisfaction.
 
+::::
+
 ## Démonstration 3 - Repérer les valeurs manquantes
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : identifier les variables incomplètes avant de calculer des moyennes
 ou des tableaux synthèses.
 
@@ -183,8 +190,11 @@ Phrase possible :
 > Certaines variables contiennent des valeurs manquantes. Les indicateurs qui
 > utilisent ces variables doivent donc être calculés et interprétés avec prudence.
 
+::::
+
 ## Démonstration 4 - Voir l'effet de `na.rm = TRUE`
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : comprendre pourquoi certaines moyennes deviennent manquantes lorsque
 les données contiennent des valeurs `NA`.
 
@@ -215,8 +225,11 @@ calculé sur les valeurs observées n'est pas exactement la même chose qu'un
 résumé calculé sur toutes les observations prévues.
 :::
 
+::::
+
 ## Démonstration 5 - Résumer par succursale
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : passer du tableau mensuel à une comparaison lisible des succursales.
 
 ```{r}
@@ -224,10 +237,13 @@ Objectif : passer du tableau mensuel à une comparaison lisible des succursales.
 synthese_succursales <- ventes |>
   group_by(succursale, region) |>
   summarise(
-    ventes_totales = sum(ventes, na.rm = TRUE),
-    clients_totaux = sum(clients, na.rm = TRUE),
+    mois_observes = n(),
+    ventes_totales = sum(ventes),
+    clients_totaux = sum(clients),
     panier_moyen = ventes_totales / clients_totaux,
+    mois_satisfaction = sum(!is.na(satisfaction)),
     satisfaction_moyenne = mean(satisfaction, na.rm = TRUE),
+    mois_delai = sum(!is.na(delai_livraison_jours)),
     delai_moyen = mean(delai_livraison_jours, na.rm = TRUE),
     ruptures_stock = sum(ruptures_stock, na.rm = TRUE),
     .groups = "drop"
@@ -235,31 +251,53 @@ synthese_succursales <- ventes |>
   arrange(desc(ventes_totales))
 
 synthese_succursales |>
-  mutate(
-    ventes_totales = currency_ca(ventes_totales),
-    panier_moyen = currency_ca(panier_moyen),
-    satisfaction_moyenne = round(satisfaction_moyenne, 1),
-    delai_moyen = round(delai_moyen, 1)
+  transmute(
+    Succursale = succursale,
+    Mois = mois_observes,
+    `Ventes totales ($ CA)` = currency_ca(ventes_totales),
+    `Clients cumulés` = clients_totaux,
+    `Ventes par client ($ CA)` = currency_ca(panier_moyen)
   ) |>
   knitr::kable()
+
+# Présenter séparément les indicateurs de service pour garder des tableaux lisibles.
+synthese_succursales |>
+  transmute(
+    Succursale = succursale,
+    `Mois avec satisfaction` = mois_satisfaction,
+    `Satisfaction sur 10` = satisfaction_moyenne,
+    `Mois avec délai` = mois_delai,
+    `Délai (jours)` = delai_moyen,
+    `Ruptures totales` = ruptures_stock
+  ) |>
+  knitr::kable(digits = 2, format.args = list(decimal.mark = ","))
 ```
 
 À observer :
 
 - les ventes totales comparent le volume d'affaires;
-- le panier moyen compare la valeur moyenne des transactions;
+- le ratio ventes/clients compare les ventes par client sur la période;
 - la satisfaction et les ruptures de stock ajoutent une dimension
   opérationnelle;
 - la succursale avec les ventes les plus élevées n'est pas nécessairement la
   plus favorable selon tous les indicateurs.
+
+Les ventes et les clients sont complets dans ce fichier. Pour la satisfaction
+et le délai, les effectifs indiquent les mois disponibles. Les moyennes portent
+sur les résumés mensuels, avec un poids égal pour chaque mois disponible.
+La mission demande un seul indicateur de service : choisissez celui qui vous
+est utile parmi les exemples présentés ici.
 
 À reprendre dans la trace finale :
 
 Choisissez deux ou trois résultats qui ressortent du tableau. Il n'est pas utile
 de commenter toutes les colonnes.
 
+::::
+
 ## Démonstration 6 - Visualiser les ventes
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : produire un graphique simple qui compare les ventes annuelles par
 succursale.
 
@@ -293,8 +331,11 @@ Phrase possible :
 > Cette comparaison décrit le volume d'affaires, mais ne suffit pas à expliquer
 > les causes des écarts.
 
+::::
+
 ## Démonstration 7 - Explorer une relation descriptive
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : examiner si deux variables semblent évoluer ensemble, sans conclure à
 une relation causale.
 
@@ -302,10 +343,12 @@ une relation causale.
 #| label: demo-relation-ruptures-satisfaction-atelier-01
 #| fig-width: 8
 #| fig-height: 5
-ventes |>
+observations_graphique <- ventes |>
+  filter(!is.na(ruptures_stock), !is.na(satisfaction))
+
+observations_graphique |>
   ggplot(aes(ruptures_stock, satisfaction, color = succursale)) +
   geom_point(size = 2.4, alpha = 0.8) +
-  geom_smooth(method = "lm", se = FALSE, color = "#1F2933") +
   labs(
     title = "Satisfaction client et ruptures de stock",
     x = "Nombre de ruptures de stock",
@@ -318,9 +361,12 @@ ventes |>
 À observer :
 
 - chaque point représente une observation mensuelle pour une succursale;
-- la droite aide à voir une tendance descriptive générale;
+- le nuage permet de repérer des associations et de la dispersion;
 - les couleurs permettent de repérer les succursales, mais elles ne remplacent
   pas une analyse plus formelle.
+
+Le graphique utilise `r nrow(observations_graphique)` observations sur
+`r nrow(ventes)`. Il exclut les lignes dont une des deux variables est manquante.
 
 ::: {.callout-caution title="Limite importante"}
 Ce graphique ne prouve pas que les ruptures de stock causent une baisse de
@@ -328,8 +374,11 @@ satisfaction. Il suggère seulement une relation descriptive à examiner plus
 rigoureusement.
 :::
 
+::::
+
 ## Démonstration 8 - Choisir une priorité de prochaine analyse
 
+:::: {.callout-tip collapse="true" title="Afficher la démonstration après une tentative"}
 Objectif : transformer l'exploration en recommandation prudente. La direction
 hésite entre trois priorités : marketing, opérations ou saisonnalité. On produit
 un petit résultat descriptif pour éclairer ce choix.
@@ -411,6 +460,8 @@ priorite_saison |>
 Ce résultat aide à décider si les prochaines analyses devraient distinguer les
 périodes de l'année. Il reste descriptif : il ne sépare pas encore les effets de
 succursale, de saison, de marketing ou d'opérations.
+
+::::
 
 ## Synthèse pour la trace finale
 

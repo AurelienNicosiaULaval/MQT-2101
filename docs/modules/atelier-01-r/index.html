@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Atelier 01 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Laboratoire 01 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7020,10 +7020,10 @@ display: none;
   <ul>
   <li><a href="#avant-latelier" id="toc-avant-latelier" class="nav-link active" data-scroll-target="#avant-latelier">Avant l’atelier</a></li>
   <li><a href="#pendant-latelier" id="toc-pendant-latelier" class="nav-link" data-scroll-target="#pendant-latelier">Pendant l’atelier</a></li>
+  <li><a href="#production-attendue" id="toc-production-attendue" class="nav-link" data-scroll-target="#production-attendue">Production attendue</a></li>
   <li><a href="#après-latelier" id="toc-après-latelier" class="nav-link" data-scroll-target="#après-latelier">Après l’atelier</a></li>
   <li><a href="#ressources-utiles" id="toc-ressources-utiles" class="nav-link" data-scroll-target="#ressources-utiles">Ressources utiles</a></li>
-  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
-  <li><a href="#pour-la-suite" id="toc-pour-la-suite" class="nav-link" data-scroll-target="#pour-la-suite">Pour la suite</a></li>
+  <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
   </ul>
 </nav>
     </div>
@@ -7032,8 +7032,8 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Atelier 01</h1>
-<p class="subtitle lead">Explorer un tableau avec RStudio</p>
+<h1 class="title">Laboratoire 01</h1>
+<p class="subtitle lead">Une mission d’analyse avec R et Quarto</p>
 </div>
 
 
@@ -7052,379 +7052,161 @@ display: none;
 
 <div class="learning-hero">
 <p class="hero-kicker">
-Atelier en classe
+Premier laboratoire en classe
 </p>
 <h2 class="anchored">
-Explorer un tableau avec RStudio
+Quelle analyse proposer à la direction?
 </h2>
-<p>Cet atelier n’est pas conçu comme une séance autonome complète. Il sert à pratiquer en classe les gestes vus dans les deux premiers modules : ouvrir un projet, importer un fichier CSV, inspecter un tableau, produire quelques résumés, visualiser, écrire des constats descriptifs et choisir une priorité de prochaine analyse.</p>
-<div class="quick-facts">
-<div class="fact-card">
-<div class="fact-icon fact-clock" aria-hidden="true">
-
+<p>Après une courte présentation, vous explorerez les données d’une PME québécoise fictive. Votre mission sera de choisir une priorité de prochaine analyse et de la justifier dans un court rapport Quarto.</p>
+<p>Mercredi 16 septembre 2026, de 9 h à 11 h 50, au pavillon Palasis-Prince, local 3213, selon le <a href="../../calendrier.html">calendrier du cours</a>.</p>
 </div>
-<div>
-<div class="fact-label">
-Avant
-</div>
-<div class="fact-value">
-Préparation courte
-</div>
-</div>
-</div>
-<div class="fact-card">
-<div class="fact-icon fact-tools" aria-hidden="true">
-
-</div>
-<div>
-<div class="fact-label">
-Pendant
-</div>
-<div class="fact-value">
-2 h 30 à 3 h dans RStudio
-</div>
-</div>
-</div>
-<div class="fact-card">
-<div class="fact-icon fact-data" aria-hidden="true">
-
-</div>
-<div>
-<div class="fact-label">
-Données
-</div>
-<div class="fact-value">
-<a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a>
-</div>
-</div>
-</div>
-<div class="fact-card">
-<div class="fact-icon fact-report" aria-hidden="true">
-
-</div>
-<div>
-<div class="fact-label">
-Après
-</div>
-<div class="fact-value">
-Court rapport Quarto
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi ça compte">
+<div class="callout callout-style-default callout-note callout-titled" title="Un laboratoire formatif">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pourquoi ça compte
+<span class="screen-reader-only">Note</span>Un laboratoire formatif
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La direction d’une PME québécoise veut savoir où concentrer ses efforts l’an prochain : le marketing, les opérations (ruptures de stock, délais) ou la saisonnalité. Vous disposez d’un tableau de ventes mensuelles. Cet atelier transforme ce tableau en une priorité défendable, plutôt qu’en simple intuition.</p>
+<p>Ce travail sert à pratiquer les acquis des modules 1 et 2 et à recevoir une rétroaction. Il ne compte pas dans la note finale. Vous pourrez corriger votre démarche pendant la séance et préciser ce qui reste à travailler.</p>
 </div>
 </div>
 <section id="avant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="avant-latelier">Avant l’atelier</h2>
-<p>L’objectif est simplement d’arriver en classe avec un environnement prêt pour travailler. Il ne faut pas refaire tout le module 2 : il suffit de retrouver les gestes essentiels.</p>
-<div class="phase-grid">
-  <div class="phase-card">
-    <span class="phase-label">1</span>
-    <h3 class="anchored">Préparer RStudio</h3>
-    <p>Ouvrir ou créer un projet R pour l&#39;atelier et vérifier que les packages de base se chargent.</p>
-  </div>
-  <div class="phase-card">
-    <span class="phase-label">2</span>
-    <h3 class="anchored">Repérer le fichier</h3>
-    <p>Vérifier que <a class="data-link" href="../../donnees/#ventes-mensuelles-dune-pme-québécoise-fictive">ventes_pme_quebec.csv</a> est accessible dans le dossier de l&#39;atelier.</p>
-  </div>
-  <div class="phase-card">
-    <span class="phase-label">3</span>
-    <h3 class="anchored">Démarrer le QMD</h3>
-    <p>Créer un document Quarto minimal avec une section d&#39;importation et une section de résultats.</p>
-  </div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Préparation à faire avant d&#39;arriver">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Préparation à faire avant d’arriver
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Avant l’atelier, vérifiez surtout que vous pouvez reprendre les gestes de base du module 2 sans repartir de zéro. L’atelier est supervisé : il est normal de poser des questions, mais vous gagnerez du temps si les éléments suivants sont déjà prêts.</p>
-</div>
-</div>
-<div class="checklist-box">
+<p>Prévoyez environ 10 minutes pour préparer vos fichiers. La mission commence en classe.</p>
 <ul class="task-list">
-<li><label><input type="checkbox">RStudio ou Positron ouvre sans problème.</label></li>
-<li><label><input type="checkbox">Les packages <code>tidyverse</code> et <code>janitor</code> se chargent.</label></li>
-<li><label><input type="checkbox">Vous savez où se trouve votre dossier de travail.</label></li>
-<li><label><input type="checkbox">Vous savez créer ou ouvrir un fichier <code>.qmd</code>.</label></li>
-<li><label><input type="checkbox">Vous savez exécuter un bloc de code dans Quarto.</label></li>
-<li><label><input type="checkbox">Vous savez importer un fichier CSV avec <code>readr::read_csv()</code>.</label></li>
-<li><label><input type="checkbox">Vous savez utiliser <code>glimpse()</code> ou <code>dim()</code> pour inspecter un tableau.</label></li>
-<li><label><input type="checkbox">Vous avez relu les exercices 3 à 5 du module 2.</label></li>
+<li><label><input type="checkbox">Apportez votre ordinateur et son chargeur.</label></li>
+<li><label><input type="checkbox">Vérifiez que R, RStudio ou Positron et Quarto fonctionnent, à l’aide de la <a href="../../installation.html">page Installation</a>.</label></li>
+<li><label><input type="checkbox">Vérifiez que <code>library(tidyverse)</code> et <code>library(janitor)</code> s’exécutent.</label></li>
+<li><label><input type="checkbox">Téléchargez le <a href="../../assets/exemples/laboratoire-01.zip">dossier de départ du laboratoire</a>, puis décompressez-le.</label></li>
+<li><label><input type="checkbox">Ouvrez <code>laboratoire-01.Rproj</code>, puis <code>rapport-labo-01.qmd</code> et cliquez sur Render. Le gabarit doit produire un HTML avant même que vous commenciez l’analyse.</label></li>
 </ul>
-</div>
-<p>Ce qui doit être maîtrisé avant l’atelier :</p>
-<div class="resource-list">
-  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-4">
-    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Importer</span><span class="resource-row-text">Lire un CSV et vérifier que le tableau apparaît dans l&#39;environnement.</span></span>
-  </a>
-  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-5">
-    <span class="resource-row-icon reading-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Inspecter</span><span class="resource-row-text">Nommer l&#39;unité d&#39;observation et reconnaître les types de variables.</span></span>
-  </a>
-  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-6">
-    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Diagnostiquer</span><span class="resource-row-text">Repérer les valeurs manquantes et expliquer pourquoi elles comptent.</span></span>
-  </a>
-  <a class="resource-row" href="../semaine-02-r-quarto/index.html#etape-7">
-    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Résumer et visualiser</span><span class="resource-row-text">Produire un tableau descriptif, un graphique et une phrase prudente.</span></span>
-  </a>
-</div>
-<p>À revoir si nécessaire :</p>
-<ul>
-<li><a href="../../ressources/guide-quarto.html">guide Quarto</a>, pour créer et rendre un fichier <code>.qmd</code>;</li>
-<li><a href="../semaine-02-r-quarto/demonstrations.html">démonstrations du module 2</a>, pour l’importation CSV et <code>glimpse()</code>.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Préparation minimale">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Préparation minimale
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si vous arrivez avec RStudio ouvert, le fichier CSV accessible et un document Quarto créé, c’est suffisant pour commencer l’atelier.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Ce qui sera accompagné en classe">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Ce qui sera accompagné en classe
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Les comparaisons plus exploratoires, par exemple satisfaction et ruptures de stock, ventes et dépenses marketing ou ventes selon la saison, seront travaillées pendant l’atelier avec accompagnement. Vous n’avez pas besoin de maîtriser ces analyses avant d’arriver. L’objectif est d’apprendre à passer d’un résultat à un constat descriptif prudent.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi cette préparation?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pourquoi cette préparation?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>L’atelier commence par des gestes simples : inspecter les variables, vérifier les types, regarder l’effet des valeurs manquantes et produire des graphiques lisibles. Ces gestes servent ensuite une question de gestion : quelle priorité d’analyse recommander à la direction?</p>
-</div>
-</div>
+<p>En cas de difficulté, consultez le <a href="../../ressources/guide-quarto.html">guide Quarto</a>. Si le problème persiste, venez avec vos fichiers et le message d’erreur pour le signaler dès votre arrivée.</p>
+<p>Les notions utiles sont l’unité d’observation, les types de variables, les valeurs manquantes, les résumés descriptifs et les graphiques. Les <a href="../../modules/semaine-02-r-quarto/exercices.html">exercices corrigés du module 2</a> restent disponibles pour revoir un geste précis.</p>
 </section>
 <section id="pendant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="pendant-latelier">Pendant l’atelier</h2>
-<p>Pendant la séance, l’important est de produire les éléments du rapport, pas de lire toutes les ressources dans l’ordre. Le guide complet est le fil principal de l’atelier : il contient les démonstrations, les moments « À vous », les pauses diagnostic et les éléments à conserver dans la trace finale.</p>
-<div class="workshop-launch">
-  <a class="workshop-link-card workshop-link-card-primary" href="guide-atelier.html">
-    <span class="phase-label">À ouvrir en classe</span>
-    <h3 class="anchored">Guide complet de l&#39;atelier</h3>
-    <p>Suivre ce parcours pendant la séance. Les démonstrations sont intégrées directement dans le guide, puis reprises par des tâches à faire dans le rapport.</p>
-  </a>
-  <a class="workshop-link-card" href="demonstrations.html">
-    <span class="phase-label">Démarche guidée</span>
-    <h3 class="anchored">Démonstrations R</h3>
-    <p>Revoir les tableaux, graphiques, sorties R et interprétations attendues.</p>
-  </a>
-  <a class="workshop-link-card" href="exercices.html">
-    <span class="phase-label">Pratique ciblée</span>
-    <h3 class="anchored">Exercices</h3>
-    <p>Faire les points de pratique associés aux moments « À vous » du guide. Ce n&#39;est pas un parcours séparé.</p>
-  </a>
-</div>
-<p>Le fil de travail en classe est le suivant.</p>
-<div class="workshop-agenda">
-  <div class="agenda-item">
-    <div class="agenda-time">Départ</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Importer le tableau</h3>
-      <p>Lire le fichier CSV, vérifier les dimensions et nommer l&#39;unité d&#39;observation.</p>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="agenda-time">Étape 1</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Construire le dictionnaire</h3>
-      <p>Repérer les types, les exemples de valeurs et les variables utiles pour la décision.</p>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="agenda-time">Étape 2</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Vérifier les valeurs manquantes</h3>
-      <p>Produire un petit diagnostic et noter les précautions nécessaires.</p>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="agenda-time">Étape 3</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Construire un tableau synthèse</h3>
-      <p>Résumer les ventes, les clients, le panier moyen, la satisfaction et les ruptures par succursale.</p>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="agenda-time">Étape 4</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Créer deux graphiques</h3>
-      <p>Produire un graphique de comparaison et un graphique explorant une autre dimension du tableau.</p>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="agenda-time">Étape 5</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Choisir une priorité</h3>
-      <p>Comparer marketing, opérations ou saisonnalité et formuler une recommandation prudente.</p>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="agenda-time">Fin</div>
-    <div class="agenda-content">
-      <h3 class="anchored">Mettre en commun</h3>
-      <p>Présenter une priorité, un résultat descriptif, une limite et une question pour la suite.</p>
-    </div>
-  </div>
-</div>
-<p>Ce qui doit être produit pendant l’atelier :</p>
-<div class="checklist-box">
-<ul class="task-list">
-<li><label><input type="checkbox">le code d’importation;</label></li>
-<li><label><input type="checkbox">une inspection du tableau;</label></li>
-<li><label><input type="checkbox">un dictionnaire rapide de variables clés;</label></li>
-<li><label><input type="checkbox">un diagnostic des valeurs manquantes;</label></li>
-<li><label><input type="checkbox">un tableau synthèse par succursale;</label></li>
-<li><label><input type="checkbox">deux graphiques;</label></li>
-<li><label><input type="checkbox">trois constats descriptifs;</label></li>
-<li><label><input type="checkbox">une limite d’interprétation;</label></li>
-<li><label><input type="checkbox">une recommandation de prochaine analyse.</label></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Lien entre guide, démonstrations et exercices">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Lien entre guide, démonstrations et exercices
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le guide complet est la page à suivre pendant l’atelier. Les démonstrations montrent une démarche complète; les exercices reprennent les parties à produire dans votre propre trace finale. Autrement dit, vous regardez une démonstration, vous faites le point « À vous » correspondant, puis vous gardez le résultat utile dans le rapport Quarto.</p>
-</div>
-</div>
+<p>Ouvrez le <a href="../../modules/atelier-01-r/guide-atelier.html">guide de la mission</a>. Il rassemble les consignes, les étapes, le contenu du rapport et la grille formative. Gardez-le à côté de votre document Quarto pendant le travail.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Horaire</th>
+<th>Activité</th>
+<th>Résultat visé</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>9 h à 9 h 15</td>
+<td>Courte présentation et lancement de la mission</td>
+<td>Comprendre la question et le rapport attendu</td>
+</tr>
+<tr class="even">
+<td>9 h 15 à 9 h 30</td>
+<td>Prise en main du dossier</td>
+<td>Premier HTML, importation et unité d’observation</td>
+</tr>
+<tr class="odd">
+<td>9 h 30 à 10 h</td>
+<td>Diagnostic et tableau synthèse</td>
+<td>Données vérifiées et comparaison des succursales</td>
+</tr>
+<tr class="even">
+<td>10 h à 10 h 10</td>
+<td>Premier point de rétroaction</td>
+<td>Une vérification ou une correction à appliquer</td>
+</tr>
+<tr class="odd">
+<td>10 h 10 à 10 h 20</td>
+<td>Pause</td>
+<td>Reprise à 10 h 20</td>
+</tr>
+<tr class="even">
+<td>10 h 20 à 10 h 55</td>
+<td>Deux graphiques et choix d’une priorité</td>
+<td>Résultats utiles à la mission</td>
+</tr>
+<tr class="odd">
+<td>10 h 55 à 11 h 20</td>
+<td>Rédaction de la réponse à la direction</td>
+<td>Trois constats chiffrés, une priorité et une limite</td>
+</tr>
+<tr class="even">
+<td>11 h 20 à 11 h 35</td>
+<td>Relecture croisée et rétroaction</td>
+<td>Un point réussi et une amélioration précise</td>
+</tr>
+<tr class="odd">
+<td>11 h 35 à 11 h 50</td>
+<td>Corrections, Render et bilan</td>
+<td>Rapport lisible et prochaine étape personnelle</td>
+</tr>
+</tbody>
+</table>
+<p>Ces repères permettent d’avancer ensemble. Si vous bloquez, demandez de l’aide en montrant votre tentative, le résultat obtenu et votre question.</p>
+</section>
+<section id="production-attendue" class="level2">
+<h2 class="anchored" data-anchor-id="production-attendue">Production attendue</h2>
+<p>Un seul rapport Quarto répond à la mission. Il réunit la description et le diagnostic des données, un tableau comparatif, deux graphiques commentés, trois constats chiffrés et une priorité de prochaine analyse justifiée. Le <a href="../../assets/exemples/laboratoire-01.zip">gabarit fourni</a> contient déjà les sections à compléter et l’importation.</p>
+<p>Visez environ 400 à 600 mots, hors code et tableaux. Cette longueur est un repère pour rester concis, pas un critère de notation. Les éléments attendus et les modalités de fin de séance se trouvent dans le <a href="../../modules/atelier-01-r/guide-atelier.html#rapport-attendu">guide de la mission</a>.</p>
 </section>
 <section id="après-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="après-latelier">Après l’atelier</h2>
-<p>Après la séance, il faut surtout nettoyer, vérifier et finaliser. Cette partie ne demande pas une nouvelle analyse complète.</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Trace finale à produire">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Trace finale à produire
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La trace finale prend la forme d’un court rapport Quarto reproductible. Le rapport doit montrer que vous êtes capable de passer d’un fichier CSV à une première exploration descriptive claire.</p>
-</div>
-</div>
-<p>Le rapport doit contenir :</p>
-<ul>
-<li>une courte introduction;</li>
-<li>le code d’importation;</li>
-<li>une description du tableau;</li>
-<li>un dictionnaire rapide des variables clés;</li>
-<li>le diagnostic des valeurs manquantes;</li>
-<li>le tableau synthèse;</li>
-<li>deux graphiques;</li>
-<li>trois constats descriptifs;</li>
-<li>une limite d’interprétation;</li>
-<li>une recommandation de prochaine analyse.</li>
-</ul>
-<p>Avant de considérer le fichier terminé :</p>
-<div class="checklist-box">
-<ul class="task-list">
-<li><label><input type="checkbox">Le document Quarto se génère sans erreur.</label></li>
-<li><label><input type="checkbox">Les tableaux et graphiques sont lisibles.</label></li>
-<li><label><input type="checkbox">Les constats sont descriptifs, pas causaux.</label></li>
-<li><label><input type="checkbox">La limite d’interprétation est explicite.</label></li>
-<li><label><input type="checkbox">Le fichier final est court et propre.</label></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Auto-vérification assistée par IA">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Auto-vérification assistée par IA
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Vous pouvez utiliser le <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">GPT du cours</a> pour relire votre trace finale. Son rôle est de repérer les éléments manquants, les imprécisions, les problèmes de reproductibilité et les questions à clarifier. Il ne doit pas réécrire le rapport à votre place.</p>
-<p>Suggestion de demande :</p>
-<blockquote class="blockquote">
-<p>Voici ma trace finale pour l’atelier 01. Vérifie si le document contient tous les éléments attendus, si le code semble reproductible et si mes constats sont assez clairs. Indique les éléments manquants, les passages imprécis et les questions que je devrais me poser. Ne réécris pas mon rapport à ma place.</p>
-</blockquote>
-<p>Après cette vérification, notez une correction apportée à votre trace ou une question qui reste à clarifier.</p>
-</div>
-</div>
+<p>Conservez ensemble le <code>.qmd</code>, le <code>.html</code> et le dossier <code>data/</code>. Reprenez le point d’amélioration relevé pendant la rétroaction et notez une question à clarifier. Cette démarche vous prépare à la rédaction du <a href="../../evaluations/mini-rapport-1.html">mini-rapport 1</a>, dont les consignes et l’évaluation sont distinctes.</p>
 </section>
 <section id="ressources-utiles" class="level2">
 <h2 class="anchored" data-anchor-id="ressources-utiles">Ressources utiles</h2>
-<div class="resource-list">
-  <a class="resource-row" href="guide-atelier.html">
-    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Guide d&#39;atelier</span><span class="resource-row-text">Parcours principal à suivre en classe, avec les moments « À vous ».</span></span>
-  </a>
-  <a class="resource-row" href="demonstrations.html">
-    <span class="resource-row-icon demo-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Démarche complète avec sorties, tableaux, graphiques et interprétations.</span></span>
-  </a>
-  <a class="resource-row" href="exercices.html">
-    <span class="resource-row-icon exercise-icon" aria-hidden="true"></span>
-    <span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Consignes courtes pour compléter ou reprendre la pratique.</span></span>
-  </a>
-</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Ressource</th>
+<th>Quand l’utiliser</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../../modules/atelier-01-r/guide-atelier.html">Guide de la mission</a></td>
+<td>Fil principal de la séance</td>
+</tr>
+<tr class="even">
+<td><a href="../../modules/atelier-01-r/presentation.html">Présentation de lancement</a></td>
+<td>Support de la courte introduction en classe</td>
+</tr>
+<tr class="odd">
+<td><a href="../../assets/exemples/laboratoire-01.zip">Dossier de départ : projet, QMD et CSV</a></td>
+<td>Pour commencer directement dans RStudio</td>
+</tr>
+<tr class="even">
+<td><a href="../../modules/atelier-01-r/demonstrations.html">Démonstrations R</a></td>
+<td>Aide ponctuelle après une première tentative</td>
+</tr>
+<tr class="odd">
+<td><a href="../../modules/atelier-01-r/capsules.html">Repères conceptuels</a></td>
+<td>Pour retrouver une notion des modules 1 et 2</td>
+</tr>
+<tr class="even">
+<td><a href="../../modules/atelier-01-r/exercices.html">Exercices complémentaires</a></td>
+<td>Pratique facultative après la mission</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="je-suis-bloquée" class="level2">
-<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
-<p>Vérifiez d’abord :</p>
-<ol type="1">
-<li>le dossier du projet R;</li>
-<li>le chemin du fichier CSV;</li>
-<li>le chargement des packages avec <code>library(tidyverse)</code> et <code>library(janitor)</code>;</li>
-<li>le nom exact des variables;</li>
-<li>le message d’erreur complet;</li>
-<li>le code correspondant dans le guide d’atelier.</li>
-</ol>
-</section>
-<section id="pour-la-suite" class="level2">
-<h2 class="anchored" data-anchor-id="pour-la-suite">Pour la suite</h2>
-<p>Cet atelier prépare la séance sur la régression linéaire. Après avoir décrit un tableau, vous commencerez à vous demander si deux variables semblent liées et comment mesurer cette relation avec un modèle.</p>
+<section id="auto-vérification" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Mon HTML répond à la mission avec des résultats produits dans mon <code>.qmd</code>.</label></li>
+<li><label><input type="checkbox">Je peux expliquer ce que représente une ligne et ce que mes indicateurs résument.</label></li>
+<li><label><input type="checkbox">J’ai tenu compte des valeurs manquantes et nommé une limite.</label></li>
+<li><label><input type="checkbox">Ma priorité renvoie à des résultats précis de mon rapport.</label></li>
+<li><label><input type="checkbox">J’ai appliqué une correction après la rétroaction ou noté la question qui reste ouverte.</label></li>
+</ul>
 
 
 </section>
