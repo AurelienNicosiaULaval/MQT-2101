@@ -74,6 +74,17 @@ source("scripts/99_render_site.R")
 
 Les fichiers HTML seront créés dans `docs/`.
 
+### Mettre à jour les dossiers étudiants
+
+Après une modification des fichiers sources correspondants, reconstruire les archives avant le rendu du site :
+
+```bash
+Rscript scripts/19_prepare_labo01.R
+Rscript scripts/20_prepare_mini_rapport_1.R
+```
+
+Le second script synchronise aussi l'aperçu du gabarit du mini-rapport 1 avec le fichier téléchargeable. Tester ensuite le rendu du QMD depuis le ZIP extrait dans un dossier séparé.
+
 ## Valider avant une publication
 
 Exécuter les trois contrôles depuis la racine du projet :

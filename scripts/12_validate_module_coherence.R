@@ -311,6 +311,16 @@ if (length(missing_packages)) {
   ))
 }
 
+# Le total affiché doit correspondre aux points réellement attribués.
+rubric_lines <- readLines("evaluations/grille-mini-rapports.qmd", warn = FALSE)
+point_rows <- rubric_lines[grepl("^\\|[^|]+\\| *[0-9]+ *\\|", rubric_lines)]
+points <- as.numeric(sub("^\\|[^|]+\\| *([0-9]+) *\\|.*$", "\\1", point_rows))
+is_total <- grepl("^\\| *Total *\\|", point_rows)
+if (sum(is_total) != 1L || anyNA(points) ||
+    sum(points[!is_total]) != points[is_total] || points[is_total] != 100) {
+  add_error("Grille des mini-rapports : les critères doivent totaliser les 100 points annoncés.")
+}
+
 cat("Validation de cohérence MQT-2101\n")
 cat("Modules vérifiés :", nrow(course_modules), "\n")
 cat("Ateliers vérifiés :", length(workshops), "\n")

@@ -136,6 +136,35 @@ if (!file.exists(installer_output) ||
   add_error("Le script d'installation publié est absent ou différent de sa source.")
 }
 
+# Le gabarit brut et l'archive offerts aux étudiants doivent rester à jour.
+mr1_downloads <- c(
+  "assets/exemples/mini-rapport-1.zip",
+  "assets/exemples/mini-rapport-1/mini-rapport-1.qmd"
+)
+for (source in mr1_downloads) {
+  published <- file.path("docs", source)
+  if (!file.exists(source) || !file.exists(published) ||
+      unname(tools::md5sum(source)) != unname(tools::md5sum(published))) {
+    add_error(paste0("Téléchargement du mini-rapport 1 absent ou périmé : ", published))
+  }
+}
+if (file.exists(mr1_downloads[[1]])) {
+  check_dir <- tempfile("verification-mr1-")
+  dir.create(check_dir)
+  extracted <- utils::unzip(mr1_downloads[[1]], exdir = check_dir)
+  relative <- substring(extracted, nchar(check_dir) + 2L)
+  expected <- file.path("mini-rapport-1", c(
+    "mini-rapport-1.Rproj", "mini-rapport-1.qmd", "README.md", "data/LIRE-MOI.txt"
+  ))
+  if (!setequal(relative, expected) || !identical(
+    unname(tools::md5sum(file.path("assets/exemples", expected))),
+    unname(tools::md5sum(file.path(check_dir, expected)))
+  )) {
+    add_error("Archive du mini-rapport 1 différente de ses sources : la reconstruire avec scripts/20_prepare_mini_rapport_1.R.")
+  }
+  unlink(check_dir, recursive = TRUE)
+}
+
 cat("Validation du site rendu MQT-2101\n")
 cat("Sources étudiantes :", length(render_sources), "\n")
 cat("Références locales vérifiées :", links_checked, "\n")

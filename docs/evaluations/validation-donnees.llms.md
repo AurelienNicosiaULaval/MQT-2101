@@ -4,6 +4,8 @@
 
 Tous les jeux publiés dans la section [Données](../donnees/index.llms.md) et identifiés comme simulés pour le cours peuvent être utilisés sans approbation supplémentaire.
 
+L’autorisation porte sur les données. Votre équipe doit choisir une question adaptée au mini-rapport et produire sa propre analyse; un corrigé du cours ne peut pas être remis comme travail d’équipe.
+
 ## Proposition d’un autre jeu
 
 Avant la date indiquée dans la consigne, transmettez dans le canal officiel du cours :
@@ -27,7 +29,7 @@ Sont refusés :
 - fichiers obtenus sans droit clair d’utilisation;
 - données dont la cible est construite avec de l’information future;
 - jeux trop petits ou trop agrégés pour la question;
-- données déjà utilisées comme solution complète dans une source accessible;
+- pour un jeu externe, reprise d’une analyse déjà fournie comme solution complète dans une source accessible;
 - données impossibles à remettre ou importer de façon reproductible.
 
 ## IA et confidentialité

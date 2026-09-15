@@ -7045,7 +7045,9 @@ display: none;
         l&#39;exploration, la visualisation, la régression et l&#39;interprétation.
       </p>
       <div class="resource-actions" aria-label="Accès rapides">
-        <a class="home-action home-action--primary" href="#structure">Structure attendue</a>
+        <a class="home-action home-action--primary" href="../assets/exemples/mini-rapport-1.zip" download>Télécharger le dossier de départ (.zip)</a>
+        <a class="home-action" href="../assets/exemples/mini-rapport-1/mini-rapport-1.qmd" download>Télécharger le fichier .qmd</a>
+        <a class="home-action" href="../evaluations/mini-rapport-1.html">Consignes</a>
         <a class="home-action" href="#modele-qmd">Modèle .qmd</a>
         <a class="home-action" href="declaration-ia.html">Déclaration IA</a>
         <a class="home-action" href="../evaluations/grille-mini-rapports.html">Grille</a>
@@ -7078,14 +7080,29 @@ display: none;
       <li>
         <span>03</span>
         <h3 class="anchored">Analyse</h3>
-        <p>Préparer, explorer, visualiser et ajuster une régression pertinente.</p>
+        <p>Explorer les données, comparer une référence à une variante et examiner les résidus.</p>
       </li>
       <li>
         <span>04</span>
         <h3 class="anchored">Conclusion</h3>
-        <p>Interpréter avec prudence et nommer les limites.</p>
+        <p>Interpréter les coefficients, recommander une action et préciser les limites.</p>
       </li>
     </ol>
+  </section>
+
+  <section class="resource-section" aria-labelledby="demarrer-title">
+    <div class="resource-section__header">
+      <h2 id="demarrer-title" class="anchored">Premier rendu dans RStudio</h2>
+      <p>Le dossier contient un projet RStudio, le gabarit QMD, un README et un dossier data/ à compléter.</p>
+    </div>
+    <ol>
+      <li>Téléchargez le ZIP et extrayez-le complètement dans un dossier de travail.</li>
+      <li>Ouvrez <code>mini-rapport-1.Rproj</code>, puis <code>mini-rapport-1.qmd</code> dans RStudio.</li>
+      <li>Cliquez sur <em>Render</em>. Si une bibliothèque manque, suivez l&#39;indication du README.</li>
+      <li>Choisissez vos données autorisées, adaptez le code et remplacez les indications par votre analyse.</li>
+    </ol>
+    <p>Le premier rendu fonctionne sans données et sert à vérifier l&#39;installation. Le gabarit reste à compléter : un HTML produit sans erreur ne signifie pas que le travail est terminé.</p>
+    <p>Le rapport est réalisé en équipe de 2 ou 3 personnes : environ 1 200 à 1 600 mots hors code et références, avec au maximum quatre figures et tableaux principaux au total.</p>
   </section>
 
   <section class="resource-section resource-split" aria-labelledby="workflow-title">
@@ -7112,121 +7129,179 @@ display: none;
   <section class="resource-section" id="modele-qmd" aria-labelledby="qmd-title">
     <div class="resource-section__header">
       <h2 id="qmd-title" class="anchored">Modèle .qmd</h2>
-      <p>Ce modèle peut être adapté au jeu de données de votre équipe.</p>
+      <p>Cet aperçu correspond au fichier téléchargeable. Les blocs de code sont des emplacements à compléter; les exemples précédés de # doivent être adaptés avant de les activer.</p>
     </div>
     <div class="resource-code-card resource-code-card--light" aria-label="Gabarit Quarto du mini-rapport 1">
       <span>mini-rapport-1.qmd</span>
+      <!-- debut-modele-qmd -->
       <pre><code>---
-title: &quot;Mini-rapport 1&quot;
-author: &quot;Équipe : à compléter&quot;
+title: &quot;Mini-rapport 1 : titre de votre analyse&quot;
+author: &quot;Prénoms et noms des 2 ou 3 membres&quot;
+lang: fr
 format:
   html:
     embed-resources: true
+    toc: true
+    code-fold: true
 execute:
-  warning: false
   message: false
 ---
 
-## Identification
-
-- Équipe :
-- Membres :
-- Jeu de données :
-- Date :
-
-## Contribution de l&#39;équipe
-
-- Membre 1 :
-- Membre 2 :
-- Membre 3, si applicable :
-
-## Question d&#39;analyse
-
-Formuler la question que l&#39;analyse vise à éclairer.
-
-## Données
-
-Décrire l&#39;origine, le droit d&#39;utilisation, l&#39;unité d&#39;observation, les variables principales,
-les contrôles de qualité et les limites connues.
+&lt;!-- Gabarit à compléter. Il se rend avant l&#39;ajout des données, mais ne contient
+encore aucune analyse. Remplacez les indications par votre travail et supprimez
+les commentaires d&#39;aide devenus inutiles. Les exemples de code précédés de #
+ne s&#39;exécutent pas : adaptez-les avant de retirer #. --&gt;
 
 ```{r}
-# Load libraries
+#| label: configuration
+#| include: false
+
+# Charger explicitement les bibliothèques utilisées dans le rapport.
 library(tidyverse)
 library(janitor)
 library(broom)
-
-# Import data
-donnees_brutes &lt;- read_csv(&quot;data/votre_fichier.csv&quot;, show_col_types = FALSE)
-
-# Clean data
-donnees &lt;- donnees_brutes |&gt;
-  clean_names()
-
-glimpse(donnees)
 ```
 
-## Préparation
+## Question et décision
 
-Décrire les transformations importantes.
+À compléter : formulez une question précise, indiquez à qui s&#39;adresse l&#39;analyse
+et quelle décision elle peut éclairer.
+
+## Données et préparation
+
+À compléter : source et lien, producteur, droits d&#39;utilisation, caractère simulé
+le cas échéant, unité d&#39;observation, variable réponse quantitative et variables
+explicatives avec leurs unités. Indiquez les limites connues des données.
 
 ```{r}
-donnees_analyse &lt;- donnees |&gt;
-  filter(!is.na(variable_y), !is.na(variable_x))
-```
+#| label: importation
 
-## Exploration descriptive
+# Placez le fichier autorisé dans data/, puis adaptez ce chemin.
+# donnees_brutes &lt;- read_csv(&quot;data/nom_du_fichier.csv&quot;, show_col_types = FALSE)
+# donnees &lt;- donnees_brutes |&gt; clean_names()
+```
 
 ```{r}
-donnees_analyse |&gt;
-  summarise(
-    n = n(),
-    moyenne_y = mean(variable_y, na.rm = TRUE),
-    mediane_y = median(variable_y, na.rm = TRUE),
-    ecart_type_y = sd(variable_y, na.rm = TRUE)
-  )
+#| label: preparation
+
+# Examinez les types, valeurs manquantes, doublons et valeurs inhabituelles.
+# Construisez donnees_analyse après avoir justifié les traitements nécessaires.
+# Utilisez les mêmes observations pour les deux modèles comparés.
 ```
 
-## Visualisation
+À compléter : nombre de lignes avant et après préparation, contrôles réalisés,
+exclusions et transformations justifiées. Expliquez leur effet sur l&#39;analyse.
+
+## Exploration
 
 ```{r}
-donnees_analyse |&gt;
-  ggplot(aes(x = variable_x, y = variable_y)) +
-  geom_point() +
-  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
-  labs(
-    title = &quot;Relation entre variable_x et variable_y&quot;,
-    x = &quot;Variable explicative&quot;,
-    y = &quot;Variable réponse&quot;
-  ) +
-  theme_minimal()
-```
+#| label: resume-descriptif
 
-## Régression
+# Produisez un résumé ciblé des variables utiles à votre question.
+```
 
 ```{r}
-modele &lt;- lm(variable_y ~ variable_x, data = donnees_analyse)
+#| label: visualisation
 
-tidy(modele)
-glance(modele)
+# Produisez au moins une visualisation utile, avec titre, axes et unités.
 ```
 
-Comparer le modèle principal à un modèle simple de référence et présenter au moins un diagnostic des résidus.
+À compléter : décrivez les principaux constats et expliquez ce qu&#39;ils suggèrent
+pour la régression. Distinguez observation, association et causalité.
 
-## Interprétation
+## Régression et comparaison
 
-Interpréter le résultat principal en langage clair.
+À compléter : présentez un modèle simple de référence et une variante pertinente.
+Justifiez la forme des modèles en vous appuyant sur la question et l&#39;exploration.
 
-## Recommandation ou conclusion
+```{r}
+#| label: modeles
 
-Relier la conclusion à la question de départ.
+# Exemple de structure à adapter, si une courbure est pertinente :
+# modele_reference &lt;- lm(reponse ~ explicative, data = donnees_analyse)
+# modele_variante &lt;- lm(reponse ~ explicative + I(explicative^2),
+#                       data = donnees_analyse)
+# Les noms reponse et explicative doivent être remplacés par vos variables.
+# Une relation quadratique n&#39;est pas imposée : justifiez votre variante.
+```
 
-## Limites
+```{r}
+#| label: comparaison
 
-Nommer au moins deux limites de l&#39;analyse.
+# Comparez les modèles sur les mêmes observations et pour la même réponse.
+# Par exemple : broom::glance() fournit le R² d&#39;un modèle lm.
+# La RMSE d&#39;ajustement peut se calculer avec sqrt(mean(residuals(modele)^2)).
+# Le nom modele doit être remplacé par celui du modèle évalué.
+# Présentez une comparaison concise et identifiez le modèle retenu.
+```
+
+À compléter : comparez l&#39;ajustement, l&#39;interprétabilité et l&#39;utilité des modèles.
+Le modèle de référence peut être retenu. Le R² et la RMSE calculés sur les
+données d&#39;ajustement ne démontrent pas la performance sur de nouvelles données.
+Une séparation apprentissage/test n&#39;est pas obligatoire pour ce mini-rapport.
+
+### Interprétation des coefficients
+
+```{r}
+#| label: coefficients
+
+# Extrayez les coefficients utiles, par exemple avec broom::tidy().
+# Vous pouvez les présenter dans le texte pour éviter un tableau supplémentaire.
+```
+
+À compléter : interprétez au moins deux coefficients dans le contexte, avec
+leurs unités et leurs limites. Pour l&#39;ordonnée à l&#39;origine, précisez si zéro a
+un sens et appartient au domaine observé. Dans une relation quadratique,
+l&#39;effet de la variable dépend de son niveau; le terme au carré n&#39;est pas
+un effet constant à interpréter isolément.
+
+### Diagnostic des résidus
+
+```{r}
+#| label: diagnostic-residus
+
+# Pour le modèle retenu, produisez au moins un graphique de diagnostic.
+# Par exemple : résidus contre valeurs ajustées avec une ligne horizontale à 0.
+# broom::augment() fournit notamment .fitted et .resid pour un modèle lm.
+```
+
+À compléter : décrivez ce que montre le diagnostic et discutez une limite
+concrète du modèle. Reliez cette limite à la prudence de votre recommandation.
+
+## Recommandation, limites et suite
+
+À compléter : répondez à la question, proposez une recommandation proportionnée
+aux résultats, indiquez une incertitude ou une réserve importante et nommez
+la prochaine vérification à réaliser avant une décision réelle.
+
+## Références
+
+À compléter : sources des données et des ressources utilisées, avec les liens
+permettant de les retrouver.
+
+## Contributions
+
+- Membre 1, prénom et nom : une phrase décrivant sa contribution.
+- Membre 2, prénom et nom : une phrase décrivant sa contribution.
+- Membre 3, s&#39;il y a lieu : une phrase décrivant sa contribution.
 
 ## Déclaration d&#39;usage de l&#39;IA
 
-Compléter la déclaration si l&#39;IA a influencé le livrable. Sinon, écrire explicitement qu&#39;aucun usage d&#39;IA n&#39;a influencé le code, l&#39;analyse, l&#39;interprétation, la documentation ou le texte.</code></pre>
+À compléter : si une aide a influencé le code, l&#39;analyse, l&#39;interprétation,
+la documentation ou le texte, indiquez l&#39;outil, l&#39;usage précis, les vérifications
+réalisées et ce qui a été retenu ou corrigé. Suivez la déclaration du cours :
+&lt;https://aureliennicosiaulaval.github.io/MQT-2101/ressources/declaration-ia.html&gt;.
+
+Si aucun usage n&#39;a influencé le livrable, remplacez ce paragraphe par la mention :
+« Aucun usage d&#39;IA ayant influencé le livrable ».
+
+&lt;!-- Avant remise : environ 1 200 à 1 600 mots hors code et références;
+quatre figures et tableaux principaux au total au maximum. Remettez le QMD,
+le HTML autonome, les données autorisées ou leur script d&#39;importation,
+les éventuels scripts appelés et le README complété dans une archive ZIP.
+Vérifiez son rendu après extraction dans un autre dossier et redémarrage de R.
+Un seul membre dépose l&#39;archive pour toute l&#39;équipe dans Brio. --&gt;</code></pre>
+      <!-- fin-modele-qmd -->
     </div>
   </section>
 
@@ -7236,12 +7311,12 @@ Compléter la déclaration si l&#39;IA a influencé le livrable. Sinon, écrire 
       <p>Avant la remise, chaque élément ci-dessous devrait être vérifié par l&#39;équipe.</p>
     </div>
     <div class="resource-card-grid">
-      <article class="resource-card"><h3 class="anchored">Le rapport se rend</h3><p>Le fichier HTML final est produit sans erreur.</p></article>
+      <article class="resource-card"><h3 class="anchored">Le rapport se rend</h3><p>Après extraction du ZIP dans un autre dossier et redémarrage de R, le HTML est produit sans erreur.</p></article>
       <article class="resource-card"><h3 class="anchored">La question est claire</h3><p>La conclusion répond à la question annoncée.</p></article>
       <article class="resource-card"><h3 class="anchored">Le code est minimal</h3><p>Le rapport contient le code nécessaire, sans blocs inutiles.</p></article>
-      <article class="resource-card"><h3 class="anchored">La régression est interprétée</h3><p>Les coefficients importants sont expliqués en unités concrètes.</p></article>
+      <article class="resource-card"><h3 class="anchored">La régression est interprétée</h3><p>La comparaison des modèles, au moins deux coefficients et un diagnostic des résidus sont expliqués.</p></article>
       <article class="resource-card"><h3 class="anchored">Les limites sont présentes</h3><p>Les limites des données et de la méthode sont nommées.</p></article>
-      <article class="resource-card"><h3 class="anchored">L&#39;IA est déclarée</h3><p>La déclaration est complétée si l&#39;aide reçue a influencé le livrable.</p></article>
+      <article class="resource-card"><h3 class="anchored">Les contributions sont documentées</h3><p>Chaque membre décrit sa contribution; l&#39;usage de l&#39;IA ou son absence d&#39;influence est déclaré.</p></article>
     </div>
   </section>
 </div>
@@ -7728,7 +7803,7 @@ Compléter la déclaration si l&#39;IA a influencé le livrable. Sinon, écrire 
 <p>MQT-2101 - Université Laval</p>
 </div>
     <div class="nav-footer-center">
-       
+
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>
