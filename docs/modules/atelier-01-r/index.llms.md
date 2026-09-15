@@ -46,6 +46,8 @@ Ouvrez le [guide de la mission](../../modules/atelier-01-r/guide-atelier.llms.md
 | 8 | Vérification, Render et bilan initial | Rapport lisible, difficultés et aide utilisée indiquées |
 | 9 | Premier dépôt dans Brio | Dossier ZIP avec le QMD, le HTML et les données |
 
+Pour chaque version du rapport, un seul membre du binôme effectue le dépôt dans Brio. Le rapport doit porter les noms des deux membres.
+
 Ces repères permettent d’avancer ensemble. Si vous bloquez, demandez de l’aide en montrant votre tentative, le résultat obtenu et votre question.
 
 ## Production attendue

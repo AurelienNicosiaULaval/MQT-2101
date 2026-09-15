@@ -22,7 +22,7 @@ Travail en binômes, avec un rapport par binôme. Je vous accompagne pendant le 
 - Deux graphiques commentés et trois constats chiffrés.
 - Une priorité justifiée, une limite et une prochaine question.
 
-Déposez dans la boîte de dépôt Brio un ZIP contenant le `.qmd`, le `.html` et le dossier `data/`. Indiquez vos noms dans le rapport.
+Un seul membre du binôme dépose le ZIP dans Brio (`.qmd`, `.html` et dossier `data/`). Le rapport doit porter les noms des deux membres.
 
 Ouvrez le HTML pour vérifier son contenu. Le bilan sera complété après la rétroaction croisée.
 
@@ -61,7 +61,7 @@ Si un résultat vous semble incertain, proposez une vérification à effectuer.
 1.  Lisez la rétroaction reçue et vérifiez les points soulevés.
 2.  Corrigez le rapport. Dans le bilan, expliquez ce que vous avez modifié, ou pourquoi vous conservez un choix.
 3.  Relancez Render et vérifiez le HTML.
-4.  Redéposez le dossier révisé dans Brio, avec la rétroaction reçue.
+4.  Un seul membre redépose le dossier révisé dans Brio, avec la rétroaction reçue.
 
 Je vous donnerai ensuite un retour formatif sur le travail révisé et les points à consolider avant le mini-rapport 1.
 

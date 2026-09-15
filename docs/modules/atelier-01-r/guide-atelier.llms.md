@@ -163,7 +163,7 @@ Avant de terminer le laboratoire :
 1.  Vérifiez que le rapport répond à la mission. Dans le bilan, indiquez les difficultés rencontrées et l’aide utilisée; les commentaires des pairs seront ajoutés après leur réception.
 2.  Enregistrez le `.qmd`. Redémarrez R, puis cliquez sur Render sans exécuter de commandes préparatoires dans la Console.
 3.  Ouvrez le HTML produit et vérifiez les tableaux, les deux graphiques et la réponse à la mission.
-4.  Compressez le dossier complet, avec le `.qmd`, le `.html` et le dossier `data/` contenant le CSV. Déposez ce ZIP dans la boîte de dépôt Brio du laboratoire. Indiquez les noms des auteurs dans le rapport.
+4.  Compressez le dossier complet, avec le `.qmd`, le `.html` et le dossier `data/` contenant le CSV. Un seul membre du binôme dépose ce ZIP dans la boîte de dépôt Brio du laboratoire. Le rapport doit porter les noms des deux membres. Un seul dépôt est attendu par binôme.
 
 Si vous n’avez pas terminé, déposez les éléments réalisés et indiquez le blocage dans le bilan. Si le rendu échoue, montrez le premier message d’erreur pour recevoir de l’aide. L’objectif formatif est de repérer la prochaine étape qui vous permettra de progresser.
 
@@ -172,7 +172,7 @@ Si vous n’avez pas terminé, déposez les éléments réalisés et indiquez le
 1.  Lisez les commentaires reçus et vérifiez les points soulevés.
 2.  Corrigez le rapport et complétez le bilan : rétroaction reçue, changements apportés, choix conservés avec leur justification et point à retravailler.
 3.  Relancez Render et vérifiez le HTML révisé.
-4.  Redéposez dans Brio le dossier révisé, avec la rétroaction reçue, selon l’échéance annoncée dans la [présentation d’accueil](../../modules/atelier-01-r/presentation.llms.md#les-trois-échéances).
+4.  Un seul membre du binôme redépose dans Brio le dossier révisé, avec la rétroaction reçue, selon l’échéance annoncée dans la [présentation d’accueil](../../modules/atelier-01-r/presentation.llms.md#les-trois-échéances).
 
 L’enseignant fera ensuite une évaluation formative de votre travail révisé pour vous aider à préparer le [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md). Ce parcours ne compte pas dans la note finale.
 
