@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module03-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,107 +24,192 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-capsule-02-semaine-03
+#| label: preparation-capsule-02
 #| include: false
-
 library(tidyverse)
 
-data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
-  "data/campagnes_marketing_quebec.csv"
-} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
-  "../../data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
 }
-
-campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une décision concrète
-:::
-
 ::: {.question-line}
-Une pente positive estimée par R suffit-elle pour conclure?
+La relation peut-elle se résumer par une droite?
 :::
 
 ::: {.note-box}
-Non, pas à elle seule. Le graphique peut révéler une courbe, un groupe de régions qui se comporte autrement ou un point extrême que la pente seule masque. On regarde avant de calculer.
+Avant d’ajuster un modèle, le nuage de points révèle la forme de la relation et les écarts entre observations.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Lire un nuage de points avant d'ajuster un modèle.
-- Repérer la direction et la dispersion de la relation.
-- Identifier les cas où une droite pourrait être insuffisante.
+- Décrire la direction, la forme et la dispersion.
+- Lire une corrélation linéaire.
+- Repérer les limites d’un résumé numérique.
 :::
 
-## Trois questions visuelles
+## Lecture du nuage de points
+
+```{r}
+#| label: m03-c02-nuage
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| out-width: "88%"
+ggplot(campagnes, aes(budget_marketing, ventes)) +
+  geom_point(colour = "#0B4F6C", size = 2.7, alpha = 0.8) +
+  scale_x_continuous(labels = monnaie) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Budget marketing mensuel ($)", y = "Ventes mensuelles ($)") +
+  theme_minimal(base_size = 18)
+```
+
+::: {.notes}
+Chaque point est une observation mois-région. Demander d’abord le sens de la tendance, puis sa forme. Les ventes augmentent globalement avec le budget, mais deux campagnes de budget voisin peuvent avoir des ventes différentes. Ne pas ajouter de droite avant cette lecture.
+:::
+
+## Trois repères visuels
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-direction
+Direction
 :::
 ::: {.label}
-les points montent-ils ou descendent-ils?
+Association positive
 :::
 :::
 ::: {.metric}
 ::: {.value}
-forme
+Forme
 :::
 ::: {.label}
-la relation ressemble-t-elle à une droite?
+Tendance approximativement linéaire
 :::
 :::
 ::: {.metric}
 ::: {.value}
-dispersion
+Dispersion
 :::
 ::: {.label}
-les points sont-ils proches de la tendance?
+Des ventes différentes à budget voisin
 :::
 :::
 :::
 
-## Le nuage de points
+::: {.visual-note}
+Un point éloigné mérite une vérification, pas une suppression automatique.
+:::
+
+## La corrélation linéaire
+
+::: {.lead}
+$r$ décrit la direction et l’intensité de la relation linéaire.
+:::
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+$-1$
+:::
+::: {.label}
+Alignement décroissant
+:::
+:::
+::: {.metric}
+::: {.value}
+$0$
+:::
+::: {.label}
+Absence de relation linéaire
+:::
+:::
+::: {.metric}
+::: {.value}
+$+1$
+:::
+::: {.label}
+Alignement croissant
+:::
+:::
+:::
+
+::: {.visual-note}
+Sans unité. Symétrique en $x$ et $y$. Une relation courbe peut avoir une corrélation faible.
+:::
+
+## La corrélation dans ce fichier
 
 ```{r}
-#| label: capsule-02-nuage
-#| echo: true
-#| fig-width: 9
-#| fig-height: 4.4
-#| out-width: "100%"
+#| label: m03-c02-correlation
+cor(campagnes$budget_marketing, campagnes$ventes)
+```
 
+::: {.note-box}
+Ici, $r$ vaut environ `r nombre_fr(cor(campagnes$budget_marketing, campagnes$ventes), 3)` : l’association linéaire est positive et marquée.
+:::
+
+::: {.notes}
+Le signe renseigne sur le sens, et la valeur absolue sur la proximité d’un alignement. Une corrélation élevée ne prouve ni la causalité ni la validité des futures prédictions.
+:::
+
+## Les régions dans le graphique
+
+```{r}
+#| label: m03-c02-regions
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| out-width: "88%"
 ggplot(campagnes, aes(budget_marketing, ventes)) +
-  geom_point(alpha = 0.6, color = "#0B4F6C") +
-  geom_smooth(method = "lm", se = FALSE, color = "#E63946") +
-  scale_x_continuous(labels = scales::label_number(big.mark = " ")) +
-  scale_y_continuous(labels = scales::label_number(big.mark = " ")) +
-  labs(x = "Budget marketing", y = "Ventes") +
-  theme_minimal(base_size = 14)
+  geom_point(aes(colour = region), size = 2.6, alpha = 0.85) +
+  scale_x_continuous(labels = monnaie) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Budget marketing mensuel ($)", y = "Ventes mensuelles ($)",
+       colour = "Région") +
+  theme_minimal(base_size = 17) +
+  theme(legend.position = "bottom")
+```
+
+::: {.notes}
+Les couleurs permettent de situer les régions dans le nuage. On voit un chevauchement des budgets et des ventes. Une corrélation globale ne résume pas nécessairement les relations au sein de chaque région. Nous reviendrons sur ces différences avec les résidus.
+:::
+
+## Le code du graphique
+
+```{r}
+#| label: m03-c02-code
+#| eval: false
+ggplot(campagnes, aes(budget_marketing, ventes)) +
+  geom_point(aes(colour = region), alpha = 0.8) +
+  labs(x = "Budget marketing mensuel ($)",
+       y = "Ventes mensuelles ($)", colour = "Région") +
+  theme_minimal()
 ```
 
 ::: {.visual-note}
-La droite résume la tendance moyenne; ce sont les points qui disent si le résumé est crédible.
-:::
-
-## Pièges fréquents
-
-::: {.keypoints}
-- conclure seulement à partir de la pente;
-- ignorer un groupe ou une région qui se comporte autrement;
-- oublier de regarder les points extrêmes.
+L’importation et le code complet figurent dans les démonstrations R.
 :::
 
 ## À retenir
@@ -133,7 +220,7 @@ La droite résume la tendance moyenne; ce sont les points qui disent si le résu
 1
 :::
 ::: {.label}
-Le graphique vient avant le modèle.
+Le graphique avant le calcul
 :::
 :::
 ::: {.metric}
@@ -141,7 +228,7 @@ Le graphique vient avant le modèle.
 2
 :::
 ::: {.label}
-La droite est un résumé, pas la réalité.
+Une corrélation sans unité
 :::
 :::
 ::: {.metric}
@@ -149,26 +236,21 @@ La droite est un résumé, pas la réalité.
 3
 :::
 ::: {.label}
-La dispersion annonce déjà la prudence de l'interprétation.
+Le contexte reste nécessaire
 :::
 :::
 :::
-
 
 ## Production autonome 3.2
 
 ::: {.lead}
-Décrivez le nuage de points observé entre `budget_marketing` et `ventes`.
-:::
-
-::: {.keypoints}
-Précisez la direction, la dispersion et une phrase sur ce que le graphique ne permet pas de conclure.
+Produisez le nuage budget-ventes et décrivez sa direction, sa forme, sa dispersion et une limite.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- La pente est interprétée avec ses variables et ses unités.
-- J'ai distingué erreur du modèle et résidu observé.
-- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
+- Mes axes nomment les variables et les dollars.
+- J’ai décrit les points avant de citer la corrélation.
+- Je n’ai pas transformé la corrélation en preuve causale.
 :::

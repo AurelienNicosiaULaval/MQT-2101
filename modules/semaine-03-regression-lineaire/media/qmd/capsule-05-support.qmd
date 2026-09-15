@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module03-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,96 +24,182 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-capsule-05-semaine-03
+#| label: preparation-capsule-05
 #| include: false
-
 library(tidyverse)
 
-data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
-  "data/campagnes_marketing_quebec.csv"
-} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
-  "../../data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
-}
-
-campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
 modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une décision concrète
-:::
-
 ::: {.question-line}
-Un R² élevé garantit-il un bon modèle?
+La droite se trompe-t-elle de la même façon partout?
 :::
 
 ::: {.note-box}
-Non. Une droite peut afficher un bon ajustement global tout en commettant des erreurs systématiques sur une partie des données. Les résidus révèlent ces erreurs cachées avant qu'elles ne fragilisent une recommandation.
+Une tendance globale peut masquer des écarts réguliers selon la région. Les résidus permettent de les examiner.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Définir un résidu.
-- Produire un graphique de diagnostic simple.
-- Repérer les signes d'un modèle fragile.
+- Calculer les résidus et comprendre leur signe.
+- Lire un graphique de diagnostic.
+- Examiner les écarts selon la région.
 :::
 
-## Définition
-
-::: {.lead}
-Un résidu est l'écart entre la valeur observée et la valeur prédite :
-:::
-
-$$\text{résidu} = y - \hat{y}.$$
-
-::: {.note-box}
-Les résidus indiquent où la droite se trompe. Une structure claire peut signaler qu'un modèle linéaire simple est insuffisant.
-:::
-
-## Le graphique des résidus
+## Du modèle aux résidus
 
 ```{r}
-#| label: capsule-05-residus
-#| echo: true
-#| fig-width: 9
-#| fig-height: 4.4
-#| out-width: "100%"
-
+#| label: m03-c05-calcul
 resultats <- campagnes |>
   mutate(
     ventes_predites = fitted(modele),
-    residus = residuals(modele)
+    residu = residuals(modele)
   )
-
-ggplot(resultats, aes(ventes_predites, residus)) +
-  geom_point(alpha = 0.6, color = "#0B4F6C") +
-  geom_hline(yintercept = 0, color = "#E63946", linewidth = 1) +
-  labs(x = "Ventes prédites", y = "Résidus") +
-  theme_minimal(base_size = 14)
 ```
 
-## Ce qu'on espère voir
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Résidu positif
+:::
+::: {.text}
+Ventes observées au-dessus de la droite : sous-estimation.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Résidu négatif
+:::
+::: {.text}
+Ventes observées sous la droite : surestimation.
+:::
+:::
+:::
 
-::: {.keypoints}
-- des résidus répartis autour de zéro;
-- pas de courbure évidente;
-- pas d'éventail qui s'élargit;
-- pas d'observation isolée qui domine tout.
+## Les résidus selon les ventes prédites
+
+```{r}
+#| label: m03-c05-diagnostic
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| out-width: "88%"
+ggplot(resultats, aes(ventes_predites, residu)) +
+  geom_hline(yintercept = 0, colour = "#E30513", linewidth = 0.8) +
+  geom_point(colour = "#0B4F6C", size = 2.7, alpha = 0.8) +
+  scale_x_continuous(labels = monnaie) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Ventes prédites ($)", y = "Résidu ($)") +
+  theme_minimal(base_size = 18)
+```
+
+::: {.notes}
+Les signes sont répartis autour de zéro et on ne voit pas de courbure nette dans ce graphique. Cela ne suffit pas à valider le modèle. Avec une ordonnée et les moindres carrés, la moyenne globale des résidus est déjà nulle par construction, à l’arrondi numérique près.
+:::
+
+## Les signes à rechercher
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Courbure
+:::
+::: {.text}
+La moyenne pourrait être mal décrite par une droite.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Éventail
+:::
+::: {.text}
+La dispersion pourrait varier avec le niveau des ventes.
+:::
+:::
 :::
 
 ::: {.visual-note}
-Un coefficient significatif ou un R² élevé ne remplace jamais l'examen des résidus.
+Un point isolé appelle une vérification. Son influence ne se déduit pas du seul résidu.
+:::
+
+::: {.notes}
+Un point peut modifier la droite parce que son budget est très éloigné des autres : c’est un effet de levier. Les diagnostics d’influence sont un prolongement. Ici, on évite de supprimer automatiquement une observation.
+:::
+
+## La moyenne des résidus par région
+
+```{r}
+#| label: m03-c05-regions
+#| echo: false
+bilan_regions <- resultats |>
+  group_by(region) |>
+  summarise(residu_moyen = mean(residu), .groups = "drop")
+bilan_regions |>
+  mutate(residu_moyen = round(residu_moyen)) |>
+  knitr::kable(col.names = c("Région", "Résidu moyen ($)"))
+```
+
+::: {.visual-note}
+Capitale-Nationale : sous-estimation moyenne. Outaouais : surestimation moyenne.
+:::
+
+::: {.notes}
+Les résidus moyens vont d’environ moins 5 066 dollars en Outaouais à plus 5 676 dollars en Capitale-Nationale. Ce sont des écarts descriptifs sur douze mois par région, pas un test d’un effet régional. Le modèle ignore aussi la saison et le canal.
+:::
+
+## Le code du diagnostic par région
+
+```{r}
+#| label: m03-c05-code
+#| eval: false
+resultats |>
+  group_by(region) |>
+  summarise(
+    observations = n(),
+    residu_moyen = mean(residu),
+    .groups = "drop"
+  )
+```
+
+::: {.visual-note}
+Le graphique résidus-valeurs prédites et ce tableau répondent à des questions complémentaires.
+:::
+
+## Résultats du diagnostic
+
+::: {.lead}
+La droite décrit la tendance globale, mais les écarts régionaux méritent une analyse complémentaire.
+:::
+
+::: {.note-box}
+Les mêmes régions sont observées sur plusieurs mois. Ce graphique seul ne vérifie pas l’indépendance des erreurs.
+:::
+
+::: {.notes}
+Faire le lien entre ce constat et les intervalles de la capsule précédente. Une analyse régionale et temporelle serait nécessaire avant une utilisation opérationnelle. Ne pas conclure que la région cause l’écart.
 :::
 
 ## À retenir
@@ -122,7 +210,7 @@ Un coefficient significatif ou un R² élevé ne remplace jamais l'examen des r�
 1
 :::
 ::: {.label}
-Les résidus gardent la trace des erreurs du modèle.
+Un résidu signé
 :::
 :::
 ::: {.metric}
@@ -130,7 +218,7 @@ Les résidus gardent la trace des erreurs du modèle.
 2
 :::
 ::: {.label}
-Un diagnostic visuel protège d'une interprétation trop rapide.
+Des motifs à rechercher
 :::
 :::
 ::: {.metric}
@@ -138,26 +226,21 @@ Un diagnostic visuel protège d'une interprétation trop rapide.
 3
 :::
 ::: {.label}
-Une droite utile reste cohérente avec les données.
+Un contexte à vérifier
 :::
 :::
 :::
-
 
 ## Production autonome 3.5
 
 ::: {.lead}
-Décrivez votre lecture d'un graphique résidus contre valeurs prédites.
-:::
-
-::: {.keypoints}
-Nommez ce que vous regardez : centrage, courbure, éventail et point isolé, avant de faire une recommandation.
+Produisez le graphique des résidus et le tableau par région. Rédigez un constat sur chacun, puis une limite.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- La pente est interprétée avec ses variables et ses unités.
-- J'ai distingué erreur du modèle et résidu observé.
-- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
+- Mes axes indiquent les dollars.
+- J’ai relié le signe des résidus à une sous-estimation ou une surestimation.
+- Je n’ai pas déclaré le modèle valide sur la seule moyenne nulle des résidus.
 :::

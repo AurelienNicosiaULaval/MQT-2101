@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module03-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,120 +24,154 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
+```{r}
+#| label: preparation-capsule-01
+#| include: false
+library(tidyverse)
+
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+```
+
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une décision concrète
-:::
-
 ::: {.question-line}
-Le budget marketing est-il associé à des ventes plus élevées, ou les deux variables varient-elles ensemble pour une autre raison?
+Que peut-on apprendre du lien entre budget et ventes?
 :::
 
 ::: {.note-box}
-La direction veut justifier le budget de l'an prochain. Avant d'affirmer que « plus de budget = plus de ventes », il faut poser la question avec les bons mots : une association moyenne, pas une cause prouvée.
+Une direction prépare son prochain budget marketing. Elle veut quantifier la relation observée avec les ventes.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Distinguer question d'affaires et question statistique.
-- Identifier la variable réponse et la variable explicative.
-- Éviter une formulation causale trop rapide.
+- Formuler une question statistique.
+- Identifier les variables et leurs unités.
+- Distinguer association et causalité.
 :::
 
-## Deux rôles différents
+## Le cas étudié
 
-::: {.concept-grid}
-::: {.concept-card .accent}
-::: {.tag}
-Variable réponse
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+60
 :::
-::: {.text}
-`ventes` : ce que l'on veut expliquer ou prédire.
+::: {.label}
+observations mois-région
 :::
 :::
-::: {.concept-card}
-::: {.tag}
-Variable explicative
+::: {.metric}
+::: {.value}
+5
 :::
-::: {.text}
-`budget_marketing` : la variable utilisée pour résumer la relation.
+::: {.label}
+régions québécoises
+:::
+:::
+::: {.metric}
+::: {.value}
+12
+:::
+::: {.label}
+mois en 2025
 :::
 :::
 :::
 
 ::: {.visual-note}
-Variables de contexte qui peuvent modifier l'interprétation :
+Données simulées : une campagne régionale observée pendant un mois. Aucune organisation réelle.
 :::
 
-::: {.data-strip}
-::: {.data-field}
-::: {.name}
-region
-:::
-::: {.value}
-région
-:::
-:::
-::: {.data-field}
-::: {.name}
-canal
-:::
-::: {.value}
-canal de campagne
-:::
-:::
-::: {.data-field}
-::: {.name}
-saison
-:::
-::: {.value}
-période
-:::
-:::
-::: {.data-field}
-::: {.name}
-rabais
-:::
-::: {.value}
-niveau de rabais
-:::
-:::
-::: {.data-field}
-::: {.name}
-visites_site
-:::
-::: {.value}
-trafic web
-:::
-:::
+::: {.notes}
+Il y a douze observations par région. Une ligne ne représente ni un client ni une région différente. Le budget et les ventes sont des montants mensuels en dollars canadiens. Les régions portent des noms réels, mais les campagnes sont fictives.
 :::
 
-## Bien formuler la question
+## Les variables et leurs rôles
 
-::: {.statement-grid}
-::: {.statement-card .acceptable}
+::: {.concept-grid}
+::: {.concept-card}
 ::: {.tag}
-Formulation prudente
+Réponse : ventes
 :::
 ::: {.text}
-Les ventes moyennes sont-elles plus élevées lorsque le budget marketing est plus élevé?
+Montant mensuel des ventes, en dollars.
 :::
 :::
-::: {.statement-card .warning}
+::: {.concept-card}
 ::: {.tag}
-À éviter
+Explicative : budget_marketing
 :::
 ::: {.text}
-Le budget marketing cause-t-il l'augmentation des ventes? (exigerait un plan d'étude causal)
+Budget marketing mensuel, en dollars.
 :::
 :::
+:::
+
+::: {.visual-note}
+La région, la saison et le canal de campagne donnent le contexte.
+:::
+
+::: {.notes}
+La variable explicative sert à décrire la variation moyenne de la réponse. Son nom ne prouve pas qu’elle agit sur la réponse. En opérations, on pourrait étudier le temps moyen de production selon la taille d’un lot : les rôles statistiques seraient les mêmes.
+:::
+
+## La question statistique
+
+::: {.question-line}
+Dans ces données, comment les ventes moyennes varient-elles selon le budget marketing?
+:::
+
+::: {.note-box}
+Comparer des budgets différents, pendant un mois, dans les régions observées.
+:::
+
+::: {.notes}
+Insister sur « en moyenne ». On cherche une tendance commune à plusieurs observations, pas une règle exacte pour chaque campagne.
+:::
+
+## La portée de la réponse
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Association
+:::
+::: {.text}
+Les campagnes ayant un budget plus élevé ont-elles des ventes moyennes plus élevées?
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Causalité
+:::
+::: {.text}
+Que deviendraient les ventes si l’on modifiait le budget, toutes choses pertinentes étant comparables?
+:::
+:::
+:::
+
+::: {.notes}
+Une demande attendue plus forte peut conduire à augmenter le budget et s’accompagner de ventes plus élevées. Une association ne permet donc pas à elle seule d’attribuer l’écart de ventes au budget. Des données expérimentales ou un plan d’étude approprié seraient nécessaires pour une interprétation causale crédible.
 :::
 
 ## À retenir
@@ -146,7 +182,7 @@ Le budget marketing cause-t-il l'augmentation des ventes? (exigerait un plan d'�
 1
 :::
 ::: {.label}
-Une régression répond à une question structurée.
+Une question précise
 :::
 :::
 ::: {.metric}
@@ -154,7 +190,7 @@ Une régression répond à une question structurée.
 2
 :::
 ::: {.label}
-Variable réponse et variable explicative ne jouent pas le même rôle.
+Des rôles et des unités
 :::
 :::
 ::: {.metric}
@@ -162,26 +198,21 @@ Variable réponse et variable explicative ne jouent pas le même rôle.
 3
 :::
 ::: {.label}
-La prudence commence dès la formulation.
+Une limite causale
 :::
 :::
 :::
-
 
 ## Production autonome 3.1
 
 ::: {.lead}
-Rédigez la question d'analyse en une phrase.
-:::
-
-::: {.keypoints}
-Indiquez ensuite la variable réponse, la variable explicative et une variable de contexte qui pourrait modifier l'interprétation.
+Rédigez la question sur le budget et les ventes. Nommez la réponse, la variable explicative et une variable de contexte.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- La pente est interprétée avec ses variables et ses unités.
-- J'ai distingué erreur du modèle et résidu observé.
-- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
+- J’ai précisé qu’une ligne correspond à un mois et une région.
+- J’ai donné les unités des deux variables.
+- Ma question porte sur une association moyenne.
 :::

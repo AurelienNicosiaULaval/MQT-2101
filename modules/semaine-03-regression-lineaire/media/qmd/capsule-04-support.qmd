@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module03-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,114 +24,226 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-capsule-04-semaine-03
+#| label: preparation-capsule-04
 #| include: false
-
 library(tidyverse)
 
-data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
-  "data/campagnes_marketing_quebec.csv"
-} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
-  "../../data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
 }
-
-campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une décision concrète
-:::
-
 ::: {.question-line}
-Votre sortie R affiche une pente d'environ 13,58. Que signifie cette valeur pour la direction?
+Comment retrouver la droite à partir du fichier CSV?
 :::
 
 ::: {.note-box}
-Recopier un coefficient ne décide rien. Le travail utile consiste à traduire 13,58 en une phrase d'affaires : environ 13,58 dollars de ventes moyennes supplémentaires par dollar de budget, dans ces données et selon ce modèle, sans en déduire un effet causal.
+Le calcul doit pouvoir être repris dans un projet R, du fichier de données aux coefficients interprétés.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Ajuster une régression avec `lm()`.
-- Lire les coefficients du modèle.
-- Traduire la sortie R en phrases interprétables.
+- Ajuster la droite avec lm().
+- Lire les coefficients dans R.
+- Présenter une estimation avec son incertitude.
+- Formuler H₀ et interpréter une valeur p.
 :::
 
-## Ajuster le modèle
+## Le projet R
+
+::: {.lead}
+Projet : `regression-marketing`
+:::
 
 ```{r}
-#| label: capsule-04-modele
-#| echo: true
+#| label: m03-c04-import
+#| eval: false
+library(tidyverse)
 
+campagnes <- read_csv(
+  "data/campagnes_marketing_quebec.csv",
+  show_col_types = FALSE
+)
+
+colSums(is.na(campagnes[c("ventes", "budget_marketing")]))
+```
+
+::: {.visual-note}
+60 lignes, aucune valeur manquante dans les deux variables du modèle.
+:::
+
+::: {.notes}
+Dans RStudio, créer le projet puis le dossier data. Le rapport regression_marketing.qmd se trouve à la racine du projet. Les démonstrations détaillent ces étapes. Les variables ont été inspectées avant ce calcul. Avec des valeurs manquantes, il faudrait expliciter les lignes utilisées.
+:::
+
+## L’ajustement avec lm()
+
+```{r}
+#| label: m03-c04-ajustement
 modele <- lm(ventes ~ budget_marketing, data = campagnes)
 ```
 
 ::: {.concept-grid}
 ::: {.concept-card}
 ::: {.tag}
-À gauche du ~
+À gauche de ~
 :::
 ::: {.text}
-la variable réponse : `ventes`.
+La réponse : ventes
 :::
 :::
 ::: {.concept-card}
 ::: {.tag}
-À droite du ~
+À droite de ~
 :::
 ::: {.text}
-la variable explicative : `budget_marketing`.
+La variable explicative : budget_marketing
 :::
 :::
 :::
 
-## Lire les coefficients
+::: {.visual-note}
+La commande conserve le modèle dans l’objet `modele`.
+:::
+
+## Les coefficients calculés
 
 ```{r}
-#| label: capsule-04-coefs
-#| echo: false
-
-tibble::tibble(
-  Terme = c("Ordonnée à l'origine", "Pente (budget_marketing)"),
-  Estimation = round(coef(modele), 2)
-) |>
-  knitr::kable()
+#| label: m03-c04-coef
+coef(modele)
 ```
 
 ::: {.visual-note}
-La ligne `budget_marketing` est la pente estimée : la variation moyenne des ventes par unité de budget.
+`(Intercept)` : ordonnée à l’origine. `budget_marketing` : pente.
 :::
 
-## Traduire en langage d'affaires
+::: {.note-box}
+La droite estimée : ventes prédites = `r nombre_fr(coef(modele)[1], 2)` + `r nombre_fr(coef(modele)[2], 2)` × budget.
+:::
 
-::: {.statement-grid}
-::: {.statement-card .acceptable}
-::: {.tag}
-Réponse utile
+## L’interprétation dans les bonnes unités
+
+```{r}
+#| label: m03-c04-pente1000
+coef(modele)[["budget_marketing"]] * 1000
+```
+
+::: {.lead}
+Une différence de 1 000 $ de budget est associée à environ `r nombre_fr(1000 * coef(modele)[2])` $ de ventes moyennes supplémentaires selon le modèle.
 :::
-::: {.text}
-En moyenne, chaque dollar de budget supplémentaire est associé à X ventes de plus, dans la plage observée.
+
+## L’incertitude sur la pente
+
+```{r}
+#| label: m03-c04-ic
+confint(modele, "budget_marketing", level = 0.95)
+```
+
+::: {.visual-note}
+Intervalle de confiance classique à 95 % : de `r nombre_fr(confint(modele)[2,1], 2)` à `r nombre_fr(confint(modele)[2,2], 2)` $ de ventes par dollar de budget.
 :::
+
+::: {.notes}
+Ce calcul illustre l’incertitude d’estimation sous le modèle classique. La méthode repose sur des erreurs indépendantes, de variance constante et, pour cet intervalle exact, normales. Sur des échantillons répétés sous ces hypothèses, 95 % des intervalles construits ainsi couvriraient la pente. Ce n’est pas un intervalle de ventes pour une nouvelle campagne.
 :::
-::: {.statement-card .warning}
-::: {.tag}
-À éviter
+
+## Les hypothèses restent à examiner
+
+::: {.lead}
+Relation moyenne linéaire, erreurs indépendantes, dispersion constante.
 :::
-::: {.text}
-« Le coefficient est 13,58 » : un nombre sans contexte ni unité ne décide rien.
+
+::: {.note-box}
+Ici, les mêmes régions reviennent chaque mois. Les résidus et le contexte doivent être examinés avant de faire confiance aux intervalles.
 :::
+
+::: {.notes}
+La normalité des erreurs intervient dans les intervalles classiques exacts. Elle n’est pas requise pour calculer la droite des moindres carrés. Les observations répétées ne prouvent pas une dépendance, mais empêchent de la supposer absente sans examen. Les intervalles présentés sont des calculs sous hypothèses, pas une validation de celles-ci.
 :::
+
+## Poser la question du test
+
+$$H_0 : \beta_1 = 0 \qquad H_1 : \beta_1 \ne 0$$
+
+::: {.lead}
+H₀ est l’hypothèse nulle : la pente de population est nulle.
+:::
+
+::: {.note-box}
+Le test porte sur une association linéaire dans le modèle. Il ne démontre pas un effet causal du budget.
+:::
+
+::: {.notes}
+H₁ est l’hypothèse alternative bilatérale : une pente positive ou négative. La valeur observée de la pente estimée peut s’écarter de zéro, même si la pente de population est nulle. Le test compare cet écart à son incertitude d’estimation.
+:::
+
+## Lire la ligne de la pente
+
+```{r}
+#| label: test-pente-capsule-04
+#| echo: true
+summary(modele)$coefficients["budget_marketing", ]
+```
+
+::: {.visual-note}
+Estimate : pente estimée. Std. Error : erreur-type. t value : statistique du test. Pr(>|t|) : valeur p bilatérale.
+:::
+
+$$t = \frac{\widehat{\beta}_1 - 0}{\operatorname{SE}(\widehat{\beta}_1)}$$
+
+::: {.notes}
+Ici, t vaut environ 16,49. En régression simple avec ordonnée et n observations indépendantes, sa loi sous H₀ est une loi de Student à n − 2 degrés de liberté, sous les hypothèses classiques incluant la normalité. Une grande valeur absolue de t traduit un écart à zéro important par rapport à l’erreur-type.
+:::
+
+## Que signifie la valeur p?
+
+::: {.lead}
+Sous H₀ et les hypothèses du modèle, la valeur p est la probabilité d’obtenir une statistique au moins aussi extrême que celle observée.
+:::
+
+::: {.note-box}
+Pour ce test bilatéral, « aussi extrême » signifie aussi loin de zéro, dans l’un ou l’autre sens.
+:::
+
+::: {.visual-note}
+Une petite valeur p indique une moins bonne compatibilité des données avec H₀. Ce n’est pas la probabilité que H₀ soit vraie.
+:::
+
+## Décider sous des hypothèses
+
+::: {.keypoints}
+- Au seuil fixé α = 0,05, on rejette H₀ si p ≤ 0,05.
+- Sinon, on ne rejette pas H₀ : on n’a pas prouvé que la pente est nulle.
+- Ici, p < 0,001; le calcul suppose les hypothèses classiques valides.
+:::
+
+::: {.note-box}
+La valeur p ne mesure ni l’ampleur de l’association ni son importance pratique. Il faut aussi lire la pente, son intervalle et les diagnostics.
+:::
+
+::: {.notes}
+Pour le test bilatéral et l’intervalle t correspondants, zéro est hors de l’intervalle à 95 % lorsque p est inférieur à 0,05. Les mêmes régions reviennent chaque mois : l’indépendance reste à examiner. Ne pas présenter une petite valeur p comme une validation du modèle ou comme une recommandation d’augmenter le budget.
 :::
 
 ## À retenir
@@ -140,7 +254,7 @@ En moyenne, chaque dollar de budget supplémentaire est associé à X ventes de 
 1
 :::
 ::: {.label}
-`lm()` ajuste la droite.
+Un modèle reproductible
 :::
 :::
 ::: {.metric}
@@ -148,7 +262,7 @@ En moyenne, chaque dollar de budget supplémentaire est associé à X ventes de 
 2
 :::
 ::: {.label}
-Les coefficients donnent pente et ordonnée.
+Des coefficients interprétés
 :::
 :::
 ::: {.metric}
@@ -156,26 +270,21 @@ Les coefficients donnent pente et ordonnée.
 3
 :::
 ::: {.label}
-Une réponse utile traduit les coefficients en interprétation.
+Une incertitude sous hypothèses
 :::
 :::
 :::
-
 
 ## Production autonome 3.4
 
 ::: {.lead}
-Ajustez le modèle et interprétez-le.
-:::
-
-::: {.keypoints}
-Écrivez le code `lm()`, puis deux phrases : une pour la pente (avec l'unité) et une pour la limite d'interprétation.
+Ajustez la droite. Présentez la pente pour 1 000 $ et son intervalle classique. Formulez H₀ sur la pente et interprétez la valeur p sous les hypothèses du modèle.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- La pente est interprétée avec ses variables et ses unités.
-- J'ai distingué erreur du modèle et résidu observé.
-- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
+- La formule place les ventes à gauche de ~.
+- Mes valeurs correspondent à coef(modele) et confint(modele).
+- J’ai indiqué une hypothèse ou une limite à vérifier.
 :::

@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module03-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,97 +24,222 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
+```{r}
+#| label: preparation-capsule-03
+#| include: false
+library(tidyverse)
+
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+```
+
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une décision concrète
-:::
-
 ::: {.question-line}
-Que signifie, pour la direction, une pente estimée à 13,58 dollars de ventes par dollar de budget?
+Comment traduire une droite en une comparaison utile?
 :::
 
 ::: {.note-box}
-Un coefficient n'éclaire une décision que si on le traduit en unités réelles. Dans ces données, un dollar de budget supplémentaire est associé à environ 13,58 dollars de ventes moyennes supplémentaires. Mal interpréter la pente ou l'ordonnée à l'origine mène à des recommandations absurdes.
+La direction compare deux budgets séparés de 1 000 $. La pente donne la différence de ventes moyennes estimée par le modèle.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Lire l'équation du modèle linéaire simple.
-- Interpréter la pente dans les unités du problème.
-- Distinguer valeur observée, valeur prédite et erreur.
+- Lire le modèle linéaire simple.
+- Interpréter la pente et l’ordonnée à l’origine.
+- Comprendre le résidu et les moindres carrés.
 :::
 
-## Le modèle
+## Le modèle et la moyenne
 
-::: {.lead}
-Le modèle linéaire simple résume la relation moyenne entre une variable réponse `y` et une variable explicative `x` :
-:::
+$$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
 
-$$Y = \beta_0 + \beta_1 x + \varepsilon.$$
+$$\mathrm{E}(Y_i \mid x_i) = \beta_0 + \beta_1 x_i$$
 
 ::: {.visual-note}
-Le terme $\varepsilon$ représente l'écart aléatoire non observé dans le modèle de population. Après ajustement, le résidu $e_i = y_i - \widehat{y}_i$ est l'écart calculé pour l'observation $i$.
+$x_i$ : budget. $Y_i$ : ventes. $\varepsilon_i$ : écart aléatoire non observé.
 :::
 
-## Lire les deux coefficients
+::: {.notes}
+La seconde égalité suppose que l’erreur a une moyenne nulle pour chaque valeur de x. Les paramètres bêta décrivent le modèle de population. Les montants sont en dollars. On décrit une moyenne conditionnelle, sans affirmer qu’une hausse imposée du budget aurait le même effet.
+:::
+
+## La droite estimée
+
+$$\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$$
 
 ::: {.concept-grid}
-::: {.concept-card .accent}
+::: {.concept-card}
 ::: {.tag}
-Pente (β₁)
+Pente estimée
 :::
 ::: {.text}
-Variation moyenne des `ventes` lorsque le `budget_marketing` augmente d'une unité. La pente répond à la question principale.
+Différence de ventes moyennes estimée pour 1 $ de budget supplémentaire.
 :::
 :::
 ::: {.concept-card}
 ::: {.tag}
-Ordonnée à l'origine (β₀)
+Ordonnée à l’origine estimée
 :::
 ::: {.text}
-Ventes prédites lorsque le budget vaut zéro. C'est utile pour tracer la droite, mais à commenter avec prudence si zéro est hors contexte.
+Ventes prédites lorsque le budget vaut 0 $.
+:::
+:::
+:::
+
+::: {.notes}
+Le chapeau distingue une estimation obtenue avec les données du paramètre inconnu. La pente est en dollars de ventes par dollar de budget. L’ordonnée est en dollars de ventes.
+:::
+
+## Une comparaison de 1 000 $
+
+::: {.lead}
+Pente estimée : `r nombre_fr(coef(modele)[2], 2)` $ de ventes par dollar de budget.
+:::
+
+::: {.note-box}
+Pour 1 000 $ de budget supplémentaire : environ `r nombre_fr(1000 * coef(modele)[2])` $ de ventes moyennes supplémentaires selon la droite.
+:::
+
+::: {.visual-note}
+Une association estimée dans ces données simulées.
+:::
+
+::: {.notes}
+Les coefficients seront obtenus dans R à la capsule suivante. Multiplier par 1 000 change l’échelle de la comparaison, pas le modèle. Il s’agit de ventes, pas d’un profit ou d’un rendement net.
+:::
+
+## Le budget nul est hors de la plage observée
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+2 497 $
+:::
+::: {.label}
+Budget minimal observé
+:::
+:::
+::: {.metric}
+::: {.value}
+8 857 $
+:::
+::: {.label}
+Budget maximal observé
+:::
+:::
+::: {.metric}
+::: {.value}
+0 $
+:::
+::: {.label}
+Extrapolation
+:::
+:::
+:::
+
+::: {.note-box}
+L’ordonnée estimée vaut `r nombre_fr(coef(modele)[1])` $. Son interprétation à budget nul n’est pas appuyée par ces observations.
+:::
+
+::: {.notes}
+Conserver l’ordonnée dans le modèle. Le fait que zéro soit hors de la plage observée ne justifie pas de forcer la droite à passer par l’origine.
+:::
+
+## Un résidu se calcule sur une observation
+
+$$e_i = y_i - \widehat{y}_i$$
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+121 915 $
+:::
+::: {.label}
+Ventes observées
+:::
+:::
+::: {.metric}
+::: {.value}
+108 888 $
+:::
+::: {.label}
+Ventes prédites
+:::
+:::
+::: {.metric}
+::: {.value}
++13 027 $
+:::
+::: {.label}
+Résidu, après arrondi
 :::
 :::
 :::
 
 ::: {.visual-note}
-Toujours préciser l'unité de la pente : dollars, milliers de dollars, etc.
+Capitale-Nationale, janvier 2025. Budget : 5 814 $.
 :::
 
-## Observée, prédite, erreur
+::: {.notes}
+Le modèle sous-estime ici les ventes. Les calculs utilisent les coefficients non arrondis. Le résidu est calculable, tandis que l’erreur epsilon du modèle de population reste inconnue.
+:::
 
-::: {.metric-grid}
-::: {.metric}
-::: {.value}
-observée
+## Le résidu dans le graphique
+
+```{r}
+#| label: m03-c03-residu
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| out-width: "88%"
+ggplot(campagnes, aes(budget_marketing, ventes)) +
+  geom_point(colour = "grey65", size = 2) +
+  geom_abline(intercept = coef(modele)[1], slope = coef(modele)[2],
+              colour = "#0B4F6C", linewidth = 1) +
+  geom_segment(data = resultats[1, ],
+    aes(xend = budget_marketing, yend = ventes_predites),
+    colour = "#E30513", linewidth = 1.8) +
+  geom_point(data = resultats[1, ], colour = "#E30513", size = 3.5) +
+  scale_x_continuous(labels = monnaie) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Budget marketing mensuel ($)", y = "Ventes mensuelles ($)") +
+  theme_minimal(base_size = 18)
+```
+
+::: {.notes}
+Le segment vertical rouge représente le résidu de l’observation précédente. La distance se mesure dans l’unité de la réponse. Un point sous la droite aurait un résidu négatif.
 :::
-::: {.label}
-la vente réellement mesurée
+
+## Le principe des moindres carrés
+
+$$\sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i-\widehat{y}_i)^2$$
+
+::: {.lead}
+La droite ajustée minimise cette somme.
 :::
-:::
-::: {.metric}
-::: {.value}
-prédite
-:::
-::: {.label}
-la vente estimée par la droite
-:::
-:::
-::: {.metric}
-::: {.value}
-résidu
-:::
-::: {.label}
-la valeur observée moins la valeur prédite
-:::
-:::
+
+::: {.note-box}
+Les carrés évitent que les écarts positifs et négatifs s’annulent. Les grands écarts pèsent davantage.
 :::
 
 ## À retenir
@@ -123,7 +250,7 @@ la valeur observée moins la valeur prédite
 1
 :::
 ::: {.label}
-La pente répond à la question principale.
+Pente et unités
 :::
 :::
 ::: {.metric}
@@ -131,7 +258,7 @@ La pente répond à la question principale.
 2
 :::
 ::: {.label}
-L'ordonnée à l'origine se commente avec prudence.
+Résidu observé moins prédit
 :::
 :::
 ::: {.metric}
@@ -139,26 +266,21 @@ L'ordonnée à l'origine se commente avec prudence.
 3
 :::
 ::: {.label}
-Les unités font partie de l'interprétation.
+Somme des carrés minimale
 :::
 :::
 :::
-
 
 ## Production autonome 3.3
 
 ::: {.lead}
-Rédigez une phrase d'interprétation de la pente.
-:::
-
-::: {.keypoints}
-Elle doit contenir la variable réponse, la variable explicative, le mot « moyenne » et l'unité utilisée.
+Interprétez la pente pour 1 000 $ de budget. Expliquez le signe du résidu de janvier en Capitale-Nationale.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- La pente est interprétée avec ses variables et ses unités.
-- J'ai distingué erreur du modèle et résidu observé.
-- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
+- Ma comparaison porte sur les ventes moyennes estimées.
+- Le résidu est positif lorsque la droite sous-estime.
+- Je distingue les paramètres, leurs estimations et les résidus.
 :::

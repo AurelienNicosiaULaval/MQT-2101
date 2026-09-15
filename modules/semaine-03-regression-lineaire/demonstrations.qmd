@@ -1,35 +1,61 @@
 ---
 title: "Démonstrations R - Module 03"
+lang: fr
 format:
   html:
+    css: media/module03-pages.css
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-overflow: wrap
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ## Objectif
 
-Cette page montre une analyse reproductible de régression linéaire simple. Le
-but n'est pas de mémoriser le code, mais de comprendre la séquence :
+Construire une analyse de régression sur les campagnes marketing fictives. Les six activités du [parcours](index.qmd#votre-parcours) alimentent un seul document, `regression_marketing.qmd`. Les productions autonomes des capsules correspondent à ces activités : vous n’avez pas à les refaire deux fois.
 
-1. importer;
-2. visualiser;
-3. ajuster;
-4. interpréter;
-5. diagnostiquer;
-6. formuler une conclusion prudente.
+Les blocs ci-dessous s’exécutent dans l’ordre, dans le même document. Les résultats présentés sont calculés à partir du CSV du cours. Après ce travail guidé, les [exercices](exercices.qmd) vous demandent de transférer la démarche au délai de service et à la satisfaction.
 
 ## Préparation
+
+1. Dans RStudio, choisissez File > New Project > New Directory > New Project. Nommez le projet `regression-marketing`.
+2. Dans Files, créez un dossier `data`. Placez-y le fichier [campagnes_marketing_quebec.csv](data/campagnes_marketing_quebec.csv).
+3. Choisissez File > New File > Quarto Document, puis HTML. Enregistrez `regression_marketing.qmd` à la racine du projet.
+4. Conservez cet en-tête, puis insérez les blocs R avec Insert > Code Chunk > R.
+
+```yaml
+---
+title: "Budget marketing et ventes"
+lang: fr
+format:
+  html:
+    embed-resources: true
+---
+```
+
+```{r}
+#| label: racine-demonstrations-03
+#| include: false
+# Utiliser la même organisation data/ que dans le projet étudiant.
+dossier_module <- if (dir.exists("data")) "." else "modules/semaine-03-regression-lineaire"
+knitr::opts_knit$set(root.dir = normalizePath(dossier_module))
+nombre_fr <- function(x, decimales = 2) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+```
 
 ```{r}
 #| label: setup-module-03
 library(tidyverse)
 
-data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
-  "data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
-}
-
-campagnes <- read_csv(data_path, show_col_types = FALSE)
+campagnes <- read_csv(
+  "data/campagnes_marketing_quebec.csv",
+  show_col_types = FALSE
+)
 ```
 
 ## Inspecter le tableau
@@ -39,17 +65,34 @@ campagnes <- read_csv(data_path, show_col_types = FALSE)
 glimpse(campagnes)
 ```
 
+Le tableau contient 60 lignes et 10 colonnes. Une ligne correspond à une région pendant un mois : cinq régions sont observées pendant les douze mois de 2025. Les campagnes sont simulées. Les noms des régions sont réels.
+
+| Variable | Sens et unité |
+|---|---|
+| `ventes` | Montant mensuel des ventes, en dollars canadiens; variable réponse |
+| `budget_marketing` | Budget marketing mensuel, en dollars canadiens; variable explicative |
+| `region` | Région de la campagne |
+| `mois` | Mois de l’observation, représenté par son premier jour |
+| `saison` | Niveau d’activité saisonnière : régulier, moyen ou haut |
+| `canal` | Canal principal de la campagne |
+
+Les autres colonnes sont décrites dans la [page Données](../../donnees/#campagnes-marketing-québécoises-fictives).
+
 ```{r}
-#| label: resume-campagnes
+#| label: controle-campagnes
 campagnes |>
   summarise(
     observations = n(),
-    budget_moyen = mean(budget_marketing),
-    ventes_moyennes = mean(ventes),
-    ventes_min = min(ventes),
-    ventes_max = max(ventes)
+    budgets_manquants = sum(is.na(budget_marketing)),
+    ventes_manquantes = sum(is.na(ventes)),
+    budget_min = min(budget_marketing),
+    budget_max = max(budget_marketing)
   )
 ```
+
+Les deux variables du modèle sont complètes. Les budgets vont de 2 497 $ à 8 857 $. S’il manquait des valeurs, il faudrait préciser les observations utilisées avant d’ajuster le modèle.
+
+Question de l’activité 3.1 : comment les ventes moyennes varient-elles selon le budget marketing dans ces données? La région et la saison peuvent aussi être liées aux ventes. La question porte sur une association.
 
 ## Visualiser la relation
 
@@ -59,125 +102,220 @@ campagnes |>
 #| fig-height: 5
 ggplot(campagnes, aes(x = budget_marketing, y = ventes)) +
   geom_point(aes(colour = region), alpha = 0.8, size = 2.4) +
-  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
   labs(
     title = "Ventes selon le budget marketing",
-    x = "Budget marketing",
-    y = "Ventes",
+    x = "Budget marketing mensuel ($)",
+    y = "Ventes mensuelles ($)",
     colour = "Région"
   ) +
-  theme_minimal(base_size = 12) +
-  theme(panel.grid.minor = element_blank())
+  theme_minimal(base_size = 12)
 ```
 
-Le graphique suggère une association positive : les campagnes avec un budget
-plus élevé tendent aussi à avoir des ventes plus élevées.
+Pour l’activité 3.2, décrivez d’abord les points : la tendance globale est croissante et approximativement linéaire, avec une dispersion visible autour de cette tendance. Les couleurs permettent de situer les régions. Ce graphique ne montre pas ce qu’une intervention sur le budget provoquerait.
+
+La corrélation complète la lecture visuelle :
+
+```{r}
+#| label: correlation-campagnes
+cor(campagnes$budget_marketing, campagnes$ventes)
+```
+
+La corrélation vaut environ 0,908. Elle est sans unité et décrit la relation linéaire. Elle est symétrique : inverser les deux variables ne change pas sa valeur. La régression distingue, elle, la réponse de la variable explicative.
+
+## Comprendre la droite
+
+Le modèle s’écrit $Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$. Sous l’hypothèse $\mathrm{E}(\varepsilon_i \mid x_i)=0$, les ventes moyennes au budget $x_i$ valent $\beta_0 + \beta_1 x_i$.
+
+Après estimation, la droite est $\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$. Le résidu $e_i = y_i - \widehat{y}_i$ se calcule sur les données; il est distinct de l’erreur non observée $\varepsilon_i$. Les moindres carrés choisissent la droite qui minimise $\sum_i e_i^2$.
 
 ## Ajuster le modèle
 
 ```{r}
 #| label: modele-budget-ventes
-modele_budget <- lm(ventes ~ budget_marketing, data = campagnes)
-
-summary(modele_budget)
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+coef(modele)
 ```
+
+`ventes` est à gauche de `~`; `budget_marketing` est à droite. R inclut une ordonnée à l’origine par défaut. Dans la sortie, `(Intercept)` désigne cette ordonnée et `budget_marketing` désigne la pente.
+
+Pour voir le résumé complet :
+
+```{r}
+#| label: resume-modele-budget
+summary(modele)
+```
+
+`Estimate` signifie « estimation » et `Std. Error` signifie « erreur-type ». Les colonnes de test et les étoiles ne suffisent pas à justifier une décision. Pour ce module, commencez par interpréter les coefficients, puis examinez les résidus et le R².
 
 ## Interpréter les coefficients
 
 ```{r}
-#| label: coefficients-budget
-coefficients_modele <- coef(modele_budget)
-
-coefficients_modele
-```
-
-La pente estimée correspond à la variation moyenne des ventes associée à une
-augmentation d'une unité de budget marketing, dans ce jeu de données.
-
-Comme le budget est en dollars, une augmentation de 1 dollar est peu parlante.
-On peut reformuler la pente pour 1 000 dollars.
-
-```{r}
 #| label: pente-mille-dollars
-pente_1000 <- coefficients_modele["budget_marketing"] * 1000
-
+pente_1000 <- coef(modele)[["budget_marketing"]] * 1000
 pente_1000
 ```
 
-Interprétation attendue : pour 1 000 dollars de budget marketing
-supplémentaire, le modèle estime une augmentation moyenne des ventes d'environ
-`r round(pente_1000)` dollars, dans ces données.
+Pour les activités 3.3 et 3.4, une formulation possible est :
+
+> Dans ces données simulées, une différence de 1 000 $ de budget marketing est associée à environ `r nombre_fr(pente_1000, 0)` $ de ventes moyennes supplémentaires selon la droite.
+
+Ce montant décrit les ventes, pas le profit. Le modèle ne permet pas d’affirmer qu’une augmentation imposée du budget produirait cette hausse.
+
+L’ordonnée estimée vaut environ `r nombre_fr(coef(modele)[1], 0)` $. Elle correspond aux ventes prédites à budget nul. Or zéro est hors de la plage observée : cette interprétation relève de l’extrapolation. Cela ne justifie pas de supprimer l’ordonnée du modèle.
+
+### Incertitude sur la pente
+
+```{r}
+#| label: confiance-pente-budget
+confint(modele, "budget_marketing", level = 0.95)
+```
+
+L’intervalle de confiance classique à 95 % va d’environ 11,93 à 15,23 $ de ventes par dollar de budget. Pour une différence de 1 000 $, les bornes deviennent environ 11 933 $ et 15 231 $. Il s’agit d’un intervalle sur la pente, pas d’un intervalle pour les ventes d’une nouvelle observation.
+
+::: {.callout-note title="Ce calcul repose sur des hypothèses"}
+Les intervalles classiques supposent une moyenne linéaire, des erreurs indépendantes et une variance constante. La normalité des erreurs permet les résultats exacts utilisés ici. Sous ces hypothèses, la méthode couvre la pente dans 95 % des répétitions d’échantillonnage.
+
+Les mêmes régions reviennent chaque mois. Il faut donc examiner le contexte régional et temporel avant de faire confiance à ces intervalles. Les calculs illustrent la méthode; ils ne vérifient pas ses hypothèses.
+:::
+
+## Hypothèse nulle et valeur p
+
+Le test bilatéral de la pente pose $H_0 : \beta_1 = 0$ contre $H_1 : \beta_1 \ne 0$. H₀ est l’hypothèse nulle et H₁ l’hypothèse alternative. Le paramètre visé est la pente de population, pas la pente déjà estimée avec les données.
+
+```{r}
+#| label: demonstration-03-test-pente
+test_pente <- summary(modele)$coefficients["budget_marketing", ]
+test_pente
+```
+
+`t value` est le rapport entre l’estimation de la pente et son erreur-type, puisque la valeur testée est zéro. `Pr(>|t|)` est la valeur p bilatérale : sous H₀ et les hypothèses du modèle, la probabilité d’obtenir une statistique au moins aussi éloignée de zéro que celle observée. Une valeur p plus petite indique une moins bonne compatibilité des données avec H₀. Elle ne donne pas la probabilité que H₀ soit vraie.
+
+Au seuil fixé à 5 %, on rejette H₀ si p ≤ 0,05; sinon, on ne la rejette pas. Ne pas rejeter H₀ ne prouve pas que la pente est nulle. Ici, la valeur p est inférieure à 0,001 : le calcul rejette H₀ sous les hypothèses classiques. Il ne mesure ni l’importance pratique de la pente ni un effet causal du budget.
+
+Pour le test t exact, on suppose une moyenne correctement spécifiée et des erreurs de moyenne nulle, indépendantes, normales et de variance constante. Les degrés de liberté valent ici 60 − 2 = 58. La répétition des régions au fil des mois appelle un examen de l’indépendance; le résultat numérique illustre le test sous hypothèses.
 
 ## Qualité d'ajustement
 
 ```{r}
 #| label: r-carre-module-03
-resume_modele <- summary(modele_budget)
-
-resume_modele$r.squared
+summary(modele)$r.squared
 ```
 
-Le `R²` indique la proportion de variation des ventes expliquée par la droite
-utilisant seulement le budget marketing.
+Le coefficient de détermination R² vaut environ 0,824. La droite décrit ainsi environ 82,4 % de la variation des ventes dans l’échantillon utilisé pour l’ajuster. Ce pourcentage ne représente ni un taux de prédictions correctes ni une part des ventes causée par le budget. Dans cette régression simple avec ordonnée, R² est égal au carré de la corrélation.
+
+### Retrouver R² à partir des écarts
+
+La somme des carrés résiduels (SSE) mesure les écarts à la droite. La somme totale des carrés (SST) mesure les écarts à la moyenne des ventes. Avec une ordonnée à l’origine et une réponse non constante, $R^2 = 1 - \mathrm{SSE}/\mathrm{SST}$.
+
+```{r}
+#| label: demonstration-03-sommes-carres
+sse <- sum(residuals(modele)^2)
+sst <- sum((campagnes$ventes - mean(campagnes$ventes))^2)
+
+tibble(
+  SSE = sse,
+  SST = sst,
+  R2_calcule = 1 - sse / sst,
+  R2_summary = summary(modele)$r.squared,
+  pourcentage = 100 * (1 - sse / sst)
+)
+```
+
+Les deux calculs donnent le même R². Par exemple, si SSE = 30 et SST = 120, alors R² = 1 − 30 / 120 = 0,75, soit 75 %. Ce pourcentage décrit la variation expliquée dans les données d’ajustement.
 
 ## Résidus et valeurs ajustées
 
 ```{r}
 #| label: ajouter-residus-module-03
-campagnes_modele <- campagnes |>
+resultats <- campagnes |>
   mutate(
-    ventes_predites = predict(modele_budget),
-    residu = residuals(modele_budget)
+    ventes_predites = fitted(modele),
+    residu = residuals(modele)
   )
 
-campagnes_modele |>
+resultats |>
   select(region, mois_label, budget_marketing, ventes, ventes_predites, residu) |>
-  slice_head(n = 8)
+  slice_head(n = 6)
 ```
+
+La première observation, en Capitale-Nationale en janvier, a un budget de 5 814 $ et des ventes de 121 915 $. La droite prédit environ 108 888 $, d’où un résidu positif d’environ 13 027 $ : elle sous-estime les ventes de cette observation.
 
 ```{r}
 #| label: diagnostic-residus-module-03
 #| fig-width: 8
 #| fig-height: 5
-ggplot(campagnes_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
+ggplot(resultats, aes(x = ventes_predites, y = residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24") +
   geom_point(alpha = 0.8, size = 2.4, colour = "#0B4F6C") +
   labs(
     title = "Résidus selon les ventes prédites",
-    x = "Ventes prédites",
-    y = "Résidu"
+    x = "Ventes prédites ($)",
+    y = "Résidu ($)"
   ) +
-  theme_minimal(base_size = 12) +
-  theme(panel.grid.minor = element_blank())
+  theme_minimal(base_size = 12)
 ```
 
-Un bon diagnostic de base vérifie si les résidus sont dispersés autour de zéro
-sans motif évident. Si les résidus augmentent, diminuent ou forment une courbe,
-le modèle linéaire simple peut être insuffisant.
+Les points ne montrent pas de courbure nette dans ce graphique. La moyenne globale des résidus est nulle par construction pour les moindres carrés avec ordonnée. Ce centrage ne prouve donc pas que le modèle est adéquat. Une courbure, un éventail ou un point isolé appelleraient un examen supplémentaire.
+
+Pour l’activité 3.5, examinez également les régions :
+
+```{r}
+#| label: diagnostic-regions-module-03
+bilan_regions <- resultats |>
+  group_by(region) |>
+  summarise(
+    observations = n(),
+    residu_moyen = mean(residu),
+    .groups = "drop"
+  )
+
+bilan_regions
+```
+
+La droite sous-estime en moyenne les ventes en Capitale-Nationale d’environ 5 676 $ et les surestime en Outaouais d’environ 5 066 $. Ces écarts descriptifs montrent l’intérêt d’examiner les différences régionales. Ils ne constituent pas un test de causalité. Le graphique précédent ne vérifie pas non plus l’indépendance entre les mois d’une même région.
 
 ## Prédire pour de nouveaux budgets
 
 ```{r}
 #| label: predictions-nouveaux-budgets
-nouveaux_budgets <- tibble(
-  budget_marketing = c(4000, 6000, 8000)
+nouveaux_budgets <- tibble(budget_marketing = c(4000, 6000, 8000))
+
+predictions <- predict(
+  modele,
+  newdata = nouveaux_budgets,
+  interval = "prediction",
+  level = 0.95
 )
 
-predict(
-  modele_budget,
-  newdata = nouveaux_budgets,
-  interval = "prediction"
-)
+bind_cols(nouveaux_budgets, as_tibble(predictions))
 ```
 
-Une prédiction doit être interprétée comme une estimation incertaine. Elle est
-plus crédible pour des budgets comparables à ceux observés dans les données.
+Les trois budgets sont dans la plage observée. `fit` est la valeur prédite; `lwr` et `upr` sont les bornes de l’intervalle. Pour 6 000 $ de budget, les ventes prédites sont d’environ 111 414 $, avec un intervalle de prédiction classique à 95 % allant de 94 560 $ à 128 268 $.
+
+La nouvelle observation est un mois dans une région comparable. L’intervalle tient compte de l’incertitude sur la moyenne et de la dispersion d’une nouvelle observation autour de cette moyenne. Sa couverture repose sur les hypothèses du modèle; les diagnostics précédents appellent donc à la prudence.
+
+Pour estimer uniquement la moyenne à un budget donné, on utilise `interval = "confidence"` :
+
+```{r}
+#| label: moyenne-ou-observation
+budget_6000 <- tibble(budget_marketing = 6000)
+
+predict(modele, newdata = budget_6000, interval = "confidence")
+predict(modele, newdata = budget_6000, interval = "prediction")
+```
+
+Au même budget et au même niveau de confiance, l’intervalle de prédiction est plus large. Une prédiction hors de 2 497 $ à 8 857 $ serait une extrapolation. Dans cette plage, la comparabilité du contexte reste à vérifier.
 
 ## Conclusion prudente
 
-::: {.callout-tip title="Interprétation synthèse"}
-Dans ces données simulées, les ventes sont positivement associées au budget
-marketing. La pente du modèle donne une estimation de l'augmentation moyenne des
-ventes lorsque le budget augmente. Cette relation reste une association
-observée: elle ne suffit pas à prouver un effet causal du budget sur les ventes.
-:::
+Pour l’activité 3.6, une conclusion possible est :
+
+> Nous étudions l’association entre le budget marketing et les ventes mensuelles dans 60 observations simulées de campagnes régionales. Une différence de 1 000 $ de budget est associée à environ 13 582 $ de ventes moyennes supplémentaires selon la droite. Le modèle décrit 82,4 % de la variation des ventes, mais les résidus moyens diffèrent selon la région. Cette association ne prouve pas qu’augmenter le budget provoquerait cette hausse des ventes. Avant une recommandation, il faudrait examiner les différences régionales et temporelles et évaluer les prédictions sur de nouvelles observations.
+
+## Trace finale
+
+Votre document guidé doit contenir la question, le nuage de points, le code du modèle, les coefficients interprétés, H₀ et la valeur p sous hypothèses, le calcul du R², le diagnostic des résidus et la prédiction pour 6 000 $ avec son intervalle et ses limites. Terminez par votre conclusion.
+
+Dans RStudio, choisissez Session > Restart R, puis Render. Vérifiez que les résultats se recalculent et que les figures sont lisibles dans le HTML. Cette trace est un entraînement; les consignes des travaux évalués sont dans la section [Évaluations](../../evaluations/index.qmd).
+
+Les [lectures du module](lectures.qmd) donnent les références sur l’ajustement, les diagnostics et les intervalles.

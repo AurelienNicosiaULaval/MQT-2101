@@ -2597,172 +2597,11 @@
     "text": "Après les repères\nPoursuivez avec le guide complet. Les repères servent à préparer les décisions; le guide sert à produire la mini-analyse en classe."
   },
   {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#pourquoi-ça-compte",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nJusqu’où peut aller votre recommandation sans dépasser les données?\n\n\nUne conclusion trop forte engage la direction sur une promesse que le modèle ne peut pas soutenir. Conclure, c’est dire ce que la droite montre et tracer clairement la frontière de ce qu’elle ne prouve pas."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nLire le R² sans le surinterpréter.\nDistinguer association, prédiction et causalité.\nFormuler une conclusion courte et défendable."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#qualité-dajustement",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#qualité-dajustement",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Qualité d’ajustement",
-    "text": "Qualité d’ajustement\n\n\n\n\n\nMesure\nValeur\n\n\n\n\nR carré\n0.824\n\n\n\n\n\n\nLe R² résume la part de variation des ventes captée par la droite. Il aide à juger l’ajustement, mais il ne valide pas tout le raisonnement."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#prédire-avec-prudence",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#prédire-avec-prudence",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Prédire avec prudence",
-    "text": "Prédire avec prudence\n\nnouveaux &lt;- tibble(budget_marketing = c(3000, 4500, 6000))\n\npredictions &lt;- predict(\n  modele,\n  newdata = nouveaux,\n  interval = \"prediction\",\n  level = 0.95\n)\n\nbind_cols(nouveaux, as_tibble(predictions)) |&gt;\n  transmute(\n    budget_marketing,\n    prediction = round(fit),\n    borne_inferieure = round(lwr),\n    borne_superieure = round(upr)\n  ) |&gt;\n  knitr::kable()\n\n\n\n\nbudget_marketing\nprediction\nborne_inferieure\nborne_superieure\n\n\n\n\n3000\n70668\n53351\n87985\n\n\n4500\n91041\n74134\n107948\n\n\n6000\n111414\n94560\n128268\n\n\n\n\n\n\nUne prédiction est plus défendable lorsqu’elle reste dans la plage de budgets observée. L’intervalle de prédiction à 95 % décrit l’incertitude pour une nouvelle campagne, pas seulement l’incertitude sur la moyenne."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#trois-notions-à-ne-pas-confondre",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#trois-notions-à-ne-pas-confondre",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Trois notions à ne pas confondre",
-    "text": "Trois notions à ne pas confondre\n\n\n\nassociation\n\n\ndeux variables varient ensemble\n\n\n\n\nprédiction\n\n\nle modèle estime une valeur attendue\n\n\n\n\ncausalité\n\n\nagir sur une variable change l’autre variable"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#structure-dune-conclusion",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#structure-dune-conclusion",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Structure d’une conclusion",
-    "text": "Structure d’une conclusion\n\n\n\n1\n\n\nQuestion\n\n\n\n\n2\n\n\nRésultat (pente)\n\n\n\n\n3\n\n\nAjustement\n\n\n\n\n4\n\n\nLimite\n\n\n\n\n5\n\n\nSuite"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#une-phrase-modèle",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#une-phrase-modèle",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Une phrase modèle",
-    "text": "Une phrase modèle\n\n\n\nConclusion défendable\n\n\nLes ventes moyennes sont plus élevées lorsque le budget est plus élevé : la droite résume une association positive, mais ne prouve pas que le budget cause les ventes. Il faut vérifier les résidus et le contexte avant de recommander."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#à-retenir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#à-retenir",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nLa conclusion est courte et défendable.\n\n\n\n\n2\n\n\nUne bonne réponse dit aussi ce que le modèle ne prouve pas.\n\n\n\n\n3\n\n\nLa prudence est une compétence, pas une faiblesse."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#production-autonome-3.6",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#production-autonome-3.6",
-    "title": "Capsule 6 - Conclure sans dépasser les données",
-    "section": "Production autonome 3.6",
-    "text": "Production autonome 3.6\n\nRédigez une conclusion de quatre phrases.\n\n\nUne phrase par élément : question, pente, diagnostic (résidus/ajustement), limite.\n\nAuto-vérification\n\n\nLa pente est interprétée avec ses variables et ses unités.\nJ’ai distingué erreur du modèle et résidu observé.\nJe n’ai affirmé ni causalité ni validité hors de la plage observée."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nVotre sortie R affiche une pente d’environ 13,58. Que signifie cette valeur pour la direction?\n\n\nRecopier un coefficient ne décide rien. Le travail utile consiste à traduire 13,58 en une phrase d’affaires : environ 13,58 dollars de ventes moyennes supplémentaires par dollar de budget, dans ces données et selon ce modèle, sans en déduire un effet causal."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nAjuster une régression avec lm().\nLire les coefficients du modèle.\nTraduire la sortie R en phrases interprétables."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#ajuster-le-modèle",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#ajuster-le-modèle",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "Ajuster le modèle",
-    "text": "Ajuster le modèle\n\nmodele &lt;- lm(ventes ~ budget_marketing, data = campagnes)\n\n\n\n\nÀ gauche du ~\n\n\nla variable réponse : ventes.\n\n\n\n\nÀ droite du ~\n\n\nla variable explicative : budget_marketing."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#lire-les-coefficients",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#lire-les-coefficients",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "Lire les coefficients",
-    "text": "Lire les coefficients\n\n\n\n\n\nTerme\nEstimation\n\n\n\n\nOrdonnée à l’origine\n29922.11\n\n\nPente (budget_marketing)\n13.58\n\n\n\n\n\n\nLa ligne budget_marketing est la pente estimée : la variation moyenne des ventes par unité de budget."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#traduire-en-langage-daffaires",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#traduire-en-langage-daffaires",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "Traduire en langage d’affaires",
-    "text": "Traduire en langage d’affaires\n\n\n\nRéponse utile\n\n\nEn moyenne, chaque dollar de budget supplémentaire est associé à X ventes de plus, dans la plage observée.\n\n\n\n\nÀ éviter\n\n\n« Le coefficient est 13,58 » : un nombre sans contexte ni unité ne décide rien."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#à-retenir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#à-retenir",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nlm() ajuste la droite.\n\n\n\n\n2\n\n\nLes coefficients donnent pente et ordonnée.\n\n\n\n\n3\n\n\nUne réponse utile traduit les coefficients en interprétation."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#production-autonome-3.4",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#production-autonome-3.4",
-    "title": "Capsule 4 - Ajuster le modèle avec R",
-    "section": "Production autonome 3.4",
-    "text": "Production autonome 3.4\n\nAjustez le modèle et interprétez-le.\n\n\nÉcrivez le code lm(), puis deux phrases : une pour la pente (avec l’unité) et une pour la limite d’interprétation.\n\nAuto-vérification\n\n\nLa pente est interprétée avec ses variables et ses unités.\nJ’ai distingué erreur du modèle et résidu observé.\nJe n’ai affirmé ni causalité ni validité hors de la plage observée."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nUne pente positive estimée par R suffit-elle pour conclure?\n\n\nNon, pas à elle seule. Le graphique peut révéler une courbe, un groupe de régions qui se comporte autrement ou un point extrême que la pente seule masque. On regarde avant de calculer."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nLire un nuage de points avant d’ajuster un modèle.\nRepérer la direction et la dispersion de la relation.\nIdentifier les cas où une droite pourrait être insuffisante."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#trois-questions-visuelles",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#trois-questions-visuelles",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "Trois questions visuelles",
-    "text": "Trois questions visuelles\n\n\n\ndirection\n\n\nles points montent-ils ou descendent-ils?\n\n\n\n\nforme\n\n\nla relation ressemble-t-elle à une droite?\n\n\n\n\ndispersion\n\n\nles points sont-ils proches de la tendance?"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#le-nuage-de-points",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#le-nuage-de-points",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "Le nuage de points",
-    "text": "Le nuage de points\n\nggplot(campagnes, aes(budget_marketing, ventes)) +\n  geom_point(alpha = 0.6, color = \"#0B4F6C\") +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"#E63946\") +\n  scale_x_continuous(labels = scales::label_number(big.mark = \" \")) +\n  scale_y_continuous(labels = scales::label_number(big.mark = \" \")) +\n  labs(x = \"Budget marketing\", y = \"Ventes\") +\n  theme_minimal(base_size = 14)\n\n\n\nLa droite résume la tendance moyenne; ce sont les points qui disent si le résumé est crédible."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#pièges-fréquents",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#pièges-fréquents",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "Pièges fréquents",
-    "text": "Pièges fréquents\n\n\nconclure seulement à partir de la pente;\nignorer un groupe ou une région qui se comporte autrement;\noublier de regarder les points extrêmes."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#à-retenir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#à-retenir",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nLe graphique vient avant le modèle.\n\n\n\n\n2\n\n\nLa droite est un résumé, pas la réalité.\n\n\n\n\n3\n\n\nLa dispersion annonce déjà la prudence de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#production-autonome-3.2",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#production-autonome-3.2",
-    "title": "Capsule 2 - Lire le nuage de points",
-    "section": "Production autonome 3.2",
-    "text": "Production autonome 3.2\n\nDécrivez le nuage de points observé entre budget_marketing et ventes.\n\n\nPrécisez la direction, la dispersion et une phrase sur ce que le graphique ne permet pas de conclure.\n\nAuto-vérification\n\n\nLa pente est interprétée avec ses variables et ses unités.\nJ’ai distingué erreur du modèle et résidu observé.\nJe n’ai affirmé ni causalité ni validité hors de la plage observée."
-  },
-  {
     "objectID": "modules/semaine-03-regression-lineaire/lectures.html",
     "href": "modules/semaine-03-regression-lineaire/lectures.html",
     "title": "Lectures - Module 03",
     "section": "",
-    "text": "Revoir la page d’accueil du module.\nLire les capsules avant de faire les démonstrations R.\nReproduire les démonstrations R.\nFaire les exercices avant de consulter les solutions cachées."
+    "text": "Le parcours précise l’ordre des six activités et le contenu de la trace finale.\nLes capsules et leurs supports expliquent les notions et les exemples.\nLes démonstrations R donnent le code complet du cas guidé.\nLes exercices proposent un autre cas et des corrigés à ouvrir après une tentative.\nLes notes de cours, aussi disponibles en PDF, servent de synthèse."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/lectures.html#lectures-obligatoires",
@@ -2790,126 +2629,126 @@
     "href": "modules/semaine-03-regression-lineaire/exercices.html",
     "title": "Exercices - Module 03",
     "section": "",
-    "text": "Pratiquer la régression linéaire dans un autre contexte que les campagnes marketing des capsules. Le cas de transfert porte sur le délai de service et la satisfaction dans des succursales fictives.\nJeu de données de transfert : performance_succursales_quebec.csv."
+    "text": "Appliquer la régression linéaire à une nouvelle question : une responsable de service souhaite décrire le lien entre le délai de service et la satisfaction mensuelle dans des succursales fictives.\nJeu de données de transfert : performance_succursales_quebec.csv, décrit dans la page Données.\nLes activités des capsules portent sur le budget marketing et les ventes. Ici, la question, les variables, les unités et la destinataire changent. Les six exercices se suivent et alimentent un seul rapport, diagnostic_service.qmd.\nFaites une première tentative avant d’ouvrir la solution détaillée à la fin de chaque exercice. Les corrigés contiennent le code, les résultats calculés et leur interprétation. Leur code s’exécute dans l’ordre, après la préparation ci-dessous. Les réponses rédigées sont des exemples à comparer à votre raisonnement."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#objectif",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#objectif",
     "title": "Exercices - Module 03",
     "section": "",
-    "text": "Pratiquer la régression linéaire dans un autre contexte que les campagnes marketing des capsules. Le cas de transfert porte sur le délai de service et la satisfaction dans des succursales fictives.\nJeu de données de transfert : performance_succursales_quebec.csv."
+    "text": "Appliquer la régression linéaire à une nouvelle question : une responsable de service souhaite décrire le lien entre le délai de service et la satisfaction mensuelle dans des succursales fictives.\nJeu de données de transfert : performance_succursales_quebec.csv, décrit dans la page Données.\nLes activités des capsules portent sur le budget marketing et les ventes. Ici, la question, les variables, les unités et la destinataire changent. Les six exercices se suivent et alimentent un seul rapport, diagnostic_service.qmd.\nFaites une première tentative avant d’ouvrir la solution détaillée à la fin de chaque exercice. Les corrigés contiennent le code, les résultats calculés et leur interprétation. Leur code s’exécute dans l’ordre, après la préparation ci-dessous. Les réponses rédigées sont des exemples à comparer à votre raisonnement."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#préparation",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#préparation",
     "title": "Exercices - Module 03",
     "section": "Préparation",
-    "text": "Préparation\n\nlibrary(tidyverse)\nlibrary(broom)\n\ndata_path &lt;- if (file.exists(\"../atelier-02-regression/data/performance_succursales_quebec.csv\")) {\n  \"../atelier-02-regression/data/performance_succursales_quebec.csv\"\n} else {\n  \"modules/atelier-02-regression/data/performance_succursales_quebec.csv\"\n}\n\nperformance &lt;- read_csv(\n  data_path,\n  show_col_types = FALSE\n) |&gt;\n  mutate(\n    mois = as.Date(mois),\n    campagne_locale = factor(campagne_locale)\n  )"
+    "text": "Préparation\n\nDans RStudio, créez un projet diagnostic-service avec File &gt; New Project &gt; New Directory &gt; New Project.\nDans Files, créez data et placez-y le CSV téléchargé.\nCréez un document Quarto HTML nommé diagnostic_service.qmd à la racine du projet.\nUtilisez cet en-tête, puis ajoutez les blocs R avec Insert &gt; Code Chunk &gt; R.\n\n---\ntitle: \"Délai de service et satisfaction\"\nlang: fr\nformat:\n  html:\n    embed-resources: true\n---\n\nlibrary(tidyverse)\n\nperformance &lt;- read_csv(\n  \"data/performance_succursales_quebec.csv\",\n  show_col_types = FALSE\n) |&gt;\n  mutate(campagne_locale = factor(campagne_locale, levels = c(\"non\", \"oui\")))"
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-1---identifier-les-variables",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-1---identifier-les-variables",
     "title": "Exercices - Module 03",
     "section": "Exercice 1 - Identifier les variables",
-    "text": "Exercice 1 - Identifier les variables\nLa direction demande : « Un délai de service plus long est-il associé à une satisfaction mensuelle plus faible? »\nIdentifiez :\n\nla variable réponse;\nla variable explicative principale;\nl’unité d’observation;\nune variable de contexte susceptible de modifier l’interprétation;\nune information qu’il faudrait obtenir avant d’attribuer une cause au délai."
+    "text": "Exercice 1 - Identifier les variables\nLa responsable demande : « Un délai de service plus long est-il associé à une satisfaction mensuelle plus faible? »\nIdentifiez la variable réponse, la variable explicative et leurs unités. Précisez ce que représente une ligne, le nombre de succursales et le nombre de mois. Vérifiez les valeurs manquantes dans les deux variables du modèle. Nommez une variable de contexte et une information à obtenir avant de parler de causalité.\nRepères : delai_service_minutes est un délai mensuel moyen en minutes; satisfaction est un score mensuel moyen sur 10; campagne_locale indique la présence ou l’absence d’une campagne.\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 1\n\n\n\n\n\nVérifier le tableau\n\nperformance |&gt;\n  summarise(\n    observations = n(),\n    colonnes = ncol(performance),\n    succursales = n_distinct(succursale),\n    mois = n_distinct(mois),\n    delais_manquants = sum(is.na(delai_service_minutes)),\n    satisfactions_manquantes = sum(is.na(satisfaction))\n  )\n\n# A tibble: 1 × 6\n  observations colonnes succursales  mois delais_manquants\n         &lt;int&gt;    &lt;int&gt;       &lt;int&gt; &lt;int&gt;            &lt;int&gt;\n1           72       14           6    12                0\n# ℹ 1 more variable: satisfactions_manquantes &lt;int&gt;\n\n\nLe fichier contient 72 observations et 14 colonnes. Il décrit six succursales pendant les douze mois de 2025, soit 6 × 12 = 72 lignes. Les variables du modèle sont complètes.\n\n\n\n\n\n\n\nÉlément\nRéponse\n\n\n\n\nRéponse\nsatisfaction, en points sur 10\n\n\nExplicative\ndelai_service_minutes, en minutes\n\n\nUnité d’observation\nUne succursale pendant un mois\n\n\nContexte possible\nruptures_stock, campagne_locale ou heures_personnel\n\n\n\nLa satisfaction et le délai sont des résumés mensuels. Ce ne sont pas les réponses de 72 clients indépendants. Les mêmes succursales reviennent chaque mois.\nUn nombre élevé de ruptures de stock pourrait être associé à des délais plus longs et à une satisfaction plus faible. Pour attribuer une variation de satisfaction à une intervention sur le délai, il faudrait connaître le plan de collecte, la chronologie et les autres changements de service. Le fichier simulé sert à pratiquer la méthode."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-2---nuage-de-points",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-2---nuage-de-points",
     "title": "Exercices - Module 03",
     "section": "Exercice 2 - Nuage de points",
-    "text": "Exercice 2 - Nuage de points\nProduisez un nuage de points de la satisfaction selon le délai de service. La couleur doit indiquer si une campagne locale était active.\n\nggplot(\n  performance,\n  aes(\n    x = delai_service_minutes,\n    y = satisfaction,\n    colour = campagne_locale\n  )\n) +\n  geom_point(alpha = 0.8) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"black\") +\n  labs(\n    title = \"Satisfaction selon le délai de service\",\n    x = \"Délai de service, en minutes\",\n    y = \"Satisfaction\",\n    colour = \"Campagne locale\"\n  ) +\n  theme_minimal(base_size = 12)\n\nDécrivez la direction, la dispersion et un éventuel chevauchement entre les deux groupes. Ne commentez pas les ventes ni le budget marketing."
+    "text": "Exercice 2 - Nuage de points\nProduisez un nuage de points de la satisfaction selon le délai de service. Colorez les points selon la présence d’une campagne locale. Ajoutez une seule droite ajustée à toutes les observations.\nDécrivez la direction, la forme, la dispersion et le chevauchement des deux groupes. Précisez une limite du graphique.\nIndice : placez colour = campagne_locale dans geom_point(aes(...)) pour colorer les points sans créer deux droites.\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 2\n\n\n\n\n\n\nggplot(performance, aes(x = delai_service_minutes, y = satisfaction)) +\n  geom_point(aes(colour = campagne_locale), alpha = 0.8, size = 2.3) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Satisfaction selon le délai de service\",\n    x = \"Délai de service mensuel moyen (minutes)\",\n    y = \"Satisfaction mensuelle moyenne (points sur 10)\",\n    colour = \"Campagne locale\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nLa tendance globale est décroissante : les observations où le délai est plus long ont généralement une satisfaction plus faible. Les points restent dispersés autour de la droite et les groupes se chevauchent. La couleur ne démontre pas un effet causal de la campagne locale.\ngeom_smooth(method = \"lm\") ajuste ici une droite globale, car le groupe de couleur n’est défini que dans geom_point(). se = FALSE masque la bande d’incertitude du graphique; cela ne supprime pas l’incertitude du modèle.\nPour situer les données :\n\nperformance |&gt;\n  summarise(\n    delai_min = min(delai_service_minutes),\n    delai_max = max(delai_service_minutes),\n    satisfaction_min = min(satisfaction),\n    satisfaction_max = max(satisfaction)\n  )\n\n# A tibble: 1 × 4\n  delai_min delai_max satisfaction_min satisfaction_max\n      &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;\n1       3.6       8.7              5.9              8.9\n\n\nLes délais vont de 3,6 à 8,7 minutes et les scores de 5,9 à 8,9. L’axe vertical est exprimé en points sur 10. Une différence de 0,5 point n’est pas une baisse de 50 %."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-3---ajuster-le-modèle",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-3---ajuster-le-modèle",
     "title": "Exercices - Module 03",
     "section": "Exercice 3 - Ajuster le modèle",
-    "text": "Exercice 3 - Ajuster le modèle\nAjustez le modèle simple suivant, puis interprétez la pente pour une augmentation de deux minutes du délai.\n\nmodele_service &lt;- lm(\n  satisfaction ~ delai_service_minutes,\n  data = performance\n)\n\ntidy(modele_service, conf.int = TRUE)\ncoef(modele_service)[[\"delai_service_minutes\"]] * 2\n\nVotre phrase doit contenir la réponse, la variable explicative, le mot « moyenne » et les unités. Elle ne doit pas employer le verbe « causer »."
+    "text": "Exercice 3 - Ajuster le modèle\nAjustez satisfaction ~ delai_service_minutes avec lm(). Présentez la pente et son intervalle de confiance classique à 95 %. Interprétez la pente pour une différence de deux minutes.\nExpliquez aussi ce que représente l’ordonnée à l’origine et pourquoi il faut être prudent à délai nul. Nommez une hypothèse nécessaire pour interpréter l’intervalle de confiance. Formulez H₀ et H₁ pour un test bilatéral de la pente. Relevez la valeur p, puis expliquez la décision au seuil de 5 % et une limite de cette décision.\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 3\n\n\n\n\n\n\nmodele_service &lt;- lm(\n  satisfaction ~ delai_service_minutes,\n  data = performance\n)\n\ncoef(modele_service)\n\n          (Intercept) delai_service_minutes \n            9.7736347            -0.3263961 \n\nconfint(modele_service, \"delai_service_minutes\", level = 0.95)\n\n                           2.5 %     97.5 %\ndelai_service_minutes -0.4293887 -0.2234035\n\n\nLa droite estimée est :\n\\[\\widehat{\\text{satisfaction}} = 9{,}7736 - 0{,}3264\\times\\text{délai en minutes}.\\]\nLa pente est d’environ −0,326 point par minute. Son intervalle classique à 95 % va d’environ −0,429 à −0,223 point par minute.\n\npente_deux_minutes &lt;- coef(modele_service)[[\"delai_service_minutes\"]] * 2\nintervalle_deux_minutes &lt;- confint(\n  modele_service, \"delai_service_minutes\", level = 0.95\n) * 2\n\npente_deux_minutes\n\n[1] -0.6527922\n\nintervalle_deux_minutes\n\n                           2.5 %    97.5 %\ndelai_service_minutes -0.8587774 -0.446807\n\n\nUne réponse possible :\n\nDans ces données simulées, deux minutes de délai moyen supplémentaires sont associées à une satisfaction mensuelle moyenne inférieure d’environ 0,65 point sur 10 selon le modèle. L’intervalle classique correspondant va d’environ −0,86 à −0,45 point pour la différence de satisfaction.\n\nLe signe indique une diminution. On multiplie la pente et les deux bornes par 2 pour passer de la comparaison d’une minute à celle de deux minutes.\nL’ordonnée vaut environ 9,77 points : c’est la satisfaction prédite à délai nul. Les délais observés commencent à 3,6 minutes. Cette interprétation à zéro extrapole donc au-delà des observations.\n\nTester une pente nulle\nLes hypothèses sont \\(H_0 : \\beta_1 = 0\\) et \\(H_1 : \\beta_1 \\ne 0\\).\n\ntest_pente_service &lt;- summary(modele_service)$coefficients[\n  \"delai_service_minutes\", ]\ntest_pente_service\n\n     Estimate    Std. Error       t value      Pr(&gt;|t|) \n-3.263961e-01  5.163994e-02 -6.320614e+00  2.109825e-08 \n\n\nLa valeur p est inférieure à 0,001 : au seuil de 5 %, le test rejette H₀ sous les hypothèses du modèle. Elle indique une faible compatibilité des données avec une pente nulle, sous ces hypothèses. Ce n’est ni la probabilité que H₀ soit vraie ni une mesure de l’ampleur de l’association. La pente et son intervalle donnent cette information dans les unités de satisfaction.\nL’intervalle classique repose notamment sur une moyenne linéaire, des erreurs indépendantes et de variance constante; la normalité permet le calcul exact présenté. Comme les mêmes succursales sont observées sur plusieurs mois, l’indépendance reste à examiner. L’intervalle illustre le calcul sous ces hypothèses et ne prouve pas un effet causal du délai."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-4---examiner-les-résidus",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-4---examiner-les-résidus",
     "title": "Exercices - Module 03",
     "section": "Exercice 4 - Examiner les résidus",
-    "text": "Exercice 4 - Examiner les résidus\nVérifiez d’abord le graphique résidus contre valeurs prédites. Examinez ensuite si les résidus moyens diffèrent entre les succursales.\n\ndiagnostic_service &lt;- augment(modele_service, data = performance)\n\nggplot(diagnostic_service, aes(x = .fitted, y = .resid)) +\n  geom_hline(yintercept = 0, linetype = \"dashed\") +\n  geom_point(aes(colour = succursale), alpha = 0.8) +\n  labs(\n    title = \"Résidus du modèle de satisfaction\",\n    x = \"Satisfaction prédite\",\n    y = \"Résidu\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12)\n\ndiagnostic_service |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    residu_moyen = mean(.resid),\n    erreur_absolue_moyenne = mean(abs(.resid)),\n    .groups = \"drop\"\n  )\n\nExpliquez pourquoi un motif par succursale signalerait une limite du modèle simple, même si la pente est différente de zéro."
+    "text": "Exercice 4 - Examiner les résidus\nProduisez le graphique des résidus selon les valeurs prédites, avec une couleur par succursale. Calculez ensuite, pour chaque succursale, le résidu moyen et l’erreur absolue moyenne, c’est-à-dire la moyenne des valeurs absolues des résidus.\nIdentifiez une sous-estimation ou une surestimation moyenne. Expliquez pourquoi un petit résidu moyen peut coexister avec des erreurs individuelles importantes. Terminez par une limite du modèle simple.\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 4\n\n\n\n\n\n\ndiagnostic_service &lt;- performance |&gt;\n  mutate(\n    satisfaction_predite = fitted(modele_service),\n    residu = residuals(modele_service)\n  )\n\n\nggplot(diagnostic_service, aes(x = satisfaction_predite, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\") +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.3) +\n  labs(\n    title = \"Résidus du modèle de satisfaction\",\n    x = \"Satisfaction prédite (points sur 10)\",\n    y = \"Résidu (points)\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\nbilan_succursales &lt;- diagnostic_service |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    observations = n(),\n    residu_moyen = mean(residu),\n    erreur_absolue_moyenne = mean(abs(residu)),\n    .groups = \"drop\"\n  )\n\nbilan_succursales |&gt;\n  mutate(across(c(residu_moyen, erreur_absolue_moyenne), ~ round(.x, 3))) |&gt;\n  knitr::kable(col.names = c(\n    \"Succursale\", \"Observations\", \"Résidu moyen (points)\",\n    \"Erreur absolue moyenne (points)\"\n  ))\n\n\n\n\n\n\n\n\n\n\nSuccursale\nObservations\nRésidu moyen (points)\nErreur absolue moyenne (points)\n\n\n\n\nGatineau\n12\n0.023\n0.444\n\n\nMontréal\n12\n0.336\n0.408\n\n\nQuébec\n12\n-0.102\n0.399\n\n\nSaguenay\n12\n-0.099\n0.573\n\n\nSherbrooke\n12\n-0.149\n0.335\n\n\nTrois-Rivières\n12\n-0.009\n0.274\n\n\n\n\n\nÀ Montréal, le résidu moyen est d’environ +0,336 point : la droite sous-estime en moyenne la satisfaction. À Sherbrooke, il est d’environ −0,149 point : elle la surestime en moyenne. Ces écarts sont descriptifs et ne prouvent pas un effet propre à la succursale.\nÀ Gatineau, le résidu moyen est proche de zéro (+0,023 point), mais l’erreur absolue moyenne vaut environ 0,444 point. Des erreurs positives et négatives peuvent s’annuler dans une moyenne signée. La moyenne des valeurs absolues renseigne sur leur ampleur.\nLe nuage ne montre pas de courbure nette, mais les différences entre succursales méritent un examen. La moyenne globale des résidus est nulle par construction avec une ordonnée; ce seul fait ne valide pas le modèle. Il faudrait aussi examiner les mois et les variables de contexte. Le graphique ne vérifie pas l’indépendance entre observations répétées."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-5---conclusion-courte",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-5---conclusion-courte",
     "title": "Exercices - Module 03",
     "section": "Exercice 5 - Conclusion courte",
-    "text": "Exercice 5 - Conclusion courte\nRédigez une conclusion de cinq phrases maximum :\n\nquestion étudiée;\ndirection observée;\ninterprétation de la pente pour deux minutes;\nrésultat du diagnostic;\nlimite et prochaine information à recueillir."
+    "text": "Exercice 5 - Conclusion courte\nRédigez au plus cinq phrases pour la responsable du service :\n\nla question étudiée;\nla direction et l’ampleur de l’association pour deux minutes;\nun résultat précis du diagnostic;\nune limite de l’interprétation;\nune information à recueillir ensuite.\n\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 5\n\n\n\n\n\nUne conclusion possible :\n\nNous étudions le lien entre délai de service moyen et satisfaction mensuelle dans six succursales fictives observées pendant douze mois. Deux minutes de délai supplémentaires sont associées à une satisfaction moyenne inférieure d’environ 0,65 point sur 10 selon la droite. Le modèle sous-estime notamment la satisfaction à Montréal d’environ 0,34 point en moyenne. Cette association ne prouve pas qu’une réduction imposée du délai provoquerait une amélioration de satisfaction de même ampleur, et les observations répétées appellent un examen de l’indépendance. Il faudrait documenter les changements de personnel, les ruptures de stock et le moment des interventions pour approfondir l’analyse.\n\nCette réponse cite un résultat vérifiable, conserve les unités et propose une collecte liée aux limites du modèle. D’autres formulations conviennent si elles restent cohérentes avec les résultats. Évitez une conclusion limitée à « la pente est significative »."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-6---mini-trace-finale",
     "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-6---mini-trace-finale",
     "title": "Exercices - Module 03",
     "section": "Exercice 6 - Mini-trace finale",
-    "text": "Exercice 6 - Mini-trace finale\nPréparez une note destinée à la responsable du service. Elle doit inclure le graphique, le coefficient avec son intervalle de confiance, le diagnostic par succursale et une action de collecte de données. La note doit rester utile même si la relation observée ne permet pas encore une décision causale."
+    "text": "Exercice 6 - Mini-trace finale\nPréparez une courte note Quarto destinée à la responsable du service. Rassemblez le nuage de points, le modèle, la pente et son intervalle, le test sous hypothèses, le calcul du R², le diagnostic par succursale et votre conclusion. Indiquez une action de collecte de données.\nRedémarrez R et rendez le document en HTML. Les exercices précédents doivent suffire à recalculer tous les résultats.\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 6\n\n\n\n\n\n\nOrganisation possible\n\n\n\n\n\n\n\nSection du rapport\nContenu attendu\n\n\n\n\nQuestion et données\n72 observations mois-succursale, données simulées, variables et unités\n\n\nRelation observée\nNuage de points de l’exercice 2 et lecture de la dispersion\n\n\nModèle\nCode lm(), pente, intervalle classique, H₀, valeur p et hypothèses\n\n\nDiagnostic\nGraphique des résidus, tableau par succursale et calcul du R²\n\n\nConclusion\nVotre réponse à l’exercice 5 et la prochaine collecte proposée\n\n\n\nPour présenter la comparaison de deux minutes dans un petit tableau :\n\nic_pente &lt;- confint(modele_service, \"delai_service_minutes\")\n\ntibble(\n  comparaison = \"Deux minutes supplémentaires\",\n  difference_satisfaction = 2 * coef(modele_service)[[\"delai_service_minutes\"]],\n  borne_inferieure = 2 * ic_pente[1, 1],\n  borne_superieure = 2 * ic_pente[1, 2]\n) |&gt;\n  mutate(across(where(is.numeric), ~ round(.x, 3))) |&gt;\n  knitr::kable(col.names = c(\n    \"Comparaison\", \"Différence (points)\", \"Borne inférieure\", \"Borne supérieure\"\n  ))\n\n\n\n\n\n\n\n\n\n\nComparaison\nDifférence (points)\nBorne inférieure\nBorne supérieure\n\n\n\n\nDeux minutes supplémentaires\n-0.653\n-0.859\n-0.447\n\n\n\n\n\nLes bornes sont celles de l’intervalle classique à 95 % de la différence moyenne estimée sous le modèle. Elles ne décrivent pas l’intervalle de satisfaction d’une nouvelle observation.\n\n\nVérifier le rapport\nDans RStudio, choisissez Session &gt; Restart R, puis Render. Si un objet manque, vérifiez que le bloc qui le crée est présent plus haut dans le document. Si le CSV est introuvable, vérifiez le dossier data dans Files.\nLe HTML doit afficher les résultats et vos explications. Conservez le .qmd avec le CSV pour permettre de refaire l’analyse. Cette trace est un entraînement; elle ne remplace pas un mini-rapport évalué."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html",
     "href": "modules/semaine-03-regression-lineaire/capsules.html",
     "title": "Capsules - Module 03",
     "section": "",
-    "text": "Cette page rassemble les six capsules du module 03. Elles construisent progressivement l’intuition de la régression linéaire : partir d’une question d’affaires, lire un nuage de points, ajuster une droite, interpréter les coefficients, examiner les résidus et conclure avec prudence.\nPour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles."
+    "text": "Les six capsules construisent une analyse de régression : formuler une question, lire les données, comprendre la droite, l’ajuster dans R, examiner les résidus et conclure.\nLes supports PDF et HTML sont disponibles. Les vidéos du module 3 ne sont pas encore disponibles. Les onglets reprennent l’organisation des modules précédents. Dans l’onglet HTML, les boutons des blocs de code permettent de copier le code; le lien sous les diapositives ouvre le support en grand.\nSuivez les capsules dans l’ordre. Conservez vos réponses aux productions autonomes 3.1 à 3.6 dans le document du parcours guidé. Ce sont les mêmes activités : vous n’avez pas à les refaire deux fois. Les démonstrations R montrent la séquence complète, depuis la création du projet jusqu’au rendu HTML."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#objectif",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#objectif",
     "title": "Capsules - Module 03",
     "section": "",
-    "text": "Cette page rassemble les six capsules du module 03. Elles construisent progressivement l’intuition de la régression linéaire : partir d’une question d’affaires, lire un nuage de points, ajuster une droite, interpréter les coefficients, examiner les résidus et conclure avec prudence.\nPour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles."
+    "text": "Les six capsules construisent une analyse de régression : formuler une question, lire les données, comprendre la droite, l’ajuster dans R, examiner les résidus et conclure.\nLes supports PDF et HTML sont disponibles. Les vidéos du module 3 ne sont pas encore disponibles. Les onglets reprennent l’organisation des modules précédents. Dans l’onglet HTML, les boutons des blocs de code permettent de copier le code; le lien sous les diapositives ouvre le support en grand.\nSuivez les capsules dans l’ordre. Conservez vos réponses aux productions autonomes 3.1 à 3.6 dans le document du parcours guidé. Ce sont les mêmes activités : vous n’avez pas à les refaire deux fois. Les démonstrations R montrent la séquence complète, depuis la création du projet jusqu’au rendu HTML."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#capsule-1---formuler-une-question-de-régression",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#capsule-1---formuler-une-question-de-régression",
     "title": "Capsules - Module 03",
     "section": "Capsule 1 - Formuler une question de régression",
-    "text": "Capsule 1 - Formuler une question de régression\nCette capsule transforme une question d’affaires en question statistique avec une variable réponse et une variable explicative.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : Formulez la question du module en une phrase sans utiliser le mot « cause »."
+    "text": "Capsule 1 - Formuler une question de régression\nIdentifier la réponse, la variable explicative, leurs unités et la portée de la question.\n\nVidéoPDFHTML\n\n\nLa vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.\n\n\n\n  \n\nOuvrir le PDF\n\n\n\n  \n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nÀ faire après la capsule : formuler la question sur le budget et les ventes, puis nommer les variables, leurs unités et une variable de contexte."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#capsule-2---lire-le-nuage-de-points",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#capsule-2---lire-le-nuage-de-points",
     "title": "Capsules - Module 03",
     "section": "Capsule 2 - Lire le nuage de points",
-    "text": "Capsule 2 - Lire le nuage de points\nCette capsule montre comment regarder la relation avant de modéliser : direction, forme, dispersion et points atypiques.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : Décrivez le nuage de points attendu entre budget_marketing et ventes avec les mots direction, dispersion et limite."
+    "text": "Capsule 2 - Lire le nuage de points\nLire la direction, la forme et la dispersion, puis interpréter la corrélation.\n\nVidéoPDFHTML\n\n\nLa vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.\n\n\n\n  \n\nOuvrir le PDF\n\n\n\n  \n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nÀ faire après la capsule : produire le nuage de points et décrire sa direction, sa forme, sa dispersion et une limite."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#capsule-3---comprendre-la-droite-de-régression",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#capsule-3---comprendre-la-droite-de-régression",
     "title": "Capsules - Module 03",
     "section": "Capsule 3 - Comprendre la droite de régression",
-    "text": "Capsule 3 - Comprendre la droite de régression\nCette capsule présente l’équation du modèle linéaire et le sens de la pente dans une analyse appliquée.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : Expliquez ce que signifierait une pente positive dans le contexte des ventes et du budget marketing."
+    "text": "Capsule 3 - Comprendre la droite de régression\nRelier la pente et les unités au modèle, aux résidus et aux moindres carrés.\n\nVidéoPDFHTML\n\n\nLa vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.\n\n\n\n  \n\nOuvrir le PDF\n\n\n\n  \n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nÀ faire après la capsule : interpréter la pente pour 1 000 $ de budget et expliquer le signe du résidu de janvier en Capitale-Nationale."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#capsule-4---ajuster-le-modèle-avec-r",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#capsule-4---ajuster-le-modèle-avec-r",
     "title": "Capsules - Module 03",
     "section": "Capsule 4 - Ajuster le modèle avec R",
-    "text": "Capsule 4 - Ajuster le modèle avec R\nCette capsule relie l’intuition à la commande lm() et à la lecture des coefficients.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : Écrivez le code lm() du module et indiquez où se trouvent la pente et l’ordonnée à l’origine dans la sortie."
+    "text": "Capsule 4 - Ajuster le modèle avec R\nAjuster la droite, interpréter les coefficients, lire un intervalle classique et expliquer le test de la pente.\n\nVidéoPDFHTML\n\n\nLa vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.\n\n\n\n  \n\nOuvrir le PDF\n\n\n\n  \n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nÀ faire après la capsule : présenter la pente pour 1 000 $ et son intervalle, formuler H₀, interpréter la valeur p et indiquer une hypothèse à vérifier."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#capsule-5---diagnostiquer-avec-les-résidus",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#capsule-5---diagnostiquer-avec-les-résidus",
     "title": "Capsules - Module 03",
     "section": "Capsule 5 - Diagnostiquer avec les résidus",
-    "text": "Capsule 5 - Diagnostiquer avec les résidus\nCette capsule montre pourquoi les résidus sont indispensables pour vérifier si la droite résume correctement les données.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : Expliquez pourquoi un modèle avec une pente intéressante peut quand même être fragile."
+    "text": "Capsule 5 - Diagnostiquer avec les résidus\nExaminer le graphique des résidus et les écarts moyens par région.\n\nVidéoPDFHTML\n\n\nLa vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.\n\n\n\n  \n\nOuvrir le PDF\n\n\n\n  \n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nÀ faire après la capsule : produire le graphique des résidus et le tableau par région, puis rédiger deux constats et une limite."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#capsule-6---conclure-sans-dépasser-les-données",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#capsule-6---conclure-sans-dépasser-les-données",
     "title": "Capsules - Module 03",
     "section": "Capsule 6 - Conclure sans dépasser les données",
-    "text": "Capsule 6 - Conclure sans dépasser les données\nCette capsule rassemble pente, qualité d’ajustement, prédiction et prudence causale dans une conclusion courte.\n\n  \n    \n  \n  \n    \n  \n\nÀ faire après la capsule : Rédigez une conclusion de quatre phrases qui mentionne la pente, l’ajustement, une limite et une suite possible."
+    "text": "Capsule 6 - Conclure sans dépasser les données\nInterpréter le R², présenter une prédiction avec son intervalle et conclure à partir des diagnostics.\n\nVidéoPDFHTML\n\n\nLa vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.\n\n\n\n  \n\nOuvrir le PDF\n\n\n\n  \n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nÀ faire après la capsule : rédiger cinq phrases : question, pente, ajustement et diagnostic, limite, prochaine étape."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/capsules.html#après-les-capsules",
     "href": "modules/semaine-03-regression-lineaire/capsules.html#après-les-capsules",
     "title": "Capsules - Module 03",
     "section": "Après les capsules",
-    "text": "Après les capsules\nPoursuivez avec les démonstrations R, puis les exercices. Les capsules donnent l’intuition; les démonstrations montrent le code complet; les exercices servent à produire l’interprétation finale du modèle."
+    "text": "Après les capsules\nTerminez votre analyse guidée avec les démonstrations R. Passez ensuite aux exercices d’application et à leurs corrigés sur les délais et la satisfaction. Les notes de cours rassemblent les repères du module, également disponibles en PDF."
   },
   {
     "objectID": "modules/atelier-01-r/lectures.html",
@@ -5051,84 +4890,84 @@
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html",
     "title": "Démonstrations R - Module 03",
     "section": "",
-    "text": "Cette page montre une analyse reproductible de régression linéaire simple. Le but n’est pas de mémoriser le code, mais de comprendre la séquence :\n\nimporter;\nvisualiser;\najuster;\ninterpréter;\ndiagnostiquer;\nformuler une conclusion prudente."
+    "text": "Construire une analyse de régression sur les campagnes marketing fictives. Les six activités du parcours alimentent un seul document, regression_marketing.qmd. Les productions autonomes des capsules correspondent à ces activités : vous n’avez pas à les refaire deux fois.\nLes blocs ci-dessous s’exécutent dans l’ordre, dans le même document. Les résultats présentés sont calculés à partir du CSV du cours. Après ce travail guidé, les exercices vous demandent de transférer la démarche au délai de service et à la satisfaction."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#objectif",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#objectif",
     "title": "Démonstrations R - Module 03",
     "section": "",
-    "text": "Cette page montre une analyse reproductible de régression linéaire simple. Le but n’est pas de mémoriser le code, mais de comprendre la séquence :\n\nimporter;\nvisualiser;\najuster;\ninterpréter;\ndiagnostiquer;\nformuler une conclusion prudente."
+    "text": "Construire une analyse de régression sur les campagnes marketing fictives. Les six activités du parcours alimentent un seul document, regression_marketing.qmd. Les productions autonomes des capsules correspondent à ces activités : vous n’avez pas à les refaire deux fois.\nLes blocs ci-dessous s’exécutent dans l’ordre, dans le même document. Les résultats présentés sont calculés à partir du CSV du cours. Après ce travail guidé, les exercices vous demandent de transférer la démarche au délai de service et à la satisfaction."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#préparation",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#préparation",
     "title": "Démonstrations R - Module 03",
     "section": "Préparation",
-    "text": "Préparation\n\nlibrary(tidyverse)\n\ndata_path &lt;- if (file.exists(\"data/campagnes_marketing_quebec.csv\")) {\n  \"data/campagnes_marketing_quebec.csv\"\n} else {\n  \"modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv\"\n}\n\ncampagnes &lt;- read_csv(data_path, show_col_types = FALSE)"
+    "text": "Préparation\n\nDans RStudio, choisissez File &gt; New Project &gt; New Directory &gt; New Project. Nommez le projet regression-marketing.\nDans Files, créez un dossier data. Placez-y le fichier campagnes_marketing_quebec.csv.\nChoisissez File &gt; New File &gt; Quarto Document, puis HTML. Enregistrez regression_marketing.qmd à la racine du projet.\nConservez cet en-tête, puis insérez les blocs R avec Insert &gt; Code Chunk &gt; R.\n\n---\ntitle: \"Budget marketing et ventes\"\nlang: fr\nformat:\n  html:\n    embed-resources: true\n---\n\nlibrary(tidyverse)\n\ncampagnes &lt;- read_csv(\n  \"data/campagnes_marketing_quebec.csv\",\n  show_col_types = FALSE\n)"
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#inspecter-le-tableau",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#inspecter-le-tableau",
     "title": "Démonstrations R - Module 03",
     "section": "Inspecter le tableau",
-    "text": "Inspecter le tableau\n\nglimpse(campagnes)\n\nRows: 60\nColumns: 10\n$ mois             &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01, 2025…\n$ mois_label       &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"janvier\"…\n$ region           &lt;chr&gt; \"Capitale-Nationale\", \"Estrie\", \"Mauricie\", \"Montréal…\n$ canal            &lt;chr&gt; \"Infolettre\", \"Infolettre\", \"Recherche\", \"Réseaux soc…\n$ saison           &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\"…\n$ budget_marketing &lt;dbl&gt; 5814, 3775, 5497, 6215, 5703, 3246, 4927, 2497, 6515,…\n$ visites_site     &lt;dbl&gt; 6393, 5235, 6880, 8106, 7107, 4958, 6154, 4117, 7606,…\n$ rabais           &lt;dbl&gt; 0.00, 0.15, 0.13, 0.17, 0.17, 0.13, 0.15, 0.08, 0.17,…\n$ ventes           &lt;dbl&gt; 121915, 93518, 95109, 121125, 108469, 82306, 95280, 5…\n$ satisfaction     &lt;dbl&gt; 7.7, 7.4, 7.5, 7.7, 7.7, 7.1, 7.3, 7.2, 8.5, 7.2, 8.3…\n\n\n\ncampagnes |&gt;\n  summarise(\n    observations = n(),\n    budget_moyen = mean(budget_marketing),\n    ventes_moyennes = mean(ventes),\n    ventes_min = min(ventes),\n    ventes_max = max(ventes)\n  )\n\n# A tibble: 1 × 5\n  observations budget_moyen ventes_moyennes ventes_min ventes_max\n         &lt;int&gt;        &lt;dbl&gt;           &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;\n1           60        5470.         104212.      56608     153315"
+    "text": "Inspecter le tableau\n\nglimpse(campagnes)\n\nRows: 60\nColumns: 10\n$ mois             &lt;date&gt; 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01, 2025…\n$ mois_label       &lt;chr&gt; \"janvier\", \"janvier\", \"janvier\", \"janvier\", \"janvier\"…\n$ region           &lt;chr&gt; \"Capitale-Nationale\", \"Estrie\", \"Mauricie\", \"Montréal…\n$ canal            &lt;chr&gt; \"Infolettre\", \"Infolettre\", \"Recherche\", \"Réseaux soc…\n$ saison           &lt;chr&gt; \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\", \"moyenne\"…\n$ budget_marketing &lt;dbl&gt; 5814, 3775, 5497, 6215, 5703, 3246, 4927, 2497, 6515,…\n$ visites_site     &lt;dbl&gt; 6393, 5235, 6880, 8106, 7107, 4958, 6154, 4117, 7606,…\n$ rabais           &lt;dbl&gt; 0.00, 0.15, 0.13, 0.17, 0.17, 0.13, 0.15, 0.08, 0.17,…\n$ ventes           &lt;dbl&gt; 121915, 93518, 95109, 121125, 108469, 82306, 95280, 5…\n$ satisfaction     &lt;dbl&gt; 7.7, 7.4, 7.5, 7.7, 7.7, 7.1, 7.3, 7.2, 8.5, 7.2, 8.3…\n\n\nLe tableau contient 60 lignes et 10 colonnes. Une ligne correspond à une région pendant un mois : cinq régions sont observées pendant les douze mois de 2025. Les campagnes sont simulées. Les noms des régions sont réels.\n\n\n\n\n\n\n\nVariable\nSens et unité\n\n\n\n\nventes\nMontant mensuel des ventes, en dollars canadiens; variable réponse\n\n\nbudget_marketing\nBudget marketing mensuel, en dollars canadiens; variable explicative\n\n\nregion\nRégion de la campagne\n\n\nmois\nMois de l’observation, représenté par son premier jour\n\n\nsaison\nNiveau d’activité saisonnière : régulier, moyen ou haut\n\n\ncanal\nCanal principal de la campagne\n\n\n\nLes autres colonnes sont décrites dans la page Données.\n\ncampagnes |&gt;\n  summarise(\n    observations = n(),\n    budgets_manquants = sum(is.na(budget_marketing)),\n    ventes_manquantes = sum(is.na(ventes)),\n    budget_min = min(budget_marketing),\n    budget_max = max(budget_marketing)\n  )\n\n# A tibble: 1 × 5\n  observations budgets_manquants ventes_manquantes budget_min budget_max\n         &lt;int&gt;             &lt;int&gt;             &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;\n1           60                 0                 0       2497       8857\n\n\nLes deux variables du modèle sont complètes. Les budgets vont de 2 497 $ à 8 857 $. S’il manquait des valeurs, il faudrait préciser les observations utilisées avant d’ajuster le modèle.\nQuestion de l’activité 3.1 : comment les ventes moyennes varient-elles selon le budget marketing dans ces données? La région et la saison peuvent aussi être liées aux ventes. La question porte sur une association."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#visualiser-la-relation",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#visualiser-la-relation",
     "title": "Démonstrations R - Module 03",
     "section": "Visualiser la relation",
-    "text": "Visualiser la relation\n\nggplot(campagnes, aes(x = budget_marketing, y = ventes)) +\n  geom_point(aes(colour = region), alpha = 0.8, size = 2.4) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#0B4F6C\", linewidth = 1.1) +\n  labs(\n    title = \"Ventes selon le budget marketing\",\n    x = \"Budget marketing\",\n    y = \"Ventes\",\n    colour = \"Région\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\nLe graphique suggère une association positive : les campagnes avec un budget plus élevé tendent aussi à avoir des ventes plus élevées."
+    "text": "Visualiser la relation\n\nggplot(campagnes, aes(x = budget_marketing, y = ventes)) +\n  geom_point(aes(colour = region), alpha = 0.8, size = 2.4) +\n  labs(\n    title = \"Ventes selon le budget marketing\",\n    x = \"Budget marketing mensuel ($)\",\n    y = \"Ventes mensuelles ($)\",\n    colour = \"Région\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nPour l’activité 3.2, décrivez d’abord les points : la tendance globale est croissante et approximativement linéaire, avec une dispersion visible autour de cette tendance. Les couleurs permettent de situer les régions. Ce graphique ne montre pas ce qu’une intervention sur le budget provoquerait.\nLa corrélation complète la lecture visuelle :\n\ncor(campagnes$budget_marketing, campagnes$ventes)\n\n[1] 0.907859\n\n\nLa corrélation vaut environ 0,908. Elle est sans unité et décrit la relation linéaire. Elle est symétrique : inverser les deux variables ne change pas sa valeur. La régression distingue, elle, la réponse de la variable explicative."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#ajuster-le-modèle",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#ajuster-le-modèle",
     "title": "Démonstrations R - Module 03",
     "section": "Ajuster le modèle",
-    "text": "Ajuster le modèle\n\nmodele_budget &lt;- lm(ventes ~ budget_marketing, data = campagnes)\n\nsummary(modele_budget)\n\n\nCall:\nlm(formula = ventes ~ budget_marketing, data = campagnes)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-16277.1  -6353.5   -347.8   6892.4  17632.8 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)      2.992e+04  4.632e+03    6.46 2.35e-08 ***\nbudget_marketing 1.358e+01  8.236e-01   16.49  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8339 on 58 degrees of freedom\nMultiple R-squared:  0.8242,    Adjusted R-squared:  0.8212 \nF-statistic: 271.9 on 1 and 58 DF,  p-value: &lt; 2.2e-16"
+    "text": "Ajuster le modèle\n\nmodele &lt;- lm(ventes ~ budget_marketing, data = campagnes)\ncoef(modele)\n\n     (Intercept) budget_marketing \n       29922.107           13.582 \n\n\nventes est à gauche de ~; budget_marketing est à droite. R inclut une ordonnée à l’origine par défaut. Dans la sortie, (Intercept) désigne cette ordonnée et budget_marketing désigne la pente.\nPour voir le résumé complet :\n\nsummary(modele)\n\n\nCall:\nlm(formula = ventes ~ budget_marketing, data = campagnes)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-16277.1  -6353.5   -347.8   6892.4  17632.8 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)      2.992e+04  4.632e+03    6.46 2.35e-08 ***\nbudget_marketing 1.358e+01  8.236e-01   16.49  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8339 on 58 degrees of freedom\nMultiple R-squared:  0.8242,    Adjusted R-squared:  0.8212 \nF-statistic: 271.9 on 1 and 58 DF,  p-value: &lt; 2.2e-16\n\n\nEstimate signifie « estimation » et Std. Error signifie « erreur-type ». Les colonnes de test et les étoiles ne suffisent pas à justifier une décision. Pour ce module, commencez par interpréter les coefficients, puis examinez les résidus et le R²."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#interpréter-les-coefficients",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#interpréter-les-coefficients",
     "title": "Démonstrations R - Module 03",
     "section": "Interpréter les coefficients",
-    "text": "Interpréter les coefficients\n\ncoefficients_modele &lt;- coef(modele_budget)\n\ncoefficients_modele\n\n     (Intercept) budget_marketing \n       29922.107           13.582 \n\n\nLa pente estimée correspond à la variation moyenne des ventes associée à une augmentation d’une unité de budget marketing, dans ce jeu de données.\nComme le budget est en dollars, une augmentation de 1 dollar est peu parlante. On peut reformuler la pente pour 1 000 dollars.\n\npente_1000 &lt;- coefficients_modele[\"budget_marketing\"] * 1000\n\npente_1000\n\nbudget_marketing \n           13582 \n\n\nInterprétation attendue : pour 1 000 dollars de budget marketing supplémentaire, le modèle estime une augmentation moyenne des ventes d’environ 1.3582^{4} dollars, dans ces données."
+    "text": "Interpréter les coefficients\n\npente_1000 &lt;- coef(modele)[[\"budget_marketing\"]] * 1000\npente_1000\n\n[1] 13582\n\n\nPour les activités 3.3 et 3.4, une formulation possible est :\n\nDans ces données simulées, une différence de 1 000 $ de budget marketing est associée à environ 13 582 $ de ventes moyennes supplémentaires selon la droite.\n\nCe montant décrit les ventes, pas le profit. Le modèle ne permet pas d’affirmer qu’une augmentation imposée du budget produirait cette hausse.\nL’ordonnée estimée vaut environ 29 922 $. Elle correspond aux ventes prédites à budget nul. Or zéro est hors de la plage observée : cette interprétation relève de l’extrapolation. Cela ne justifie pas de supprimer l’ordonnée du modèle.\n\nIncertitude sur la pente\n\nconfint(modele, \"budget_marketing\", level = 0.95)\n\n                    2.5 %   97.5 %\nbudget_marketing 11.93333 15.23067\n\n\nL’intervalle de confiance classique à 95 % va d’environ 11,93 à 15,23 $ de ventes par dollar de budget. Pour une différence de 1 000 $, les bornes deviennent environ 11 933 $ et 15 231 $. Il s’agit d’un intervalle sur la pente, pas d’un intervalle pour les ventes d’une nouvelle observation.\n\n\n\n\n\n\nNoteCe calcul repose sur des hypothèses\n\n\n\nLes intervalles classiques supposent une moyenne linéaire, des erreurs indépendantes et une variance constante. La normalité des erreurs permet les résultats exacts utilisés ici. Sous ces hypothèses, la méthode couvre la pente dans 95 % des répétitions d’échantillonnage.\nLes mêmes régions reviennent chaque mois. Il faut donc examiner le contexte régional et temporel avant de faire confiance à ces intervalles. Les calculs illustrent la méthode; ils ne vérifient pas ses hypothèses."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#qualité-dajustement",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#qualité-dajustement",
     "title": "Démonstrations R - Module 03",
     "section": "Qualité d’ajustement",
-    "text": "Qualité d’ajustement\n\nresume_modele &lt;- summary(modele_budget)\n\nresume_modele$r.squared\n\n[1] 0.8242079\n\n\nLe R² indique la proportion de variation des ventes expliquée par la droite utilisant seulement le budget marketing."
+    "text": "Qualité d’ajustement\n\nsummary(modele)$r.squared\n\n[1] 0.8242079\n\n\nLe coefficient de détermination R² vaut environ 0,824. La droite décrit ainsi environ 82,4 % de la variation des ventes dans l’échantillon utilisé pour l’ajuster. Ce pourcentage ne représente ni un taux de prédictions correctes ni une part des ventes causée par le budget. Dans cette régression simple avec ordonnée, R² est égal au carré de la corrélation.\n\nRetrouver R² à partir des écarts\nLa somme des carrés résiduels (SSE) mesure les écarts à la droite. La somme totale des carrés (SST) mesure les écarts à la moyenne des ventes. Avec une ordonnée à l’origine et une réponse non constante, \\(R^2 = 1 - \\mathrm{SSE}/\\mathrm{SST}\\).\n\nsse &lt;- sum(residuals(modele)^2)\nsst &lt;- sum((campagnes$ventes - mean(campagnes$ventes))^2)\n\ntibble(\n  SSE = sse,\n  SST = sst,\n  R2_calcule = 1 - sse / sst,\n  R2_summary = summary(modele)$r.squared,\n  pourcentage = 100 * (1 - sse / sst)\n)\n\n# A tibble: 1 × 5\n          SSE          SST R2_calcule R2_summary pourcentage\n        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n1 4033405090. 22944176320.      0.824      0.824        82.4\n\n\nLes deux calculs donnent le même R². Par exemple, si SSE = 30 et SST = 120, alors R² = 1 − 30 / 120 = 0,75, soit 75 %. Ce pourcentage décrit la variation expliquée dans les données d’ajustement."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#résidus-et-valeurs-ajustées",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#résidus-et-valeurs-ajustées",
     "title": "Démonstrations R - Module 03",
     "section": "Résidus et valeurs ajustées",
-    "text": "Résidus et valeurs ajustées\n\ncampagnes_modele &lt;- campagnes |&gt;\n  mutate(\n    ventes_predites = predict(modele_budget),\n    residu = residuals(modele_budget)\n  )\n\ncampagnes_modele |&gt;\n  select(region, mois_label, budget_marketing, ventes, ventes_predites, residu) |&gt;\n  slice_head(n = 8)\n\n# A tibble: 8 × 6\n  region             mois_label budget_marketing ventes ventes_predites residu\n  &lt;chr&gt;              &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;\n1 Capitale-Nationale janvier                5814 121915         108888. 13027.\n2 Estrie             janvier                3775  93518          81194. 12324.\n3 Mauricie           janvier                5497  95109         104582. -9473.\n4 Montréal           janvier                6215 121125         114334.  6791.\n5 Outaouais          janvier                5703 108469         107380.  1089.\n6 Capitale-Nationale février                3246  82306          74009.  8297.\n7 Estrie             février                4927  95280          96841. -1561.\n8 Mauricie           février                2497  56608          63836. -7228.\n\n\n\nggplot(campagnes_modele, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\", linewidth = 0.9) +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus selon les ventes prédites\",\n    x = \"Ventes prédites\",\n    y = \"Résidu\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(panel.grid.minor = element_blank())\n\n\n\n\n\n\n\n\nUn bon diagnostic de base vérifie si les résidus sont dispersés autour de zéro sans motif évident. Si les résidus augmentent, diminuent ou forment une courbe, le modèle linéaire simple peut être insuffisant."
+    "text": "Résidus et valeurs ajustées\n\nresultats &lt;- campagnes |&gt;\n  mutate(\n    ventes_predites = fitted(modele),\n    residu = residuals(modele)\n  )\n\nresultats |&gt;\n  select(region, mois_label, budget_marketing, ventes, ventes_predites, residu) |&gt;\n  slice_head(n = 6)\n\n# A tibble: 6 × 6\n  region             mois_label budget_marketing ventes ventes_predites residu\n  &lt;chr&gt;              &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;\n1 Capitale-Nationale janvier                5814 121915         108888. 13027.\n2 Estrie             janvier                3775  93518          81194. 12324.\n3 Mauricie           janvier                5497  95109         104582. -9473.\n4 Montréal           janvier                6215 121125         114334.  6791.\n5 Outaouais          janvier                5703 108469         107380.  1089.\n6 Capitale-Nationale février                3246  82306          74009.  8297.\n\n\nLa première observation, en Capitale-Nationale en janvier, a un budget de 5 814 $ et des ventes de 121 915 $. La droite prédit environ 108 888 $, d’où un résidu positif d’environ 13 027 $ : elle sous-estime les ventes de cette observation.\n\nggplot(resultats, aes(x = ventes_predites, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\") +\n  geom_point(alpha = 0.8, size = 2.4, colour = \"#0B4F6C\") +\n  labs(\n    title = \"Résidus selon les ventes prédites\",\n    x = \"Ventes prédites ($)\",\n    y = \"Résidu ($)\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\nLes points ne montrent pas de courbure nette dans ce graphique. La moyenne globale des résidus est nulle par construction pour les moindres carrés avec ordonnée. Ce centrage ne prouve donc pas que le modèle est adéquat. Une courbure, un éventail ou un point isolé appelleraient un examen supplémentaire.\nPour l’activité 3.5, examinez également les régions :\n\nbilan_regions &lt;- resultats |&gt;\n  group_by(region) |&gt;\n  summarise(\n    observations = n(),\n    residu_moyen = mean(residu),\n    .groups = \"drop\"\n  )\n\nbilan_regions\n\n# A tibble: 5 × 3\n  region             observations residu_moyen\n  &lt;chr&gt;                     &lt;int&gt;        &lt;dbl&gt;\n1 Capitale-Nationale           12        5676.\n2 Estrie                       12       -3340.\n3 Mauricie                     12        -226.\n4 Montréal                     12        2956.\n5 Outaouais                    12       -5066.\n\n\nLa droite sous-estime en moyenne les ventes en Capitale-Nationale d’environ 5 676 $ et les surestime en Outaouais d’environ 5 066 $. Ces écarts descriptifs montrent l’intérêt d’examiner les différences régionales. Ils ne constituent pas un test de causalité. Le graphique précédent ne vérifie pas non plus l’indépendance entre les mois d’une même région."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#prédire-pour-de-nouveaux-budgets",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#prédire-pour-de-nouveaux-budgets",
     "title": "Démonstrations R - Module 03",
     "section": "Prédire pour de nouveaux budgets",
-    "text": "Prédire pour de nouveaux budgets\n\nnouveaux_budgets &lt;- tibble(\n  budget_marketing = c(4000, 6000, 8000)\n)\n\npredict(\n  modele_budget,\n  newdata = nouveaux_budgets,\n  interval = \"prediction\"\n)\n\n        fit       lwr      upr\n1  84250.11  67245.43 101254.8\n2 111414.12  94560.27 128268.0\n3 138578.12 121237.71 155918.5\n\n\nUne prédiction doit être interprétée comme une estimation incertaine. Elle est plus crédible pour des budgets comparables à ceux observés dans les données."
+    "text": "Prédire pour de nouveaux budgets\n\nnouveaux_budgets &lt;- tibble(budget_marketing = c(4000, 6000, 8000))\n\npredictions &lt;- predict(\n  modele,\n  newdata = nouveaux_budgets,\n  interval = \"prediction\",\n  level = 0.95\n)\n\nbind_cols(nouveaux_budgets, as_tibble(predictions))\n\n# A tibble: 3 × 4\n  budget_marketing     fit     lwr     upr\n             &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;\n1             4000  84250.  67245. 101255.\n2             6000 111414.  94560. 128268.\n3             8000 138578. 121238. 155919.\n\n\nLes trois budgets sont dans la plage observée. fit est la valeur prédite; lwr et upr sont les bornes de l’intervalle. Pour 6 000 $ de budget, les ventes prédites sont d’environ 111 414 $, avec un intervalle de prédiction classique à 95 % allant de 94 560 $ à 128 268 $.\nLa nouvelle observation est un mois dans une région comparable. L’intervalle tient compte de l’incertitude sur la moyenne et de la dispersion d’une nouvelle observation autour de cette moyenne. Sa couverture repose sur les hypothèses du modèle; les diagnostics précédents appellent donc à la prudence.\nPour estimer uniquement la moyenne à un budget donné, on utilise interval = \"confidence\" :\n\nbudget_6000 &lt;- tibble(budget_marketing = 6000)\n\npredict(modele, newdata = budget_6000, interval = \"confidence\")\n\n       fit      lwr      upr\n1 111414.1 109088.5 113739.7\n\npredict(modele, newdata = budget_6000, interval = \"prediction\")\n\n       fit      lwr    upr\n1 111414.1 94560.27 128268\n\n\nAu même budget et au même niveau de confiance, l’intervalle de prédiction est plus large. Une prédiction hors de 2 497 $ à 8 857 $ serait une extrapolation. Dans cette plage, la comparabilité du contexte reste à vérifier."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#conclusion-prudente",
     "href": "modules/semaine-03-regression-lineaire/demonstrations.html#conclusion-prudente",
     "title": "Démonstrations R - Module 03",
     "section": "Conclusion prudente",
-    "text": "Conclusion prudente\n\n\n\n\n\n\nAstuceInterprétation synthèse\n\n\n\nDans ces données simulées, les ventes sont positivement associées au budget marketing. La pente du modèle donne une estimation de l’augmentation moyenne des ventes lorsque le budget augmente. Cette relation reste une association observée: elle ne suffit pas à prouver un effet causal du budget sur les ventes."
+    "text": "Conclusion prudente\nPour l’activité 3.6, une conclusion possible est :\n\nNous étudions l’association entre le budget marketing et les ventes mensuelles dans 60 observations simulées de campagnes régionales. Une différence de 1 000 $ de budget est associée à environ 13 582 $ de ventes moyennes supplémentaires selon la droite. Le modèle décrit 82,4 % de la variation des ventes, mais les résidus moyens diffèrent selon la région. Cette association ne prouve pas qu’augmenter le budget provoquerait cette hausse des ventes. Avant une recommandation, il faudrait examiner les différences régionales et temporelles et évaluer les prédictions sur de nouvelles observations."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html",
     "href": "modules/semaine-03-regression-lineaire/index.html",
     "title": "Module 03",
     "section": "",
-    "text": "Séance autonome\n\n\nComprendre, ajuster et interpréter une droite de régression dans un contexte d’affaires. Le module part d’une question simple: lorsqu’un indicateur augmente, que peut-on dire de la valeur moyenne d’un autre indicateur?\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, graphiques, modèle linéaire\n\n\n\n\n\n\n\n\n\nDonnées\n\n\ncampagnes_marketing_quebec.csv\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nInterprétation d’un modèle"
+    "text": "Séance autonome\n\n\nComprendre, ajuster et interpréter une droite de régression dans un contexte d’affaires. Le module part d’une question simple : lorsqu’un indicateur augmente, que peut-on dire de la valeur moyenne d’un autre indicateur?\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nDonnées du parcours guidé\n\n\ncampagnes_marketing_quebec.csv\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nRapport Quarto court"
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html#on-passe-au-concret",
@@ -5142,35 +4981,35 @@
     "href": "modules/semaine-03-regression-lineaire/index.html#votre-parcours",
     "title": "Module 03",
     "section": "Votre parcours",
-    "text": "Votre parcours\n\n\n\n\n\n\nNoteNotes de cours\n\n\n\nLe support global de notes de cours est disponible en HTML et en PDF. Il sert de synthèse du module; les supports détaillés sont associés aux capsules.\n\n\nRevenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.\n\n  \n    \n      1\n      Formuler la question\n      Passer d'une question d'affaires à une question de régression.\n      Capsule 1Ex. 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Identifier la variable réponse, la variable explicative et la limite causale de départ.\n      Ressource Capsule 1 Exercice 1\n      Action Reformuler la question avec les mots association moyenne, ventes et budget marketing.\n\n      Activité 3.1 - Question et variablesÉcrivez la question statistique, puis nommez la variable réponse, la variable explicative principale et une variable de contexte.\n    \n  \n\n  \n    \n      2\n      Lire le nuage de points\n      Observer direction, forme, dispersion et points atypiques avant de modéliser.\n      Capsule 2DémoEx. 2\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Vérifier visuellement si une droite est un résumé plausible.\n      Ressource Capsule 2 Démonstration Exercice 2\n      Action Produire le nuage de points et décrire la direction de l'association.\n\n      Activité 3.2 - Lecture graphiqueDécrivez le graphique avec trois mots-clés : direction, dispersion, limite.\n    \n  \n\n  \n    \n      3\n      Comprendre la droite\n      Relier l'équation du modèle à la pente et à l'ordonnée à l'origine.\n      Capsule 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Comprendre ce que la pente mesure dans le contexte du module.\n      Ressource Capsule 3\n      Action Traduire l'équation en langage d'affaires.\n\n      Activité 3.3 - Pente et unitésPréparez une phrase qui explique ce que signifie une pente positive pour les ventes.\n    \n  \n\n  \n    \n      4\n      Ajuster le modèle dans R\n      Utiliser lm(), lire les coefficients et transformer la sortie en phrases.\n      Capsule 4DémoEx. 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Ajuster une régression linéaire simple et lire la sortie R utile.\n      Ressource Capsule 4 Démonstration Exercice 3\n      Action Exécuter `lm(ventes ~ budget_marketing, data = campagnes)` et repérer les coefficients.\n\n      Activité 3.4 - Lire les coefficientsIndiquez où se trouve la pente dans la sortie et ce qu'elle signifie.\n    \n  \n\n  \n    \n      5\n      Diagnostiquer les résidus\n      Vérifier si les erreurs du modèle restent compatibles avec une droite.\n      Capsule 5DémoEx. 4\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Utiliser les résidus pour juger la crédibilité du modèle.\n      Ressource Capsule 5 Démonstration Exercice 4\n      Action Ajouter valeurs prédites et résidus, puis produire un graphique de diagnostic.\n\n      Activité 3.5 - RésidusExpliquez pourquoi une pente intéressante ne suffit pas sans diagnostic.\n    \n  \n\n  \n    \n      6\n      Conclure prudemment\n      Rassembler graphique, pente, ajustement, limite et recommandation.\n      Capsule 6DémoEx. 5\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Produire une conclusion courte, utile et statistiquement défendable.\n      Ressource Capsule 6 Démonstration Exercice 5\n      Action Rédiger une conclusion qui distingue association, prédiction et causalité.\n\n      Activité 3.6 - Conclusion finaleRédigez quatre phrases : question, pente, diagnostic, limite."
+    "text": "Votre parcours\nSuivez les six capsules dans l’ordre et conservez le code et vos réponses dans regression_marketing.qmd. Les activités 3.1 à 3.6 ci-dessous correspondent aux productions autonomes des diapositives : il n’est pas nécessaire de les refaire deux fois. Les démonstrations montrent le code complet sur le même fichier.\nLes supports se consultent en PDF ou en HTML, avec du code copiable dans les versions HTML. Les vidéos du module 3 ne sont pas encore disponibles.\nUne fois le parcours guidé terminé, passez aux exercices d’application sur le délai de service et la satisfaction, dans un projet distinct. Les données des deux cas sont simulées.\n\n\n\n\n\n\nNoteNotes de cours\n\n\n\nLe support global de notes de cours est disponible en HTML et en PDF. Il sert de synthèse du module; les supports détaillés sont associés aux capsules.\n\n\nRevenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.\n\n  \n    \n      1\n      Formuler la question\n      Passer d'une question d'affaires à une question de régression.\n      Capsule 1\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Identifier la variable réponse, la variable explicative et la limite causale de départ.\n      Ressource Capsule 1 \n      Action Reformuler la question avec les mots association moyenne, ventes et budget marketing.\n\n      Activité 3.1 - Question et variablesÉcrivez la question statistique, puis nommez la variable réponse, la variable explicative principale et une variable de contexte.\n    \n  \n\n  \n    \n      2\n      Lire le nuage de points\n      Observer direction, forme, dispersion et points atypiques avant de modéliser.\n      Capsule 2Démo\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Vérifier visuellement si une droite est un résumé plausible.\n      Ressource Capsule 2 Démonstration \n      Action Produire le nuage de points et décrire la direction de l'association.\n\n      Activité 3.2 - Lecture graphiqueDécrivez la direction, la forme et la dispersion du nuage de points, puis indiquez une limite.\n    \n  \n\n  \n    \n      3\n      Comprendre la droite\n      Relier l'équation du modèle à la pente et à l'ordonnée à l'origine.\n      Capsule 3\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Comprendre ce que la pente mesure dans le contexte du module.\n      Ressource Capsule 3\n      Action Traduire l'équation en langage d'affaires.\n\n      Activité 3.3 - Pente et unitésInterprétez la pente pour 1 000 $ de budget. Expliquez le signe du résidu de janvier en Capitale-Nationale.\n    \n  \n\n  \n    \n      4\n      Ajuster le modèle dans R\n      Utiliser lm(), lire les coefficients et transformer la sortie en phrases.\n      Capsule 4Démo\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Ajuster une régression linéaire simple et lire la sortie R utile.\n      Ressource Capsule 4 Démonstration \n      Action Exécuter lm(ventes ~ budget_marketing, data = campagnes) et repérer les coefficients.\n\n      Activité 3.4 - Lire les coefficientsAjustez la droite, présentez la pente pour 1 000 $ et son intervalle classique. Formulez H₀ sur la pente et interprétez la valeur p. Indiquez une hypothèse à vérifier.\n    \n  \n\n  \n    \n      5\n      Diagnostiquer les résidus\n      Vérifier si les erreurs du modèle restent compatibles avec une droite.\n      Capsule 5Démo\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Utiliser les résidus pour juger la crédibilité du modèle.\n      Ressource Capsule 5 Démonstration \n      Action Ajouter valeurs prédites et résidus, puis produire un graphique de diagnostic.\n\n      Activité 3.5 - RésidusProduisez le graphique des résidus et le tableau par région. Rédigez un constat sur chacun, puis une limite.\n    \n  \n\n  \n    \n      6\n      Conclure prudemment\n      Rassembler graphique, pente, ajustement, limite et recommandation.\n      Capsule 6Démo\n      Ouvrir l'étapeRéduire\n    \n    \n      Objectif Produire une conclusion courte, utile et statistiquement défendable.\n      Ressource Capsule 6 Démonstration \n      Action Calculer le R², prédire les ventes pour 6 000 $ de budget avec un intervalle, puis conclure en tenant compte des résidus et du contexte.\n\n      Activité 3.6 - Conclusion finaleRédigez cinq phrases : question, pente pour 1 000 $, ajustement et diagnostic, limite, prochaine étape."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html#avant-de-commencer",
     "href": "modules/semaine-03-regression-lineaire/index.html#avant-de-commencer",
     "title": "Module 03",
     "section": "Avant de commencer",
-    "text": "Avant de commencer\nTéléchargez ou repérez le fichier campagnes_marketing_quebec.csv. Chaque ligne représente une combinaison mois-région pour une campagne fictive.\nVariables centrales :\n\nventes : variable réponse;\nbudget_marketing : variable explicative principale;\nvisites_site, rabais, region, canal : variables utiles pour contextualiser;\nsatisfaction : indicateur complémentaire à ne pas confondre avec les ventes."
+    "text": "Avant de commencer\nReprenez les gestes du module 2 : créez le projet R regression-marketing, placez campagnes_marketing_quebec.csv dans son dossier data, puis créez regression_marketing.qmd à la racine du projet. Les démonstrations R détaillent les clics et le code.\nUne ligne décrit une campagne régionale pendant un mois. Le fichier simulé contient 60 observations : cinq régions suivies pendant les douze mois de 2025. budget_marketing et ventes sont des montants mensuels en dollars canadiens.\nLa région, le mois, le canal et la saison aident à comprendre le contexte. Le fichier représente des campagnes fictives, même si les noms des régions sont réels."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html#trace-finale",
     "href": "modules/semaine-03-regression-lineaire/index.html#trace-finale",
     "title": "Module 03",
     "section": "Trace finale",
-    "text": "Trace finale\nVotre trace finale doit tenir en quelques paragraphes. Elle doit inclure :\n\nla question d’analyse;\nle graphique de relation entre budget marketing et ventes;\nl’équation interprétée du modèle;\nune phrase sur la pente;\nune phrase sur la qualité d’ajustement ou les résidus;\nune limite claire sur l’interprétation causale.\n\n\n\n\n\n\n\nAstucePhrase cible\n\n\n\nUne bonne conclusion ressemble à ceci : « Dans ces données, les ventes moyennes sont plus élevées lorsque le budget marketing est plus élevé. Le modèle estime l’association moyenne, mais il ne suffit pas à prouver que le budget cause l’augmentation des ventes. »"
+    "text": "Trace finale\nLe parcours guidé produit regression_marketing.qmd. Il doit contenir :\n\nla question, l’unité d’observation et les unités des variables;\nle nuage budget-ventes et sa lecture;\nle code lm() et l’interprétation de la pente pour 1 000 $;\nl’intervalle de confiance classique de la pente et ses hypothèses;\nle R², le graphique des résidus et le diagnostic par région;\nla prédiction pour 6 000 $ de budget, son intervalle et ses limites;\nune conclusion courte appuyée sur les résultats.\n\nLes exercices produisent diagnostic_service.qmd, destiné à la responsable du service. L’exercice 6 précise le contenu de cette note.\nDans RStudio, choisissez Session &gt; Restart R, puis Render pour vérifier chacun des documents. Ces traces sont des entraînements; les consignes des mini-rapports évalués restent dans la section Évaluations."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html#ressources-du-module",
     "href": "modules/semaine-03-regression-lineaire/index.html#ressources-du-module",
     "title": "Module 03",
     "section": "Ressources du module",
-    "text": "Ressources du module\n\n  CapsulesSix capsules courtes avec supports HTML/PDF pour construire l'intuition.\n  Notes de coursSynthèse globale du module en format RevealJS.\n  Démonstrations RAnalyse complète avec le fichier de campagnes marketing.\n  ExercicesPratiquer l'interprétation, le code et les diagnostics.\n  LecturesClarifier les notions de régression et de prudence causale.\n\n\n\n\n\n\n\nAvertissementErreurs fréquentes à éviter\n\n\n\n\nInterpréter la pente sans préciser l’unité de la variable explicative.\nLire une association comme une preuve de causalité.\nAjuster le modèle avant d’avoir regardé le nuage de points.\nCiter seulement le R² sans regarder les résidus.\nOublier que l’ordonnée à l’origine peut être peu utile si budget_marketing = 0 n’est pas une situation réaliste dans les données.\nFaire une prédiction loin de la plage de budgets observés."
+    "text": "Ressources du module\n\n  CapsulesSix supports PDF et HTML, avec code copiable. Vidéos à venir.\n  Notes de coursSynthèse du module en diapositives HTML et PDF.\n  Démonstrations RAnalyse complète avec le fichier de campagnes marketing.\n  Exercices et solutions détailléesTransférer la démarche au service, puis comparer le code, les résultats et les interprétations.\n  LecturesClarifier les notions de régression et de prudence causale.\n\n\n\n\n\n\n\nAvertissementErreurs fréquentes à éviter\n\n\n\n\nInterpréter la pente sans préciser l’unité de la variable explicative.\nLire une association comme une preuve de causalité.\nAjuster le modèle avant d’avoir regardé le nuage de points.\nCiter seulement le R² sans regarder les résidus.\nOublier que l’ordonnée à l’origine peut être peu utile si budget_marketing = 0 n’est pas une situation réaliste dans les données.\nFaire une prédiction loin de la plage de budgets observés."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html#auto-vérification",
     "href": "modules/semaine-03-regression-lineaire/index.html#auto-vérification",
     "title": "Module 03",
     "section": "Auto-vérification",
-    "text": "Auto-vérification\nAvant de passer au module suivant, je peux dire que :\n\n\nJ’ai formulé une question de régression sans causalité non justifiée.\nJ’ai identifié la variable réponse et la variable explicative.\nJ’ai produit et interprété un nuage de points.\nJ’ai ajusté un modèle avec lm().\nJ’ai interprété la pente avec les unités.\nJ’ai examiné les résidus.\nJ’ai rédigé une conclusion prudente.\n\n\n\n\n\n\n\n\nNoteAuto-vérification assistée par IA\n\n\n\nVous pouvez utiliser le GPT du cours pour vérifier votre interprétation. Son rôle est de repérer les imprécisions, les oublis de diagnostic et les conclusions trop fortes. Il ne doit pas rédiger la trace finale à votre place.\nSuggestion de demande :\n\nVoici ma trace finale pour le module 03. Vérifie si ma question, mon graphique, mon interprétation de la pente, mon diagnostic des résidus et ma limite causale sont clairs. Indique les éléments manquants ou imprécis, sans réécrire ma réponse à ma place.\n\nAprès cette vérification, notez une correction concrète à apporter à votre interprétation."
+    "text": "Auto-vérification\nAvant de passer au module suivant, je peux dire que :\n\n\nJ’ai formulé une question de régression sans causalité non justifiée.\nJ’ai identifié la variable réponse et la variable explicative.\nJ’ai produit et interprété un nuage de points.\nJ’ai ajusté un modèle avec lm().\nJ’ai interprété la pente avec les unités.\nJ’ai examiné le graphique des résidus et leurs moyennes par région.\nJ’ai expliqué les limites des intervalles et de la prédiction.\nMon document se recalcule après redémarrage de R.\nJ’ai rédigé une conclusion prudente.\n\n\n\n\n\n\n\n\nNoteAuto-vérification assistée par IA\n\n\n\nVous pouvez utiliser le GPT du cours pour vérifier votre interprétation. Après une première tentative, son rôle est de repérer les imprécisions, les oublis de diagnostic et les conclusions trop fortes. Il ne doit pas rédiger la trace finale à votre place.\nSuggestion de demande :\n\nVoici ma trace finale pour le module 03. Vérifie si ma question, mon graphique, mon interprétation de la pente, mon diagnostic des résidus et ma limite causale sont clairs. Indique les éléments manquants ou imprécis, sans réécrire ma réponse à ma place.\n\nAprès cette vérification, notez une correction concrète à apporter à votre interprétation."
   },
   {
     "objectID": "modules/semaine-03-regression-lineaire/index.html#je-suis-bloquée",
@@ -5185,300 +5024,6 @@
     "title": "Module 03",
     "section": "Pour aller plus loin",
     "text": "Pour aller plus loin\n\nComparer l’interprétation d’une hausse de 1 dollar et d’une hausse de 1 000 dollars de budget.\nAjouter une variable de contexte dans le graphique, par exemple region ou canal, sans en faire une preuve causale.\nReprendre la conclusion en distinguant clairement association, prédiction et décision."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
-    "title": "Capsule 1 - Formuler une question de régression",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nLe budget marketing est-il associé à des ventes plus élevées, ou les deux variables varient-elles ensemble pour une autre raison?\n\n\nLa direction veut justifier le budget de l’an prochain. Avant d’affirmer que « plus de budget = plus de ventes », il faut poser la question avec les bons mots : une association moyenne, pas une cause prouvée."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 1 - Formuler une question de régression",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDistinguer question d’affaires et question statistique.\nIdentifier la variable réponse et la variable explicative.\nÉviter une formulation causale trop rapide."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#deux-rôles-différents",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#deux-rôles-différents",
-    "title": "Capsule 1 - Formuler une question de régression",
-    "section": "Deux rôles différents",
-    "text": "Deux rôles différents\n\n\n\nVariable réponse\n\n\nventes : ce que l’on veut expliquer ou prédire.\n\n\n\n\nVariable explicative\n\n\nbudget_marketing : la variable utilisée pour résumer la relation.\n\n\n\n\nVariables de contexte qui peuvent modifier l’interprétation :\n\n\n\n\nregion\n\n\nrégion\n\n\n\n\ncanal\n\n\ncanal de campagne\n\n\n\n\nsaison\n\n\npériode\n\n\n\n\nrabais\n\n\nniveau de rabais\n\n\n\n\nvisites_site\n\n\ntrafic web"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#bien-formuler-la-question",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#bien-formuler-la-question",
-    "title": "Capsule 1 - Formuler une question de régression",
-    "section": "Bien formuler la question",
-    "text": "Bien formuler la question\n\n\n\nFormulation prudente\n\n\nLes ventes moyennes sont-elles plus élevées lorsque le budget marketing est plus élevé?\n\n\n\n\nÀ éviter\n\n\nLe budget marketing cause-t-il l’augmentation des ventes? (exigerait un plan d’étude causal)"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#à-retenir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#à-retenir",
-    "title": "Capsule 1 - Formuler une question de régression",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nUne régression répond à une question structurée.\n\n\n\n\n2\n\n\nVariable réponse et variable explicative ne jouent pas le même rôle.\n\n\n\n\n3\n\n\nLa prudence commence dès la formulation."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#production-autonome-3.1",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#production-autonome-3.1",
-    "title": "Capsule 1 - Formuler une question de régression",
-    "section": "Production autonome 3.1",
-    "text": "Production autonome 3.1\n\nRédigez la question d’analyse en une phrase.\n\n\nIndiquez ensuite la variable réponse, la variable explicative et une variable de contexte qui pourrait modifier l’interprétation.\n\nAuto-vérification\n\n\nLa pente est interprétée avec ses variables et ses unités.\nJ’ai distingué erreur du modèle et résidu observé.\nJe n’ai affirmé ni causalité ni validité hors de la plage observée."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nQue signifie, pour la direction, une pente estimée à 13,58 dollars de ventes par dollar de budget?\n\n\nUn coefficient n’éclaire une décision que si on le traduit en unités réelles. Dans ces données, un dollar de budget supplémentaire est associé à environ 13,58 dollars de ventes moyennes supplémentaires. Mal interpréter la pente ou l’ordonnée à l’origine mène à des recommandations absurdes."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nLire l’équation du modèle linéaire simple.\nInterpréter la pente dans les unités du problème.\nDistinguer valeur observée, valeur prédite et erreur."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#le-modèle",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#le-modèle",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "Le modèle",
-    "text": "Le modèle\n\nLe modèle linéaire simple résume la relation moyenne entre une variable réponse y et une variable explicative x :\n\n\\[Y = \\beta_0 + \\beta_1 x + \\varepsilon.\\]\n\nLe terme \\(\\varepsilon\\) représente l’écart aléatoire non observé dans le modèle de population. Après ajustement, le résidu \\(e_i = y_i - \\widehat{y}_i\\) est l’écart calculé pour l’observation \\(i\\)."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#lire-les-deux-coefficients",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#lire-les-deux-coefficients",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "Lire les deux coefficients",
-    "text": "Lire les deux coefficients\n\n\n\nPente (β₁)\n\n\nVariation moyenne des ventes lorsque le budget_marketing augmente d’une unité. La pente répond à la question principale.\n\n\n\n\nOrdonnée à l’origine (β₀)\n\n\nVentes prédites lorsque le budget vaut zéro. C’est utile pour tracer la droite, mais à commenter avec prudence si zéro est hors contexte.\n\n\n\n\nToujours préciser l’unité de la pente : dollars, milliers de dollars, etc."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#observée-prédite-erreur",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#observée-prédite-erreur",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "Observée, prédite, erreur",
-    "text": "Observée, prédite, erreur\n\n\n\nobservée\n\n\nla vente réellement mesurée\n\n\n\n\nprédite\n\n\nla vente estimée par la droite\n\n\n\n\nrésidu\n\n\nla valeur observée moins la valeur prédite"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#à-retenir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#à-retenir",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nLa pente répond à la question principale.\n\n\n\n\n2\n\n\nL’ordonnée à l’origine se commente avec prudence.\n\n\n\n\n3\n\n\nLes unités font partie de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#production-autonome-3.3",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#production-autonome-3.3",
-    "title": "Capsule 3 - Comprendre la droite de régression",
-    "section": "Production autonome 3.3",
-    "text": "Production autonome 3.3\n\nRédigez une phrase d’interprétation de la pente.\n\n\nElle doit contenir la variable réponse, la variable explicative, le mot « moyenne » et l’unité utilisée.\n\nAuto-vérification\n\n\nLa pente est interprétée avec ses variables et ses unités.\nJ’ai distingué erreur du modèle et résidu observé.\nJe n’ai affirmé ni causalité ni validité hors de la plage observée."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nUne décision concrète\n\n\nUn R² élevé garantit-il un bon modèle?\n\n\nNon. Une droite peut afficher un bon ajustement global tout en commettant des erreurs systématiques sur une partie des données. Les résidus révèlent ces erreurs cachées avant qu’elles ne fragilisent une recommandation."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDéfinir un résidu.\nProduire un graphique de diagnostic simple.\nRepérer les signes d’un modèle fragile."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#définition",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#définition",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "Définition",
-    "text": "Définition\n\nUn résidu est l’écart entre la valeur observée et la valeur prédite :\n\n\\[\\text{résidu} = y - \\hat{y}.\\]\n\nLes résidus indiquent où la droite se trompe. Une structure claire peut signaler qu’un modèle linéaire simple est insuffisant."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#le-graphique-des-résidus",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#le-graphique-des-résidus",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "Le graphique des résidus",
-    "text": "Le graphique des résidus\n\nresultats &lt;- campagnes |&gt;\n  mutate(\n    ventes_predites = fitted(modele),\n    residus = residuals(modele)\n  )\n\nggplot(resultats, aes(ventes_predites, residus)) +\n  geom_point(alpha = 0.6, color = \"#0B4F6C\") +\n  geom_hline(yintercept = 0, color = \"#E63946\", linewidth = 1) +\n  labs(x = \"Ventes prédites\", y = \"Résidus\") +\n  theme_minimal(base_size = 14)"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#ce-quon-espère-voir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#ce-quon-espère-voir",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "Ce qu’on espère voir",
-    "text": "Ce qu’on espère voir\n\n\ndes résidus répartis autour de zéro;\npas de courbure évidente;\npas d’éventail qui s’élargit;\npas d’observation isolée qui domine tout.\n\n\n\nUn coefficient significatif ou un R² élevé ne remplace jamais l’examen des résidus."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#à-retenir",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#à-retenir",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\n1\n\n\nLes résidus gardent la trace des erreurs du modèle.\n\n\n\n\n2\n\n\nUn diagnostic visuel protège d’une interprétation trop rapide.\n\n\n\n\n3\n\n\nUne droite utile reste cohérente avec les données."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#production-autonome-3.5",
-    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#production-autonome-3.5",
-    "title": "Capsule 5 - Diagnostiquer avec les résidus",
-    "section": "Production autonome 3.5",
-    "text": "Production autonome 3.5\n\nDécrivez votre lecture d’un graphique résidus contre valeurs prédites.\n\n\nNommez ce que vous regardez : centrage, courbure, éventail et point isolé, avant de faire une recommandation.\n\nAuto-vérification\n\n\nLa pente est interprétée avec ses variables et ses unités.\nJ’ai distingué erreur du modèle et résidu observé.\nJe n’ai affirmé ni causalité ni validité hors de la plage observée."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#objectifs-du-module",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#objectifs-du-module",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Objectifs du module",
-    "text": "Objectifs du module\n\n\nLire une relation entre deux variables quantitatives.\nDistinguer corrélation, association, prédiction et causalité.\nAjuster une régression linéaire simple avec lm().\nInterpréter une pente, une ordonnée à l’origine et un R².\nVérifier les résidus avant de conclure.\nRédiger une interprétation utile pour une décision d’affaires."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#point-de-départ",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#point-de-départ",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Point de départ",
-    "text": "Point de départ\n\nL’ancien matériel introduisait la corrélation, les moindres carrés, les tests, les diagnostics et les exercices R.\n\n\nLa version actuelle conserve ces idées, mais les réorganise autour d’une question appliquée : comment quantifier l’association moyenne entre budget marketing et ventes?"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#données-du-module",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#données-du-module",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Données du module",
-    "text": "Données du module\n\n\n# A tibble: 6 × 10\n  mois       mois_label region canal saison budget_marketing visites_site rabais\n  &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;\n1 2025-01-01 janvier    Capit… Info… moyen…             5814         6393   0   \n2 2025-01-01 janvier    Estrie Info… moyen…             3775         5235   0.15\n3 2025-01-01 janvier    Mauri… Rech… moyen…             5497         6880   0.13\n4 2025-01-01 janvier    Montr… Rése… moyen…             6215         8106   0.17\n5 2025-01-01 janvier    Outao… Rech… moyen…             5703         7107   0.17\n6 2025-02-01 février    Capit… Info… moyen…             3246         4958   0.13\n# ℹ 2 more variables: ventes &lt;dbl&gt;, satisfaction &lt;dbl&gt;"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#unité-dobservation",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#unité-dobservation",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Unité d’observation",
-    "text": "Unité d’observation\n\n\nUne ligne représente une combinaison mois-région.\nventes est la variable réponse.\nbudget_marketing est la variable explicative principale.\nregion, canal, saison, visites_site et rabais contextualisent l’analyse."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#corrélation",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#corrélation",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Corrélation",
-    "text": "Corrélation\n\nLa corrélation mesure la force et la direction d’une relation linéaire entre deux variables quantitatives.\n\n\nElle est symétrique : la corrélation entre x et y est la même que celle entre y et x. Une régression, elle, impose une variable réponse et une variable explicative."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#corrélation-dans-les-données",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#corrélation-dans-les-données",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Corrélation dans les données",
-    "text": "Corrélation dans les données\n\n\n# A tibble: 1 × 1\n  correlation_budget_ventes\n                      &lt;dbl&gt;\n1                     0.908"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#nuage-de-points",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#nuage-de-points",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Nuage de points",
-    "text": "Nuage de points"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#pourquoi-un-modèle",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#pourquoi-un-modèle",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Pourquoi un modèle?",
-    "text": "Pourquoi un modèle?\n\n\nLe graphique montre une tendance.\nLe modèle quantifie cette tendance.\nLe coefficient donne une interprétation moyenne.\nLes résidus montrent ce que la droite ne capture pas."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#modèle-linéaire-simple",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#modèle-linéaire-simple",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Modèle linéaire simple",
-    "text": "Modèle linéaire simple\n\\[\nY_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\n\\]\nDans le module :\n\n\n\\(Y_i\\) : ventes observées.\n\\(x_i\\) : budget marketing.\n\\(\\beta_0\\) : ventes moyennes estimées lorsque le budget vaut 0.\n\\(\\beta_1\\) : variation moyenne des ventes pour une unité de budget.\n\\(\\varepsilon_i\\) : écart entre la valeur observée et la droite."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#estimation",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#estimation",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Estimation",
-    "text": "Estimation\n\nLa droite de régression est estimée par la méthode des moindres carrés.\n\n\nElle choisit les coefficients qui minimisent la somme des carrés des résidus. C’est le principe central repris de l’ancien support de régression."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#ajustement-dans-r",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#ajustement-dans-r",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Ajustement dans R",
-    "text": "Ajustement dans R\n\n\n\nCall:\nlm(formula = ventes ~ budget_marketing, data = campagnes)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-16277.1  -6353.5   -347.8   6892.4  17632.8 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)      2.992e+04  4.632e+03    6.46 2.35e-08 ***\nbudget_marketing 1.358e+01  8.236e-01   16.49  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8339 on 58 degrees of freedom\nMultiple R-squared:  0.8242,    Adjusted R-squared:  0.8212 \nF-statistic: 271.9 on 1 and 58 DF,  p-value: &lt; 2.2e-16"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#lire-les-coefficients",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#lire-les-coefficients",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Lire les coefficients",
-    "text": "Lire les coefficients\n\n\n     (Intercept) budget_marketing \n       29922.107           13.582 \n\n\n\nLa pente est souvent plus utile si on la reformule pour 1 000 dollars de budget.\n\n\n\nbudget_marketing \n           13582"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#interprétation-de-la-pente",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#interprétation-de-la-pente",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Interprétation de la pente",
-    "text": "Interprétation de la pente\n\nDans ces données, 1 000 dollars de budget marketing supplémentaire sont associés à une variation moyenne estimée des ventes de 1.3582^{4} dollars.\n\n\nCette phrase décrit une association moyenne. Elle ne prouve pas que le budget cause directement les ventes."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#qualité-dajustement",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#qualité-dajustement",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Qualité d’ajustement",
-    "text": "Qualité d’ajustement\n\n\n# A tibble: 1 × 3\n  r_carre r_carre_ajuste  rmse\n    &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;\n1   0.824          0.821 8199."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#valeurs-prédites-et-résidus",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#valeurs-prédites-et-résidus",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Valeurs prédites et résidus",
-    "text": "Valeurs prédites et résidus\n\n\n# A tibble: 8 × 6\n  region             mois_label budget_marketing ventes ventes_predites residu\n  &lt;chr&gt;              &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt;\n1 Capitale-Nationale janvier                5814 121915         108888. 13027.\n2 Estrie             janvier                3775  93518          81194. 12324.\n3 Mauricie           janvier                5497  95109         104582. -9473.\n4 Montréal           janvier                6215 121125         114334.  6791.\n5 Outaouais          janvier                5703 108469         107380.  1089.\n6 Capitale-Nationale février                3246  82306          74009.  8297.\n7 Estrie             février                4927  95280          96841. -1561.\n8 Mauricie           février                2497  56608          63836. -7228."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#diagnostic-des-résidus",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#diagnostic-des-résidus",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Diagnostic des résidus",
-    "text": "Diagnostic des résidus"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#ce-quon-cherche-dans-les-résidus",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#ce-quon-cherche-dans-les-résidus",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Ce qu’on cherche dans les résidus",
-    "text": "Ce qu’on cherche dans les résidus\n\n\nDes points répartis autour de 0.\nPas de courbe évidente.\nPas de dispersion qui augmente fortement.\nPas d’observation isolée qui domine l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#prédire",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#prédire",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Prédire",
-    "text": "Prédire\n\n\n        fit       lwr      upr\n1  84250.11  67245.43 101254.8\n2 111414.12  94560.27 128268.0\n3 138578.12 121237.71 155918.5"
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#prédiction-et-prudence",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#prédiction-et-prudence",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Prédiction et prudence",
-    "text": "Prédiction et prudence\n\n\nUne prédiction est incertaine.\nElle est plus défendable dans la plage observée.\nElle dépend du modèle choisi.\nElle ne remplace pas la connaissance du contexte."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#association-ou-causalité",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#association-ou-causalité",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Association ou causalité?",
-    "text": "Association ou causalité?\n\n\n\n\n\n\nAvertissement\n\n\nUne régression sur données observationnelles ne suffit pas à établir une relation causale.\n\n\n\nPour parler de causalité, il faudrait discuter du plan d’étude, des variables omises, de la temporalité, des mécanismes et des biais possibles."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#réponse-attendue",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#réponse-attendue",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Réponse attendue",
-    "text": "Réponse attendue\n\nLes ventes sont positivement associées au budget marketing. La pente indique la variation moyenne estimée des ventes pour une hausse du budget, dans les données observées. Le graphique et les résidus doivent être examinés avant de conclure. L’interprétation reste une association, pas une preuve causale."
-  },
-  {
-    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#sources-et-prolongements",
-    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#sources-et-prolongements",
-    "title": "Module 03 - Régression linéaire",
-    "section": "Sources et prolongements",
-    "text": "Sources et prolongements\n\n\nAncien matériel MQT-2101, séance 03 : corrélation, régression linéaire, moindres carrés, diagnostics et exercices R.\nDocumentation R : stats::lm() et predict.lm().\nDocumentation ggplot2 : geom_point() et geom_smooth()."
   },
   {
     "objectID": "modules/atelier-02-regression/demonstrations.html",
@@ -8853,5 +8398,754 @@
     "title": "Grille des mini-rapports",
     "section": "Attentes selon le mini-rapport",
     "text": "Attentes selon le mini-rapport\n\nMini-rapport 1 : comparez un modèle de référence à une variante pertinente, justifiez le modèle retenu et interprétez un diagnostic des résidus. Une validation sur des données séparées n’est pas obligatoire. Les mesures calculées sur les données d’ajustement doivent être présentées comme telles.\nMini-rapport 2 : une preuve hors échantillon est exigée, selon les modalités de la piste choisie. Les données de validation doivent être séparées de celles utilisées pour ajuster le modèle, sans fuite d’information.\n\nLe critère « Modélisation et validation » vaut 20 points dans les deux rapports. La note sur 100 est ensuite convertie en une contribution de 15 % à la note finale pour chaque rapport."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/index.html#exercices-dapplication",
+    "href": "modules/semaine-03-regression-lineaire/index.html#exercices-dapplication",
+    "title": "Module 03",
+    "section": "Exercices d’application",
+    "text": "Exercices d’application\nRéalisez ensuite les six exercices dans le projet diagnostic-service. Vous étudierez le délai de service moyen, en minutes, et la satisfaction mensuelle, en points sur 10, dans six succursales fictives.\nLe fichier de transfert est performance_succursales_quebec.csv. La démarche reste la même, mais la question, les variables, les unités et la destinataire changent. Tentez chaque exercice avant d’ouvrir sa solution détaillée."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#comprendre-la-droite",
+    "href": "modules/semaine-03-regression-lineaire/demonstrations.html#comprendre-la-droite",
+    "title": "Démonstrations R - Module 03",
+    "section": "Comprendre la droite",
+    "text": "Comprendre la droite\nLe modèle s’écrit \\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\). Sous l’hypothèse \\(\\mathrm{E}(\\varepsilon_i \\mid x_i)=0\\), les ventes moyennes au budget \\(x_i\\) valent \\(\\beta_0 + \\beta_1 x_i\\).\nAprès estimation, la droite est \\(\\widehat{y}_i = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\). Le résidu \\(e_i = y_i - \\widehat{y}_i\\) se calcule sur les données; il est distinct de l’erreur non observée \\(\\varepsilon_i\\). Les moindres carrés choisissent la droite qui minimise \\(\\sum_i e_i^2\\)."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#trace-finale",
+    "href": "modules/semaine-03-regression-lineaire/demonstrations.html#trace-finale",
+    "title": "Démonstrations R - Module 03",
+    "section": "Trace finale",
+    "text": "Trace finale\nVotre document guidé doit contenir la question, le nuage de points, le code du modèle, les coefficients interprétés, H₀ et la valeur p sous hypothèses, le calcul du R², le diagnostic des résidus et la prédiction pour 6 000 $ avec son intervalle et ses limites. Terminez par votre conclusion.\nDans RStudio, choisissez Session &gt; Restart R, puis Render. Vérifiez que les résultats se recalculent et que les figures sont lisibles dans le HTML. Cette trace est un entraînement; les consignes des travaux évalués sont dans la section Évaluations.\nLes lectures du module donnent les références sur l’ajustement, les diagnostics et les intervalles."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/exercices.html#auto-vérification",
+    "href": "modules/semaine-03-regression-lineaire/exercices.html#auto-vérification",
+    "title": "Exercices - Module 03",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\nJ’ai tenté chaque exercice avant d’ouvrir son corrigé.\nJe distingue une observation mensuelle d’un client individuel.\nJ’interprète la pente en points de satisfaction pour deux minutes.\nJe formule H₀ et j’interprète une valeur p sous les hypothèses du modèle.\nJe calcule R² à partir de SSE et SST, puis le convertis en pourcentage.\nJe sais expliquer le signe d’un résidu et l’erreur absolue moyenne.\nJ’ai relié la conclusion à un diagnostic effectivement calculé.\nMon HTML se recalcule après redémarrage de R.\n\nVous pouvez demander au GPT du cours de commenter votre tentative. Gardez une trace de l’aide reçue et reformulez votre réponse vous-même. Une solution comprise avec de l’aide ne démontre pas, à elle seule, que vous savez la reproduire sans aide."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/lectures.html#pour-suivre-le-module",
+    "href": "modules/semaine-03-regression-lineaire/lectures.html#pour-suivre-le-module",
+    "title": "Lectures - Module 03",
+    "section": "",
+    "text": "Le parcours précise l’ordre des six activités et le contenu de la trace finale.\nLes capsules et leurs supports expliquent les notions et les exemples.\nLes démonstrations R donnent le code complet du cas guidé.\nLes exercices proposent un autre cas et des corrigés à ouvrir après une tentative.\nLes notes de cours, aussi disponibles en PDF, servent de synthèse."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/lectures.html#références-pour-approfondir",
+    "href": "modules/semaine-03-regression-lineaire/lectures.html#références-pour-approfondir",
+    "title": "Lectures - Module 03",
+    "section": "Références pour approfondir",
+    "text": "Références pour approfondir\nLes références suivantes sont des compléments en anglais. Consultez la partie correspondant à votre question; leur lecture intégrale n’est pas nécessaire pour réaliser les activités.\n\n\n\nQuestion\nRéférence\nPassage utile\n\n\n\n\nComment R ajuste-t-il la droite?\nR Core Team, documentation de lm(), consultée le 15 septembre 2026\nFormule, coefficients et résidus\n\n\nComment lire le test de la pente et le R²?\nR Core Team, documentation de summary.lm(), consultée le 15 septembre 2026\nTableau coefficients : estimation, erreur-type, t, valeur p; définition de r.squared\n\n\nComment calculer un intervalle sur la pente?\nR Core Team, documentation de confint(), consultée le 15 septembre 2026\nMéthode pour les modèles lm\n\n\nMoyenne ou nouvelle observation?\nR Core Team, documentation de predict.lm(), consultée le 15 septembre 2026\nOptions confidence et prediction\n\n\nQue rechercher dans les résidus?\nNIST/SEMATECH, e-Handbook of Statistical Methods : Model Validation, consulté le 15 septembre 2026\nMotifs des résidus et limites des indicateurs numériques\n\n\nComment ajouter une droite au graphique?\nÉquipe ggplot2, documentation de geom_smooth(), consultée le 15 septembre 2026\nmethod = \"lm\", groupes et bande d’incertitude"
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/lectures.html#repères-de-lecture",
+    "href": "modules/semaine-03-regression-lineaire/lectures.html#repères-de-lecture",
+    "title": "Lectures - Module 03",
+    "section": "Repères de lecture",
+    "text": "Repères de lecture\nLa pente se lit avec ses variables et ses unités. Le R² décrit l’ajustement sur les données utilisées. Les résidus aident à repérer des limites, mais un seul graphique ne vérifie pas toutes les hypothèses.\nLes intervalles classiques reposent sur le modèle choisi et ses hypothèses. Les observations mensuelles répétées par région ou par succursale demandent notamment un examen de l’indépendance. Une association observée ne suffit pas à attribuer un effet causal à une intervention."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/demonstrations.html#hypothèse-nulle-et-valeur-p",
+    "href": "modules/semaine-03-regression-lineaire/demonstrations.html#hypothèse-nulle-et-valeur-p",
+    "title": "Démonstrations R - Module 03",
+    "section": "Hypothèse nulle et valeur p",
+    "text": "Hypothèse nulle et valeur p\nLe test bilatéral de la pente pose \\(H_0 : \\beta_1 = 0\\) contre \\(H_1 : \\beta_1 \\ne 0\\). H₀ est l’hypothèse nulle et H₁ l’hypothèse alternative. Le paramètre visé est la pente de population, pas la pente déjà estimée avec les données.\n\ntest_pente &lt;- summary(modele)$coefficients[\"budget_marketing\", ]\ntest_pente\n\n    Estimate   Std. Error      t value     Pr(&gt;|t|) \n1.358200e+01 8.236280e-01 1.649046e+01 1.458098e-23 \n\n\nt value est le rapport entre l’estimation de la pente et son erreur-type, puisque la valeur testée est zéro. Pr(&gt;|t|) est la valeur p bilatérale : sous H₀ et les hypothèses du modèle, la probabilité d’obtenir une statistique au moins aussi éloignée de zéro que celle observée. Une valeur p plus petite indique une moins bonne compatibilité des données avec H₀. Elle ne donne pas la probabilité que H₀ soit vraie.\nAu seuil fixé à 5 %, on rejette H₀ si p ≤ 0,05; sinon, on ne la rejette pas. Ne pas rejeter H₀ ne prouve pas que la pente est nulle. Ici, la valeur p est inférieure à 0,001 : le calcul rejette H₀ sous les hypothèses classiques. Il ne mesure ni l’importance pratique de la pente ni un effet causal du budget.\nPour le test t exact, on suppose une moyenne correctement spécifiée et des erreurs de moyenne nulle, indépendantes, normales et de variance constante. Les degrés de liberté valent ici 60 − 2 = 58. La répétition des régions au fil des mois appelle un examen de l’indépendance; le résultat numérique illustre le test sous hypothèses."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/exercices.html#exercice-4---examiner-les-résidus-et-le-r²",
+    "href": "modules/semaine-03-regression-lineaire/exercices.html#exercice-4---examiner-les-résidus-et-le-r²",
+    "title": "Exercices - Module 03",
+    "section": "Exercice 4 - Examiner les résidus et le R²",
+    "text": "Exercice 4 - Examiner les résidus et le R²\nProduisez le graphique des résidus selon les valeurs prédites, avec une couleur par succursale. Calculez ensuite, pour chaque succursale, le résidu moyen et l’erreur absolue moyenne, c’est-à-dire la moyenne des valeurs absolues des résidus.\nIdentifiez une sous-estimation ou une surestimation moyenne. Expliquez pourquoi un petit résidu moyen peut coexister avec des erreurs individuelles importantes. Calculez aussi SSE, SST et R². Comparez votre R² à celui de summary() et exprimez-le en pourcentage. Terminez par une limite du modèle simple.\n\n\n\n\n\n\nAstuceSolution détaillée de l’exercice 4\n\n\n\n\n\n\ndiagnostic_service &lt;- performance |&gt;\n  mutate(\n    satisfaction_predite = fitted(modele_service),\n    residu = residuals(modele_service)\n  )\n\n\nggplot(diagnostic_service, aes(x = satisfaction_predite, y = residu)) +\n  geom_hline(yintercept = 0, colour = \"#7A1C24\") +\n  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.3) +\n  labs(\n    title = \"Résidus du modèle de satisfaction\",\n    x = \"Satisfaction prédite (points sur 10)\",\n    y = \"Résidu (points)\",\n    colour = \"Succursale\"\n  ) +\n  theme_minimal(base_size = 12)\n\n\n\n\n\n\n\n\n\nbilan_succursales &lt;- diagnostic_service |&gt;\n  group_by(succursale) |&gt;\n  summarise(\n    observations = n(),\n    residu_moyen = mean(residu),\n    erreur_absolue_moyenne = mean(abs(residu)),\n    .groups = \"drop\"\n  )\n\nbilan_succursales |&gt;\n  mutate(across(c(residu_moyen, erreur_absolue_moyenne), ~ round(.x, 3))) |&gt;\n  knitr::kable(col.names = c(\n    \"Succursale\", \"Observations\", \"Résidu moyen (points)\",\n    \"Erreur absolue moyenne (points)\"\n  ))\n\n\n\n\n\n\n\n\n\n\nSuccursale\nObservations\nRésidu moyen (points)\nErreur absolue moyenne (points)\n\n\n\n\nGatineau\n12\n0.023\n0.444\n\n\nMontréal\n12\n0.336\n0.408\n\n\nQuébec\n12\n-0.102\n0.399\n\n\nSaguenay\n12\n-0.099\n0.573\n\n\nSherbrooke\n12\n-0.149\n0.335\n\n\nTrois-Rivières\n12\n-0.009\n0.274\n\n\n\n\n\nÀ Montréal, le résidu moyen est d’environ +0,336 point : la droite sous-estime en moyenne la satisfaction. À Sherbrooke, il est d’environ −0,149 point : elle la surestime en moyenne. Ces écarts sont descriptifs et ne prouvent pas un effet propre à la succursale.\nÀ Gatineau, le résidu moyen est proche de zéro (+0,023 point), mais l’erreur absolue moyenne vaut environ 0,444 point. Des erreurs positives et négatives peuvent s’annuler dans une moyenne signée. La moyenne des valeurs absolues renseigne sur leur ampleur.\n\nRetrouver le coefficient de détermination\n\nsse_service &lt;- sum(residuals(modele_service)^2)\nsst_service &lt;- sum(\n  (performance$satisfaction - mean(performance$satisfaction))^2\n)\n\ntibble(\n  SSE = sse_service,\n  SST = sst_service,\n  R2_calcule = 1 - sse_service / sst_service,\n  R2_summary = summary(modele_service)$r.squared,\n  pourcentage = 100 * (1 - sse_service / sst_service)\n)\n\n# A tibble: 1 × 5\n    SSE   SST R2_calcule R2_summary pourcentage\n  &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n1  16.6  26.1      0.363      0.363        36.3\n\n\nLes deux R² valent environ 0,363 : la droite explique environ 36,3 % de la variation observée des scores de satisfaction. Cela ne signifie pas que 36,3 % des prédictions sont correctes. Les écarts au carré à la droite représentent les quelque 63,7 % restants de la variation totale.\nLe nuage ne montre pas de courbure nette, mais les différences entre succursales méritent un examen. La moyenne globale des résidus est nulle par construction avec une ordonnée; ce seul fait ne valide pas le modèle. Il faudrait aussi examiner les mois et les variables de contexte. Le graphique ne vérifie pas l’indépendance entre observations répétées."
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/pourquoi-ça-compte",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/pourquoi-ça-compte",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Que peut-on apprendre du lien entre budget et ventes? Une direction prépare son prochain budget marketing. Elle veut quantifier la relation observée avec les ventes. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/objectifs-de-la-capsule",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/objectifs-de-la-capsule",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Formuler une question statistique. Identifier les variables et leurs unités. Distinguer association et causalité. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/le-cas-étudié",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/le-cas-étudié",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "Le cas étudié",
+    "text": "Le cas étudié 60 observations mois-région 5 régions québécoises 12 mois en 2025 Données simulées : une campagne régionale observée pendant un mois. Aucune organisation réelle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/les-variables-et-leurs-rôles",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/les-variables-et-leurs-rôles",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "Les variables et leurs rôles",
+    "text": "Les variables et leurs rôles Réponse : ventes Montant mensuel des ventes, en dollars. Explicative : budget_marketing Budget marketing mensuel, en dollars. La région, la saison et le canal de campagne donnent le contexte. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/la-question-statistique",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/la-question-statistique",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "La question statistique",
+    "text": "La question statistique Dans ces données, comment les ventes moyennes varient-elles selon le budget marketing? Comparer des budgets différents, pendant un mois, dans les régions observées. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/la-portée-de-la-réponse",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/la-portée-de-la-réponse",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "La portée de la réponse",
+    "text": "La portée de la réponse Association Les campagnes ayant un budget plus élevé ont-elles des ventes moyennes plus élevées? Causalité Que deviendraient les ventes si l’on modifiait le budget, toutes choses pertinentes étant comparables? "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/à-retenir",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/à-retenir",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "À retenir",
+    "text": "À retenir 1 Une question précise 2 Des rôles et des unités 3 Une limite causale "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/production-autonome-3.1",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-01-support.html#/production-autonome-3.1",
+    "title": "Capsule 1 - Formuler une question de régression",
+    "section": "Production autonome 3.1",
+    "text": "Production autonome 3.1 Rédigez la question sur le budget et les ventes. Nommez la réponse, la variable explicative et une variable de contexte. Auto-vérification J’ai précisé qu’une ligne correspond à un mois et une région. J’ai donné les unités des deux variables. Ma question porte sur une association moyenne. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/pourquoi-ça-compte",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/pourquoi-ça-compte",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte La relation peut-elle se résumer par une droite? Avant d’ajuster un modèle, le nuage de points révèle la forme de la relation et les écarts entre observations. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/objectifs-de-la-capsule",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/objectifs-de-la-capsule",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Décrire la direction, la forme et la dispersion. Lire une corrélation linéaire. Repérer les limites d’un résumé numérique. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/lecture-du-nuage-de-points",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/lecture-du-nuage-de-points",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Lecture du nuage de points",
+    "text": "Lecture du nuage de points "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/trois-repères-visuels",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/trois-repères-visuels",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Trois repères visuels",
+    "text": "Trois repères visuels Direction Association positive Forme Tendance approximativement linéaire Dispersion Des ventes différentes à budget voisin Un point éloigné mérite une vérification, pas une suppression automatique. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/la-corrélation-linéaire",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/la-corrélation-linéaire",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "La corrélation linéaire",
+    "text": "La corrélation linéaire \\(r\\) décrit la direction et l’intensité de la relation linéaire. \\(-1\\) Alignement décroissant \\(0\\) Absence de relation linéaire \\(+1\\) Alignement croissant Sans unité. Symétrique en \\(x\\) et \\(y\\). Une relation courbe peut avoir une corrélation faible. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/la-corrélation-dans-ce-fichier",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/la-corrélation-dans-ce-fichier",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "La corrélation dans ce fichier",
+    "text": "La corrélation dans ce fichier cor(campagnes$budget_marketing, campagnes$ventes) [1] 0.907859 Ici, \\(r\\) vaut environ 0,908 : l’association linéaire est positive et marquée. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/les-régions-dans-le-graphique",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/les-régions-dans-le-graphique",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Les régions dans le graphique",
+    "text": "Les régions dans le graphique "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/le-code-du-graphique",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/le-code-du-graphique",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Le code du graphique",
+    "text": "Le code du graphique ggplot(campagnes, aes(budget_marketing, ventes)) + geom_point(aes(colour = region), alpha = 0.8) + labs(x = \"Budget marketing mensuel ($)\", y = \"Ventes mensuelles ($)\", colour = \"Région\") + theme_minimal() L’importation et le code complet figurent dans les démonstrations R. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/à-retenir",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/à-retenir",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "À retenir",
+    "text": "À retenir 1 Le graphique avant le calcul 2 Une corrélation sans unité 3 Le contexte reste nécessaire "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/production-autonome-3.2",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-02-support.html#/production-autonome-3.2",
+    "title": "Capsule 2 - Lire le nuage de points",
+    "section": "Production autonome 3.2",
+    "text": "Production autonome 3.2 Produisez le nuage budget-ventes et décrivez sa direction, sa forme, sa dispersion et une limite. Auto-vérification Mes axes nomment les variables et les dollars. J’ai décrit les points avant de citer la corrélation. Je n’ai pas transformé la corrélation en preuve causale. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/pourquoi-ça-compte",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/pourquoi-ça-compte",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Comment traduire une droite en une comparaison utile? La direction compare deux budgets séparés de 1 000 $. La pente donne la différence de ventes moyennes estimée par le modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/objectifs-de-la-capsule",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/objectifs-de-la-capsule",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Lire le modèle linéaire simple. Interpréter la pente et l’ordonnée à l’origine. Comprendre le résidu et les moindres carrés. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-modèle-et-la-moyenne",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-modèle-et-la-moyenne",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Le modèle et la moyenne",
+    "text": "Le modèle et la moyenne \\[Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\] \\[\\mathrm{E}(Y_i \\mid x_i) = \\beta_0 + \\beta_1 x_i\\] \\(x_i\\) : budget. \\(Y_i\\) : ventes. \\(\\varepsilon_i\\) : écart aléatoire non observé. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/la-droite-estimée",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/la-droite-estimée",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "La droite estimée",
+    "text": "La droite estimée \\[\\widehat{y}_i = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\] Pente estimée Différence de ventes moyennes estimée pour 1 $ de budget supplémentaire. Ordonnée à l’origine estimée Ventes prédites lorsque le budget vaut 0 $. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/une-comparaison-de-1-000",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/une-comparaison-de-1-000",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Une comparaison de 1 000 $",
+    "text": "Une comparaison de 1 000 $ Pente estimée : 13,58 $ de ventes par dollar de budget. Pour 1 000 $ de budget supplémentaire : environ 13 582 $ de ventes moyennes supplémentaires selon la droite. Une association estimée dans ces données simulées. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-budget-nul-est-hors-de-la-plage-observée",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-budget-nul-est-hors-de-la-plage-observée",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Le budget nul est hors de la plage observée",
+    "text": "Le budget nul est hors de la plage observée 2 497 $ Budget minimal observé 8 857 $ Budget maximal observé 0 $ Extrapolation L’ordonnée estimée vaut 29 922 $. Son interprétation à budget nul n’est pas appuyée par ces observations. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/un-résidu-se-calcule-sur-une-observation",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/un-résidu-se-calcule-sur-une-observation",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Un résidu se calcule sur une observation",
+    "text": "Un résidu se calcule sur une observation \\[e_i = y_i - \\widehat{y}_i\\] 121 915 $ Ventes observées 108 888 $ Ventes prédites +13 027 $ Résidu, après arrondi Capitale-Nationale, janvier 2025. Budget : 5 814 $. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-résidu-dans-le-graphique",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-résidu-dans-le-graphique",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Le résidu dans le graphique",
+    "text": "Le résidu dans le graphique "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-principe-des-moindres-carrés",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/le-principe-des-moindres-carrés",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Le principe des moindres carrés",
+    "text": "Le principe des moindres carrés \\[\\sum_{i=1}^{n} e_i^2 = \\sum_{i=1}^{n}(y_i-\\widehat{y}_i)^2\\] La droite ajustée minimise cette somme. Les carrés évitent que les écarts positifs et négatifs s’annulent. Les grands écarts pèsent davantage. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/à-retenir",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/à-retenir",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "À retenir",
+    "text": "À retenir 1 Pente et unités 2 Résidu observé moins prédit 3 Somme des carrés minimale "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/production-autonome-3.3",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-03-support.html#/production-autonome-3.3",
+    "title": "Capsule 3 - Comprendre la droite de régression",
+    "section": "Production autonome 3.3",
+    "text": "Production autonome 3.3 Interprétez la pente pour 1 000 $ de budget. Expliquez le signe du résidu de janvier en Capitale-Nationale. Auto-vérification Ma comparaison porte sur les ventes moyennes estimées. Le résidu est positif lorsque la droite sous-estime. Je distingue les paramètres, leurs estimations et les résidus. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/pourquoi-ça-compte",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/pourquoi-ça-compte",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Comment retrouver la droite à partir du fichier CSV? Le calcul doit pouvoir être repris dans un projet R, du fichier de données aux coefficients interprétés. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/objectifs-de-la-capsule",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/objectifs-de-la-capsule",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Ajuster la droite avec lm(). Lire les coefficients dans R. Présenter une estimation avec son incertitude. Formuler H₀ et interpréter une valeur p. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/le-projet-r",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/le-projet-r",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Le projet R",
+    "text": "Le projet R Projet : regression-marketing library(tidyverse) campagnes <- read_csv( \"data/campagnes_marketing_quebec.csv\", show_col_types = FALSE ) colSums(is.na(campagnes[c(\"ventes\", \"budget_marketing\")])) 60 lignes, aucune valeur manquante dans les deux variables du modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/lajustement-avec-lm",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/lajustement-avec-lm",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "L’ajustement avec lm()",
+    "text": "L’ajustement avec lm() modele <- lm(ventes ~ budget_marketing, data = campagnes) À gauche de ~ La réponse : ventes À droite de ~ La variable explicative : budget_marketing La commande conserve le modèle dans l’objet modele. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/les-coefficients-calculés",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/les-coefficients-calculés",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Les coefficients calculés",
+    "text": "Les coefficients calculés coef(modele) (Intercept) budget_marketing 29922.107 13.582 (Intercept) : ordonnée à l’origine. budget_marketing : pente. La droite estimée : ventes prédites = 29 922,11 + 13,58 × budget. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/linterprétation-dans-les-bonnes-unités",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/linterprétation-dans-les-bonnes-unités",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "L’interprétation dans les bonnes unités",
+    "text": "L’interprétation dans les bonnes unités coef(modele)[[\"budget_marketing\"]] * 1000 [1] 13582 Une différence de 1 000 $ de budget est associée à environ 13 582 $ de ventes moyennes supplémentaires selon le modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/lincertitude-sur-la-pente",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/lincertitude-sur-la-pente",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "L’incertitude sur la pente",
+    "text": "L’incertitude sur la pente confint(modele, \"budget_marketing\", level = 0.95) 2.5 % 97.5 % budget_marketing 11.93333 15.23067 Intervalle de confiance classique à 95 % : de 11,93 à 15,23 $ de ventes par dollar de budget. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/les-hypothèses-restent-à-examiner",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/les-hypothèses-restent-à-examiner",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Les hypothèses restent à examiner",
+    "text": "Les hypothèses restent à examiner Relation moyenne linéaire, erreurs indépendantes, dispersion constante. Ici, les mêmes régions reviennent chaque mois. Les résidus et le contexte doivent être examinés avant de faire confiance aux intervalles. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/poser-la-question-du-test",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/poser-la-question-du-test",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Poser la question du test",
+    "text": "Poser la question du test \\[H_0 : \\beta_1 = 0 \\qquad H_1 : \\beta_1 \\ne 0\\] H₀ est l’hypothèse nulle : la pente de population est nulle. Le test porte sur une association linéaire dans le modèle. Il ne démontre pas un effet causal du budget. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/lire-la-ligne-de-la-pente",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/lire-la-ligne-de-la-pente",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Lire la ligne de la pente",
+    "text": "Lire la ligne de la pente summary(modele)$coefficients[\"budget_marketing\", ] Estimate Std. Error t value Pr(>|t|) 1.358200e+01 8.236280e-01 1.649046e+01 1.458098e-23 Estimate : pente estimée. Std. Error : erreur-type. t value : statistique du test. Pr(>|t|) : valeur p bilatérale. \\[t = \\frac{\\widehat{\\beta}_1 - 0}{\\operatorname{SE}(\\widehat{\\beta}_1)}\\] "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/que-signifie-la-valeur-p",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/que-signifie-la-valeur-p",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Que signifie la valeur p?",
+    "text": "Que signifie la valeur p? Sous H₀ et les hypothèses du modèle, la valeur p est la probabilité d’obtenir une statistique au moins aussi extrême que celle observée. Pour ce test bilatéral, « aussi extrême » signifie aussi loin de zéro, dans l’un ou l’autre sens. Une petite valeur p indique une moins bonne compatibilité des données avec H₀. Ce n’est pas la probabilité que H₀ soit vraie. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/décider-sous-des-hypothèses",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/décider-sous-des-hypothèses",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Décider sous des hypothèses",
+    "text": "Décider sous des hypothèses Au seuil fixé α = 0,05, on rejette H₀ si p ≤ 0,05. Sinon, on ne rejette pas H₀ : on n’a pas prouvé que la pente est nulle. Ici, p < 0,001; le calcul suppose les hypothèses classiques valides. La valeur p ne mesure ni l’ampleur de l’association ni son importance pratique. Il faut aussi lire la pente, son intervalle et les diagnostics. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/à-retenir",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/à-retenir",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "À retenir",
+    "text": "À retenir 1 Un modèle reproductible 2 Des coefficients interprétés 3 Une incertitude sous hypothèses "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/production-autonome-3.4",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-04-support.html#/production-autonome-3.4",
+    "title": "Capsule 4 - Ajuster le modèle avec R",
+    "section": "Production autonome 3.4",
+    "text": "Production autonome 3.4 Ajustez la droite. Présentez la pente pour 1 000 $ et son intervalle classique. Formulez H₀ sur la pente et interprétez la valeur p sous les hypothèses du modèle. Auto-vérification La formule place les ventes à gauche de ~. Mes valeurs correspondent à coef(modele) et confint(modele). J’ai indiqué une hypothèse ou une limite à vérifier. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/pourquoi-ça-compte",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/pourquoi-ça-compte",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte La droite se trompe-t-elle de la même façon partout? Une tendance globale peut masquer des écarts réguliers selon la région. Les résidus permettent de les examiner. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/objectifs-de-la-capsule",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/objectifs-de-la-capsule",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Calculer les résidus et comprendre leur signe. Lire un graphique de diagnostic. Examiner les écarts selon la région. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/du-modèle-aux-résidus",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/du-modèle-aux-résidus",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Du modèle aux résidus",
+    "text": "Du modèle aux résidus resultats <- campagnes |> mutate( ventes_predites = fitted(modele), residu = residuals(modele) ) Résidu positif Ventes observées au-dessus de la droite : sous-estimation. Résidu négatif Ventes observées sous la droite : surestimation. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/les-résidus-selon-les-ventes-prédites",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/les-résidus-selon-les-ventes-prédites",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Les résidus selon les ventes prédites",
+    "text": "Les résidus selon les ventes prédites "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/les-signes-à-rechercher",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/les-signes-à-rechercher",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Les signes à rechercher",
+    "text": "Les signes à rechercher Courbure La moyenne pourrait être mal décrite par une droite. Éventail La dispersion pourrait varier avec le niveau des ventes. Un point isolé appelle une vérification. Son influence ne se déduit pas du seul résidu. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/la-moyenne-des-résidus-par-région",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/la-moyenne-des-résidus-par-région",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "La moyenne des résidus par région",
+    "text": "La moyenne des résidus par région Région Résidu moyen ($) Capitale-Nationale 5676 Estrie -3340 Mauricie -226 Montréal 2956 Outaouais -5066 Capitale-Nationale : sous-estimation moyenne. Outaouais : surestimation moyenne. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/le-code-du-diagnostic-par-région",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/le-code-du-diagnostic-par-région",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Le code du diagnostic par région",
+    "text": "Le code du diagnostic par région resultats |> group_by(region) |> summarise( observations = n(), residu_moyen = mean(residu), .groups = \"drop\" ) Le graphique résidus-valeurs prédites et ce tableau répondent à des questions complémentaires. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/résultats-du-diagnostic",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/résultats-du-diagnostic",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Résultats du diagnostic",
+    "text": "Résultats du diagnostic La droite décrit la tendance globale, mais les écarts régionaux méritent une analyse complémentaire. Les mêmes régions sont observées sur plusieurs mois. Ce graphique seul ne vérifie pas l’indépendance des erreurs. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/à-retenir",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/à-retenir",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "À retenir",
+    "text": "À retenir 1 Un résidu signé 2 Des motifs à rechercher 3 Un contexte à vérifier "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/production-autonome-3.5",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-05-support.html#/production-autonome-3.5",
+    "title": "Capsule 5 - Diagnostiquer avec les résidus",
+    "section": "Production autonome 3.5",
+    "text": "Production autonome 3.5 Produisez le graphique des résidus et le tableau par région. Rédigez un constat sur chacun, puis une limite. Auto-vérification Mes axes indiquent les dollars. J’ai relié le signe des résidus à une sous-estimation ou une surestimation. Je n’ai pas déclaré le modèle valide sur la seule moyenne nulle des résidus. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/pourquoi-ça-compte",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/pourquoi-ça-compte",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Quelle conclusion la direction peut-elle utiliser? La réponse doit quantifier l’association, donner les limites du modèle et préciser l’incertitude d’une prédiction. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/objectifs-de-la-capsule",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/objectifs-de-la-capsule",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Interpréter le coefficient de détermination R². Distinguer moyenne estimée et nouvelle observation. Rédiger une conclusion appuyée sur les diagnostics. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/le-coefficient-de-détermination",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/le-coefficient-de-détermination",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Le coefficient de détermination",
+    "text": "Le coefficient de détermination \\[R^2 = 1-\\frac{\\sum_i(y_i-\\widehat{y}_i)^2}{\\sum_i(y_i-\\bar y)^2}\\] Ici : 0,824, soit environ 82,4 % de la variation des ventes décrite par la droite. Calcul sur les observations qui ont servi à ajuster le modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/deux-sommes-de-carrés",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/deux-sommes-de-carrés",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Deux sommes de carrés",
+    "text": "Deux sommes de carrés \\[\\mathrm{SSE}=\\sum_i(y_i-\\widehat{y}_i)^2 \\qquad \\mathrm{SST}=\\sum_i(y_i-\\bar y)^2\\] SSE : somme résiduelle Écarts au carré entre les observations et la droite. SST : somme totale Écarts au carré entre les observations et leur moyenne. Avec une ordonnée à l’origine : R² = 1 − SSE / SST, si SST > 0. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/passer-du-rapport-au-pourcentage",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/passer-du-rapport-au-pourcentage",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Passer du rapport au pourcentage",
+    "text": "Passer du rapport au pourcentage Exemple : SSE = 30 et SST = 120. \\[R^2=1-\\frac{30}{120}=0{,}75=75\\,\\%\\] La droite explique 75 % de la variation observée autour de la moyenne. Les 25 % restants correspondent à la variation résiduelle. 0,75 est une proportion; 75 % est le pourcentage correspondant. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/ajustement-et-diagnostic",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/ajustement-et-diagnostic",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Ajustement et diagnostic",
+    "text": "Ajustement et diagnostic 82,4 % Variation décrite dans cet échantillon Régions Résidus moyens différents À vérifier Performance sur de nouvelles données Un R² élevé ne remplace ni le diagnostic ni une évaluation sur de nouvelles observations. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/la-plage-de-prédiction",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/la-plage-de-prédiction",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "La plage de prédiction",
+    "text": "La plage de prédiction 2 497 $ Budget minimal observé 6 000 $ Exemple dans la plage 8 857 $ Budget maximal observé Prédire au-delà de cette plage est une extrapolation. Dans la plage, le contexte doit aussi rester comparable. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/le-calcul-pour-6-000",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/le-calcul-pour-6-000",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Le calcul pour 6 000 $",
+    "text": "Le calcul pour 6 000 $ nouveau_budget <- tibble(budget_marketing = 6000) predict(modele, newdata = nouveau_budget, interval = \"prediction\", level = 0.95) fit lwr upr 1 111414.1 94560.27 128268 fit : valeur prédite. lwr et upr : bornes de l’intervalle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/une-prédiction-accompagnée-de-son-intervalle",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/une-prédiction-accompagnée-de-son-intervalle",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Une prédiction accompagnée de son intervalle",
+    "text": "Une prédiction accompagnée de son intervalle 111 414 $ Ventes prédites pour 6 000 $ de budget 94 560 $ Borne inférieure 128 268 $ Borne supérieure Intervalle de prédiction classique à 95 %, sous les hypothèses du modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/moyenne-et-nouvelle-observation",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/moyenne-et-nouvelle-observation",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Moyenne et nouvelle observation",
+    "text": "Moyenne et nouvelle observation Intervalle de confiance Incertitude sur les ventes moyennes pour un budget donné. Intervalle de prédiction Incertitude pour une nouvelle observation, y compris sa dispersion autour de la moyenne. Pour le même budget et le même niveau, l’intervalle de prédiction est plus large. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/une-conclusion-appuyée-sur-les-résultats",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/une-conclusion-appuyée-sur-les-résultats",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Une conclusion appuyée sur les résultats",
+    "text": "Une conclusion appuyée sur les résultats Pour 1 000 $ de budget supplémentaire, la droite estime environ 13 582 $ de ventes moyennes supplémentaires. Elle décrit 82,4 % de la variation observée. Les résidus moyens varient selon la région. Ces données simulées ne prouvent pas qu’augmenter le budget provoquerait cette hausse des ventes. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/prochaine-étape-de-lanalyse",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/prochaine-étape-de-lanalyse",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Prochaine étape de l’analyse",
+    "text": "Prochaine étape de l’analyse Examiner les différences régionales et temporelles, puis évaluer les prédictions sur de nouvelles données. Une décision sur le budget demande aussi des informations sur les coûts et un plan d’étude adapté. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/à-retenir",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/à-retenir",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "À retenir",
+    "text": "À retenir 1 Une association quantifiée 2 Une prédiction incertaine 3 Une conclusion avec ses limites "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/production-autonome-3.6",
+    "href": "modules/semaine-03-regression-lineaire/media/qmd/capsule-06-support.html#/production-autonome-3.6",
+    "title": "Capsule 6 - Conclure sans dépasser les données",
+    "section": "Production autonome 3.6",
+    "text": "Production autonome 3.6 Rédigez cinq phrases : question, pente pour 1 000 $, ajustement et diagnostic, limite, prochaine étape. Auto-vérification Je calcule R² = 1 − SSE / SST et le convertis en pourcentage. Le R² décrit l’ajustement sur les données utilisées. La prédiction indique le budget, l’unité et son intervalle. Ma conclusion tient compte des écarts régionaux et de la limite causale. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/objectifs-du-module",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/objectifs-du-module",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Objectifs du module",
+    "text": "Objectifs du module Formuler une question et lire les données. Interpréter une droite ajustée avec R. Examiner les résidus et les limites des prédictions. Rédiger une conclusion appuyée sur les résultats. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-cas-étudié",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-cas-étudié",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Le cas étudié",
+    "text": "Le cas étudié 60 observations mois-région 5 régions québécoises 12 mois en 2025 Données simulées : une campagne régionale observée pendant un mois. Aucune organisation réelle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-variables-et-leurs-rôles",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-variables-et-leurs-rôles",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Les variables et leurs rôles",
+    "text": "Les variables et leurs rôles Réponse : ventes Montant mensuel des ventes, en dollars. Explicative : budget_marketing Budget marketing mensuel, en dollars. La région, la saison et le canal de campagne donnent le contexte. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-question-statistique",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-question-statistique",
+    "title": "Module 03 - Régression linéaire",
+    "section": "La question statistique",
+    "text": "La question statistique Dans ces données, comment les ventes moyennes varient-elles selon le budget marketing? Comparer des budgets différents, pendant un mois, dans les régions observées. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/lecture-du-nuage-de-points",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/lecture-du-nuage-de-points",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Lecture du nuage de points",
+    "text": "Lecture du nuage de points "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-corrélation-linéaire",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-corrélation-linéaire",
+    "title": "Module 03 - Régression linéaire",
+    "section": "La corrélation linéaire",
+    "text": "La corrélation linéaire \\(r\\) décrit la direction et l’intensité de la relation linéaire. \\(-1\\) Alignement décroissant \\(0\\) Absence de relation linéaire \\(+1\\) Alignement croissant Sans unité. Symétrique en \\(x\\) et \\(y\\). Une relation courbe peut avoir une corrélation faible. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-modèle-et-la-moyenne",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-modèle-et-la-moyenne",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Le modèle et la moyenne",
+    "text": "Le modèle et la moyenne \\[Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\] \\[\\mathrm{E}(Y_i \\mid x_i) = \\beta_0 + \\beta_1 x_i\\] \\(x_i\\) : budget. \\(Y_i\\) : ventes. \\(\\varepsilon_i\\) : écart aléatoire non observé. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-droite-estimée",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-droite-estimée",
+    "title": "Module 03 - Régression linéaire",
+    "section": "La droite estimée",
+    "text": "La droite estimée \\[\\widehat{y}_i = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\] Pente estimée Différence de ventes moyennes estimée pour 1 $ de budget supplémentaire. Ordonnée à l’origine estimée Ventes prédites lorsque le budget vaut 0 $. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/une-comparaison-de-1-000",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/une-comparaison-de-1-000",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Une comparaison de 1 000 $",
+    "text": "Une comparaison de 1 000 $ Pente estimée : 13,58 $ de ventes par dollar de budget. Pour 1 000 $ de budget supplémentaire : environ 13 582 $ de ventes moyennes supplémentaires selon la droite. Une association estimée dans ces données simulées. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-budget-nul-est-hors-de-la-plage-observée",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-budget-nul-est-hors-de-la-plage-observée",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Le budget nul est hors de la plage observée",
+    "text": "Le budget nul est hors de la plage observée 2 497 $ Budget minimal observé 8 857 $ Budget maximal observé 0 $ Extrapolation L’ordonnée estimée vaut 29 922 $. Son interprétation à budget nul n’est pas appuyée par ces observations. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/un-résidu-se-calcule-sur-une-observation",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/un-résidu-se-calcule-sur-une-observation",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Un résidu se calcule sur une observation",
+    "text": "Un résidu se calcule sur une observation \\[e_i = y_i - \\widehat{y}_i\\] 121 915 $ Ventes observées 108 888 $ Ventes prédites +13 027 $ Résidu, après arrondi Capitale-Nationale, janvier 2025. Budget : 5 814 $. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-principe-des-moindres-carrés",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-principe-des-moindres-carrés",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Le principe des moindres carrés",
+    "text": "Le principe des moindres carrés \\[\\sum_{i=1}^{n} e_i^2 = \\sum_{i=1}^{n}(y_i-\\widehat{y}_i)^2\\] La droite ajustée minimise cette somme. Les carrés évitent que les écarts positifs et négatifs s’annulent. Les grands écarts pèsent davantage. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-coefficients-calculés",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-coefficients-calculés",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Les coefficients calculés",
+    "text": "Les coefficients calculés (Intercept) budget_marketing 29922.107 13.582 (Intercept) : ordonnée à l’origine. budget_marketing : pente. La droite estimée : ventes prédites = 29 922,11 + 13,58 × budget. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/lincertitude-sur-la-pente",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/lincertitude-sur-la-pente",
+    "title": "Module 03 - Régression linéaire",
+    "section": "L’incertitude sur la pente",
+    "text": "L’incertitude sur la pente 2.5 % 97.5 % budget_marketing 11.93333 15.23067 Intervalle de confiance classique à 95 % : de 11,93 à 15,23 $ de ventes par dollar de budget. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-hypothèses-restent-à-examiner",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-hypothèses-restent-à-examiner",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Les hypothèses restent à examiner",
+    "text": "Les hypothèses restent à examiner Relation moyenne linéaire, erreurs indépendantes, dispersion constante. Ici, les mêmes régions reviennent chaque mois. Les résidus et le contexte doivent être examinés avant de faire confiance aux intervalles. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/poser-la-question-du-test",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/poser-la-question-du-test",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Poser la question du test",
+    "text": "Poser la question du test \\[H_0 : \\beta_1 = 0 \\qquad H_1 : \\beta_1 \\ne 0\\] H₀ est l’hypothèse nulle : la pente de population est nulle. Le test porte sur une association linéaire dans le modèle. Il ne démontre pas un effet causal du budget. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/lire-la-ligne-de-la-pente",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/lire-la-ligne-de-la-pente",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Lire la ligne de la pente",
+    "text": "Lire la ligne de la pente summary(modele)$coefficients[\"budget_marketing\", ] Estimate Std. Error t value Pr(>|t|) 1.358200e+01 8.236280e-01 1.649046e+01 1.458098e-23 Estimate : pente estimée. Std. Error : erreur-type. t value : statistique du test. Pr(>|t|) : valeur p bilatérale. \\[t = \\frac{\\widehat{\\beta}_1 - 0}{\\operatorname{SE}(\\widehat{\\beta}_1)}\\] "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/que-signifie-la-valeur-p",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/que-signifie-la-valeur-p",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Que signifie la valeur p?",
+    "text": "Que signifie la valeur p? Sous H₀ et les hypothèses du modèle, la valeur p est la probabilité d’obtenir une statistique au moins aussi extrême que celle observée. Pour ce test bilatéral, « aussi extrême » signifie aussi loin de zéro, dans l’un ou l’autre sens. Une petite valeur p indique une moins bonne compatibilité des données avec H₀. Ce n’est pas la probabilité que H₀ soit vraie. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/décider-sous-des-hypothèses",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/décider-sous-des-hypothèses",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Décider sous des hypothèses",
+    "text": "Décider sous des hypothèses Au seuil fixé α = 0,05, on rejette H₀ si p ≤ 0,05. Sinon, on ne rejette pas H₀ : on n’a pas prouvé que la pente est nulle. Ici, p < 0,001; le calcul suppose les hypothèses classiques valides. La valeur p ne mesure ni l’ampleur de l’association ni son importance pratique. Il faut aussi lire la pente, son intervalle et les diagnostics. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-résidus-selon-les-ventes-prédites",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/les-résidus-selon-les-ventes-prédites",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Les résidus selon les ventes prédites",
+    "text": "Les résidus selon les ventes prédites "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-moyenne-des-résidus-par-région",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-moyenne-des-résidus-par-région",
+    "title": "Module 03 - Régression linéaire",
+    "section": "La moyenne des résidus par région",
+    "text": "La moyenne des résidus par région Région Résidu moyen ($) Capitale-Nationale 5676 Estrie -3340 Mauricie -226 Montréal 2956 Outaouais -5066 Capitale-Nationale : sous-estimation moyenne. Outaouais : surestimation moyenne. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/résultats-du-diagnostic",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/résultats-du-diagnostic",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Résultats du diagnostic",
+    "text": "Résultats du diagnostic La droite décrit la tendance globale, mais les écarts régionaux méritent une analyse complémentaire. Les mêmes régions sont observées sur plusieurs mois. Ce graphique seul ne vérifie pas l’indépendance des erreurs. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-coefficient-de-détermination",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/le-coefficient-de-détermination",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Le coefficient de détermination",
+    "text": "Le coefficient de détermination \\[R^2 = 1-\\frac{\\sum_i(y_i-\\widehat{y}_i)^2}{\\sum_i(y_i-\\bar y)^2}\\] Ici : 0,824, soit environ 82,4 % de la variation des ventes décrite par la droite. Calcul sur les observations qui ont servi à ajuster le modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/deux-sommes-de-carrés",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/deux-sommes-de-carrés",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Deux sommes de carrés",
+    "text": "Deux sommes de carrés \\[\\mathrm{SSE}=\\sum_i(y_i-\\widehat{y}_i)^2 \\qquad \\mathrm{SST}=\\sum_i(y_i-\\bar y)^2\\] SSE : somme résiduelle Écarts au carré entre les observations et la droite. SST : somme totale Écarts au carré entre les observations et leur moyenne. Avec une ordonnée à l’origine : R² = 1 − SSE / SST, si SST > 0. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/passer-du-rapport-au-pourcentage",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/passer-du-rapport-au-pourcentage",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Passer du rapport au pourcentage",
+    "text": "Passer du rapport au pourcentage Exemple : SSE = 30 et SST = 120. \\[R^2=1-\\frac{30}{120}=0{,}75=75\\,\\%\\] La droite explique 75 % de la variation observée autour de la moyenne. Les 25 % restants correspondent à la variation résiduelle. 0,75 est une proportion; 75 % est le pourcentage correspondant. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-plage-de-prédiction",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/la-plage-de-prédiction",
+    "title": "Module 03 - Régression linéaire",
+    "section": "La plage de prédiction",
+    "text": "La plage de prédiction 2 497 $ Budget minimal observé 6 000 $ Exemple dans la plage 8 857 $ Budget maximal observé Prédire au-delà de cette plage est une extrapolation. Dans la plage, le contexte doit aussi rester comparable. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/une-prédiction-accompagnée-de-son-intervalle",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/une-prédiction-accompagnée-de-son-intervalle",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Une prédiction accompagnée de son intervalle",
+    "text": "Une prédiction accompagnée de son intervalle 111 414 $ Ventes prédites pour 6 000 $ de budget 94 560 $ Borne inférieure 128 268 $ Borne supérieure Intervalle de prédiction classique à 95 %, sous les hypothèses du modèle. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/moyenne-et-nouvelle-observation",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/moyenne-et-nouvelle-observation",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Moyenne et nouvelle observation",
+    "text": "Moyenne et nouvelle observation Intervalle de confiance Incertitude sur les ventes moyennes pour un budget donné. Intervalle de prédiction Incertitude pour une nouvelle observation, y compris sa dispersion autour de la moyenne. Pour le même budget et le même niveau, l’intervalle de prédiction est plus large. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/une-conclusion-appuyée-sur-les-résultats",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/une-conclusion-appuyée-sur-les-résultats",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Une conclusion appuyée sur les résultats",
+    "text": "Une conclusion appuyée sur les résultats Pour 1 000 $ de budget supplémentaire, la droite estime environ 13 582 $ de ventes moyennes supplémentaires. Elle décrit 82,4 % de la variation observée. Les résidus moyens varient selon la région. Ces données simulées ne prouvent pas qu’augmenter le budget provoquerait cette hausse des ventes. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/références",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/références",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Références",
+    "text": "Références R Core Team : documentation de lm() et predict.lm(). NIST/SEMATECH : diagnostic des modèles par les résidus. Données simulées du cours : campagnes régionales en 2025. "
+  },
+  {
+    "objectID": "modules/semaine-03-regression-lineaire/notes-cours.html#/votre-travail",
+    "href": "modules/semaine-03-regression-lineaire/notes-cours.html#/votre-travail",
+    "title": "Module 03 - Régression linéaire",
+    "section": "Votre travail",
+    "text": "Votre travail Le parcours guidé construit le rapport sur le budget et les ventes. Les démonstrations R donnent le code complet. Les exercices et corrigés permettent ensuite de transférer la démarche au délai de service et à la satisfaction. "
   }
 ]

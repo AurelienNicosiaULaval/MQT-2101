@@ -2,58 +2,120 @@
 
 ## Objectif
 
-Cette page rassemble les six capsules du module 03. Elles construisent progressivement l’intuition de la régression linéaire : partir d’une question d’affaires, lire un nuage de points, ajuster une droite, interpréter les coefficients, examiner les résidus et conclure avec prudence.
+Les six capsules construisent une analyse de régression : formuler une question, lire les données, comprendre la droite, l’ajuster dans R, examiner les résidus et conclure.
 
-Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles.
+Les supports PDF et HTML sont disponibles. Les vidéos du module 3 ne sont pas encore disponibles. Les onglets reprennent l’organisation des modules précédents. Dans l’onglet HTML, les boutons des blocs de code permettent de copier le code; le lien sous les diapositives ouvre le support en grand.
+
+Suivez les capsules dans l’ordre. Conservez vos réponses aux productions autonomes 3.1 à 3.6 dans le document du [parcours guidé](../../modules/semaine-03-regression-lineaire/index.llms.md#votre-parcours). Ce sont les mêmes activités : vous n’avez pas à les refaire deux fois. Les [démonstrations R](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md) montrent la séquence complète, depuis la création du projet jusqu’au rendu HTML.
 
 ## Capsule 1 - Formuler une question de régression
 
-Cette capsule transforme une question d’affaires en question statistique avec une variable réponse et une variable explicative.
+Identifier la réponse, la variable explicative, leurs unités et la portée de la question.
 
-[](media/qmd/capsule-01-support.llms.md "HTML") [](media/pdf/capsule-01-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Formulez la question du module en une phrase sans utiliser le mot « cause ».
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
+
+À faire après la capsule : formuler la question sur le budget et les ventes, puis nommer les variables, leurs unités et une variable de contexte.
 
 ## Capsule 2 - Lire le nuage de points
 
-Cette capsule montre comment regarder la relation avant de modéliser : direction, forme, dispersion et points atypiques.
+Lire la direction, la forme et la dispersion, puis interpréter la corrélation.
 
-[](media/qmd/capsule-02-support.llms.md "HTML") [](media/pdf/capsule-02-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Décrivez le nuage de points attendu entre `budget_marketing` et `ventes` avec les mots direction, dispersion et limite.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
+
+À faire après la capsule : produire le nuage de points et décrire sa direction, sa forme, sa dispersion et une limite.
 
 ## Capsule 3 - Comprendre la droite de régression
 
-Cette capsule présente l’équation du modèle linéaire et le sens de la pente dans une analyse appliquée.
+Relier la pente et les unités au modèle, aux résidus et aux moindres carrés.
 
-[](media/qmd/capsule-03-support.llms.md "HTML") [](media/pdf/capsule-03-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Expliquez ce que signifierait une pente positive dans le contexte des ventes et du budget marketing.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
+
+À faire après la capsule : interpréter la pente pour 1 000 \$ de budget et expliquer le signe du résidu de janvier en Capitale-Nationale.
 
 ## Capsule 4 - Ajuster le modèle avec R
 
-Cette capsule relie l’intuition à la commande `lm()` et à la lecture des coefficients.
+Ajuster la droite, interpréter les coefficients, lire un intervalle classique et expliquer le test de la pente.
 
-[](media/qmd/capsule-04-support.llms.md "HTML") [](media/pdf/capsule-04-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Écrivez le code `lm()` du module et indiquez où se trouvent la pente et l’ordonnée à l’origine dans la sortie.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
+
+À faire après la capsule : présenter la pente pour 1 000 \$ et son intervalle, formuler H₀, interpréter la valeur p et indiquer une hypothèse à vérifier.
 
 ## Capsule 5 - Diagnostiquer avec les résidus
 
-Cette capsule montre pourquoi les résidus sont indispensables pour vérifier si la droite résume correctement les données.
+Examiner le graphique des résidus et les écarts moyens par région.
 
-[](media/qmd/capsule-05-support.llms.md "HTML") [](media/pdf/capsule-05-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Expliquez pourquoi un modèle avec une pente intéressante peut quand même être fragile.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
+
+À faire après la capsule : produire le graphique des résidus et le tableau par région, puis rédiger deux constats et une limite.
 
 ## Capsule 6 - Conclure sans dépasser les données
 
-Cette capsule rassemble pente, qualité d’ajustement, prédiction et prudence causale dans une conclusion courte.
+Interpréter le R², présenter une prédiction avec son intervalle et conclure à partir des diagnostics.
 
-[](media/qmd/capsule-06-support.llms.md "HTML") [](media/pdf/capsule-06-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Rédigez une conclusion de quatre phrases qui mentionne la pente, l’ajustement, une limite et une suite possible.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-06-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-06-support.llms.md)
+
+À faire après la capsule : rédiger cinq phrases : question, pente, ajustement et diagnostic, limite, prochaine étape.
 
 ## Après les capsules
 
-Poursuivez avec les [démonstrations R](demonstrations.llms.md), puis les [exercices](exercices.llms.md). Les capsules donnent l’intuition; les démonstrations montrent le code complet; les exercices servent à produire l’interprétation finale du modèle.
+Terminez votre analyse guidée avec les [démonstrations R](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md). Passez ensuite aux [exercices d’application et à leurs corrigés](../../modules/semaine-03-regression-lineaire/exercices.llms.md) sur les délais et la satisfaction. Les [notes de cours](../../modules/semaine-03-regression-lineaire/notes-cours.llms.md) rassemblent les repères du module, également disponibles en [PDF](media/pdf/notes-cours.pdf).

@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module03-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,182 +24,280 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-capsule-06-semaine-03
+#| label: preparation-capsule-06
 #| include: false
-
 library(tidyverse)
 
-data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
-  "data/campagnes_marketing_quebec.csv"
-} else if (file.exists("../../data/campagnes_marketing_quebec.csv")) {
-  "../../data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
-}
-
-campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
 modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une décision concrète
-:::
-
 ::: {.question-line}
-Jusqu'où peut aller votre recommandation sans dépasser les données?
+Quelle conclusion la direction peut-elle utiliser?
 :::
 
 ::: {.note-box}
-Une conclusion trop forte engage la direction sur une promesse que le modèle ne peut pas soutenir. Conclure, c'est dire ce que la droite montre et tracer clairement la frontière de ce qu'elle ne prouve pas.
+La réponse doit quantifier l’association, donner les limites du modèle et préciser l’incertitude d’une prédiction.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Lire le R² sans le surinterpréter.
-- Distinguer association, prédiction et causalité.
-- Formuler une conclusion courte et défendable.
+- Interpréter le coefficient de détermination R².
+- Distinguer moyenne estimée et nouvelle observation.
+- Rédiger une conclusion appuyée sur les diagnostics.
 :::
 
-## Qualité d'ajustement
+## Le coefficient de détermination
 
-```{r}
-#| label: capsule-06-r2
-#| echo: false
+$$R^2 = 1-\frac{\sum_i(y_i-\widehat{y}_i)^2}{\sum_i(y_i-\bar y)^2}$$
 
-tibble::tibble(
-  Mesure = "R carré",
-  Valeur = round(summary(modele)$r.squared, 3)
-) |>
-  knitr::kable()
-```
+::: {.lead}
+Ici : `r nombre_fr(summary(modele)$r.squared, 3)`, soit environ `r nombre_fr(100 * summary(modele)$r.squared, 1)` % de la variation des ventes décrite par la droite.
+:::
 
 ::: {.visual-note}
-Le R² résume la part de variation des ventes captée par la droite. Il aide à juger l'ajustement, mais il ne valide pas tout le raisonnement.
+Calcul sur les observations qui ont servi à ajuster le modèle.
 :::
 
-## Prédire avec prudence
+::: {.notes}
+Comparer les écarts à la droite aux écarts à la moyenne globale des ventes. Un R² de 0,824 ne signifie ni 82,4 % de prédictions correctes ni 82,4 % de causalité. En régression simple avec ordonnée, R² égale le carré de la corrélation.
+:::
 
-```{r}
-#| label: capsule-06-predire
-#| echo: true
+## Deux sommes de carrés
 
-nouveaux <- tibble(budget_marketing = c(3000, 4500, 6000))
+$$\mathrm{SSE}=\sum_i(y_i-\widehat{y}_i)^2
+\qquad
+\mathrm{SST}=\sum_i(y_i-\bar y)^2$$
 
-predictions <- predict(
-  modele,
-  newdata = nouveaux,
-  interval = "prediction",
-  level = 0.95
-)
-
-bind_cols(nouveaux, as_tibble(predictions)) |>
-  transmute(
-    budget_marketing,
-    prediction = round(fit),
-    borne_inferieure = round(lwr),
-    borne_superieure = round(upr)
-  ) |>
-  knitr::kable()
-```
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+SSE : somme résiduelle
+:::
+::: {.text}
+Écarts au carré entre les observations et la droite.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+SST : somme totale
+:::
+::: {.text}
+Écarts au carré entre les observations et leur moyenne.
+:::
+:::
+:::
 
 ::: {.visual-note}
-Une prédiction est plus défendable lorsqu'elle reste dans la plage de budgets observée. L'intervalle de prédiction à 95 % décrit l'incertitude pour une nouvelle campagne, pas seulement l'incertitude sur la moyenne.
+Avec une ordonnée à l’origine : R² = 1 − SSE / SST, si SST > 0.
 :::
 
-## Trois notions à ne pas confondre
+## Passer du rapport au pourcentage
+
+::: {.lead}
+Exemple : SSE = 30 et SST = 120.
+:::
+
+$$R^2=1-\frac{30}{120}=0{,}75=75\,\%$$
+
+::: {.note-box}
+La droite explique 75 % de la variation observée autour de la moyenne. Les 25 % restants correspondent à la variation résiduelle.
+:::
+
+::: {.visual-note}
+0,75 est une proportion; 75 % est le pourcentage correspondant.
+:::
+
+## Ajustement et diagnostic
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-association
+82,4 %
 :::
 ::: {.label}
-deux variables varient ensemble
+Variation décrite dans cet échantillon
 :::
 :::
 ::: {.metric}
 ::: {.value}
-prédiction
+Régions
 :::
 ::: {.label}
-le modèle estime une valeur attendue
+Résidus moyens différents
 :::
 :::
 ::: {.metric}
 ::: {.value}
-causalité
+À vérifier
 :::
 ::: {.label}
-agir sur une variable change l'autre variable
+Performance sur de nouvelles données
 :::
 :::
 :::
 
-## Structure d'une conclusion
+::: {.note-box}
+Un R² élevé ne remplace ni le diagnostic ni une évaluation sur de nouvelles observations.
+:::
 
-::: {.journey}
-::: {.journey-step}
-::: {.num}
-1
+## La plage de prédiction
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+2 497 $
 :::
-::: {.text}
-Question
-:::
-:::
-::: {.journey-step}
-::: {.num}
-2
-:::
-::: {.text}
-Résultat (pente)
+::: {.label}
+Budget minimal observé
 :::
 :::
-::: {.journey-step}
-::: {.num}
-3
+::: {.metric}
+::: {.value}
+6 000 $
 :::
-::: {.text}
-Ajustement
-:::
-:::
-::: {.journey-step}
-::: {.num}
-4
-:::
-::: {.text}
-Limite
+::: {.label}
+Exemple dans la plage
 :::
 :::
-::: {.journey-step}
-::: {.num}
-5
+::: {.metric}
+::: {.value}
+8 857 $
 :::
-::: {.text}
-Suite
+::: {.label}
+Budget maximal observé
 :::
 :::
 :::
 
-## Une phrase modèle
+::: {.note-box}
+Prédire au-delà de cette plage est une extrapolation. Dans la plage, le contexte doit aussi rester comparable.
+:::
 
-::: {.statement-grid}
-::: {.statement-card .acceptable}
+## Le calcul pour 6 000 $
+
+```{r}
+#| label: m03-c06-prediction
+nouveau_budget <- tibble(budget_marketing = 6000)
+
+predict(modele, newdata = nouveau_budget,
+        interval = "prediction", level = 0.95)
+```
+
+::: {.visual-note}
+`fit` : valeur prédite. `lwr` et `upr` : bornes de l’intervalle.
+:::
+
+::: {.notes}
+La prédiction concerne une nouvelle observation mois-région comparable. Elle ne concerne pas un achat individuel. Les unités sont les dollars de ventes mensuelles.
+:::
+
+## Une prédiction accompagnée de son intervalle
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+111 414 $
+:::
+::: {.label}
+Ventes prédites pour 6 000 $ de budget
+:::
+:::
+::: {.metric}
+::: {.value}
+94 560 $
+:::
+::: {.label}
+Borne inférieure
+:::
+:::
+::: {.metric}
+::: {.value}
+128 268 $
+:::
+::: {.label}
+Borne supérieure
+:::
+:::
+:::
+
+::: {.visual-note}
+Intervalle de prédiction classique à 95 %, sous les hypothèses du modèle.
+:::
+
+::: {.notes}
+Ces valeurs arrondies viennent de predict() avec les coefficients non arrondis. La procédure de prédiction couvre une nouvelle observation dans 95 % des répétitions sous les hypothèses. Les écarts régionaux et une éventuelle dépendance temporelle peuvent fragiliser cette couverture.
+:::
+
+## Moyenne et nouvelle observation
+
+::: {.concept-grid}
+::: {.concept-card}
 ::: {.tag}
-Conclusion défendable
+Intervalle de confiance
 :::
 ::: {.text}
-Les ventes moyennes sont plus élevées lorsque le budget est plus élevé : la droite résume une association positive, mais ne prouve pas que le budget cause les ventes. Il faut vérifier les résidus et le contexte avant de recommander.
+Incertitude sur les ventes moyennes pour un budget donné.
 :::
 :::
+::: {.concept-card}
+::: {.tag}
+Intervalle de prédiction
+:::
+::: {.text}
+Incertitude pour une nouvelle observation, y compris sa dispersion autour de la moyenne.
+:::
+:::
+:::
+
+::: {.visual-note}
+Pour le même budget et le même niveau, l’intervalle de prédiction est plus large.
+:::
+
+## Une conclusion appuyée sur les résultats
+
+::: {.lead}
+Pour 1 000 $ de budget supplémentaire, la droite estime environ 13 582 $ de ventes moyennes supplémentaires.
+:::
+
+::: {.note-box}
+Elle décrit 82,4 % de la variation observée. Les résidus moyens varient selon la région. Ces données simulées ne prouvent pas qu’augmenter le budget provoquerait cette hausse des ventes.
+:::
+
+::: {.notes}
+Présenter ces phrases comme un exemple sur le cas guidé. Elles associent une quantité précise à une limite réellement observée. La prochaine étape serait d’examiner les différences régionales et temporelles, puis la performance sur de nouvelles données, avant une recommandation de budget.
+:::
+
+## Prochaine étape de l’analyse
+
+::: {.question-line}
+Examiner les différences régionales et temporelles, puis évaluer les prédictions sur de nouvelles données.
+:::
+
+::: {.visual-note}
+Une décision sur le budget demande aussi des informations sur les coûts et un plan d’étude adapté.
 :::
 
 ## À retenir
@@ -208,7 +308,7 @@ Les ventes moyennes sont plus élevées lorsque le budget est plus élevé : la 
 1
 :::
 ::: {.label}
-La conclusion est courte et défendable.
+Une association quantifiée
 :::
 :::
 ::: {.metric}
@@ -216,7 +316,7 @@ La conclusion est courte et défendable.
 2
 :::
 ::: {.label}
-Une bonne réponse dit aussi ce que le modèle ne prouve pas.
+Une prédiction incertaine
 :::
 :::
 ::: {.metric}
@@ -224,26 +324,22 @@ Une bonne réponse dit aussi ce que le modèle ne prouve pas.
 3
 :::
 ::: {.label}
-La prudence est une compétence, pas une faiblesse.
+Une conclusion avec ses limites
 :::
 :::
 :::
-
 
 ## Production autonome 3.6
 
 ::: {.lead}
-Rédigez une conclusion de quatre phrases.
-:::
-
-::: {.keypoints}
-Une phrase par élément : question, pente, diagnostic (résidus/ajustement), limite.
+Rédigez cinq phrases : question, pente pour 1 000 $, ajustement et diagnostic, limite, prochaine étape.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- La pente est interprétée avec ses variables et ses unités.
-- J'ai distingué erreur du modèle et résidu observé.
-- Je n'ai affirmé ni causalité ni validité hors de la plage observée.
+- Je calcule R² = 1 − SSE / SST et le convertis en pourcentage.
+- Le R² décrit l’ajustement sur les données utilisées.
+- La prédiction indique le budget, l’unité et son intervalle.
+- Ma conclusion tient compte des écarts régionaux et de la limite causale.
 :::

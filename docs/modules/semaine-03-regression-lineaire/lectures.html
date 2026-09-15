@@ -6837,6 +6837,12 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7018,9 +7024,9 @@ display: none;
     <h2 id="toc-title">Sur cette page</h2>
 
   <ul>
-  <li><a href="#lectures-obligatoires" id="toc-lectures-obligatoires" class="nav-link active" data-scroll-target="#lectures-obligatoires">Lectures obligatoires</a></li>
-  <li><a href="#documentation-r-utile" id="toc-documentation-r-utile" class="nav-link" data-scroll-target="#documentation-r-utile">Documentation R utile</a></li>
-  <li><a href="#à-retenir-pendant-la-lecture" id="toc-à-retenir-pendant-la-lecture" class="nav-link" data-scroll-target="#à-retenir-pendant-la-lecture">À retenir pendant la lecture</a></li>
+  <li><a href="#pour-suivre-le-module" id="toc-pour-suivre-le-module" class="nav-link active" data-scroll-target="#pour-suivre-le-module">Pour suivre le module</a></li>
+  <li><a href="#références-pour-approfondir" id="toc-références-pour-approfondir" class="nav-link" data-scroll-target="#références-pour-approfondir">Références pour approfondir</a></li>
+  <li><a href="#repères-de-lecture" id="toc-repères-de-lecture" class="nav-link" data-scroll-target="#repères-de-lecture">Repères de lecture</a></li>
   </ul>
 </nav>
     </div>
@@ -7046,26 +7052,65 @@ display: none;
 </header>
 
 
-<section id="lectures-obligatoires" class="level2">
-<h2 class="anchored" data-anchor-id="lectures-obligatoires">Lectures obligatoires</h2>
+<section id="pour-suivre-le-module" class="level2">
+<h2 class="anchored" data-anchor-id="pour-suivre-le-module">Pour suivre le module</h2>
 <ul>
-<li>Revoir la <a href="../../modules/semaine-03-regression-lineaire/index.html">page d’accueil du module</a>.</li>
-<li>Lire les <a href="../../modules/semaine-03-regression-lineaire/capsules.html">capsules</a> avant de faire les démonstrations R.</li>
-<li>Reproduire les <a href="../../modules/semaine-03-regression-lineaire/demonstrations.html">démonstrations R</a>.</li>
-<li>Faire les <a href="../../modules/semaine-03-regression-lineaire/exercices.html">exercices</a> avant de consulter les solutions cachées.</li>
+<li>Le <a href="../../modules/semaine-03-regression-lineaire/index.html">parcours</a> précise l’ordre des six activités et le contenu de la trace finale.</li>
+<li>Les <a href="../../modules/semaine-03-regression-lineaire/capsules.html">capsules et leurs supports</a> expliquent les notions et les exemples.</li>
+<li>Les <a href="../../modules/semaine-03-regression-lineaire/demonstrations.html">démonstrations R</a> donnent le code complet du cas guidé.</li>
+<li>Les <a href="../../modules/semaine-03-regression-lineaire/exercices.html">exercices</a> proposent un autre cas et des corrigés à ouvrir après une tentative.</li>
+<li>Les <a href="../../modules/semaine-03-regression-lineaire/notes-cours.html">notes de cours</a>, aussi disponibles en <a href="media/pdf/notes-cours.pdf">PDF</a>, servent de synthèse.</li>
 </ul>
 </section>
-<section id="documentation-r-utile" class="level2">
-<h2 class="anchored" data-anchor-id="documentation-r-utile">Documentation R utile</h2>
-<ul>
-<li>Fonction <code>lm()</code> pour les modèles linéaires : <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html</a></li>
-<li>Fonction <code>summary.lm()</code> pour résumer un modèle linéaire : <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html</a></li>
-<li>Fonction <code>geom_smooth()</code> pour ajouter une droite ajustée dans <code>ggplot2</code> : <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_smooth.html</a></li>
-</ul>
+<section id="références-pour-approfondir" class="level2">
+<h2 class="anchored" data-anchor-id="références-pour-approfondir">Références pour approfondir</h2>
+<p>Les références suivantes sont des compléments en anglais. Consultez la partie correspondant à votre question; leur lecture intégrale n’est pas nécessaire pour réaliser les activités.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Référence</th>
+<th>Passage utile</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Comment R ajuste-t-il la droite?</td>
+<td>R Core Team, documentation de <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html">lm()</a>, consultée le 15 septembre 2026</td>
+<td>Formule, coefficients et résidus</td>
+</tr>
+<tr class="even">
+<td>Comment lire le test de la pente et le R²?</td>
+<td>R Core Team, documentation de <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html">summary.lm()</a>, consultée le 15 septembre 2026</td>
+<td>Tableau <code>coefficients</code> : estimation, erreur-type, t, valeur p; définition de <code>r.squared</code></td>
+</tr>
+<tr class="odd">
+<td>Comment calculer un intervalle sur la pente?</td>
+<td>R Core Team, documentation de <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/confint.html">confint()</a>, consultée le 15 septembre 2026</td>
+<td>Méthode pour les modèles <code>lm</code></td>
+</tr>
+<tr class="even">
+<td>Moyenne ou nouvelle observation?</td>
+<td>R Core Team, documentation de <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html">predict.lm()</a>, consultée le 15 septembre 2026</td>
+<td>Options <code>confidence</code> et <code>prediction</code></td>
+</tr>
+<tr class="odd">
+<td>Que rechercher dans les résidus?</td>
+<td>NIST/SEMATECH, <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm">e-Handbook of Statistical Methods : Model Validation</a>, consulté le 15 septembre 2026</td>
+<td>Motifs des résidus et limites des indicateurs numériques</td>
+</tr>
+<tr class="even">
+<td>Comment ajouter une droite au graphique?</td>
+<td>Équipe ggplot2, documentation de <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a>, consultée le 15 septembre 2026</td>
+<td><code>method = &quot;lm&quot;</code>, groupes et bande d’incertitude</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="à-retenir-pendant-la-lecture" class="level2">
-<h2 class="anchored" data-anchor-id="à-retenir-pendant-la-lecture">À retenir pendant la lecture</h2>
-<p>La régression linéaire doit toujours être reliée à une question précise. Avant d’interpréter les coefficients, vérifiez le graphique, le contexte, les unités et les résidus. Une relation statistique utile pour la décision n’est pas nécessairement une relation causale.</p>
+<section id="repères-de-lecture" class="level2">
+<h2 class="anchored" data-anchor-id="repères-de-lecture">Repères de lecture</h2>
+<p>La pente se lit avec ses variables et ses unités. Le R² décrit l’ajustement sur les données utilisées. Les résidus aident à repérer des limites, mais un seul graphique ne vérifie pas toutes les hypothèses.</p>
+<p>Les intervalles classiques reposent sur le modèle choisi et ses hypothèses. Les observations mensuelles répétées par région ou par succursale demandent notamment un examen de l’indépendance. Une association observée ne suffit pas à attribuer un effet causal à une intervention.</p>
 
 
 </section>
@@ -7550,7 +7595,7 @@ display: none;
 <p>MQT-2101 - Université Laval</p>
 </div>
     <div class="nav-footer-center">
-       
+
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>

@@ -5,6 +5,8 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: media/module03-capsules.css
     theme:
       - default
       - ../../assets/ulaval-reveal.scss
@@ -22,291 +24,668 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: false
   warning: false
   message: false
 editor: visual
 ---
 
+
 ```{r}
-#| label: setup-notes-module-03
+#| label: preparation-synthese-03
 #| include: false
-
 library(tidyverse)
-library(scales)
 
-data_path <- if (file.exists("data/campagnes_marketing_quebec.csv")) {
-  "data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+chemins <- c("data/campagnes_marketing_quebec.csv",
+             "../../data/campagnes_marketing_quebec.csv",
+             "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+campagnes <- read_csv(chemin, show_col_types = FALSE)
+stopifnot(!anyNA(campagnes[c("budget_marketing", "ventes")]))
+modele <- lm(ventes ~ budget_marketing, data = campagnes)
+resultats <- campagnes |>
+  mutate(ventes_predites = fitted(modele), residu = residuals(modele))
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
 }
-
-campagnes <- readr::read_csv(data_path, show_col_types = FALSE)
-
-currency_ca <- scales::label_dollar(
-  prefix = "",
-  suffix = " $",
-  big.mark = " ",
-  decimal.mark = ","
-)
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
 ```
+
 
 ## Objectifs du module
 
-::: {.keypoints}
-- Lire une relation entre deux variables quantitatives.
-- Distinguer corrélation, association, prédiction et causalité.
-- Ajuster une régression linéaire simple avec `lm()`.
-- Interpréter une pente, une ordonnée à l'origine et un `R²`.
-- Vérifier les résidus avant de conclure.
-- Rédiger une interprétation utile pour une décision d'affaires.
+- Formuler une question et lire les données.
+- Interpréter une droite ajustée avec R.
+- Examiner les résidus et les limites des prédictions.
+- Rédiger une conclusion appuyée sur les résultats.
+
+## Le cas étudié
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+60
+:::
+::: {.label}
+observations mois-région
+:::
+:::
+::: {.metric}
+::: {.value}
+5
+:::
+::: {.label}
+régions québécoises
+:::
+:::
+::: {.metric}
+::: {.value}
+12
+:::
+::: {.label}
+mois en 2025
+:::
+:::
 :::
 
-## Point de départ
+::: {.visual-note}
+Données simulées : une campagne régionale observée pendant un mois. Aucune organisation réelle.
+:::
+
+::: {.notes}
+Il y a douze observations par région. Une ligne ne représente ni un client ni une région différente. Le budget et les ventes sont des montants mensuels en dollars canadiens. Les régions portent des noms réels, mais les campagnes sont fictives.
+:::
+
+## Les variables et leurs rôles
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Réponse : ventes
+:::
+::: {.text}
+Montant mensuel des ventes, en dollars.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Explicative : budget_marketing
+:::
+::: {.text}
+Budget marketing mensuel, en dollars.
+:::
+:::
+:::
+
+::: {.visual-note}
+La région, la saison et le canal de campagne donnent le contexte.
+:::
+
+::: {.notes}
+La variable explicative sert à décrire la variation moyenne de la réponse. Son nom ne prouve pas qu’elle agit sur la réponse. En opérations, on pourrait étudier le temps moyen de production selon la taille d’un lot : les rôles statistiques seraient les mêmes.
+:::
+
+## La question statistique
+
+::: {.question-line}
+Dans ces données, comment les ventes moyennes varient-elles selon le budget marketing?
+:::
+
+::: {.note-box}
+Comparer des budgets différents, pendant un mois, dans les régions observées.
+:::
+
+::: {.notes}
+Insister sur « en moyenne ». On cherche une tendance commune à plusieurs observations, pas une règle exacte pour chaque campagne.
+:::
+
+## Lecture du nuage de points
+
+```{r}
+#| label: m03-c02-nuage
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| out-width: "88%"
+ggplot(campagnes, aes(budget_marketing, ventes)) +
+  geom_point(colour = "#0B4F6C", size = 2.7, alpha = 0.8) +
+  scale_x_continuous(labels = monnaie) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Budget marketing mensuel ($)", y = "Ventes mensuelles ($)") +
+  theme_minimal(base_size = 18)
+```
+
+::: {.notes}
+Chaque point est une observation mois-région. Demander d’abord le sens de la tendance, puis sa forme. Les ventes augmentent globalement avec le budget, mais deux campagnes de budget voisin peuvent avoir des ventes différentes. Ne pas ajouter de droite avant cette lecture.
+:::
+
+## La corrélation linéaire
 
 ::: {.lead}
-L'ancien matériel introduisait la corrélation, les moindres carrés, les tests,
-les diagnostics et les exercices R.
+$r$ décrit la direction et l’intensité de la relation linéaire.
 :::
 
-::: {.note-box}
-La version actuelle conserve ces idées, mais les réorganise autour d'une
-question appliquée : comment quantifier l'association moyenne entre budget
-marketing et ventes?
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+$-1$
+:::
+::: {.label}
+Alignement décroissant
+:::
+:::
+::: {.metric}
+::: {.value}
+$0$
+:::
+::: {.label}
+Absence de relation linéaire
+:::
+:::
+::: {.metric}
+::: {.value}
+$+1$
+:::
+::: {.label}
+Alignement croissant
+:::
+:::
 :::
 
-## Données du module
-
-```{r}
-#| label: apercu-campagnes-notes
-campagnes |>
-  slice_head(n = 6)
-```
-
-## Unité d'observation
-
-::: {.keypoints}
-- Une ligne représente une combinaison mois-région.
-- `ventes` est la variable réponse.
-- `budget_marketing` est la variable explicative principale.
-- `region`, `canal`, `saison`, `visites_site` et `rabais` contextualisent
-  l'analyse.
+::: {.visual-note}
+Sans unité. Symétrique en $x$ et $y$. Une relation courbe peut avoir une corrélation faible.
 :::
 
-## Corrélation
+## Le modèle et la moyenne
+
+$$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
+
+$$\mathrm{E}(Y_i \mid x_i) = \beta_0 + \beta_1 x_i$$
+
+::: {.visual-note}
+$x_i$ : budget. $Y_i$ : ventes. $\varepsilon_i$ : écart aléatoire non observé.
+:::
+
+::: {.notes}
+La seconde égalité suppose que l’erreur a une moyenne nulle pour chaque valeur de x. Les paramètres bêta décrivent le modèle de population. Les montants sont en dollars. On décrit une moyenne conditionnelle, sans affirmer qu’une hausse imposée du budget aurait le même effet.
+:::
+
+## La droite estimée
+
+$$\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$$
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Pente estimée
+:::
+::: {.text}
+Différence de ventes moyennes estimée pour 1 $ de budget supplémentaire.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Ordonnée à l’origine estimée
+:::
+::: {.text}
+Ventes prédites lorsque le budget vaut 0 $.
+:::
+:::
+:::
+
+::: {.notes}
+Le chapeau distingue une estimation obtenue avec les données du paramètre inconnu. La pente est en dollars de ventes par dollar de budget. L’ordonnée est en dollars de ventes.
+:::
+
+## Une comparaison de 1 000 $
 
 ::: {.lead}
-La corrélation mesure la force et la direction d'une relation linéaire entre
-deux variables quantitatives.
+Pente estimée : `r nombre_fr(coef(modele)[2], 2)` $ de ventes par dollar de budget.
 :::
 
 ::: {.note-box}
-Elle est symétrique : la corrélation entre `x` et `y` est la même que celle entre
-`y` et `x`. Une régression, elle, impose une variable réponse et une variable
-explicative.
+Pour 1 000 $ de budget supplémentaire : environ `r nombre_fr(1000 * coef(modele)[2])` $ de ventes moyennes supplémentaires selon la droite.
 :::
 
-## Corrélation dans les données
-
-```{r}
-#| label: correlation-module-03
-campagnes |>
-  summarise(
-    correlation_budget_ventes = cor(budget_marketing, ventes)
-  )
-```
-
-## Nuage de points
-
-```{r}
-#| label: graphique-correlation-module-03
-#| fig-width: 10
-#| fig-height: 5.6
-ggplot(campagnes, aes(x = budget_marketing, y = ventes)) +
-  geom_point(aes(colour = region), alpha = 0.8, size = 2.6) +
-  labs(
-    title = "Ventes selon le budget marketing",
-    x = "Budget marketing",
-    y = "Ventes",
-    colour = "Région"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
-```
-
-## Pourquoi un modèle?
-
-::: {.keypoints}
-- Le graphique montre une tendance.
-- Le modèle quantifie cette tendance.
-- Le coefficient donne une interprétation moyenne.
-- Les résidus montrent ce que la droite ne capture pas.
+::: {.visual-note}
+Une association estimée dans ces données simulées.
 :::
 
-## Modèle linéaire simple
-
-$$
-Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
-$$
-
-Dans le module :
-
-::: {.keypoints}
-- $Y_i$ : ventes observées.
-- $x_i$ : budget marketing.
-- $\beta_0$ : ventes moyennes estimées lorsque le budget vaut 0.
-- $\beta_1$ : variation moyenne des ventes pour une unité de budget.
-- $\varepsilon_i$ : écart entre la valeur observée et la droite.
+::: {.notes}
+Les coefficients seront obtenus dans R à la capsule suivante. Multiplier par 1 000 change l’échelle de la comparaison, pas le modèle. Il s’agit de ventes, pas d’un profit ou d’un rendement net.
 :::
 
-## Estimation
+## Le budget nul est hors de la plage observée
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+2 497 $
+:::
+::: {.label}
+Budget minimal observé
+:::
+:::
+::: {.metric}
+::: {.value}
+8 857 $
+:::
+::: {.label}
+Budget maximal observé
+:::
+:::
+::: {.metric}
+::: {.value}
+0 $
+:::
+::: {.label}
+Extrapolation
+:::
+:::
+:::
+
+::: {.note-box}
+L’ordonnée estimée vaut `r nombre_fr(coef(modele)[1])` $. Son interprétation à budget nul n’est pas appuyée par ces observations.
+:::
+
+::: {.notes}
+Conserver l’ordonnée dans le modèle. Le fait que zéro soit hors de la plage observée ne justifie pas de forcer la droite à passer par l’origine.
+:::
+
+## Un résidu se calcule sur une observation
+
+$$e_i = y_i - \widehat{y}_i$$
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+121 915 $
+:::
+::: {.label}
+Ventes observées
+:::
+:::
+::: {.metric}
+::: {.value}
+108 888 $
+:::
+::: {.label}
+Ventes prédites
+:::
+:::
+::: {.metric}
+::: {.value}
++13 027 $
+:::
+::: {.label}
+Résidu, après arrondi
+:::
+:::
+:::
+
+::: {.visual-note}
+Capitale-Nationale, janvier 2025. Budget : 5 814 $.
+:::
+
+::: {.notes}
+Le modèle sous-estime ici les ventes. Les calculs utilisent les coefficients non arrondis. Le résidu est calculable, tandis que l’erreur epsilon du modèle de population reste inconnue.
+:::
+
+## Le principe des moindres carrés
+
+$$\sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i-\widehat{y}_i)^2$$
 
 ::: {.lead}
-La droite de régression est estimée par la méthode des moindres carrés.
+La droite ajustée minimise cette somme.
 :::
 
 ::: {.note-box}
-Elle choisit les coefficients qui minimisent la somme des carrés des résidus.
-C'est le principe central repris de l'ancien support de régression.
+Les carrés évitent que les écarts positifs et négatifs s’annulent. Les grands écarts pèsent davantage.
 :::
 
-## Ajustement dans R
+## Les coefficients calculés
 
 ```{r}
-#| label: lm-module-03
-modele_budget <- lm(ventes ~ budget_marketing, data = campagnes)
-
-summary(modele_budget)
+#| label: m03-c04-coef
+coef(modele)
 ```
 
-## Lire les coefficients
-
-```{r}
-#| label: coefficients-module-03-notes
-coef(modele_budget)
-```
+::: {.visual-note}
+`(Intercept)` : ordonnée à l’origine. `budget_marketing` : pente.
+:::
 
 ::: {.note-box}
-La pente est souvent plus utile si on la reformule pour 1 000 dollars de budget.
+La droite estimée : ventes prédites = `r nombre_fr(coef(modele)[1], 2)` + `r nombre_fr(coef(modele)[2], 2)` × budget.
 :::
 
+## L’incertitude sur la pente
+
 ```{r}
-#| label: pente-1000-module-03-notes
-coef(modele_budget)["budget_marketing"] * 1000
+#| label: m03-c04-ic
+confint(modele, "budget_marketing", level = 0.95)
 ```
 
-## Interprétation de la pente
+::: {.visual-note}
+Intervalle de confiance classique à 95 % : de `r nombre_fr(confint(modele)[2,1], 2)` à `r nombre_fr(confint(modele)[2,2], 2)` $ de ventes par dollar de budget.
+:::
+
+::: {.notes}
+Ce calcul illustre l’incertitude d’estimation sous le modèle classique. La méthode repose sur des erreurs indépendantes, de variance constante et, pour cet intervalle exact, normales. Sur des échantillons répétés sous ces hypothèses, 95 % des intervalles construits ainsi couvriraient la pente. Ce n’est pas un intervalle de ventes pour une nouvelle campagne.
+:::
+
+## Les hypothèses restent à examiner
 
 ::: {.lead}
-Dans ces données, 1 000 dollars de budget marketing supplémentaire sont associés
-à une variation moyenne estimée des ventes de `r round(coef(modele_budget)["budget_marketing"] * 1000)` dollars.
+Relation moyenne linéaire, erreurs indépendantes, dispersion constante.
 :::
 
 ::: {.note-box}
-Cette phrase décrit une association moyenne. Elle ne prouve pas que le budget
-cause directement les ventes.
+Ici, les mêmes régions reviennent chaque mois. Les résidus et le contexte doivent être examinés avant de faire confiance aux intervalles.
 :::
 
-## Qualité d'ajustement
-
-```{r}
-#| label: qualite-ajustement-module-03
-tibble(
-  r_carre = summary(modele_budget)$r.squared,
-  r_carre_ajuste = summary(modele_budget)$adj.r.squared,
-  rmse = sqrt(mean(residuals(modele_budget)^2))
-)
-```
-
-## Valeurs prédites et résidus
-
-```{r}
-#| label: predictions-residus-module-03
-campagnes_modele <- campagnes |>
-  mutate(
-    ventes_predites = predict(modele_budget),
-    residu = residuals(modele_budget)
-  )
-
-campagnes_modele |>
-  select(region, mois_label, budget_marketing, ventes, ventes_predites, residu) |>
-  slice_head(n = 8)
-```
-
-## Diagnostic des résidus
-
-```{r}
-#| label: graphique-residus-module-03-notes
-#| fig-width: 10
-#| fig-height: 5.6
-ggplot(campagnes_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 1) +
-  geom_point(alpha = 0.8, colour = "#0B4F6C", size = 2.6) +
-  labs(
-    title = "Résidus selon les ventes prédites",
-    x = "Ventes prédites",
-    y = "Résidu"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
-```
-
-## Ce qu'on cherche dans les résidus
-
-::: {.keypoints}
-- Des points répartis autour de 0.
-- Pas de courbe évidente.
-- Pas de dispersion qui augmente fortement.
-- Pas d'observation isolée qui domine l'interprétation.
+::: {.notes}
+La normalité des erreurs intervient dans les intervalles classiques exacts. Elle n’est pas requise pour calculer la droite des moindres carrés. Les observations répétées ne prouvent pas une dépendance, mais empêchent de la supposer absente sans examen. Les intervalles présentés sont des calculs sous hypothèses, pas une validation de celles-ci.
 :::
 
-## Prédire
+## Poser la question du test
 
-```{r}
-#| label: prediction-module-03-notes
-nouveaux_budgets <- tibble(
-  budget_marketing = c(4000, 6000, 8000)
-)
+$$H_0 : \beta_1 = 0 \qquad H_1 : \beta_1 \ne 0$$
 
-predict(
-  modele_budget,
-  newdata = nouveaux_budgets,
-  interval = "prediction"
-)
-```
-
-## Prédiction et prudence
-
-::: {.keypoints}
-- Une prédiction est incertaine.
-- Elle est plus défendable dans la plage observée.
-- Elle dépend du modèle choisi.
-- Elle ne remplace pas la connaissance du contexte.
+::: {.lead}
+H₀ est l’hypothèse nulle : la pente de population est nulle.
 :::
-
-## Association ou causalité?
-
-::: {.callout-warning}
-Une régression sur données observationnelles ne suffit pas à établir une relation
-causale.
-:::
-
-Pour parler de causalité, il faudrait discuter du plan d'étude, des variables
-omises, de la temporalité, des mécanismes et des biais possibles.
-
-## Réponse attendue
 
 ::: {.note-box}
-Les ventes sont positivement associées au budget marketing. La pente indique la
-variation moyenne estimée des ventes pour une hausse du budget, dans les données
-observées. Le graphique et les résidus doivent être examinés avant de conclure.
-L'interprétation reste une association, pas une preuve causale.
+Le test porte sur une association linéaire dans le modèle. Il ne démontre pas un effet causal du budget.
 :::
 
-## Sources et prolongements
+::: {.notes}
+H₁ est l’hypothèse alternative bilatérale : une pente positive ou négative. La valeur observée de la pente estimée peut s’écarter de zéro, même si la pente de population est nulle. Le test compare cet écart à son incertitude d’estimation.
+:::
+
+## Lire la ligne de la pente
+
+```{r}
+#| label: test-pente-synthese-03
+#| echo: true
+summary(modele)$coefficients["budget_marketing", ]
+```
+
+::: {.visual-note}
+Estimate : pente estimée. Std. Error : erreur-type. t value : statistique du test. Pr(>|t|) : valeur p bilatérale.
+:::
+
+$$t = \frac{\widehat{\beta}_1 - 0}{\operatorname{SE}(\widehat{\beta}_1)}$$
+
+::: {.notes}
+Ici, t vaut environ 16,49. En régression simple avec ordonnée et n observations indépendantes, sa loi sous H₀ est une loi de Student à n − 2 degrés de liberté, sous les hypothèses classiques incluant la normalité. Une grande valeur absolue de t traduit un écart à zéro important par rapport à l’erreur-type.
+:::
+
+## Que signifie la valeur p?
+
+::: {.lead}
+Sous H₀ et les hypothèses du modèle, la valeur p est la probabilité d’obtenir une statistique au moins aussi extrême que celle observée.
+:::
+
+::: {.note-box}
+Pour ce test bilatéral, « aussi extrême » signifie aussi loin de zéro, dans l’un ou l’autre sens.
+:::
+
+::: {.visual-note}
+Une petite valeur p indique une moins bonne compatibilité des données avec H₀. Ce n’est pas la probabilité que H₀ soit vraie.
+:::
+
+## Décider sous des hypothèses
 
 ::: {.keypoints}
-- Ancien matériel MQT-2101, séance 03 : corrélation, régression linéaire,
-  moindres carrés, diagnostics et exercices R.
-- Documentation R : `stats::lm()` et `predict.lm()`.
-- Documentation ggplot2 : `geom_point()` et `geom_smooth()`.
+- Au seuil fixé α = 0,05, on rejette H₀ si p ≤ 0,05.
+- Sinon, on ne rejette pas H₀ : on n’a pas prouvé que la pente est nulle.
+- Ici, p < 0,001; le calcul suppose les hypothèses classiques valides.
 :::
+
+::: {.note-box}
+La valeur p ne mesure ni l’ampleur de l’association ni son importance pratique. Il faut aussi lire la pente, son intervalle et les diagnostics.
+:::
+
+::: {.notes}
+Pour le test bilatéral et l’intervalle t correspondants, zéro est hors de l’intervalle à 95 % lorsque p est inférieur à 0,05. Les mêmes régions reviennent chaque mois : l’indépendance reste à examiner. Ne pas présenter une petite valeur p comme une validation du modèle ou comme une recommandation d’augmenter le budget.
+:::
+
+## Les résidus selon les ventes prédites
+
+```{r}
+#| label: m03-c05-diagnostic
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.6
+#| out-width: "88%"
+ggplot(resultats, aes(ventes_predites, residu)) +
+  geom_hline(yintercept = 0, colour = "#E30513", linewidth = 0.8) +
+  geom_point(colour = "#0B4F6C", size = 2.7, alpha = 0.8) +
+  scale_x_continuous(labels = monnaie) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Ventes prédites ($)", y = "Résidu ($)") +
+  theme_minimal(base_size = 18)
+```
+
+::: {.notes}
+Les signes sont répartis autour de zéro et on ne voit pas de courbure nette dans ce graphique. Cela ne suffit pas à valider le modèle. Avec une ordonnée et les moindres carrés, la moyenne globale des résidus est déjà nulle par construction, à l’arrondi numérique près.
+:::
+
+## La moyenne des résidus par région
+
+```{r}
+#| label: m03-c05-regions
+#| echo: false
+bilan_regions <- resultats |>
+  group_by(region) |>
+  summarise(residu_moyen = mean(residu), .groups = "drop")
+bilan_regions |>
+  mutate(residu_moyen = round(residu_moyen)) |>
+  knitr::kable(col.names = c("Région", "Résidu moyen ($)"))
+```
+
+::: {.visual-note}
+Capitale-Nationale : sous-estimation moyenne. Outaouais : surestimation moyenne.
+:::
+
+::: {.notes}
+Les résidus moyens vont d’environ moins 5 066 dollars en Outaouais à plus 5 676 dollars en Capitale-Nationale. Ce sont des écarts descriptifs sur douze mois par région, pas un test d’un effet régional. Le modèle ignore aussi la saison et le canal.
+:::
+
+## Résultats du diagnostic
+
+::: {.lead}
+La droite décrit la tendance globale, mais les écarts régionaux méritent une analyse complémentaire.
+:::
+
+::: {.note-box}
+Les mêmes régions sont observées sur plusieurs mois. Ce graphique seul ne vérifie pas l’indépendance des erreurs.
+:::
+
+::: {.notes}
+Faire le lien entre ce constat et les intervalles de la capsule précédente. Une analyse régionale et temporelle serait nécessaire avant une utilisation opérationnelle. Ne pas conclure que la région cause l’écart.
+:::
+
+## Le coefficient de détermination
+
+$$R^2 = 1-\frac{\sum_i(y_i-\widehat{y}_i)^2}{\sum_i(y_i-\bar y)^2}$$
+
+::: {.lead}
+Ici : `r nombre_fr(summary(modele)$r.squared, 3)`, soit environ `r nombre_fr(100 * summary(modele)$r.squared, 1)` % de la variation des ventes décrite par la droite.
+:::
+
+::: {.visual-note}
+Calcul sur les observations qui ont servi à ajuster le modèle.
+:::
+
+::: {.notes}
+Comparer les écarts à la droite aux écarts à la moyenne globale des ventes. Un R² de 0,824 ne signifie ni 82,4 % de prédictions correctes ni 82,4 % de causalité. En régression simple avec ordonnée, R² égale le carré de la corrélation.
+:::
+
+## Deux sommes de carrés
+
+$$\mathrm{SSE}=\sum_i(y_i-\widehat{y}_i)^2
+\qquad
+\mathrm{SST}=\sum_i(y_i-\bar y)^2$$
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+SSE : somme résiduelle
+:::
+::: {.text}
+Écarts au carré entre les observations et la droite.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+SST : somme totale
+:::
+::: {.text}
+Écarts au carré entre les observations et leur moyenne.
+:::
+:::
+:::
+
+::: {.visual-note}
+Avec une ordonnée à l’origine : R² = 1 − SSE / SST, si SST > 0.
+:::
+
+## Passer du rapport au pourcentage
+
+::: {.lead}
+Exemple : SSE = 30 et SST = 120.
+:::
+
+$$R^2=1-\frac{30}{120}=0{,}75=75\,\%$$
+
+::: {.note-box}
+La droite explique 75 % de la variation observée autour de la moyenne. Les 25 % restants correspondent à la variation résiduelle.
+:::
+
+::: {.visual-note}
+0,75 est une proportion; 75 % est le pourcentage correspondant.
+:::
+
+## La plage de prédiction
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+2 497 $
+:::
+::: {.label}
+Budget minimal observé
+:::
+:::
+::: {.metric}
+::: {.value}
+6 000 $
+:::
+::: {.label}
+Exemple dans la plage
+:::
+:::
+::: {.metric}
+::: {.value}
+8 857 $
+:::
+::: {.label}
+Budget maximal observé
+:::
+:::
+:::
+
+::: {.note-box}
+Prédire au-delà de cette plage est une extrapolation. Dans la plage, le contexte doit aussi rester comparable.
+:::
+
+## Une prédiction accompagnée de son intervalle
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+111 414 $
+:::
+::: {.label}
+Ventes prédites pour 6 000 $ de budget
+:::
+:::
+::: {.metric}
+::: {.value}
+94 560 $
+:::
+::: {.label}
+Borne inférieure
+:::
+:::
+::: {.metric}
+::: {.value}
+128 268 $
+:::
+::: {.label}
+Borne supérieure
+:::
+:::
+:::
+
+::: {.visual-note}
+Intervalle de prédiction classique à 95 %, sous les hypothèses du modèle.
+:::
+
+::: {.notes}
+Ces valeurs arrondies viennent de predict() avec les coefficients non arrondis. La procédure de prédiction couvre une nouvelle observation dans 95 % des répétitions sous les hypothèses. Les écarts régionaux et une éventuelle dépendance temporelle peuvent fragiliser cette couverture.
+:::
+
+## Moyenne et nouvelle observation
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Intervalle de confiance
+:::
+::: {.text}
+Incertitude sur les ventes moyennes pour un budget donné.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Intervalle de prédiction
+:::
+::: {.text}
+Incertitude pour une nouvelle observation, y compris sa dispersion autour de la moyenne.
+:::
+:::
+:::
+
+::: {.visual-note}
+Pour le même budget et le même niveau, l’intervalle de prédiction est plus large.
+:::
+
+## Une conclusion appuyée sur les résultats
+
+::: {.lead}
+Pour 1 000 $ de budget supplémentaire, la droite estime environ 13 582 $ de ventes moyennes supplémentaires.
+:::
+
+::: {.note-box}
+Elle décrit 82,4 % de la variation observée. Les résidus moyens varient selon la région. Ces données simulées ne prouvent pas qu’augmenter le budget provoquerait cette hausse des ventes.
+:::
+
+::: {.notes}
+Présenter ces phrases comme un exemple sur le cas guidé. Elles associent une quantité précise à une limite réellement observée. La prochaine étape serait d’examiner les différences régionales et temporelles, puis la performance sur de nouvelles données, avant une recommandation de budget.
+:::
+
+## Références
+
+- R Core Team : documentation de [lm()](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html) et [predict.lm()](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html).
+- NIST/SEMATECH : [diagnostic des modèles par les résidus](https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm).
+- Données simulées du cours : campagnes régionales en 2025.
+
+## Votre travail
+
+Le [parcours guidé](index.qmd) construit le rapport sur le budget et les ventes. Les [démonstrations R](demonstrations.qmd) donnent le code complet.
+
+Les [exercices et corrigés](exercices.qmd) permettent ensuite de transférer la démarche au délai de service et à la satisfaction.

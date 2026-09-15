@@ -13,14 +13,14 @@ régression linéaire.
 
 - `mois` : mois de l'observation;
 - `mois_label` : nom du mois;
-- `region` : région québécoise fictive de la campagne;
+- `region` : région québécoise de la campagne fictive;
 - `canal` : canal principal de campagne;
 - `saison` : période régulière, moyenne ou haute;
-- `budget_marketing` : budget marketing mensuel;
+- `budget_marketing` : budget marketing mensuel, en dollars canadiens;
 - `visites_site` : visites web associées à la campagne;
-- `rabais` : niveau de rabais appliqué;
-- `ventes` : ventes mensuelles;
-- `satisfaction` : score de satisfaction simulé.
+- `rabais` : proportion de rabais appliqué (0,10 correspond à 10 %);
+- `ventes` : montant des ventes mensuelles, en dollars canadiens;
+- `satisfaction` : score mensuel moyen de satisfaction simulé, sur 10.
 
 Les données sont simulées pour l'enseignement. Elles ne représentent pas une
 organisation réelle.
