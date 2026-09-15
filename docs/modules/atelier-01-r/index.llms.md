@@ -14,9 +14,9 @@ Après une courte présentation, vous explorerez les données d’une PME québ�
 
 ## Avant l’atelier
 
-Préparez vos fichiers avant la séance. La mission commence en classe.
+L’essentiel est d’avoir fait le module 2 et d’apporter votre ordinateur avec son chargeur. La mission commence en classe.
 
-Apportez votre ordinateur et son chargeur.
+Les vérifications suivantes sont optionnelles avant la séance; elles peuvent être faites avec l’accompagnement de l’enseignant en classe.
 
 Vérifiez que R, RStudio ou Positron et Quarto fonctionnent, à l’aide de la [page Installation](../../installation.llms.md).
 
@@ -43,8 +43,8 @@ Ouvrez le [guide de la mission](../../modules/atelier-01-r/guide-atelier.llms.md
 | 5 | Pause | Reprendre ensuite avec les graphiques |
 | 6 | Deux graphiques et choix d’une priorité | Résultats utiles à la mission |
 | 7 | Rédaction de la réponse à la direction | Trois constats chiffrés, une priorité et une limite |
-| 8 | Relecture croisée et rétroaction | Un point réussi et une amélioration précise |
-| 9 | Corrections, Render et bilan | Rapport lisible et prochaine étape personnelle |
+| 8 | Vérification, Render et bilan initial | Rapport lisible, difficultés et aide utilisée indiquées |
+| 9 | Premier dépôt dans Brio | Dossier ZIP avec le QMD, le HTML et les données |
 
 Ces repères permettent d’avancer ensemble. Si vous bloquez, demandez de l’aide en montrant votre tentative, le résultat obtenu et votre question.
 
@@ -56,7 +56,9 @@ Visez environ 400 à 600 mots, hors code et tableaux. Cette longueur est un rep�
 
 ## Après l’atelier
 
-Conservez ensemble le `.qmd`, le `.html` et le dossier `data/`. Reprenez le point d’amélioration relevé pendant la rétroaction et notez une question à clarifier. Cette démarche vous prépare à la rédaction du [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md), dont les consignes et l’évaluation sont distinctes.
+L’enseignant vous transmettra un rapport attribué au hasard. Envoyez aux auteurs une rétroaction fondée sur la grille du guide. Révisez ensuite votre propre rapport à partir des commentaires reçus, complétez le bilan et redéposez le dossier dans Brio avec la rétroaction reçue. Consultez la [présentation d’accueil](../../modules/atelier-01-r/presentation.llms.md#les-trois-échéances) pour les échéances.
+
+L’enseignant fera ensuite une évaluation formative du travail révisé, en préparation du [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md), dont les consignes et l’évaluation sont distinctes.
 
 ## Ressources utiles
 

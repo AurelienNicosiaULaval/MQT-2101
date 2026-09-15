@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>$pagetitle$</title>
+<style>
+:root{--bleu:#0b4f6c;--vert:#0b6b61;--gris:#f3f6f7}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#18323d;background:var(--bleu);overflow:hidden}
+main{min-height:100vh;display:grid;place-items:center;padding:24px 4vw 64px}
+body>main{margin:0!important;box-sizing:border-box!important}
+.slide{display:none;width:min(1200px,92vw);min-height:min(760px,calc(100vh - 96px));background:white;border-radius:18px;padding:clamp(30px,4.5vw,64px);box-shadow:0 20px 60px #001b2680}
+.slide.active{display:flex;flex-direction:column;justify-content:center}
+h1,h2{color:var(--bleu);margin:0 0 .55em;line-height:1.12;font-weight:600}
+h1{font-size:clamp(40px,5.5vw,72px)}
+h2{font-size:clamp(32px,4vw,52px)}
+p,li,td,th{font-size:clamp(20px,2.1vw,29px);line-height:1.32}
+p{margin:.45em 0}ul,ol{margin:.45em 0;padding-left:1.2em}li+li{margin-top:.25em}
+blockquote{margin:.6em 0;border-left:6px solid var(--vert);padding:.4em 1em;background:var(--gris)}
+blockquote p{font-size:clamp(19px,2vw,27px)}
+table{border-collapse:collapse;width:100%;margin:.4em 0 .7em}
+th,td{padding:15px 12px;border-bottom:1px solid #ccd8dc;text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--vert)}td:first-child{width:43%}
+a{color:var(--vert);text-underline-offset:.15em}code{font-size:.88em}
+.subtitle{font-size:clamp(26px,3vw,38px)}.institute{margin-top:1.4em}
+.notes,.anchor-section{display:none}
+nav{position:fixed;right:24px;bottom:14px;color:white;font-size:18px;display:flex;align-items:center;gap:10px}
+button{font-size:24px;padding:5px 15px;border:0;border-radius:8px;background:white;color:var(--bleu);cursor:pointer}
+button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible{outline:3px solid #e4ad17;outline-offset:4px}
+@media(max-width:600px){body{overflow:auto}main{padding:15px 15px 68px}.slide{width:100%;min-height:80vh;padding:26px}td,th{font-size:18px;padding:10px 7px}}
+@media print{@page{size:landscape;margin:0}body{background:white;overflow:visible}main{display:block;padding:0}.slide{display:flex!important;width:100%;height:100vh;min-height:0;border-radius:0;box-shadow:none;break-after:page;padding:40px;justify-content:center}.slide:last-child{break-after:auto}nav{display:none}p,li,td,th{font-size:22px}h2{font-size:40px}}
+</style>
+</head>
+<body>
+<main aria-label="Présentation d'accueil du laboratoire">
+<section class="slide active" id="accueil">
+<h1>$title$</h1>
+<p class="subtitle">$subtitle$</p>
+<p class="institute">$institute$</p>
+</section>
+$body$
+</main>
+<nav aria-label="Navigation des diapositives">
+<span id="count" aria-live="polite"></span>
+<button id="prev" aria-label="Diapositive précédente">‹</button>
+<button id="next" aria-label="Diapositive suivante">›</button>
+</nav>
+<script>
+// La navigation autonome conserve les diapositives utilisables hors ligne.
+const slides=[...document.querySelectorAll('main > section')];
+const previous=document.getElementById('prev');
+const next=document.getElementById('next');
+let current=0;
+slides.forEach(slide=>slide.classList.add('slide'));
+function show(index){
+  current=Math.max(0,Math.min(slides.length-1,index));
+  slides.forEach((slide,i)=>{slide.classList.toggle('active',i===current);slide.setAttribute('aria-hidden',String(i!==current));});
+  document.getElementById('count').textContent=(current+1)+' / '+slides.length;
+  previous.disabled=current===0;
+  next.disabled=current===slides.length-1;
+  history.replaceState(null,'','#'+slides[current].id);
+}
+previous.onclick=()=>show(current-1);
+next.onclick=()=>show(current+1);
+addEventListener('keydown',event=>{
+  if(event.target.closest('input,textarea,select')||event.altKey||event.ctrlKey||event.metaKey)return;
+  if(event.key===' '&&event.target.closest('a,button'))return;
+  if(['ArrowRight',' ','PageDown'].includes(event.key)){event.preventDefault();show(current+1);}
+  if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();show(current-1);}
+  if(event.key==='Home'){event.preventDefault();show(0);}
+  if(event.key==='End'){event.preventDefault();show(slides.length-1);}
+});
+show(Math.max(0,slides.findIndex(slide=>slide.id===decodeURIComponent(location.hash.slice(1)))));
+</script>
+</body>
+</html>

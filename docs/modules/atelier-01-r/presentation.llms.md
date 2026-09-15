@@ -1,26 +1,18 @@
----
-title: "Bienvenue au laboratoire 01"
-subtitle: "La mission et le parcours de rétroaction"
-institute: "MQT-2101, Université Laval"
-lang: fr
-format:
-  html:
-    template: ../../assets/templates/labo-slides.html
-    theme: none
-    toc: false
-    section-divs: true
-    embed-resources: true
----
+# Bienvenue au laboratoire 01
+
+La mission et le parcours de rétroaction
+
+MQT-2101, Université Laval
 
 ## Le travail en classe
 
 Vous mobilisez les acquis des modules 1 et 2 dans un rapport Quarto.
 
-La mission : recommander une priorité d'analyse à la direction d'une PME fictive, à partir de ses données.
+La mission : recommander une priorité d’analyse à la direction d’une PME fictive, à partir de ses données.
 
-1. Comprendre les données et vérifier leur qualité.
-2. Construire un tableau et deux graphiques.
-3. Justifier une priorité, puis vérifier le rapport.
+1.  Comprendre les données et vérifier leur qualité.
+2.  Construire un tableau et deux graphiques.
+3.  Justifier une priorité, puis vérifier le rapport.
 
 Travail en binômes, avec un rapport par binôme. Je vous accompagne pendant le laboratoire.
 
@@ -37,20 +29,20 @@ Ouvrez le HTML pour vérifier son contenu. Le bilan sera complété après la r�
 ## Les trois échéances
 
 | Échéance | Action attendue |
-|---|---|
+|----|----|
 | Mercredi 16 septembre, 11 h 30 | Déposer la première version dans Brio |
 | Avant dimanche 20 septembre, 23 h 59 | Envoyer votre rétroaction aux auteurs du rapport attribué |
 | Avant mercredi 23 septembre, 9 h | Redéposer votre rapport révisé dans Brio |
 
 Après la remise révisée, je ferai une évaluation formative de votre travail pour vous préparer au mini-rapport 1.
 
-## L'attribution des rapports
+## L’attribution des rapports
 
 Après le premier dépôt, je répartirai les rapports au hasard et je vous transmettrai celui à relire.
 
 - Attendez mon attribution avant de commencer la relecture.
 - Utilisez la [grille formative du guide](https://aureliennicosiaulaval.github.io/MQT-2101/modules/atelier-01-r/guide-atelier.html#rétroaction-formative).
-- Envoyez vos commentaires directement aux auteurs avant l'échéance du dimanche.
+- Envoyez vos commentaires directement aux auteurs avant l’échéance du dimanche.
 
 Chaque binôme produit une rétroaction sur le rapport qui lui est attribué.
 
@@ -66,10 +58,10 @@ Si un résultat vous semble incertain, proposez une vérification à effectuer.
 
 ## La révision et mon retour
 
-1. Lisez la rétroaction reçue et vérifiez les points soulevés.
-2. Corrigez le rapport. Dans le bilan, expliquez ce que vous avez modifié, ou pourquoi vous conservez un choix.
-3. Relancez Render et vérifiez le HTML.
-4. Redéposez le dossier révisé dans Brio, avec la rétroaction reçue.
+1.  Lisez la rétroaction reçue et vérifiez les points soulevés.
+2.  Corrigez le rapport. Dans le bilan, expliquez ce que vous avez modifié, ou pourquoi vous conservez un choix.
+3.  Relancez Render et vérifiez le HTML.
+4.  Redéposez le dossier révisé dans Brio, avec la rétroaction reçue.
 
 Je vous donnerai ensuite un retour formatif sur le travail révisé et les points à consolider avant le mini-rapport 1.
 
@@ -77,11 +69,11 @@ Ce parcours est sans points dans la note finale.
 
 ## Pour commencer la mission
 
-1. Ouvrez le [guide de la mission](https://aureliennicosiaulaval.github.io/MQT-2101/modules/atelier-01-r/guide-atelier.html).
-2. Décompressez le [dossier de départ](https://aureliennicosiaulaval.github.io/MQT-2101/assets/exemples/laboratoire-01.zip).
-3. Ouvrez le projet, puis `rapport-labo-01.qmd`.
-4. Cliquez sur Render, puis commencez l'inspection des données.
+1.  Ouvrez le [guide de la mission](https://aureliennicosiaulaval.github.io/MQT-2101/modules/atelier-01-r/guide-atelier.html).
+2.  Décompressez le [dossier de départ](https://aureliennicosiaulaval.github.io/MQT-2101/assets/exemples/laboratoire-01.zip).
+3.  Ouvrez le projet, puis `rapport-labo-01.qmd`.
+4.  Cliquez sur Render, puis commencez l’inspection des données.
 
-Si vous avez besoin d'aide, montrez-moi votre tentative et expliquez votre question.
+Si vous avez besoin d’aide, montrez-moi votre tentative et expliquez votre question.
 
 Question de départ : que représente une ligne du fichier?
