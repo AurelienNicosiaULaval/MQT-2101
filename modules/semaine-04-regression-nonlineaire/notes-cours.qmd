@@ -1,10 +1,12 @@
 ---
-title: "Module 04 - Régression non linéaire et transformations"
+title: "Module 04 - Relations non linéaires et transformations"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: media/module04-capsules.css
     theme:
       - default
       - ../../assets/ulaval-reveal.scss
@@ -22,282 +24,541 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: false
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-notes-module-04
+#| label: preparation-synthese-04
 #| include: false
-
 library(tidyverse)
-
-data_path <- if (file.exists("data/achalandage_saturation_quebec.csv")) {
-  "data/achalandage_saturation_quebec.csv"
-} else {
-  "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv"
+chemins <- c("data/achalandage_saturation_quebec.csv",
+             "../../data/achalandage_saturation_quebec.csv",
+             "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+saturation <- read_csv(chemin, show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), achalandage_milliers = achalandage / 1000)
+stopifnot(!anyNA(saturation[c("mois", "achalandage", "ventes")]),
+          all(saturation$achalandage > 0))
+apprentissage <- saturation |> filter(mois < as.Date("2025-10-01"))
+validation <- saturation |> filter(mois >= as.Date("2025-10-01"))
+modele_lin <- lm(ventes ~ achalandage_milliers, data = apprentissage)
+modele_quad <- lm(ventes ~ achalandage_milliers + I(achalandage_milliers^2), data = apprentissage)
+modele_log <- lm(ventes ~ log(achalandage_milliers), data = apprentissage)
+modeles <- list("Linéaire" = modele_lin, "Quadratique" = modele_quad,
+                "Logarithmique" = modele_log)
+rmse <- function(observe, predit) sqrt(mean((observe - predit)^2))
+comparaison <- imap_dfr(modeles, function(ajustement, nom) {
+  tibble(modele = nom, r2 = summary(ajustement)$r.squared,
+         r2_ajuste = summary(ajustement)$adj.r.squared,
+         rmse_apprentissage = rmse(apprentissage$ventes, fitted(ajustement)),
+         rmse_validation = rmse(validation$ventes, predict(ajustement, newdata = validation)))
+})
+grille <- tibble(achalandage_milliers = seq(min(apprentissage$achalandage_milliers),
+                                          max(apprentissage$achalandage_milliers), length.out = 120))
+courbes <- imap_dfr(modeles, function(ajustement, nom) {
+  grille |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille))
+})
+diagnostic <- imap_dfr(modeles, function(ajustement, nom) {
+  apprentissage |> mutate(modele = nom, ventes_predites = fitted(ajustement), residu = residuals(ajustement))
+})
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
 }
-
-saturation <- readr::read_csv(data_path, show_col_types = FALSE)
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+palette_modeles <- c("Linéaire" = "#7A1C24", "Quadratique" = "#0B4F6C", "Logarithmique" = "#8A6500")
+theme_set(theme_minimal(base_size = 17) + theme(panel.grid.minor = element_blank()))
 ```
 
 ## Objectifs du module
 
 ::: {.keypoints}
-- Repérer une relation qui n'est pas bien décrite par une droite.
-- Comprendre l'idée de saturation.
-- Ajuster un modèle linéaire, quadratique et logarithmique.
-- Comparer les modèles avec le graphique, les résidus, le `R²` et la RMSE.
-- Interpréter le modèle sur l'échelle originale.
-- Éviter l'extrapolation fragile.
+- Reconnaître et modéliser une courbure.
+- Comparer sur des données mises de côté.
+- Interpréter une prédiction et ses limites.
+- Justifier le choix dans un rapport reproductible.
 :::
 
-## Point de départ
+## Le cas et l’unité d’observation
 
-::: {.lead}
-L'ancien matériel de la séance 04 présentait plusieurs familles de modèles non
-linéaires : polynômes, splines, GAM, probit, Tobit, logistique et autres.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+72
+:::
+::: {.label}
+observations mois-succursale
+:::
+:::
+::: {.metric}
+::: {.value}
+6
+:::
+::: {.label}
+succursales fictives
+:::
+:::
+::: {.metric}
+::: {.value}
+2025
+:::
+::: {.label}
+douze mois de suivi
+:::
+:::
 :::
 
 ::: {.note-box}
-Dans ce module, on conserve l'idée centrale : la relation peut être courbée. On
-se limite volontairement aux transformations simples qui restent interprétables
-dans une première analyse.
+Une ligne décrit un mois dans une succursale. Les données sont simulées; les ventes sont en dollars canadiens.
 :::
 
-## Données du module
+## Garder les derniers mois pour comparer
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+54
+:::
+::: {.label}
+janvier à septembre : apprentissage
+:::
+:::
+::: {.metric}
+::: {.value}
+18
+:::
+::: {.label}
+octobre à décembre : validation
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+formes candidates fixées avant la comparaison
+:::
+:::
+:::
+
+::: {.visual-note}
+Explorer et ajuster sur l’apprentissage. Comparer ensuite sur la validation.
+:::
+
+## Lire le nuage avant de choisir
 
 ```{r}
-#| label: apercu-saturation-notes
-saturation |>
-  slice_head(n = 6)
+#| label: m04-synthese-nuage
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(apprentissage, aes(achalandage, ventes)) +
+  geom_point(aes(colour = succursale), size = 2.5, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#7A1C24") +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Achalandage mensuel (visites)", y = "Ventes mensuelles ($ CA)",
+       colour = "Succursale", subtitle = "Janvier à septembre 2025 : données d’apprentissage")
 ```
 
-## Question
+## Ce qu’une droite impose
 
-::: {.lead}
-Les ventes augmentent-elles avec l'achalandage au même rythme sur toute l'échelle?
+::: {.example-box}
+$$\widehat{y}=b_0+b_1x$$
+:::
+
+::: {.keypoints}
+- Une même hausse de x donne une même hausse prédite.
+- Une courbe permet une variation qui dépend du point de départ.
+- La dispersion autour de la tendance demeure.
+:::
+
+## Un taux peut dépasser 100 %
+
+::: {.example-box}
+$$\text{Taux d’occupation}=\frac{\text{achalandage}}{\text{capacité de référence}}$$
 :::
 
 ::: {.note-box}
-Si une succursale approche sa capacité, une personne de plus ne produit pas
-nécessairement le même gain de ventes qu'à faible achalandage.
+2 400 visites pour une référence de 2 000 : 1,20, soit 120 %. Ce rapport n’est pas une probabilité.
 :::
 
-## Visualiser la forme
-
-```{r}
-#| label: graphique-saturation-notes
-#| fig-width: 10
-#| fig-height: 5.6
-ggplot(saturation, aes(x = achalandage, y = ventes)) +
-  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.6) +
-  geom_smooth(method = "lm", se = FALSE, colour = "#7A1C24", linewidth = 1) +
-  geom_smooth(
-    method = "lm",
-    formula = y ~ x + I(x^2),
-    se = FALSE,
-    colour = "#0B4F6C",
-    linewidth = 1
-  ) +
-  labs(
-    title = "Ventes selon l'achalandage",
-    subtitle = "Droite linéaire et courbe quadratique",
-    x = "Achalandage mensuel",
-    y = "Ventes",
-    colour = "Succursale"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
-```
-
-## Pourquoi une droite peut être insuffisante
+## Ralentissement et plateau
 
 ::: {.keypoints}
-- La pente d'une droite est constante.
-- La saturation implique une pente qui diminue.
-- Un modèle linéaire peut surestimer les ventes aux hauts niveaux.
-- Le diagnostic doit partir du graphique, pas seulement du `R²`.
+- Ralentissement : la hausse devient plus faible.
+- Plateau : la courbe se rapproche d’une limite.
+- Un ralentissement observé ne démontre pas un plafond.
 :::
 
-## Trois modèles simples
-
-```{r}
-#| label: modeles-saturation-notes
-modele_lineaire <- lm(ventes ~ achalandage, data = saturation)
-
-modele_quadratique <- lm(
-  ventes ~ achalandage + I(achalandage^2),
-  data = saturation
-)
-
-modele_log <- lm(
-  ventes ~ log(achalandage),
-  data = saturation
-)
-```
-
-## Modèle linéaire
-
-```{r}
-#| label: resume-lineaire-module-04
-summary(modele_lineaire)
-```
-
-## Modèle quadratique
-
-```{r}
-#| label: resume-quadratique-module-04
-summary(modele_quadratique)
-```
-
-## Modèle logarithmique
-
-```{r}
-#| label: resume-log-module-04
-summary(modele_log)
-```
-
-## Comparer les modèles
-
-```{r}
-#| label: comparaison-module-04-notes
-rmse <- function(modele) {
-  sqrt(mean(residuals(modele)^2))
-}
-
-comparaison <- tibble(
-  modele = c("Linéaire", "Quadratique", "Logarithmique"),
-  r_carre = c(
-    summary(modele_lineaire)$r.squared,
-    summary(modele_quadratique)$r.squared,
-    summary(modele_log)$r.squared
-  ),
-  erreur_rmse = c(
-    rmse(modele_lineaire),
-    rmse(modele_quadratique),
-    rmse(modele_log)
-  )
-)
-
-comparaison
-```
-
-## `R²` et RMSE
-
-::: {.keypoints}
-- Le `R²` mesure la proportion de variation expliquée.
-- La RMSE mesure une erreur typique sur l'échelle de la réponse.
-- Un meilleur `R²` ne suffit pas.
-- Il faut aussi vérifier les résidus et l'interprétabilité.
+::: {.note-box}
+Une courbe quadratique peut redescendre. Un logarithme croissant n’a pas de plafond.
 :::
 
-## Superposer les prédictions
+## Logarithmique et logistique
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Ventes
+:::
+::: {.label}
+réponse quantitative : module 4
+:::
+:::
+::: {.metric}
+::: {.value}
+Oui / non
+:::
+::: {.label}
+réponse binaire : module 10
+:::
+:::
+::: {.metric}
+::: {.value}
+Log(x)
+:::
+::: {.label}
+transformation d’une explicative positive
+:::
+:::
+:::
+
+::: {.note-box}
+Le modèle logarithmique étudié ici prédit des dollars. La régression logistique modélise une probabilité.
+:::
+
+## Trois formes, une même réponse
+
+On note $x$ l’achalandage en milliers de visites et $y$ les ventes en dollars.
+
+| Forme | Moyenne modélisée |
+|---|---|
+| Droite | $\beta_0+\beta_1x$ |
+| Quadratique | $\beta_0+\beta_1x+\beta_2x^2$ |
+| Logarithmique | $\beta_0+\beta_1\ln(x)$, avec $x>0$ |
+
+## Courbe en x, modèle linéaire en paramètres
+
+::: {.example-box}
+$$Y=\beta_0+\beta_1x+\beta_2x^2+\varepsilon$$
+:::
+
+::: {.note-box}
+Les coefficients restent linéaires : `lm()` convient. Une relation courbée n’exige pas forcément une régression non linéaire en paramètres.
+:::
+
+## Ajuster la droite et la quadratique
 
 ```{r}
-#| label: predictions-module-04-notes
-grille <- tibble(
-  achalandage = seq(
-    min(saturation$achalandage),
-    max(saturation$achalandage),
-    length.out = 120
-  )
-)
-
-predictions <- bind_rows(
-  grille |>
-    mutate(modele = "Linéaire", ventes_predites = predict(modele_lineaire, newdata = grille)),
-  grille |>
-    mutate(modele = "Quadratique", ventes_predites = predict(modele_quadratique, newdata = grille)),
-  grille |>
-    mutate(modele = "Logarithmique", ventes_predites = predict(modele_log, newdata = grille))
+#| label: m04-synthese-modeles
+#| echo: true
+modele_lin <- lm(ventes ~ achalandage_milliers,
+                 data = apprentissage)
+modele_quad <- lm(
+  ventes ~ achalandage_milliers + I(achalandage_milliers^2),
+  data = apprentissage
 )
 ```
 
+::: {.note-box}
+`I(x^2)` demande le carré numérique. Conservez aussi le terme x.
+:::
+
+## Interpréter une variation
+
 ```{r}
-#| label: graphique-predictions-module-04-notes
+#| label: m04-synthese-variations
+#| echo: false
+scenarios <- tibble(achalandage_milliers = c(2, 2.1, 3, 3.1))
+pred <- predict(modele_quad, newdata = scenarios)
+tibble(Comparaison = c("2 000 à 2 100 visites", "3 000 à 3 100 visites"),
+       `Hausse prédite (dollars)` = nombre_fr(c(pred[2]-pred[1], pred[4]-pred[3]))) |>
+  knitr::kable()
+```
+
+::: {.note-box}
+Pour 100 visites supplémentaires, la hausse prédite dépend du point de départ.
+:::
+
+## Transformer l’explicative avec un logarithme
+
+```{r}
+#| label: m04-synthese-log
+#| echo: true
+modele_log <- lm(ventes ~ log(achalandage_milliers),
+                 data = apprentissage)
+```
+
+::: {.example-box}
+Pour une hausse de 10 % de x : $\Delta\widehat{y}=b_1\ln(1{,}10)$.
+:::
+
+::: {.note-box}
+La réponse reste en dollars. Il n’y a pas de transformation inverse de y à effectuer.
+:::
+
+## Superposer les trois formes
+
+```{r}
+#| label: m04-synthese-courbes
+#| echo: false
 #| fig-width: 10
-#| fig-height: 5.6
-ggplot(saturation, aes(x = achalandage, y = ventes)) +
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(apprentissage, aes(achalandage_milliers, ventes)) +
   geom_point(alpha = 0.45, colour = "#40515C") +
-  geom_line(
-    data = predictions,
-    aes(y = ventes_predites, colour = modele),
-    linewidth = 1.1
-  ) +
-  labs(
-    title = "Comparaison des prédictions",
-    x = "Achalandage mensuel",
-    y = "Ventes prédites",
-    colour = "Modèle"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
+  geom_line(data = courbes, aes(y = ventes_predites, colour = modele), linewidth = 1.2) +
+  scale_colour_manual(values = palette_modeles) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Achalandage mensuel (milliers de visites)", y = "Ventes mensuelles ($ CA)", colour = "Modèle")
 ```
 
-## Diagnostic des résidus
+## Deux usages des données
 
-```{r}
-#| label: residus-module-04-notes
-residus_modeles <- bind_rows(
-  saturation |>
-    mutate(modele = "Linéaire", ventes_predites = predict(modele_lineaire), residu = residuals(modele_lineaire)),
-  saturation |>
-    mutate(modele = "Quadratique", ventes_predites = predict(modele_quadratique), residu = residuals(modele_quadratique)),
-  saturation |>
-    mutate(modele = "Logarithmique", ventes_predites = predict(modele_log), residu = residuals(modele_log))
-)
-```
-
-```{r}
-#| label: graphique-residus-module-04-notes
-#| fig-width: 10
-#| fig-height: 5.6
-ggplot(residus_modeles, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 1) +
-  geom_point(alpha = 0.7, colour = "#0B4F6C", size = 2.4) +
-  facet_wrap(vars(modele)) +
-  labs(
-    title = "Résidus selon les ventes prédites",
-    x = "Ventes prédites",
-    y = "Résidu"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
-```
-
-## Extrapolation
-
-::: {.callout-warning}
-Un modèle non linéaire peut devenir très dangereux hors de la plage observée.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Apprendre
 :::
-
-Un polynôme peut monter ou descendre rapidement sans raison d'affaires. Il faut
-donc limiter les prédictions aux niveaux d'achalandage comparables aux données.
-
-## Interprétation d'affaires
+::: {.label}
+ajuster les coefficients sur janvier à septembre
+:::
+:::
+::: {.metric}
+::: {.value}
+Comparer
+:::
+::: {.label}
+prédire octobre à décembre sans réajuster
+:::
+:::
+::: {.metric}
+::: {.value}
+Confirmer
+:::
+::: {.label}
+prévoir de nouvelles données pour évaluer le choix final
+:::
+:::
+:::
 
 ::: {.note-box}
-Si les ventes augmentent de moins en moins vite à haut achalandage, la décision
-n'est pas seulement d'attirer plus de clients. Il faut aussi regarder la
-capacité, les ruptures de stock, le personnel et le temps d'attente.
+Les mois utilisés pour choisir le modèle deviennent un ensemble de validation; ils ne constituent plus un test final indépendant.
 :::
 
-## Ce qui sera repris plus tard
+## Lire la RMSE
+
+::: {.example-box}
+$$\mathrm{RMSE}=\bigl[n^{-1}\sum_{i=1}^{n}(y_i-\widehat{y}_i)^2\bigr]^{1/2}$$
+:::
 
 ::: {.keypoints}
-- La régression logistique de l'ancien matériel sera reprise dans le module sur
-  la classification et les résultats binaires.
-- Les splines et les GAM sont utiles, mais dépassent le niveau attendu ici.
-- Pour ce module, on veut surtout choisir et défendre une transformation simple.
+- Racine de la moyenne des erreurs au carré.
+- Même unité que la réponse : dollars ici.
+- Les grandes erreurs pèsent davantage.
 :::
 
-## Sources et prolongements
+## Comparer les résultats
+
+Les RMSE sont exprimées en dollars.
+
+
+```{r}
+#| label: m04-synthese-tableau
+#| echo: false
+comparaison |>
+  transmute(Modèle = modele, `R² apprentissage` = nombre_fr(r2, 3),
+            `RMSE apprentissage` = nombre_fr(rmse_apprentissage),
+            `RMSE validation` = nombre_fr(rmse_validation)) |>
+  knitr::kable()
+```
+
+## Le plus grand R² ne suffit pas
 
 ::: {.keypoints}
-- Ancien matériel MQT-2101, séance 04 : modèles non linéaires, modèles
-  polynomiaux, GAM, RMSE et `R²`.
-- Documentation R : `lm()` et `predict.lm()`.
-- Documentation ggplot2 : `geom_smooth()`.
+- R² résume l’ajustement sur l’apprentissage.
+- Ajouter x² ne peut pas réduire le R² sur les mêmes lignes.
+- Le R² ajusté pénalise les paramètres supplémentaires.
+- Aucun des deux ne remplace l’erreur de validation.
 :::
+
+## Examiner les résidus
+
+```{r}
+#| label: m04-synthese-residus
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(diagnostic, aes(ventes_predites, residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24") +
+  geom_point(alpha = 0.7, colour = "#0B4F6C") +
+  facet_wrap(vars(modele), nrow = 1) +
+  scale_x_continuous(labels = scales::label_number(scale = 0.001, suffix = " k$")) +
+  scale_y_continuous(labels = scales::label_number(scale = 0.001, suffix = " k$")) +
+  labs(x = "Ventes ajustées", y = "Résidu : observé − ajusté")
+```
+
+## Un choix provisoire
+
+::: {.example-box}
+La quadratique a la plus faible RMSE de validation : `r nombre_fr(comparaison$rmse_validation[2])` $, contre `r nombre_fr(comparaison$rmse_validation[1])` $ pour la droite.
+:::
+
+::: {.note-box}
+18 observations seulement, regroupées dans six succursales. Deux achalandages de validation dépassent le maximum d’apprentissage. Le classement peut varier sur une autre période.
+:::
+
+## Délimiter la plage utile
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1 151
+:::
+::: {.label}
+minimum d’apprentissage, en visites
+:::
+:::
+::: {.metric}
+::: {.value}
+3 833
+:::
+::: {.label}
+maximum d’apprentissage, en visites
+:::
+:::
+::: {.metric}
+::: {.value}
+2 500
+:::
+::: {.label}
+scénario situé dans cette plage
+:::
+:::
+:::
+
+::: {.note-box}
+La validation va de 1 500 à 4 166 visites : deux lignes dépassent 3 833.
+:::
+
+## Calculer une prédiction
+
+```{r}
+#| label: m04-synthese-predire
+#| echo: true
+scenario <- tibble(achalandage_milliers = 2.5)
+prediction <- predict(modele_quad, newdata = scenario,
+                      interval = "prediction", level = 0.95)
+as.data.frame(prediction) |>
+  mutate(across(everything(), round))
+```
+
+## Lire l’intervalle de prédiction
+
+::: {.keypoints}
+- `fit` : estimation ponctuelle des ventes.
+- `lwr` et `upr` : bornes pour une nouvelle observation.
+- Un intervalle de confiance viserait la moyenne.
+:::
+
+::: {.note-box}
+L’intervalle classique suppose notamment une moyenne bien spécifiée, des erreurs indépendantes, de variance constante et normalement distribuées. Il ne corrige pas une courbe mal choisie.
+:::
+
+## Des modèles proches peuvent diverger
+
+```{r}
+#| label: m04-synthese-extrapoler
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+grille_lointaine <- tibble(achalandage_milliers = seq(1.151, 6, length.out = 180))
+pred_lointaines <- imap_dfr(modeles, function(ajustement, nom) {
+  grille_lointaine |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille_lointaine))
+})
+ggplot(pred_lointaines, aes(achalandage_milliers, ventes_predites, colour = modele)) +
+  annotate("rect", xmin = 3.833, xmax = 6, ymin = -Inf, ymax = Inf, fill = "#F2E7C9", alpha = 0.65) +
+  geom_line(linewidth = 1.2) +
+  geom_vline(xintercept = 3.833, linetype = "dashed", colour = "#555555") +
+  scale_colour_manual(values = palette_modeles) + scale_y_continuous(labels = monnaie) +
+  labs(x = "Achalandage (milliers de visites)", y = "Ventes prédites ($ CA)", colour = "Modèle",
+       subtitle = "Zone colorée : au-delà du maximum d’apprentissage")
+```
+
+## Cinq éléments dans la conclusion
+
+::: {.keypoints}
+- Question et variables.
+- Forme observée sur l’apprentissage.
+- Comparaison chiffrée sur la validation.
+- Plage d’utilisation.
+- Limite et prochaine vérification.
+:::
+
+## Un exemple de conclusion
+
+::: {.example-box}
+Dans les succursales fictives, la relation ventes-achalandage est croissante et présente une courbure. La quadratique obtient une RMSE de validation d’environ 7 237 $, contre 10 155 $ pour la droite. Elle constitue un choix provisoire pour résumer cette relation. L’utilisation doit rester prudente dans la plage de 1 151 à 3 833 visites. Une nouvelle période et les contraintes de service doivent être examinées avant toute décision de capacité.
+:::
+
+## Relier résultat et décision
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Résultat
+:::
+::: {.label}
+erreur de validation plus faible
+:::
+:::
+::: {.metric}
+::: {.value}
+Hypothèse
+:::
+::: {.label}
+contraintes possibles de service
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+recueillir des données avant d’investir
+:::
+:::
+:::
+
+::: {.note-box}
+Une relation descriptive ne chiffre pas l’effet d’augmenter la capacité.
+:::
+
+## La trace Quarto attendue
+
+::: {.keypoints}
+- Graphique des 54 observations d’apprentissage.
+- Formules et code des trois modèles.
+- RMSE, diagnostics et comparaison argumentée.
+- Scénario de prédiction et limite d’extrapolation.
+:::
+
+::: {.note-box}
+Redémarrez R, puis utilisez Render : tous les résultats doivent se recalculer.
+:::
+
+## Repères bibliographiques
+
+::: {.keypoints}
+- James, Witten, Hastie et Tibshirani (2021), ISLR, 2e éd., chapitres 5 et 7.
+- R Core Team, documentation de lm() et predict.lm().
+- Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, section 5.8.
+:::
+
+[Lectures et liens du module](lectures.qmd)

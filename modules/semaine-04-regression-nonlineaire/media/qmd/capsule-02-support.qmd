@@ -1,10 +1,12 @@
 ---
-title: 'Capsule 2 - Comprendre la saturation'
+title: "Capsule 2 - Comprendre la saturation"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module04-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,136 +24,227 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-module-04
+#| label: preparation-m04-c2
 #| include: false
 library(tidyverse)
-data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-saturation <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
-entrainement <- saturation |> slice(id_entrainement)
-test <- saturation |> slice(-id_entrainement)
-modele_lin <- lm(ventes ~ achalandage, data = entrainement)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
-modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+chemins <- c("data/achalandage_saturation_quebec.csv",
+             "../../data/achalandage_saturation_quebec.csv",
+             "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+saturation <- read_csv(chemin, show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), achalandage_milliers = achalandage / 1000)
+stopifnot(!anyNA(saturation[c("mois", "achalandage", "ventes")]),
+          all(saturation$achalandage > 0))
+apprentissage <- saturation |> filter(mois < as.Date("2025-10-01"))
+validation <- saturation |> filter(mois >= as.Date("2025-10-01"))
+modele_lin <- lm(ventes ~ achalandage_milliers, data = apprentissage)
+modele_quad <- lm(ventes ~ achalandage_milliers + I(achalandage_milliers^2), data = apprentissage)
+modele_log <- lm(ventes ~ log(achalandage_milliers), data = apprentissage)
+modeles <- list("Linéaire" = modele_lin, "Quadratique" = modele_quad,
+                "Logarithmique" = modele_log)
+rmse <- function(observe, predit) sqrt(mean((observe - predit)^2))
+comparaison <- imap_dfr(modeles, function(ajustement, nom) {
+  tibble(modele = nom, r2 = summary(ajustement)$r.squared,
+         r2_ajuste = summary(ajustement)$adj.r.squared,
+         rmse_apprentissage = rmse(apprentissage$ventes, fitted(ajustement)),
+         rmse_validation = rmse(validation$ventes, predict(ajustement, newdata = validation)))
+})
+grille <- tibble(achalandage_milliers = seq(min(apprentissage$achalandage_milliers),
+                                          max(apprentissage$achalandage_milliers), length.out = 120))
+courbes <- imap_dfr(modeles, function(ajustement, nom) {
+  grille |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille))
+})
+diagnostic <- imap_dfr(modeles, function(ajustement, nom) {
+  apprentissage |> mutate(modele = nom, ventes_predites = fitted(ajustement), residu = residuals(ajustement))
+})
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+palette_modeles <- c("Linéaire" = "#7A1C24", "Quadratique" = "#0B4F6C", "Logarithmique" = "#8A6500")
+theme_set(theme_minimal(base_size = 17) + theme(panel.grid.minor = element_blank()))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une contrainte à rendre visible
-:::
-
 ::: {.question-line}
-Le ralentissement des ventes vient-il de la demande ou de la capacité à la servir?
+Un ralentissement des ventes prouve-t-il un manque de capacité?
 :::
 
 ::: {.note-box}
-Le taux d'occupation, l'attente et les ruptures de stock donnent un sens opérationnel à la courbure. Ils suggèrent des mécanismes à vérifier sans, à eux seuls, les prouver.
+La capacité, l’attente et les ruptures de stock peuvent éclairer le contexte. Un graphique ne permet pas d’isoler leur effet causal.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Relier la courbure aux contraintes opérationnelles.
-- Nommer des indicateurs de saturation.
-- Distinguer achalandage et capacité.
-- Préparer une interprétation appliquée.
+- Relier un indice au contexte.
+- Interpréter un taux d’occupation.
+- Distinguer courbure et plateau.
 :::
-## Saturation : intuition
 
-La saturation apparaît lorsqu'une ressource approche sa limite. Plus de demande peut rester souhaitable, mais l'organisation ne transforme plus cette demande aussi efficacement.
+## Trois indices à examiner
 
-## Indices dans les données
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Capacité
+:::
+::: {.label}
+achalandage rapporté à une référence
+:::
+:::
+::: {.metric}
+::: {.value}
+Attente
+:::
+::: {.label}
+temps moyen, en minutes
+:::
+:::
+::: {.metric}
+::: {.value}
+Stock
+:::
+::: {.label}
+nombre de ruptures observées
+:::
+:::
+:::
 
-- `taux_occupation` : utilisation de la capacité.
-- `temps_attente_minutes` : friction pour les clients.
-- `ruptures_stock` : incapacité à répondre à la demande.
-- `ventes` : résultat observé dans les données.
+## Un taux peut dépasser 100 %
+
+::: {.example-box}
+$$\text{Taux d’occupation}=\frac{\text{achalandage}}{\text{capacité de référence}}$$
+:::
+
+::: {.note-box}
+2 400 visites pour une référence de 2 000 : 1,20, soit 120 %. Ce rapport n’est pas une probabilité.
+:::
+
+## Observer l’attente
 
 ```{r}
-#| label: capsule-04-02-indices
+#| label: m04-c2-attente
 #| echo: false
-
-saturation |>
-  summarise(
-    occupation_min = min(taux_occupation),
-    occupation_max = max(taux_occupation),
-    attente_mediane = median(temps_attente_minutes),
-    ruptures_max = max(ruptures_stock)
-  ) |>
-  mutate(across(everything(), ~ round(.x, 2))) |>
-  knitr::kable()
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(apprentissage, aes(taux_occupation, temps_attente_minutes)) +
+  geom_point(aes(colour = succursale), size = 2.7) +
+  geom_vline(xintercept = 1, linetype = "dashed", colour = "#7A1C24") +
+  scale_x_continuous(labels = scales::label_percent()) +
+  labs(x = "Occupation de la capacité de référence", y = "Attente moyenne (minutes)", colour = "Succursale")
 ```
 
-::: {.warning-box}
-Le `taux_occupation` est calculé par rapport à une capacité de référence mensuelle. Il peut donc dépasser 1 : une valeur de 1,20 signifie un achalandage équivalant à 120 % de cette référence, pas une occupation physique simultanée de 120 %.
+## Ralentissement et plateau
+
+::: {.keypoints}
+- Ralentissement : la hausse devient plus faible.
+- Plateau : la courbe se rapproche d’une limite.
+- Un ralentissement observé ne démontre pas un plafond.
 :::
 
-## Phrase utile
+::: {.note-box}
+Une courbe quadratique peut redescendre. Un logarithme croissant n’a pas de plafond.
+:::
 
-Les ventes augmentent avec l'achalandage, mais la relation semble ralentir lorsque la succursale approche sa capacité.
+## Confronter plusieurs explications
 
-## Ce que le modèle ne révèle pas seul
+::: {.example-box}
+Hypothèse : davantage de visites met le service sous pression.
+:::
 
-- Il ne connaît pas la cause réelle de la saturation.
-- Il ne voit pas toutes les contraintes non mesurées.
-- Il ne remplace pas une analyse opérationnelle.
-- Il aide plutôt à formuler une hypothèse vérifiable.
+::: {.keypoints}
+- Autres facteurs : saison, marketing, taille du magasin.
+- Les mêmes succursales reviennent chaque mois.
+- Comparer des associations ne remplace pas un plan causal.
+:::
 
-## Décision possible
+## Logarithmique et logistique
 
-Si la saturation est plausible, la recommandation peut porter sur la capacité, la gestion des files, les stocks ou les horaires, et pas seulement sur l'acquisition de clients.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Ventes
+:::
+::: {.label}
+réponse quantitative : module 4
+:::
+:::
+::: {.metric}
+::: {.value}
+Oui / non
+:::
+::: {.label}
+réponse binaire : module 10
+:::
+:::
+::: {.metric}
+::: {.value}
+Log(x)
+:::
+::: {.label}
+transformation d’une explicative positive
+:::
+:::
+:::
+
+::: {.note-box}
+Le modèle logarithmique étudié ici prédit des dollars. La régression logistique modélise une probabilité.
+:::
 
 ## À retenir
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Indice
 :::
 ::: {.label}
-La courbure doit être interprétée dans le contexte.
+une information de contexte
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Hypothèse
 :::
 ::: {.label}
-Augmenter l'achalandage et améliorer la capacité ne sont pas la même décision.
+une explication à confronter
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Plateau
 :::
 ::: {.label}
-Une bonne analyse relie une forme statistique à une question de gestion.
+une limite non démontrée
 :::
 :::
 :::
 
 ::: {.notes}
-[Sources]
-- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to Statistical Learning with Applications in R, 2e édition, chapitres 5 et 7, https://www.statlearning.com/. Documentation de stats::lm et stats::predict.lm : https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html et https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html.
 :::
+
 ## Production autonome 4.2
 
-Choisissez deux variables du fichier qui pourraient appuyer l'hypothèse de saturation et expliquez leur rôle en une phrase chacune.
-
+::: {.lead}
+Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.
+:::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Les modèles sont comparés sur les mêmes données test.
-- La forme retenue est visible et interprétable.
-- La prédiction reste dans la plage observée et son incertitude est indiquée.
+- J’ai distingué un taux d’occupation d’une probabilité.
+- Mon hypothèse reste à vérifier.
+- Je ne confonds pas courbure et preuve de saturation.
 :::

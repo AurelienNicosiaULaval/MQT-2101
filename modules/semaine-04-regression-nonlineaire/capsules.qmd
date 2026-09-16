@@ -1,118 +1,260 @@
 ---
 title: "Capsules - Module 04"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module04-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ## Objectif
 
-Cette page rassemble les six capsules du module 04. Elles montrent comment reconnaître une relation courbée, pourquoi une droite peut devenir trompeuse, comment utiliser des transformations simples, comment comparer des modèles et comment éviter l'extrapolation.
+Les six capsules construisent une comparaison de modèles sur le lien entre l’achalandage et les ventes. Les données sont simulées. Le code complet est dans les [démonstrations R](demonstrations.qmd).
 
-Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu'elles sont disponibles.
+Ouvrez le PDF ou le support HTML avec code copiable, puis réalisez la production autonome dans `comparaison_achalandage.qmd`. Les activités 4.1 à 4.6 du parcours reprennent ces productions : il suffit de les faire une fois. Les vidéos ne sont pas encore disponibles.
+
+Les exercices liés sous certaines capsules utilisent un autre cas, sur l’utilisation et l’attente. Ils alimentent le projet distinct `comparaison-attente`, avec des corrigés à ouvrir après une première tentative.
 
 ## Capsule 1 - Reconnaître une relation non linéaire
 
-Cette capsule installe l'intuition : parfois la variation moyenne n'est pas constante sur toute l'échelle.
+Une direction veut estimer ses ventes. Une droite suppose une variation moyenne constante; les données peuvent suggérer un ralentissement.
+
+::: {.panel-tabset}
+
+### Vidéo
+
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+### PDF
 
 ```{=html}
-<div class="support-icons" aria-label="Supports de la capsule 1">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-01-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-01-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
+<div class="pdf-viewer">
+  <iframe src="media/pdf/capsule-01-support.pdf" title="PDF - Capsule 1" loading="lazy"></iframe>
 </div>
+<p class="resource-fallback"><a href="media/pdf/capsule-01-support.pdf">Ouvrir le PDF</a></p>
 ```
 
-À faire après la capsule : Donnez une raison opérationnelle qui pourrait expliquer une relation avec saturation en succursale.
+### HTML
+
+```{=html}
+<div class="video-embed html-slides">
+  <iframe data-support-src="media/qmd/capsule-01-support.html"
+    title="Support HTML - Capsule 1" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="media/qmd/capsule-01-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
+:::
+
+À faire après la capsule : Produisez le nuage achalandage-ventes sur janvier à septembre. Décrivez la direction, une courbure possible et la dispersion. Nommez les unités et une limite.
+
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 1](exercices.qmd#exercice-1---lire-le-graphique) sur le cas d’attente. Commencez par la [préparation du projet](exercices.qmd#préparation). Tentez votre réponse avant d’ouvrir le corrigé.
+:::
 
 ## Capsule 2 - Comprendre la saturation
 
-Cette capsule relie la courbure statistique à des contraintes d'affaires concrètes : capacité, attente et rupture de stock.
+La capacité, l’attente et les ruptures de stock peuvent éclairer le contexte. Un graphique ne permet pas d’isoler leur effet causal.
+
+::: {.panel-tabset}
+
+### Vidéo
+
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+### PDF
 
 ```{=html}
-<div class="support-icons" aria-label="Supports de la capsule 2">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-02-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-02-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
+<div class="pdf-viewer">
+  <iframe src="media/pdf/capsule-02-support.pdf" title="PDF - Capsule 2" loading="lazy"></iframe>
 </div>
+<p class="resource-fallback"><a href="media/pdf/capsule-02-support.pdf">Ouvrir le PDF</a></p>
 ```
 
-À faire après la capsule : Associez un signe de saturation possible à une variable du fichier.
+### HTML
+
+```{=html}
+<div class="video-embed html-slides">
+  <iframe data-support-src="media/qmd/capsule-02-support.html"
+    title="Support HTML - Capsule 2" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="media/qmd/capsule-02-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
+:::
+
+À faire après la capsule : Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.
 
 ## Capsule 3 - Ajouter une transformation simple
 
-Cette capsule présente deux outils simples : terme quadratique et logarithme.
+Une droite, une courbe quadratique et un logarithme imposent des formes différentes. Le choix doit rester lisible sur l’échelle des ventes.
+
+::: {.panel-tabset}
+
+### Vidéo
+
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+### PDF
 
 ```{=html}
-<div class="support-icons" aria-label="Supports de la capsule 3">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-03-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-03-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
+<div class="pdf-viewer">
+  <iframe src="media/pdf/capsule-03-support.pdf" title="PDF - Capsule 3" loading="lazy"></iframe>
 </div>
+<p class="resource-fallback"><a href="media/pdf/capsule-03-support.pdf">Ouvrir le PDF</a></p>
 ```
 
-À faire après la capsule : Expliquez en quoi un terme quadratique peut représenter un ralentissement de la croissance.
+### HTML
+
+```{=html}
+<div class="video-embed html-slides">
+  <iframe data-support-src="media/qmd/capsule-03-support.html"
+    title="Support HTML - Capsule 3" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="media/qmd/capsule-03-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
+:::
+
+À faire après la capsule : Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.
+
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 2](exercices.qmd#exercice-2---ajuster-deux-modèles) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
+:::
 
 ## Capsule 4 - Comparer plusieurs modèles
 
-Cette capsule montre comment comparer une droite, une courbe quadratique et un modèle logarithmique.
+Une courbe peut réduire les résidus d’apprentissage sans mieux prédire. Les mêmes mois de validation doivent servir à comparer tous les candidats.
+
+::: {.panel-tabset}
+
+### Vidéo
+
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+### PDF
 
 ```{=html}
-<div class="support-icons" aria-label="Supports de la capsule 4">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-04-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-04-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
+<div class="pdf-viewer">
+  <iframe src="media/pdf/capsule-04-support.pdf" title="PDF - Capsule 4" loading="lazy"></iframe>
 </div>
+<p class="resource-fallback"><a href="media/pdf/capsule-04-support.pdf">Ouvrir le PDF</a></p>
 ```
 
-À faire après la capsule : Nommez trois critères de comparaison qui ne se limitent pas au plus grand `R²`.
-
-## Capsule 5 - Prédire et éviter l'extrapolation
-
-Cette capsule insiste sur les limites des prédictions hors de la plage observée.
+### HTML
 
 ```{=html}
-<div class="support-icons" aria-label="Supports de la capsule 5">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-05-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-05-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
+<div class="video-embed html-slides">
+  <iframe data-support-src="media/qmd/capsule-04-support.html"
+    title="Support HTML - Capsule 4" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
 </div>
+<p class="resource-fallback"><a href="media/qmd/capsule-04-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
 ```
 
-À faire après la capsule : Expliquez pourquoi prédire pour un achalandage jamais observé est fragile.
+:::
+
+À faire après la capsule : Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.
+
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 3](exercices.qmd#exercice-3---calculer-la-rmse) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
+:::
+
+## Capsule 5 - Prédire et éviter l’extrapolation
+
+Des modèles proches sur les données peuvent diverger fortement au-delà. Un intervalle calculé ne garantit pas la bonne forme de la courbe.
+
+::: {.panel-tabset}
+
+### Vidéo
+
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+### PDF
+
+```{=html}
+<div class="pdf-viewer">
+  <iframe src="media/pdf/capsule-05-support.pdf" title="PDF - Capsule 5" loading="lazy"></iframe>
+</div>
+<p class="resource-fallback"><a href="media/pdf/capsule-05-support.pdf">Ouvrir le PDF</a></p>
+```
+
+### HTML
+
+```{=html}
+<div class="video-embed html-slides">
+  <iframe data-support-src="media/qmd/capsule-05-support.html"
+    title="Support HTML - Capsule 5" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="media/qmd/capsule-05-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
+:::
+
+À faire après la capsule : Prédisez les ventes pour 2 500 visites avec le modèle quadratique et son intervalle de prédiction. Comparez ensuite les trois prédictions à 6 000 visites et expliquez pourquoi elles ne justifient pas une recommandation.
+
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 4](exercices.qmd#exercice-4---interpréter-la-saturation) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
+:::
 
 ## Capsule 6 - Communiquer le choix du modèle
 
-Cette capsule transforme la comparaison technique en conclusion de gestion prudente.
+La direction a besoin d’un résultat chiffré, d’une plage d’utilisation et d’une limite. Le classement des modèles ne constitue pas à lui seul une décision de gestion.
+
+::: {.panel-tabset}
+
+### Vidéo
+
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+### PDF
 
 ```{=html}
-<div class="support-icons" aria-label="Supports de la capsule 6">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-06-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-06-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
+<div class="pdf-viewer">
+  <iframe src="media/pdf/capsule-06-support.pdf" title="PDF - Capsule 6" loading="lazy"></iframe>
 </div>
+<p class="resource-fallback"><a href="media/pdf/capsule-06-support.pdf">Ouvrir le PDF</a></p>
 ```
 
-À faire après la capsule : Rédigez une recommandation qui distingue résultat statistique, décision possible et limite.
+### HTML
+
+```{=html}
+<div class="video-embed html-slides">
+  <iframe data-support-src="media/qmd/capsule-06-support.html"
+    title="Support HTML - Capsule 6" loading="lazy" allow="clipboard-write" allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="media/qmd/capsule-06-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
+:::
+
+À faire après la capsule : Rédigez cinq phrases : question, forme observée, comparaison chiffrée, plage d’utilisation et limite. Ajoutez au rapport une donnée à recueillir avant toute décision de capacité.
+
+::: {.callout-note title="Exercice d’application distinct"}
+Faites les [exercices 5 et 6](exercices.qmd#exercice-5---conclusion-prudente) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
+:::
 
 ## Après les capsules
 
-Poursuivez avec les [démonstrations R](demonstrations.html), puis les [exercices](exercices.html). Les capsules préparent le vocabulaire; les démonstrations montrent la comparaison complète; les exercices servent à justifier un choix de modèle.
+Terminez les exercices restants et relisez vos conclusions. Les [notes de cours](notes-cours.qmd), également disponibles en [PDF](media/pdf/notes-cours.pdf), rassemblent les repères du module.
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loadVisibleSupports = () => {
+    document.querySelectorAll(".tab-pane.active iframe[data-support-src]").forEach((iframe) => {
+      if (!iframe.hasAttribute("src")) iframe.src = iframe.dataset.supportSrc;
+    });
+  };
+  document.addEventListener("shown.bs.tab", loadVisibleSupports);
+  loadVisibleSupports();
+});
+</script>
+```

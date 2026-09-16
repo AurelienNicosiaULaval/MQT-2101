@@ -1,10 +1,12 @@
 ---
-title: 'Capsule 4 - Comparer plusieurs modèles'
+title: "Capsule 4 - Comparer plusieurs modèles"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module04-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,147 +24,242 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-module-04
+#| label: preparation-m04-c4
 #| include: false
 library(tidyverse)
-data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-saturation <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
-entrainement <- saturation |> slice(id_entrainement)
-test <- saturation |> slice(-id_entrainement)
-modele_lin <- lm(ventes ~ achalandage, data = entrainement)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
-modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+chemins <- c("data/achalandage_saturation_quebec.csv",
+             "../../data/achalandage_saturation_quebec.csv",
+             "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+saturation <- read_csv(chemin, show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), achalandage_milliers = achalandage / 1000)
+stopifnot(!anyNA(saturation[c("mois", "achalandage", "ventes")]),
+          all(saturation$achalandage > 0))
+apprentissage <- saturation |> filter(mois < as.Date("2025-10-01"))
+validation <- saturation |> filter(mois >= as.Date("2025-10-01"))
+modele_lin <- lm(ventes ~ achalandage_milliers, data = apprentissage)
+modele_quad <- lm(ventes ~ achalandage_milliers + I(achalandage_milliers^2), data = apprentissage)
+modele_log <- lm(ventes ~ log(achalandage_milliers), data = apprentissage)
+modeles <- list("Linéaire" = modele_lin, "Quadratique" = modele_quad,
+                "Logarithmique" = modele_log)
+rmse <- function(observe, predit) sqrt(mean((observe - predit)^2))
+comparaison <- imap_dfr(modeles, function(ajustement, nom) {
+  tibble(modele = nom, r2 = summary(ajustement)$r.squared,
+         r2_ajuste = summary(ajustement)$adj.r.squared,
+         rmse_apprentissage = rmse(apprentissage$ventes, fitted(ajustement)),
+         rmse_validation = rmse(validation$ventes, predict(ajustement, newdata = validation)))
+})
+grille <- tibble(achalandage_milliers = seq(min(apprentissage$achalandage_milliers),
+                                          max(apprentissage$achalandage_milliers), length.out = 120))
+courbes <- imap_dfr(modeles, function(ajustement, nom) {
+  grille |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille))
+})
+diagnostic <- imap_dfr(modeles, function(ajustement, nom) {
+  apprentissage |> mutate(modele = nom, ventes_predites = fitted(ajustement), residu = residuals(ajustement))
+})
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+palette_modeles <- c("Linéaire" = "#7A1C24", "Quadratique" = "#0B4F6C", "Logarithmique" = "#8A6500")
+theme_set(theme_minimal(base_size = 17) + theme(panel.grid.minor = element_blank()))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une comparaison loyale
-:::
-
 ::: {.question-line}
-Quel modèle prédit le mieux des observations qu'il n'a pas utilisées pour s'ajuster?
+Le modèle le plus souple prédit-il mieux les mois suivants?
 :::
 
 ::: {.note-box}
-Une erreur calculée sur les données d'entraînement mesure surtout l'ajustement. Une période ou un échantillon test séparé permet une comparaison plus crédible des prédictions.
+Une courbe peut réduire les résidus d’apprentissage sans mieux prédire. Les mêmes mois de validation doivent servir à comparer tous les candidats.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Comparer plusieurs modèles sur les mêmes données.
-- Utiliser un graphique de prédictions.
-- Calculer une mesure d'erreur.
-- Éviter de choisir automatiquement le modèle le plus complexe.
+- Séparer apprentissage et validation.
+- Calculer et interpréter la RMSE.
+- Croiser erreurs, résidus et simplicité.
 :::
-## Trois modèles candidats
+
+## Deux usages des données
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Apprendre
+:::
+::: {.label}
+ajuster les coefficients sur janvier à septembre
+:::
+:::
+::: {.metric}
+::: {.value}
+Comparer
+:::
+::: {.label}
+prédire octobre à décembre sans réajuster
+:::
+:::
+::: {.metric}
+::: {.value}
+Confirmer
+:::
+::: {.label}
+prévoir de nouvelles données pour évaluer le choix final
+:::
+:::
+:::
+
+::: {.note-box}
+Les mois utilisés pour choisir le modèle deviennent un ensemble de validation; ils ne constituent plus un test final indépendant.
+:::
+
+## Lire la RMSE
+
+::: {.example-box}
+$$\mathrm{RMSE}=\bigl[n^{-1}\sum_{i=1}^{n}(y_i-\widehat{y}_i)^2\bigr]^{1/2}$$
+:::
+
+::: {.keypoints}
+- Racine de la moyenne des erreurs au carré.
+- Même unité que la réponse : dollars ici.
+- Les grandes erreurs pèsent davantage.
+:::
+
+## Un calcul à la main
+
+::: {.example-box}
+Erreurs : −2, 1 et 2. Moyenne des carrés : (4 + 1 + 4) / 3 = 3. RMSE = √3 ≈ 1,73.
+:::
+
+::: {.note-box}
+La moyenne signée vaut 0,33 : ce n’est pas la RMSE.
+:::
+
+## Calculer sur les mêmes mois
 
 ```{r}
-#| label: code-candidats-module-04
+#| label: m04-c4-rmse
 #| echo: true
-modele_lin <- lm(ventes ~ achalandage, data = entrainement)
-modele_quad <- lm(
-  ventes ~ achalandage + I(achalandage^2),
-  data = entrainement
-)
-modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+rmse <- function(observe, predit) {
+  sqrt(mean((observe - predit)^2))
+}
+prediction_quad <- predict(modele_quad, newdata = validation)
+rmse(validation$ventes, prediction_quad)
 ```
 
-## Critères utiles
+::: {.note-box}
+Aucun coefficient n’est réajusté sur les mois de validation.
+:::
 
-- Graphique avec les courbes superposées.
-- Résidus sans structure évidente.
-- Erreur de prédiction plus faible.
-- Interprétation compréhensible pour la décision.
+## Comparer les résultats
 
-## RMSE
+Les RMSE sont exprimées en dollars.
 
-La RMSE test résume l'erreur typique sur des observations qui n'ont pas servi à ajuster les modèles. Elle s'exprime ici en dollars de ventes. Plus elle est faible, plus les prédictions hors échantillon sont proches des valeurs observées, pour cette séparation précise.
-
-## Résultat hors échantillon
 
 ```{r}
-#| label: resultat-rmse-module-04
+#| label: m04-c4-tableau
 #| echo: false
-rmse_test <- function(modele, nouvelles_donnees) {
-  prediction <- predict(modele, newdata = nouvelles_donnees)
-  sqrt(mean((nouvelles_donnees$ventes - prediction)^2))
-}
-
-tibble(
-  modele = c("lineaire", "quadratique", "logarithmique"),
-  rmse_test = c(
-    rmse_test(modele_lin, test),
-    rmse_test(modele_quad, test),
-    rmse_test(modele_log, test)
-  )
-) |>
-  mutate(rmse_test = scales::dollar(
-    rmse_test,
-    prefix = "",
-    suffix = " $",
-    big.mark = " ",
-    accuracy = 1
-  )) |>
+comparaison |>
+  transmute(Modèle = modele, `R² apprentissage` = nombre_fr(r2, 3),
+            `RMSE apprentissage` = nombre_fr(rmse_apprentissage),
+            `RMSE validation` = nombre_fr(rmse_validation)) |>
   knitr::kable()
 ```
 
-## Piège fréquent
+## Le plus grand R² ne suffit pas
 
-Le modèle quadratique obtient la plus faible RMSE sur cette séparation, environ 8 367 $. Ce résultat dépend toutefois de l'échantillon test; il doit être lu avec le graphique, les résidus et l'interprétabilité.
+::: {.keypoints}
+- R² résume l’ajustement sur l’apprentissage.
+- Ajouter x² ne peut pas réduire le R² sur les mêmes lignes.
+- Le R² ajusté pénalise les paramètres supplémentaires.
+- Aucun des deux ne remplace l’erreur de validation.
+:::
+
+## Examiner les résidus
+
+```{r}
+#| label: m04-c4-residus
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(diagnostic, aes(ventes_predites, residu)) +
+  geom_hline(yintercept = 0, colour = "#7A1C24") +
+  geom_point(alpha = 0.7, colour = "#0B4F6C") +
+  facet_wrap(vars(modele), nrow = 1) +
+  scale_x_continuous(labels = scales::label_number(scale = 0.001, suffix = " k$")) +
+  scale_y_continuous(labels = scales::label_number(scale = 0.001, suffix = " k$")) +
+  labs(x = "Ventes ajustées", y = "Résidu : observé − ajusté")
+```
+
+## Un choix provisoire
+
+::: {.example-box}
+La quadratique a la plus faible RMSE de validation : `r nombre_fr(comparaison$rmse_validation[2])` $, contre `r nombre_fr(comparaison$rmse_validation[1])` $ pour la droite.
+:::
+
+::: {.note-box}
+18 observations seulement, regroupées dans six succursales. Deux achalandages de validation dépassent le maximum d’apprentissage. Le classement peut varier sur une autre période.
+:::
+
+::: {.notes}
+Le découpage est fixé avant comparaison. La validation sert au choix; ne pas présenter sa RMSE comme celle d’un test final indépendant. Une autre période pourrait changer le classement.
+:::
 
 ## À retenir
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Même base
 :::
 ::: {.label}
-Comparer, c'est croiser plusieurs indices.
+comparaison équitable
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Validation
 :::
 ::: {.label}
-Un chiffre ne suffit pas.
+observations non utilisées pour ajuster
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Prudence
 :::
 ::: {.label}
-Le meilleur modèle est celui qui résume bien les données et reste interprétable.
+un classement provisoire
 :::
 :::
 :::
 
 ::: {.notes}
-[Sources]
-- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to Statistical Learning with Applications in R, 2e édition, chapitres 5 et 7, https://www.statlearning.com/. Documentation de stats::lm et stats::predict.lm : https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html et https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html.
 :::
+
 ## Production autonome 4.4
 
-Préparez une grille de comparaison avec trois colonnes : graphique, erreur et interprétation.
-
+::: {.lead}
+Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.
+:::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Les modèles sont comparés sur les mêmes données test.
-- La forme retenue est visible et interprétable.
-- La prédiction reste dans la plage observée et son incertitude est indiquée.
+- Le R² porte sur l’apprentissage.
+- La RMSE de validation utilise octobre à décembre.
+- Je ne présente pas ce choix comme une performance finale indépendante.
 :::

@@ -1,50 +1,39 @@
 ---
 title: "Module 04"
 subtitle: "Régression non linéaire et transformations"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module04-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ::: {.learning-hero}
 <p class="hero-kicker">Séance autonome</p>
 <h2>Régression non linéaire et transformations</h2>
 
-Reconnaître une relation qui n'est pas bien résumée par une droite, choisir une
-transformation simple et comparer plusieurs modèles sans perdre l'interprétation
-d'affaires.
+Reconnaître une courbure, ajuster trois formes candidates et justifier un choix avec des graphiques, des erreurs de validation et des limites explicites.
 
 :::: {.quick-facts}
 ::: {.fact-card}
-<div class="fact-icon fact-clock" aria-hidden="true"></div>
-<div>
-  <div class="fact-label">Organisation</div>
-  <div class="fact-value">À votre rythme</div>
-</div>
+<div><div class="fact-label">Organisation</div><div class="fact-value">À votre rythme</div></div>
 :::
-
 ::: {.fact-card}
-<div class="fact-icon fact-tools" aria-hidden="true"></div>
-<div>
-  <div class="fact-label">Outils</div>
-  <div class="fact-value">R, graphiques, transformations</div>
-</div>
+<div><div class="fact-label">Outils</div><div class="fact-value">R, RStudio et Quarto</div></div>
 :::
-
 ::: {.fact-card}
-<div class="fact-icon fact-data" aria-hidden="true"></div>
-<div>
-  <div class="fact-label">Données</div>
-  <div class="fact-value"><a class="data-link" href="../../donnees/#achalandage-et-saturation-de-succursales-fictives">achalandage_saturation_quebec.csv</a></div>
-</div>
+<div><div class="fact-label">Cas guidé</div><div class="fact-value">Achalandage et ventes</div></div>
 :::
-
 ::: {.fact-card}
-<div class="fact-icon fact-report" aria-hidden="true"></div>
-<div>
-  <div class="fact-label">Trace finale</div>
-  <div class="fact-value">Comparaison de modèles</div>
-</div>
+<div><div class="fact-label">Trace finale</div><div class="fact-value">Comparaison de modèles</div></div>
 :::
 ::::
 :::
@@ -52,132 +41,153 @@ d'affaires.
 ## On passe au concret
 
 ::: {.callout-note title="La question du module"}
-Une direction observe que les ventes augmentent lorsque l'achalandage augmente,
-mais cette hausse semble ralentir lorsque les succursales approchent leur
-capacité. Une droite peut alors exagérer les ventes attendues aux très hauts
-niveaux d'achalandage.
-
-Le module sert à décider si un modèle linéaire simple est suffisant ou si une
-transformation, par exemple un terme quadratique ou un logarithme, décrit mieux
-la relation.
+Une direction veut décrire le lien entre l’achalandage et les ventes mensuelles de ses succursales. Une droite suppose une hausse constante. Les données peuvent suggérer un ralentissement, sans prouver un plafond ni sa cause. Quelle forme est la plus défendable : droite, quadratique ou logarithme?
 :::
 
-À la fin du module, vous devriez pouvoir :
+À la fin du module, vous devriez pouvoir lire une courbure, ajuster ces trois formes avec `lm()`, comparer leurs erreurs sur les mêmes observations mises de côté, interpréter une prédiction et rédiger une conclusion prudente.
 
-- repérer une courbure dans un nuage de points;
-- expliquer pourquoi une droite peut être trompeuse en présence de saturation;
-- ajuster un modèle linéaire, un modèle quadratique et un modèle logarithmique;
-- comparer les modèles avec un graphique, les résidus et une mesure d'erreur;
-- interpréter les résultats sur l'échelle originale des données;
-- éviter l'extrapolation au-delà des valeurs observées.
-
-## Votre parcours
-
-::: {.callout-note title="Notes de cours"}
-Le support global de notes de cours est disponible en [HTML](notes-cours.qmd) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
-:::
-
-Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l'étape complète : objectif, ressource, action et activité associée.
-
-```{=html}
-<div class="path-grid interactive-path">
-  <details class="path-card" id="etape-1"><summary><span class="path-number">1</span><span class="path-title">Reconnaître la courbure</span><span class="path-preview">Voir pourquoi une droite ne suffit pas toujours.</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1---reconnaître-une-relation-non-linéaire">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#visualiser-la-courbure">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1---lire-le-graphique">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Objectif</span> Repérer visuellement une relation avec courbure ou saturation.</p><p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-1---reconnaître-une-relation-non-linéaire">Capsule 1</a> <a class="resource-link demo-link" href="demonstrations.html#visualiser-la-courbure">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-1---lire-le-graphique">Exercice 1</a></p><p><span class="step-label">Action</span> Produire le nuage de points entre achalandage et ventes.</p><div class="ae-box"><p class="ae-title">Activité 4.1 - Forme observée</p><p>Décrivez la relation avec les mots hausse, ralentissement et saturation.</p></div></div></details>
-  <details class="path-card" id="etape-2"><summary><span class="path-number">2</span><span class="path-title">Relier la saturation au contexte</span><span class="path-preview">Utiliser capacité, attente et ruptures de stock pour interpréter la forme.</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2---comprendre-la-saturation">Capsule 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Objectif</span> Expliquer pourquoi une relation peut ralentir à haut achalandage.</p><p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-2---comprendre-la-saturation">Capsule 2</a></p><p><span class="step-label">Action</span> Identifier les variables qui peuvent signaler une contrainte opérationnelle.</p><div class="ae-box"><p class="ae-title">Activité 4.2 - Indices de saturation</p><p>Associez `taux_occupation`, `temps_attente_minutes` ou `ruptures_stock` à une hypothèse de saturation.</p></div></div></details>
-  <details class="path-card" id="etape-3"><summary><span class="path-number">3</span><span class="path-title">Transformer la relation</span><span class="path-preview">Ajouter un terme quadratique ou un logarithme lorsque la forme le justifie.</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3---ajouter-une-transformation-simple">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#ajuster-trois-modèles">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2---ajuster-deux-modèles">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Objectif</span> Comprendre ce qu'un terme quadratique ou logarithmique change dans le modèle.</p><p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-3---ajouter-une-transformation-simple">Capsule 3</a> <a class="resource-link demo-link" href="demonstrations.html#ajuster-trois-modèles">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-2---ajuster-deux-modèles">Exercice 2</a></p><p><span class="step-label">Action</span> Ajuster au moins deux modèles candidats.</p><div class="ae-box"><p class="ae-title">Activité 4.3 - Transformation</p><p>Expliquez ce qu'une courbe permet de représenter qu'une droite ne représente pas.</p></div></div></details>
-  <details class="path-card" id="etape-4"><summary><span class="path-number">4</span><span class="path-title">Comparer les modèles</span><span class="path-preview">Utiliser graphique, résidus et RMSE pour justifier un choix.</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4---comparer-plusieurs-modèles">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#comparer-lajustement">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3---calculer-la-rmse">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Objectif</span> Comparer sans se limiter au plus grand R².</p><p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-4---comparer-plusieurs-modèles">Capsule 4</a> <a class="resource-link demo-link" href="demonstrations.html#comparer-lajustement">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-3---calculer-la-rmse">Exercice 3</a></p><p><span class="step-label">Action</span> Comparer au moins deux modèles avec un critère visuel et un critère numérique.</p><div class="ae-box"><p class="ae-title">Activité 4.4 - Grille de comparaison</p><p>Remplissez trois cases : graphique, erreur, interprétation.</p></div></div></details>
-  <details class="path-card" id="etape-5"><summary><span class="path-number">5</span><span class="path-title">Prédire avec prudence</span><span class="path-preview">Comprendre la plage observée et la limite d'extrapolation.</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---prédire-et-éviter-lextrapolation">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#superposer-les-prédictions">Démo</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Objectif</span> Utiliser les prédictions sans sortir abusivement des données observées.</p><p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5---prédire-et-éviter-lextrapolation">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#superposer-les-prédictions">Démonstration</a></p><p><span class="step-label">Action</span> Superposer les prédictions dans la plage observée.</p><div class="ae-box"><p class="ae-title">Activité 4.5 - Extrapolation</p><p>Rédigez une phrase qui interdit d'utiliser le modèle loin hors de la plage observée sans données supplémentaires.</p></div></div></details>
-  <details class="path-card" id="etape-6"><summary><span class="path-number">6</span><span class="path-title">Communiquer le choix</span><span class="path-preview">Transformer la comparaison technique en recommandation prudente.</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---communiquer-le-choix-du-modèle">Capsule 6</a><a class="summary-resource-link demo-link" href="demonstrations.html#conclusion-prudente">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5---conclusion-prudente">Ex. 5</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l'étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Objectif</span> Justifier un modèle dans une conclusion utile pour la décision.</p><p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6---communiquer-le-choix-du-modèle">Capsule 6</a> <a class="resource-link demo-link" href="demonstrations.html#conclusion-prudente">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-5---conclusion-prudente">Exercice 5</a></p><p><span class="step-label">Action</span> Rédiger une conclusion qui relie courbure, saturation, décision et limite.</p><div class="ae-box"><p class="ae-title">Activité 4.6 - Conclusion appliquée</p><p>Rédigez : forme observée, modèle retenu, argument, décision possible, limite.</p></div></div></details>
-</div>
-```
+La réponse reste quantitative. Ces transformations de x sont linéaires en leurs coefficients. La [régression logistique du module 10](../semaine-10-classification-modeles-avances/index.qmd) répond à une autre question : modéliser une probabilité pour une réponse binaire.
 
 ## Avant de commencer
 
-Téléchargez ou repérez le fichier [`achalandage_saturation_quebec.csv`](data/achalandage_saturation_quebec.csv). Chaque ligne représente une combinaison mois-succursale pour des succursales fictives.
+Créez le projet RStudio `comparaison-achalandage`, placez [achalandage_saturation_quebec.csv](data/achalandage_saturation_quebec.csv) dans `data`, puis créez `comparaison_achalandage.qmd` à la racine. La [préparation des démonstrations](demonstrations.qmd#préparation) détaille les clics et le code.
 
-Variables centrales :
+Une ligne correspond à une succursale fictive pendant un mois : 72 observations, six succursales et douze mois en 2025. L’achalandage compte des visites; les ventes sont en dollars canadiens. Les taux d’occupation, l’attente et les ruptures de stock donnent le contexte.
 
-- `ventes` : variable réponse;
-- `achalandage` : variable explicative principale;
-- `taux_occupation` : niveau d'utilisation de la capacité de référence;
-- `temps_attente_minutes` et `ruptures_stock` : signes possibles de saturation;
-- `depenses_marketing`, `succursale`, `saison` : variables de contexte.
+Fixez la séparation avant la comparaison : janvier à septembre pour l’apprentissage, octobre à décembre pour la validation. Les modèles des capsules et des démonstrations utilisent exactement cette séparation.
 
-## Trace finale
+## Votre parcours
 
-Votre trace finale doit inclure :
+Suivez les six capsules dans l’ordre. Les activités 4.1 à 4.6 correspondent aux productions autonomes de fin de capsule : il n’est pas nécessaire de les refaire. Elles construisent le rapport guidé sur les ventes.
 
-1. la question d'analyse;
-2. un graphique montrant la relation entre achalandage et ventes;
-3. une comparaison entre au moins deux modèles;
-4. un argument clair pour choisir un modèle;
-5. une limite sur l'extrapolation;
-6. une interprétation prudente liée à la décision.
+Les liens « Ex. » indiquent quand passer au cas distinct sur l’attente, dans le projet `comparaison-attente`. Suivez d’abord la [préparation des exercices](exercices.qmd#préparation). Les corrigés sont fermés par défaut et se consultent après une tentative.
 
-::: {.callout-tip title="Phrase cible"}
-Une bonne conclusion ressemble à ceci : « Les ventes augmentent avec l'achalandage, mais la relation semble ralentir aux niveaux élevés. Un modèle avec courbure décrit mieux cette saturation qu'une droite, sans prouver à lui seul la cause de cette saturation. »
+Les supports sont disponibles en HTML et PDF, avec du code copiable dans les versions HTML. Les vidéos ne sont pas encore disponibles.
+
+::: {.callout-note title="Notes de cours"}
+La synthèse est disponible en [HTML](notes-cours.qmd) et en [PDF](media/pdf/notes-cours.pdf). Les supports détaillés sont associés aux capsules.
 :::
 
-## Ressources du module
+Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.
 
 ```{=html}
-<div class="resource-list">
-  <a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Six capsules courtes avec supports HTML/PDF sur courbure, saturation et transformations.</span></span></a>
-  <a class="resource-row" href="notes-cours.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Notes de cours</span><span class="resource-row-text">Synthèse globale du module en format RevealJS.</span></span></a>
-  <a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Comparer plusieurs modèles sur les mêmes données.</span></span></a>
-  <a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Choisir un modèle, justifier le choix et formuler une limite.</span></span></a>
-  <a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Approfondir transformations, diagnostics et interprétation.</span></span></a>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1">
+<summary><span class="path-number">1</span><span class="path-title">Reconnaître une relation non linéaire</span>
+<span class="path-preview">La hausse reste-t-elle la même à tous les niveaux d’achalandage?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1---reconnaître-une-relation-non-linéaire">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#visualiser-la-courbure">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1---lire-le-graphique">Ex. 1</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Définir la question et les unités.</p>
+<p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-1---reconnaître-une-relation-non-linéaire">Capsule 1</a> et <a href="demonstrations.html#visualiser-la-courbure">démonstration R</a>.</p>
+<p><span class="step-label">Action</span> Réaliser la production dans votre rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 4.1 - Reconnaître une relation non linéaire</p><p>Produisez le nuage achalandage-ventes sur janvier à septembre. Décrivez la direction, une courbure possible et la dispersion. Nommez les unités et une limite.</p></div>
+<p><span class="step-label">Exercice distinct</span> Passez à l’<a href="exercices.html#exercice-1---lire-le-graphique">exercice 1</a> sur l’attente; tentez une réponse avant d’ouvrir le corrigé.</p>
+</div></details>
+<details class="path-card" id="etape-2">
+<summary><span class="path-number">2</span><span class="path-title">Comprendre la saturation</span>
+<span class="path-preview">Un ralentissement des ventes prouve-t-il un manque de capacité?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2---comprendre-la-saturation">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#relier-la-forme-au-contexte">Démo</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Relier un indice au contexte.</p>
+<p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-2---comprendre-la-saturation">Capsule 2</a> et <a href="demonstrations.html#relier-la-forme-au-contexte">démonstration R</a>.</p>
+<p><span class="step-label">Action</span> Réaliser la production dans votre rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 4.2 - Comprendre la saturation</p><p>Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.</p></div>
+</div></details>
+<details class="path-card" id="etape-3">
+<summary><span class="path-number">3</span><span class="path-title">Ajouter une transformation simple</span>
+<span class="path-preview">Comment représenter une hausse qui ralentit?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3---ajouter-une-transformation-simple">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#ajuster-trois-modèles">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2---ajuster-deux-modèles">Ex. 2</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Écrire trois modèles candidats.</p>
+<p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-3---ajouter-une-transformation-simple">Capsule 3</a> et <a href="demonstrations.html#ajuster-trois-modèles">démonstration R</a>.</p>
+<p><span class="step-label">Action</span> Réaliser la production dans votre rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 4.3 - Ajouter une transformation simple</p><p>Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.</p></div>
+<p><span class="step-label">Exercice distinct</span> Passez à l’<a href="exercices.html#exercice-2---ajuster-deux-modèles">exercice 2</a> sur l’attente; tentez une réponse avant d’ouvrir le corrigé.</p>
+</div></details>
+<details class="path-card" id="etape-4">
+<summary><span class="path-number">4</span><span class="path-title">Comparer plusieurs modèles</span>
+<span class="path-preview">Le modèle le plus souple prédit-il mieux les mois suivants?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4---comparer-plusieurs-modèles">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#comparer-lajustement">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3---calculer-la-rmse">Ex. 3</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Séparer apprentissage et validation.</p>
+<p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-4---comparer-plusieurs-modèles">Capsule 4</a> et <a href="demonstrations.html#comparer-lajustement">démonstration R</a>.</p>
+<p><span class="step-label">Action</span> Réaliser la production dans votre rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 4.4 - Comparer plusieurs modèles</p><p>Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.</p></div>
+<p><span class="step-label">Exercice distinct</span> Passez à l’<a href="exercices.html#exercice-3---calculer-la-rmse">exercice 3</a> sur l’attente; tentez une réponse avant d’ouvrir le corrigé.</p>
+</div></details>
+<details class="path-card" id="etape-5">
+<summary><span class="path-number">5</span><span class="path-title">Prédire et éviter l’extrapolation</span>
+<span class="path-preview">Que vaut une prédiction à un niveau d’achalandage jamais observé?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5---prédire-et-éviter-lextrapolation">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#prédire-et-vérifier-la-plage">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4---interpréter-la-saturation">Ex. 4</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Délimiter la plage d’apprentissage.</p>
+<p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-5---prédire-et-éviter-lextrapolation">Capsule 5</a> et <a href="demonstrations.html#prédire-et-vérifier-la-plage">démonstration R</a>.</p>
+<p><span class="step-label">Action</span> Réaliser la production dans votre rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 4.5 - Prédire et éviter l’extrapolation</p><p>Prédisez les ventes pour 2 500 visites avec le modèle quadratique et son intervalle de prédiction. Comparez ensuite les trois prédictions à 6 000 visites et expliquez pourquoi elles ne justifient pas une recommandation.</p></div>
+<p><span class="step-label">Exercice distinct</span> Passez à l’<a href="exercices.html#exercice-4---interpréter-la-saturation">exercice 4</a> sur l’attente; tentez une réponse avant d’ouvrir le corrigé.</p>
+</div></details>
+<details class="path-card" id="etape-6">
+<summary><span class="path-number">6</span><span class="path-title">Communiquer le choix du modèle</span>
+<span class="path-preview">Comment justifier un choix sans promettre plus que les données?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6---communiquer-le-choix-du-modèle">Capsule 6</a><a class="summary-resource-link demo-link" href="demonstrations.html#conclusion-prudente">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5---conclusion-prudente">Ex. 5 et 6</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Rassembler les résultats utiles.</p>
+<p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-6---communiquer-le-choix-du-modèle">Capsule 6</a> et <a href="demonstrations.html#conclusion-prudente">démonstration R</a>.</p>
+<p><span class="step-label">Action</span> Réaliser la production dans votre rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 4.6 - Communiquer le choix du modèle</p><p>Rédigez cinq phrases : question, forme observée, comparaison chiffrée, plage d’utilisation et limite. Ajoutez au rapport une donnée à recueillir avant toute décision de capacité.</p></div>
+<p><span class="step-label">Exercice distinct</span> Passez aux <a href="exercices.html#exercice-5---conclusion-prudente">exercices 5 et 6</a> sur l’attente; tentez une réponse avant d’ouvrir le corrigé.</p>
+</div></details>
 </div>
 ```
 
+## Exercices d’application
+
+Les [six exercices et leurs corrigés détaillés](exercices.qmd) étudient le taux d’utilisation et le temps d’attente dans quatre succursales fictives. Le choix du modèle doit être justifié par les résultats de ce nouveau cas. Les exercices réalisés au fil des capsules ne sont pas à refaire.
+
+## Trace finale
+
+Le rapport guidé `comparaison_achalandage.qmd` rassemble :
+
+1. la question, les unités et la séparation des périodes;
+2. le nuage d’apprentissage et les trois modèles;
+3. les erreurs d’apprentissage et de validation;
+4. les résidus et leur interprétation;
+5. une prédiction dans la plage connue et une comparaison en extrapolation;
+6. une conclusion chiffrée, sa limite et une prochaine collecte.
+
+Le rapport distinct `comparaison_attente.qmd` est précisé à l’[exercice 6](exercices.qmd#exercice-6---mini-trace-de-comparaison). Redémarrez R puis utilisez Render pour vérifier les deux documents. Ce sont des entraînements; les consignes des travaux évalués restent dans [Évaluations](../../evaluations/index.qmd).
+
+## Ressources du module
+
+- [Capsules et supports HTML/PDF](capsules.qmd)
+- [Synthèse](notes-cours.qmd)
+- [Démonstrations R complètes](demonstrations.qmd)
+- [Exercices et solutions détaillées](exercices.qmd)
+- [Lectures et documentation](lectures.qmd)
+
 ::: {.callout-warning title="Erreurs fréquentes à éviter"}
-- Choisir automatiquement le modèle qui a le plus grand `R²`.
-- Oublier que le modèle quadratique peut devenir irréaliste hors de la plage observée.
-- Interpréter une courbe comme une preuve de saturation causée par un seul facteur.
-- Comparer des modèles sans regarder les prédictions superposées aux données.
-- Présenter une transformation sans expliquer ce qu'elle change dans l'interprétation.
-- Faire une recommandation opérationnelle sans mentionner la limite d'extrapolation.
+- Choisir automatiquement le plus grand R² d’apprentissage.
+- Réajuster un modèle sur la validation avant de calculer son erreur.
+- Interpréter une courbe comme une preuve de saturation ou de causalité.
+- Confondre logarithmique et logistique.
+- Confondre 10 % relatifs et 10 points de pourcentage.
+- Croire qu’un intervalle de prédiction rend l’extrapolation fiable.
 :::
 
 ## Auto-vérification
 
-Avant de passer au module suivant, je peux dire que :
-
 ::: {.checklist-box}
-- [ ] J'ai reconnu une relation non linéaire dans un graphique.
-- [ ] J'ai expliqué l'idée de saturation dans un contexte d'affaires.
-- [ ] J'ai ajusté au moins deux modèles candidats.
-- [ ] J'ai comparé les modèles avec un graphique et une mesure d'erreur.
-- [ ] J'ai nommé une limite d'extrapolation.
-- [ ] J'ai formulé une recommandation prudente.
+- [ ] J’ai identifié les variables, les unités et la forme du nuage.
+- [ ] Mes trois modèles utilisent les mêmes observations d’apprentissage.
+- [ ] J’ai calculé les erreurs sur la même période de validation.
+- [ ] J’ai lu les résidus et les limites liées aux succursales répétées.
+- [ ] Je distingue une courbure d’un plateau.
+- [ ] Je sais justifier un modèle simple quand la complexité n’apporte pas de gain utile.
+- [ ] Mes deux rapports se recalculent après redémarrage de R.
 :::
 
 ::: {.callout-note title="Auto-vérification assistée par IA"}
-Vous pouvez utiliser le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) pour relire votre comparaison de modèles. Son rôle est de signaler les arguments incomplets, les diagnostics manquants et les conclusions qui dépassent les données. Il ne doit pas choisir le modèle à votre place sans justification.
-
-Suggestion de demande :
-
-> Voici ma comparaison de modèles pour le module 04. Vérifie si j'utilise au moins un argument graphique, un argument numérique, un diagnostic et une limite d'extrapolation. Indique les passages à clarifier, sans rédiger la conclusion à ma place.
-
-Après cette vérification, notez l'argument le plus faible de votre comparaison et améliorez-le.
+Après une première tentative, vous pouvez demander au [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) de vérifier votre comparaison. Demandez-lui de repérer une confusion entre apprentissage et validation, une unité manquante ou une conclusion trop forte, sans rédiger la réponse à votre place. Corrigez ensuite votre propre raisonnement.
 :::
 
 ## Je suis bloqué·e
 
-::: {.help-box}
-Avant de demander de l'aide, vérifiez dans l'ordre :
-
-1. le chargement de `tidyverse`;
-2. le chemin vers `achalandage_saturation_quebec.csv`;
-3. le nuage de points entre `achalandage` et `ventes`;
-4. le modèle linéaire;
-5. le modèle quadratique ou logarithmique;
-6. le graphique des prédictions;
-7. les résidus et la RMSE;
-8. la plage des valeurs d'achalandage observées.
-:::
+Vérifiez le chargement de `tidyverse`, le dossier `data`, les noms des variables, les dates de séparation et les unités. Le nom de la variable fourni à `predict()` doit correspondre à celui de la formule. Reprenez les [démonstrations](demonstrations.qmd) dans l’ordre avec une session R redémarrée.
 
 ## Pour aller plus loin
 
-- Comparer une conclusion basée seulement sur le `R²` avec une conclusion qui utilise aussi les résidus.
-- Identifier une situation d'affaires où une relation saturée serait plausible.
-- Reprendre la conclusion en précisant ce qui relève du résultat statistique et ce qui relève de la décision de gestion.
+Examinez la stabilité du classement sur d’autres périodes, sans recycler indéfiniment la même validation. Les dépendances temporelles seront approfondies dans les modules de séries chronologiques; la réponse binaire et la logistique sont au module 10.

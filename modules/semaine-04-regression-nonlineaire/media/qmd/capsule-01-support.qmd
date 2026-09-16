@@ -1,10 +1,12 @@
 ---
-title: 'Capsule 1 - Reconnaître une relation non linéaire'
+title: "Capsule 1 - Reconnaître une relation non linéaire"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module04-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,101 +24,135 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-module-04
+#| label: preparation-m04-c1
 #| include: false
 library(tidyverse)
-data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-saturation <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
-entrainement <- saturation |> slice(id_entrainement)
-test <- saturation |> slice(-id_entrainement)
-modele_lin <- lm(ventes ~ achalandage, data = entrainement)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
-modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+chemins <- c("data/achalandage_saturation_quebec.csv",
+             "../../data/achalandage_saturation_quebec.csv",
+             "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+saturation <- read_csv(chemin, show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), achalandage_milliers = achalandage / 1000)
+stopifnot(!anyNA(saturation[c("mois", "achalandage", "ventes")]),
+          all(saturation$achalandage > 0))
+apprentissage <- saturation |> filter(mois < as.Date("2025-10-01"))
+validation <- saturation |> filter(mois >= as.Date("2025-10-01"))
+modele_lin <- lm(ventes ~ achalandage_milliers, data = apprentissage)
+modele_quad <- lm(ventes ~ achalandage_milliers + I(achalandage_milliers^2), data = apprentissage)
+modele_log <- lm(ventes ~ log(achalandage_milliers), data = apprentissage)
+modeles <- list("Linéaire" = modele_lin, "Quadratique" = modele_quad,
+                "Logarithmique" = modele_log)
+rmse <- function(observe, predit) sqrt(mean((observe - predit)^2))
+comparaison <- imap_dfr(modeles, function(ajustement, nom) {
+  tibble(modele = nom, r2 = summary(ajustement)$r.squared,
+         r2_ajuste = summary(ajustement)$adj.r.squared,
+         rmse_apprentissage = rmse(apprentissage$ventes, fitted(ajustement)),
+         rmse_validation = rmse(validation$ventes, predict(ajustement, newdata = validation)))
+})
+grille <- tibble(achalandage_milliers = seq(min(apprentissage$achalandage_milliers),
+                                          max(apprentissage$achalandage_milliers), length.out = 120))
+courbes <- imap_dfr(modeles, function(ajustement, nom) {
+  grille |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille))
+})
+diagnostic <- imap_dfr(modeles, function(ajustement, nom) {
+  apprentissage |> mutate(modele = nom, ventes_predites = fitted(ajustement), residu = residuals(ajustement))
+})
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+palette_modeles <- c("Linéaire" = "#7A1C24", "Quadratique" = "#0B4F6C", "Logarithmique" = "#8A6500")
+theme_set(theme_minimal(base_size = 17) + theme(panel.grid.minor = element_blank()))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une forme qui change la décision
-:::
-
 ::: {.question-line}
-Une droite peut-elle recommander toujours plus de clients quand la succursale est déjà saturée?
+La hausse reste-t-elle la même à tous les niveaux d’achalandage?
 :::
 
 ::: {.note-box}
-Le nuage de points permet de voir si chaque client additionnel est associé au même gain de ventes. Une courbure ignorée peut transformer un ajustement commode en recommandation irréaliste.
+Une direction veut estimer ses ventes. Une droite suppose une variation moyenne constante; les données peuvent suggérer un ralentissement.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Repérer une courbure dans un nuage de points.
-- Comprendre la notion de saturation.
-- Expliquer pourquoi une droite peut devenir insuffisante.
-- Préparer la comparaison de modèles.
+- Définir la question et les unités.
+- Repérer une courbure possible.
+- Préparer une comparaison reproductible.
 :::
-## L'idée centrale
 
-Une relation est non linéaire lorsque l'effet moyen de `x` sur `y` change selon le niveau de `x`. Par exemple, une hausse de 100 clients peut avoir un effet différent lorsque l'achalandage est faible ou déjà très élevé.
-
-## Exemple du module
-
-- Variable réponse : `ventes`.
-- Variable explicative : `achalandage`.
-- Contexte : les succursales peuvent approcher leur capacité.
-- Conséquence possible : les ventes augmentent, mais à un rythme de plus en plus lent.
-
-## Ce que le graphique doit montrer
-
-- Une hausse rapide au début.
-- Un ralentissement aux niveaux élevés.
-- Une dispersion parfois plus forte près de la saturation.
-- Des limites pratiques : attente, capacité, ruptures de stock.
-
-## Code minimal
-
-```{r}
-#| label: code-nuage-module-04
-#| echo: true
-ggplot(saturation, aes(x = achalandage, y = ventes)) +
-  geom_point(alpha = 0.65, color = "#0B4F6C") +
-  geom_smooth(method = "loess", se = FALSE, color = "#E69F00", linewidth = 1.2) +
-  scale_y_continuous(labels = scales::label_dollar(suffix = " $")) +
-  labs(x = "Achalandage mensuel", y = "Ventes mensuelles") +
-  theme_minimal(base_size = 14)
-```
-
-## Piège fréquent
-
-Ajuster une droite sans regarder le graphique peut donner une réponse techniquement correcte, mais trompeuse sur le fond.
-
-## À retenir
+## Le cas et l’unité d’observation
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+72
 :::
 ::: {.label}
-La non-linéarité est d'abord une question de forme.
+observations mois-succursale
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+6
 :::
 ::: {.label}
-La saturation est une explication opérationnelle plausible.
+succursales fictives
+:::
+:::
+::: {.metric}
+::: {.value}
+2025
+:::
+::: {.label}
+douze mois de suivi
+:::
+:::
+:::
+
+::: {.note-box}
+Une ligne décrit un mois dans une succursale. Les données sont simulées; les ventes sont en dollars canadiens.
+:::
+
+## Préparer le projet
+
+::: {.keypoints}
+- Projet RStudio : `comparaison-achalandage`.
+- CSV dans le dossier `data`.
+- Rapport : `comparaison_achalandage.qmd`.
+:::
+
+::: {.note-box}
+Le code complet et les clics sont dans les démonstrations R.
+:::
+
+## Garder les derniers mois pour comparer
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+54
+:::
+::: {.label}
+janvier à septembre : apprentissage
+:::
+:::
+::: {.metric}
+::: {.value}
+18
+:::
+::: {.label}
+octobre à décembre : validation
 :::
 :::
 ::: {.metric}
@@ -124,24 +160,96 @@ La saturation est une explication opérationnelle plausible.
 3
 :::
 ::: {.label}
-Le graphique aide à juger si la droite mérite confiance.
+formes candidates fixées avant la comparaison
+:::
+:::
+:::
+
+::: {.visual-note}
+Explorer et ajuster sur l’apprentissage. Comparer ensuite sur la validation.
+:::
+
+## Lire le nuage avant de choisir
+
+```{r}
+#| label: m04-c1-nuage
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(apprentissage, aes(achalandage, ventes)) +
+  geom_point(aes(colour = succursale), size = 2.5, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#7A1C24") +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Achalandage mensuel (visites)", y = "Ventes mensuelles ($ CA)",
+       colour = "Succursale", subtitle = "Janvier à septembre 2025 : données d’apprentissage")
+```
+
+## Ce qu’une droite impose
+
+::: {.example-box}
+$$\widehat{y}=b_0+b_1x$$
+:::
+
+::: {.keypoints}
+- Une même hausse de x donne une même hausse prédite.
+- Une courbe permet une variation qui dépend du point de départ.
+- La dispersion autour de la tendance demeure.
+:::
+
+## Une question statistique précise
+
+::: {.statement-card .acceptable}
+Comment les ventes mensuelles moyennes varient-elles avec l’achalandage, dans les succursales observées?
+:::
+
+::: {.note-box}
+Cela ne mesure pas l’effet causal d’attirer des visites supplémentaires.
+:::
+
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Question
+:::
+::: {.label}
+variables et unités explicites
+:::
+:::
+::: {.metric}
+::: {.value}
+Forme
+:::
+::: {.label}
+lire avant d’ajuster
+:::
+:::
+::: {.metric}
+::: {.value}
+Limite
+:::
+::: {.label}
+association, sans causalité établie
 :::
 :::
 :::
 
 ::: {.notes}
-[Sources]
-- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to Statistical Learning with Applications in R, 2e édition, chapitres 5 et 7, https://www.statlearning.com/. Documentation de stats::lm et stats::predict.lm : https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html et https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html.
 :::
+
 ## Production autonome 4.1
 
-Expliquez en deux phrases pourquoi une succursale très achalandée peut ne pas convertir chaque client additionnel en ventes proportionnelles.
-
+::: {.lead}
+Produisez le nuage achalandage-ventes sur janvier à septembre. Décrivez la direction, une courbure possible et la dispersion. Nommez les unités et une limite.
+:::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Les modèles sont comparés sur les mêmes données test.
-- La forme retenue est visible et interprétable.
-- La prédiction reste dans la plage observée et son incertitude est indiquée.
+- J’ai utilisé les 54 observations d’apprentissage.
+- Mes axes indiquent les visites et les dollars.
+- Je distingue forme observée et explication causale.
 :::

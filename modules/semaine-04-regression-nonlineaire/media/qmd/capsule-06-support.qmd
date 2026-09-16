@@ -1,10 +1,12 @@
 ---
-title: 'Capsule 6 - Communiquer le choix du modèle'
+title: "Capsule 6 - Communiquer le choix du modèle"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module04-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,120 +24,228 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-module-04
+#| label: preparation-m04-c6
 #| include: false
 library(tidyverse)
-data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-saturation <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
-entrainement <- saturation |> slice(id_entrainement)
-test <- saturation |> slice(-id_entrainement)
-modele_lin <- lm(ventes ~ achalandage, data = entrainement)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
-modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+chemins <- c("data/achalandage_saturation_quebec.csv",
+             "../../data/achalandage_saturation_quebec.csv",
+             "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+saturation <- read_csv(chemin, show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), achalandage_milliers = achalandage / 1000)
+stopifnot(!anyNA(saturation[c("mois", "achalandage", "ventes")]),
+          all(saturation$achalandage > 0))
+apprentissage <- saturation |> filter(mois < as.Date("2025-10-01"))
+validation <- saturation |> filter(mois >= as.Date("2025-10-01"))
+modele_lin <- lm(ventes ~ achalandage_milliers, data = apprentissage)
+modele_quad <- lm(ventes ~ achalandage_milliers + I(achalandage_milliers^2), data = apprentissage)
+modele_log <- lm(ventes ~ log(achalandage_milliers), data = apprentissage)
+modeles <- list("Linéaire" = modele_lin, "Quadratique" = modele_quad,
+                "Logarithmique" = modele_log)
+rmse <- function(observe, predit) sqrt(mean((observe - predit)^2))
+comparaison <- imap_dfr(modeles, function(ajustement, nom) {
+  tibble(modele = nom, r2 = summary(ajustement)$r.squared,
+         r2_ajuste = summary(ajustement)$adj.r.squared,
+         rmse_apprentissage = rmse(apprentissage$ventes, fitted(ajustement)),
+         rmse_validation = rmse(validation$ventes, predict(ajustement, newdata = validation)))
+})
+grille <- tibble(achalandage_milliers = seq(min(apprentissage$achalandage_milliers),
+                                          max(apprentissage$achalandage_milliers), length.out = 120))
+courbes <- imap_dfr(modeles, function(ajustement, nom) {
+  grille |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille))
+})
+diagnostic <- imap_dfr(modeles, function(ajustement, nom) {
+  apprentissage |> mutate(modele = nom, ventes_predites = fitted(ajustement), residu = residuals(ajustement))
+})
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+palette_modeles <- c("Linéaire" = "#7A1C24", "Quadratique" = "#0B4F6C", "Logarithmique" = "#8A6500")
+theme_set(theme_minimal(base_size = 17) + theme(panel.grid.minor = element_blank()))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Un choix à défendre
-:::
-
 ::: {.question-line}
-Pourriez-vous justifier le modèle retenu sans montrer une seule ligne de code?
+Comment justifier un choix sans promettre plus que les données?
 :::
 
 ::: {.note-box}
-La direction a besoin d'une forme observée, d'une comparaison hors échantillon, d'une conséquence et d'une limite. Une conclusion utile reste plus simple que le calcul qui la soutient.
+La direction a besoin d’un résultat chiffré, d’une plage d’utilisation et d’une limite. Le classement des modèles ne constitue pas à lui seul une décision de gestion.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Justifier un choix de modèle.
-- Relier le choix au contexte d'affaires.
-- Écrire une conclusion courte.
-- Nommer une limite et une suite possible.
+- Rassembler les résultats utiles.
+- Séparer résultat et décision.
+- Produire une conclusion vérifiable.
 :::
-## Structure de justification
 
-- Ce que montre le graphique.
-- Ce que confirme la comparaison des erreurs.
-- Ce que disent les résidus.
-- Ce que le modèle implique pour la décision.
-- Ce que le modèle ne prouve pas.
+## Une comparaison lisible
 
-## Phrase modèle
+RMSE de validation, en dollars.
 
-Les ventes augmentent avec l'achalandage, mais la relation semble ralentir aux niveaux élevés. Le modèle avec courbure décrit mieux cette saturation qu'une droite. Cette conclusion suggère d'examiner la capacité et les ruptures de stock, sans prouver à elle seule la cause du ralentissement.
 
-## Ce qu'une bonne conclusion évite
+```{r}
+#| label: m04-c6-rappel
+#| echo: false
+comparaison |>
+  transmute(Modèle = modele, `RMSE validation` = nombre_fr(rmse_validation)) |>
+  knitr::kable()
+```
 
-- Dire seulement : le modèle quadratique est meilleur.
-- Oublier la question d'affaires.
-- Ignorer les unités.
-- Prétendre à une causalité non établie.
-- Prédire hors des données sans avertissement.
+::: {.note-box}
+La réduction de RMSE n’est ni un gain de ventes ni une estimation de profit.
+:::
 
-## Trace finale du module
+## Cinq éléments dans la conclusion
 
-- Question d'analyse.
-- Graphique de relation.
-- Comparaison de deux ou trois modèles.
-- Argument de choix.
-- Limite d'extrapolation.
-- Conclusion liée à la décision.
+::: {.keypoints}
+- Question et variables.
+- Forme observée sur l’apprentissage.
+- Comparaison chiffrée sur la validation.
+- Plage d’utilisation.
+- Limite et prochaine vérification.
+:::
+
+## Un exemple de conclusion
+
+::: {.example-box}
+Dans les succursales fictives, la relation ventes-achalandage est croissante et présente une courbure. La quadratique obtient une RMSE de validation d’environ 7 237 $, contre 10 155 $ pour la droite. Elle constitue un choix provisoire pour résumer cette relation. L’utilisation doit rester prudente dans la plage de 1 151 à 3 833 visites. Une nouvelle période et les contraintes de service doivent être examinées avant toute décision de capacité.
+:::
+
+## Relier résultat et décision
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Résultat
+:::
+::: {.label}
+erreur de validation plus faible
+:::
+:::
+::: {.metric}
+::: {.value}
+Hypothèse
+:::
+::: {.label}
+contraintes possibles de service
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+recueillir des données avant d’investir
+:::
+:::
+:::
+
+::: {.note-box}
+Une relation descriptive ne chiffre pas l’effet d’augmenter la capacité.
+:::
+
+## La trace Quarto attendue
+
+::: {.keypoints}
+- Graphique des 54 observations d’apprentissage.
+- Formules et code des trois modèles.
+- RMSE, diagnostics et comparaison argumentée.
+- Scénario de prédiction et limite d’extrapolation.
+:::
+
+::: {.note-box}
+Redémarrez R, puis utilisez Render : tous les résultats doivent se recalculer.
+:::
+
+## Transférer au cas d’exercice
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Capsules
+:::
+::: {.label}
+achalandage et ventes
+:::
+:::
+::: {.metric}
+::: {.value}
+Exercices
+:::
+::: {.label}
+utilisation et attente
+:::
+:::
+::: {.metric}
+::: {.value}
+À vérifier
+:::
+::: {.label}
+la courbe apporte-t-elle un gain utile?
+:::
+:::
+:::
+
+::: {.note-box}
+Le contexte, les données, les unités et la décision changent. Le modèle à retenir n’est pas imposé.
+:::
 
 ## À retenir
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Argument
 :::
 ::: {.label}
-Un modèle non linéaire sert à mieux décrire une forme.
+graphique et chiffres
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Contexte
 :::
 ::: {.label}
-La communication doit rester plus simple que le calcul.
+décision clairement séparée
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Suite
 :::
 ::: {.label}
-La recommandation doit être orientée vers l'action et défendable.
+une vérification concrète
 :::
 :::
 :::
 
 ::: {.notes}
-[Sources]
-- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to Statistical Learning with Applications in R, 2e édition, chapitres 5 et 7, https://www.statlearning.com/. Documentation de stats::lm et stats::predict.lm : https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html et https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html.
 :::
+
 ## Production autonome 4.6
 
-Rédigez une conclusion de cinq phrases maximum : forme observée, modèle retenu, argument, décision possible et limite.
-
+::: {.lead}
+Rédigez cinq phrases : question, forme observée, comparaison chiffrée, plage d’utilisation et limite. Ajoutez au rapport une donnée à recueillir avant toute décision de capacité.
+:::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Les modèles sont comparés sur les mêmes données test.
-- La forme retenue est visible et interprétable.
-- La prédiction reste dans la plage observée et son incertitude est indiquée.
+- Je cite une RMSE avec sa période et son unité.
+- Je distingue ventes prédites et effet d’une intervention.
+- Ma prochaine étape répond à une limite identifiée.
 :::

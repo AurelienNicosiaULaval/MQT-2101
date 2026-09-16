@@ -2,58 +2,140 @@
 
 ## Objectif
 
-Cette page rassemble les six capsules du module 04. Elles montrent comment reconnaître une relation courbée, pourquoi une droite peut devenir trompeuse, comment utiliser des transformations simples, comment comparer des modèles et comment éviter l’extrapolation.
+Les six capsules construisent une comparaison de modèles sur le lien entre l’achalandage et les ventes. Les données sont simulées. Le code complet est dans les [démonstrations R](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md).
 
-Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles.
+Ouvrez le PDF ou le support HTML avec code copiable, puis réalisez la production autonome dans `comparaison_achalandage.qmd`. Les activités 4.1 à 4.6 du parcours reprennent ces productions : il suffit de les faire une fois. Les vidéos ne sont pas encore disponibles.
+
+Les exercices liés sous certaines capsules utilisent un autre cas, sur l’utilisation et l’attente. Ils alimentent le projet distinct `comparaison-attente`, avec des corrigés à ouvrir après une première tentative.
 
 ## Capsule 1 - Reconnaître une relation non linéaire
 
-Cette capsule installe l’intuition : parfois la variation moyenne n’est pas constante sur toute l’échelle.
+Une direction veut estimer ses ventes. Une droite suppose une variation moyenne constante; les données peuvent suggérer un ralentissement.
 
-[](media/qmd/capsule-01-support.llms.md "HTML") [](media/pdf/capsule-01-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Donnez une raison opérationnelle qui pourrait expliquer une relation avec saturation en succursale.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
+
+À faire après la capsule : Produisez le nuage achalandage-ventes sur janvier à septembre. Décrivez la direction, une courbure possible et la dispersion. Nommez les unités et une limite.
+
+> **NOTE:**
+>
+> Faites l’[exercice 1](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-1---lire-le-graphique) sur le cas d’attente. Commencez par la [préparation du projet](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#préparation). Tentez votre réponse avant d’ouvrir le corrigé.
 
 ## Capsule 2 - Comprendre la saturation
 
-Cette capsule relie la courbure statistique à des contraintes d’affaires concrètes : capacité, attente et rupture de stock.
+La capacité, l’attente et les ruptures de stock peuvent éclairer le contexte. Un graphique ne permet pas d’isoler leur effet causal.
 
-[](media/qmd/capsule-02-support.llms.md "HTML") [](media/pdf/capsule-02-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Associez un signe de saturation possible à une variable du fichier.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
+
+À faire après la capsule : Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.
 
 ## Capsule 3 - Ajouter une transformation simple
 
-Cette capsule présente deux outils simples : terme quadratique et logarithme.
+Une droite, une courbe quadratique et un logarithme imposent des formes différentes. Le choix doit rester lisible sur l’échelle des ventes.
 
-[](media/qmd/capsule-03-support.llms.md "HTML") [](media/pdf/capsule-03-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Expliquez en quoi un terme quadratique peut représenter un ralentissement de la croissance.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
+
+À faire après la capsule : Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.
+
+> **NOTE:**
+>
+> Faites l’[exercice 2](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-2---ajuster-deux-modèles) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
 
 ## Capsule 4 - Comparer plusieurs modèles
 
-Cette capsule montre comment comparer une droite, une courbe quadratique et un modèle logarithmique.
+Une courbe peut réduire les résidus d’apprentissage sans mieux prédire. Les mêmes mois de validation doivent servir à comparer tous les candidats.
 
-[](media/qmd/capsule-04-support.llms.md "HTML") [](media/pdf/capsule-04-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Nommez trois critères de comparaison qui ne se limitent pas au plus grand `R²`.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
+
+À faire après la capsule : Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.
+
+> **NOTE:**
+>
+> Faites l’[exercice 3](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-3---calculer-la-rmse) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
 
 ## Capsule 5 - Prédire et éviter l’extrapolation
 
-Cette capsule insiste sur les limites des prédictions hors de la plage observée.
+Des modèles proches sur les données peuvent diverger fortement au-delà. Un intervalle calculé ne garantit pas la bonne forme de la courbe.
 
-[](media/qmd/capsule-05-support.llms.md "HTML") [](media/pdf/capsule-05-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Expliquez pourquoi prédire pour un achalandage jamais observé est fragile.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
+
+À faire après la capsule : Prédisez les ventes pour 2 500 visites avec le modèle quadratique et son intervalle de prédiction. Comparez ensuite les trois prédictions à 6 000 visites et expliquez pourquoi elles ne justifient pas une recommandation.
+
+> **NOTE:**
+>
+> Faites l’[exercice 4](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-4---interpréter-la-saturation) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
 
 ## Capsule 6 - Communiquer le choix du modèle
 
-Cette capsule transforme la comparaison technique en conclusion de gestion prudente.
+La direction a besoin d’un résultat chiffré, d’une plage d’utilisation et d’une limite. Le classement des modèles ne constitue pas à lui seul une décision de gestion.
 
-[](media/qmd/capsule-06-support.llms.md "HTML") [](media/pdf/capsule-06-support.pdf "PDF")
+## Vidéo
 
-À faire après la capsule : Rédigez une recommandation qui distingue résultat statistique, décision possible et limite.
+La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-06-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-06-support.llms.md)
+
+À faire après la capsule : Rédigez cinq phrases : question, forme observée, comparaison chiffrée, plage d’utilisation et limite. Ajoutez au rapport une donnée à recueillir avant toute décision de capacité.
+
+> **NOTE:**
+>
+> Faites les [exercices 5 et 6](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-5---conclusion-prudente) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
 
 ## Après les capsules
 
-Poursuivez avec les [démonstrations R](demonstrations.llms.md), puis les [exercices](exercices.llms.md). Les capsules préparent le vocabulaire; les démonstrations montrent la comparaison complète; les exercices servent à justifier un choix de modèle.
+Terminez les exercices restants et relisez vos conclusions. Les [notes de cours](../../modules/semaine-04-regression-nonlineaire/notes-cours.llms.md), également disponibles en [PDF](media/pdf/notes-cours.pdf), rassemblent les repères du module.

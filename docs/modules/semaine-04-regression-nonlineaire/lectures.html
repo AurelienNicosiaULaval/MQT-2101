@@ -6837,6 +6837,12 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,10 +7023,10 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#lectures-obligatoires" id="toc-lectures-obligatoires" class="nav-link active" data-scroll-target="#lectures-obligatoires">Lectures obligatoires</a></li>
-  <li><a href="#documentation-r-utile" id="toc-documentation-r-utile" class="nav-link" data-scroll-target="#documentation-r-utile">Documentation R utile</a></li>
-  <li><a href="#à-retenir-pendant-la-lecture" id="toc-à-retenir-pendant-la-lecture" class="nav-link" data-scroll-target="#à-retenir-pendant-la-lecture">À retenir pendant la lecture</a></li>
+  <ul class="collapse">
+  <li><a href="#pour-ce-module" id="toc-pour-ce-module" class="nav-link active" data-scroll-target="#pour-ce-module">Pour ce module</a></li>
+  <li><a href="#références-complémentaires" id="toc-références-complémentaires" class="nav-link" data-scroll-target="#références-complémentaires">Références complémentaires</a></li>
+  <li><a href="#repères-de-lecture" id="toc-repères-de-lecture" class="nav-link" data-scroll-target="#repères-de-lecture">Repères de lecture</a></li>
   </ul>
 </nav>
     </div>
@@ -7046,27 +7052,23 @@ display: none;
 </header>
 
 
-<section id="lectures-obligatoires" class="level2">
-<h2 class="anchored" data-anchor-id="lectures-obligatoires">Lectures obligatoires</h2>
+<section id="pour-ce-module" class="level2">
+<h2 class="anchored" data-anchor-id="pour-ce-module">Pour ce module</h2>
+<p>Reprenez les repères de <a href="../../modules/semaine-03-regression-lineaire/index.html">régression linéaire</a> : moyenne prédite, résidu, R², hypothèses et intervalle de prédiction. Consultez les <a href="../../modules/semaine-04-regression-nonlineaire/capsules.html">capsules</a>, reproduisez les <a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html">démonstrations</a> et tentez les <a href="../../modules/semaine-04-regression-nonlineaire/exercices.html">exercices</a> avant leurs corrigés.</p>
+</section>
+<section id="références-complémentaires" class="level2">
+<h2 class="anchored" data-anchor-id="références-complémentaires">Références complémentaires</h2>
 <ul>
-<li>Revoir le <a href="../../modules/semaine-03-regression-lineaire/index.html">module 03</a>, surtout la pente, les résidus et la prudence d’interprétation.</li>
-<li>Lire les <a href="../../modules/semaine-04-regression-nonlineaire/capsules.html">capsules</a>.</li>
-<li>Reproduire les <a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html">démonstrations R</a>.</li>
-<li>Faire les <a href="../../modules/semaine-04-regression-nonlineaire/exercices.html">exercices</a> avant de consulter les solutions cachées.</li>
+<li>James, G., Witten, D., Hastie, T. et Tibshirani, R. (2021). <a href="https://www.statlearning.com/">An Introduction to Statistical Learning with Applications in R, 2e édition</a>. Chapitre 5 pour la validation; chapitre 7, section sur la régression polynomiale. L’édition R est de 2021; l’édition Python est de 2023.</li>
+<li>Hyndman, R. J. et Athanasopoulos, G. (2021). <a href="https://otexts.com/fpp3/accuracy.html">Forecasting: Principles and Practice, 3e édition, section 5.8</a>. Résidus, erreurs sur des observations mises de côté et RMSE.</li>
+<li>R Core Team, documentation officielle de <a href="https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html">lm()</a> et <a href="https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html">predict.lm()</a>, consultée le 15 septembre 2026.</li>
+<li>R Core Team, documentation de <a href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/Log.html">log()</a> : logarithme naturel par défaut.</li>
 </ul>
 </section>
-<section id="documentation-r-utile" class="level2">
-<h2 class="anchored" data-anchor-id="documentation-r-utile">Documentation R utile</h2>
-<ul>
-<li>Fonction <code>lm()</code> pour les modèles linéaires : <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html</a></li>
-<li>Fonction <code>predict.lm()</code> pour produire des prédictions : <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html</a></li>
-<li>Fonction <code>geom_smooth()</code> pour visualiser des ajustements : <a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_smooth.html</a></li>
-<li>Fonction <code>log()</code> dans R : <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html</a></li>
-</ul>
-</section>
-<section id="à-retenir-pendant-la-lecture" class="level2">
-<h2 class="anchored" data-anchor-id="à-retenir-pendant-la-lecture">À retenir pendant la lecture</h2>
-<p>Une transformation doit être justifiée par la forme de la relation, le contexte et l’interprétation. Le modèle choisi doit rester utile pour répondre à la question d’affaires, pas seulement produire un meilleur indicateur numérique.</p>
+<section id="repères-de-lecture" class="level2">
+<h2 class="anchored" data-anchor-id="repères-de-lecture">Repères de lecture</h2>
+<p>Le modèle quadratique et le modèle avec log(x) restent linéaires en leurs paramètres. Ils permettent une relation courbée tout en conservant une réponse quantitative. La validation sert ici à comparer des candidats; une nouvelle évaluation serait nécessaire pour confirmer la performance du choix final.</p>
+<p>La régression logistique est traitée au <a href="../../modules/semaine-10-classification-modeles-avances/index.html">module 10</a>. Les modèles à plateau imposé, les splines, les GAM, le probit et le Tobit ne sont pas développés dans ce module.</p>
 
 
 </section>

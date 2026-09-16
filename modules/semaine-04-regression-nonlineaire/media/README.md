@@ -1,15 +1,7 @@
-# Médias - Semaine 04
+# Supports du module 04
 
-Ce dossier sert à préparer les médias publics du module.
+Les six sources sont dans `qmd/`; leurs PDF sont dans `pdf/`. La synthèse provient de `../notes-cours.qmd` et son PDF est `pdf/notes-cours.pdf`.
 
-## Sous-dossiers
+Toutes les capsules utilisent le cas simulé achalandage-ventes, les 54 lignes de janvier à septembre 2025 pour l’apprentissage et les 18 lignes d’octobre à décembre pour la validation. Les exercices sur l’utilisation et l’attente forment un cas distinct avec leurs corrigés.
 
-- `videos/` : vidéos courtes intégrées dans les capsules.
-- `pdf/` : supports PDF générés à partir des contenus Quarto.
-
-## Règles
-
-- ne pas publier de documents privés ou protégés sans validation;
-- privilégier des vidéos courtes;
-- garder le même numéro de capsule entre vidéo, support;
-- documenter toute source ancienne utilisée.
+Après toute modification, rendre les sources, régénérer les PDF, contrôler les pages et les liens, puis vérifier la publication. Les vidéos sont encore à enregistrer.

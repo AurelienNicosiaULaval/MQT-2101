@@ -1,10 +1,12 @@
 ---
-title: 'Capsule 3 - Ajouter une transformation simple'
+title: "Capsule 3 - Ajouter une transformation simple"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module04-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -22,126 +24,227 @@ format:
     code-overflow: wrap
     embed-resources: true
 execute:
+  echo: true
   warning: false
   message: false
 editor: visual
 ---
 
 ```{r}
-#| label: setup-module-04
+#| label: preparation-m04-c3
 #| include: false
 library(tidyverse)
-data_candidates <- c("data/achalandage_saturation_quebec.csv", "../../data/achalandage_saturation_quebec.csv", "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-saturation <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-id_entrainement <- sample(seq_len(nrow(saturation)), floor(0.80 * nrow(saturation)))
-entrainement <- saturation |> slice(id_entrainement)
-test <- saturation |> slice(-id_entrainement)
-modele_lin <- lm(ventes ~ achalandage, data = entrainement)
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = entrainement)
-modele_log <- lm(ventes ~ log(achalandage), data = entrainement)
+chemins <- c("data/achalandage_saturation_quebec.csv",
+             "../../data/achalandage_saturation_quebec.csv",
+             "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+saturation <- read_csv(chemin, show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), achalandage_milliers = achalandage / 1000)
+stopifnot(!anyNA(saturation[c("mois", "achalandage", "ventes")]),
+          all(saturation$achalandage > 0))
+apprentissage <- saturation |> filter(mois < as.Date("2025-10-01"))
+validation <- saturation |> filter(mois >= as.Date("2025-10-01"))
+modele_lin <- lm(ventes ~ achalandage_milliers, data = apprentissage)
+modele_quad <- lm(ventes ~ achalandage_milliers + I(achalandage_milliers^2), data = apprentissage)
+modele_log <- lm(ventes ~ log(achalandage_milliers), data = apprentissage)
+modeles <- list("Linéaire" = modele_lin, "Quadratique" = modele_quad,
+                "Logarithmique" = modele_log)
+rmse <- function(observe, predit) sqrt(mean((observe - predit)^2))
+comparaison <- imap_dfr(modeles, function(ajustement, nom) {
+  tibble(modele = nom, r2 = summary(ajustement)$r.squared,
+         r2_ajuste = summary(ajustement)$adj.r.squared,
+         rmse_apprentissage = rmse(apprentissage$ventes, fitted(ajustement)),
+         rmse_validation = rmse(validation$ventes, predict(ajustement, newdata = validation)))
+})
+grille <- tibble(achalandage_milliers = seq(min(apprentissage$achalandage_milliers),
+                                          max(apprentissage$achalandage_milliers), length.out = 120))
+courbes <- imap_dfr(modeles, function(ajustement, nom) {
+  grille |> mutate(modele = nom, ventes_predites = predict(ajustement, newdata = grille))
+})
+diagnostic <- imap_dfr(modeles, function(ajustement, nom) {
+  apprentissage |> mutate(modele = nom, ventes_predites = fitted(ajustement), residu = residuals(ajustement))
+})
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
+monnaie <- scales::label_number(big.mark = " ", decimal.mark = ",", suffix = " $")
+palette_modeles <- c("Linéaire" = "#7A1C24", "Quadratique" = "#0B4F6C", "Logarithmique" = "#8A6500")
+theme_set(theme_minimal(base_size = 17) + theme(panel.grid.minor = element_blank()))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une forme à choisir
-:::
-
 ::: {.question-line}
-Quelle courbe résume la saturation sans perdre le lien avec la décision?
+Comment représenter une hausse qui ralentit?
 :::
 
 ::: {.note-box}
-Le terme quadratique et le logarithme n'imposent pas la même forme. Les comparer oblige à relier le choix mathématique au nuage de points et à l'échelle des ventes.
+Une droite, une courbe quadratique et un logarithme imposent des formes différentes. Le choix doit rester lisible sur l’échelle des ventes.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Comprendre le rôle d'une transformation.
-- Utiliser un terme quadratique.
-- Utiliser un logarithme lorsque le contexte le justifie.
-- Garder le lien avec l'échelle originale.
+- Écrire trois modèles candidats.
+- Ajuster les modèles avec lm().
+- Interpréter une différence de prédictions.
 :::
-## Transformation : définition pratique
 
-Une transformation change la forme utilisée par le modèle. Elle ne change pas la question d'analyse : elle change la façon de résumer la relation.
+## Trois formes, une même réponse
 
-## Modèle quadratique
+On note $x$ l’achalandage en milliers de visites et $y$ les ventes en dollars.
+
+| Forme | Moyenne modélisée |
+|---|---|
+| Droite | $\beta_0+\beta_1x$ |
+| Quadratique | $\beta_0+\beta_1x+\beta_2x^2$ |
+| Logarithmique | $\beta_0+\beta_1\ln(x)$, avec $x>0$ |
+
+## Courbe en x, modèle linéaire en paramètres
+
+::: {.example-box}
+$$Y=\beta_0+\beta_1x+\beta_2x^2+\varepsilon$$
+:::
+
+::: {.note-box}
+Les coefficients restent linéaires : `lm()` convient. Une relation courbée n’exige pas forcément une régression non linéaire en paramètres.
+:::
+
+::: {.notes}
+Le mot linéaire se rapporte ici aux paramètres. On garde une réponse quantitative et une erreur additive; une régression logistique répond à une autre question.
+:::
+
+## Fixer les données d’apprentissage
 
 ```{r}
-#| label: code-quadratique-module-04
+#| label: m04-c3-separer
 #| echo: true
-modele_quad <- lm(ventes ~ achalandage + I(achalandage^2), data = saturation)
+saturation <- saturation |>
+  mutate(achalandage_milliers = achalandage / 1000)
+apprentissage <- saturation |>
+  filter(mois < as.Date("2025-10-01"))
+validation <- saturation |>
+  filter(mois >= as.Date("2025-10-01"))
 ```
 
-Le terme `I(achalandage^2)` permet à la relation estimée de se courber.
-
-## Modèle logarithmique
+## Ajuster la droite et la quadratique
 
 ```{r}
-#| label: code-logarithmique-module-04
+#| label: m04-c3-modeles
 #| echo: true
-modele_log <- lm(ventes ~ log(achalandage), data = saturation)
+modele_lin <- lm(ventes ~ achalandage_milliers,
+                 data = apprentissage)
+modele_quad <- lm(
+  ventes ~ achalandage_milliers + I(achalandage_milliers^2),
+  data = apprentissage
+)
 ```
 
-Le logarithme peut représenter une augmentation rapide au début, puis plus lente par la suite.
+::: {.note-box}
+`I(x^2)` demande le carré numérique. Conservez aussi le terme x.
+:::
 
-## Choisir avec une raison
+## Interpréter une variation
 
-- La forme observée dans le graphique.
-- Le contexte opérationnel.
-- La lisibilité de l'interprétation.
-- La qualité des résidus et des prédictions.
+```{r}
+#| label: m04-c3-variations
+#| echo: false
+scenarios <- tibble(achalandage_milliers = c(2, 2.1, 3, 3.1))
+pred <- predict(modele_quad, newdata = scenarios)
+tibble(Comparaison = c("2 000 à 2 100 visites", "3 000 à 3 100 visites"),
+       `Hausse prédite (dollars)` = nombre_fr(c(pred[2]-pred[1], pred[4]-pred[3]))) |>
+  knitr::kable()
+```
 
-## Vigilance
+::: {.note-box}
+Pour 100 visites supplémentaires, la hausse prédite dépend du point de départ.
+:::
 
-Une transformation peut améliorer l'ajustement tout en rendant l'interprétation moins directe. Il faut donc revenir à des phrases concrètes sur les ventes et l'achalandage.
+## Transformer l’explicative avec un logarithme
+
+```{r}
+#| label: m04-c3-log
+#| echo: true
+modele_log <- lm(ventes ~ log(achalandage_milliers),
+                 data = apprentissage)
+```
+
+::: {.example-box}
+Pour une hausse de 10 % de x : $\Delta\widehat{y}=b_1\ln(1{,}10)$.
+:::
+
+::: {.note-box}
+La réponse reste en dollars. Il n’y a pas de transformation inverse de y à effectuer.
+:::
+
+## Superposer les trois formes
+
+```{r}
+#| label: m04-c3-courbes
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.3
+#| out-width: "85%"
+ggplot(apprentissage, aes(achalandage_milliers, ventes)) +
+  geom_point(alpha = 0.45, colour = "#40515C") +
+  geom_line(data = courbes, aes(y = ventes_predites, colour = modele), linewidth = 1.2) +
+  scale_colour_manual(values = palette_modeles) +
+  scale_y_continuous(labels = monnaie) +
+  labs(x = "Achalandage mensuel (milliers de visites)", y = "Ventes mensuelles ($ CA)", colour = "Modèle")
+```
+
+## Ce que la forme ne garantit pas
+
+::: {.keypoints}
+- Quadratique : une courbure, sans plateau imposé.
+- Logarithme : défini seulement pour x positif.
+- Une meilleure apparence doit être confrontée à la validation.
+:::
 
 ## À retenir
 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Forme
 :::
 ::: {.label}
-Une transformation est un choix de forme.
+trois candidats explicites
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Échelle
 :::
 ::: {.label}
-Le choix doit être justifié par les données et le contexte.
+ventes en dollars
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Variation
 :::
 ::: {.label}
-L'interprétation doit revenir à l'échelle de la décision d'affaires.
+comparer des prédictions
 :::
 :::
 :::
 
 ::: {.notes}
-[Sources]
-- James, G., Witten, D., Hastie, T. et Tibshirani, R. (2023). An Introduction to Statistical Learning, 2e éd. https://www.statlearning.com/
+Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to Statistical Learning with Applications in R, 2e édition, chapitres 5 et 7, https://www.statlearning.com/. Documentation de stats::lm et stats::predict.lm : https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html et https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html.
 :::
+
 ## Production autonome 4.3
 
-Écrivez une phrase qui explique pourquoi un modèle transformé peut être plus réaliste qu'une droite dans le cas d'une succursale saturée.
-
+::: {.lead}
+Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.
+:::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Les modèles sont comparés sur les mêmes données test.
-- La forme retenue est visible et interprétable.
-- La prédiction reste dans la plage observée et son incertitude est indiquée.
+- J’ai exprimé x en milliers de visites.
+- Les trois modèles utilisent les mêmes 54 lignes.
+- Je n’interprète pas le coefficient de x comme une pente constante dans le modèle quadratique.
 :::
