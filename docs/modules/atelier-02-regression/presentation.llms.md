@@ -59,6 +59,6 @@ Ouvrez le [guide de la mission](https://aureliennicosiaulaval.github.io/MQT-2101
 
 Lancez un premier rendu, puis commencez par les données et votre question.
 
-Les 30 dernières minutes sont réservées aux questions sur le mini-rapport 1. Apportez un passage, un résultat ou un message d’erreur précis.
+Un moment est prévu pour vos questions sur le mini-rapport 1. Apportez un passage, un résultat ou un message d’erreur précis.
 
 Conservez le QMD, le HTML et les données du laboratoire ensemble.

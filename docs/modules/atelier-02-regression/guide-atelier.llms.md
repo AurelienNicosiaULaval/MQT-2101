@@ -25,7 +25,7 @@ Le cadre est commun, mais vous prenez davantage de décisions.
 
 Travaillez en binômes, avec un rapport commun. Alternez la personne au clavier après le premier point de rétroaction. Chacun doit pouvoir expliquer la démarche; le travail individuel reste possible. Reprenez un point à améliorer de la rétroaction du laboratoire 1.
 
-Ce laboratoire est formatif, sans points dans la note finale. La [présentation](../../modules/atelier-02-regression/presentation.llms.md) lance la séance et le [déroulement](../../modules/atelier-02-regression/index.llms.md#pendant-latelier) réserve les 30 dernières minutes aux questions sur le mini-rapport 1.
+Ce laboratoire est formatif, sans points dans la note finale. La [présentation](../../modules/atelier-02-regression/presentation.llms.md) lance la séance et le [déroulement](../../modules/atelier-02-regression/index.llms.md#pendant-latelier) prévoit un moment pour les questions sur le mini-rapport 1.
 
 ## Dossier de départ
 
@@ -164,7 +164,7 @@ Appliquez une correction ou expliquez pourquoi vous conservez votre choix. Notez
 - Conservez le dossier complet avec le QMD, le HTML et `data/`. Si nécessaire, compressez ce dossier pour le transférer.
 - Si un point reste bloqué, indiquez la tentative et la question dans le bilan, puis montrez-les à l’enseignant.
 
-Les 30 dernières minutes servent aux questions sur le [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md). Apportez un passage, une sortie ou un message d’erreur précis. Les modalités de l’évaluation restent celles de sa page de consignes et du calendrier.
+La fin de la séance permet de poser vos questions sur le [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md). Apportez un passage, une sortie ou un message d’erreur précis. Les modalités de l’évaluation restent celles de sa page de consignes et du calendrier.
 
 ## Aide à la demande
 

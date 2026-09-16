@@ -28,21 +28,21 @@ La mission commence en classe. Si le premier rendu bloque, gardez le message d�
 
 Le [guide de la mission](../../modules/atelier-02-regression/guide-atelier.llms.md) est le fil principal. Travaillez en binômes, avec un rapport par binôme; chaque personne doit pouvoir expliquer les deux modèles. Si vous travaillez seul, les mêmes productions sont attendues.
 
-Le déroulement suivant est un repère pour la séance de 9 h à 11 h 50, indiquée au [calendrier](../../calendrier.llms.md).
+Le déroulement suivant présente les étapes de la séance.
 
-| Moment | Travail | Résultat visé |
+| Étape | Travail | Résultat visé |
 |----|----|----|
-| 9 h à 9 h 10 | Présentation et lancement | Comprendre la mission et les choix à faire |
-| 9 h 10 à 9 h 30 | Données et question | Données vérifiées, variable explicative choisie |
-| 9 h 30 à 9 h 55 | Exploration et droite de référence | Graphique, modèle et coefficients interprétés |
-| 9 h 55 à 10 h 05 | Premier point de rétroaction | Expliquer le choix de la variante à essayer |
-| 10 h 05 à 10 h 15 | Pause | Reprendre avec la comparaison |
-| 10 h 15 à 10 h 45 | Variante et diagnostic | Deux modèles comparés et résidus examinés |
-| 10 h 45 à 11 h 05 | Conclusion et relecture croisée | Une recommandation justifiée et une amélioration précise |
-| 11 h 05 à 11 h 20 | Correction et rendu | HTML vérifié et bilan formatif |
-| 11 h 20 à 11 h 50 | Questions sur le mini-rapport 1 | Vérifier un choix, une interprétation ou le dossier de remise |
+| 1 | Présentation et lancement | Comprendre la mission et les choix à faire |
+| 2 | Données et question | Données vérifiées, variable explicative choisie |
+| 3 | Exploration et droite de référence | Graphique, modèle et coefficients interprétés |
+| 4 | Premier point de rétroaction | Expliquer le choix de la variante à essayer |
+| 5 | Pause | Reprendre avec la comparaison |
+| 6 | Variante et diagnostic | Deux modèles comparés et résidus examinés |
+| 7 | Conclusion et relecture croisée | Une recommandation justifiée et une amélioration précise |
+| 8 | Correction et rendu | HTML vérifié et bilan formatif |
+| 9 | Questions sur le mini-rapport 1 | Vérifier un choix, une interprétation ou le dossier de remise |
 
-Ces durées peuvent être ajustées en classe. Montrez votre tentative et expliquez ce que vous cherchez à obtenir lorsque vous demandez de l’aide.
+Montrez votre tentative et expliquez ce que vous cherchez à obtenir lorsque vous demandez de l’aide.
 
 ## Production attendue
 
