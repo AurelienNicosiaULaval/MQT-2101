@@ -26,6 +26,10 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 À faire après la capsule : formuler la question sur le budget et les ventes, puis nommer les variables, leurs unités et une variable de contexte.
 
+> **NOTE:**
+>
+> Passez à l’[exercice 1 : identifier les variables](../../modules/semaine-03-regression-lineaire/exercices.llms.md#exercice-1---identifier-les-variables) du cas de service. Commencez par la [préparation du projet](../../modules/semaine-03-regression-lineaire/exercices.llms.md#préparation). Faites une première tentative avant de consulter le corrigé.
+
 ## Capsule 2 - Lire le nuage de points
 
 Lire la direction, la forme et la dispersion, puis interpréter la corrélation.
@@ -43,6 +47,10 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
 
 À faire après la capsule : produire le nuage de points et décrire sa direction, sa forme, sa dispersion et une limite.
+
+> **NOTE:**
+>
+> Faites l’[exercice 2 : nuage de points](../../modules/semaine-03-regression-lineaire/exercices.llms.md#exercice-2---nuage-de-points), sur le délai de service et la satisfaction. Faites une première tentative avant de consulter le corrigé.
 
 ## Capsule 3 - Comprendre la droite de régression
 
@@ -80,6 +88,10 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 À faire après la capsule : présenter la pente pour 1 000 \$ et son intervalle, formuler H₀, interpréter la valeur p et indiquer une hypothèse à vérifier.
 
+> **NOTE:**
+>
+> Faites l’[exercice 3 : ajuster le modèle](../../modules/semaine-03-regression-lineaire/exercices.llms.md#exercice-3---ajuster-le-modèle), pour interpréter la pente, son intervalle et sa valeur p dans le cas de service. Faites une première tentative avant de consulter le corrigé.
+
 ## Capsule 5 - Diagnostiquer avec les résidus
 
 Examiner le graphique des résidus et les écarts moyens par région.
@@ -116,6 +128,10 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 À faire après la capsule : rédiger cinq phrases : question, pente, ajustement et diagnostic, limite, prochaine étape.
 
+> **NOTE:**
+>
+> Terminez les [exercices 4 à 6](../../modules/semaine-03-regression-lineaire/exercices.llms.md#exercice-4---examiner-les-résidus-et-le-r²) : diagnostic et R², conclusion et note Quarto. Le R² nécessaire à l’exercice 4 vient d’être présenté dans cette capsule. Faites une première tentative avant de consulter le corrigé.
+
 ## Après les capsules
 
-Terminez votre analyse guidée avec les [démonstrations R](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md). Passez ensuite aux [exercices d’application et à leurs corrigés](../../modules/semaine-03-regression-lineaire/exercices.llms.md) sur les délais et la satisfaction. Les [notes de cours](../../modules/semaine-03-regression-lineaire/notes-cours.llms.md) rassemblent les repères du module, également disponibles en [PDF](media/pdf/notes-cours.pdf).
+Terminez votre analyse guidée avec les [démonstrations R](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md). Complétez les [exercices d’application](../../modules/semaine-03-regression-lineaire/exercices.llms.md) qui restent à faire, puis comparez vos réponses aux corrigés. Les exercices réalisés après les capsules ne sont pas à refaire. Les [notes de cours](../../modules/semaine-03-regression-lineaire/notes-cours.llms.md) rassemblent les repères du module, également disponibles en [PDF](media/pdf/notes-cours.pdf).

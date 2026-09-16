@@ -55,7 +55,7 @@ Suivez les six capsules dans l’ordre et conservez le code et vos réponses dan
 
 Les supports se consultent en PDF ou en HTML, avec du code copiable dans les versions HTML. Les vidéos du module 3 ne sont pas encore disponibles.
 
-Une fois le parcours guidé terminé, passez aux exercices d’application sur le délai de service et la satisfaction, dans un projet distinct. Les données des deux cas sont simulées.
+Les liens « Ex. » dans les étapes indiquent quand faire les exercices d’application sur le délai de service et la satisfaction. Préparez le projet distinct `diagnostic-service` en suivant la [préparation des exercices](../../modules/semaine-03-regression-lineaire/exercices.llms.md#préparation). Les données des deux cas sont simulées.
 
 > **NOTE:**
 >
@@ -63,11 +63,11 @@ Une fois le parcours guidé terminé, passez aux exercices d’application sur l
 
 Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.
 
-1 Formuler la question Passer d'une question d'affaires à une question de régression. [Capsule 1](capsules.llms.md#capsule-1---formuler-une-question-de-régression) Ouvrir l'étapeRéduire
+1 Formuler la question Passer d'une question d'affaires à une question de régression. [Capsule 1](capsules.llms.md#capsule-1---formuler-une-question-de-régression)[Ex. 1](exercices.llms.md#exercice-1---identifier-les-variables) Ouvrir l'étapeRéduire
 
 Objectif Identifier la variable réponse, la variable explicative et la limite causale de départ.
 
-Ressource [Capsule 1](capsules.llms.md#capsule-1---formuler-une-question-de-régression)
+Ressource [Capsule 1](capsules.llms.md#capsule-1---formuler-une-question-de-régression) [Exercice 1](exercices.llms.md#exercice-1---identifier-les-variables)
 
 Action Reformuler la question avec les mots association moyenne, ventes et budget marketing.
 
@@ -75,17 +75,21 @@ Activité 3.1 - Question et variables
 
 Écrivez la question statistique, puis nommez la variable réponse, la variable explicative principale et une variable de contexte.
 
-2 Lire le nuage de points Observer direction, forme, dispersion et points atypiques avant de modéliser. [Capsule 2](capsules.llms.md#capsule-2---lire-le-nuage-de-points)[Démo](demonstrations.llms.md#visualiser-la-relation) Ouvrir l'étapeRéduire
+Exercice d’application Après la capsule, faites l’exercice 1 sur les variables du cas de service. Tentez une réponse avant d’ouvrir le corrigé.
+
+2 Lire le nuage de points Observer direction, forme, dispersion et points atypiques avant de modéliser. [Capsule 2](capsules.llms.md#capsule-2---lire-le-nuage-de-points)[Démo](demonstrations.llms.md#visualiser-la-relation)[Ex. 2](exercices.llms.md#exercice-2---nuage-de-points) Ouvrir l'étapeRéduire
 
 Objectif Vérifier visuellement si une droite est un résumé plausible.
 
-Ressource [Capsule 2](capsules.llms.md#capsule-2---lire-le-nuage-de-points) [Démonstration](demonstrations.llms.md#visualiser-la-relation)
+Ressource [Capsule 2](capsules.llms.md#capsule-2---lire-le-nuage-de-points) [Démonstration](demonstrations.llms.md#visualiser-la-relation) [Exercice 2](exercices.llms.md#exercice-2---nuage-de-points)
 
 Action Produire le nuage de points et décrire la direction de l'association.
 
 Activité 3.2 - Lecture graphique
 
 Décrivez la direction, la forme et la dispersion du nuage de points, puis indiquez une limite.
+
+Exercice d’application Après la capsule, faites l’exercice 2 : un nouveau nuage de points, sur le délai et la satisfaction. Tentez une réponse avant d’ouvrir le corrigé.
 
 3 Comprendre la droite Relier l'équation du modèle à la pente et à l'ordonnée à l'origine. [Capsule 3](capsules.llms.md#capsule-3---comprendre-la-droite-de-régression) Ouvrir l'étapeRéduire
 
@@ -99,17 +103,19 @@ Activité 3.3 - Pente et unités
 
 Interprétez la pente pour 1 000 \$ de budget. Expliquez le signe du résidu de janvier en Capitale-Nationale.
 
-4 Ajuster le modèle dans R Utiliser lm(), lire les coefficients et transformer la sortie en phrases. [Capsule 4](capsules.llms.md#capsule-4---ajuster-le-modèle-avec-r)[Démo](demonstrations.llms.md#ajuster-le-modèle) Ouvrir l'étapeRéduire
+4 Ajuster le modèle dans R Utiliser lm(), lire les coefficients et transformer la sortie en phrases. [Capsule 4](capsules.llms.md#capsule-4---ajuster-le-modèle-avec-r)[Démo](demonstrations.llms.md#ajuster-le-modèle)[Ex. 3](exercices.llms.md#exercice-3---ajuster-le-modèle) Ouvrir l'étapeRéduire
 
 Objectif Ajuster une régression linéaire simple et lire la sortie R utile.
 
-Ressource [Capsule 4](capsules.llms.md#capsule-4---ajuster-le-modèle-avec-r) [Démonstration](demonstrations.llms.md#ajuster-le-modèle)
+Ressource [Capsule 4](capsules.llms.md#capsule-4---ajuster-le-modèle-avec-r) [Démonstration](demonstrations.llms.md#ajuster-le-modèle) [Exercice 3](exercices.llms.md#exercice-3---ajuster-le-modèle)
 
 Action Exécuter `lm(ventes ~ budget_marketing, data = campagnes)` et repérer les coefficients.
 
 Activité 3.4 - Lire les coefficients
 
 Ajustez la droite, présentez la pente pour 1 000 \$ et son intervalle classique. Formulez H₀ sur la pente et interprétez la valeur p. Indiquez une hypothèse à vérifier.
+
+Exercice d’application Après la capsule, faites l’exercice 3 pour ajuster et interpréter le modèle de satisfaction, puis lire le test de la pente. Tentez une réponse avant d’ouvrir le corrigé.
 
 5 Diagnostiquer les résidus Vérifier si les erreurs du modèle restent compatibles avec une droite. [Capsule 5](capsules.llms.md#capsule-5---diagnostiquer-avec-les-résidus)[Démo](demonstrations.llms.md#résidus-et-valeurs-ajustées) Ouvrir l'étapeRéduire
 
@@ -123,11 +129,11 @@ Activité 3.5 - Résidus
 
 Produisez le graphique des résidus et le tableau par région. Rédigez un constat sur chacun, puis une limite.
 
-6 Conclure prudemment Rassembler graphique, pente, ajustement, limite et recommandation. [Capsule 6](capsules.llms.md#capsule-6---conclure-sans-dépasser-les-données)[Démo](demonstrations.llms.md#conclusion-prudente) Ouvrir l'étapeRéduire
+6 Conclure prudemment Rassembler graphique, pente, ajustement, limite et recommandation. [Capsule 6](capsules.llms.md#capsule-6---conclure-sans-dépasser-les-données)[Démo](demonstrations.llms.md#conclusion-prudente)[Ex. 4 à 6](exercices.llms.md#exercice-4---examiner-les-résidus-et-le-r²) Ouvrir l'étapeRéduire
 
 Objectif Produire une conclusion courte, utile et statistiquement défendable.
 
-Ressource [Capsule 6](capsules.llms.md#capsule-6---conclure-sans-dépasser-les-données) [Démonstration](demonstrations.llms.md#conclusion-prudente)
+Ressource [Capsule 6](capsules.llms.md#capsule-6---conclure-sans-dépasser-les-données) [Démonstration](demonstrations.llms.md#conclusion-prudente) [Exercices 4 à 6](exercices.llms.md#exercice-4---examiner-les-résidus-et-le-r²)
 
 Action Calculer le R², prédire les ventes pour 6 000 \$ de budget avec un intervalle, puis conclure en tenant compte des résidus et du contexte.
 
@@ -135,9 +141,11 @@ Activité 3.6 - Conclusion finale
 
 Rédigez cinq phrases : question, pente pour 1 000 \$, ajustement et diagnostic, limite, prochaine étape.
 
+Exercice d’application Terminez avec les exercices 4 à 6 : diagnostic et R², conclusion, puis note Quarto. L’exercice 4 vient ici parce qu’il utilise aussi le R² présenté dans la capsule 6. Tentez une réponse avant d’ouvrir le corrigé.
+
 ## Exercices d’application
 
-Réalisez ensuite les [six exercices](../../modules/semaine-03-regression-lineaire/exercices.llms.md) dans le projet `diagnostic-service`. Vous étudierez le délai de service moyen, en minutes, et la satisfaction mensuelle, en points sur 10, dans six succursales fictives.
+Les [six exercices](../../modules/semaine-03-regression-lineaire/exercices.llms.md) se font progressivement dans le projet `diagnostic-service`, aux étapes indiquées ci-dessus. Si vous les avez déjà réalisés, il suffit de terminer les exercices restants et de relire vos réponses. Vous étudierez le délai de service moyen, en minutes, et la satisfaction mensuelle, en points sur 10, dans six succursales fictives.
 
 Le fichier de transfert est [performance_succursales_quebec.csv](../atelier-02-regression/data/performance_succursales_quebec.csv). La démarche reste la même, mais la question, les variables, les unités et la destinataire changent. Tentez chaque exercice avant d’ouvrir sa solution détaillée.
 
