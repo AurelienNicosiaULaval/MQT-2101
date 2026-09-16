@@ -7161,10 +7161,10 @@ display: none;
   <li><a href="#unité-dobservation" id="toc-unité-dobservation" class="nav-link" data-scroll-target="#unité-dobservation">1. Unité d’observation</a></li>
   <li><a href="#choisir-un-graphique" id="toc-choisir-un-graphique" class="nav-link" data-scroll-target="#choisir-un-graphique">2. Choisir un graphique</a></li>
   <li><a href="#interpréter-une-pente" id="toc-interpréter-une-pente" class="nav-link" data-scroll-target="#interpréter-une-pente">3. Interpréter une pente</a></li>
-  <li><a href="#interpréter-un-facteur" id="toc-interpréter-un-facteur" class="nav-link" data-scroll-target="#interpréter-un-facteur">4. Interpréter un facteur</a></li>
+  <li><a href="#interpréter-un-test-sur-la-pente" id="toc-interpréter-un-test-sur-la-pente" class="nav-link" data-scroll-target="#interpréter-un-test-sur-la-pente">4. Interpréter un test sur la pente</a></li>
   <li><a href="#lire-un-résidu" id="toc-lire-un-résidu" class="nav-link" data-scroll-target="#lire-un-résidu">5. Lire un résidu</a></li>
   <li><a href="#diagnostiquer" id="toc-diagnostiquer" class="nav-link" data-scroll-target="#diagnostiquer">6. Diagnostiquer</a></li>
-  <li><a href="#comparer-des-modèles" id="toc-comparer-des-modèles" class="nav-link" data-scroll-target="#comparer-des-modèles">7. Comparer des modèles</a></li>
+  <li><a href="#calculer-et-interpréter-r²" id="toc-calculer-et-interpréter-r²" class="nav-link" data-scroll-target="#calculer-et-interpréter-r²">7. Calculer et interpréter R²</a></li>
   <li><a href="#association-et-causalité" id="toc-association-et-causalité" class="nav-link" data-scroll-target="#association-et-causalité">8. Association et causalité</a></li>
   <li><a href="#réponse-décisionnelle" id="toc-réponse-décisionnelle" class="nav-link" data-scroll-target="#réponse-décisionnelle">9. Réponse décisionnelle</a></li>
   <li><a href="#plan-de-révision" id="toc-plan-de-révision" class="nav-link" data-scroll-target="#plan-de-révision">10. Plan de révision</a></li>
@@ -7196,7 +7196,7 @@ display: none;
 <section id="mode-demploi" class="level2">
 <h2 class="anchored" data-anchor-id="mode-demploi">Mode d’emploi</h2>
 <p>Répondez sans notes ni IA au premier essai. Ouvrez ensuite la rétroaction, classez chaque réponse en « acquis », « hésitant » ou « à reprendre », puis refaites seulement les questions hésitantes deux jours plus tard.</p>
-<p>Ce questionnaire est formatif et non évalué.</p>
+<p>Ce questionnaire est formatif et non évalué. Il se fait après les six capsules du module 03. Les dix questions de cette page constituent un entraînement complémentaire au questionnaire de Brio.</p>
 </section>
 <section id="unité-dobservation" class="level2">
 <h2 class="anchored" data-anchor-id="unité-dobservation">1. Unité d’observation</h2>
@@ -7258,9 +7258,9 @@ display: none;
 </div>
 </div>
 </section>
-<section id="interpréter-un-facteur" class="level2">
-<h2 class="anchored" data-anchor-id="interpréter-un-facteur">4. Interpréter un facteur</h2>
-<p>La catégorie de référence est « sans promotion » et le coefficient <code>promotionoui</code> vaut 18 000.</p>
+<section id="interpréter-un-test-sur-la-pente" class="level2">
+<h2 class="anchored" data-anchor-id="interpréter-un-test-sur-la-pente">4. Interpréter un test sur la pente</h2>
+<p>On teste <span class="math inline">\(H_0 : \beta_1 = 0\)</span> contre <span class="math inline">\(H_1 : \beta_1 \ne 0\)</span>. La valeur p est 0,02 et le seuil fixé est 0,05. Quelle décision prenez-vous? Peut-on conclure à un effet causal?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7273,7 +7273,7 @@ display: none;
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>À valeurs égales des autres variables du modèle, les observations avec promotion ont des ventes moyennes estimées supérieures de 18 000 dollars à celles sans promotion.</p>
+<p>Comme 0,02 &lt; 0,05, on rejette l’hypothèse d’une pente nulle, sous les hypothèses du modèle. Ce résultat indique une association linéaire; il ne démontre pas un effet causal. La valeur p ne mesure ni l’ampleur de l’association ni la probabilité que l’hypothèse nulle soit vraie.</p>
 </div>
 </div>
 </div>
@@ -7318,9 +7318,9 @@ display: none;
 </div>
 </div>
 </section>
-<section id="comparer-des-modèles" class="level2">
-<h2 class="anchored" data-anchor-id="comparer-des-modèles">7. Comparer des modèles</h2>
-<p>Un modèle plus complexe augmente légèrement <span class="math inline">\(R^2\)</span> mais détériore la performance sur des données non utilisées. Lequel privilégier pour prédire?</p>
+<section id="calculer-et-interpréter-r²" class="level2">
+<h2 class="anchored" data-anchor-id="calculer-et-interpréter-r²">7. Calculer et interpréter R²</h2>
+<p>Pour une régression avec ordonnée à l’origine, la somme des carrés résiduels est SSE = 45 et la somme des carrés totale est SST = 150. Calculez <span class="math inline">\(R^2\)</span> et interprétez-le. Garantit-il de bonnes prédictions sur de nouvelles données?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Réponse">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7333,7 +7333,7 @@ display: none;
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Le modèle qui performe mieux sur les données non utilisées, sous réserve de vérifier que la comparaison est équitable. L’ajustement d’entraînement ne suffit pas.</p>
+<p><span class="math inline">\(R^2 = 1 - 45/150 = 0{,}70\)</span>. Le modèle décrit 70 % de la variation observée de la réponse autour de sa moyenne, dans les données utilisées pour l’ajustement. Les 30 % restants correspondent à la variation résiduelle. Ce résultat ne garantit pas la performance sur de nouvelles données et ne remplace pas les diagnostics.</p>
 </div>
 </div>
 </div>
@@ -7380,7 +7380,7 @@ display: none;
 </section>
 <section id="plan-de-révision" class="level2">
 <h2 class="anchored" data-anchor-id="plan-de-révision">10. Plan de révision</h2>
-<p>Notez les deux notions les moins solides et associez chacune à un exercice précis du module 03, 04 ou 05.</p>
+<p>Notez les deux notions les moins solides et associez chacune à un <a href="../modules/semaine-03-regression-lineaire/exercices.html">exercice précis du module 03</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="IA après le premier essai">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

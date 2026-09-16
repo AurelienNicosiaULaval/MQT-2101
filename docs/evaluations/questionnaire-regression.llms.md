@@ -4,7 +4,7 @@
 
 Répondez sans notes ni IA au premier essai. Ouvrez ensuite la rétroaction, classez chaque réponse en « acquis », « hésitant » ou « à reprendre », puis refaites seulement les questions hésitantes deux jours plus tard.
 
-Ce questionnaire est formatif et non évalué.
+Ce questionnaire est formatif et non évalué. Il se fait après les six capsules du module 03. Les dix questions de cette page constituent un entraînement complémentaire au questionnaire de Brio.
 
 ## 1. Unité d’observation
 
@@ -30,13 +30,13 @@ Dans `ventes ~ budget`, la pente vaut 4,2. Le budget et les ventes sont en dolla
 >
 > Dans ce modèle, un dollar supplémentaire de budget est associé à 4,2 dollars de ventes supplémentaires en moyenne. Cette association ne démontre pas à elle seule un effet causal.
 
-## 4. Interpréter un facteur
+## 4. Interpréter un test sur la pente
 
-La catégorie de référence est « sans promotion » et le coefficient `promotionoui` vaut 18 000.
+On teste \\H_0 : \beta_1 = 0\\ contre \\H_1 : \beta_1 \ne 0\\. La valeur p est 0,02 et le seuil fixé est 0,05. Quelle décision prenez-vous? Peut-on conclure à un effet causal?
 
 > **TIP:**
 >
-> À valeurs égales des autres variables du modèle, les observations avec promotion ont des ventes moyennes estimées supérieures de 18 000 dollars à celles sans promotion.
+> Comme 0,02 \< 0,05, on rejette l’hypothèse d’une pente nulle, sous les hypothèses du modèle. Ce résultat indique une association linéaire; il ne démontre pas un effet causal. La valeur p ne mesure ni l’ampleur de l’association ni la probabilité que l’hypothèse nulle soit vraie.
 
 ## 5. Lire un résidu
 
@@ -54,13 +54,13 @@ Les résidus forment une courbe en U selon les valeurs ajustées. Que suggère c
 >
 > La forme moyenne n’est probablement pas suffisamment captée par une relation linéaire. Une transformation ou un terme non linéaire peut être examiné, puis validé.
 
-## 7. Comparer des modèles
+## 7. Calculer et interpréter R²
 
-Un modèle plus complexe augmente légèrement \\R^2\\ mais détériore la performance sur des données non utilisées. Lequel privilégier pour prédire?
+Pour une régression avec ordonnée à l’origine, la somme des carrés résiduels est SSE = 45 et la somme des carrés totale est SST = 150. Calculez \\R^2\\ et interprétez-le. Garantit-il de bonnes prédictions sur de nouvelles données?
 
 > **TIP:**
 >
-> Le modèle qui performe mieux sur les données non utilisées, sous réserve de vérifier que la comparaison est équitable. L’ajustement d’entraînement ne suffit pas.
+> \\R^2 = 1 - 45/150 = 0{,}70\\. Le modèle décrit 70 % de la variation observée de la réponse autour de sa moyenne, dans les données utilisées pour l’ajustement. Les 30 % restants correspondent à la variation résiduelle. Ce résultat ne garantit pas la performance sur de nouvelles données et ne remplace pas les diagnostics.
 
 ## 8. Association et causalité
 
@@ -80,7 +80,7 @@ Corrigez : « Les succursales ayant davantage de personnel ont plus de ventes; e
 
 ## 10. Plan de révision
 
-Notez les deux notions les moins solides et associez chacune à un exercice précis du module 03, 04 ou 05.
+Notez les deux notions les moins solides et associez chacune à un [exercice précis du module 03](../modules/semaine-03-regression-lineaire/exercices.llms.md).
 
 > **NOTE:**
 >

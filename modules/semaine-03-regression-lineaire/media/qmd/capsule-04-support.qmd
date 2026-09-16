@@ -164,6 +164,10 @@ confint(modele, "budget_marketing", level = 0.95)
 Intervalle de confiance classique à 95 % : de `r nombre_fr(confint(modele)[2,1], 2)` à `r nombre_fr(confint(modele)[2,2], 2)` $ de ventes par dollar de budget.
 :::
 
+::: {.note-box}
+Pour 1 000 $ de budget, multipliez aussi les deux bornes par 1 000 : de `r nombre_fr(1000 * confint(modele)[2,1])` à `r nombre_fr(1000 * confint(modele)[2,2])` $ de ventes moyennes supplémentaires.
+:::
+
 ::: {.notes}
 Ce calcul illustre l’incertitude d’estimation sous le modèle classique. La méthode repose sur des erreurs indépendantes, de variance constante et, pour cet intervalle exact, normales. Sur des échantillons répétés sous ces hypothèses, 95 % des intervalles construits ainsi couvriraient la pente. Ce n’est pas un intervalle de ventes pour une nouvelle campagne.
 :::
