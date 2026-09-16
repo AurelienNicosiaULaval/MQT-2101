@@ -165,6 +165,33 @@ if (file.exists(mr1_downloads[[1]])) {
   unlink(check_dir, recursive = TRUE)
 }
 
+# Vérifier le dossier autonome proposé au laboratoire 02 et son téléchargement.
+labo02_archive <- "assets/exemples/laboratoire-02.zip"
+labo02_published <- file.path("docs", labo02_archive)
+if (!file.exists(labo02_archive) || !file.exists(labo02_published) ||
+    unname(tools::md5sum(labo02_archive)) != unname(tools::md5sum(labo02_published))) {
+  add_error("Téléchargement du laboratoire 02 absent ou périmé.")
+}
+if (file.exists(labo02_archive)) {
+  check_dir <- tempfile("verification-labo02-")
+  dir.create(check_dir)
+  extracted <- utils::unzip(labo02_archive, exdir = check_dir)
+  relative <- substring(extracted, nchar(check_dir) + 2L)
+  starter_names <- c("laboratoire-02.Rproj", "rapport-labo-02.qmd", "LIRE-MOI.txt")
+  expected <- file.path("laboratoire-02", c(
+    starter_names, "data/performance_succursales_quebec.csv"
+  ))
+  sources <- c(file.path("assets/exemples/laboratoire-02", starter_names),
+               "modules/atelier-02-regression/data/performance_succursales_quebec.csv")
+  if (!setequal(relative, expected) || !all(file.exists(sources)) || !identical(
+    unname(tools::md5sum(sources)),
+    unname(tools::md5sum(file.path(check_dir, expected)))
+  )) {
+    add_error("Archive du laboratoire 02 différente de ses sources : la reconstruire avec scripts/21_prepare_labo02.R.")
+  }
+  unlink(check_dir, recursive = TRUE)
+}
+
 cat("Validation du site rendu MQT-2101\n")
 cat("Sources étudiantes :", length(render_sources), "\n")
 cat("Références locales vérifiées :", links_checked, "\n")

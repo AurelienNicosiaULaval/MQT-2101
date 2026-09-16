@@ -1,97 +1,51 @@
 ---
-title: "Repères - Atelier 02"
+title: "Repères - Laboratoire 02"
 format:
   html:
     embed-resources: true
 ---
 
-## Rôle des repères
+## Des repères à consulter au besoin
 
-Ces repères préparent le travail en classe. Ils résument les décisions à
-prendre pendant une analyse de régression appliquée.
+La [mission](guide-atelier.qmd) mobilise les modules 3 et 4. Ces repères aident à vérifier une décision pendant l'analyse; ils ne constituent pas un travail supplémentaire.
 
-Pour chaque repère, produisez une trace très courte : une phrase, une liste ou
-un choix argumenté. Ces traces seront réutilisées dans le guide complet.
+## Question et unités
 
-## Repère 1 - Question d'affaires et variable réponse
+Les ventes mensuelles sont la réponse. Choisissez une explicative qui permet de poser une question précise et donnez son unité. Distinguez les différences observées entre mois et succursales de l'effet qu'aurait une intervention de la direction.
 
-*Pourquoi ça compte* : un modèle qui répond à une question floue produit une recommandation floue.
+À vérifier : que représente une ligne, et quelle augmentation concrète de l'explicative allez-vous commenter?
 
-Une bonne régression commence par une question d'affaires précise. Dans cet
-atelier, la question centrale est :
+## Droite et coefficients
 
-> Quels facteurs sont associés aux ventes mensuelles des succursales?
+La pente d'une droite correspond à une variation constante de la moyenne estimée de la réponse par unité de l'explicative. L'intercept correspond à une explicative égale à zéro; vérifiez si ce point a un sens dans le contexte et la plage observée.
 
-La variable réponse est `ventes`. Les variables explicatives possibles incluent
-`achalandage`, `depenses_marketing`, `heures_personnel`, `ruptures_stock` et
-`campagne_locale`.
+À vérifier : votre phrase contient-elle les dollars de ventes, l'augmentation choisie et une formulation d'association?
 
-::: {.callout-tip title="Activité courte"}
-Choisissez une variable explicative et écrivez pourquoi elle pourrait être liée
-aux ventes.
-:::
+## Courbe et interprétation
 
-À conserver : une question d'affaires et la variable réponse.
+Une quadratique conserve le terme simple avec son carré. Un logarithme de l'explicative exige des valeurs strictement positives. Dans les deux cas, les ventes restent en dollars et `lm()` estime les coefficients. Une courbe peut décrire une relation sans qu'un modèle non linéaire dans ses paramètres soit nécessaire.
 
-## Repère 2 - Relation visible et relation modélisée
+Pour interpréter la variante, comparez ses prédictions en deux points précis. La variation n'est pas constante sur toute la plage. Un logarithme ne représente pas un plafond de ventes et une quadratique peut finir par redescendre hors de la plage utile.
 
-*Pourquoi ça compte* : une droite bien ajustée sur un nuage courbé donne une fausse impression de précision.
+## Comparaison et diagnostic
 
-Un nuage de points montre la relation observée entre deux variables. Le modèle
-linéaire ajoute une droite qui résume cette relation moyenne.
+| Repère | Ce qu'il apporte | Limite |
+|---|---|---|
+| R² | Part de la variation de la réponse résumée par l'ajustement avec intercept | Peut augmenter avec la complexité sans gain utile |
+| R² ajusté | Ajustement avec une pénalisation liée au nombre de paramètres | Reste une mesure sur les données d'ajustement |
+| RMSE d'ajustement | Taille des erreurs, en dollars, avec davantage de poids aux grandes erreurs | Ne mesure pas l'erreur sur de nouvelles données |
+| Graphique des résidus | Recherche de courbure, dispersion variable ou points à vérifier | Ne suffit pas à confirmer toutes les hypothèses |
 
-La droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le
-nuage de points est fortement courbé ou très dispersé, une droite peut donner
-une impression de précision trompeuse.
+À vérifier : les modèles utilisent-ils les mêmes lignes et la même réponse? Les résidus changent-ils votre jugement? Les mois d'une même succursale peuvent être liés, même si le nuage paraît régulier.
 
-::: {.callout-tip title="Activité courte"}
-Avant d'ajuster le modèle, écrivez ce que vous vous attendez à voir entre
-`achalandage` et `ventes`.
-:::
+## Prédiction et décision
 
-À conserver : une phrase qui décrit la relation attendue avant le modèle.
+Vérifiez la plage de l'explicative et la comparabilité du contexte. Une valeur dans la plage n'efface pas les différences entre succursales. Au-delà de cette plage, il s'agit d'une extrapolation.
 
-## Repère 3 - Modèle simple et modèle enrichi
+Une recommandation indique le modèle retenu, les résultats qui motivent le choix, une limite précise et la prochaine vérification utile.
 
-*Pourquoi ça compte* : ajouter des variables peut clarifier le portrait, ou rendre chaque coefficient impossible à expliquer à la direction.
+## Retrouver une explication
 
-Un modèle simple relie une variable réponse à une seule variable explicative.
-Il est facile à expliquer et utile pour commencer.
-
-Un modèle enrichi ajoute d'autres variables. Il peut mieux représenter le
-contexte, mais il demande une interprétation plus prudente, car chaque
-coefficient se lit en gardant constantes les autres variables du modèle.
-
-::: {.callout-warning title="Point de vigilance"}
-Ajouter des variables ne rend pas automatiquement le modèle meilleur pour la
-décision. Il faut vérifier si l'interprétation reste claire et si les variables
-ajoutées ont un sens dans le contexte.
-:::
-
-À conserver : un avantage et une limite du modèle enrichi.
-
-## Repère 4 - Recommandation et limites
-
-*Pourquoi ça compte* : une recommandation sans limite, c'est une décision risquée présentée comme une certitude.
-
-Une recommandation statistique doit relier trois éléments :
-
-- ce que le modèle estime;
-- ce que le contexte rend plausible;
-- ce que les données ne permettent pas de conclure.
-
-Une recommandation solide ne dit pas seulement « faire plus de X ». Elle précise
-la variable priorisée, l'incertitude, la limite et la prochaine vérification à
-faire.
-
-::: {.callout-tip title="Activité courte"}
-Rédigez une phrase qui commence par : « Les données suggèrent de prioriser... »,
-puis ajoutez immédiatement une limite.
-:::
-
-À conserver : une recommandation provisoire et une limite causale.
-
-## Après les repères
-
-Poursuivez avec le [guide complet](guide-atelier.html). Les repères servent à
-préparer les décisions; le guide sert à produire la mini-analyse en classe.
+- [Module 3 : interpréter une droite et ses résidus](../semaine-03-regression-lineaire/demonstrations.qmd).
+- [Module 4 : comparer les formes et distinguer ajustement et validation](../semaine-04-regression-nonlineaire/demonstrations.qmd).
+- [Documentation R et lectures utiles](lectures.qmd).

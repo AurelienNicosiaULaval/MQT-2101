@@ -1,494 +1,181 @@
-# Guide en classe - Atelier 02
+# Mission du laboratoire 02
 
-> **NOTE:**
->
-> La direction veut savoir quel levier actionner pour augmenter les ventes des succursales : marketing, personnel ou ruptures de stock. Un modèle de régression peut éclairer ce choix, à condition de lire ses coefficients avec prudence. À la fin de la séance, vous aurez une recommandation appuyée sur un modèle et une limite assumée.
+Comparer deux modèles et justifier son choix
 
-> **NOTE:**
->
-> Cet atelier se fait après le module 3. Il sert à passer d’une régression linéaire simple à une mini-analyse appliquée : question d’affaires, exploration, modèle, diagnostic et recommandation.
+## Votre mission
 
-## Objectif du parcours
+La direction d’un réseau de succursales québécoises fictives souhaite mieux décrire les écarts de ventes mensuelles. Elle veut savoir si une relation simple suffit ou si une courbe apporte une amélioration utile.
 
-Question centrale :
+> Quelle relation retenez-vous pour décrire les ventes, et jusqu’où la direction peut-elle s’appuyer sur ce modèle?
 
-> Quels facteurs sont associés aux ventes mensuelles des succursales, et quelle piste d’action peut-on recommander prudemment?
+La réponse est `ventes`, en dollars canadiens. Choisissez une seule variable explicative principale parmi `achalandage`, `depenses_marketing` et `heures_personnel`. Comparez une droite avec une variante quadratique ou logarithmique de cette même variable. Vous pouvez conserver la droite au terme de la comparaison.
 
-L’objectif n’est pas de trouver une réponse automatique. L’objectif est de produire une analyse claire qui montre ce que le modèle estime, ce que les données suggèrent et ce qu’il faut encore vérifier.
+Votre recommandation porte sur le modèle à utiliser et sur une prochaine vérification. Pour conseiller une intervention réelle, il faudrait d’autres éléments que ces associations dans des données simulées.
 
-## Ce que vous allez construire
+## Ce qui change depuis le laboratoire 1
 
-À la fin de l’atelier, vous aurez une mini-analyse Quarto contenant :
+Le cadre est commun, mais vous prenez davantage de décisions.
 
-- une question d’affaires reformulée;
-- une description du tableau;
-- un graphique exploratoire;
-- un modèle simple;
-- un modèle enrichi;
-- un diagnostic des résidus;
-- une recommandation prudente;
-- une limite explicite.
+| Fourni | À décider et à produire en équipe |
+|----|----|
+| Le fichier de données et son importation | Les contrôles utiles et votre question précise |
+| Un début de rapport avec quelques sections | Les sous-sections, les blocs de code et les sorties à conserver |
+| Deux familles de variantes vues au module 4 | La variante à essayer et sa justification |
+| Les critères de comparaison et les points de rétroaction | Le modèle retenu, les interprétations et la conclusion |
 
-## Organisation du parcours
+Travaillez en binômes, avec un rapport commun. Alternez la personne au clavier après le premier point de rétroaction. Chacun doit pouvoir expliquer la démarche; le travail individuel reste possible. Reprenez un point à améliorer de la rétroaction du laboratoire 1.
 
-L’atelier est construit en épisodes courts. Chaque épisode ajoute une pièce à la trace finale. Ne gardez pas seulement le code : écrivez aussi les phrases d’interprétation pendant que les résultats sont encore frais.
+Ce laboratoire est formatif, sans points dans la note finale. La [présentation](../../modules/atelier-02-regression/presentation.llms.md) lance la séance et le [déroulement](../../modules/atelier-02-regression/index.llms.md#pendant-latelier) réserve les 30 dernières minutes aux questions sur le mini-rapport 1.
 
-1
+## Dossier de départ
 
-### Question
+[Télécharger le dossier du laboratoire 02](../../assets/exemples/laboratoire-02.zip)
 
-Clarifier la décision et les variables.
-
-2
-
-### Données
-
-Comprendre les lignes, les colonnes et les limites.
-
-3
-
-### Graphique
-
-Observer la relation avant le modèle.
-
-4
-
-### Modèles
-
-Ajuster, comparer et interpréter.
-
-5
-
-### Diagnostic
-
-Vérifier les résidus et les limites.
-
-6
-
-### Recommandation
-
-Transformer les résultats en décision prudente.
-
-## Données et préparation
-
-Fichier : [performance_succursales_quebec.csv](../../donnees/#performance-de-succursales-québécoises-fictives).
-
-[Télécharger le fichier CSV](data/performance_succursales_quebec.csv)
-
-``` r
-library(tidyverse)
-library(broom)
-
-data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
-  "data/performance_succursales_quebec.csv"
-} else {
-  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
-}
-
-performance <- read_csv(data_path, show_col_types = FALSE)
+``` text
+laboratoire-02/
+  laboratoire-02.Rproj
+  rapport-labo-02.qmd
+  LIRE-MOI.txt
+  data/
+    performance_succursales_quebec.csv
 ```
 
-## Étape 1 - Comprendre la question
+1.  Décompressez le dossier et ouvrez le projet dans RStudio ou Positron.
+2.  Ouvrez le `.qmd`, indiquez vos noms et cliquez sur Render.
+3.  Gardez le CSV dans `data/` et ajoutez votre analyse au rapport. Relancez Render régulièrement.
 
-Avant de coder, écrivez une phrase qui relie l’analyse à une décision.
+Le premier rendu vérifie seulement que le dossier fonctionne. Le rapport reste à construire. L’installation éventuelle des packages se fait dans la Console, jamais dans le `.qmd`.
+
+Le [CSV seul](data/performance_succursales_quebec.csv) et le [dictionnaire des données](../../donnees/index.llms.md#performance-de-succursales-québécoises-fictives) restent accessibles. Ce jeu de données a déjà servi aux exercices du module 3 : vous allez maintenant choisir et défendre votre propre comparaison.
+
+## 1. Définir la question et vérifier les données
+
+Choisissez une variable explicative et expliquez pourquoi elle est pertinente pour décrire les ventes. Précisez son unité et une augmentation concrète qui servira à lire la pente : par exemple 100 visites, 1 000 \$ ou 10 heures.
+
+Dans le rapport, indiquez :
+
+- ce que représente une ligne, les dimensions, la période et le nombre de succursales;
+- les valeurs manquantes et les doublons éventuels de la paire mois-succursale;
+- la plage observée de votre variable explicative;
+- les lignes conservées pour les deux modèles et toute transformation effectuée.
 
 > **TIP:**
 >
-> Nous voulons comprendre quels facteurs sont associés aux ventes mensuelles des succursales afin de prioriser une piste d’amélioration à tester.
+> Retrouvez `glimpse()`, `n_distinct()`, `range()`, `is.na()` et `count(succursale, mois)`. Une absence de valeur manquante est aussi un résultat à signaler. Si vous filtrez, construisez un seul tableau d’analyse pour les deux modèles et donnez les effectifs avant et après.
+>
+> Une ligne décrit un mois d’une succursale. Les observations répétées d’une même succursale ne sont pas nécessairement indépendantes; gardez cette réserve pour la conclusion.
 
-Variables à repérer :
+## 2. Explorer et établir une référence
 
-- `ventes` : variable réponse;
-- `achalandage` : volume de clients ou clientes;
-- `depenses_marketing` : effort marketing mensuel;
-- `heures_personnel` : capacité opérationnelle;
-- `ruptures_stock` : contrainte opérationnelle;
-- `campagne_locale` : indicateur d’action locale.
+Produisez un nuage de points des ventes en fonction de votre variable. Rendez les succursales identifiables, par exemple par la couleur, puis décrivez la tendance, la dispersion et une éventuelle courbure. Ajoutez une droite commune à l’ensemble des observations.
+
+Ajustez la droite de référence. Dans le texte :
+
+1.  Interprétez sa pente pour l’augmentation concrète choisie, en dollars de ventes.
+2.  Interprétez son intercept et vérifiez si la valeur zéro de l’explicative appartient à la plage observée.
+3.  Donnez le R² et expliquez ce qu’il résume pour ces données.
 
 > **TIP:**
 >
-> Écrivez votre propre version de la question en une phrase. Elle doit mentionner les ventes, les succursales et l’idée d’une décision à éclairer.
+> Le module 3 utilise `lm()`, `coef()` et `summary()`. La pente multipliée par l’augmentation choisie donne la variation des ventes moyennes estimées par la droite. L’intercept correspond à la valeur estimée quand l’explicative vaut zéro; il peut être sans utilité pratique si ce point est hors de la plage observée.
+>
+> Une association estimée ne prouve pas qu’une augmentation décidée par la direction produirait cette variation.
+
+> **NOTE:**
+>
+> Montrez votre question, votre graphique et une interprétation de coefficient. Annoncez la variante que vous voulez essayer et expliquez ce qu’elle permet de vérifier. L’enseignant vous aide à repérer un problème; la décision et le code restent à construire par votre équipe.
+
+## 3. Choisir une variante et comparer
+
+Choisissez une seule des deux options vues au module 4. Justifiez ce choix à partir du graphique ou d’une question sur la forme de la relation. L’absence de courbure visible peut conduire à vérifier si une variante apporte vraiment quelque chose.
+
+| Variante | Question examinée | Vérification nécessaire |
+|----|----|----|
+| Quadratique | L’association change-t-elle avec le niveau de l’explicative? | Conserver le terme simple avec le carré et examiner la courbe dans la plage observée |
+| Logarithme de l’explicative | Une relation qui s’aplatit ou se redresse décrit-elle mieux les observations? | Vérifier que toutes les valeurs de l’explicative sont strictement positives |
+
+Gardez les ventes en dollars dans les deux modèles. Ajoutez les deux ajustements au graphique, uniquement dans la plage observée. Construisez un tableau comparatif contenant le nombre d’observations, le R² ajusté et la RMSE d’ajustement en dollars.
+
+Expliquez le compromis entre ajustement et simplicité. Une variante plus complexe n’est pas nécessairement le choix à retenir.
+
+> **TIP:**
+>
+> Pour une quadratique, la formule contient l’explicative et son carré écrit avec `I(...^2)`. Pour l’autre option, `log()` transforme uniquement l’explicative. Ces modèles restent linéaires dans leurs coefficients et s’ajustent avec `lm()`.
+>
+> La RMSE d’ajustement se calcule par `sqrt(mean(residuals(modele)^2))`. Le R² ajusté se trouve dans `summary(modele)$adj.r.squared`. Comparez les mêmes observations, la même réponse et les mêmes unités. Ne choisissez pas sur le seul R² : l’ajout du carré ne peut pas diminuer le R² d’ajustement d’une droite avec intercept sur les mêmes lignes.
+>
+> Les [démonstrations du module 4](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md) montrent comment tracer plusieurs ajustements avec `predict()`.
+
+Choisissez ensuite deux valeurs de l’explicative dans sa plage observée. Calculez les ventes prédites par votre variante à ces deux valeurs et interprétez leur différence. Pour une courbe, la variation dépend des points choisis : ne lisez pas un coefficient comme une pente constante par unité de l’explicative.
 
 > **IMPORTANT:**
 >
-> Avant de continuer, vérifiez que vous pouvez distinguer la variable réponse des variables explicatives. Si ce n’est pas clair, le modèle sera difficile à interpréter.
+> Le parcours essentiel compare les deux modèles sur les données utilisées pour les ajuster. La RMSE décrit donc l’ajustement et ne mesure pas la performance sur de nouvelles données. Une séparation apprentissage/validation n’est pas obligatoire ici, comme pour le mini-rapport 1. Le module 4 vous permet de préciser cette limite et de proposer une validation ultérieure.
 
-## Étape 2 - Inspecter le tableau
+## 4. Diagnostiquer et répondre à la direction
 
-``` r
-glimpse(performance)
-```
-
-    Rows: 72
-    Columns: 14
-    $ mois                  <date> 2025-01-01, 2025-01-01, 2025-01-01, 2025-01-01,…
-    $ mois_label            <chr> "janvier", "janvier", "janvier", "janvier", "jan…
-    $ saison                <chr> "moyenne", "moyenne", "moyenne", "moyenne", "moy…
-    $ succursale            <chr> "Gatineau", "Montréal", "Québec", "Saguenay", "S…
-    $ region                <chr> "Outaouais", "Montréal", "Capitale-Nationale", "…
-    $ surface_m2            <dbl> 420, 560, 470, 350, 390, 365, 420, 560, 470, 350…
-    $ campagne_locale       <chr> "oui", "oui", "non", "non", "oui", "non", "non",…
-    $ depenses_marketing    <dbl> 5977, 6162, 4978, 2981, 5061, 3279, 4677, 4693, …
-    $ achalandage           <dbl> 1653, 2043, 1864, 1202, 1362, 1369, 1486, 2179, …
-    $ heures_personnel      <dbl> 483, 528, 499, 450, 476, 493, 498, 577, 495, 465…
-    $ ruptures_stock        <dbl> 1, 1, 2, 1, 0, 1, 0, 1, 6, 3, 0, 2, 1, 0, 1, 2, …
-    $ delai_service_minutes <dbl> 5.5, 6.8, 3.8, 5.4, 3.8, 5.5, 5.0, 6.2, 6.5, 5.3…
-    $ satisfaction          <dbl> 7.7, 8.0, 7.7, 7.4, 8.7, 8.4, 8.6, 8.3, 7.1, 7.6…
-    $ ventes                <dbl> 163260, 180567, 166706, 126460, 151254, 132775, …
-
-``` r
-performance |>
-  group_by(succursale) |>
-  summarise(
-    ventes_moyennes = mean(ventes),
-    achalandage_moyen = mean(achalandage),
-    depenses_moyennes = mean(depenses_marketing),
-    ruptures_moyennes = mean(ruptures_stock),
-    .groups = "drop"
-  ) |>
-  arrange(desc(ventes_moyennes))
-```
-
-    # A tibble: 6 × 5
-      succursale     ventes_moyennes achalandage_moyen depenses_moyennes
-      <chr>                    <dbl>             <dbl>             <dbl>
-    1 Montréal               183803.             2129.             6216.
-    2 Québec                 163630.             1754.             5853.
-    3 Gatineau               155196.             1631.             5339.
-    4 Sherbrooke             144795.             1529              4520.
-    5 Trois-Rivières         144135.             1450.             5045.
-    6 Saguenay               133635.             1360.             3977.
-    # ℹ 1 more variable: ruptures_moyennes <dbl>
-
-> **NOTE:**
->
-> Quelles succursales ont les ventes moyennes les plus élevées? Est-ce que cela semble cohérent avec l’achalandage moyen?
+Retenez provisoirement un modèle et tracez ses résidus contre ses valeurs ajustées, avec une ligne horizontale à zéro. Identifiez les succursales par la couleur. Décrivez un motif, une différence de dispersion, un point à examiner ou l’absence de structure évidente. Expliquez la conséquence pour l’utilisation du modèle. Vous pouvez réviser votre choix après ce diagnostic.
 
 > **TIP:**
 >
-> Ajoutez à votre trace une phrase qui indique ce que représente une ligne du tableau, puis nommez trois variables qui seront utiles pour la décision.
+> `fitted()` donne les valeurs ajustées et `residuals()` les écarts observé moins ajusté. Une courbure résiduelle peut remettre en cause la forme; une dispersion variable appelle à la prudence sur l’incertitude. L’absence de motif évident sur ce graphique ne vérifie pas toutes les hypothèses, notamment l’indépendance entre les mois d’une même succursale.
 
-### Trace finale
+Dans un paragraphe destiné à la direction :
 
-Votre mini-analyse doit maintenant contenir la question d’affaires et une courte description des données.
+1.  Nommez la relation étudiée et le modèle retenu.
+2.  Appuyez ce choix sur au moins deux résultats chiffrés du rapport, dont un élément de comparaison des modèles.
+3.  Expliquez une limite précise liée au diagnostic, aux succursales répétées, à la comparaison sur les données d’ajustement ou à la plage observée.
+4.  Proposez une prochaine vérification avant d’utiliser le modèle dans une décision réelle.
 
-## Étape 3 - Visualiser avant de modéliser
+Il n’y a pas de modèle gagnant imposé. Un choix simple et bien défendu peut être préférable à une courbe peu convaincante. Une recommandation d’augmenter automatiquement le marketing ou le personnel ne découle pas de cette analyse.
 
-``` r
-ggplot(performance, aes(x = achalandage, y = ventes)) +
-  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +
-  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
-  labs(
-    title = "Ventes selon l'achalandage",
-    x = "Achalandage mensuel",
-    y = "Ventes",
-    colour = "Succursale"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(panel.grid.minor = element_blank())
-```
+## Rapport attendu
 
-![](guide-atelier_files/figure-html/graphique-exploration-guide-1.png)
+Le gabarit propose cinq sections que vous pouvez adapter. Vous ajoutez vos blocs de code et vos sous-sections.
 
-> **TIP:**
->
-> Le nuage de points suggère une relation positive entre achalandage et ventes. Cette observation justifie un premier modèle, mais ne suffit pas à conclure à un effet causal.
+| Partie | Contenu attendu |
+|----|----|
+| Question | Choix de l’explicative et justification |
+| Données | Unités, contrôles, plage et effectif analysé |
+| Analyse et comparaison | Graphique avec les deux ajustements; pente et intercept de la droite; R²; variante justifiée; tableau comparatif; différence entre deux prédictions de la variante |
+| Diagnostic et recommandation | Graphique des résidus, interprétation, choix appuyé sur deux résultats chiffrés, limite et prochaine vérification |
+| Bilan formatif | Point repris du laboratoire 1, rétroaction reçue, correction ou choix conservé, aide utilisée |
 
-> **TIP:**
->
-> Écrivez deux phrases : une sur la direction de la relation entre `achalandage` et `ventes`, puis une sur une limite visible ou possible du graphique.
+Visez environ 500 à 700 mots hors code et tableaux. Deux graphiques et un tableau comparatif suffisent pour présenter les résultats principaux; les contrôles de données peuvent être résumés dans le texte. Gardez le code visible et sélectionnez les sorties utiles à la lecture.
 
-## Étape 4 - Ajuster un modèle simple
-
-``` r
-modele_simple <- lm(ventes ~ achalandage, data = performance)
+## Rétroaction et correction en classe
 
-summary(modele_simple)
-```
+Avant le rendu final, faites lire votre HTML à un autre binôme. Utilisez la grille suivante avec les repères « Acquis », « À consolider » ou « À reprendre ». Relevez un point réussi et une amélioration précise en indiquant où intervenir. Vous recevez aussi l’accompagnement de l’enseignant pendant la séance.
 
+| Critère | Repère pour la relecture |
+|----|----|
+| Question et données | Le choix de l’explicative, les unités, les lignes utilisées et la plage sont explicites |
+| Comparaison | Deux modèles portent sur les mêmes lignes; la variante est motivée et le choix ne repose pas seulement sur le R² |
+| Interprétation | Pente et intercept de la droite sont bien lus; la différence de prédictions de la courbe tient compte des points choisis |
+| Diagnostic et décision | Le commentaire décrit les résidus observés; la recommandation renvoie à deux résultats et une limite précise |
+| Reproductibilité | Le code produit les résultats annoncés et le HTML se lit sans la session R |
 
-    Call:
-    lm(formula = ventes ~ achalandage, data = performance)
+Appliquez une correction ou expliquez pourquoi vous conservez votre choix. Notez cette décision dans le bilan. La rétroaction et la correction se font pendant la séance.
 
-    Residuals:
-         Min       1Q   Median       3Q      Max
-    -18695.7  -4922.6   -294.8   5934.3  18386.3
+## Fin de séance
 
-    Coefficients:
-                Estimate Std. Error t value Pr(>|t|)
-    (Intercept) 50540.53    5526.11   9.146 1.43e-13 ***
-    achalandage    63.12       3.31  19.069  < 2e-16 ***
-    ---
-    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-    Residual standard error: 8433 on 70 degrees of freedom
-    Multiple R-squared:  0.8386,    Adjusted R-squared:  0.8363
-    F-statistic: 363.6 on 1 and 70 DF,  p-value: < 2.2e-16
-
-Notez la pente de `achalandage`.
-
-``` r
-pente_achalandage <- coef(modele_simple)["achalandage"]
-
-pente_achalandage
-```
-
-    achalandage
-       63.12511
-
-> **TIP:**
->
-> Dans ce modèle simple, une unité supplémentaire d’achalandage est associée à une augmentation moyenne estimée des ventes de 63.1 dollars. Cette phrase décrit une association moyenne dans les données.
-
-> **WARNING:**
->
-> Ne dites pas que l’achalandage cause les ventes. Le modèle estime une association moyenne dans des données observationnelles.
-
-> **TIP:**
->
-> Rédigez une phrase qui interprète la pente avec les unités. Commencez par « Dans ce modèle… » pour garder visible le fait que l’interprétation dépend du modèle ajusté.
-
-## Étape 5 - Ajouter des variables de contexte
-
-``` r
-modele_enrichi <- lm(
-  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
-  data = performance
-)
-
-summary(modele_enrichi)
-```
-
-
-    Call:
-    lm(formula = ventes ~ achalandage + depenses_marketing + heures_personnel +
-        ruptures_stock, data = performance)
-
-    Residuals:
-        Min      1Q  Median      3Q     Max
-    -8940.3 -2956.8  -437.2  2763.3 12110.6
-
-    Coefficients:
-                         Estimate Std. Error t value Pr(>|t|)
-    (Intercept)         5098.7691  9382.6231   0.543    0.589
-    achalandage           34.7889     3.6456   9.543 4.12e-14 ***
-    depenses_marketing     5.9455     0.6318   9.411 7.08e-14 ***
-    heures_personnel     131.4254    25.6218   5.129 2.68e-06 ***
-    ruptures_stock     -1947.2759   404.7535  -4.811 8.89e-06 ***
-    ---
-    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-    Residual standard error: 4995 on 67 degrees of freedom
-    Multiple R-squared:  0.9458,    Adjusted R-squared:  0.9426
-    F-statistic: 292.3 on 4 and 67 DF,  p-value: < 2.2e-16
-
-Dans le modèle enrichi, chaque coefficient se lit en gardant constantes les autres variables du modèle. Cette idée est essentielle pour éviter les interprétations trop rapides.
-
-``` r
-tibble(
-  modele = c("Simple", "Enrichi"),
-  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),
-  r_carre_ajuste = c(
-    summary(modele_simple)$adj.r.squared,
-    summary(modele_enrichi)$adj.r.squared
-  )
-)
-```
-
-    # A tibble: 2 × 3
-      modele  r_carre r_carre_ajuste
-      <chr>     <dbl>          <dbl>
-    1 Simple    0.839          0.836
-    2 Enrichi   0.946          0.943
-
-> **NOTE:**
->
-> Est-ce que le modèle enrichi améliore assez l’ajustement pour justifier une interprétation plus complexe? Notez un avantage et une limite du modèle enrichi.
-
-> **TIP:**
->
-> Remplissez une mini-grille avec trois colonnes : modèle simple, modèle enrichi, ce que cela change dans l’interprétation.
-
-## Étape 6 - Diagnostiquer le modèle
-
-``` r
-performance_modele <- performance |>
-  mutate(
-    ventes_predites = predict(modele_enrichi),
-    residu = residuals(modele_enrichi)
-  )
-```
-
-``` r
-ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
-  geom_point(alpha = 0.8, size = 2.4, colour = "#0B4F6C") +
-  labs(
-    title = "Résidus du modèle enrichi",
-    x = "Ventes prédites",
-    y = "Résidu"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(panel.grid.minor = element_blank())
-```
-
-![](guide-atelier_files/figure-html/graphique-residus-guide-1.png)
-
-> **NOTE:**
->
-> Le graphique des résidus sert à vérifier si les erreurs du modèle semblent réparties autour de zéro. Si un motif clair apparaît, il faut le mentionner dans la limite de l’analyse.
-
-> **TIP:**
->
-> Ajoutez une phrase à votre trace : les résidus semblent-ils raisonnablement répartis autour de zéro ou montrent-ils une structure à mentionner?
-
-> **IMPORTANT:**
->
-> Une recommandation sans diagnostic est fragile. Avant de rédiger, assurez-vous d’avoir au moins une phrase sur les résidus ou sur une limite du modèle.
-
-## Étape 7 - Choisir une piste prioritaire
-
-Le modèle enrichi peut suggérer plusieurs pistes : achalandage, marketing, capacité de service, ruptures de stock. Votre rôle n’est pas de transformer un coefficient en certitude, mais de choisir une piste raisonnable à tester ou à approfondir.
-
-``` r
-variations_realistes <- tribble(
-  ~term, ~variation, ~scenario,
-  "achalandage", 100, "+100 visites mensuelles",
-  "depenses_marketing", 500, "+500 $ de dépenses marketing",
-  "heures_personnel", 40, "+40 heures de personnel",
-  "ruptures_stock", 1, "+1 rupture de stock"
-)
-
-broom::tidy(modele_enrichi, conf.int = TRUE) |>
-  inner_join(variations_realistes, by = "term") |>
-  transmute(
-    facteur = term,
-    scenario,
-    variation_ventes_estimee = estimate * variation,
-    borne_inferieure = conf.low * variation,
-    borne_superieure = conf.high * variation
-  ) |>
-  mutate(across(where(is.numeric), ~ round(.x))) |>
-  knitr::kable()
-```
-
-| facteur | scenario | variation_ventes_estimee | borne_inferieure | borne_superieure |
-|:---|:---|---:|---:|---:|
-| achalandage | +100 visites mensuelles | 3479 | 2751 | 4207 |
-| depenses_marketing | +500 \$ de dépenses marketing | 2973 | 2342 | 3603 |
-| heures_personnel | +40 heures de personnel | 5257 | 3211 | 7303 |
-| ruptures_stock | +1 rupture de stock | -1947 | -2755 | -1139 |
+- Redémarrez R, puis utilisez Render sans exécuter de commandes préparatoires dans la Console.
+- Ouvrez le HTML et vérifiez les graphiques, les valeurs citées et la conclusion.
+- Conservez le dossier complet avec le QMD, le HTML et `data/`. Si nécessaire, compressez ce dossier pour le transférer.
+- Si un point reste bloqué, indiquez la tentative et la question dans le bilan, puis montrez-les à l’enseignant.
 
-> **WARNING:**
->
-> Un coefficient pour 1 dollar, 1 visite, 1 heure ou 1 rupture n’est pas sur la même échelle. Ne classez pas les facteurs par la valeur absolue des coefficients bruts. Comparez plutôt des variations réalistes, leurs intervalles de confiance, la possibilité d’agir sur le facteur et le coût de l’action.
+Les 30 dernières minutes servent aux questions sur le [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md). Apportez un passage, une sortie ou un message d’erreur précis. Les modalités de l’évaluation restent celles de sa page de consignes et du calendrier.
 
-> **TIP:**
->
-> Choisissez une variable prioritaire. Justifiez-la par l’effet estimé d’une variation réaliste, son intervalle de confiance et un élément de contexte. Ajoutez immédiatement une limite.
+## Aide à la demande
 
-## Étape 8 - Rédiger la recommandation
+Tentez d’abord la tâche avec les acquis des modules 3 et 4. Ouvrez ensuite un indice de ce guide, puis une rubrique d’[aide R](../../modules/atelier-02-regression/demonstrations.llms.md) si nécessaire. Adaptez le code à votre choix et vérifiez le résultat.
 
-Utilisez le modèle pour prioriser une piste, mais gardez l’incertitude visible.
+Le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) peut vous aider à comprendre une erreur ou vous poser des questions après une première tentative, selon les [règles du cours](../../ressources/ia.llms.md). Vous devez pouvoir expliquer le code et les interprétations conservés. Notez l’aide utilisée et ce que vous avez vérifié.
 
-Modèle de paragraphe à adapter
+## Pour aller plus loin, si le temps le permet
 
-``` markdown
-Les données suggèrent que [facteur prioritaire] est associé aux ventes mensuelles.
-Dans le modèle, [résultat chiffré ou direction de l'effet] indique que ce facteur
-mérite une attention particulière. Je recommande donc de [action prudente à tester
-ou à approfondir]. Cette recommandation doit rester prudente, car les données sont
-observationnelles et le modèle ne prouve pas à lui seul une relation causale.
-Une prochaine étape serait de [validation ou analyse complémentaire].
-```
+La mission est complète avec deux modèles. Pour prolonger votre réflexion, choisissez une seule piste :
 
-> **TIP:**
->
-> Rédigez cinq à sept lignes. Votre recommandation doit nommer le facteur prioritaire, le résultat qui l’appuie, l’action prudente à tester et une limite.
-
-## Étape 9 - Mise en commun
-
-En petits groupes, comparez vos recommandations. Cherchez surtout les différences d’interprétation :
-
-- avez-vous choisi le même facteur prioritaire?
-- avez-vous utilisé le même argument statistique?
-- avez-vous nommé la même limite?
-- votre recommandation dépasse-t-elle ce que les données permettent de dire?
-
-Après la mise en commun, ajustez votre recommandation si un autre groupe a repéré une limite ou une formulation plus prudente.
-
-## Gabarit minimal pour votre mini-analyse
-
-Structure Quarto à copier
-
-``` markdown
----
-title: "Atelier 02 - Régression"
-format:
-  html:
-    embed-resources: true
----
-
-## Question d'affaires
-
-## Données
-
-## Exploration
-
-## Modèle simple
-
-## Modèle enrichi
-
-## Diagnostic
-
-## Recommandation prudente
-```
-
-## Trace finale
-
-Votre trace finale doit être courte, mais complète. Elle doit contenir :
-
-1.  la question d’affaires;
-2.  une description minimale des données;
-3.  un graphique exploratoire;
-4.  un modèle simple ou enrichi;
-5.  une interprétation de coefficient;
-6.  un diagnostic des résidus;
-7.  une recommandation prudente;
-8.  une limite et une prochaine vérification.
-
-## Grille formative
-
-La question d’affaires est claire.
-
-Le graphique est interprété avant le modèle.
-
-Le modèle est écrit avec `lm()`.
-
-Au moins un coefficient est interprété avec les unités.
-
-Le modèle enrichi est comparé au modèle simple.
-
-Les résidus sont commentés.
-
-La recommandation est prudente et orientée vers l’action.
-
-La limite causale est explicite.
-
-## Auto-vérification assistée par IA
-
-Vous pouvez demander au [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) de relire votre trace. Demandez-lui de vérifier la structure, la reproductibilité du code, l’interprétation de la pente, le diagnostic et la prudence de la recommandation. Ne lui demandez pas de rédiger la recommandation finale à votre place.
-
-Suggestion de demande :
-
-> Voici ma trace finale de l’atelier 02. Vérifie si la question, le graphique, le modèle, l’interprétation de coefficient, le diagnostic des résidus, la recommandation et la limite sont présents et cohérents. Donne-moi une rétroaction concrète sans réécrire mon texte.
-
-## Fin de l’atelier
-
-Avant de quitter, vérifiez que votre fichier contient :
-
-- au moins un graphique;
-- au moins un modèle ajusté avec `lm()`;
-- une interprétation de coefficient;
-- un diagnostic des résidus;
-- une recommandation qui ne confond pas association et causalité.
+- préparer une validation sur des mois suivants, en fixant les périodes et les modèles avant d’examiner les résultats de validation;
+- examiner les résidus dans le temps pour chaque succursale;
+- reprendre les [exercices complémentaires](../../modules/atelier-02-regression/exercices.llms.md) sur le trafic d’un site web.

@@ -1,0 +1,64 @@
+# Bienvenue au laboratoire 02
+
+Choisir et défendre un modèle
+
+MQT-2101, Université Laval
+
+## La mission
+
+Quelle relation retenir pour décrire les ventes mensuelles de succursales fictives?
+
+1.  Choisir une explicative : achalandage, marketing ou heures de personnel.
+2.  Comparer une droite à une quadratique ou à un logarithme de l’explicative.
+3.  Défendre un modèle, une limite et une prochaine vérification.
+
+Vous pouvez retenir la droite. La complexité n’est pas un objectif.
+
+## Un peu plus d’autonomie
+
+Le dossier fournit l’importation et un début de rapport.
+
+Vous choisissez la question précise, la variante et la présentation des résultats. Vous écrivez les blocs d’analyse.
+
+Travail en binômes, avec un rapport commun. Changez de personne au clavier après le premier point de rétroaction.
+
+Reprenez un point à améliorer de votre laboratoire 1.
+
+## Les résultats à produire
+
+- Un graphique de la relation avec les deux ajustements.
+- Un tableau comparatif : effectif, R² ajusté et RMSE d’ajustement.
+- Un graphique de résidus et son interprétation.
+- Une conclusion appuyée sur deux résultats chiffrés.
+
+Interprétez la pente et l’intercept de la droite, puis une différence entre deux prédictions de la variante.
+
+## Comment défendre votre choix
+
+Comparez les mêmes observations et les ventes dans les mêmes unités.
+
+Reliez votre décision à l’ajustement, aux résidus et à la simplicité.
+
+Une erreur calculée sur les données d’ajustement ne démontre pas la performance sur de nouvelles données. Une association ne prouve pas un effet causal.
+
+Nommez la prochaine vérification nécessaire.
+
+## La rétroaction en classe
+
+Au premier point, montrez la question, le graphique et une interprétation. Expliquez la variante à essayer.
+
+Avant le rendu final, un autre binôme relit votre HTML : un point réussi et une amélioration précise, avec la grille du guide.
+
+Corrigez ou justifiez votre choix dans le bilan, puis redémarrez R et faites Render.
+
+Le laboratoire est formatif, sans points dans la note finale.
+
+## Pour commencer et pour terminer
+
+Ouvrez le [guide de la mission](https://aureliennicosiaulaval.github.io/MQT-2101/modules/atelier-02-regression/guide-atelier.html) et décompressez le [dossier de départ](https://aureliennicosiaulaval.github.io/MQT-2101/assets/exemples/laboratoire-02.zip).
+
+Lancez un premier rendu, puis commencez par les données et votre question.
+
+Les 30 dernières minutes sont réservées aux questions sur le mini-rapport 1. Apportez un passage, un résultat ou un message d’erreur précis.
+
+Conservez le QMD, le HTML et les données du laboratoire ensemble.

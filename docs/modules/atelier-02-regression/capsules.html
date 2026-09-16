@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Repères - Atelier 02 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Repères - Laboratoire 02 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7018,12 +7018,13 @@ display: none;
     <h2 id="toc-title">Sur cette page</h2>
 
   <ul>
-  <li><a href="#rôle-des-repères" id="toc-rôle-des-repères" class="nav-link active" data-scroll-target="#rôle-des-repères">Rôle des repères</a></li>
-  <li><a href="#repère-1---question-daffaires-et-variable-réponse" id="toc-repère-1---question-daffaires-et-variable-réponse" class="nav-link" data-scroll-target="#repère-1---question-daffaires-et-variable-réponse">Repère 1 - Question d’affaires et variable réponse</a></li>
-  <li><a href="#repère-2---relation-visible-et-relation-modélisée" id="toc-repère-2---relation-visible-et-relation-modélisée" class="nav-link" data-scroll-target="#repère-2---relation-visible-et-relation-modélisée">Repère 2 - Relation visible et relation modélisée</a></li>
-  <li><a href="#repère-3---modèle-simple-et-modèle-enrichi" id="toc-repère-3---modèle-simple-et-modèle-enrichi" class="nav-link" data-scroll-target="#repère-3---modèle-simple-et-modèle-enrichi">Repère 3 - Modèle simple et modèle enrichi</a></li>
-  <li><a href="#repère-4---recommandation-et-limites" id="toc-repère-4---recommandation-et-limites" class="nav-link" data-scroll-target="#repère-4---recommandation-et-limites">Repère 4 - Recommandation et limites</a></li>
-  <li><a href="#après-les-repères" id="toc-après-les-repères" class="nav-link" data-scroll-target="#après-les-repères">Après les repères</a></li>
+  <li><a href="#des-repères-à-consulter-au-besoin" id="toc-des-repères-à-consulter-au-besoin" class="nav-link active" data-scroll-target="#des-repères-à-consulter-au-besoin">Des repères à consulter au besoin</a></li>
+  <li><a href="#question-et-unités" id="toc-question-et-unités" class="nav-link" data-scroll-target="#question-et-unités">Question et unités</a></li>
+  <li><a href="#droite-et-coefficients" id="toc-droite-et-coefficients" class="nav-link" data-scroll-target="#droite-et-coefficients">Droite et coefficients</a></li>
+  <li><a href="#courbe-et-interprétation" id="toc-courbe-et-interprétation" class="nav-link" data-scroll-target="#courbe-et-interprétation">Courbe et interprétation</a></li>
+  <li><a href="#comparaison-et-diagnostic" id="toc-comparaison-et-diagnostic" class="nav-link" data-scroll-target="#comparaison-et-diagnostic">Comparaison et diagnostic</a></li>
+  <li><a href="#prédiction-et-décision" id="toc-prédiction-et-décision" class="nav-link" data-scroll-target="#prédiction-et-décision">Prédiction et décision</a></li>
+  <li><a href="#retrouver-une-explication" id="toc-retrouver-une-explication" class="nav-link" data-scroll-target="#retrouver-une-explication">Retrouver une explication</a></li>
   </ul>
 </nav>
     </div>
@@ -7032,7 +7033,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Repères - Atelier 02</h1>
+<h1 class="title">Repères - Laboratoire 02</h1>
 </div>
 
 
@@ -7049,102 +7050,77 @@ display: none;
 </header>
 
 
-<section id="rôle-des-repères" class="level2">
-<h2 class="anchored" data-anchor-id="rôle-des-repères">Rôle des repères</h2>
-<p>Ces repères préparent le travail en classe. Ils résument les décisions à prendre pendant une analyse de régression appliquée.</p>
-<p>Pour chaque repère, produisez une trace très courte : une phrase, une liste ou un choix argumenté. Ces traces seront réutilisées dans le guide complet.</p>
+<section id="des-repères-à-consulter-au-besoin" class="level2">
+<h2 class="anchored" data-anchor-id="des-repères-à-consulter-au-besoin">Des repères à consulter au besoin</h2>
+<p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> mobilise les modules 3 et 4. Ces repères aident à vérifier une décision pendant l’analyse; ils ne constituent pas un travail supplémentaire.</p>
 </section>
-<section id="repère-1---question-daffaires-et-variable-réponse" class="level2">
-<h2 class="anchored" data-anchor-id="repère-1---question-daffaires-et-variable-réponse">Repère 1 - Question d’affaires et variable réponse</h2>
-<p><em>Pourquoi ça compte</em> : un modèle qui répond à une question floue produit une recommandation floue.</p>
-<p>Une bonne régression commence par une question d’affaires précise. Dans cet atelier, la question centrale est :</p>
-<blockquote class="blockquote">
-<p>Quels facteurs sont associés aux ventes mensuelles des succursales?</p>
-</blockquote>
-<p>La variable réponse est <code>ventes</code>. Les variables explicatives possibles incluent <code>achalandage</code>, <code>depenses_marketing</code>, <code>heures_personnel</code>, <code>ruptures_stock</code> et <code>campagne_locale</code>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Activité courte">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Activité courte
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Choisissez une variable explicative et écrivez pourquoi elle pourrait être liée aux ventes.</p>
-</div>
-</div>
-<p>À conserver : une question d’affaires et la variable réponse.</p>
+<section id="question-et-unités" class="level2">
+<h2 class="anchored" data-anchor-id="question-et-unités">Question et unités</h2>
+<p>Les ventes mensuelles sont la réponse. Choisissez une explicative qui permet de poser une question précise et donnez son unité. Distinguez les différences observées entre mois et succursales de l’effet qu’aurait une intervention de la direction.</p>
+<p>À vérifier : que représente une ligne, et quelle augmentation concrète de l’explicative allez-vous commenter?</p>
 </section>
-<section id="repère-2---relation-visible-et-relation-modélisée" class="level2">
-<h2 class="anchored" data-anchor-id="repère-2---relation-visible-et-relation-modélisée">Repère 2 - Relation visible et relation modélisée</h2>
-<p><em>Pourquoi ça compte</em> : une droite bien ajustée sur un nuage courbé donne une fausse impression de précision.</p>
-<p>Un nuage de points montre la relation observée entre deux variables. Le modèle linéaire ajoute une droite qui résume cette relation moyenne.</p>
-<p>La droite ne remplace pas le graphique. Elle doit être lue avec lui. Si le nuage de points est fortement courbé ou très dispersé, une droite peut donner une impression de précision trompeuse.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Activité courte">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Activité courte
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Avant d’ajuster le modèle, écrivez ce que vous vous attendez à voir entre <code>achalandage</code> et <code>ventes</code>.</p>
-</div>
-</div>
-<p>À conserver : une phrase qui décrit la relation attendue avant le modèle.</p>
+<section id="droite-et-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="droite-et-coefficients">Droite et coefficients</h2>
+<p>La pente d’une droite correspond à une variation constante de la moyenne estimée de la réponse par unité de l’explicative. L’intercept correspond à une explicative égale à zéro; vérifiez si ce point a un sens dans le contexte et la plage observée.</p>
+<p>À vérifier : votre phrase contient-elle les dollars de ventes, l’augmentation choisie et une formulation d’association?</p>
 </section>
-<section id="repère-3---modèle-simple-et-modèle-enrichi" class="level2">
-<h2 class="anchored" data-anchor-id="repère-3---modèle-simple-et-modèle-enrichi">Repère 3 - Modèle simple et modèle enrichi</h2>
-<p><em>Pourquoi ça compte</em> : ajouter des variables peut clarifier le portrait, ou rendre chaque coefficient impossible à expliquer à la direction.</p>
-<p>Un modèle simple relie une variable réponse à une seule variable explicative. Il est facile à expliquer et utile pour commencer.</p>
-<p>Un modèle enrichi ajoute d’autres variables. Il peut mieux représenter le contexte, mais il demande une interprétation plus prudente, car chaque coefficient se lit en gardant constantes les autres variables du modèle.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Point de vigilance">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Avertissement</span>Point de vigilance
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Ajouter des variables ne rend pas automatiquement le modèle meilleur pour la décision. Il faut vérifier si l’interprétation reste claire et si les variables ajoutées ont un sens dans le contexte.</p>
-</div>
-</div>
-<p>À conserver : un avantage et une limite du modèle enrichi.</p>
+<section id="courbe-et-interprétation" class="level2">
+<h2 class="anchored" data-anchor-id="courbe-et-interprétation">Courbe et interprétation</h2>
+<p>Une quadratique conserve le terme simple avec son carré. Un logarithme de l’explicative exige des valeurs strictement positives. Dans les deux cas, les ventes restent en dollars et <code>lm()</code> estime les coefficients. Une courbe peut décrire une relation sans qu’un modèle non linéaire dans ses paramètres soit nécessaire.</p>
+<p>Pour interpréter la variante, comparez ses prédictions en deux points précis. La variation n’est pas constante sur toute la plage. Un logarithme ne représente pas un plafond de ventes et une quadratique peut finir par redescendre hors de la plage utile.</p>
 </section>
-<section id="repère-4---recommandation-et-limites" class="level2">
-<h2 class="anchored" data-anchor-id="repère-4---recommandation-et-limites">Repère 4 - Recommandation et limites</h2>
-<p><em>Pourquoi ça compte</em> : une recommandation sans limite, c’est une décision risquée présentée comme une certitude.</p>
-<p>Une recommandation statistique doit relier trois éléments :</p>
+<section id="comparaison-et-diagnostic" class="level2">
+<h2 class="anchored" data-anchor-id="comparaison-et-diagnostic">Comparaison et diagnostic</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Repère</th>
+<th>Ce qu’il apporte</th>
+<th>Limite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R²</td>
+<td>Part de la variation de la réponse résumée par l’ajustement avec intercept</td>
+<td>Peut augmenter avec la complexité sans gain utile</td>
+</tr>
+<tr class="even">
+<td>R² ajusté</td>
+<td>Ajustement avec une pénalisation liée au nombre de paramètres</td>
+<td>Reste une mesure sur les données d’ajustement</td>
+</tr>
+<tr class="odd">
+<td>RMSE d’ajustement</td>
+<td>Taille des erreurs, en dollars, avec davantage de poids aux grandes erreurs</td>
+<td>Ne mesure pas l’erreur sur de nouvelles données</td>
+</tr>
+<tr class="even">
+<td>Graphique des résidus</td>
+<td>Recherche de courbure, dispersion variable ou points à vérifier</td>
+<td>Ne suffit pas à confirmer toutes les hypothèses</td>
+</tr>
+</tbody>
+</table>
+<p>À vérifier : les modèles utilisent-ils les mêmes lignes et la même réponse? Les résidus changent-ils votre jugement? Les mois d’une même succursale peuvent être liés, même si le nuage paraît régulier.</p>
+</section>
+<section id="prédiction-et-décision" class="level2">
+<h2 class="anchored" data-anchor-id="prédiction-et-décision">Prédiction et décision</h2>
+<p>Vérifiez la plage de l’explicative et la comparabilité du contexte. Une valeur dans la plage n’efface pas les différences entre succursales. Au-delà de cette plage, il s’agit d’une extrapolation.</p>
+<p>Une recommandation indique le modèle retenu, les résultats qui motivent le choix, une limite précise et la prochaine vérification utile.</p>
+</section>
+<section id="retrouver-une-explication" class="level2">
+<h2 class="anchored" data-anchor-id="retrouver-une-explication">Retrouver une explication</h2>
 <ul>
-<li>ce que le modèle estime;</li>
-<li>ce que le contexte rend plausible;</li>
-<li>ce que les données ne permettent pas de conclure.</li>
+<li><a href="../../modules/semaine-03-regression-lineaire/demonstrations.html">Module 3 : interpréter une droite et ses résidus</a>.</li>
+<li><a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html">Module 4 : comparer les formes et distinguer ajustement et validation</a>.</li>
+<li><a href="../../modules/atelier-02-regression/lectures.html">Documentation R et lectures utiles</a>.</li>
 </ul>
-<p>Une recommandation solide ne dit pas seulement « faire plus de X ». Elle précise la variable priorisée, l’incertitude, la limite et la prochaine vérification à faire.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Activité courte">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Activité courte
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Rédigez une phrase qui commence par : « Les données suggèrent de prioriser… », puis ajoutez immédiatement une limite.</p>
-</div>
-</div>
-<p>À conserver : une recommandation provisoire et une limite causale.</p>
-</section>
-<section id="après-les-repères" class="level2">
-<h2 class="anchored" data-anchor-id="après-les-repères">Après les repères</h2>
-<p>Poursuivez avec le <a href="guide-atelier.html">guide complet</a>. Les repères servent à préparer les décisions; le guide sert à produire la mini-analyse en classe.</p>
 
 
 </section>
@@ -7629,7 +7605,7 @@ display: none;
 <p>MQT-2101 - Université Laval</p>
 </div>
     <div class="nav-footer-center">
-       
+
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>

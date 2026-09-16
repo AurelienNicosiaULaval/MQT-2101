@@ -1,0 +1,83 @@
+---
+title: "Laboratoire 02 : choisir un modèle pour les ventes"
+author: "Noms des personnes participantes"
+lang: fr
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-fold: false
+    code-copy: true
+execute:
+  echo: true
+  warning: true
+  message: false
+---
+
+<!-- Ce début de rapport se rend dès l'ouverture. L'importation est fournie;
+vous ajoutez les blocs d'analyse et organisez les résultats.
+Les commentaires R seuls ne produisent pas de résultat.
+Le guide de la mission contient les attentes détaillées. -->
+
+## 1. Question
+
+La direction souhaite mieux décrire les ventes mensuelles de ses succursales à partir d'une relation simple et connaître les limites de son utilisation.
+
+À compléter : formulez votre question, choisissez une variable explicative et justifiez son intérêt. Nommez un point de la rétroaction du laboratoire 1 que vous souhaitez améliorer.
+
+## 2. Données
+
+Source : données simulées pour le cours MQT-2101, fichier `performance_succursales_quebec.csv`.
+
+```{r}
+#| label: importation
+
+# Charger les outils et lire le fichier avec un chemin relatif.
+library(tidyverse)
+
+performance <- read_csv(
+  "data/performance_succursales_quebec.csv",
+  show_col_types = FALSE
+) |>
+  mutate(
+    mois = as.Date(mois),
+    succursale = factor(succursale)
+  )
+```
+
+```{r}
+#| label: controles
+
+# Ajoutez vos contrôles et préparez le même tableau pour les deux modèles.
+```
+
+À compléter : unité d'observation, dimensions, période, succursales, qualité des données, unités et plage de l'explicative, effectif conservé.
+
+## 3. Analyse et comparaison
+
+À construire : vos blocs de code, sous-sections et commentaires. Comparez la droite de référence à une variante choisie. Sélectionnez les sorties utiles au lecteur et interprétez les résultats dans leurs unités.
+
+```{r}
+#| label: analyse
+
+# Commencez par le graphique et la droite, puis ajoutez votre comparaison.
+# Créez d'autres blocs au besoin avec Ctrl+Alt+I (Windows) ou Cmd+Option+I (Mac).
+```
+
+## 4. Diagnostic et recommandation
+
+À construire : le graphique des résidus, son commentaire et votre réponse à la direction. Justifiez le modèle retenu par deux résultats chiffrés, expliquez une limite précise et proposez une prochaine vérification.
+
+## 5. Bilan formatif
+
+À compléter : point repris du laboratoire 1, rétroaction reçue, correction appliquée ou choix conservé avec justification. Indiquez l'aide utilisée, ce que vous avez vérifié et une question restante, s'il y a lieu.
+
+### Avant de terminer
+
+- [ ] Les deux modèles utilisent les mêmes lignes et la même réponse en dollars.
+- [ ] Le graphique des ajustements, le tableau comparatif et le graphique des résidus sont commentés.
+- [ ] J'interprète la pente et l'intercept de la droite, ainsi qu'une différence entre deux prédictions de la variante.
+- [ ] Ma conclusion s'appuie sur les résultats produits et distingue ajustement et validation.
+- [ ] J'ai remplacé les consignes par mon analyse et indiqué les noms des membres.
+- [ ] Après redémarrage de R, Render fonctionne sans préparation dans la Console.
+- [ ] J'ai ouvert le HTML et conservé le QMD, le HTML et le dossier data/.

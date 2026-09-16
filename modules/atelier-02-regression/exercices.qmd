@@ -1,150 +1,139 @@
 ---
-title: "Exercices - Atelier 02"
+title: "Exercices complémentaires - Laboratoire 02"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
+## Une pratique facultative
 
-Réaliser une analyse de transfert après l'atelier guidé. Le guide utilise la
-performance des succursales; cette page utilise plutôt des campagnes marketing
-et cherche à expliquer les visites du site, non les ventes des succursales.
+La [mission du laboratoire](guide-atelier.qmd) se fait dans un seul rapport. Ces exercices servent à reprendre un geste après la mission ou à pratiquer davantage. Ils utilisent le trafic numérique de campagnes fictives plutôt que les ventes des succursales.
 
 Jeu de données de transfert :
-<a class="data-link" href="../../donnees/#campagnes-marketing-québécoises-fictives">campagnes_marketing_quebec.csv</a>.
+[campagnes_marketing_quebec.csv](../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv).
 
-## Préparation
+Essayez chaque exercice avant d'ouvrir sa proposition de solution. Les solutions s'exécutent dans l'ordre; plusieurs choix de variante et plusieurs conclusions peuvent être défendables.
 
 ```{r}
-#| eval: false
-
-library(tidyverse)
-library(broom)
-
-data_path <- if (file.exists("../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv")) {
-  "../semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
-} else {
-  "modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv"
+#| label: racine-exercices-labo02
+#| include: false
+if (!file.exists("data/campagnes_marketing_quebec.csv")) {
+  candidates <- c("../semaine-03-regression-lineaire", "modules/semaine-03-regression-lineaire")
+  candidate <- candidates[file.exists(file.path(candidates, "data/campagnes_marketing_quebec.csv"))][1]
+  stopifnot(!is.na(candidate))
+  knitr::opts_knit$set(root.dir = normalizePath(candidate))
 }
-
-campagnes <- read_csv(
-  data_path,
-  show_col_types = FALSE
-) |>
-  mutate(
-    mois = as.Date(mois),
-    canal = factor(canal),
-    region = factor(region)
-  )
 ```
 
-## Exercice 1 - Question et variables
+## 1. Question et données
 
-La question est : « Comment le budget marketing est-il associé au nombre de
-visites du site, et cette association paraît-elle différente selon le canal? »
+Comment le budget marketing est-il associé aux visites du site? Identifiez la réponse, l'explicative, leurs unités et l'unité d'observation. Vérifiez les données avant l'ajustement.
 
-Identifiez la réponse, la variable explicative principale, le rôle de `canal`,
-l'unité d'observation et une limite causale.
-
-## Exercice 2 - Graphique exploratoire
-
-Produisez un nuage de points avec une couleur et une droite distinctes par canal.
+::: {.callout-tip collapse="true" title="Proposition de solution : question et contrôles"}
 
 ```{r}
-#| eval: false
+#| label: donnees-exercices-labo02
+library(tidyverse)
 
-ggplot(
-  campagnes,
-  aes(x = budget_marketing, y = visites_site, colour = canal)
-) +
-  geom_point(alpha = 0.8) +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    x = "Budget marketing",
-    y = "Visites du site",
-    colour = "Canal"
-  ) +
-  theme_minimal(base_size = 12)
+campagnes <- read_csv("data/campagnes_marketing_quebec.csv", show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois), budget_milliers = budget_marketing / 1000)
+glimpse(campagnes)
+campagnes |> count(region, mois) |> filter(n > 1)
+campagnes |> summarise(n = n(), debut = min(mois), fin = max(mois),
+                        budget_min = min(budget_marketing), budget_max = max(budget_marketing))
+sum(is.na(campagnes))
+stopifnot(all(complete.cases(campagnes[c("visites_site", "budget_milliers")])) )
 ```
 
-Décrivez ce qui est commun aux canaux et ce qui semble différent. N'interprétez
-pas encore ces écarts comme des effets certains.
+La réponse est le nombre mensuel de visites du site. L'explicative est le budget mensuel, exprimé ici en milliers de dollars. Une ligne correspond à un mois dans une région; le canal est une caractéristique de la campagne. Les régions sont observées à plusieurs mois. L'analyse décrit une association et ne prouve pas un effet d'une dépense décidée par la direction.
+:::
 
-## Exercice 3 - Modèle simple
+## 2. Explorer et lire une droite
 
-Ajustez `visites_site ~ budget_marketing`. Interprétez la pente pour une hausse
-de 1 000 dollars et donnez son intervalle de confiance.
+Tracez le nuage des visites selon le budget, en distinguant les canaux. Ajustez une droite commune et interprétez la pente pour 1 000 $ supplémentaires. Expliquez la portée de l'intercept.
+
+::: {.callout-tip collapse="true" title="Proposition de solution : graphique et droite"}
 
 ```{r}
-#| eval: false
+#| label: droite-exercices-labo02
+#| fig-width: 8
+#| fig-height: 4.5
+ggplot(campagnes, aes(budget_milliers, visites_site)) +
+  geom_point(aes(colour = canal)) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C") +
+  labs(x = "Budget mensuel (milliers de dollars)", y = "Visites mensuelles du site",
+       colour = "Canal") +
+  theme_minimal()
 
-modele_simple <- lm(
-  visites_site ~ budget_marketing,
-  data = campagnes
-)
-
-tidy(modele_simple, conf.int = TRUE)
-coef(modele_simple)[["budget_marketing"]] * 1000
+reference <- lm(visites_site ~ budget_milliers, data = campagnes)
+coef(reference)
+summary(reference)$r.squared
 ```
 
-## Exercice 4 - Modèle enrichi
+La pente vaut `r round(coef(reference)[["budget_milliers"]], 1)` visites par tranche de 1 000 $. Elle décrit une variation moyenne estimée des visites, sans isoler l'effet causal du budget. L'intercept représente les visites estimées pour un budget nul; zéro est hors de la plage observée et son interprétation pratique est limitée.
+:::
 
-Ajoutez le canal, le rabais et la saison. Comparez la pente du budget entre les
-deux modèles.
+## 3. Comparer une variante
+
+Choisissez une quadratique ou un logarithme du budget. Gardez les visites comme réponse et les mêmes lignes. Comparez le R² ajusté et la RMSE d'ajustement; expliquez pourquoi cela ne suffit pas à établir une meilleure performance future.
+
+::: {.callout-tip collapse="true" title="Proposition de solution : une variante logarithmique"}
+
+Le logarithme permet ici d'examiner une association dont l'intensité varie avec le niveau du budget. Il s'agit d'une variante à examiner, pas d'une forme à retenir d'avance.
 
 ```{r}
-#| eval: false
+#| label: comparaison-exercices-labo02
+stopifnot(all(campagnes$budget_milliers > 0))
+variante <- lm(visites_site ~ log(budget_milliers), data = campagnes)
 
-modele_enrichi <- lm(
-  visites_site ~ budget_marketing + canal + rabais + saison,
-  data = campagnes
-)
-
-bind_rows(
-  tidy(modele_simple) |> mutate(modele = "Simple"),
-  tidy(modele_enrichi) |> mutate(modele = "Enrichi")
-) |>
-  filter(term == "budget_marketing") |>
-  select(modele, estimate, std.error, p.value)
+tibble(
+  modele = c("Droite", "Logarithme"),
+  n = c(nobs(reference), nobs(variante)),
+  r2_ajuste = c(summary(reference)$adj.r.squared, summary(variante)$adj.r.squared),
+  rmse_ajustement_visites = c(sqrt(mean(residuals(reference)^2)),
+                            sqrt(mean(residuals(variante)^2)))) |>
+  knitr::kable(digits = c(0, 0, 3, 1))
 ```
 
-Expliquez pourquoi le changement de pente peut révéler un mélange entre budget,
-canal, rabais et saison.
+La RMSE est en visites pour les deux modèles. Une diminution décrit une meilleure concordance sur ces observations. Elle ne remplace pas une validation sur des données mises de côté. Le modèle retenu doit aussi rester interprétable et compatible avec les diagnostics.
+:::
 
-## Exercice 5 - Recommandation
+## 4. Interpréter la courbe et les résidus
 
-La direction veut augmenter les visites du site. Recommandez une prochaine
-vérification, et non une hausse automatique du budget. Votre texte doit citer la
-pente, le rôle du canal, une limite observationnelle et une option de validation.
+Comparez les prédictions de la variante pour deux budgets dans la plage observée. Examinez ses résidus en distinguant les canaux. Expliquez une limite concrète pour l'utilisation du modèle.
 
-## Exercice 6 - Diagnostic des résidus
-
-Examinez les résidus dans le temps et par canal.
+::: {.callout-tip collapse="true" title="Proposition de solution : différence et diagnostic"}
 
 ```{r}
-#| eval: false
+#| label: prediction-exercices-labo02
+budgets <- tibble(budget_milliers = as.numeric(
+  quantile(campagnes$budget_milliers, c(0.25, 0.75))))
+budgets <- budgets |> mutate(visites_estimees = predict(variante, newdata = budgets))
+budgets
+diff(budgets$visites_estimees)
+```
 
-diagnostic <- augment(modele_enrichi, data = campagnes)
+Cette différence compare les moyennes estimées aux deux budgets indiqués. Le coefficient du logarithme n'est pas une variation constante par dollar.
 
-ggplot(diagnostic, aes(x = mois, y = .resid, colour = canal)) +
+```{r}
+#| label: diagnostic-exercices-labo02
+#| fig-width: 8
+#| fig-height: 4.5
+diagnostic <- campagnes |> mutate(ajustement = fitted(variante), residu = residuals(variante))
+ggplot(diagnostic, aes(ajustement, residu, colour = canal)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_line(aes(group = interaction(region, canal)), alpha = 0.5) +
   geom_point() +
-  labs(x = NULL, y = "Résidu", colour = "Canal") +
-  theme_minimal(base_size = 12)
+  labs(x = "Visites ajustées", y = "Résidu (visites)", colour = "Canal") +
+  theme_minimal()
 ```
 
-Repérez une structure temporelle, une différence de dispersion ou un point
-atypique qui mériterait une vérification.
+Des différences entre canaux peuvent appeler une vérification du contexte. Les mois répétés d'une même région limitent aussi l'hypothèse d'indépendance. N'inventez pas un motif : décrivez celui que votre graphique montre et reliez-le à une vérification précise.
+:::
 
-## Exercice 7 - Mini-recommandation complète
+## 5. Conclure
 
-Rédigez huit lignes maximum : question, graphique, pente, comparaison des
-modèles, diagnostic, limite, décision possible et validation proposée.
+Rédigez au plus huit lignes : question, modèle retenu, deux résultats chiffrés, diagnostic, limite et prochaine vérification.
 
-## Trace finale courte
-
-La trace doit être une mini-analyse du trafic numérique. Elle ne doit reprendre
-ni `performance_succursales_quebec.csv`, ni le modèle de ventes du guide de
-l'atelier.
+::: {.callout-tip collapse="true" title="Repères pour vérifier votre conclusion"}
+La conclusion doit préciser la variante effectivement essayée et peut retenir la droite. Citez les valeurs de votre comparaison et une interprétation en visites. Une nouvelle période de campagnes ou un examen des écarts entre canaux peut être proposé comme prochaine vérification. Une augmentation automatique du budget n'est pas démontrée par ces associations.
+:::

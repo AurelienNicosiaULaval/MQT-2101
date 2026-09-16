@@ -1,236 +1,178 @@
 ---
-title: "Démonstrations R - Atelier 02"
+title: "Aide R - Laboratoire 02"
+subtitle: "Retrouver un geste après une première tentative"
 format:
   html:
     embed-resources: true
 ---
 
-## Objectif
+## Utiliser cette aide
 
-Cette page montre comment passer d'un tableau de performance de
-succursales à une recommandation fondée sur une régression.
+La [mission](guide-atelier.qmd) reste votre fil principal. Ouvrez seulement la rubrique qui répond à votre difficulté. Les exemples reprennent le jeu de saturation du module 4; adaptez les variables et les objets à votre propre analyse des succursales.
 
-::: {.callout-note title="Comment utiliser cette page"}
-Cette page sert de référence pendant l'atelier. Lisez l'objectif de chaque
-démonstration, exécutez le code, puis écrivez l'interprétation dans votre propre
-fichier Quarto. Le code seul ne suffit pas : chaque résultat doit être relié à
-la question d'affaires.
-:::
-
-## Vue d'ensemble
-
-Les démonstrations suivent le même ordre que la trace finale :
-
-1. comprendre le tableau;
-2. visualiser la relation principale;
-3. ajuster un modèle simple;
-4. ajouter des variables de contexte;
-5. comparer les modèles;
-6. diagnostiquer les résidus;
-7. formuler une recommandation prudente.
-
-## Préparation
+Les blocs ci-dessous s'exécutent dans l'ordre pour reproduire cet exemple. Pour l'utiliser dans un projet indépendant, placez le [CSV du module 4](../semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv) dans `data/` et le `.qmd` à la racine.
 
 ```{r}
-#| label: setup-atelier-02-demo
+#| label: racine-aide-labo02
+#| include: false
+# Retrouver les données lors du rendu du site, tout en montrant le chemin étudiant.
+if (!file.exists("data/achalandage_saturation_quebec.csv")) {
+  candidates <- c("../semaine-04-regression-nonlineaire",
+                  "modules/semaine-04-regression-nonlineaire")
+  candidate <- candidates[file.exists(file.path(candidates, "data/achalandage_saturation_quebec.csv"))][1]
+  stopifnot(!is.na(candidate))
+  knitr::opts_knit$set(root.dir = normalizePath(candidate))
+}
+```
+
+## Ajouter un bloc dans le rapport
+
+Dans RStudio, le bouton d'insertion de bloc permet d'ajouter du code R à une section. Le code reste dans les blocs; la justification et l'interprétation s'écrivent dans le texte. Donnez des noms distincts aux modèles pour conserver les deux ajustements.
+
+## Importer et contrôler
+
+::: {.callout-tip collapse="true" title="Ouvrir l'exemple d'importation et de contrôle"}
+
+```{r}
+#| label: importer-aide-labo02
 library(tidyverse)
 
-data_path <- if (file.exists("data/performance_succursales_quebec.csv")) {
-  "data/performance_succursales_quebec.csv"
-} else {
-  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
-}
+saturation <- read_csv("data/achalandage_saturation_quebec.csv",
+                       show_col_types = FALSE) |>
+  mutate(mois = as.Date(mois),
+         achalandage_milliers = achalandage / 1000)
 
-performance <- read_csv(data_path, show_col_types = FALSE)
+saturation |>
+  summarise(observations = n(),
+            succursales = n_distinct(succursale),
+            debut = min(mois), fin = max(mois),
+            visites_min = min(achalandage),
+            visites_max = max(achalandage))
+sum(is.na(saturation))
+saturation |> count(succursale, mois) |> filter(n > 1)
+
+# Un seul tableau complet pour tous les modèles de cet exemple.
+stopifnot(all(complete.cases(saturation[c("ventes", "achalandage_milliers")])))
 ```
 
-## Démonstration 1 - Comprendre les données
-
-Objectif : vérifier le contenu du tableau avant de modéliser. Une ligne
-représente une observation mensuelle pour une succursale fictive.
-
-```{r}
-#| label: inspecter-performance-demo
-glimpse(performance)
-```
-
-```{r}
-#| label: resume-performance-demo
-performance |>
-  summarise(
-    observations = n(),
-    succursales = n_distinct(succursale),
-    ventes_moyennes = mean(ventes),
-    achalandage_moyen = mean(achalandage),
-    depenses_moyennes = mean(depenses_marketing)
-  )
-```
-
-::: {.callout-warning title="Erreur fréquente"}
-Ne commencez pas par `lm()` sans avoir vérifié l'unité d'observation et les
-variables disponibles. Une bonne interprétation dépend d'abord d'une bonne
-lecture du tableau.
+Vérifiez les colonnes effectivement utilisées. Si un contrôle échoue, examinez la cause avant de filtrer ou de modéliser.
 :::
 
-## Démonstration 2 - Explorer une relation principale
+## Construire la référence et une variante
 
-Objectif : produire un graphique qui permet de voir la relation entre
-achalandage et ventes avant d'ajuster le modèle.
-
-```{r}
-#| label: graphique-achalandage-ventes-demo
-#| fig-width: 8
-#| fig-height: 5
-ggplot(performance, aes(x = achalandage, y = ventes)) +
-  geom_point(aes(colour = succursale), alpha = 0.8, size = 2.4) +
-  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
-  labs(
-    title = "Ventes selon l'achalandage",
-    x = "Achalandage mensuel",
-    y = "Ventes",
-    colour = "Succursale"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(panel.grid.minor = element_blank())
-```
-
-::: {.callout-caution title="Limite importante"}
-Le nuage de points peut suggérer une relation positive. Il ne permet pas, à lui
-seul, de dire que l'achalandage cause les ventes.
-:::
-
-## Démonstration 3 - Ajuster un modèle simple
-
-Objectif : quantifier l'association moyenne entre l'achalandage et les ventes.
+::: {.callout-tip collapse="true" title="Ouvrir l'exemple de modèles et de coefficients"}
 
 ```{r}
-#| label: modele-simple-atelier-02
-modele_simple <- lm(ventes ~ achalandage, data = performance)
-
-summary(modele_simple)
-```
-
-La pente du modèle simple indique la variation moyenne estimée des ventes pour
-une unité supplémentaire d'achalandage mensuel.
-
-```{r}
-#| label: pente-achalandage-atelier-02
-coef(modele_simple)["achalandage"]
-```
-
-::: {.callout-tip title="Phrase à adapter"}
-Dans ce modèle simple, une unité supplémentaire d'achalandage est associée à une
-variation moyenne estimée des ventes égale à la pente. Cette interprétation doit
-être formulée avec les unités réelles du contexte.
-:::
-
-## Démonstration 4 - Ajouter le contexte
-
-Un modèle enrichi peut inclure d'autres variables plausibles. Ici, on ajoute les
-dépenses marketing, les heures de personnel et les ruptures de stock.
-
-```{r}
-#| label: modele-enrichi-atelier-02
-modele_enrichi <- lm(
-  ventes ~ achalandage + depenses_marketing + heures_personnel + ruptures_stock,
-  data = performance
+#| label: modeles-aide-labo02
+modele_reference <- lm(ventes ~ achalandage_milliers, data = saturation)
+modele_variante <- lm(
+  ventes ~ achalandage_milliers + I(achalandage_milliers^2),
+  data = saturation
 )
 
-summary(modele_enrichi)
+coef(modele_reference)
+summary(modele_reference)$r.squared
+
+# La variable est en milliers de visites : 100 visites représentent 0,1 unité.
+unname(coef(modele_reference)["achalandage_milliers"] * 0.1)
 ```
 
-Les coefficients du modèle enrichi se lisent en gardant constantes les autres
-variables incluses dans la formule. Cette formulation est importante, car elle
-évite de comparer naïvement des succursales qui n'ont pas le même achalandage ou
-la même dotation en personnel.
-
-::: {.callout-warning title="Point de vigilance"}
-Dans un modèle enrichi, un coefficient ne se lit pas comme une comparaison brute.
-Il se lit conditionnellement aux autres variables incluses dans la formule.
-:::
-
-## Démonstration 5 - Comparer les modèles
-
-Objectif : comparer le modèle simple et le modèle enrichi sans choisir seulement
-le `R²` le plus élevé.
+Pour essayer l'autre famille à la place de la quadratique :
 
 ```{r}
-#| label: comparer-modeles-atelier-02
-tibble(
-  modele = c("Simple", "Enrichi"),
-  r_carre = c(summary(modele_simple)$r.squared, summary(modele_enrichi)$r.squared),
-  r_carre_ajuste = c(
-    summary(modele_simple)$adj.r.squared,
-    summary(modele_enrichi)$adj.r.squared
+#| label: logarithme-aide-labo02
+#| eval: false
+stopifnot(all(saturation$achalandage_milliers > 0))
+modele_variante <- lm(ventes ~ log(achalandage_milliers), data = saturation)
+```
+
+Choisissez la forme pour une raison explicite. Les deux coefficients de la droite s'interprètent ensemble; ceux de la quadratique ne définissent pas une pente constante.
+:::
+
+## Comparer des ajustements
+
+::: {.callout-tip collapse="true" title="Ouvrir l'exemple de tableau comparatif"}
+
+```{r}
+#| label: comparaison-aide-labo02
+comparaison <- tibble(
+  modele = c("Droite", "Variante"),
+  observations = c(nobs(modele_reference), nobs(modele_variante)),
+  r2_ajuste = c(summary(modele_reference)$adj.r.squared,
+                summary(modele_variante)$adj.r.squared),
+  rmse_ajustement_dollars = c(
+    sqrt(mean(residuals(modele_reference)^2)),
+    sqrt(mean(residuals(modele_variante)^2))
   )
 )
+knitr::kable(comparaison, digits = c(0, 0, 3, 0),
+             col.names = c("Modèle", "Observations", "R² ajusté", "RMSE d'ajustement ($)"))
 ```
 
-Le modèle enrichi peut mieux expliquer les ventes, mais il doit rester lisible.
-Dans une analyse appliquée, le meilleur modèle n'est pas seulement celui qui a
-le `R²` le plus élevé. C'est aussi celui qui soutient une interprétation utile.
+L'erreur est calculée sur les données d'ajustement. Cet exemple n'effectue pas de validation sur des observations mises de côté. Vérifiez aussi l'identité des lignes : deux effectifs égaux ne suffisent pas si les lignes utilisées diffèrent.
+:::
 
-## Démonstration 6 - Diagnostiquer les résidus
+## Superposer les courbes et interpréter une différence
 
-Objectif : vérifier si les erreurs du modèle enrichi montrent une structure qui
-fragilise la recommandation.
+::: {.callout-tip collapse="true" title="Ouvrir l'exemple de prédictions dans la plage observée"}
 
 ```{r}
-#| label: residus-atelier-02
-performance_modele <- performance |>
-  mutate(
-    ventes_predites = predict(modele_enrichi),
-    residu = residuals(modele_enrichi)
-  )
-```
-
-```{r}
-#| label: graphique-residus-atelier-02
+#| label: courbes-aide-labo02
 #| fig-width: 8
-#| fig-height: 5
-ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 0.9) +
-  geom_point(alpha = 0.8, size = 2.4, colour = "#0B4F6C") +
-  labs(
-    title = "Résidus du modèle enrichi",
-    x = "Ventes prédites",
-    y = "Résidu"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(panel.grid.minor = element_blank())
+#| fig-height: 4.5
+plage <- range(saturation$achalandage_milliers)
+grille <- tibble(achalandage_milliers = seq(plage[1], plage[2], length.out = 100))
+courbes <- grille |>
+  mutate(Droite = predict(modele_reference, newdata = grille),
+         Variante = predict(modele_variante, newdata = grille)) |>
+  pivot_longer(c(Droite, Variante), names_to = "modele", values_to = "ventes_estimees")
+
+ggplot(saturation, aes(achalandage_milliers, ventes)) +
+  geom_point(aes(colour = succursale), alpha = 0.7) +
+  geom_line(data = courbes,
+            aes(y = ventes_estimees, linetype = modele), linewidth = 0.9) +
+  labs(x = "Achalandage mensuel (milliers de visites)", y = "Ventes mensuelles ($)",
+       colour = "Succursale", linetype = "Modèle") +
+  theme_minimal()
 ```
 
-::: {.callout-important title="Point d'interprétation"}
-Des résidus répartis autour de zéro rendent le modèle plus défendable pour une
-première analyse. Un motif clair dans les résidus doit être mentionné comme
-limite, même si les coefficients semblent intéressants.
+```{r}
+#| label: difference-aide-labo02
+# Deux niveaux choisis dans la plage pour illustrer la variation estimée.
+scenarios <- tibble(achalandage_milliers = as.numeric(
+  quantile(saturation$achalandage_milliers, probs = c(0.25, 0.75))))
+scenarios <- scenarios |>
+  mutate(ventes_estimees = predict(modele_variante, newdata = scenarios))
+scenarios
+diff(scenarios$ventes_estimees)
+```
+
+Nommez les deux niveaux et les unités dans votre phrase. Cette différence est celle des moyennes estimées par le modèle à ces points; elle n'est ni une pente constante, ni un effet causal.
 :::
 
-## Démonstration 7 - Préparer une recommandation
+## Examiner les résidus
 
-::: {.callout-tip title="Exemple de formulation"}
-Les données suggèrent que l'achalandage est fortement associé aux ventes. Les
-dépenses marketing et les heures de personnel peuvent aussi être considérées
-dans l'interprétation du modèle enrichi. La recommandation doit toutefois rester
-prudente, car ces données simulées sont observationnelles et ne prouvent pas un
-effet causal.
+::: {.callout-tip collapse="true" title="Ouvrir l'exemple de diagnostic"}
+
+```{r}
+#| label: residus-aide-labo02
+#| fig-width: 8
+#| fig-height: 4.5
+# Ici la variante illustre le geste; utilisez le modèle que vous avez retenu.
+diagnostic <- saturation |>
+  mutate(valeur_ajustee = fitted(modele_variante),
+         residu = residuals(modele_variante))
+
+ggplot(diagnostic, aes(valeur_ajustee, residu, colour = succursale)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_point(alpha = 0.8) +
+  labs(x = "Ventes ajustées ($)", y = "Résidu ($)", colour = "Succursale") +
+  theme_minimal()
+```
+
+Décrivez ce que vous voyez effectivement : courbure, dispersion, groupes ou points à examiner. Ce seul graphique ne permet pas de vérifier l'indépendance entre mois ni de garantir la performance future.
 :::
 
-## Synthèse pour la trace finale
+## Revenir à votre analyse
 
-Votre trace finale doit relier les éléments suivants :
-
-- question d'affaires;
-- graphique;
-- modèle;
-- coefficient interprété;
-- diagnostic;
-- recommandation;
-- limite.
-
-::: {.callout-tip title="Phrase de recommandation à adapter"}
-Les données suggèrent de prioriser [facteur], car [résultat du modèle ou du
-graphique]. Cette recommandation doit rester prudente : le modèle décrit une
-association observée et une validation complémentaire serait nécessaire avant de
-conclure à un effet causal.
-:::
+La [mission](guide-atelier.qmd) demande vos choix, vos résultats et votre conclusion. Consultez les [repères](capsules.qmd) pour vérifier une interprétation et les [lectures](lectures.qmd) pour la documentation officielle.

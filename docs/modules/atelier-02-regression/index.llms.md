@@ -1,203 +1,87 @@
-# Atelier 02
+# Laboratoire 02
 
-Régression appliquée à une décision d’affaires
+Choisir et défendre un modèle de régression
 
-Atelier en classe
+Deuxième laboratoire en classe
 
-## Régression appliquée à une décision d’affaires
+## Une droite suffit-elle pour décrire les ventes?
 
-Cet atelier prolonge le module 3. Vous allez utiliser la régression pour analyser la performance de succursales fictives et formuler une recommandation prudente à partir d’un modèle.
-
-Pendant
-
-Travail en classe
-
-Outils
-
-R, Quarto, régression
-
-Données
-
-[performance_succursales_quebec.csv](../../donnees/#performance-de-succursales-québécoises-fictives)
-
-Production
-
-Mini-analyse commentée
+Vous reprenez la démarche du laboratoire 1 : comprendre les données, produire des résultats et répondre à une direction fictive. Cette fois, vous choisissez une relation à étudier, comparez deux modèles et défendez votre choix dans un court rapport Quarto.
 
 > **NOTE:**
 >
-> Faut-il investir davantage en marketing, ajouter du personnel ou réduire les ruptures de stock pour augmenter les ventes? La direction veut une réponse appuyée sur un modèle, pas sur une intuition. Cet atelier vous fait passer d’un nuage de points à une recommandation prudente et chiffrée.
+> Le dossier fourni contient l’importation et un début de rapport. À vous de choisir la variable explicative, de construire les graphiques, d’écrire les modèles et d’organiser les résultats. Les consignes et les indices restent disponibles dans le guide; l’enseignant vous accompagne pendant la séance.
+
+Le laboratoire mobilise les modules 3 et 4. Il est formatif, sans points dans la note finale, et prépare les dernières vérifications du [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md).
 
 ## Avant l’atelier
 
-Cet atelier suppose que les notions du module 3 sont assez présentes pour être réutilisées en classe. L’objectif n’est pas de tout maîtriser avant d’arriver, mais d’avoir les bons repères pour participer activement.
+- Reprenez la rétroaction reçue au laboratoire 1 et choisissez un point à améliorer dans ce nouveau rapport.
+- Revoyez les [repères du module 3](../../modules/semaine-03-regression-lineaire/index.llms.md) : droite, coefficients, R², résidus et prédiction.
+- Revoyez les [repères du module 4](../../modules/semaine-04-regression-nonlineaire/index.llms.md) : quadratique, logarithme, comparaison et extrapolation.
+- Téléchargez puis décompressez le [dossier de départ](../../assets/exemples/laboratoire-02.zip). Ouvrez `laboratoire-02.Rproj`, puis `rapport-labo-02.qmd` et cliquez sur Render.
+- Apportez votre mini-rapport 1 en cours et une question précise, si vous en avez une.
 
-> **NOTE:**
->
-> Avant l’atelier, relisez surtout les éléments qui permettent de passer d’une sortie R à une interprétation : variable réponse, variable explicative, pente, résidus et prudence causale.
-
-Avant d’arriver, vérifiez que vous pouvez expliquer :
-
-- variable réponse et variable explicative;
-- nuage de points;
-- pente et ordonnée à l’origine;
-- résidus;
-- différence entre association, prédiction et causalité.
-
-Téléchargez ou repérez le fichier [`performance_succursales_quebec.csv`](data/performance_succursales_quebec.csv).
-
-J’ai relu les capsules ou les notes du module 3.
-
-Je sais ouvrir un fichier `.qmd`.
-
-Je sais charger `tidyverse`.
-
-Je sais ajuster un modèle avec `lm()`.
-
-Je sais expliquer pourquoi une régression observationnelle ne prouve pas automatiquement une causalité.
-
-> **TIP:**
->
-> Si vous manquez de temps, relisez seulement la page des [capsules du module 3](../semaine-03-regression-lineaire/capsules.llms.md), puis ouvrez le [guide complet de l’atelier](guide-atelier.llms.md) avant la séance.
+La mission commence en classe. Si le premier rendu bloque, gardez le message d’erreur pour recevoir de l’aide.
 
 ## Pendant l’atelier
 
-Le guide complet est la page principale à suivre en classe. Les démonstrations et les exercices servent de soutien pendant le parcours.
+Le [guide de la mission](../../modules/atelier-02-regression/guide-atelier.llms.md) est le fil principal. Travaillez en binômes, avec un rapport par binôme; chaque personne doit pouvoir expliquer les deux modèles. Si vous travaillez seul, les mêmes productions sont attendues.
 
-[Guide](guide-atelier.llms.md)
+Le déroulement suivant est un repère pour la séance de 9 h à 11 h 50, indiquée au [calendrier](../../calendrier.llms.md).
 
-### Guide complet de l'atelier
+| Moment | Travail | Résultat visé |
+|----|----|----|
+| 9 h à 9 h 10 | Présentation et lancement | Comprendre la mission et les choix à faire |
+| 9 h 10 à 9 h 30 | Données et question | Données vérifiées, variable explicative choisie |
+| 9 h 30 à 9 h 55 | Exploration et droite de référence | Graphique, modèle et coefficients interprétés |
+| 9 h 55 à 10 h 05 | Premier point de rétroaction | Expliquer le choix de la variante à essayer |
+| 10 h 05 à 10 h 15 | Pause | Reprendre avec la comparaison |
+| 10 h 15 à 10 h 45 | Variante et diagnostic | Deux modèles comparés et résidus examinés |
+| 10 h 45 à 11 h 05 | Conclusion et relecture croisée | Une recommandation justifiée et une amélioration précise |
+| 11 h 05 à 11 h 20 | Correction et rendu | HTML vérifié et bilan formatif |
+| 11 h 20 à 11 h 50 | Questions sur le mini-rapport 1 | Vérifier un choix, une interprétation ou le dossier de remise |
 
-Suivre le déroulement en classe, étape par étape, jusqu'à la recommandation finale.
+Ces durées peuvent être ajustées en classe. Montrez votre tentative et expliquez ce que vous cherchez à obtenir lorsque vous demandez de l’aide.
 
-[Démo](demonstrations.llms.md)
+## Production attendue
 
-### Démonstrations R
+Un seul rapport, d’environ 500 à 700 mots hors code et tableaux, avec :
 
-Voir une analyse reproductible avant de produire votre propre version.
+- une question et un diagnostic ciblé des données;
+- un graphique de la relation, complété par les deux ajustements;
+- une droite de référence et une variante quadratique ou logarithmique;
+- un tableau comparatif et des interprétations en unités concrètes;
+- un graphique de résidus pour le modèle retenu;
+- une recommandation, une limite et un bilan de la rétroaction.
 
-[Pratique](exercices.llms.md)
-
-### Exercices
-
-Tester votre compréhension et vérifier vos interprétations.
-
-> **IMPORTANT:**
->
-> La partie la plus importante de l’atelier est le passage du modèle à la recommandation. Le code sert à produire les résultats, mais le travail principal est d’expliquer ce que les coefficients veulent dire, ce que les résidus permettent de vérifier et ce que la direction peut raisonnablement faire ensuite.
-
-## Déroulement suggéré
-
-0:00 - 0:25
-
-### Question d'affaires
-
-Identifier la variable réponse, les variables explicatives et la décision à éclairer.
-
-0:25 - 1:05
-
-### Exploration
-
-Inspecter le tableau, produire les premiers graphiques et repérer les relations plausibles.
-
-1:05 - 1:55
-
-### Modélisation
-
-Ajuster un modèle simple, puis un modèle enrichi, et comparer les interprétations.
-
-1:55 - 2:35
-
-### Diagnostic
-
-Examiner les résidus, les points influents et les limites du modèle.
-
-2:35 - 3:00
-
-### Recommandation
-
-Transformer les résultats en recommandation prudente et défendable.
-
-Pendant l’atelier, gardez le même fichier Quarto ouvert. À la fin de chaque bloc, ajoutez directement la trace demandée : une phrase, un graphique, un tableau ou un paragraphe de recommandation.
-
-J’ai reformulé la question d’affaires.
-
-J’ai décrit le tableau et l’unité d’observation.
-
-J’ai produit un graphique exploratoire.
-
-J’ai ajusté un modèle simple.
-
-J’ai ajusté ou interprété un modèle enrichi.
-
-J’ai regardé les résidus.
-
-J’ai rédigé une recommandation prudente.
-
-## Résultat attendu
-
-Votre mini-analyse doit inclure :
-
-- une question d’affaires claire;
-- un graphique exploratoire;
-- un modèle linéaire simple;
-- une interprétation de coefficient;
-- un diagnostic des résidus;
-- une recommandation;
-- une limite importante.
-
-> **WARNING:**
->
-> La recommandation doit rester cohérente avec les données. Un modèle peut aider à prioriser une piste d’action, mais il ne remplace pas l’analyse du contexte ni la validation avec d’autres informations.
+La longueur est un repère pour rester concis. Les attentes détaillées se trouvent dans le [guide](../../modules/atelier-02-regression/guide-atelier.llms.md#rapport-attendu). Vous pouvez retenir la droite si la variante n’apporte pas d’amélioration convaincante.
 
 ## Après l’atelier
 
-Après la séance, le travail principal consiste à nettoyer la mini-analyse pour qu’elle soit lisible sans votre présence. Une personne qui ouvre votre fichier doit comprendre la question, les résultats et la recommandation sans chercher dans votre console R.
+Conservez le dossier complet avec le `.qmd`, le HTML et les données. Terminez les corrections discutées en classe et reportez les vérifications utiles à votre mini-rapport 1.
 
-> **IMPORTANT:**
->
-> Votre trace finale est une mini-analyse Quarto courte. Elle doit contenir un graphique, au moins un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite.
+Le calendrier place ce laboratoire le jour de la remise du mini-rapport 1. Consultez les [consignes de l’évaluation](../../evaluations/mini-rapport-1.llms.md) et le [calendrier du cours](../../calendrier.llms.md) pour la remise. Le rapport de laboratoire est une pratique formative distincte.
 
-Avant de considérer la trace terminée :
+## Ressources utiles
 
-Le fichier se génère en HTML.
+| Ressource | Quand l’utiliser |
+|----|----|
+| [Guide de la mission](../../modules/atelier-02-regression/guide-atelier.llms.md) | Question, étapes, indices et grille formative |
+| [Présentation de lancement](../../modules/atelier-02-regression/presentation.llms.md) | Introduction en classe |
+| [Dossier de départ : projet, QMD et CSV](../../assets/exemples/laboratoire-02.zip) | Pour commencer dans RStudio |
+| [Aide R à la demande](../../modules/atelier-02-regression/demonstrations.llms.md) | Retrouver un geste après une première tentative |
+| [Repères conceptuels](../../modules/atelier-02-regression/capsules.llms.md) | Vérifier une interprétation |
+| [Exercices complémentaires](../../modules/atelier-02-regression/exercices.llms.md) | Pratique facultative sur un autre contexte |
 
-Les graphiques ont des titres et des axes lisibles.
+## Auto-vérification
 
-Les coefficients sont interprétés avec les unités.
+Je peux justifier ma variable explicative et la variante essayée.
 
-La recommandation ne confond pas association et causalité.
+Les deux modèles utilisent les mêmes lignes et les ventes en dollars.
 
-Une limite importante est mentionnée.
+Ma comparaison tient compte de l’ajustement, des résidus et de la simplicité.
 
-> **NOTE:**
->
-> Vous pouvez utiliser le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) pour relire votre mini-analyse. Son rôle est de repérer les éléments manquants, les imprécisions statistiques et les conclusions trop fortes. Il ne doit pas rédiger la recommandation à votre place.
->
-> Suggestion de demande :
->
-> > Voici ma mini-analyse de l’atelier 02. Vérifie si elle contient une question claire, un graphique, un modèle, une interprétation de coefficient, un diagnostic des résidus, une recommandation et une limite. Indique les passages à corriger, sans réécrire mon texte à ma place.
->
-> Après cette vérification, notez une correction apportée à votre recommandation ou à votre interprétation.
+Ma recommandation s’appuie sur deux résultats chiffrés et une limite précise.
 
-## Ressources de l’atelier
-
-[RepèresPréparer les décisions clés avant la séance.](capsules.llms.md) [Guide completSuivre le parcours en classe jusqu'à la recommandation finale.](guide-atelier.llms.md) [Démonstrations RReproduire l'analyse pas à pas et comprendre les sorties.](demonstrations.llms.md) [ExercicesTester les gestes essentiels et préparer la trace finale.](exercices.llms.md) [LecturesRevoir les références utiles sur \`lm()\`, les prédictions et les graphiques.](lectures.llms.md)
-
-## Je suis bloqué·e
-
-Avant de demander de l’aide, vérifiez dans l’ordre :
-
-1.  le chemin vers `performance_succursales_quebec.csv`;
-2.  le chargement de `tidyverse`;
-3.  le nom exact des variables utilisées dans le modèle;
-4.  le graphique avant le modèle;
-5.  la formule dans `lm()`;
-6.  le graphique des résidus;
-7.  la phrase de recommandation et la limite causale.
-
-## Pour la suite
-
-- Reprendre la recommandation en huit lignes maximum.
-- Identifier une variable qui mériterait une analyse plus poussée dans le mini-rapport 1.
-- Comparer le modèle enrichi de l’atelier avec les idées du module 04 sur la complexité des modèles.
+Render refait l’analyse sans préparation dans la Console.

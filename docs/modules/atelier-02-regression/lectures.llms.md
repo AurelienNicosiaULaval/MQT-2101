@@ -1,23 +1,24 @@
-# Lectures - Atelier 02
+# Lectures - Laboratoire 02
 
-## À faire avant l’atelier
+## Avant la séance
 
-- Revoir le [module 3](../semaine-03-regression-lineaire/index.llms.md).
-- Lire les [repères de l’atelier](capsules.llms.md).
-- Parcourir le début du [guide en classe](guide-atelier.llms.md) pour repérer les variables du jeu de données.
+- [Module 3](../../modules/semaine-03-regression-lineaire/index.llms.md) : droite, unités des coefficients, R², résidus et prédiction.
+- [Module 4](../../modules/semaine-04-regression-nonlineaire/index.llms.md) : quadratique, logarithme de l’explicative, comparaison, validation et extrapolation.
+- La rétroaction de votre laboratoire 1 : choisissez un point à améliorer.
+- Le début du [guide de la mission](../../modules/atelier-02-regression/guide-atelier.llms.md) et le premier rendu du [dossier de départ](../../assets/exemples/laboratoire-02.zip).
 
-## À utiliser pendant l’atelier
+## Pendant la séance
 
-- Garder le [guide complet](guide-atelier.llms.md) ouvert comme fil principal.
-- Utiliser les [démonstrations R](demonstrations.llms.md) lorsque le code bloque.
-- Revenir aux [exercices](exercices.llms.md) pour vérifier l’interprétation avant la recommandation finale.
+Gardez le guide à côté du rapport. Après une première tentative, ouvrez ses indices repliés ou une rubrique de l’[aide R](../../modules/atelier-02-regression/demonstrations.llms.md). Les [exercices complémentaires](../../modules/atelier-02-regression/exercices.llms.md) sont facultatifs et utilisent un autre contexte.
 
-## Documentation R utile
+## Documentation officielle
 
-- Fonction `lm()` pour ajuster un modèle linéaire : <https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html>
-- Fonction `predict.lm()` pour produire des valeurs prédites : <https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html>
-- Documentation `ggplot2` pour les couches de graphiques : <https://ggplot2.tidyverse.org/reference/>
+R Core Team, documentation en ligne du package stats, consultée le 16 septembre 2026 :
 
-## À garder en tête
+- [`lm()` : ajuster un modèle et écrire sa formule](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html).
+- [`summary.lm()` : coefficients, R² et R² ajusté](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html).
+- [`predict.lm()` : valeurs prédites et intervalles](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html).
 
-Pendant l’atelier, chaque résultat doit être relié à une décision possible et à une limite. Un modèle est utile s’il aide à clarifier une question, mais il doit être interprété avec les unités, les hypothèses et le contexte.
+## Lien avec le mini-rapport 1
+
+Les [consignes du mini-rapport 1](../../evaluations/mini-rapport-1.llms.md) définissent ses attentes et son dépôt. Le laboratoire prépare la comparaison de modèles, les interprétations et la vérification du rendu. Une séparation apprentissage/validation est facultative pour ces deux productions; les mesures d’ajustement doivent être présentées comme telles.
