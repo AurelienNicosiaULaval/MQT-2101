@@ -53,7 +53,7 @@ La région, le mois, le canal et la saison aident à comprendre le contexte. Le 
 
 Suivez les six capsules dans l’ordre et conservez le code et vos réponses dans `regression_marketing.qmd`. Les activités 3.1 à 3.6 ci-dessous correspondent aux productions autonomes des diapositives : il n’est pas nécessaire de les refaire deux fois. Les démonstrations montrent le code complet sur le même fichier.
 
-Les supports se consultent en PDF ou en HTML, avec du code copiable dans les versions HTML. Les vidéos du module 3 ne sont pas encore disponibles.
+Les six [capsules vidéo](../../modules/semaine-03-regression-lineaire/capsules.llms.md) sont disponibles, accompagnées des notes annotées en PDF. Les supports se consultent aussi en PDF sans annotations ou en HTML, avec du code copiable dans les versions HTML.
 
 Les liens « Ex. » dans les étapes indiquent quand faire les exercices d’application sur le délai de service et la satisfaction. Préparez le projet distinct `diagnostic-service` en suivant la [préparation des exercices](../../modules/semaine-03-regression-lineaire/exercices.llms.md#préparation). Les données des deux cas sont simulées.
 
@@ -167,7 +167,7 @@ Dans RStudio, choisissez Session \> Restart R, puis Render pour vérifier chacun
 
 ## Ressources du module
 
-[CapsulesSix supports PDF et HTML, avec code copiable. Vidéos à venir.](capsules.llms.md) [Notes de coursSynthèse du module en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse complète avec le fichier de campagnes marketing.](demonstrations.llms.md) [Exercices et solutions détailléesTransférer la démarche au service, puis comparer le code, les résultats et les interprétations.](exercices.llms.md) [LecturesClarifier les notions de régression et de prudence causale.](lectures.llms.md)
+[CapsulesSix vidéos, leurs notes annotées et les supports PDF et HTML, avec code copiable.](capsules.llms.md) [Notes de coursSynthèse du module en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse complète avec le fichier de campagnes marketing.](demonstrations.llms.md) [Exercices et solutions détailléesTransférer la démarche au service, puis comparer le code, les résultats et les interprétations.](exercices.llms.md) [LecturesClarifier les notions de régression et de prudence causale.](lectures.llms.md)
 
 > **WARNING:**
 >

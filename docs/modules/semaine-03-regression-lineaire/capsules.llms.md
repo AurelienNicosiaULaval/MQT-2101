@@ -4,7 +4,7 @@
 
 Les six capsules construisent une analyse de régression : formuler une question, lire les données, comprendre la droite, l’ajuster dans R, examiner les résidus et conclure.
 
-Les supports PDF et HTML sont disponibles. Les vidéos du module 3 ne sont pas encore disponibles. Les onglets reprennent l’organisation des modules précédents. Dans l’onglet HTML, les boutons des blocs de code permettent de copier le code; le lien sous les diapositives ouvre le support en grand.
+Les six vidéos du module 3 et les notes annotées sont disponibles. Chaque capsule propose quatre onglets : Vidéo, PDF, PDF annoté et HTML. Les onglets reprennent l’organisation des modules précédents. Dans l’onglet HTML, les boutons des blocs de code permettent de copier le code; le lien sous les diapositives ouvre le support en grand.
 
 Suivez les capsules dans l’ordre. Conservez vos réponses aux productions autonomes 3.1 à 3.6 dans le document du [parcours guidé](../../modules/semaine-03-regression-lineaire/index.llms.md#votre-parcours). Ce sont les mêmes activités : vous n’avez pas à les refaire deux fois. Les [démonstrations R](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md) montrent la séquence complète, depuis la création du projet jusqu’au rendu HTML.
 
@@ -14,11 +14,15 @@ Identifier la réponse, la variable explicative, leurs unités et la portée de 
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=niqBzHP1Hkk)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-01-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-01-support-annote.pdf)
 
 ## HTML
 
@@ -36,11 +40,15 @@ Lire la direction, la forme et la dispersion, puis interpréter la corrélation.
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=_aYfLRHzN_o)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-02-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-02-support-annote.pdf)
 
 ## HTML
 
@@ -58,11 +66,15 @@ Relier la pente et les unités au modèle, aux résidus et aux moindres carrés.
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=aXU2EnhJmWU)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-03-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-03-support-annote.pdf)
 
 ## HTML
 
@@ -76,11 +88,15 @@ Ajuster la droite, interpréter les coefficients, lire un intervalle classique e
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=Vq3eIU8kEPw)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
 
 ## HTML
 
@@ -98,11 +114,15 @@ Examiner le graphique des résidus et les écarts moyens par région.
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 5 sur YouTube](https://www.youtube.com/watch?v=ikh_Y5xSbLQ)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-05-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-05-support-annote.pdf)
 
 ## HTML
 
@@ -116,11 +136,15 @@ Interpréter le R², présenter une prédiction avec son intervalle et conclure 
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 6 sur YouTube](https://www.youtube.com/watch?v=1UJLLXpTUPg)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-06-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-06-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-06-support-annote.pdf)
 
 ## HTML
 

@@ -11,8 +11,8 @@ pdf_files <- sort(list.files(
 
 pdf_files <- pdf_files[grepl("modules/semaine-0[1-5].*/media/pdf/", pdf_files)]
 
-if (length(pdf_files) != 36L) {
-  stop("36 PDF liés étaient attendus; ", length(pdf_files), " ont été trouvés.")
+if (length(pdf_files) != 42L) {
+  stop("42 PDF liés étaient attendus; ", length(pdf_files), " ont été trouvés.")
 }
 
 errors <- character()
