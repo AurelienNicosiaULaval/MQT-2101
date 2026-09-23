@@ -145,9 +145,11 @@ Exercice d’application Terminez avec les exercices 4 à 6 : diagnostic et R²,
 
 ## Exercices d’application
 
-Les [six exercices](../../modules/semaine-03-regression-lineaire/exercices.llms.md) se font progressivement dans le projet `diagnostic-service`, aux étapes indiquées ci-dessus. Si vous les avez déjà réalisés, il suffit de terminer les exercices restants et de relire vos réponses. Vous étudierez le délai de service moyen, en minutes, et la satisfaction mensuelle, en points sur 10, dans six succursales fictives.
+Les [six premiers exercices](../../modules/semaine-03-regression-lineaire/exercices.llms.md) se font progressivement dans le projet `diagnostic-service`, aux étapes indiquées ci-dessus. Si vous les avez déjà réalisés, il suffit de terminer les exercices restants et de relire vos réponses. Vous étudierez le délai de service moyen, en minutes, et la satisfaction mensuelle, en points sur 10, dans six succursales fictives.
 
 Le fichier de transfert est [performance_succursales_quebec.csv](../atelier-02-regression/data/performance_succursales_quebec.csv). La démarche reste la même, mais la question, les variables, les unités et la destinataire changent. Tentez chaque exercice avant d’ouvrir sa solution détaillée.
+
+Pour pratiquer davantage, choisissez parmi les [huit exercices supplémentaires corrigés](../../modules/semaine-03-regression-lineaire/exercices.llms.md#pratique-supplementaire) : calculs, unités, corrélation, intervalles, extrapolation, diagnostics et lecture critique. La page [Lectures](../../modules/semaine-03-regression-lineaire/lectures.llms.md#exercices-ouvrages) indique aussi les sections à lire et les exercices précis des ouvrages.
 
 ## Trace finale
 
@@ -167,7 +169,7 @@ Dans RStudio, choisissez Session \> Restart R, puis Render pour vérifier chacun
 
 ## Ressources du module
 
-[CapsulesSix vidéos, leurs notes annotées et les supports PDF et HTML, avec code copiable.](capsules.llms.md) [Notes de coursSynthèse du module en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse complète avec le fichier de campagnes marketing.](demonstrations.llms.md) [Exercices et solutions détailléesTransférer la démarche au service, puis comparer le code, les résultats et les interprétations.](exercices.llms.md) [LecturesClarifier les notions de régression et de prudence causale.](lectures.llms.md)
+[CapsulesSix vidéos, leurs notes annotées et les supports PDF et HTML, avec code copiable.](capsules.llms.md) [Notes de coursSynthèse du module en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse complète avec le fichier de campagnes marketing.](demonstrations.llms.md) [Exercices et solutions détailléesSix exercices suivis et huit exercices supplémentaires, tous avec corrigés détaillés.](exercices.llms.md) [LecturesSections à lire, exercices des ouvrages par difficulté et liens vers les réponses.](lectures.llms.md)
 
 > **WARNING:**
 >
