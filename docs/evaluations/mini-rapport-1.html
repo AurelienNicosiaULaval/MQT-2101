@@ -1538,7 +1538,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1550,16 +1550,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1604,7 +1604,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1666,7 +1666,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1680,7 +1680,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6861,147 +6861,147 @@ display: none;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../plan-de-cours.html">
+    <a class="nav-link" href="../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../calendrier.html">
+    <a class="nav-link" href="../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../installation.html">
+    <a class="nav-link" href="../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../evaluations/index.html">
+    <a class="nav-link" href="../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../donnees/index.html">
+    <a class="nav-link" href="../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7016,14 +7016,19 @@ display: none;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul>
   <li><a href="#objectif-et-pondération" id="toc-objectif-et-pondération" class="nav-link active" data-scroll-target="#objectif-et-pondération">Objectif et pondération</a></li>
   <li><a href="#pour-commencer" id="toc-pour-commencer" class="nav-link" data-scroll-target="#pour-commencer">Pour commencer</a></li>
   <li><a href="#échéancier-pédagogique" id="toc-échéancier-pédagogique" class="nav-link" data-scroll-target="#échéancier-pédagogique">Échéancier pédagogique</a></li>
   <li><a href="#modalité" id="toc-modalité" class="nav-link" data-scroll-target="#modalité">Modalité</a></li>
   <li><a href="#livrables" id="toc-livrables" class="nav-link" data-scroll-target="#livrables">Livrables</a></li>
-  <li><a href="#validation-des-données" id="toc-validation-des-données" class="nav-link" data-scroll-target="#validation-des-données">Validation des données</a></li>
+  <li><a href="#choisir-un-jeu-de-données" id="toc-choisir-un-jeu-de-données" class="nav-link" data-scroll-target="#choisir-un-jeu-de-données">Choisir un jeu de données</a>
+  <ul class="collapse">
+  <li><a href="#où-chercher" id="toc-où-chercher" class="nav-link" data-scroll-target="#où-chercher">Où chercher?</a></li>
+  <li><a href="#quel-tableau-convient-à-ce-travail" id="toc-quel-tableau-convient-à-ce-travail" class="nav-link" data-scroll-target="#quel-tableau-convient-à-ce-travail">Quel tableau convient à ce travail?</a></li>
+  <li><a href="#proposition-par-courriel" id="toc-proposition-par-courriel" class="nav-link" data-scroll-target="#proposition-par-courriel">Proposition par courriel</a></li>
+  </ul></li>
   <li><a href="#contenu-attendu" id="toc-contenu-attendu" class="nav-link" data-scroll-target="#contenu-attendu">Contenu attendu</a>
   <ul class="collapse">
   <li><a href="#question-et-données" id="toc-question-et-données" class="nav-link" data-scroll-target="#question-et-données">Question et données</a></li>
@@ -7049,11 +7054,11 @@ display: none;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7077,9 +7082,9 @@ display: none;
 <section id="échéancier-pédagogique" class="level2">
 <h2 class="anchored" data-anchor-id="échéancier-pédagogique">Échéancier pédagogique</h2>
 <ul>
-<li>Choix du jeu de données : au plus tard au début du module 04.</li>
-<li>Pour un jeu qui n’est pas déjà autorisé, envoyez votre proposition au plus tard au début du module 04 et obtenez son approbation avant de commencer la modélisation.</li>
-<li>Remise : consulter le <a href="../calendrier.html">calendrier du cours</a>.</li>
+<li>Proposition du jeu de données : par courriel à la personne enseignante, au plus tard le mercredi 30 septembre 2026.</li>
+<li>Approbation du jeu de données : avant de commencer la modélisation.</li>
+<li>Remise : le mercredi 7 octobre 2026 à 23 h 59 dans Brio. Consultez aussi le <a href="../calendrier.html">calendrier du cours</a>.</li>
 </ul>
 <p>Le dépôt se fait dans l’évaluation « Mini-rapport 1 - Exploration et régression » de Brio. Un seul membre remet l’archive pour l’équipe; le rapport doit identifier tous les membres.</p>
 </section>
@@ -7105,11 +7110,46 @@ display: none;
 </ol>
 <p>Les déclarations IA et de contribution peuvent figurer à la fin du rapport, comme dans le gabarit. Incluez aussi les éventuels scripts appelés par le <code>.qmd</code>. Le HTML doit contenir les figures et les ressources nécessaires à sa lecture, grâce à <code>embed-resources: true</code>.</p>
 </section>
-<section id="validation-des-données" class="level2">
-<h2 class="anchored" data-anchor-id="validation-des-données">Validation des données</h2>
-<p>Suivez la <a href="../evaluations/validation-donnees.html">procédure de validation</a>. Les jeux identifiés comme simulés pour le cours dans la section <a href="../donnees/index.html">Données</a> sont déjà autorisés; aucune approbation supplémentaire n’est nécessaire. Pour un autre jeu, soumettez une proposition selon cette procédure.</p>
-<p>Choisissez une variable réponse quantitative et des variables explicatives pertinentes pour votre question. Un jeu autorisé n’est pas nécessairement adapté à toutes les questions. Si vous utilisez un jeu du cours, développez votre propre analyse : reprendre le corrigé d’un exercice ne constitue pas le mini-rapport.</p>
-<p>Aucun renseignement personnel, confidentiel ou non autorisé ne doit être inclus dans les fichiers remis ou téléversé dans un outil d’IA.</p>
+<section id="choisir-un-jeu-de-données" class="level2">
+<h2 class="anchored" data-anchor-id="choisir-un-jeu-de-données">Choisir un jeu de données</h2>
+<p>Pour ce mini-rapport, choisissez un jeu de données extérieur au cours. Les jeux fournis dans les modules, les laboratoires et la section Données du cours ne sont pas admissibles, même si vous les retrouvez sur un autre site. Chaque équipe propose son jeu et attend son approbation avant de commencer la modélisation.</p>
+<section id="où-chercher" class="level3">
+<h3 class="anchored" data-anchor-id="où-chercher">Où chercher?</h3>
+<p>Ces catalogues sont des points de départ, et non des listes de jeux automatiquement approuvés :</p>
+<ul>
+<li><a href="https://donneesbleues.ca/catalogue.html">Données bleues</a> : jeux de données et fiches pédagogiques, notamment dans des contextes québécois;</li>
+<li><a href="https://www.donneesquebec.ca/recherche/fr/dataset">Données Québec</a> : catalogue de données ouvertes du Québec;</li>
+<li><a href="https://open.canada.ca/data/fr/dataset">Portail du gouvernement ouvert du Canada</a> : données publiées par des organismes publics;</li>
+<li><a href="https://www150.statcan.gc.ca/n1/fr/type/donnees">Statistique Canada</a> : tableaux et fichiers statistiques;</li>
+<li><a href="https://www.kaggle.com/datasets">Kaggle Datasets</a> : plateforme de recherche de jeux de données. Vérifiez la source originale et la licence de chaque jeu avant de le proposer.</li>
+</ul>
+<p>Cherchez d’abord un sujet lié à une décision possible, puis un tableau de données qui permette de l’étudier. Un jeu trouvé dans un catalogue n’est pas approuvé du seul fait qu’il y figure. Ne reprenez pas une analyse ou une solution déjà publiée avec le jeu choisi.</p>
+</section>
+<section id="quel-tableau-convient-à-ce-travail" class="level3">
+<h3 class="anchored" data-anchor-id="quel-tableau-convient-à-ce-travail">Quel tableau convient à ce travail?</h3>
+<ul>
+<li>Chaque ligne correspond à une observation de même nature : par exemple une municipalité pour une année, un trajet ou un établissement pour un mois. N’additionnez pas des lignes de détail et des lignes de total.</li>
+<li>Chaque colonne correspond à une variable dont le sens et, s’il y a lieu, l’unité sont connus. Il faut au moins une réponse numérique à expliquer et deux variables explicatives possibles. Ces dernières peuvent être numériques ou catégorielles.</li>
+<li>Visez au moins 50 lignes utilisables après le traitement des valeurs manquantes. Si votre jeu en comporte moins, justifiez ce choix dans la proposition; son acceptation n’est pas garantie. Vérifiez aussi que les variables varient réellement et que les catégories retenues ne reposent pas sur quelques observations seulement.</li>
+<li>Le fichier doit pouvoir être importé dans R de manière reproductible, idéalement en CSV. Un autre format tabulaire convient si vous pouvez fournir le fichier ou un script d’importation avec le rapport. Un PDF, des images ou une collection de textes sans tableau exploitable ne suffisent pas.</li>
+<li>La source, la période, la population couverte, les définitions des variables et les conditions de réutilisation doivent être identifiables. N’utilisez aucune donnée personnelle, confidentielle ou obtenue sans droit clair d’utilisation.</li>
+<li>Le tableau doit permettre un graphique, un modèle simple de référence, un modèle principal, un diagnostic des résidus et une interprétation prudente. Une variable calculée directement à partir de la réponse ne constitue pas une preuve indépendante pour l’expliquer.</li>
+</ul>
+</section>
+<section id="proposition-par-courriel" class="level3">
+<h3 class="anchored" data-anchor-id="proposition-par-courriel">Proposition par courriel</h3>
+<p>Au plus tard le mercredi 30 septembre 2026, envoyez à la personne enseignante un courriel contenant :</p>
+<ol type="1">
+<li>les noms des membres de l’équipe;</li>
+<li>le titre du jeu, son organisme producteur et le lien direct vers sa fiche et son téléchargement;</li>
+<li>sa licence ou ses conditions de réutilisation;</li>
+<li>le nombre approximatif de lignes et de colonnes, ainsi que l’unité d’observation;</li>
+<li>la réponse numérique et au moins deux variables explicatives envisagées, avec leurs unités ou catégories;</li>
+<li>une question d’analyse liée à une décision et une phrase expliquant pourquoi le jeu permet d’y répondre;</li>
+<li>la confirmation qu’aucun renseignement personnel ou confidentiel ne sera utilisé.</li>
+</ol>
+<p>Suivez aussi la <a href="../evaluations/validation-donnees.html">procédure de validation des données</a>. L’approbation porte sur l’admissibilité du jeu; elle ne garantit pas que la question ou la méthode proposée sera retenue telle quelle.</p>
+</section>
 </section>
 <section id="contenu-attendu" class="level2">
 <h2 class="anchored" data-anchor-id="contenu-attendu">Contenu attendu</h2>
@@ -7262,7 +7302,7 @@ display: none;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7282,11 +7322,11 @@ display: none;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7363,7 +7403,7 @@ display: none;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7438,7 +7478,7 @@ display: none;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7466,7 +7506,7 @@ display: none;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7490,7 +7530,7 @@ display: none;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7530,7 +7570,7 @@ display: none;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7656,9 +7696,9 @@ display: none;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
-
+       
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>
