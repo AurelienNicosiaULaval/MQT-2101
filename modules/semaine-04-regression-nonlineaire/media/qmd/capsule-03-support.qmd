@@ -161,6 +161,26 @@ tibble(Comparaison = c("2 000 à 2 100 visites", "3 000 à 3 100 visites"),
 Pour 100 visites supplémentaires, la hausse prédite dépend du point de départ.
 :::
 
+::: {.notes}
+Le code complet de la différence est dans les démonstrations. Montrer les deux prédictions, puis soustraire. Cent visites valent 0,1 dans la variable en milliers. Le coefficient du terme simple est le taux de variation au point zéro de la quadratique, pas une pente constante sur tout le domaine.
+:::
+
+## Calculer une différence dans la quadratique
+
+::: {.example-box}
+$$\widehat y(x+h)-\widehat y(x)=b_1h+b_2(2xh+h^2)$$
+:::
+
+::: {.keypoints}
+- x et x² changent ensemble.
+- 100 visites : h = 0,1 millier.
+- Le point de départ x intervient.
+:::
+
+::: {.notes}
+Développer (x+h) au carré, puis soustraire les deux prédictions. Ce calcul exact prépare les exercices, sans introduire de dérivée. L’ordonnée à l’origine disparaît dans la différence.
+:::
+
 ## Transformer l’explicative avec un logarithme
 
 ```{r}
@@ -176,6 +196,10 @@ Pour une hausse de 10 % de x : $\Delta\widehat{y}=b_1\ln(1{,}10)$.
 
 ::: {.note-box}
 La réponse reste en dollars. Il n’y a pas de transformation inverse de y à effectuer.
+:::
+
+::: {.notes}
+Utiliser log pour le logarithme naturel. Expliquer log(1,10x) moins log(x) = log(1,10). La hausse est relative pour x, tandis que la différence de réponse est en dollars. Aucune exponentiation de la réponse n’est nécessaire. Vérifier x strictement positif.
 :::
 
 ## Superposer les trois formes
@@ -236,6 +260,10 @@ Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to St
 :::
 
 ## Production autonome 4.3
+
+::: {.notes}
+Cette production est exactement l’activité 4.3 du parcours. Elle se réalise une seule fois dans comparaison_achalandage.qmd. Les exercices sur l’attente sont un travail de transfert distinct.
+:::
 
 ::: {.lead}
 Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.

@@ -146,6 +146,10 @@ Erreurs : −2, 1 et 2. Moyenne des carrés : (4 + 1 + 4) / 3 = 3. RMSE = √3 �
 La moyenne signée vaut 0,33 : ce n’est pas la RMSE.
 :::
 
+::: {.notes}
+Demander les erreurs au carré, puis leur moyenne, puis la racine. La moyenne signée vaut un tiers et peut annuler des erreurs de sens opposés. La RMSE divise par n, pas par n moins le nombre de coefficients.
+:::
+
 ## Calculer sur les mêmes mois
 
 ```{r}
@@ -203,6 +207,10 @@ ggplot(diagnostic, aes(ventes_predites, residu)) +
   labs(x = "Ventes ajustées", y = "Résidu : observé − ajusté")
 ```
 
+::: {.notes}
+Un nuage de résidus est un outil de diagnostic, pas une preuve automatique de validité. Reprendre dans les démonstrations le tableau par succursale. Une moyenne globale nulle avec constante découle de l’ajustement.
+:::
+
 ## Un choix provisoire
 
 ::: {.example-box}
@@ -251,6 +259,10 @@ Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to St
 :::
 
 ## Production autonome 4.4
+
+::: {.notes}
+Cette production est exactement l’activité 4.4 du parcours. Elle se réalise une seule fois dans comparaison_achalandage.qmd. Les exercices sur l’attente sont un travail de transfert distinct.
+:::
 
 ::: {.lead}
 Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.

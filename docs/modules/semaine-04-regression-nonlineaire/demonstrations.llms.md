@@ -4,6 +4,8 @@
 
 Comparer trois formes pour décrire les ventes mensuelles en fonction de l’achalandage. Le même cas guidé est utilisé dans les six capsules. Une ligne correspond à une succursale pendant un mois; les données sont simulées.
 
+Le [projet guidé à compléter](telechargements/comparaison-achalandage.zip) fournit les fichiers de départ. La [démonstration complète téléchargeable](telechargements/demonstration-achalandage.zip) contient cette analyse en Quarto et un script R autonome, avec les données et le dictionnaire.
+
 ## Préparation
 
 1.  Dans RStudio, choisissez File \> New Project \> New Directory \> New Project et nommez le projet `comparaison-achalandage`.
@@ -23,6 +25,11 @@ format:
 
 ``` r
 library(tidyverse)
+
+# Afficher les résultats avec une virgule décimale dans le texte du rapport.
+nombre_fr <- function(x, decimales = 0) {
+  formatC(x, format = "f", digits = decimales, big.mark = " ", decimal.mark = ",")
+}
 
 saturation <- read_csv("data/achalandage_saturation_quebec.csv",
                        show_col_types = FALSE) |>
@@ -133,6 +140,8 @@ coef(modele_log)
 
 ### Une hausse dépend du point de départ
 
+Dans la quadratique, la différence exacte pour une hausse h de x est \\b_1h+b_2(2xh+h^2)\\. Ici, 100 visites correspondent à h = 0,1 puisque x est exprimé en milliers. Comparez les deux prédictions avec `predict()` pour éviter de confondre le coefficient de x et une pente constante.
+
 ``` r
 scenarios <- tibble(achalandage_milliers = c(2, 2.1, 3, 3.1))
 pred <- predict(modele_quad, newdata = scenarios)
@@ -156,6 +165,8 @@ unname(coef(modele_log)[2] * log(1.10))
 La quadratique prévoit une hausse d’environ 3 487 \$ pour les premières 100 visites supplémentaires et de 1 763 \$ pour les secondes. Sa pente n’est donc pas constante.
 
 Pour le modèle logarithmique, une hausse relative de 10 % de l’achalandage correspond à une différence prédite de \\b_1\ln(1{,}10)\\ dollars, dans une plage où le modèle est défendable. Ce n’est pas une hausse de 10 % des ventes. Le logarithme croît sans limite; la quadratique peut redescendre. Aucun des deux modèles n’impose un véritable plateau de saturation.
+
+La [lecture ciblée sur les transformations](../../modules/semaine-04-regression-nonlineaire/lectures.llms.md#references-ciblees) et les [exercices 7 à 9](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-07) permettent de vérifier ces interprétations sur d’autres situations.
 
 ## Comparer l’ajustement
 

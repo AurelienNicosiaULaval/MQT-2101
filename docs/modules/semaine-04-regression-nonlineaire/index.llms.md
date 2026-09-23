@@ -36,6 +36,10 @@ La réponse reste quantitative. Ces transformations de x sont linéaires en leur
 
 ## Avant de commencer
 
+Préalables : créer un projet et rendre un document Quarto (module 2), lire une droite, un résidu et un intervalle de prédiction (module 3). Reprenez les [démonstrations de régression linéaire](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md) si ces gestes restent difficiles.
+
+Vous pouvez télécharger le [projet guidé prêt à ouvrir](telechargements/comparaison-achalandage.zip) et le [projet d’exercices](telechargements/comparaison-attente.zip). Décompressez chaque archive avant d’ouvrir son fichier `.Rproj`. Chaque projet comprend le CSV, son dictionnaire et un document Quarto à compléter.
+
 Créez le projet RStudio `comparaison-achalandage`, placez [achalandage_saturation_quebec.csv](data/achalandage_saturation_quebec.csv) dans `data`, puis créez `comparaison_achalandage.qmd` à la racine. La [préparation des démonstrations](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md#préparation) détaille les clics et le code.
 
 Une ligne correspond à une succursale fictive pendant un mois : 72 observations, six succursales et douze mois en 2025. L’achalandage compte des visites; les ventes sont en dollars canadiens. Les taux d’occupation, l’attente et les ruptures de stock donnent le contexte.
@@ -142,6 +146,8 @@ Exercice distinct Passez aux [exercices 5 et 6](exercices.llms.md#exercice-5---c
 
 Les [six exercices et leurs corrigés détaillés](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md) étudient le taux d’utilisation et le temps d’attente dans quatre succursales fictives. Le choix du modèle doit être justifié par les résultats de ce nouveau cas. Les exercices réalisés au fil des capsules ne sont pas à refaire.
 
+Les [huit exercices supplémentaires corrigés](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#pratique-supplementaire) renforcent les calculs, les transformations, la validation et la lecture critique. La page [Lectures](../../modules/semaine-04-regression-nonlineaire/lectures.llms.md#lectures-parcours) indique les passages obligatoires du cours et les compléments à consulter au bon moment.
+
 ## Trace finale
 
 Le rapport guidé `comparaison_achalandage.qmd` rassemble :
@@ -154,6 +160,12 @@ Le rapport guidé `comparaison_achalandage.qmd` rassemble :
 6.  une conclusion chiffrée, sa limite et une prochaine collecte.
 
 Le rapport distinct `comparaison_attente.qmd` est précisé à l’[exercice 6](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-6---mini-trace-de-comparaison). Redémarrez R puis utilisez Render pour vérifier les deux documents. Ce sont des entraînements; les consignes des travaux évalués restent dans [Évaluations](../../evaluations/index.llms.md).
+
+## Pour préparer les évaluations
+
+Le [calendrier](../../calendrier.llms.md) situe le module 4 au 30 septembre. L’[atelier 2](../../modules/atelier-02-regression/index.llms.md) prolonge la comparaison autonome. Les [consignes du mini-rapport 1](../../evaluations/mini-rapport-1.llms.md) et de l’[intra](../../evaluations/examen-intra.llms.md) précisent les productions évaluées. Les rapports de ce module sont des entraînements.
+
+Le [questionnaire du site](../../evaluations/questionnaire-regression.llms.md) comprend dix questions de révision du module 3. Le questionnaire Brio, distinct, en comporte treize et est formatif (0 %). Ces questionnaires ne remplacent pas la pratique des transformations et de la validation du module 4.
 
 ## Ressources du module
 

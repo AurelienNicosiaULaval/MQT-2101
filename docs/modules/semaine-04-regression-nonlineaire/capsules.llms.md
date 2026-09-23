@@ -8,6 +8,8 @@ Ouvrez le PDF ou le support HTML avec code copiable, puis réalisez la productio
 
 Les exercices liés sous certaines capsules utilisent un autre cas, sur l’utilisation et l’attente. Ils alimentent le projet distinct `comparaison-attente`, avec des corrigés à ouvrir après une première tentative.
 
+Consultez les [lectures intégrées au parcours](../../modules/semaine-04-regression-nonlineaire/lectures.llms.md#lectures-parcours) aux moments indiqués. Le [projet guidé téléchargeable](telechargements/comparaison-achalandage.zip) contient les fichiers de départ.
+
 ## Capsule 1 - Reconnaître une relation non linéaire
 
 Une direction veut estimer ses ventes. Une droite suppose une variation moyenne constante; les données peuvent suggérer un ralentissement.
@@ -24,7 +26,7 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
 
-À faire après la capsule : Produisez le nuage achalandage-ventes sur janvier à septembre. Décrivez la direction, une courbure possible et la dispersion. Nommez les unités et une limite.
+Production guidée, à réaliser une seule fois : Produisez le nuage achalandage-ventes sur janvier à septembre. Décrivez la direction, une courbure possible et la dispersion. Nommez les unités et une limite.
 
 > **NOTE:**
 >
@@ -46,7 +48,7 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
 
-À faire après la capsule : Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.
+Production guidée, à réaliser une seule fois : Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.
 
 ## Capsule 3 - Ajouter une transformation simple
 
@@ -64,7 +66,7 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
 
-À faire après la capsule : Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.
+Production guidée, à réaliser une seule fois : Ajustez les trois modèles sur janvier à septembre. Avec le modèle quadratique, comparez la hausse prédite de 2 000 à 2 100 visites à celle de 3 000 à 3 100 visites.
 
 > **NOTE:**
 >
@@ -86,7 +88,7 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
 
-À faire après la capsule : Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.
+Production guidée, à réaliser une seule fois : Construisez un tableau avec le R² d’apprentissage et les RMSE d’apprentissage et de validation des trois modèles. Proposez un choix provisoire et deux limites.
 
 > **NOTE:**
 >
@@ -108,7 +110,7 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
 
-À faire après la capsule : Prédisez les ventes pour 2 500 visites avec le modèle quadratique et son intervalle de prédiction. Comparez ensuite les trois prédictions à 6 000 visites et expliquez pourquoi elles ne justifient pas une recommandation.
+Production guidée, à réaliser une seule fois : Prédisez les ventes pour 2 500 visites avec le modèle quadratique et son intervalle de prédiction. Comparez ensuite les trois prédictions à 6 000 visites et expliquez pourquoi elles ne justifient pas une recommandation.
 
 > **NOTE:**
 >
@@ -130,11 +132,13 @@ La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-d
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-06-support.llms.md)
 
-À faire après la capsule : Rédigez cinq phrases : question, forme observée, comparaison chiffrée, plage d’utilisation et limite. Ajoutez au rapport une donnée à recueillir avant toute décision de capacité.
+Production guidée, à réaliser une seule fois : Rédigez cinq phrases : question, forme observée, comparaison chiffrée, plage d’utilisation et limite. Ajoutez au rapport une donnée à recueillir avant toute décision de capacité.
 
 > **NOTE:**
 >
 > Faites les [exercices 5 et 6](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#exercice-5---conclusion-prudente) sur le cas d’attente. Tentez votre réponse avant d’ouvrir le corrigé.
+
+Pour consolider un point précis, passez aux [exercices 7 à 14](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#pratique-supplementaire), avec les préalables indiqués pour chaque question.
 
 ## Après les capsules
 

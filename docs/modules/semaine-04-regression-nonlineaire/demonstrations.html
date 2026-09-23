@@ -7237,6 +7237,7 @@ overflow-wrap: anywhere;
 <section id="objectif" class="level2">
 <h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
 <p>Comparer trois formes pour décrire les ventes mensuelles en fonction de l’achalandage. Le même cas guidé est utilisé dans les six capsules. Une ligne correspond à une succursale pendant un mois; les données sont simulées.</p>
+<p>Le <a href="telechargements/comparaison-achalandage.zip">projet guidé à compléter</a> fournit les fichiers de départ. La <a href="telechargements/demonstration-achalandage.zip">démonstration complète téléchargeable</a> contient cette analyse en Quarto et un script R autonome, avec les données et le dictionnaire.</p>
 </section>
 <section id="préparation" class="level2">
 <h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
@@ -7256,18 +7257,23 @@ overflow-wrap: anywhere;
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>saturation <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/achalandage_saturation_quebec.csv&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">as.Date</span>(mois),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">achalandage_milliers =</span> achalandage <span class="sc">/</span> <span class="dv">1000</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher les résultats avec une virgule décimale dans le texte du rapport.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>nombre_fr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">decimales =</span> <span class="dv">0</span>) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatC</span>(x, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> decimales, <span class="at">big.mark =</span> <span class="st">&quot; &quot;</span>, <span class="at">decimal.mark =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrêter l’analyse si les variables indispensables sont incomplètes.</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(saturation[<span class="fu">c</span>(<span class="st">&quot;mois&quot;</span>, <span class="st">&quot;achalandage&quot;</span>, <span class="st">&quot;ventes&quot;</span>)]),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(saturation<span class="sc">$</span>achalandage <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixer la séparation avant d’examiner les résultats de validation.</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>apprentissage <span class="ot">&lt;-</span> saturation <span class="sc">|&gt;</span> <span class="fu">filter</span>(mois <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-10-01&quot;</span>))</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>validation <span class="ot">&lt;-</span> saturation <span class="sc">|&gt;</span> <span class="fu">filter</span>(mois <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-10-01&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>saturation <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/achalandage_saturation_quebec.csv&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">as.Date</span>(mois),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">achalandage_milliers =</span> achalandage <span class="sc">/</span> <span class="dv">1000</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrêter l’analyse si les variables indispensables sont incomplètes.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(saturation[<span class="fu">c</span>(<span class="st">&quot;mois&quot;</span>, <span class="st">&quot;achalandage&quot;</span>, <span class="st">&quot;ventes&quot;</span>)]),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(saturation<span class="sc">$</span>achalandage <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixer la séparation avant d’examiner les résultats de validation.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>apprentissage <span class="ot">&lt;-</span> saturation <span class="sc">|&gt;</span> <span class="fu">filter</span>(mois <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-10-01&quot;</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>validation <span class="ot">&lt;-</span> saturation <span class="sc">|&gt;</span> <span class="fu">filter</span>(mois <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-10-01&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Les 54 lignes de janvier à septembre servent à explorer et ajuster. Les 18 lignes d’octobre à décembre servent à comparer les formes déjà choisies. Les mêmes six succursales apparaissent dans les deux périodes : la validation porte sur des mois suivants de succursales connues, pas sur de nouvelles succursales.</p>
 <p>Le terme « validation » est important : puisqu’on l’utilise pour choisir le modèle, cette période ne constitue pas un test final indépendant de la sélection.</p>
@@ -7365,6 +7371,7 @@ overflow-wrap: anywhere;
 <p><code>I(achalandage_milliers^2)</code> représente le carré numérique; le terme simple est conservé. Le logarithme naturel <code>log()</code> exige une valeur strictement positive.</p>
 <section id="une-hausse-dépend-du-point-de-départ" class="level3">
 <h3 class="anchored" data-anchor-id="une-hausse-dépend-du-point-de-départ">Une hausse dépend du point de départ</h3>
+<p>Dans la quadratique, la différence exacte pour une hausse h de x est <span class="math inline">\(b_1h+b_2(2xh+h^2)\)</span>. Ici, 100 visites correspondent à h = 0,1 puisque x est exprimé en milliers. Comparez les deux prédictions avec <code>predict()</code> pour éviter de confondre le coefficient de x et une pente constante.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">achalandage_milliers =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">2.1</span>, <span class="dv">3</span>, <span class="fl">3.1</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modele_quad, <span class="at">newdata =</span> scenarios)</span>
@@ -7385,6 +7392,7 @@ overflow-wrap: anywhere;
 </div>
 <p>La quadratique prévoit une hausse d’environ 3 487 $ pour les premières 100 visites supplémentaires et de 1 763 $ pour les secondes. Sa pente n’est donc pas constante.</p>
 <p>Pour le modèle logarithmique, une hausse relative de 10 % de l’achalandage correspond à une différence prédite de <span class="math inline">\(b_1\ln(1{,}10)\)</span> dollars, dans une plage où le modèle est défendable. Ce n’est pas une hausse de 10 % des ventes. Le logarithme croît sans limite; la quadratique peut redescendre. Aucun des deux modèles n’impose un véritable plateau de saturation.</p>
+<p>La <a href="../../modules/semaine-04-regression-nonlineaire/lectures.html#references-ciblees">lecture ciblée sur les transformations</a> et les <a href="../../modules/semaine-04-regression-nonlineaire/exercices.html#exercice-07">exercices 7 à 9</a> permettent de vérifier ces interprétations sur d’autres situations.</p>
 </section>
 </section>
 <section id="comparer-lajustement" class="level2">

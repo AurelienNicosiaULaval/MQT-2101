@@ -130,6 +130,10 @@ $$\text{Taux d’occupation}=\frac{\text{achalandage}}{\text{capacité de réfé
 2 400 visites pour une référence de 2 000 : 1,20, soit 120 %. Ce rapport n’est pas une probabilité.
 :::
 
+::: {.notes}
+Calculer 2400 / 2000 = 1,20. La capacité est une référence de volume, pas une borne de probabilité. Le taux n’est pas la proportion de clients satisfaits.
+:::
+
 ## Observer l’attente
 
 ```{r}
@@ -155,6 +159,10 @@ ggplot(apprentissage, aes(taux_occupation, temps_attente_minutes)) +
 
 ::: {.note-box}
 Une courbe quadratique peut redescendre. Un logarithme croissant n’a pas de plafond.
+:::
+
+::: {.notes}
+Distinguer une variation qui ralentit d’une limite horizontale. Dans le modèle logarithmique à coefficient positif, la pente diminue mais la fonction reste sans plafond. La quadratique peut finir par décroître; sa forme locale ne représente pas un mécanisme de capacité.
 :::
 
 ## Confronter plusieurs explications
@@ -236,6 +244,10 @@ Références : James, Witten, Hastie et Tibshirani (2021), An Introduction to St
 :::
 
 ## Production autonome 4.2
+
+::: {.notes}
+Cette production est exactement l’activité 4.2 du parcours. Elle se réalise une seule fois dans comparaison_achalandage.qmd. Les exercices sur l’attente sont un travail de transfert distinct.
+:::
 
 ::: {.lead}
 Choisissez un indice parmi le taux d’occupation, l’attente et les ruptures de stock. Décrivez ce qu’il mesure, une hypothèse opérationnelle et une autre explication possible.
