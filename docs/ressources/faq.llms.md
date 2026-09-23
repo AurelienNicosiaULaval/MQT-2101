@@ -33,7 +33,7 @@ Non. Aucun compte payant ni outil d’IA n’est requis. L’IA est interdite pe
 
 ## Peut-on utiliser ses propres données?
 
-Oui, si elles sont extérieures au cours et approuvées. Pour le [mini-rapport 1](../evaluations/mini-rapport-1.llms.md), proposez votre jeu par courriel au plus tard le mercredi 30 septembre 2026. Les jeux des modules, des laboratoires et de la section Données du cours ne sont pas admissibles à ce travail. Pour les autres travaux, consultez leur consigne et la [procédure de validation](../evaluations/validation-donnees.llms.md). Les données personnelles, confidentielles ou obtenues sans droit clair d’utilisation sont interdites.
+Oui, si elles sont extérieures au cours et approuvées. Pour le [mini-rapport 1](../evaluations/mini-rapport-1.llms.md), proposez votre jeu par courriel dès que possible, de préférence avant le 30 septembre. Le mercredi 30 septembre 2026 est la date limite. Les jeux des modules, des laboratoires et de la section Données du cours ne sont pas admissibles à ce travail. Pour les autres travaux, consultez leur consigne et la [procédure de validation](../evaluations/validation-donnees.llms.md). Les données personnelles, confidentielles ou obtenues sans droit clair d’utilisation sont interdites.
 
 ## Que faire si le site ou Internet est indisponible?
 

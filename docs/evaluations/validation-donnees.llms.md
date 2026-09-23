@@ -2,7 +2,7 @@
 
 ## Mini-rapport 1
 
-Le [mini-rapport 1](../evaluations/mini-rapport-1.llms.md) exige un jeu de données extérieur au cours. Les jeux utilisés dans les modules, les laboratoires ou la section [Données](../donnees/index.llms.md) ne sont pas admissibles pour ce travail. Chaque équipe doit proposer son jeu par courriel à la personne enseignante au plus tard le mercredi 30 septembre 2026 et obtenir son approbation avant de commencer la modélisation.
+Le [mini-rapport 1](../evaluations/mini-rapport-1.llms.md) exige un jeu de données extérieur au cours. Les jeux utilisés dans les modules, les laboratoires ou la section [Données](../donnees/index.llms.md) ne sont pas admissibles pour ce travail. Chaque équipe doit proposer son jeu par courriel à la personne enseignante dès que possible, de préférence avant le 30 septembre. Le mercredi 30 septembre 2026 est la date limite. L’approbation doit être obtenue avant de commencer la modélisation.
 
 ## Autres travaux
 
