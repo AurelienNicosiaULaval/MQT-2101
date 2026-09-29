@@ -4,6 +4,19 @@ Les six sources sont dans `qmd/`; les HTML publiés se trouvent sous `docs/modul
 
 Les activités 4.1 à 4.6 et les productions finales de capsule sont les mêmes tâches à réaliser une fois. Le cas guidé compare les ventes à l’achalandage; les exercices 1 à 6 portent sur l’attente, puis huit exercices supplémentaires varient les raisonnements et les contextes.
 
-Pour enregistrer, ouvrir les supports HTML en grand et utiliser S pour les notes orales. Les passages délicats ont des notes spécifiques. Le guide de tournage local est dans `output/audit-module04-20260923/Guide_enregistrement.md`. Les vidéos restent à enregistrer; aucun lien vidéo fictif n’est publié.
+Pour enregistrer, ouvrir les supports HTML en grand et utiliser S pour les notes orales. Les passages délicats ont des notes spécifiques. Le guide de tournage local est dans `output/audit-module04-20260923/Guide_enregistrement.md`. Les six vidéos et les PDF annotés pendant l’enregistrement sont accessibles depuis la page des capsules. Les fichiers `pdf/capsule-01-support-annote.pdf` à `pdf/capsule-06-support-annote.pdf` sont des copies intégrales des PDF annotés fournis; ils complètent les PDF originaux.
 
 Les projets téléchargeables sont produits par `scripts/22_prepare_module04.R` à partir des sources visibles, sans préparation statistique cachée. Après toute modification, les régénérer, rendre les pages et les sept diaporamas, régénérer les PDF, puis vérifier données, liens, affichage et publication.
+
+## Vidéos publiées
+
+Liens vérifiés le 29 septembre 2026 sur la chaîne Aurélien Nicosia.
+
+| Capsule | Vidéo |
+|---|---|
+| 1 | [Voir la capsule 1](https://www.youtube.com/watch?v=8TssDxXPVJE) |
+| 2 | [Voir la capsule 2](https://www.youtube.com/watch?v=CYAheZFgVEU) |
+| 3 | [Voir la capsule 3](https://www.youtube.com/watch?v=Uc-UpLCTKwk) |
+| 4 | [Voir la capsule 4](https://www.youtube.com/watch?v=ctVHXLmht1E) |
+| 5 | [Voir la capsule 5](https://www.youtube.com/watch?v=cND6zbuP-gA) |
+| 6 | [Voir la capsule 6](https://www.youtube.com/watch?v=gMqYduaZBUE) |

@@ -52,7 +52,7 @@ Suivez les six capsules dans l’ordre. Les activités 4.1 à 4.6 correspondent 
 
 Les liens « Ex. » indiquent quand passer au cas distinct sur l’attente, dans le projet `comparaison-attente`. Suivez d’abord la [préparation des exercices](../../modules/semaine-04-regression-nonlineaire/exercices.llms.md#préparation). Les corrigés sont fermés par défaut et se consultent après une tentative.
 
-Les supports sont disponibles en HTML et PDF, avec du code copiable dans les versions HTML. Les vidéos ne sont pas encore disponibles.
+Les [six vidéos et leurs supports](../../modules/semaine-04-regression-nonlineaire/capsules.llms.md) sont disponibles. Chaque capsule comprend le PDF original, le PDF annoté pendant l’enregistrement et le support HTML avec code copiable.
 
 > **NOTE:**
 >

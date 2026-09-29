@@ -4,7 +4,9 @@
 
 Les six capsules construisent une comparaison de modèles sur le lien entre l’achalandage et les ventes. Les données sont simulées. Le code complet est dans les [démonstrations R](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md).
 
-Ouvrez le PDF ou le support HTML avec code copiable, puis réalisez la production autonome dans `comparaison_achalandage.qmd`. Les activités 4.1 à 4.6 du parcours reprennent ces productions : il suffit de les faire une fois. Les vidéos ne sont pas encore disponibles.
+Les six vidéos et les PDF annotés du module sont disponibles. Chaque capsule propose quatre onglets : Vidéo, PDF, PDF annoté et HTML. Vous pouvez télécharger les PDF annotés; les supports HTML permettent de copier le code.
+
+Regardez la capsule, puis réalisez la production autonome dans `comparaison_achalandage.qmd`. Les activités 4.1 à 4.6 du parcours reprennent ces productions : il suffit de les faire une fois.
 
 Les exercices liés sous certaines capsules utilisent un autre cas, sur l’utilisation et l’attente. Ils alimentent le projet distinct `comparaison-attente`, avec des corrigés à ouvrir après une première tentative.
 
@@ -16,11 +18,15 @@ Une direction veut estimer ses ventes. Une droite suppose une variation moyenne 
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=8TssDxXPVJE)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-01-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-01-support-annote.pdf)
 
 ## HTML
 
@@ -38,11 +44,15 @@ La capacité, l’attente et les ruptures de stock peuvent éclairer le contexte
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=CYAheZFgVEU)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-02-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-02-support-annote.pdf)
 
 ## HTML
 
@@ -56,11 +66,15 @@ Une droite, une courbe quadratique et un logarithme imposent des formes différe
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=Uc-UpLCTKwk)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-03-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-03-support-annote.pdf)
 
 ## HTML
 
@@ -78,11 +92,15 @@ Une courbe peut réduire les résidus d’apprentissage sans mieux prédire. Les
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=ctVHXLmht1E)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
 
 ## HTML
 
@@ -100,11 +118,15 @@ Des modèles proches sur les données peuvent diverger fortement au-delà. Un in
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 5 sur YouTube](https://www.youtube.com/watch?v=cND6zbuP-gA)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-05-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-05-support-annote.pdf)
 
 ## HTML
 
@@ -122,11 +144,15 @@ La direction a besoin d’un résultat chiffré, d’une plage d’utilisation e
 
 ## Vidéo
 
-La vidéo n’est pas encore disponible. Vous pouvez consulter les supports ci-dessous.
+[Ouvrir la capsule 6 sur YouTube](https://www.youtube.com/watch?v=gMqYduaZBUE)
 
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-06-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-06-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-06-support-annote.pdf)
 
 ## HTML
 
