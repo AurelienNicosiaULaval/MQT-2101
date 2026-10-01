@@ -54,7 +54,17 @@ Jeu de données simulé sur des campagnes marketing régionales fictives.
 
 [Télécharger le CSV](../modules/semaine-03-regression-lineaire/data/campagnes_marketing_quebec.csv)
 
-Atelier 02 - Régression
+Atelier 02 - Audit de régression
+
+## Livraisons régionales québécoises fictives
+
+96 livraisons simulées dans quatre centres, avec distance, durée et incident documenté.
+
+96 observations · 7 variables
+
+[Télécharger le CSV](../modules/atelier-02-regression/data/livraisons_regionales_quebec.csv)
+
+Exemple complémentaire de régression
 
 ## Performance de succursales québécoises fictives
 
@@ -333,9 +343,39 @@ Profil des variables de campagnes_marketing_quebec.csv {.caption-top .table .tab
 
 ![](index_files/figure-html/plot-campagnes-marketing-quebec-1.png)
 
+## Livraisons régionales québécoises fictives
+
+Nouveau jeu du laboratoire 02 : une ligne représente une livraison. La durée est en minutes, la distance en kilomètres. Le fichier est entièrement simulé. Consultez le [dictionnaire](../modules/atelier-02-regression/data/dictionnaire-livraisons.md), notamment pour la livraison avec panne confirmée et la séparation des périodes.
+
+[Télécharger livraisons_regionales_quebec.csv](../modules/atelier-02-regression/data/livraisons_regionales_quebec.csv)
+
+### En bref
+
+| information | valeur |
+|:---|:---|
+| Module | Atelier 02 - Audit de régression |
+| Observations | 96 |
+| Variables | 7 |
+| Valeurs manquantes | 0 |
+| Utilisation dans le cours | Auditer droite et quadratique, comparer apprentissage et validation, puis juger la portée des prévisions. |
+
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| livraison_id | character | 0 | 0 % | 96 | L001 |
+| date | Date | 0 | 0 % | 24 | 2025-01-06 |
+| centre | character | 0 | 0 % | 4 | Lévis |
+| distance_km | numeric | 0 | 0 % | 86 | 11.1 |
+| colis | numeric | 0 | 0 % | 23 | 23 |
+| incident | character | 0 | 0 % | 2 | aucun |
+| duree_minutes | numeric | 0 | 0 % | 88 | 27.2 |
+
 ## Performance de succursales québécoises fictives
 
-Jeu de données simulé sur la performance mensuelle de succursales fictives au Québec. Le fichier sert à ajuster un modèle de régression appliqué, comparer un modèle simple et un modèle enrichi, puis formuler une recommandation prudente.
+Jeu de données simulé sur la performance mensuelle de succursales fictives au Québec. Ce jeu complémentaire est conservé; la mission actuelle du laboratoire 02 utilise les livraisons ci-dessus. Le fichier sert à ajuster un modèle de régression appliqué, comparer un modèle simple et un modèle enrichi, puis formuler une recommandation prudente.
 
 [Télécharger performance_succursales_quebec.csv](../modules/atelier-02-regression/data/performance_succursales_quebec.csv)
 
@@ -343,7 +383,7 @@ Jeu de données simulé sur la performance mensuelle de succursales fictives au 
 
 | information | valeur |
 |:---|:---|
-| Module | Atelier 02 - Régression |
+| Module | Exemple complémentaire de régression |
 | Observations | 72 |
 | Variables | 14 |
 | Valeurs manquantes | 0 |

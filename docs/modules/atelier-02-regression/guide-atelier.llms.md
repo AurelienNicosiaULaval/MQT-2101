@@ -1,181 +1,184 @@
 # Mission du laboratoire 02
 
-Comparer deux modèles et justifier son choix
+Auditer des prévisions de durée de livraison
 
 ## Votre mission
 
-La direction d’un réseau de succursales québécoises fictives souhaite mieux décrire les écarts de ventes mensuelles. Elle veut savoir si une relation simple suffit ou si une courbe apporte une amélioration utile.
+Un service fictif de livraison régionale au Québec veut estimer la durée de ses prochaines livraisons à partir de leur distance. La direction propose une courbe parce qu’elle décrit mieux les observations utilisées pour l’ajuster. Votre rôle est d’auditer cette proposition avant de l’utiliser.
 
-> Quelle relation retenez-vous pour décrire les ventes, et jusqu’où la direction peut-elle s’appuyer sur ce modèle?
+> Quel modèle retenir pour des livraisons comparables, et quelles affirmations la direction peut-elle soutenir?
 
-La réponse est `ventes`, en dollars canadiens. Choisissez une seule variable explicative principale parmi `achalandage`, `depenses_marketing` et `heures_personnel`. Comparez une droite avec une variante quadratique ou logarithmique de cette même variable. Vous pouvez conserver la droite au terme de la comparaison.
+Vous utilisez un nouveau jeu de données simulé, distinct des ventes et de l’achalandage des capsules. Une ligne est une livraison; la réponse est `duree_minutes`, en minutes, et l’explicative est `distance_km`, en kilomètres. Comparez une droite et une quadratique. Le logarithme et l’analyse de sensibilité sont des prolongements facultatifs.
 
-Votre recommandation porte sur le modèle à utiliser et sur une prochaine vérification. Pour conseiller une intervention réelle, il faudrait d’autres éléments que ces associations dans des données simulées.
+Il ne suffit pas de reproduire les graphiques des capsules : vous devez prendre position avant de voir la validation, vérifier ensuite votre position et traiter trois affirmations de gestion. Vous pouvez retenir la droite.
 
-## Ce qui change depuis le laboratoire 1
+## Objectifs et prérequis
 
-Le cadre est commun, mais vous prenez davantage de décisions.
+À la fin du parcours essentiel, vous devez pouvoir :
 
-| Fourni | À décider et à produire en équipe |
+1.  vérifier les données et séparer les périodes avant d’examiner leurs résultats;
+2.  interpréter une droite dans de nouvelles unités et une variation quadratique à deux niveaux;
+3.  calculer séparément les erreurs d’apprentissage et de validation;
+4.  relier les résidus et un incident documenté à la portée de l’analyse;
+5.  juger trois affirmations et défendre un choix reproductible.
+
+Reprenez le projet R, Quarto, les unités, la relecture et un point de rétroaction du laboratoire 01. Revoyez au [module 03](../../modules/semaine-03-regression-lineaire/index.llms.md) `lm()`, `summary()`, `fitted()`, `residuals()` et `predict()`; au [module 04](../../modules/semaine-04-regression-nonlineaire/index.llms.md), `I(x^2)`, la séparation temporelle et les deux RMSE. R, Quarto et `tidyverse` doivent fonctionner. Aucune méthode nouvelle n’est requise.
+
+## Parcours essentiel et traces attendues
+
+| Étape | Trace observable |
 |----|----|
-| Le fichier de données et son importation | Les contrôles utiles et votre question précise |
-| Un début de rapport avec quelques sections | Les sous-sections, les blocs de code et les sorties à conserver |
-| Deux familles de variantes vues au module 4 | La variante à essayer et sa justification |
-| Les critères de comparaison et les points de rétroaction | Le modèle retenu, les interprétations et la conclusion |
+| 1\. Données | Contrôles, unités et deux périodes séparées |
+| 2\. Apprentissage | Nuage, deux modèles, coefficients et position provisoire |
+| 3\. Validation | Tableau commun et révision argumentée de cette position |
+| 4\. Audit | Résidus, incident documenté, trois affirmations et domaine d’utilisation |
+| 5\. Relecture | Une amélioration précise et un HTML recalculé |
+| 6\. Consolidation | Raisonnement individuel sans R |
+| 7\. Mini-rapport 1 | Vérification du propre dossier évalué |
 
-Travaillez en binômes, avec un rapport commun. Alternez la personne au clavier après le premier point de rétroaction. Chacun doit pouvoir expliquer la démarche; le travail individuel reste possible. Reprenez un point à améliorer de la rétroaction du laboratoire 1.
+La validation est essentielle dans ce laboratoire. Les prolongements sont facultatifs. La mission reste formative et ne crée pas une nouvelle remise évaluée.
 
-Ce laboratoire est formatif, sans points dans la note finale. La [présentation](../../modules/atelier-02-regression/presentation.llms.md) lance la séance et le [déroulement](../../modules/atelier-02-regression/index.llms.md#pendant-latelier) prévoit un moment pour les questions sur le mini-rapport 1.
+## Fichiers nécessaires
 
-## Dossier de départ
+Décompressez le [dossier étudiant](../../assets/exemples/laboratoire-02.zip), puis ouvrez `laboratoire-02.Rproj` et `rapport-labo-02.qmd`. Le premier rendu fonctionne avec la seule importation fournie.
 
-[Télécharger le dossier du laboratoire 02](../../assets/exemples/laboratoire-02.zip)
+| Fichier | Usage |
+|----|----|
+| `rapport-labo-02.qmd` | Début du rapport, analyse à construire |
+| `data/livraisons_regionales_quebec.csv` | Nouveau jeu de la mission |
+| `data/dictionnaire-livraisons.md` | Unités, période, incident et population visée |
+| `aide-regression.R` et son CSV de saturation | Rappel de syntaxe sur un autre exemple, après une tentative |
+| `LIRE-MOI.txt` | Ouverture et vérification du dossier |
 
-``` text
-laboratoire-02/
-  laboratoire-02.Rproj
-  rapport-labo-02.qmd
-  LIRE-MOI.txt
-  data/
-    performance_succursales_quebec.csv
-```
+Le [CSV](data/livraisons_regionales_quebec.csv) et son [dictionnaire](data/dictionnaire-livraisons.md) sont aussi disponibles séparément. Les données sont entièrement simulées; elles ne décrivent aucune entreprise réelle.
 
-1.  Décompressez le dossier et ouvrez le projet dans RStudio ou Positron.
-2.  Ouvrez le `.qmd`, indiquez vos noms et cliquez sur Render.
-3.  Gardez le CSV dans `data/` et ajoutez votre analyse au rapport. Relancez Render régulièrement.
+## 1. Comprendre les données et verrouiller la séparation
 
-Le premier rendu vérifie seulement que le dossier fonctionne. Le rapport reste à construire. L’installation éventuelle des packages se fait dans la Console, jamais dans le `.qmd`.
+1.  Lisez le dictionnaire. Formulez la question et nommez l’unité d’observation.
+2.  Vérifiez dimensions, dates, centres, valeurs manquantes, identifiants et unités.
+3.  Formez `apprentissage` avec les dates strictement antérieures au 1er octobre 2025, et `validation` avec les dates à partir du 1er octobre.
+4.  Vérifiez les effectifs et l’absence d’identifiants communs. Explorez la réponse uniquement dans l’apprentissage jusqu’à l’étape 3. Ne changez pas la séparation en fonction du résultat.
 
-Le [CSV seul](data/performance_succursales_quebec.csv) et le [dictionnaire des données](../../donnees/index.llms.md#performance-de-succursales-québécoises-fictives) restent accessibles. Ce jeu de données a déjà servi aux exercices du module 3 : vous allez maintenant choisir et défendre votre propre comparaison.
-
-## 1. Définir la question et vérifier les données
-
-Choisissez une variable explicative et expliquez pourquoi elle est pertinente pour décrire les ventes. Précisez son unité et une augmentation concrète qui servira à lire la pente : par exemple 100 visites, 1 000 \$ ou 10 heures.
-
-Dans le rapport, indiquez :
-
-- ce que représente une ligne, les dimensions, la période et le nombre de succursales;
-- les valeurs manquantes et les doublons éventuels de la paire mois-succursale;
-- la plage observée de votre variable explicative;
-- les lignes conservées pour les deux modèles et toute transformation effectuée.
+Repères de contrôle : 96 lignes et sept variables, quatre centres, huit livraisons par mois de janvier à décembre 2025, 72 observations d’apprentissage et 24 de validation. Le fichier n’a aucune valeur manquante ni identifiant répété. La livraison L072 contient une panne confirmée. Il ne s’agit pas d’une erreur de saisie; conservez-la dans le parcours essentiel.
 
 > **TIP:**
 >
-> Retrouvez `glimpse()`, `n_distinct()`, `range()`, `is.na()` et `count(succursale, mois)`. Une absence de valeur manquante est aussi un résultat à signaler. Si vous filtrez, construisez un seul tableau d’analyse pour les deux modèles et donnez les effectifs avant et après.
->
-> Une ligne décrit un mois d’une succursale. Les observations répétées d’une même succursale ne sont pas nécessairement indépendantes; gardez cette réserve pour la conclusion.
+> Convertissez `date` avec `as.Date()`, puis utilisez `filter()`. Les identifiants uniques permettent de contrôler la séparation avec `intersect()`. Vérifiez `range(distance_km)` dans les deux périodes, sans regarder encore les durées de validation. Les mêmes centres sont présents dans les deux périodes : vous évaluez des livraisons ultérieures de centres connus.
 
-## 2. Explorer et établir une référence
+Avant de poursuivre : chaque personne doit pouvoir expliquer pourquoi une livraison d’automne ne sert pas à ajuster les modèles.
 
-Produisez un nuage de points des ventes en fonction de votre variable. Rendez les succursales identifiables, par exemple par la couleur, puis décrivez la tendance, la dispersion et une éventuelle courbure. Ajoutez une droite commune à l’ensemble des observations.
+## 2. Ajuster, interpréter et prendre position
 
-Ajustez la droite de référence. Dans le texte :
+Tracez la durée selon la distance dans l’apprentissage, en distinguant les centres par la couleur et L072 par un symbole ou une étiquette. Ajoutez une droite commune et une quadratique commune, uniquement dans la plage d’apprentissage. Ne tracez pas automatiquement un modèle différent par centre.
 
-1.  Interprétez sa pente pour l’augmentation concrète choisie, en dollars de ventes.
-2.  Interprétez son intercept et vérifiez si la valeur zéro de l’explicative appartient à la plage observée.
-3.  Donnez le R² et expliquez ce qu’il résume pour ces données.
+Ajustez les deux modèles sur les mêmes 72 livraisons et gardez la durée en minutes. Interprétez :
 
-> **TIP:**
->
-> Le module 3 utilise `lm()`, `coef()` et `summary()`. La pente multipliée par l’augmentation choisie donne la variation des ventes moyennes estimées par la droite. L’intercept correspond à la valeur estimée quand l’explicative vaut zéro; il peut être sans utilité pratique si ce point est hors de la plage observée.
->
-> Une association estimée ne prouve pas qu’une augmentation décidée par la direction produirait cette variation.
+- la pente de la droite pour cinq kilomètres supplémentaires;
+- son intercept, en tenant compte de la plage;
+- son R² d’apprentissage;
+- la différence de prédictions de la quadratique de 20 à 25 km, puis de 50 à 55 km.
 
-> **NOTE:**
->
-> Montrez votre question, votre graphique et une interprétation de coefficient. Annoncez la variante que vous voulez essayer et expliquez ce qu’elle permet de vérifier. L’enseignant vous aide à repérer un problème; la décision et le code restent à construire par votre équipe.
-
-## 3. Choisir une variante et comparer
-
-Choisissez une seule des deux options vues au module 4. Justifiez ce choix à partir du graphique ou d’une question sur la forme de la relation. L’absence de courbure visible peut conduire à vérifier si une variante apporte vraiment quelque chose.
-
-| Variante | Question examinée | Vérification nécessaire |
-|----|----|----|
-| Quadratique | L’association change-t-elle avec le niveau de l’explicative? | Conserver le terme simple avec le carré et examiner la courbe dans la plage observée |
-| Logarithme de l’explicative | Une relation qui s’aplatit ou se redresse décrit-elle mieux les observations? | Vérifier que toutes les valeurs de l’explicative sont strictement positives |
-
-Gardez les ventes en dollars dans les deux modèles. Ajoutez les deux ajustements au graphique, uniquement dans la plage observée. Construisez un tableau comparatif contenant le nombre d’observations, le R² ajusté et la RMSE d’ajustement en dollars.
-
-Expliquez le compromis entre ajustement et simplicité. Une variante plus complexe n’est pas nécessairement le choix à retenir.
+Comparez ces deux dernières différences. Une même hausse de distance peut-elle correspondre à la même variation prédite par une courbe? Expliquez avec vos résultats, sans lire le coefficient du terme simple comme une pente constante.
 
 > **TIP:**
 >
-> Pour une quadratique, la formule contient l’explicative et son carré écrit avec `I(...^2)`. Pour l’autre option, `log()` transforme uniquement l’explicative. Ces modèles restent linéaires dans leurs coefficients et s’ajustent avec `lm()`.
->
-> La RMSE d’ajustement se calcule par `sqrt(mean(residuals(modele)^2))`. Le R² ajusté se trouve dans `summary(modele)$adj.r.squared`. Comparez les mêmes observations, la même réponse et les mêmes unités. Ne choisissez pas sur le seul R² : l’ajout du carré ne peut pas diminuer le R² d’ajustement d’une droite avec intercept sur les mêmes lignes.
->
-> Les [démonstrations du module 4](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md) montrent comment tracer plusieurs ajustements avec `predict()`.
+> La droite s’écrit avec `duree_minutes ~ distance_km`. Pour la quadratique, ajoutez `I(distance_km^2)` en conservant le terme simple. Utilisez `predict()` pour les courbes et les quatre distances. Placez la couleur dans les points pour garder des ajustements communs.
 
-Choisissez ensuite deux valeurs de l’explicative dans sa plage observée. Calculez les ventes prédites par votre variante à ces deux valeurs et interprétez leur différence. Pour une courbe, la variation dépend des points choisis : ne lisez pas un coefficient comme une pente constante par unité de l’explicative.
+Avant d’ouvrir les durées de validation, écrivez deux phrases datées dans le rapport : le modèle provisoirement privilégié et la preuve qui pourrait vous faire changer d’avis. Un désaccord dans le binôme peut être consigné.
 
-> **IMPORTANT:**
->
-> Le parcours essentiel compare les deux modèles sur les données utilisées pour les ajuster. La RMSE décrit donc l’ajustement et ne mesure pas la performance sur de nouvelles données. Une séparation apprentissage/validation n’est pas obligatoire ici, comme pour le mini-rapport 1. Le module 4 vous permet de préciser cette limite et de proposer une validation ultérieure.
+## 3. Confronter le choix aux livraisons suivantes
 
-## 4. Diagnostiquer et répondre à la direction
+Les formules et la séparation sont maintenant fixées. Calculez les deux RMSE sur les mêmes données d’apprentissage, puis sur les mêmes 24 observations de validation, sans réajuster les modèles.
 
-Retenez provisoirement un modèle et tracez ses résidus contre ses valeurs ajustées, avec une ligne horizontale à zéro. Identifiez les succursales par la couleur. Décrivez un motif, une différence de dispersion, un point à examiner ou l’absence de structure évidente. Expliquez la conséquence pour l’utilisation du modèle. Vous pouvez réviser votre choix après ce diagnostic.
+| Colonne du tableau attendu | Sens |
+|----|----|
+| Modèle | Droite ou quadratique |
+| n apprentissage et n validation | Effectifs réellement utilisés |
+| R² ajusté d’apprentissage | Description avec pénalisation du nombre de paramètres |
+| RMSE apprentissage (min) | Erreurs des observations qui ont servi à ajuster |
+| RMSE validation (min) | Erreurs des livraisons suivantes prédites par ces mêmes modèles |
 
 > **TIP:**
 >
-> `fitted()` donne les valeurs ajustées et `residuals()` les écarts observé moins ajusté. Une courbure résiduelle peut remettre en cause la forme; une dispersion variable appelle à la prudence sur l’incertitude. L’absence de motif évident sur ce graphique ne vérifie pas toutes les hypothèses, notamment l’indépendance entre les mois d’une même succursale.
+> La RMSE est `sqrt(mean((observe - predit)^2))`. Pour l’apprentissage, les résidus donnent ces écarts. Pour la validation, comparez `validation$duree_minutes` à `predict(modele, newdata = validation)`, dans le même ordre. `fitted(modele)` contient les valeurs d’apprentissage et ne convient pas ici.
+>
+> Si vous utilisez les résultats de validation pour choisir entre les deux formes, la période sert à la sélection. Elle n’est pas un test final indépendant du choix.
 
-Dans un paragraphe destiné à la direction :
+Comparez les classements obtenus, calculez l’écart de RMSE de validation en minutes et dites si votre position provisoire change. Ne choisissez pas une nouvelle séparation ou une troisième forme après avoir vu ce résultat dans le parcours essentiel.
 
-1.  Nommez la relation étudiée et le modèle retenu.
-2.  Appuyez ce choix sur au moins deux résultats chiffrés du rapport, dont un élément de comparaison des modèles.
-3.  Expliquez une limite précise liée au diagnostic, aux succursales répétées, à la comparaison sur les données d’ajustement ou à la plage observée.
-4.  Proposez une prochaine vérification avant d’utiliser le modèle dans une décision réelle.
+Comparez aussi les plages de distance des deux périodes. Signalez les livraisons de validation qui se situent hors de la plage d’apprentissage, même si l’écart de distance est petit.
 
-Il n’y a pas de modèle gagnant imposé. Un choix simple et bien défendu peut être préférable à une courbe peu convaincante. Une recommandation d’augmenter automatiquement le marketing ou le personnel ne découle pas de cette analyse.
+## 4. Diagnostiquer et auditer la décision
+
+### Résidus et livraison particulière
+
+Tracez les résidus d’apprentissage des deux modèles contre leurs valeurs ajustées, avec une ligne à zéro. Repérez L072 et les centres. Décrivez une observation effectivement visible et sa conséquence pour l’utilisation du modèle.
+
+Relisez le dictionnaire : la panne est confirmée. Peut-on supprimer cette livraison simplement parce qu’elle gêne l’ajustement? Quelle population voudriez-vous prévoir : toutes les livraisons comparables, ou les livraisons sans incident? Expliquez le problème sans supprimer de ligne dans le parcours essentiel. Examiner sa sensibilité est facultatif.
+
+> **TIP:**
+>
+> Un point atypique appelle à vérifier sa mesure et son contexte. Un incident documenté n’est pas une faute de saisie. Une suppression change les observations et peut changer la question. L’absence de courbure ne prouve pas l’indépendance des livraisons d’un même centre.
+
+### Trois affirmations de la direction
+
+Pour chacune, indiquez « soutenue », « à nuancer » ou « non soutenue », puis justifiez avec un calcul ou une limite précise. Votre tableau ne remplace pas le raisonnement.
+
+1.  « Le modèle qui a le plus grand R² d’apprentissage sera le meilleur pour nos livraisons d’automne. »
+2.  « Réduire la RMSE d’une minute signifie que chaque livraison prendra une minute de moins. »
+3.  « La prévision à 95 km est aussi défendable que celle à 25 km. »
+
+Pour la troisième affirmation, calculez les prédictions des deux modèles à 25 et 95 km, mais classez séparément leur domaine d’utilisation. Une valeur produite par R n’est pas une validation de son usage.
+
+Terminez par une recommandation : modèle retenu, deux résultats chiffrés, domaine d’utilisation, réserve sur l’incident ou le contexte et prochaine vérification. La distance n’a pas été assignée au hasard et le modèle ne mesure pas l’effet causal d’un changement d’itinéraire.
 
 ## Rapport attendu
 
-Le gabarit propose cinq sections que vous pouvez adapter. Vous ajoutez vos blocs de code et vos sous-sections.
+Visez environ 500 à 700 mots hors code et tableaux. Deux graphiques principaux suffisent : relation et résidus. Ajoutez le tableau comparatif; les prédictions et les réponses aux affirmations peuvent être présentées dans le texte ou dans un petit tableau.
 
 | Partie | Contenu attendu |
 |----|----|
-| Question | Choix de l’explicative et justification |
-| Données | Unités, contrôles, plage et effectif analysé |
-| Analyse et comparaison | Graphique avec les deux ajustements; pente et intercept de la droite; R²; variante justifiée; tableau comparatif; différence entre deux prédictions de la variante |
-| Diagnostic et recommandation | Graphique des résidus, interprétation, choix appuyé sur deux résultats chiffrés, limite et prochaine vérification |
-| Bilan formatif | Point repris du laboratoire 1, rétroaction reçue, correction ou choix conservé, aide utilisée |
+| Question et données | Contexte, unités, contrôles et séparation verrouillée |
+| Analyse et position provisoire | Deux modèles, droite interprétée, deux variations quadratiques et position avant validation |
+| Validation et diagnostic | Tableau exact, comparaison des classements, plages et résidus |
+| Audit et recommandation | Trois affirmations jugées, prévisions dans et hors plage, choix, limite et suite |
+| Bilan formatif | Rétroaction du laboratoire 01, révision du choix, correction et aide utilisée |
 
-Visez environ 500 à 700 mots hors code et tableaux. Deux graphiques et un tableau comparatif suffisent pour présenter les résultats principaux; les contrôles de données peuvent être résumés dans le texte. Gardez le code visible et sélectionnez les sorties utiles à la lecture.
+## 5. Relire, corriger et rendre
 
-## Rétroaction et correction en classe
+Faites lire votre HTML à un autre binôme. Il relève un acquis et une amélioration localisée.
 
-Avant le rendu final, faites lire votre HTML à un autre binôme. Utilisez la grille suivante avec les repères « Acquis », « À consolider » ou « À reprendre ». Relevez un point réussi et une amélioration précise en indiquant où intervenir. Vous recevez aussi l’accompagnement de l’enseignant pendant la séance.
-
-| Critère | Repère pour la relecture |
+| Critère | Question de relecture |
 |----|----|
-| Question et données | Le choix de l’explicative, les unités, les lignes utilisées et la plage sont explicites |
-| Comparaison | Deux modèles portent sur les mêmes lignes; la variante est motivée et le choix ne repose pas seulement sur le R² |
-| Interprétation | Pente et intercept de la droite sont bien lus; la différence de prédictions de la courbe tient compte des points choisis |
-| Diagnostic et décision | Le commentaire décrit les résidus observés; la recommandation renvoie à deux résultats et une limite précise |
-| Reproductibilité | Le code produit les résultats annoncés et le HTML se lit sans la session R |
+| Séparation | Les périodes et identifiants sont disjoints; la validation a-t-elle été gardée hors de l’ajustement? |
+| Interprétation | Les minutes et kilomètres sont-ils présents; les deux variations quadratiques sont-elles calculées? |
+| Comparaison | Les deux RMSE portent-elles sur les mêmes observations dans chaque période? |
+| Audit | Les affirmations sont-elles reliées aux sorties; l’incident et l’extrapolation sont-ils traités? |
+| Reproductibilité | Le rapport se recalcule-t-il depuis les fichiers? |
 
-Appliquez une correction ou expliquez pourquoi vous conservez votre choix. Notez cette décision dans le bilan. La rétroaction et la correction se font pendant la séance.
+Appliquez une correction ou justifiez votre choix. Redémarrez R, faites Render et vérifiez le HTML. Conservez QMD, HTML et données ensemble. Une éventuelle transmission formative sera annoncée par l’enseignant; les échéances du laboratoire 01 ne s’appliquent pas automatiquement ici.
 
-## Fin de séance
+## 6. Consolider pour l’intra
 
-- Redémarrez R, puis utilisez Render sans exécuter de commandes préparatoires dans la Console.
-- Ouvrez le HTML et vérifiez les graphiques, les valeurs citées et la conclusion.
-- Conservez le dossier complet avec le QMD, le HTML et `data/`. Si nécessaire, compressez ce dossier pour le transférer.
-- Si un point reste bloqué, indiquez la tentative et la question dans le bilan, puis montrez-les à l’enseignant.
+Faites individuellement la [fiche de consolidation](../../modules/atelier-02-regression/consolidation.llms.md), sans R ni IA au premier essai. Comparez ensuite vos raisonnements et notez une erreur corrigée ou une notion à revoir. L’exercice est formatif.
 
-La fin de la séance permet de poser vos questions sur le [mini-rapport 1](../../evaluations/mini-rapport-1.llms.md). Apportez un passage, une sortie ou un message d’erreur précis. Les modalités de l’évaluation restent celles de sa page de consignes et du calendrier.
+## 7. Vérifier le mini-rapport 1
+
+Les [consignes](../../evaluations/mini-rapport-1.llms.md) et la [grille](../../evaluations/grille-mini-rapports.llms.md) prévoient la remise le mercredi 7 octobre 2026 à 23 h 59 dans Brio. Le travail évalué doit utiliser votre jeu extérieur approuvé; les données du cours, y compris ces nouvelles livraisons, sont inadmissibles.
+
+Vérifiez les six livrables : QMD, HTML autonome, données ou importation, README, déclaration IA ou mention explicite d’absence d’usage, contribution d’une phrase par membre. Les autres contraintes restent 1 200 à 1 600 mots, quatre figures ou tableaux principaux maximum, équipe de deux ou trois.
+
+La validation est exigée pour cette mission formative, mais elle reste facultative dans le mini-rapport 1 selon sa grille actuelle. Cette séance ne modifie pas les critères du travail évalué et ne fournit pas de conclusion à remettre. Apportez une question ciblée, une tentative et la sortie concernée; votre équipe conserve ses choix et sa rédaction.
 
 ## Aide à la demande
 
-Tentez d’abord la tâche avec les acquis des modules 3 et 4. Ouvrez ensuite un indice de ce guide, puis une rubrique d’[aide R](../../modules/atelier-02-regression/demonstrations.llms.md) si nécessaire. Adaptez le code à votre choix et vérifiez le résultat.
+Tentez d’abord la tâche. Ouvrez ensuite un indice, une rubrique de l’[aide R](../../modules/atelier-02-regression/demonstrations.llms.md) ou les [repères](../../modules/atelier-02-regression/capsules.llms.md). Le code complet d’aide porte sur l’ancien exemple de saturation; vous devez adapter les variables, unités, périodes et arguments. Notez l’aide utilisée et vérifiez ce que vous conservez.
 
-Le [GPT du cours](https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini) peut vous aider à comprendre une erreur ou vous poser des questions après une première tentative, selon les [règles du cours](../../ressources/ia.llms.md). Vous devez pouvoir expliquer le code et les interprétations conservés. Notez l’aide utilisée et ce que vous avez vérifié.
+## Prolongements facultatifs
 
-## Pour aller plus loin, si le temps le permet
+La mission est complète avec deux modèles. Après le parcours essentiel, choisissez une seule piste des [exercices](../../modules/atelier-02-regression/exercices.llms.md) :
 
-La mission est complète avec deux modèles. Pour prolonger votre réflexion, choisissez une seule piste :
-
-- préparer une validation sur des mois suivants, en fixant les périodes et les modèles avant d’examiner les résultats de validation;
-- examiner les résidus dans le temps pour chaque succursale;
-- reprendre les [exercices complémentaires](../../modules/atelier-02-regression/exercices.llms.md) sur le trafic d’un site web.
+- examiner la sensibilité à L072 en explicitant le changement de population;
+- fixer un modèle logarithmique pour une autre période de validation;
+- comparer les erreurs de validation selon le centre sans ajuster un modèle par centre;
+- transférer la démarche à une question de délai de service sur un jeu complémentaire du cours.

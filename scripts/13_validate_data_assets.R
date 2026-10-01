@@ -3,6 +3,8 @@
 # Rscript scripts/13_validate_data_assets.R
 
 specifications <- list(
+  list(path = "modules/atelier-02-regression/data/livraisons_regionales_quebec.csv", rows = 96L, missing = 0L,
+       columns = c("livraison_id", "date", "centre", "distance_km", "colis", "incident", "duree_minutes")),
   list(path = "modules/atelier-01-r/data/ventes_pme_quebec.csv", rows = 60L, missing = 5L,
        columns = c("mois", "mois_label", "saison", "succursale", "region", "surface_m2", "campagne_locale", "depenses_marketing", "clients", "panier_moyen", "ventes", "delai_livraison_jours", "ruptures_stock", "satisfaction", "taux_retour")),
   list(path = "modules/atelier-02-regression/data/performance_succursales_quebec.csv", rows = 72L, missing = 0L,
@@ -87,6 +89,21 @@ for (specification in specifications) {
 }
 
 weekly_source <- "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv"
+# Le nouveau laboratoire doit garder la séparation prévue et les identifiants.
+delivery_path <- "modules/atelier-02-regression/data/livraisons_regionales_quebec.csv"
+if (file.exists(delivery_path)) {
+  delivery_data <- read.csv(delivery_path, stringsAsFactors = FALSE)
+  delivery_dates <- as.Date(delivery_data$date)
+  if (anyNA(delivery_dates) || anyDuplicated(delivery_data$livraison_id) ||
+      sum(delivery_dates < as.Date("2025-10-01"), na.rm = TRUE) != 72L ||
+      sum(delivery_dates >= as.Date("2025-10-01"), na.rm = TRUE) != 24L ||
+      length(unique(delivery_data$centre)) != 4L ||
+      sum(delivery_data$incident == "panne confirmée") != 1L ||
+      !identical(delivery_data$incident[delivery_data$livraison_id == "L072"], "panne confirmée")) {
+    add_error("Livraisons du laboratoire 02 : séparation, centres, identifiants ou incident incorrects.")
+  }
+}
+
 weekly_workshop <- "modules/atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv"
 if (file.exists(weekly_source) && file.exists(weekly_workshop) &&
     unname(tools::md5sum(weekly_source)) != unname(tools::md5sum(weekly_workshop))) {

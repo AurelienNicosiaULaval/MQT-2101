@@ -177,12 +177,15 @@ if (file.exists(labo02_archive)) {
   dir.create(check_dir)
   extracted <- utils::unzip(labo02_archive, exdir = check_dir)
   relative <- substring(extracted, nchar(check_dir) + 2L)
-  starter_names <- c("laboratoire-02.Rproj", "rapport-labo-02.qmd", "LIRE-MOI.txt")
+  starter_names <- c("laboratoire-02.Rproj", "rapport-labo-02.qmd", "LIRE-MOI.txt", "aide-regression.R")
   expected <- file.path("laboratoire-02", c(
-    starter_names, "data/performance_succursales_quebec.csv"
+    starter_names, "data/livraisons_regionales_quebec.csv", "data/dictionnaire-livraisons.md",
+    "data/achalandage_saturation_quebec.csv"
   ))
   sources <- c(file.path("assets/exemples/laboratoire-02", starter_names),
-               "modules/atelier-02-regression/data/performance_succursales_quebec.csv")
+               "modules/atelier-02-regression/data/livraisons_regionales_quebec.csv",
+               "modules/atelier-02-regression/data/dictionnaire-livraisons.md",
+               "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
   if (!setequal(relative, expected) || !all(file.exists(sources)) || !identical(
     unname(tools::md5sum(sources)),
     unname(tools::md5sum(file.path(check_dir, expected)))

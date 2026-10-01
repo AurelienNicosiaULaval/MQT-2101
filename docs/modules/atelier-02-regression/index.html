@@ -7020,10 +7020,7 @@ display: none;
   <ul>
   <li><a href="#avant-latelier" id="toc-avant-latelier" class="nav-link active" data-scroll-target="#avant-latelier">Avant l’atelier</a></li>
   <li><a href="#pendant-latelier" id="toc-pendant-latelier" class="nav-link" data-scroll-target="#pendant-latelier">Pendant l’atelier</a></li>
-  <li><a href="#production-attendue" id="toc-production-attendue" class="nav-link" data-scroll-target="#production-attendue">Production attendue</a></li>
-  <li><a href="#après-latelier" id="toc-après-latelier" class="nav-link" data-scroll-target="#après-latelier">Après l’atelier</a></li>
-  <li><a href="#ressources-utiles" id="toc-ressources-utiles" class="nav-link" data-scroll-target="#ressources-utiles">Ressources utiles</a></li>
-  <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
+  <li><a href="#supports" id="toc-supports" class="nav-link" data-scroll-target="#supports">Supports</a></li>
   </ul>
 </nav>
     </div>
@@ -7033,7 +7030,7 @@ display: none;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Laboratoire 02</h1>
-<p class="subtitle lead">Choisir et défendre un modèle de régression</p>
+<p class="subtitle lead">Auditer une prévision de livraison</p>
 </div>
 
 
@@ -7055,166 +7052,76 @@ display: none;
 Deuxième laboratoire en classe
 </p>
 <h2 class="anchored">
-Une droite suffit-elle pour décrire les ventes?
+Le meilleur ajustement suffit-il pour prévoir?
 </h2>
-<p>Vous reprenez la démarche du laboratoire 1 : comprendre les données, produire des résultats et répondre à une direction fictive. Cette fois, vous choisissez une relation à étudier, comparez deux modèles et défendez votre choix dans un court rapport Quarto.</p>
+<p>Un service fictif de livraison régionale veut utiliser un modèle de durée selon la distance. Vous auditez deux modèles sur de nouvelles données simulées, puis vous jugez trois affirmations de la direction.</p>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Un peu plus d&#39;autonomie">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Un peu plus d’autonomie
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le dossier fourni contient l’importation et un début de rapport. À vous de choisir la variable explicative, de construire les graphiques, d’écrire les modèles et d’organiser les résultats. Les consignes et les indices restent disponibles dans le guide; l’enseignant vous accompagne pendant la séance.</p>
-</div>
-</div>
-<p>Le laboratoire mobilise les modules 3 et 4. Il est formatif, sans points dans la note finale, et prépare les dernières vérifications du <a href="../../evaluations/mini-rapport-1.html">mini-rapport 1</a>.</p>
+<p>Vous reprenez le projet R, Quarto et la relecture du laboratoire 01. Le contexte, les unités et le problème de décision changent : une livraison est une observation, la réponse est en minutes, un incident est documenté et les dernières observations servent à la validation.</p>
 <section id="avant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="avant-latelier">Avant l’atelier</h2>
 <ul>
-<li>Reprenez la rétroaction reçue au laboratoire 1 et choisissez un point à améliorer dans ce nouveau rapport.</li>
-<li>Revoyez les <a href="../../modules/semaine-03-regression-lineaire/index.html">repères du module 3</a> : droite, coefficients, R², résidus et prédiction.</li>
-<li>Revoyez les <a href="../../modules/semaine-04-regression-nonlineaire/index.html">repères du module 4</a> : quadratique, logarithme, comparaison et extrapolation.</li>
-<li>Téléchargez puis décompressez le <a href="../../assets/exemples/laboratoire-02.zip">dossier de départ</a>. Ouvrez <code>laboratoire-02.Rproj</code>, puis <code>rapport-labo-02.qmd</code> et cliquez sur Render.</li>
-<li>Apportez votre mini-rapport 1 en cours et une question précise, si vous en avez une.</li>
+<li>Reprenez un point de rétroaction du laboratoire 01.</li>
+<li>Revoyez les <a href="../../modules/semaine-03-regression-lineaire/index.html">modules 03</a> et <a href="../../modules/semaine-04-regression-nonlineaire/index.html">04</a>, notamment les périodes d’apprentissage et de validation.</li>
+<li>Téléchargez et décompressez le <a href="../../assets/exemples/laboratoire-02.zip">dossier étudiant</a>. Ouvrez le projet et faites Render du gabarit.</li>
+<li>Apportez votre mini-rapport 1 en cours et une question ciblée.</li>
 </ul>
-<p>La mission commence en classe. Si le premier rendu bloque, gardez le message d’erreur pour recevoir de l’aide.</p>
 </section>
 <section id="pendant-latelier" class="level2">
 <h2 class="anchored" data-anchor-id="pendant-latelier">Pendant l’atelier</h2>
-<p>Le <a href="../../modules/atelier-02-regression/guide-atelier.html">guide de la mission</a> est le fil principal. Travaillez en binômes, avec un rapport par binôme; chaque personne doit pouvoir expliquer les deux modèles. Si vous travaillez seul, les mêmes productions sont attendues.</p>
-<p>Le déroulement suivant présente les étapes de la séance.</p>
+<p>Le <a href="../../modules/atelier-02-regression/guide-atelier.html">guide</a> est le fil principal. Travaillez en binômes; chaque personne doit expliquer les unités, les deux modèles et la validation. Changez de personne au clavier après le premier contrôle.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Étape</th>
-<th>Travail</th>
-<th>Résultat visé</th>
+<th>Production</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>Présentation et lancement</td>
-<td>Comprendre la mission et les choix à faire</td>
+<td>Comprendre et séparer</td>
+<td>Données contrôlées, apprentissage et validation fixés</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>Données et question</td>
-<td>Données vérifiées, variable explicative choisie</td>
+<td>Ajuster et prendre position</td>
+<td>Droite, quadratique et position avant validation</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Exploration et droite de référence</td>
-<td>Graphique, modèle et coefficients interprétés</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Premier point de rétroaction</td>
-<td>Expliquer le choix de la variante à essayer</td>
-</tr>
-<tr class="odd">
-<td>5</td>
 <td>Pause</td>
-<td>Reprendre avec la comparaison</td>
+<td>Reprendre avec les modèles déjà fixés</td>
 </tr>
 <tr class="even">
-<td>6</td>
-<td>Variante et diagnostic</td>
-<td>Deux modèles comparés et résidus examinés</td>
+<td>Valider et diagnostiquer</td>
+<td>Deux RMSE par modèle, résidus et incident</td>
 </tr>
 <tr class="odd">
-<td>7</td>
-<td>Conclusion et relecture croisée</td>
-<td>Une recommandation justifiée et une amélioration précise</td>
+<td>Auditer et relire</td>
+<td>Trois affirmations jugées et recommandation</td>
 </tr>
 <tr class="even">
-<td>8</td>
-<td>Correction et rendu</td>
-<td>HTML vérifié et bilan formatif</td>
+<td>Recalculer</td>
+<td>Rapport corrigé et HTML vérifié</td>
 </tr>
 <tr class="odd">
-<td>9</td>
-<td>Questions sur le mini-rapport 1</td>
-<td>Vérifier un choix, une interprétation ou le dossier de remise</td>
+<td>Consolider</td>
+<td><a href="../../modules/atelier-02-regression/consolidation.html">Fiche individuelle pour l’intra</a></td>
+</tr>
+<tr class="even">
+<td>Vérifier le mini-rapport</td>
+<td><a href="../../modules/atelier-02-regression/guide-atelier.html#vérifier-le-mini-rapport-1">Vérification finale du dossier évalué</a></td>
 </tr>
 </tbody>
 </table>
-<p>Montrez votre tentative et expliquez ce que vous cherchez à obtenir lorsque vous demandez de l’aide.</p>
+<p>La validation est essentielle ici. Le logarithme, la sensibilité à l’incident et les erreurs par centre sont des <a href="../../modules/atelier-02-regression/exercices.html">prolongements facultatifs</a>.</p>
 </section>
-<section id="production-attendue" class="level2">
-<h2 class="anchored" data-anchor-id="production-attendue">Production attendue</h2>
-<p>Un seul rapport, d’environ 500 à 700 mots hors code et tableaux, avec :</p>
+<section id="supports" class="level2">
+<h2 class="anchored" data-anchor-id="supports">Supports</h2>
 <ul>
-<li>une question et un diagnostic ciblé des données;</li>
-<li>un graphique de la relation, complété par les deux ajustements;</li>
-<li>une droite de référence et une variante quadratique ou logarithmique;</li>
-<li>un tableau comparatif et des interprétations en unités concrètes;</li>
-<li>un graphique de résidus pour le modèle retenu;</li>
-<li>une recommandation, une limite et un bilan de la rétroaction.</li>
+<li><a href="../../modules/atelier-02-regression/guide-atelier.html">Guide étudiant et résultats attendus</a>.</li>
+<li><a href="../../modules/atelier-02-regression/presentation.html">Présentation de lancement</a>.</li>
+<li><a href="data/livraisons_regionales_quebec.csv">Données de livraison</a> et <a href="data/dictionnaire-livraisons.md">dictionnaire</a>.</li>
+<li><a href="../../modules/atelier-02-regression/capsules.html">Repères</a>, <a href="../../modules/atelier-02-regression/demonstrations.html">aide R à la demande</a> et <a href="../../modules/atelier-02-regression/lectures.html">lectures</a>.</li>
 </ul>
-<p>La longueur est un repère pour rester concis. Les attentes détaillées se trouvent dans le <a href="../../modules/atelier-02-regression/guide-atelier.html#rapport-attendu">guide</a>. Vous pouvez retenir la droite si la variante n’apporte pas d’amélioration convaincante.</p>
-</section>
-<section id="après-latelier" class="level2">
-<h2 class="anchored" data-anchor-id="après-latelier">Après l’atelier</h2>
-<p>Conservez le dossier complet avec le <code>.qmd</code>, le HTML et les données. Terminez les corrections discutées en classe et reportez les vérifications utiles à votre mini-rapport 1.</p>
-<p>Le calendrier place ce laboratoire le jour de la remise du mini-rapport 1. Consultez les <a href="../../evaluations/mini-rapport-1.html">consignes de l’évaluation</a> et le <a href="../../calendrier.html">calendrier du cours</a> pour la remise. Le rapport de laboratoire est une pratique formative distincte.</p>
-</section>
-<section id="ressources-utiles" class="level2">
-<h2 class="anchored" data-anchor-id="ressources-utiles">Ressources utiles</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Ressource</th>
-<th>Quand l’utiliser</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../../modules/atelier-02-regression/guide-atelier.html">Guide de la mission</a></td>
-<td>Question, étapes, indices et grille formative</td>
-</tr>
-<tr class="even">
-<td><a href="../../modules/atelier-02-regression/presentation.html">Présentation de lancement</a></td>
-<td>Introduction en classe</td>
-</tr>
-<tr class="odd">
-<td><a href="../../assets/exemples/laboratoire-02.zip">Dossier de départ : projet, QMD et CSV</a></td>
-<td>Pour commencer dans RStudio</td>
-</tr>
-<tr class="even">
-<td><a href="../../modules/atelier-02-regression/demonstrations.html">Aide R à la demande</a></td>
-<td>Retrouver un geste après une première tentative</td>
-</tr>
-<tr class="odd">
-<td><a href="../../modules/atelier-02-regression/capsules.html">Repères conceptuels</a></td>
-<td>Vérifier une interprétation</td>
-</tr>
-<tr class="even">
-<td><a href="../../modules/atelier-02-regression/exercices.html">Exercices complémentaires</a></td>
-<td>Pratique facultative sur un autre contexte</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="auto-vérification" class="level2">
-<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Je peux justifier ma variable explicative et la variante essayée.</label></li>
-<li><label><input type="checkbox">Les deux modèles utilisent les mêmes lignes et les ventes en dollars.</label></li>
-<li><label><input type="checkbox">Ma comparaison tient compte de l’ajustement, des résidus et de la simplicité.</label></li>
-<li><label><input type="checkbox">Ma recommandation s’appuie sur deux résultats chiffrés et une limite précise.</label></li>
-<li><label><input type="checkbox">Render refait l’analyse sans préparation dans la Console.</label></li>
-</ul>
+<p>Le laboratoire est formatif. Le mini-rapport 1 garde ses consignes et exige un jeu extérieur approuvé. Les données du laboratoire sont inadmissibles pour ce travail évalué.</p>
 
 
 </section>

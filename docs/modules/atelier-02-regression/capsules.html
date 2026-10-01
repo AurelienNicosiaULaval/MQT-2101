@@ -7018,12 +7018,8 @@ display: none;
     <h2 id="toc-title">Sur cette page</h2>
 
   <ul>
-  <li><a href="#des-repères-à-consulter-au-besoin" id="toc-des-repères-à-consulter-au-besoin" class="nav-link active" data-scroll-target="#des-repères-à-consulter-au-besoin">Des repères à consulter au besoin</a></li>
-  <li><a href="#question-et-unités" id="toc-question-et-unités" class="nav-link" data-scroll-target="#question-et-unités">Question et unités</a></li>
-  <li><a href="#droite-et-coefficients" id="toc-droite-et-coefficients" class="nav-link" data-scroll-target="#droite-et-coefficients">Droite et coefficients</a></li>
-  <li><a href="#courbe-et-interprétation" id="toc-courbe-et-interprétation" class="nav-link" data-scroll-target="#courbe-et-interprétation">Courbe et interprétation</a></li>
-  <li><a href="#comparaison-et-diagnostic" id="toc-comparaison-et-diagnostic" class="nav-link" data-scroll-target="#comparaison-et-diagnostic">Comparaison et diagnostic</a></li>
-  <li><a href="#prédiction-et-décision" id="toc-prédiction-et-décision" class="nav-link" data-scroll-target="#prédiction-et-décision">Prédiction et décision</a></li>
+  <li><a href="#transférer-les-acquis" id="toc-transférer-les-acquis" class="nav-link active" data-scroll-target="#transférer-les-acquis">Transférer les acquis</a></li>
+  <li><a href="#ajustement-sélection-et-portée" id="toc-ajustement-sélection-et-portée" class="nav-link" data-scroll-target="#ajustement-sélection-et-portée">Ajustement, sélection et portée</a></li>
   <li><a href="#retrouver-une-explication" id="toc-retrouver-une-explication" class="nav-link" data-scroll-target="#retrouver-une-explication">Retrouver une explication</a></li>
   </ul>
 </nav>
@@ -7050,76 +7046,76 @@ display: none;
 </header>
 
 
-<section id="des-repères-à-consulter-au-besoin" class="level2">
-<h2 class="anchored" data-anchor-id="des-repères-à-consulter-au-besoin">Des repères à consulter au besoin</h2>
-<p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> mobilise les modules 3 et 4. Ces repères aident à vérifier une décision pendant l’analyse; ils ne constituent pas un travail supplémentaire.</p>
-</section>
-<section id="question-et-unités" class="level2">
-<h2 class="anchored" data-anchor-id="question-et-unités">Question et unités</h2>
-<p>Les ventes mensuelles sont la réponse. Choisissez une explicative qui permet de poser une question précise et donnez son unité. Distinguez les différences observées entre mois et succursales de l’effet qu’aurait une intervention de la direction.</p>
-<p>À vérifier : que représente une ligne, et quelle augmentation concrète de l’explicative allez-vous commenter?</p>
-</section>
-<section id="droite-et-coefficients" class="level2">
-<h2 class="anchored" data-anchor-id="droite-et-coefficients">Droite et coefficients</h2>
-<p>La pente d’une droite correspond à une variation constante de la moyenne estimée de la réponse par unité de l’explicative. L’intercept correspond à une explicative égale à zéro; vérifiez si ce point a un sens dans le contexte et la plage observée.</p>
-<p>À vérifier : votre phrase contient-elle les dollars de ventes, l’augmentation choisie et une formulation d’association?</p>
-</section>
-<section id="courbe-et-interprétation" class="level2">
-<h2 class="anchored" data-anchor-id="courbe-et-interprétation">Courbe et interprétation</h2>
-<p>Une quadratique conserve le terme simple avec son carré. Un logarithme de l’explicative exige des valeurs strictement positives. Dans les deux cas, les ventes restent en dollars et <code>lm()</code> estime les coefficients. Une courbe peut décrire une relation sans qu’un modèle non linéaire dans ses paramètres soit nécessaire.</p>
-<p>Pour interpréter la variante, comparez ses prédictions en deux points précis. La variation n’est pas constante sur toute la plage. Un logarithme ne représente pas un plafond de ventes et une quadratique peut finir par redescendre hors de la plage utile.</p>
-</section>
-<section id="comparaison-et-diagnostic" class="level2">
-<h2 class="anchored" data-anchor-id="comparaison-et-diagnostic">Comparaison et diagnostic</h2>
+<section id="transférer-les-acquis" class="level2">
+<h2 class="anchored" data-anchor-id="transférer-les-acquis">Transférer les acquis</h2>
+<p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> utilise de nouvelles livraisons simulées. La syntaxe reste celle des modules 03 et 04; il faut adapter les unités, la question et le jugement.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Repère</th>
-<th>Ce qu’il apporte</th>
-<th>Limite</th>
+<th>Application à la mission</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>R²</td>
-<td>Part de la variation de la réponse résumée par l’ajustement avec intercept</td>
-<td>Peut augmenter avec la complexité sans gain utile</td>
+<td>Unité d’observation</td>
+<td>Une livraison, avec un identifiant unique</td>
 </tr>
 <tr class="even">
-<td>R² ajusté</td>
-<td>Ajustement avec une pénalisation liée au nombre de paramètres</td>
-<td>Reste une mesure sur les données d’ajustement</td>
+<td>Réponse et explicative</td>
+<td>Durée en minutes, distance en kilomètres</td>
 </tr>
 <tr class="odd">
-<td>RMSE d’ajustement</td>
-<td>Taille des erreurs, en dollars, avec davantage de poids aux grandes erreurs</td>
-<td>Ne mesure pas l’erreur sur de nouvelles données</td>
+<td>Droite</td>
+<td>La pente est en minutes par kilomètre; multipliez par la hausse étudiée</td>
 </tr>
 <tr class="even">
-<td>Graphique des résidus</td>
-<td>Recherche de courbure, dispersion variable ou points à vérifier</td>
-<td>Ne suffit pas à confirmer toutes les hypothèses</td>
+<td>Intercept</td>
+<td>Durée moyenne estimée à zéro km; vérifiez la plage</td>
+</tr>
+<tr class="odd">
+<td>Quadratique</td>
+<td>Conserver le terme simple et <code>I(distance_km^2)</code></td>
+</tr>
+<tr class="even">
+<td>Variation d’une courbe</td>
+<td>Comparer deux prédictions; le point de départ compte</td>
+</tr>
+<tr class="odd">
+<td>R² ajusté</td>
+<td>Mesure d’apprentissage, même quand il pénalise la complexité</td>
+</tr>
+<tr class="even">
+<td>RMSE validation</td>
+<td>Comparer observation et prédiction de livraisons non utilisées pour ajuster</td>
+</tr>
+<tr class="odd">
+<td>Incident</td>
+<td>Vérifier le contexte; atypique ne signifie pas erreur</td>
+</tr>
+<tr class="even">
+<td>Extrapolation</td>
+<td>Situer la distance dans la plage d’apprentissage</td>
 </tr>
 </tbody>
 </table>
-<p>À vérifier : les modèles utilisent-ils les mêmes lignes et la même réponse? Les résidus changent-ils votre jugement? Les mois d’une même succursale peuvent être liés, même si le nuage paraît régulier.</p>
 </section>
-<section id="prédiction-et-décision" class="level2">
-<h2 class="anchored" data-anchor-id="prédiction-et-décision">Prédiction et décision</h2>
-<p>Vérifiez la plage de l’explicative et la comparabilité du contexte. Une valeur dans la plage n’efface pas les différences entre succursales. Au-delà de cette plage, il s’agit d’une extrapolation.</p>
-<p>Une recommandation indique le modèle retenu, les résultats qui motivent le choix, une limite précise et la prochaine vérification utile.</p>
+<section id="ajustement-sélection-et-portée" class="level2">
+<h2 class="anchored" data-anchor-id="ajustement-sélection-et-portée">Ajustement, sélection et portée</h2>
+<p>Les dates sont fixées avant l’analyse. La validation sert à comparer les formes déjà fixées. Puisqu’elle guide le choix, elle ne constitue pas un test final indépendant. Les centres sont les mêmes dans les deux périodes.</p>
+<p>Un point situé dans la plage ne garantit pas un contexte comparable. Un modèle peut décrire les observations sans estimer l’effet causal d’une modification du trajet. Une réduction d’erreur de prédiction ne mesure pas directement un gain opérationnel.</p>
 </section>
 <section id="retrouver-une-explication" class="level2">
 <h2 class="anchored" data-anchor-id="retrouver-une-explication">Retrouver une explication</h2>
 <ul>
-<li><a href="../../modules/semaine-03-regression-lineaire/demonstrations.html">Module 3 : interpréter une droite et ses résidus</a>.</li>
-<li><a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html">Module 4 : comparer les formes et distinguer ajustement et validation</a>.</li>
-<li><a href="../../modules/atelier-02-regression/lectures.html">Documentation R et lectures utiles</a>.</li>
+<li><a href="../../modules/semaine-03-regression-lineaire/demonstrations.html">Module 03 : droite et résidus</a>.</li>
+<li><a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html">Module 04 : formes et validation</a>.</li>
+<li><a href="../../modules/atelier-02-regression/demonstrations.html">Aide R sur un autre exemple</a>.</li>
+<li><a href="../../modules/atelier-02-regression/lectures.html">Lectures et documentation</a>.</li>
 </ul>
 
 

@@ -7087,10 +7087,24 @@ display: none;
 </header>
 
 
+<div class="callout callout-style-default callout-note callout-titled" title="Adapter le geste à la nouvelle mission">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Adapter le geste à la nouvelle mission
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La mission porte sur les livraisons, leur distance et leur durée en minutes. Les exemples ci-dessous gardent l’ancien contexte de saturation pour une aide de syntaxe après une tentative. Ils ne fournissent pas les résultats de la mission. Pour la séparation et la RMSE de validation, consultez aussi la <a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html#comparer-lajustement">démonstration du module 04</a>. Utilisez les périodes fixées dans le guide, sans réajuster sur la validation.</p>
+</div>
+</div>
 <section id="utiliser-cette-aide" class="level2">
 <h2 class="anchored" data-anchor-id="utiliser-cette-aide">Utiliser cette aide</h2>
 <p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> reste votre fil principal. Ouvrez seulement la rubrique qui répond à votre difficulté. Les exemples reprennent le jeu de saturation du module 4; adaptez les variables et les objets à votre propre analyse des succursales.</p>
 <p>Les blocs ci-dessous s’exécutent dans l’ordre pour reproduire cet exemple. Pour l’utiliser dans un projet indépendant, placez le <a href="../semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv">CSV du module 4</a> dans <code>data/</code> et le <code>.qmd</code> à la racine.</p>
+<p>Le <a href="../../assets/exemples/laboratoire-02.zip">dossier de départ</a> contient le script complet <code>aide-regression.R</code> et ce CSV pour refaire cet exemple sans réseau. Les modèles y sont ajustés sur toutes les lignes, comme dans cette aide; la validation temporelle du module 4 est une autre étape.</p>
 </section>
 <section id="ajouter-un-bloc-dans-le-rapport" class="level2">
 <h2 class="anchored" data-anchor-id="ajouter-un-bloc-dans-le-rapport">Ajouter un bloc dans le rapport</h2>
@@ -7099,7 +7113,7 @@ display: none;
 <section id="importer-et-contrôler" class="level2">
 <h2 class="anchored" data-anchor-id="importer-et-contrôler">Importer et contrôler</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ouvrir l&#39;exemple d&#39;importation et de contrôle">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -7108,7 +7122,7 @@ display: none;
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -7150,7 +7164,7 @@ display: none;
 <section id="construire-la-référence-et-une-variante" class="level2">
 <h2 class="anchored" data-anchor-id="construire-la-référence-et-une-variante">Construire la référence et une variante</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ouvrir l&#39;exemple de modèles et de coefficients">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -7159,7 +7173,7 @@ display: none;
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>modele_reference <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> achalandage_milliers, <span class="at">data =</span> saturation)</span>
@@ -7196,7 +7210,7 @@ display: none;
 <section id="comparer-des-ajustements" class="level2">
 <h2 class="anchored" data-anchor-id="comparer-des-ajustements">Comparer des ajustements</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ouvrir l&#39;exemple de tableau comparatif">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -7205,7 +7219,7 @@ display: none;
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>comparaison <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
@@ -7255,7 +7269,7 @@ display: none;
 <section id="superposer-les-courbes-et-interpréter-une-différence" class="level2">
 <h2 class="anchored" data-anchor-id="superposer-les-courbes-et-interpréter-une-différence">Superposer les courbes et interpréter une différence</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ouvrir l&#39;exemple de prédictions dans la plage observée">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -7264,7 +7278,7 @@ display: none;
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plage <span class="ot">&lt;-</span> <span class="fu">range</span>(saturation<span class="sc">$</span>achalandage_milliers)</span>
@@ -7317,7 +7331,7 @@ display: none;
 <section id="examiner-les-résidus" class="level2">
 <h2 class="anchored" data-anchor-id="examiner-les-résidus">Examiner les résidus</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ouvrir l&#39;exemple de diagnostic">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -7326,7 +7340,7 @@ display: none;
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ici la variante illustre le geste; utilisez le modèle que vous avez retenu.</span></span>

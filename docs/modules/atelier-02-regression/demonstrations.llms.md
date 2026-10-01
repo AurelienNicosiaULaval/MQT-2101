@@ -2,11 +2,17 @@
 
 Retrouver un geste après une première tentative
 
+> **NOTE:**
+>
+> La mission porte sur les livraisons, leur distance et leur durée en minutes. Les exemples ci-dessous gardent l’ancien contexte de saturation pour une aide de syntaxe après une tentative. Ils ne fournissent pas les résultats de la mission. Pour la séparation et la RMSE de validation, consultez aussi la [démonstration du module 04](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md#comparer-lajustement). Utilisez les périodes fixées dans le guide, sans réajuster sur la validation.
+
 ## Utiliser cette aide
 
 La [mission](../../modules/atelier-02-regression/guide-atelier.llms.md) reste votre fil principal. Ouvrez seulement la rubrique qui répond à votre difficulté. Les exemples reprennent le jeu de saturation du module 4; adaptez les variables et les objets à votre propre analyse des succursales.
 
 Les blocs ci-dessous s’exécutent dans l’ordre pour reproduire cet exemple. Pour l’utiliser dans un projet indépendant, placez le [CSV du module 4](../semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv) dans `data/` et le `.qmd` à la racine.
+
+Le [dossier de départ](../../assets/exemples/laboratoire-02.zip) contient le script complet `aide-regression.R` et ce CSV pour refaire cet exemple sans réseau. Les modèles y sont ajustés sur toutes les lignes, comme dans cette aide; la validation temporelle du module 4 est une autre étape.
 
 ## Ajouter un bloc dans le rapport
 

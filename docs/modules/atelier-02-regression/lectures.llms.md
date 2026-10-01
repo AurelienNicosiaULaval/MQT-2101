@@ -21,4 +21,4 @@ R Core Team, documentation en ligne du package stats, consultée le 16 septembre
 
 ## Lien avec le mini-rapport 1
 
-Les [consignes du mini-rapport 1](../../evaluations/mini-rapport-1.llms.md) définissent ses attentes et son dépôt. Le laboratoire prépare la comparaison de modèles, les interprétations et la vérification du rendu. Une séparation apprentissage/validation est facultative pour ces deux productions; les mesures d’ajustement doivent être présentées comme telles.
+Les [consignes du mini-rapport 1](../../evaluations/mini-rapport-1.llms.md) définissent ses attentes et son dépôt. Le laboratoire prépare la comparaison de modèles, les interprétations et la vérification du rendu. La séparation apprentissage/validation est essentielle dans ce laboratoire. Elle reste facultative dans le mini-rapport 1 selon sa grille actuelle; ses critères ne changent pas.

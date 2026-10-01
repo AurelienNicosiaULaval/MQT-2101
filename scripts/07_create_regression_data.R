@@ -1,4 +1,6 @@
-# Données simulées pour le module 03 et l'atelier 02.
+# Données simulées pour le module 03 et l'ancien exemple de l'atelier 02.
+# La mission actuelle utilise livraisons_regionales_quebec.csv;
+# son générateur et ses contrôles sont conservés dans le kit enseignant privé.
 
 suppressPackageStartupMessages({
   library(tidyverse)

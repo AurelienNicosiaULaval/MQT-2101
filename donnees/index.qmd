@@ -87,10 +87,18 @@ dataset_catalog <- tibble::tribble(
   "Visualiser une relation entre budget marketing et ventes, ajuster une régression linéaire simple et interpréter les résidus.",
   "Données simulées pour le cours.",
   "Données simulées pour le cours.",
+  "livraisons_regionales_quebec",
+  "Livraisons régionales québécoises fictives",
+  "modules/atelier-02-regression/data/livraisons_regionales_quebec.csv",
+  "Atelier 02 - Audit de régression",
+  "96 livraisons simulées dans quatre centres, avec distance, durée et incident documenté.",
+  "Auditer droite et quadratique, comparer apprentissage et validation, puis juger la portée des prévisions.",
+  "Données entièrement simulées pour MQT-2101, 1er octobre 2026.",
+  "Données redistribuables avec le matériel du cours.",
   "performance_succursales_quebec",
   "Performance de succursales québécoises fictives",
   "modules/atelier-02-regression/data/performance_succursales_quebec.csv",
-  "Atelier 02 - Régression",
+  "Exemple complémentaire de régression",
   "Jeu de données simulé sur la performance mensuelle de succursales fictives au Québec.",
   "Ajuster un modèle de régression appliqué, comparer un modèle simple et un modèle enrichi, puis formuler une recommandation prudente.",
   "Données simulées pour le cours.",
@@ -635,10 +643,41 @@ dataset_profile("campagnes_marketing_quebec") |>
 plot_numeric_overview("campagnes_marketing_quebec")
 ```
 
+## Livraisons régionales québécoises fictives
+
+Nouveau jeu du laboratoire 02 : une ligne représente une livraison. La durée est en minutes, la distance en kilomètres. Le fichier est entièrement simulé. Consultez le [dictionnaire](../modules/atelier-02-regression/data/dictionnaire-livraisons.md), notamment pour la livraison avec panne confirmée et la séparation des périodes.
+
+```{r}
+#| label: telecharger-livraisons-regionales-quebec
+#| results: asis
+cat(download_link("livraisons_regionales_quebec"))
+```
+
+### En bref
+
+```{r}
+#| label: fiche-livraisons-regionales-quebec
+dataset_facts("livraisons_regionales_quebec") |> knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-livraisons-regionales-quebec
+dataset_table("livraisons_regionales_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-livraisons-regionales-quebec
+dataset_profile("livraisons_regionales_quebec") |> knitr::kable()
+```
+
 ## Performance de succursales québécoises fictives
 
 Jeu de données simulé sur la performance mensuelle de succursales fictives au
-Québec. Le fichier sert à ajuster un modèle de régression appliqué, comparer un
+Québec. Ce jeu complémentaire est conservé; la mission actuelle du laboratoire 02 utilise les livraisons ci-dessus. Le fichier sert à ajuster un modèle de régression appliqué, comparer un
 modèle simple et un modèle enrichi, puis formuler une recommandation prudente.
 
 ```{r}

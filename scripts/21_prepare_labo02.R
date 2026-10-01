@@ -4,10 +4,12 @@
 
 root <- normalizePath(".", winslash = "/", mustWork = TRUE)
 starter_dir <- file.path(root, "assets/exemples/laboratoire-02")
-csv_path <- file.path(root, "modules/atelier-02-regression/data/performance_succursales_quebec.csv")
+csv_path <- file.path(root, "modules/atelier-02-regression/data/livraisons_regionales_quebec.csv")
+dictionary_path <- file.path(root, "modules/atelier-02-regression/data/dictionnaire-livraisons.md")
 archive_path <- file.path(root, "assets/exemples/laboratoire-02.zip")
-starter_names <- c("laboratoire-02.Rproj", "rapport-labo-02.qmd", "LIRE-MOI.txt")
-source_paths <- c(file.path(starter_dir, starter_names), csv_path)
+starter_names <- c("laboratoire-02.Rproj", "rapport-labo-02.qmd", "LIRE-MOI.txt", "aide-regression.R")
+saturation_path <- file.path(root, "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv")
+source_paths <- c(file.path(starter_dir, starter_names), csv_path, dictionary_path, saturation_path)
 stopifnot(all(file.exists(source_paths)))
 
 build_archive <- function() {
@@ -16,13 +18,15 @@ build_archive <- function() {
   on.exit(unlink(build_dir, recursive = TRUE), add = TRUE)
   relative_paths <- c(
     file.path("laboratoire-02", starter_names),
-    "laboratoire-02/data/performance_succursales_quebec.csv"
+    "laboratoire-02/data/livraisons_regionales_quebec.csv",
+    "laboratoire-02/data/dictionnaire-livraisons.md",
+    "laboratoire-02/data/achalandage_saturation_quebec.csv"
   )
   destination_paths <- file.path(build_dir, relative_paths)
   stopifnot(all(file.copy(source_paths, destination_paths)))
 
   # Fixer les métadonnées pour produire la même archive avec les mêmes sources.
-  Sys.setFileTime(destination_paths, as.POSIXct("2026-09-16 12:00:00", tz = "UTC"))
+  Sys.setFileTime(destination_paths, as.POSIXct("2026-10-01 12:00:00", tz = "UTC"))
   previous_dir <- setwd(build_dir)
   on.exit(setwd(previous_dir), add = TRUE)
   temporary_archive <- file.path(build_dir, "laboratoire-02.zip")

@@ -1,0 +1,46 @@
+# Consolidation pour l’intra - Laboratoire 02
+
+Interpréter sans exécuter R
+
+## Premier essai individuel
+
+Sans R ni IA, répondez aux cinq questions. Comparez ensuite vos raisonnements, puis corrigez une erreur. Les valeurs sont fictives et indépendantes du CSV; ce n’est pas un sujet officiel d’examen.
+
+Une droite estime la durée y, en minutes, selon la distance x, en kilomètres :
+
+\\\widehat y = 12 + 1{,}1x.\\
+
+La plage d’apprentissage va de 8 à 60 km. À 25 km, la durée observée est 44 minutes.
+
+### 1. Unités et prédiction
+
+Interprétez la pente pour cinq kilomètres supplémentaires et calculez la durée moyenne estimée à 25 km. Peut-on promettre le gain d’une modification d’itinéraire?
+
+### 2. Résidu et intercept
+
+Calculez le résidu de cette livraison et interprétez son signe. Que représente l’intercept et quelle limite faut-il signaler?
+
+### 3. Choisir avec deux erreurs
+
+| Forme       | RMSE apprentissage (min) | RMSE validation (min) |
+|-------------|-------------------------:|----------------------:|
+| Droite      |                        5 |                     6 |
+| Quadratique |                        4 |                     8 |
+
+Quel modèle privilégier sur cette validation? Pourquoi le classement d’apprentissage ne suffit-il pas? L’écart de RMSE signifie-t-il que chaque livraison sera deux minutes plus rapide?
+
+### 4. Une hausse, deux points de départ
+
+Une autre quadratique fictive vaut :
+
+\\\widehat y = 30 + 0{,}7x + 0{,}008x^2.\\
+
+Calculez la différence prédite de 20 à 25 km, puis de 50 à 55 km. Pourquoi le coefficient 0,7 ne suffit-il pas?
+
+### 5. Portée
+
+Une prédiction à 95 km est-elle dans le domaine observé? La validation utilisée pour choisir le modèle est-elle un test final indépendant de ce choix? Nommez une prochaine vérification.
+
+## Garder une trace
+
+Notez une erreur corrigée, sa cause et la notion à revoir au module 05.
