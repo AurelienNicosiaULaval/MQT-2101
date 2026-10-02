@@ -7070,7 +7070,7 @@ display: none;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Aide R - Laboratoire 02</h1>
-<p class="subtitle lead">Retrouver un geste après une première tentative</p>
+<p class="subtitle lead">Retrouver une commande après une première tentative</p>
 </div>
 
 
@@ -7087,24 +7087,24 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Adapter le geste à la nouvelle mission">
+<div class="callout callout-style-default callout-note callout-titled" title="Utiliser cet exemple pour votre analyse">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Adapter le geste à la nouvelle mission
+<span class="screen-reader-only">Note</span>Utiliser cet exemple pour votre analyse
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La mission porte sur les livraisons, leur distance et leur durée en minutes. Les exemples ci-dessous gardent l’ancien contexte de saturation pour une aide de syntaxe après une tentative. Ils ne fournissent pas les résultats de la mission. Pour la séparation et la RMSE de validation, consultez aussi la <a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html#comparer-lajustement">démonstration du module 04</a>. Utilisez les périodes fixées dans le guide, sans réajuster sur la validation.</p>
+<p>Les exemples ci-dessous portent sur les ventes selon l’achalandage, comme au module 04. Ils servent à retrouver une commande après une tentative. Pour votre rapport sur les livraisons, remplacez les variables et les unités, puis utilisez les périodes du guide. Pour la séparation et la RMSE de validation, consultez aussi la <a href="../../modules/semaine-04-regression-nonlineaire/demonstrations.html#comparer-lajustement">démonstration du module 04</a>.</p>
 </div>
 </div>
 <section id="utiliser-cette-aide" class="level2">
 <h2 class="anchored" data-anchor-id="utiliser-cette-aide">Utiliser cette aide</h2>
-<p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> reste votre fil principal. Ouvrez seulement la rubrique qui répond à votre difficulté. Les exemples reprennent le jeu de saturation du module 4; adaptez les variables et les objets à votre propre analyse des succursales.</p>
+<p>Suivez la <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> et ouvrez la rubrique qui répond à votre difficulté. Adaptez les variables et les objets à votre analyse des livraisons.</p>
 <p>Les blocs ci-dessous s’exécutent dans l’ordre pour reproduire cet exemple. Pour l’utiliser dans un projet indépendant, placez le <a href="../semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv">CSV du module 4</a> dans <code>data/</code> et le <code>.qmd</code> à la racine.</p>
-<p>Le <a href="../../assets/exemples/laboratoire-02.zip">dossier de départ</a> contient le script complet <code>aide-regression.R</code> et ce CSV pour refaire cet exemple sans réseau. Les modèles y sont ajustés sur toutes les lignes, comme dans cette aide; la validation temporelle du module 4 est une autre étape.</p>
+<p>Le <a href="../../assets/exemples/laboratoire-02.zip">dossier étudiant</a> contient le script complet <code>aide-regression.R</code> et ce CSV pour refaire l’exemple sans réseau. Ici, les modèles sont ajustés sur toutes les lignes du CSV de saturation. Dans votre mission, ajustez-les uniquement sur les 72 livraisons d’apprentissage; gardez les 24 autres pour la validation.</p>
 </section>
 <section id="ajouter-un-bloc-dans-le-rapport" class="level2">
 <h2 class="anchored" data-anchor-id="ajouter-un-bloc-dans-le-rapport">Ajouter un bloc dans le rapport</h2>
@@ -7197,12 +7197,12 @@ display: none;
 <pre><code>[1] 2501.099</code></pre>
 </div>
 </div>
-<p>Pour essayer l’autre famille à la place de la quadratique :</p>
+<p>Pour retrouver la syntaxe d’un modèle logarithmique, dans le prolongement facultatif :</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(saturation<span class="sc">$</span>achalandage_milliers <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>modele_variante <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> <span class="fu">log</span>(achalandage_milliers), <span class="at">data =</span> saturation)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Choisissez la forme pour une raison explicite. Les deux coefficients de la droite s’interprètent ensemble; ceux de la quadratique ne définissent pas une pente constante.</p>
+<p>Dans le parcours essentiel, gardez la droite et le modèle quadratique prévus par le guide. Le logarithme reste facultatif. Les coefficients du modèle quadratique ne définissent pas une pente constante.</p>
 </div>
 </div>
 </div>
@@ -7343,16 +7343,17 @@ display: none;
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ici la variante illustre le geste; utilisez le modèle que vous avez retenu.</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>diagnostic <span class="ot">&lt;-</span> saturation <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">valeur_ajustee =</span> <span class="fu">fitted</span>(modele_variante),</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">residu =</span> <span class="fu">residuals</span>(modele_variante))</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostic, <span class="fu">aes</span>(valeur_ajustee, residu, <span class="at">colour =</span> succursale)) <span class="sc">+</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Ventes ajustées ($)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Résidu ($)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Succursale&quot;</span>) <span class="sc">+</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cet exemple montre les résidus d&#39;un modèle.</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dans la mission, présentez les résidus de la droite et du modèle quadratique.</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>diagnostic <span class="ot">&lt;-</span> saturation <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">valeur_ajustee =</span> <span class="fu">fitted</span>(modele_variante),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">residu =</span> <span class="fu">residuals</span>(modele_variante))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostic, <span class="fu">aes</span>(valeur_ajustee, residu, <span class="at">colour =</span> succursale)) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Ventes ajustées ($)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Résidu ($)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Succursale&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

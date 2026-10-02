@@ -7023,7 +7023,7 @@ display: none;
   <ul class="collapse">
   <li><a href="#sensibilité-à-une-livraison-avec-incident" id="toc-sensibilité-à-une-livraison-avec-incident" class="nav-link" data-scroll-target="#sensibilité-à-une-livraison-avec-incident">1. Sensibilité à une livraison avec incident</a></li>
   <li><a href="#une-troisième-forme-et-le-choix-après-validation" id="toc-une-troisième-forme-et-le-choix-après-validation" class="nav-link" data-scroll-target="#une-troisième-forme-et-le-choix-après-validation">2. Une troisième forme et le choix après validation</a></li>
-  <li><a href="#le-classement-global-résiste-t-il-aux-centres" id="toc-le-classement-global-résiste-t-il-aux-centres" class="nav-link" data-scroll-target="#le-classement-global-résiste-t-il-aux-centres">3. Le classement global résiste-t-il aux centres?</a></li>
+  <li><a href="#le-classement-est-il-le-même-dans-chaque-centre" id="toc-le-classement-est-il-le-même-dans-chaque-centre" class="nav-link" data-scroll-target="#le-classement-est-il-le-même-dans-chaque-centre">3. Le classement est-il le même dans chaque centre?</a></li>
   <li><a href="#transfert-à-une-question-de-service" id="toc-transfert-à-une-question-de-service" class="nav-link" data-scroll-target="#transfert-à-une-question-de-service">4. Transfert à une question de service</a></li>
   </ul></li>
   </ul>
@@ -7053,12 +7053,12 @@ display: none;
 
 <section id="parcours-essentiel" class="level2">
 <h2 class="anchored" data-anchor-id="parcours-essentiel">Parcours essentiel</h2>
-<p>Suivez une seule analyse dans le <a href="../../modules/atelier-02-regression/guide-atelier.html">guide</a> :</p>
+<p>Les étapes du <a href="../../modules/atelier-02-regression/guide-atelier.html">guide</a> constituent l’exercice principal :</p>
 <ol type="1">
 <li>comprendre les livraisons et séparer les périodes;</li>
-<li>ajuster la droite et la quadratique, interpréter et prendre position;</li>
+<li>ajuster la droite et le modèle quadratique, les interpréter et faire un choix provisoire;</li>
 <li>comparer les erreurs sur les livraisons suivantes;</li>
-<li>diagnostiquer, traiter l’incident et auditer trois affirmations;</li>
+<li>examiner les résidus, expliquer l’incident et évaluer les trois affirmations;</li>
 <li>relire et recalculer;</li>
 <li>faire la <a href="../../modules/atelier-02-regression/consolidation.html">consolidation</a>.</li>
 </ol>
@@ -7066,13 +7066,13 @@ display: none;
 </section>
 <section id="prolongements-facultatifs" class="level2">
 <h2 class="anchored" data-anchor-id="prolongements-facultatifs">Prolongements facultatifs</h2>
-<p>Jeu principal pour les trois prolongements ci-dessous : <a href="data/livraisons_regionales_quebec.csv">livraisons_regionales_quebec.csv</a>, avec son <a href="data/dictionnaire-livraisons.md">dictionnaire</a>.</p>
-<p>Le transfert porte ici sur une nouvelle question du même contexte. Choisissez une seule piste après le parcours essentiel.</p>
+<p>Les prolongements 1 à 3 utilisent les données de la mission : <a href="data/livraisons_regionales_quebec.csv">livraisons_regionales_quebec.csv</a>, avec son <a href="data/dictionnaire-livraisons.md">dictionnaire</a>.</p>
+<p>Le prolongement 4 utilise un autre fichier et porte sur les délais de service dans des succursales. Choisissez une seule piste, après avoir terminé le parcours essentiel.</p>
 <section id="sensibilité-à-une-livraison-avec-incident" class="level3">
 <h3 class="anchored" data-anchor-id="sensibilité-à-une-livraison-avec-incident">1. Sensibilité à une livraison avec incident</h3>
 <p>Le parcours essentiel conserve L072. Pour étudier la question différente des livraisons sans panne confirmée, refaites les deux ajustements sur les 71 autres observations d’apprentissage. Gardez les mêmes 24 observations de validation et les mêmes formules.</p>
-<p>Comparez les erreurs et les prévisions à 25 et 95 km avant et après. Décrivez ce qui change et ce que cette comparaison ne démontre pas. Conservez aussi les résultats complets; ne supprimez pas L072 du rapport initial.</p>
-<p>Trace attendue : petit tableau de sensibilité et trois phrases sur la population visée, la stabilité et la limite.</p>
+<p>Comparez les RMSE d’apprentissage et de validation, ainsi que les prévisions à 25 et à 95 km, avec et sans L072 dans l’apprentissage. Décrivez ce qui change et les limites de cette comparaison. Gardez les résultats du parcours essentiel dans le rapport.</p>
+<p>À ajouter au rapport : un petit tableau comparatif et trois phrases qui précisent les livraisons visées, ce qui change dans les résultats et une limite de l’analyse.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Indice : une autre question">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7093,8 +7093,9 @@ display: none;
 <section id="une-troisième-forme-et-le-choix-après-validation" class="level3">
 <h3 class="anchored" data-anchor-id="une-troisième-forme-et-le-choix-après-validation">2. Une troisième forme et le choix après validation</h3>
 <p>Le logarithme est déjà enseigné, mais essayer une troisième forme après avoir vu les deux erreurs change la procédure de sélection.</p>
-<p>Proposez d’abord, par écrit, une justification du logarithme de la distance et une nouvelle période qui pourrait évaluer ce choix. Vous pouvez ensuite l’ajuster sur l’apprentissage initial et calculer les prédictions sur la validation actuelle, en présentant ce résultat comme une exploration supplémentaire, pas comme une confirmation indépendante.</p>
-<p>Trace attendue : protocole annoncé, calcul exploratoire et limite de sélection.</p>
+<p>Expliquez d’abord pourquoi vous voulez essayer le logarithme de la distance. Indiquez aussi quelle nouvelle période de livraisons vous souhaiteriez recueillir pour vérifier ce choix. Ces données supplémentaires ne sont pas fournies : il s’agit de proposer une collecte future.</p>
+<p>Vous pouvez ensuite ajuster le modèle logarithmique sur l’apprentissage initial et calculer sa RMSE sur la validation actuelle. Présentez ce résultat comme une exploration : cette même période a déjà servi à comparer les deux premiers modèles.</p>
+<p>À ajouter au rapport : votre justification, la RMSE obtenue et une phrase expliquant pourquoi il faudrait de nouvelles données pour confirmer ce choix.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Indice : transformation">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7112,10 +7113,10 @@ display: none;
 </div>
 </div>
 </section>
-<section id="le-classement-global-résiste-t-il-aux-centres" class="level3">
-<h3 class="anchored" data-anchor-id="le-classement-global-résiste-t-il-aux-centres">3. Le classement global résiste-t-il aux centres?</h3>
-<p>Avec les deux modèles essentiels inchangés, calculez les RMSE de validation par centre. Donnez les effectifs et comparez le classement local au classement global. Ne réajustez pas un modèle par centre.</p>
-<p>Trace attendue : tableau par centre et phrase expliquant pourquoi six observations par centre donnent une comparaison limitée.</p>
+<section id="le-classement-est-il-le-même-dans-chaque-centre" class="level3">
+<h3 class="anchored" data-anchor-id="le-classement-est-il-le-même-dans-chaque-centre">3. Le classement est-il le même dans chaque centre?</h3>
+<p>Gardez les deux modèles du parcours essentiel. Calculez leurs RMSE de validation séparément pour chaque centre. Indiquez les effectifs et comparez le classement dans chaque centre à celui obtenu pour l’ensemble des livraisons. Ne réajustez pas un modèle par centre.</p>
+<p>À ajouter au rapport : un tableau par centre et une phrase expliquant pourquoi six observations par centre limitent la comparaison.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Indice : erreurs locales">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7128,7 +7129,7 @@ display: none;
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Créez les deux colonnes de prédictions avec <code>predict()</code>, puis utilisez <code>group_by(centre)</code> et <code>summarise()</code>. Les petits groupes et le contexte ne permettent pas de conclure qu’un centre est causalement responsable des écarts.</p>
+<p>Créez les deux colonnes de prédictions avec <code>predict()</code>, puis utilisez <code>group_by(centre)</code> et <code>summarise()</code>. Une différence d’erreur entre centres ne suffit pas à expliquer sa cause ni à juger leur efficacité.</p>
 </div>
 </div>
 </div>
@@ -7136,9 +7137,11 @@ display: none;
 <section id="transfert-à-une-question-de-service" class="level3">
 <h3 class="anchored" data-anchor-id="transfert-à-une-question-de-service">4. Transfert à une question de service</h3>
 <p>Jeu de données de transfert : <a href="data/performance_succursales_quebec.csv">performance_succursales_quebec.csv</a>.</p>
+<p>Téléchargez ce CSV et placez-le dans le dossier <code>data/</code> de votre projet pour ce prolongement.</p>
 <p>Ce jeu complémentaire est conservé dans le cours, mais il n’est plus celui de la mission. Posez une question différente des ventes des capsules : le délai de service en minutes selon l’achalandage en milliers de visites. Une ligne est un mois d’une succursale.</p>
-<p>Fixez janvier à septembre pour l’apprentissage et octobre à décembre pour la validation. Comparez droite et quadratique sur les mêmes lignes; calculez les deux RMSE en minutes. N’imposez pas le classement obtenu sur les livraisons. Interprétez la pente pour 100 visites, la différence de deux prédictions de la courbe et une limite des mois répétés.</p>
-<p>Trace attendue : un petit tableau, une différence en contexte et trois phrases de conclusion. Si vous choisissez cette piste, elle remplace les autres prolongements.</p>
+<p>Utilisez les mois de janvier à septembre pour l’apprentissage et ceux d’octobre à décembre pour la validation. Comparez une droite et un modèle quadratique sur les mêmes observations. Pour chacun, calculez une RMSE d’apprentissage et une RMSE de validation, en minutes. Le classement peut différer de celui obtenu sur les livraisons.</p>
+<p>Interprétez la pente de la droite pour 100 visites supplémentaires. Choisissez deux niveaux d’achalandage dans la plage d’apprentissage, indiquez-les et calculez la différence entre les deux délais prédits par le modèle quadratique. Expliquez aussi pourquoi les mois répétés d’une même succursale limitent l’interprétation.</p>
+<p>À ajouter au rapport : un tableau comparatif, la différence calculée avec ses unités et trois phrases de conclusion. Si vous choisissez cette piste, elle remplace les autres prolongements.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Indice : transférer la question">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7151,7 +7154,7 @@ display: none;
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>La réponse est <code>delai_service_minutes</code>, pas <code>ventes</code>. Mettez l’achalandage à l’échelle avant d’ajuster. La validation concerne les mêmes succursales à des mois ultérieurs, pas de nouvelles succursales. Vos comparaisons restent descriptives.</p>
+<p>La réponse est <code>delai_service_minutes</code>. Créez <code>achalandage_milliers = achalandage / 1000</code> avant d’ajuster les modèles; 100 visites correspondent alors à 0,1 unité. La validation concerne des mois ultérieurs des mêmes succursales. Vos comparaisons restent descriptives.</p>
 </div>
 </div>
 </div>

@@ -2,12 +2,12 @@
 
 ## Parcours essentiel
 
-Suivez une seule analyse dans le [guide](../../modules/atelier-02-regression/guide-atelier.llms.md) :
+Les étapes du [guide](../../modules/atelier-02-regression/guide-atelier.llms.md) constituent l’exercice principal :
 
 1.  comprendre les livraisons et séparer les périodes;
-2.  ajuster la droite et la quadratique, interpréter et prendre position;
+2.  ajuster la droite et le modèle quadratique, les interpréter et faire un choix provisoire;
 3.  comparer les erreurs sur les livraisons suivantes;
-4.  diagnostiquer, traiter l’incident et auditer trois affirmations;
+4.  examiner les résidus, expliquer l’incident et évaluer les trois affirmations;
 5.  relire et recalculer;
 6.  faire la [consolidation](../../modules/atelier-02-regression/consolidation.llms.md).
 
@@ -15,17 +15,17 @@ Les indices aident après une tentative. Les corrections détaillées restent r�
 
 ## Prolongements facultatifs
 
-Jeu principal pour les trois prolongements ci-dessous : [livraisons_regionales_quebec.csv](data/livraisons_regionales_quebec.csv), avec son [dictionnaire](data/dictionnaire-livraisons.md).
+Les prolongements 1 à 3 utilisent les données de la mission : [livraisons_regionales_quebec.csv](data/livraisons_regionales_quebec.csv), avec son [dictionnaire](data/dictionnaire-livraisons.md).
 
-Le transfert porte ici sur une nouvelle question du même contexte. Choisissez une seule piste après le parcours essentiel.
+Le prolongement 4 utilise un autre fichier et porte sur les délais de service dans des succursales. Choisissez une seule piste, après avoir terminé le parcours essentiel.
 
 ### 1. Sensibilité à une livraison avec incident
 
 Le parcours essentiel conserve L072. Pour étudier la question différente des livraisons sans panne confirmée, refaites les deux ajustements sur les 71 autres observations d’apprentissage. Gardez les mêmes 24 observations de validation et les mêmes formules.
 
-Comparez les erreurs et les prévisions à 25 et 95 km avant et après. Décrivez ce qui change et ce que cette comparaison ne démontre pas. Conservez aussi les résultats complets; ne supprimez pas L072 du rapport initial.
+Comparez les RMSE d’apprentissage et de validation, ainsi que les prévisions à 25 et à 95 km, avec et sans L072 dans l’apprentissage. Décrivez ce qui change et les limites de cette comparaison. Gardez les résultats du parcours essentiel dans le rapport.
 
-Trace attendue : petit tableau de sensibilité et trois phrases sur la population visée, la stabilité et la limite.
+À ajouter au rapport : un petit tableau comparatif et trois phrases qui précisent les livraisons visées, ce qui change dans les résultats et une limite de l’analyse.
 
 > **TIP:**
 >
@@ -35,34 +35,40 @@ Trace attendue : petit tableau de sensibilité et trois phrases sur la populatio
 
 Le logarithme est déjà enseigné, mais essayer une troisième forme après avoir vu les deux erreurs change la procédure de sélection.
 
-Proposez d’abord, par écrit, une justification du logarithme de la distance et une nouvelle période qui pourrait évaluer ce choix. Vous pouvez ensuite l’ajuster sur l’apprentissage initial et calculer les prédictions sur la validation actuelle, en présentant ce résultat comme une exploration supplémentaire, pas comme une confirmation indépendante.
+Expliquez d’abord pourquoi vous voulez essayer le logarithme de la distance. Indiquez aussi quelle nouvelle période de livraisons vous souhaiteriez recueillir pour vérifier ce choix. Ces données supplémentaires ne sont pas fournies : il s’agit de proposer une collecte future.
 
-Trace attendue : protocole annoncé, calcul exploratoire et limite de sélection.
+Vous pouvez ensuite ajuster le modèle logarithmique sur l’apprentissage initial et calculer sa RMSE sur la validation actuelle. Présentez ce résultat comme une exploration : cette même période a déjà servi à comparer les deux premiers modèles.
+
+À ajouter au rapport : votre justification, la RMSE obtenue et une phrase expliquant pourquoi il faudrait de nouvelles données pour confirmer ce choix.
 
 > **TIP:**
 >
 > Vérifiez les distances strictement positives. Seule l’explicative est transformée; la réponse et les erreurs restent en minutes.
 
-### 3. Le classement global résiste-t-il aux centres?
+### 3. Le classement est-il le même dans chaque centre?
 
-Avec les deux modèles essentiels inchangés, calculez les RMSE de validation par centre. Donnez les effectifs et comparez le classement local au classement global. Ne réajustez pas un modèle par centre.
+Gardez les deux modèles du parcours essentiel. Calculez leurs RMSE de validation séparément pour chaque centre. Indiquez les effectifs et comparez le classement dans chaque centre à celui obtenu pour l’ensemble des livraisons. Ne réajustez pas un modèle par centre.
 
-Trace attendue : tableau par centre et phrase expliquant pourquoi six observations par centre donnent une comparaison limitée.
+À ajouter au rapport : un tableau par centre et une phrase expliquant pourquoi six observations par centre limitent la comparaison.
 
 > **TIP:**
 >
-> Créez les deux colonnes de prédictions avec `predict()`, puis utilisez `group_by(centre)` et `summarise()`. Les petits groupes et le contexte ne permettent pas de conclure qu’un centre est causalement responsable des écarts.
+> Créez les deux colonnes de prédictions avec `predict()`, puis utilisez `group_by(centre)` et `summarise()`. Une différence d’erreur entre centres ne suffit pas à expliquer sa cause ni à juger leur efficacité.
 
 ### 4. Transfert à une question de service
 
 Jeu de données de transfert : [performance_succursales_quebec.csv](data/performance_succursales_quebec.csv).
 
+Téléchargez ce CSV et placez-le dans le dossier `data/` de votre projet pour ce prolongement.
+
 Ce jeu complémentaire est conservé dans le cours, mais il n’est plus celui de la mission. Posez une question différente des ventes des capsules : le délai de service en minutes selon l’achalandage en milliers de visites. Une ligne est un mois d’une succursale.
 
-Fixez janvier à septembre pour l’apprentissage et octobre à décembre pour la validation. Comparez droite et quadratique sur les mêmes lignes; calculez les deux RMSE en minutes. N’imposez pas le classement obtenu sur les livraisons. Interprétez la pente pour 100 visites, la différence de deux prédictions de la courbe et une limite des mois répétés.
+Utilisez les mois de janvier à septembre pour l’apprentissage et ceux d’octobre à décembre pour la validation. Comparez une droite et un modèle quadratique sur les mêmes observations. Pour chacun, calculez une RMSE d’apprentissage et une RMSE de validation, en minutes. Le classement peut différer de celui obtenu sur les livraisons.
 
-Trace attendue : un petit tableau, une différence en contexte et trois phrases de conclusion. Si vous choisissez cette piste, elle remplace les autres prolongements.
+Interprétez la pente de la droite pour 100 visites supplémentaires. Choisissez deux niveaux d’achalandage dans la plage d’apprentissage, indiquez-les et calculez la différence entre les deux délais prédits par le modèle quadratique. Expliquez aussi pourquoi les mois répétés d’une même succursale limitent l’interprétation.
+
+À ajouter au rapport : un tableau comparatif, la différence calculée avec ses unités et trois phrases de conclusion. Si vous choisissez cette piste, elle remplace les autres prolongements.
 
 > **TIP:**
 >
-> La réponse est `delai_service_minutes`, pas `ventes`. Mettez l’achalandage à l’échelle avant d’ajuster. La validation concerne les mêmes succursales à des mois ultérieurs, pas de nouvelles succursales. Vos comparaisons restent descriptives.
+> La réponse est `delai_service_minutes`. Créez `achalandage_milliers = achalandage / 1000` avant d’ajuster les modèles; 100 visites correspondent alors à 0,1 unité. La validation concerne des mois ultérieurs des mêmes succursales. Vos comparaisons restent descriptives.

@@ -18,7 +18,7 @@ execute:
 
 Source : données entièrement simulées pour MQT-2101, `livraisons_regionales_quebec.csv`. Lisez `data/dictionnaire-livraisons.md`.
 
-À compléter : question, unité d'observation, unités, qualité du fichier et point repris du laboratoire 01.
+Présentez votre question, l'unité d'observation et les unités des variables. Ajoutez les vérifications du fichier et un point de rétroaction repris du laboratoire 01.
 
 ```{r}
 #| label: importation
@@ -31,14 +31,15 @@ livraisons <- read_csv("data/livraisons_regionales_quebec.csv",
 
 ```{r}
 #| label: controles-et-separation
-# Contrôlez les données puis fixez les deux périodes avant d'explorer la réponse.
+# Vérifiez le fichier, puis créez les tableaux apprentissage et validation.
 # Dates avant le 1er octobre 2025 : apprentissage; autres dates : validation.
-# Les deux modèles gardent toutes les observations de chaque période.
+# Jusqu'à l'étape 3, analysez les durées du tableau apprentissage uniquement.
+# Gardez toutes les observations de chaque période pour les deux modèles.
 ```
 
 ## 2. Apprentissage et position provisoire
 
-À construire : nuage, droite commune, quadratique commune, interprétation de la droite et variations de la quadratique pour 20 à 25 km et 50 à 55 km.
+Tracez le nuage de points et les deux ajustements, communs à tous les centres. Interprétez la droite et calculez les hausses de durée prédites par le modèle quadratique de 20 à 25 km, puis de 50 à 55 km.
 
 ```{r}
 #| label: apprentissage
@@ -50,26 +51,26 @@ Avant d'examiner la validation, écrivez votre position et ce qui pourrait la mo
 
 ## 3. Validation et diagnostic
 
-À construire : effectifs, R² ajusté d'apprentissage, RMSE d'apprentissage et RMSE de validation, en minutes. Gardez les modèles déjà ajustés. Comparez classements et plages de distance.
+Construisez le tableau comparatif : effectifs, R² ajusté d'apprentissage, RMSE d'apprentissage et RMSE de validation, en minutes. Gardez les modèles déjà ajustés. Comparez les classements et les plages de distance.
 
-Ajoutez les résidus des deux modèles et repérez la livraison L072. La panne est confirmée; conservez cette observation dans le parcours essentiel.
+Présentez les résidus des deux modèles en deux panneaux ou deux graphiques et repérez L072. La panne est confirmée; conservez cette observation dans le parcours essentiel. Expliquez ce qu'elle implique pour les prévisions.
 
 ## 4. Audit et recommandation
 
-Jugez les trois affirmations du guide avec vos résultats. Comparez les prévisions à 25 et 95 km et leur domaine d'utilisation. Défendez votre choix avec deux résultats chiffrés, une réserve et une prochaine vérification.
+Répondez aux trois affirmations du guide en vous appuyant sur vos résultats. Calculez les prédictions des deux modèles à 25 et à 95 km, puis comparez ces distances à la plage d'apprentissage. Justifiez votre choix avec deux résultats chiffrés, une limite et une vérification à faire ensuite.
 
 ## 5. Bilan formatif
 
-Point repris du laboratoire 01, position avant validation et révision éventuelle, rétroaction reçue, correction appliquée ou choix conservé, aide utilisée et vérifiée.
+Expliquez le point repris du laboratoire 01, l'évolution éventuelle de votre choix, la rétroaction reçue et la correction apportée. Si vous conservez votre réponse, justifiez-la. Indiquez l'aide utilisée et comment vous en avez vérifié le résultat.
 
 ### Avant de terminer
 
-- [ ] Les périodes sont fixées et leurs identifiants sont disjoints.
-- [ ] Les deux modèles utilisent le même apprentissage; les deux erreurs futures utilisent la même validation.
+- [ ] Les deux périodes sont définies et ne partagent aucun identifiant.
+- [ ] Les deux modèles sont ajustés sur les mêmes observations d'apprentissage et comparés sur les mêmes observations de validation.
 - [ ] Les unités, coefficients et variations sont expliqués.
 - [ ] J'ai conservé ma position avant validation et expliqué mon jugement final.
 - [ ] Les résidus, L072 et les trois affirmations sont traités.
-- [ ] J'ai distingué les prévisions à 25 et 95 km et la portée de la validation.
+- [ ] J'ai calculé les quatre prédictions à 25 et à 95 km, puis expliqué leurs limites d'utilisation.
 - [ ] Après redémarrage de R, Render fonctionne sans préparation dans la Console.
 
 Visez 500 à 700 mots hors code et tableaux. Le laboratoire reste formatif. La validation exigée ici ne modifie pas la grille du mini-rapport 1 : jeu extérieur approuvé, livrables et rédaction propres à votre équipe.

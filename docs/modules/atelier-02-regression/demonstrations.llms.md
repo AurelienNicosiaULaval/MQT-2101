@@ -1,18 +1,18 @@
 # Aide R - Laboratoire 02
 
-Retrouver un geste après une première tentative
+Retrouver une commande après une première tentative
 
 > **NOTE:**
 >
-> La mission porte sur les livraisons, leur distance et leur durée en minutes. Les exemples ci-dessous gardent l’ancien contexte de saturation pour une aide de syntaxe après une tentative. Ils ne fournissent pas les résultats de la mission. Pour la séparation et la RMSE de validation, consultez aussi la [démonstration du module 04](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md#comparer-lajustement). Utilisez les périodes fixées dans le guide, sans réajuster sur la validation.
+> Les exemples ci-dessous portent sur les ventes selon l’achalandage, comme au module 04. Ils servent à retrouver une commande après une tentative. Pour votre rapport sur les livraisons, remplacez les variables et les unités, puis utilisez les périodes du guide. Pour la séparation et la RMSE de validation, consultez aussi la [démonstration du module 04](../../modules/semaine-04-regression-nonlineaire/demonstrations.llms.md#comparer-lajustement).
 
 ## Utiliser cette aide
 
-La [mission](../../modules/atelier-02-regression/guide-atelier.llms.md) reste votre fil principal. Ouvrez seulement la rubrique qui répond à votre difficulté. Les exemples reprennent le jeu de saturation du module 4; adaptez les variables et les objets à votre propre analyse des succursales.
+Suivez la [mission](../../modules/atelier-02-regression/guide-atelier.llms.md) et ouvrez la rubrique qui répond à votre difficulté. Adaptez les variables et les objets à votre analyse des livraisons.
 
 Les blocs ci-dessous s’exécutent dans l’ordre pour reproduire cet exemple. Pour l’utiliser dans un projet indépendant, placez le [CSV du module 4](../semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv) dans `data/` et le `.qmd` à la racine.
 
-Le [dossier de départ](../../assets/exemples/laboratoire-02.zip) contient le script complet `aide-regression.R` et ce CSV pour refaire cet exemple sans réseau. Les modèles y sont ajustés sur toutes les lignes, comme dans cette aide; la validation temporelle du module 4 est une autre étape.
+Le [dossier étudiant](../../assets/exemples/laboratoire-02.zip) contient le script complet `aide-regression.R` et ce CSV pour refaire l’exemple sans réseau. Ici, les modèles sont ajustés sur toutes les lignes du CSV de saturation. Dans votre mission, ajustez-les uniquement sur les 72 livraisons d’apprentissage; gardez les 24 autres pour la validation.
 
 ## Ajouter un bloc dans le rapport
 
@@ -93,14 +93,14 @@ Dans RStudio, le bouton d’insertion de bloc permet d’ajouter du code R à un
 >
 >     [1] 2501.099
 >
-> Pour essayer l’autre famille à la place de la quadratique :
+> Pour retrouver la syntaxe d’un modèle logarithmique, dans le prolongement facultatif :
 >
 > ``` r
 > stopifnot(all(saturation$achalandage_milliers > 0))
 > modele_variante <- lm(ventes ~ log(achalandage_milliers), data = saturation)
 > ```
 >
-> Choisissez la forme pour une raison explicite. Les deux coefficients de la droite s’interprètent ensemble; ceux de la quadratique ne définissent pas une pente constante.
+> Dans le parcours essentiel, gardez la droite et le modèle quadratique prévus par le guide. Le logarithme reste facultatif. Les coefficients du modèle quadratique ne définissent pas une pente constante.
 
 ## Comparer des ajustements
 
@@ -180,7 +180,8 @@ Dans RStudio, le bouton d’insertion de bloc permet d’ajouter du code R à un
 > **TIP:**
 >
 > ``` r
-> # Ici la variante illustre le geste; utilisez le modèle que vous avez retenu.
+> # Cet exemple montre les résidus d'un modèle.
+> # Dans la mission, présentez les résidus de la droite et du modèle quadratique.
 > diagnostic <- saturation |>
 >   mutate(valeur_ajustee = fitted(modele_variante),
 >          residu = residuals(modele_variante))

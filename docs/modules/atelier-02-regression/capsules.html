@@ -7048,7 +7048,7 @@ display: none;
 
 <section id="transférer-les-acquis" class="level2">
 <h2 class="anchored" data-anchor-id="transférer-les-acquis">Transférer les acquis</h2>
-<p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> utilise de nouvelles livraisons simulées. La syntaxe reste celle des modules 03 et 04; il faut adapter les unités, la question et le jugement.</p>
+<p>La <a href="../../modules/atelier-02-regression/guide-atelier.html">mission</a> utilise les commandes des modules 03 et 04 dans un nouveau contexte de livraisons simulées. Ces repères vous aident à vérifier les unités et les interprétations de votre rapport.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -7066,16 +7066,16 @@ display: none;
 <td>Une livraison, avec un identifiant unique</td>
 </tr>
 <tr class="even">
-<td>Réponse et explicative</td>
-<td>Durée en minutes, distance en kilomètres</td>
+<td>Variables</td>
+<td>Réponse : durée en minutes. Explicative : distance en kilomètres.</td>
 </tr>
 <tr class="odd">
 <td>Droite</td>
 <td>La pente est en minutes par kilomètre; multipliez par la hausse étudiée</td>
 </tr>
 <tr class="even">
-<td>Intercept</td>
-<td>Durée moyenne estimée à zéro km; vérifiez la plage</td>
+<td>Ordonnée à l’origine (intercept)</td>
+<td>Durée moyenne estimée à zéro km; vérifiez si cette distance est dans la plage d’apprentissage</td>
 </tr>
 <tr class="odd">
 <td>Quadratique</td>
@@ -7087,27 +7087,27 @@ display: none;
 </tr>
 <tr class="odd">
 <td>R² ajusté</td>
-<td>Mesure d’apprentissage, même quand il pénalise la complexité</td>
+<td>Mesure d’ajustement sur l’apprentissage, qui tient compte du nombre de paramètres</td>
 </tr>
 <tr class="even">
-<td>RMSE validation</td>
-<td>Comparer observation et prédiction de livraisons non utilisées pour ajuster</td>
+<td>RMSE de validation</td>
+<td>Taille des erreurs de prévision sur les livraisons qui n’ont pas servi à ajuster le modèle</td>
 </tr>
 <tr class="odd">
 <td>Incident</td>
-<td>Vérifier le contexte; atypique ne signifie pas erreur</td>
+<td>Vérifier le contexte avant de considérer une observation comme une erreur</td>
 </tr>
 <tr class="even">
 <td>Extrapolation</td>
-<td>Situer la distance dans la plage d’apprentissage</td>
+<td>Prévision pour une distance hors de la plage d’apprentissage</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="ajustement-sélection-et-portée" class="level2">
 <h2 class="anchored" data-anchor-id="ajustement-sélection-et-portée">Ajustement, sélection et portée</h2>
-<p>Les dates sont fixées avant l’analyse. La validation sert à comparer les formes déjà fixées. Puisqu’elle guide le choix, elle ne constitue pas un test final indépendant. Les centres sont les mêmes dans les deux périodes.</p>
-<p>Un point situé dans la plage ne garantit pas un contexte comparable. Un modèle peut décrire les observations sans estimer l’effet causal d’une modification du trajet. Une réduction d’erreur de prédiction ne mesure pas directement un gain opérationnel.</p>
+<p>Définissez les deux périodes avant l’analyse. Ajustez les deux modèles sur l’apprentissage, puis comparez leurs prévisions sur la validation. Puisque cette comparaison guide votre choix, la validation ne constitue pas un test final indépendant du modèle retenu. Les centres sont les mêmes dans les deux périodes.</p>
+<p>Une distance dans la plage d’apprentissage ne suffit pas à garantir qu’une livraison est comparable : son contexte et les incidents éventuels comptent aussi. Le modèle décrit une association entre distance et durée. Il ne permet pas de garantir le temps gagné en modifiant un trajet. De même, réduire l’erreur de prévision ne raccourcit pas les livraisons.</p>
 </section>
 <section id="retrouver-une-explication" class="level2">
 <h2 class="anchored" data-anchor-id="retrouver-une-explication">Retrouver une explication</h2>

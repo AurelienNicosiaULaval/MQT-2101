@@ -3,13 +3,20 @@
 Ce dossier contient les données publiques utilisées dans l'atelier sur la
 régression appliquée.
 
-## Fichier
+## Fichier du parcours essentiel
+
+- `livraisons_regionales_quebec.csv` : 96 livraisons entièrement simulées, avec distance en kilomètres et durée en minutes. Une ligne représente une livraison.
+- `dictionnaire-livraisons.md` : description des sept variables, des deux périodes et de la panne confirmée de L072.
+
+Utilisez les observations antérieures au 1er octobre 2025 pour l'apprentissage et les autres pour la validation, comme indiqué dans le guide.
+
+## Fichier du prolongement sur les délais de service
 
 - `performance_succursales_quebec.csv` : données simulées sur la performance
   mensuelle de succursales fictives au Québec. Chaque ligne représente une
   combinaison mois-succursale.
 
-## Variables principales
+### Variables du fichier de succursales
 
 - `mois` : mois de l'observation;
 - `mois_label` : nom du mois;

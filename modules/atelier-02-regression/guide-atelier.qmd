@@ -8,62 +8,66 @@ format:
 
 ## Votre mission
 
-Un service fictif de livraison régionale au Québec veut estimer la durée de ses prochaines livraisons à partir de leur distance. La direction propose une courbe parce qu'elle décrit mieux les observations utilisées pour l'ajuster. Votre rôle est d'auditer cette proposition avant de l'utiliser.
+Un service fictif de livraison régionale au Québec veut estimer la durée de ses prochaines livraisons à partir de leur distance. La direction propose un modèle quadratique parce qu'il décrit mieux les observations utilisées pour l'ajuster. Vous devez vérifier si ce choix convient aussi aux livraisons suivantes et expliquer dans quelles conditions le modèle peut être utilisé.
 
 > Quel modèle retenir pour des livraisons comparables, et quelles affirmations la direction peut-elle soutenir?
 
-Vous utilisez un nouveau jeu de données simulé, distinct des ventes et de l'achalandage des capsules. Une ligne est une livraison; la réponse est `duree_minutes`, en minutes, et l'explicative est `distance_km`, en kilomètres. Comparez une droite et une quadratique. Le logarithme et l'analyse de sensibilité sont des prolongements facultatifs.
+Vous travaillez sur des données entièrement simulées. Chaque ligne représente une livraison. La variable réponse est `duree_minutes`, en minutes; la variable explicative est `distance_km`, en kilomètres. Le parcours essentiel compare une droite et un modèle quadratique. Les autres analyses sont facultatives.
 
-Il ne suffit pas de reproduire les graphiques des capsules : vous devez prendre position avant de voir la validation, vérifier ensuite votre position et traiter trois affirmations de gestion. Vous pouvez retenir la droite.
+Après les premiers ajustements, indiquez le modèle que vous privilégiez. Vérifiez ensuite ses prévisions sur les livraisons suivantes et examinez les trois affirmations de la direction. Votre conclusion peut retenir la droite si vos résultats la favorisent.
 
 ## Objectifs et prérequis
 
 À la fin du parcours essentiel, vous devez pouvoir :
 
-1. vérifier les données et séparer les périodes avant d'examiner leurs résultats;
-2. interpréter une droite dans de nouvelles unités et une variation quadratique à deux niveaux;
+1. vérifier les données et définir les périodes d'apprentissage et de validation avant d'ajuster les modèles;
+2. interpréter la pente d'une droite et calculer la variation prédite par un modèle quadratique à deux distances de départ;
 3. calculer séparément les erreurs d'apprentissage et de validation;
-4. relier les résidus et un incident documenté à la portée de l'analyse;
-5. juger trois affirmations et défendre un choix reproductible.
+4. interpréter les résidus et expliquer ce qu'un incident documenté change dans l'analyse;
+5. évaluer trois affirmations et justifier un choix que votre rapport permet de vérifier.
 
-Reprenez le projet R, Quarto, les unités, la relecture et un point de rétroaction du laboratoire 01. Revoyez au [module 03](../semaine-03-regression-lineaire/index.qmd) `lm()`, `summary()`, `fitted()`, `residuals()` et `predict()`; au [module 04](../semaine-04-regression-nonlineaire/index.qmd), `I(x^2)`, la séparation temporelle et les deux RMSE. R, Quarto et `tidyverse` doivent fonctionner. Aucune méthode nouvelle n'est requise.
+Vous devez savoir ouvrir un projet RStudio, importer un CSV et produire le HTML d'un document Quarto, comme au laboratoire 01. Reprenez aussi un point de rétroaction reçu sur ce premier rapport.
 
-## Parcours essentiel et traces attendues
+Revoyez au [module 03](../semaine-03-regression-lineaire/index.qmd) `lm()`, `summary()`, `fitted()`, `residuals()` et `predict()`; au [module 04](../semaine-04-regression-nonlineaire/index.qmd), `I(x^2)`, la séparation par période et le calcul de la RMSE. R, Quarto et `tidyverse` doivent être installés et fonctionner.
 
-| Étape | Trace observable |
+## Parcours essentiel et résultats attendus
+
+| Étape | Ce que vous devez produire |
 |---|---|
-| 1. Données | Contrôles, unités et deux périodes séparées |
-| 2. Apprentissage | Nuage, deux modèles, coefficients et position provisoire |
-| 3. Validation | Tableau commun et révision argumentée de cette position |
-| 4. Audit | Résidus, incident documenté, trois affirmations et domaine d'utilisation |
+| 1. Données | Vérifications du fichier et deux tableaux : apprentissage et validation |
+| 2. Apprentissage | Nuage de points, deux modèles, interprétations et choix provisoire |
+| 3. Validation | Tableau comparatif des erreurs et explication de votre choix final |
+| 4. Audit | Graphique de résidus, analyse de l'incident et réponses aux trois affirmations |
 | 5. Relecture | Une amélioration précise et un HTML recalculé |
 | 6. Consolidation | Raisonnement individuel sans R |
-| 7. Mini-rapport 1 | Vérification du propre dossier évalué |
+| 7. Mini-rapport 1 | Vérification des fichiers de votre mini-rapport |
 
 La validation est essentielle dans ce laboratoire. Les prolongements sont facultatifs. La mission reste formative et ne crée pas une nouvelle remise évaluée.
 
 ## Fichiers nécessaires
 
-Décompressez le [dossier étudiant](../../assets/exemples/laboratoire-02.zip), puis ouvrez `laboratoire-02.Rproj` et `rapport-labo-02.qmd`. Le premier rendu fonctionne avec la seule importation fournie.
+Décompressez le [dossier étudiant](../../assets/exemples/laboratoire-02.zip), puis ouvrez `laboratoire-02.Rproj` et `rapport-labo-02.qmd` dans RStudio. Inscrivez vos noms et cliquez sur Render. Le gabarit importe les données; vous ajouterez ensuite l'analyse dans les sections à compléter. Gardez les fichiers dans le dossier décompressé pour que les chemins fonctionnent.
+
+Travaillez en binômes avec un rapport commun. Chaque personne doit pouvoir expliquer les résultats. Si vous travaillez seul, les mêmes productions sont attendues.
 
 | Fichier | Usage |
 |---|---|
 | `rapport-labo-02.qmd` | Début du rapport, analyse à construire |
 | `data/livraisons_regionales_quebec.csv` | Nouveau jeu de la mission |
 | `data/dictionnaire-livraisons.md` | Unités, période, incident et population visée |
-| `aide-regression.R` et son CSV de saturation | Rappel de syntaxe sur un autre exemple, après une tentative |
+| `aide-regression.R` et `data/achalandage_saturation_quebec.csv` | Exemple complet pour retrouver une commande après une tentative |
 | `LIRE-MOI.txt` | Ouverture et vérification du dossier |
 
 Le [CSV](data/livraisons_regionales_quebec.csv) et son [dictionnaire](data/dictionnaire-livraisons.md) sont aussi disponibles séparément. Les données sont entièrement simulées; elles ne décrivent aucune entreprise réelle.
 
-## 1. Comprendre les données et verrouiller la séparation
+## 1. Comprendre les données et définir les deux périodes
 
 1. Lisez le dictionnaire. Formulez la question et nommez l'unité d'observation.
 2. Vérifiez dimensions, dates, centres, valeurs manquantes, identifiants et unités.
 3. Formez `apprentissage` avec les dates strictement antérieures au 1er octobre 2025, et `validation` avec les dates à partir du 1er octobre.
-4. Vérifiez les effectifs et l'absence d'identifiants communs. Explorez la réponse uniquement dans l'apprentissage jusqu'à l'étape 3. Ne changez pas la séparation en fonction du résultat.
+4. Vérifiez les effectifs et l'absence d'identifiants communs. Jusqu'à l'étape 3, utilisez uniquement le tableau `apprentissage` pour tracer les durées, ajuster les modèles et calculer leurs erreurs. Les durées du tableau `validation` seront examinées ensuite. Gardez cette séparation pendant toute l'analyse.
 
-Repères de contrôle : 96 lignes et sept variables, quatre centres, huit livraisons par mois de janvier à décembre 2025, 72 observations d'apprentissage et 24 de validation. Le fichier n'a aucune valeur manquante ni identifiant répété. La livraison L072 contient une panne confirmée. Il ne s'agit pas d'une erreur de saisie; conservez-la dans le parcours essentiel.
+Vous devez obtenir 96 lignes et sept variables, quatre centres, huit livraisons par mois de janvier à décembre 2025, puis 72 observations d'apprentissage et 24 de validation. Le fichier ne contient aucune valeur manquante ni aucun identifiant répété. La livraison L072 a été retardée par une panne confirmée. Conservez cette observation dans le parcours essentiel.
 
 ::: {.callout-tip collapse="true" title="Indice : organiser les tableaux"}
 Convertissez `date` avec `as.Date()`, puis utilisez `filter()`. Les identifiants uniques permettent de contrôler la séparation avec `intersect()`. Vérifiez `range(distance_km)` dans les deux périodes, sans regarder encore les durées de validation. Les mêmes centres sont présents dans les deux périodes : vous évaluez des livraisons ultérieures de centres connus.
@@ -73,34 +77,37 @@ Avant de poursuivre : chaque personne doit pouvoir expliquer pourquoi une livrai
 
 ## 2. Ajuster, interpréter et prendre position
 
-Tracez la durée selon la distance dans l'apprentissage, en distinguant les centres par la couleur et L072 par un symbole ou une étiquette. Ajoutez une droite commune et une quadratique commune, uniquement dans la plage d'apprentissage. Ne tracez pas automatiquement un modèle différent par centre.
+Dans le tableau `apprentissage`, tracez la durée selon la distance. Distinguez les centres par la couleur et identifiez L072 par un symbole ou une étiquette. Ajoutez une droite et une courbe quadratique, toutes deux ajustées sur l'ensemble des 72 livraisons. Tracez les ajustements entre les distances minimale et maximale de l'apprentissage. Les couleurs servent à repérer les centres; les modèles sont communs à tous les centres.
 
 Ajustez les deux modèles sur les mêmes 72 livraisons et gardez la durée en minutes. Interprétez :
 
 - la pente de la droite pour cinq kilomètres supplémentaires;
-- son intercept, en tenant compte de la plage;
+- son ordonnée à l'origine, appelée aussi intercept, en tenant compte des distances observées;
 - son R² d'apprentissage;
-- la différence de prédictions de la quadratique de 20 à 25 km, puis de 50 à 55 km.
+- la différence entre les durées prédites par le modèle quadratique à 25 et à 20 km, puis à 55 et à 50 km. Soustrayez chaque fois la prédiction à la distance la plus courte de celle à la distance la plus longue.
 
-Comparez ces deux dernières différences. Une même hausse de distance peut-elle correspondre à la même variation prédite par une courbe? Expliquez avec vos résultats, sans lire le coefficient du terme simple comme une pente constante.
+Comparez les deux différences obtenues pour cinq kilomètres supplémentaires. La variation prédite est-elle la même aux deux distances de départ? Justifiez avec vos calculs. Dans le modèle quadratique, le coefficient de `distance_km` ne représente pas à lui seul une pente constante.
 
 ::: {.callout-tip collapse="true" title="Indice : modèles et courbes"}
 La droite s'écrit avec `duree_minutes ~ distance_km`. Pour la quadratique, ajoutez `I(distance_km^2)` en conservant le terme simple. Utilisez `predict()` pour les courbes et les quatre distances. Placez la couleur dans les points pour garder des ajustements communs.
 :::
 
-Avant d'ouvrir les durées de validation, écrivez deux phrases datées dans le rapport : le modèle provisoirement privilégié et la preuve qui pourrait vous faire changer d'avis. Un désaccord dans le binôme peut être consigné.
+Avant d'examiner les durées de validation, écrivez deux phrases dans le rapport : le modèle que vous privilégiez à ce stade et le résultat qui pourrait vous faire changer d'avis. Conservez ces phrases, même si votre choix change ensuite. Vous pouvez mentionner un désaccord au sein du binôme. Faites le point avec l'enseignant, puis changez de personne au clavier.
 
 ## 3. Confronter le choix aux livraisons suivantes
 
-Les formules et la séparation sont maintenant fixées. Calculez les deux RMSE sur les mêmes données d'apprentissage, puis sur les mêmes 24 observations de validation, sans réajuster les modèles.
+Gardez les deux modèles ajustés à l'étape 2. Pour chacun, calculez une RMSE sur les 72 observations d'apprentissage et une RMSE sur les 24 observations de validation. Vous obtenez donc quatre valeurs. Utilisez les mêmes observations pour les deux modèles dans chaque période, sans réajuster sur la validation.
+
+La RMSE est la racine de l'erreur quadratique moyenne. Elle mesure la taille des écarts entre les durées observées et prédites, ici en minutes. Présentez une ligne par modèle dans le tableau suivant.
 
 | Colonne du tableau attendu | Sens |
 |---|---|
 | Modèle | Droite ou quadratique |
-| n apprentissage et n validation | Effectifs réellement utilisés |
-| R² ajusté d'apprentissage | Description avec pénalisation du nombre de paramètres |
-| RMSE apprentissage (min) | Erreurs des observations qui ont servi à ajuster |
-| RMSE validation (min) | Erreurs des livraisons suivantes prédites par ces mêmes modèles |
+| n apprentissage | Nombre d'observations utilisées pour ajuster le modèle |
+| n validation | Nombre d'observations utilisées pour vérifier les prévisions |
+| R² ajusté d'apprentissage | Mesure d'ajustement qui tient compte du nombre de paramètres |
+| RMSE apprentissage (min) | Erreur calculée sur les livraisons utilisées pour ajuster le modèle |
+| RMSE validation (min) | Erreur calculée sur les livraisons suivantes, avec le modèle déjà ajusté |
 
 ::: {.callout-tip collapse="true" title="Indice : vérifier la validation"}
 La RMSE est `sqrt(mean((observe - predit)^2))`. Pour l'apprentissage, les résidus donnent ces écarts. Pour la validation, comparez `validation$duree_minutes` à `predict(modele, newdata = validation)`, dans le même ordre. `fitted(modele)` contient les valeurs d'apprentissage et ne convient pas ici.
@@ -108,17 +115,19 @@ La RMSE est `sqrt(mean((observe - predit)^2))`. Pour l'apprentissage, les résid
 Si vous utilisez les résultats de validation pour choisir entre les deux formes, la période sert à la sélection. Elle n'est pas un test final indépendant du choix.
 :::
 
-Comparez les classements obtenus, calculez l'écart de RMSE de validation en minutes et dites si votre position provisoire change. Ne choisissez pas une nouvelle séparation ou une troisième forme après avoir vu ce résultat dans le parcours essentiel.
+Classez les deux modèles selon leur RMSE d'apprentissage, puis selon leur RMSE de validation; une RMSE plus petite indique des erreurs plus faibles. Calculez l'écart entre les deux RMSE de validation, en minutes, et expliquez si votre choix provisoire change. Dans le parcours essentiel, gardez les périodes et les deux formes prévues, même si les résultats vous surprennent.
 
-Comparez aussi les plages de distance des deux périodes. Signalez les livraisons de validation qui se situent hors de la plage d'apprentissage, même si l'écart de distance est petit.
+Comparez aussi les distances minimale et maximale des deux périodes. Si une livraison de validation se situe hors de la plage d'apprentissage, signalez-la. S'il n'y en a aucune, indiquez-le.
 
 ## 4. Diagnostiquer et auditer la décision
 
 ### Résidus et livraison particulière
 
-Tracez les résidus d'apprentissage des deux modèles contre leurs valeurs ajustées, avec une ligne à zéro. Repérez L072 et les centres. Décrivez une observation effectivement visible et sa conséquence pour l'utilisation du modèle.
+Tracez les résidus d'apprentissage en ordonnée et les durées ajustées en abscisse, avec une ligne horizontale à zéro. Présentez les deux modèles dans deux panneaux côte à côte ou dans deux graphiques. Identifiez L072 et distinguez les centres. Décrivez ce que vous observez et expliquez ce que cela implique pour les prévisions.
 
-Relisez le dictionnaire : la panne est confirmée. Peut-on supprimer cette livraison simplement parce qu'elle gêne l'ajustement? Quelle population voudriez-vous prévoir : toutes les livraisons comparables, ou les livraisons sans incident? Expliquez le problème sans supprimer de ligne dans le parcours essentiel. Examiner sa sensibilité est facultatif.
+Un résidu est la durée observée moins la durée ajustée : un résidu positif indique une sous-estimation de la durée, un résidu négatif une surestimation.
+
+Relisez le dictionnaire : la panne est confirmée. Peut-on supprimer cette livraison simplement parce qu'elle gêne l'ajustement? Quelle population voudriez-vous prévoir : toutes les livraisons comparables, ou les livraisons sans incident? Expliquez votre réponse en conservant toutes les observations du parcours essentiel. Le premier prolongement propose de refaire l'analyse sans L072 pour examiner son influence.
 
 ::: {.callout-tip collapse="true" title="Indice : portée du diagnostic"}
 Un point atypique appelle à vérifier sa mesure et son contexte. Un incident documenté n'est pas une faute de saisie. Une suppression change les observations et peut changer la question. L'absence de courbure ne prouve pas l'indépendance des livraisons d'un même centre.
@@ -126,63 +135,72 @@ Un point atypique appelle à vérifier sa mesure et son contexte. Un incident do
 
 ### Trois affirmations de la direction
 
-Pour chacune, indiquez « soutenue », « à nuancer » ou « non soutenue », puis justifiez avec un calcul ou une limite précise. Votre tableau ne remplace pas le raisonnement.
+Pour chacune, indiquez « soutenue », « à nuancer » ou « non soutenue », puis expliquez votre réponse avec un résultat chiffré ou une limite précise.
 
 1. « Le modèle qui a le plus grand R² d'apprentissage sera le meilleur pour nos livraisons d'automne. »
 2. « Réduire la RMSE d'une minute signifie que chaque livraison prendra une minute de moins. »
 3. « La prévision à 95 km est aussi défendable que celle à 25 km. »
 
-Pour la troisième affirmation, calculez les prédictions des deux modèles à 25 et 95 km, mais classez séparément leur domaine d'utilisation. Une valeur produite par R n'est pas une validation de son usage.
+Pour la troisième affirmation, calculez les durées prédites par les deux modèles à 25 et à 95 km. Vous obtenez quatre prédictions. Pour chaque distance, précisez si elle se trouve dans la plage d'apprentissage ou en dehors : il s'agit alors d'une extrapolation. Expliquez ce que cette distinction change pour l'utilisation des prévisions.
 
-Terminez par une recommandation : modèle retenu, deux résultats chiffrés, domaine d'utilisation, réserve sur l'incident ou le contexte et prochaine vérification. La distance n'a pas été assignée au hasard et le modèle ne mesure pas l'effet causal d'un changement d'itinéraire.
+Terminez par une recommandation : nommez le modèle retenu, citez deux résultats chiffrés et précisez les livraisons auxquelles votre conclusion s'applique. Ajoutez une limite liée à l'incident ou au contexte, puis proposez une vérification avant d'utiliser le modèle sur de nouvelles livraisons. Cette analyse décrit une association entre distance et durée; elle ne permet pas d'affirmer qu'un changement d'itinéraire causera un gain de temps donné.
 
 ## Rapport attendu {#rapport-attendu}
 
-Visez environ 500 à 700 mots hors code et tableaux. Deux graphiques principaux suffisent : relation et résidus. Ajoutez le tableau comparatif; les prédictions et les réponses aux affirmations peuvent être présentées dans le texte ou dans un petit tableau.
+Visez environ 500 à 700 mots hors code et tableaux. Présentez le nuage de points avec les deux ajustements, puis les résidus des deux modèles, en panneaux ou en graphiques séparés. Ajoutez le tableau comparatif. Les quatre prédictions et les réponses aux affirmations peuvent être présentées dans le texte ou dans un petit tableau. La longueur sert de repère pour rester concis.
 
 | Partie | Contenu attendu |
 |---|---|
-| Question et données | Contexte, unités, contrôles et séparation verrouillée |
+| Question et données | Contexte, unités, vérifications du fichier et définition des deux périodes |
 | Analyse et position provisoire | Deux modèles, droite interprétée, deux variations quadratiques et position avant validation |
 | Validation et diagnostic | Tableau exact, comparaison des classements, plages et résidus |
 | Audit et recommandation | Trois affirmations jugées, prévisions dans et hors plage, choix, limite et suite |
-| Bilan formatif | Rétroaction du laboratoire 01, révision du choix, correction et aide utilisée |
+| Bilan formatif | Point repris du laboratoire 01, évolution de votre choix, rétroaction reçue, correction et aide utilisée |
 
 ## 5. Relire, corriger et rendre {#retroaction-formative}
 
-Faites lire votre HTML à un autre binôme. Il relève un acquis et une amélioration localisée.
+Faites lire votre HTML à un autre binôme. Demandez-lui de relever un élément réussi et une amélioration précise, en indiquant la section ou la phrase concernée.
 
 | Critère | Question de relecture |
 |---|---|
-| Séparation | Les périodes et identifiants sont disjoints; la validation a-t-elle été gardée hors de l'ajustement? |
-| Interprétation | Les minutes et kilomètres sont-ils présents; les deux variations quadratiques sont-elles calculées? |
-| Comparaison | Les deux RMSE portent-elles sur les mêmes observations dans chaque période? |
-| Audit | Les affirmations sont-elles reliées aux sorties; l'incident et l'extrapolation sont-ils traités? |
+| Séparation | Les deux périodes ont-elles des identifiants distincts? Les modèles ont-ils été ajustés uniquement sur l'apprentissage? |
+| Interprétation | Les unités sont-elles indiquées? Les deux variations quadratiques sont-elles calculées et expliquées? |
+| Comparaison | Les erreurs de chaque modèle sont-elles calculées sur les mêmes observations, séparément pour chaque période? |
+| Audit | Les réponses aux affirmations citent-elles un résultat ou une limite? L'incident et l'extrapolation sont-ils expliqués? |
 | Reproductibilité | Le rapport se recalcule-t-il depuis les fichiers? |
 
-Appliquez une correction ou justifiez votre choix. Redémarrez R, faites Render et vérifiez le HTML. Conservez QMD, HTML et données ensemble. Une éventuelle transmission formative sera annoncée par l'enseignant; les échéances du laboratoire 01 ne s'appliquent pas automatiquement ici.
+Corrigez le point signalé ou expliquez pourquoi vous conservez votre réponse. Redémarrez R, cliquez sur Render et ouvrez le HTML obtenu pour vérifier les textes, les tableaux et les figures. Conservez le QMD, le HTML et les données dans le même dossier. L'enseignant précisera s'il faut transmettre ce rapport formatif; les modalités du laboratoire 01 ne s'appliquent pas automatiquement ici.
 
 ## 6. Consolider pour l'intra
 
 Faites individuellement la [fiche de consolidation](consolidation.qmd), sans R ni IA au premier essai. Comparez ensuite vos raisonnements et notez une erreur corrigée ou une notion à revoir. L'exercice est formatif.
 
-## 7. Vérifier le mini-rapport 1
+## 7. Vérifier le mini-rapport 1 {#mini-rapport-1}
 
 Les [consignes](../../evaluations/mini-rapport-1.qmd) et la [grille](../../evaluations/grille-mini-rapports.qmd) prévoient la remise le mercredi 7 octobre 2026 à 23 h 59 dans Brio. Le travail évalué doit utiliser votre jeu extérieur approuvé; les données du cours, y compris ces nouvelles livraisons, sont inadmissibles.
 
-Vérifiez les six livrables : QMD, HTML autonome, données ou importation, README, déclaration IA ou mention explicite d'absence d'usage, contribution d'une phrase par membre. Les autres contraintes restent 1 200 à 1 600 mots, quatre figures ou tableaux principaux maximum, équipe de deux ou trois.
+Vérifiez les six éléments à remettre :
+
+1. le fichier QMD;
+2. le HTML autonome;
+3. les données ou le code permettant de les importer;
+4. un README qui explique comment produire le HTML;
+5. la déclaration d'usage de l'IA, ou la mention explicite d'absence d'usage;
+6. une déclaration de contribution d'une phrase par membre.
+
+Les consignes prévoient une équipe de deux ou trois personnes, environ 1 200 à 1 600 mots hors code et références, et un maximum de quatre figures et tableaux principaux au total. Les déclarations peuvent figurer à la fin du rapport. Incluez aussi les scripts appelés par le QMD, s'il y en a.
 
 La validation est exigée pour cette mission formative, mais elle reste facultative dans le mini-rapport 1 selon sa grille actuelle. Cette séance ne modifie pas les critères du travail évalué et ne fournit pas de conclusion à remettre. Apportez une question ciblée, une tentative et la sortie concernée; votre équipe conserve ses choix et sa rédaction.
 
 ## Aide à la demande
 
-Tentez d'abord la tâche. Ouvrez ensuite un indice, une rubrique de l'[aide R](demonstrations.qmd) ou les [repères](capsules.qmd). Le code complet d'aide porte sur l'ancien exemple de saturation; vous devez adapter les variables, unités, périodes et arguments. Notez l'aide utilisée et vérifiez ce que vous conservez.
+Faites d'abord une tentative. Si vous bloquez, ouvrez un indice, la rubrique correspondante de l'[aide R](demonstrations.qmd) ou les [repères](capsules.qmd). Pour demander de l'aide, montrez votre code ou votre phrase et expliquez ce que vous cherchez à obtenir. Le script complet d'aide utilise l'exemple de saturation du module 04 : adaptez les variables, les unités et les périodes à votre analyse des livraisons. Notez l'aide utilisée et vérifiez le résultat obtenu.
 
 ## Prolongements facultatifs
 
 La mission est complète avec deux modèles. Après le parcours essentiel, choisissez une seule piste des [exercices](exercices.qmd) :
 
 - examiner la sensibilité à L072 en explicitant le changement de population;
-- fixer un modèle logarithmique pour une autre période de validation;
+- explorer un modèle logarithmique et proposer une nouvelle période de données pour vérifier ce choix;
 - comparer les erreurs de validation selon le centre sans ajuster un modèle par centre;
 - transférer la démarche à une question de délai de service sur un jeu complémentaire du cours.

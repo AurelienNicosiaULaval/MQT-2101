@@ -5,15 +5,15 @@
 - [Module 3](../../modules/semaine-03-regression-lineaire/index.llms.md) : droite, unités des coefficients, R², résidus et prédiction.
 - [Module 4](../../modules/semaine-04-regression-nonlineaire/index.llms.md) : quadratique, logarithme de l’explicative, comparaison, validation et extrapolation.
 - La rétroaction de votre laboratoire 1 : choisissez un point à améliorer.
-- Le début du [guide de la mission](../../modules/atelier-02-regression/guide-atelier.llms.md) et le premier rendu du [dossier de départ](../../assets/exemples/laboratoire-02.zip).
+- Lisez le début du [guide](../../modules/atelier-02-regression/guide-atelier.llms.md), puis ouvrez le gabarit du [dossier étudiant](../../assets/exemples/laboratoire-02.zip) dans RStudio et cliquez sur Render.
 
 ## Pendant la séance
 
-Gardez le guide à côté du rapport. Après une première tentative, ouvrez ses indices repliés ou une rubrique de l’[aide R](../../modules/atelier-02-regression/demonstrations.llms.md). Les [exercices complémentaires](../../modules/atelier-02-regression/exercices.llms.md) sont facultatifs et utilisent un autre contexte.
+Gardez le guide à côté du rapport. Après une première tentative, ouvrez un indice du guide ou la rubrique correspondante de l’[aide R](../../modules/atelier-02-regression/demonstrations.llms.md). Les [prolongements](../../modules/atelier-02-regression/exercices.llms.md) sont facultatifs : les trois premiers reprennent les livraisons, le quatrième porte sur les délais de service dans des succursales.
 
 ## Documentation officielle
 
-R Core Team, documentation en ligne du package stats, consultée le 16 septembre 2026 :
+R Core Team, documentation en ligne du package stats, consultée le 2 octobre 2026 :
 
 - [`lm()` : ajuster un modèle et écrire sa formule](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html).
 - [`summary.lm()` : coefficients, R² et R² ajusté](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html).
