@@ -5,6 +5,7 @@ institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
     theme:
       - default
       - ../../assets/ulaval-reveal.scss
@@ -27,216 +28,319 @@ execute:
 editor: visual
 ---
 
-```{r}
-#| label: setup-notes-module-05
-#| include: false
+## Objectifs de la révision
 
-library(tidyverse)
+- Mobiliser les modules 01 à 04.
+- Lire les résultats avec unités.
+- Expliquer les diagnostics et limites.
+- Reconstruire le raisonnement sans aide.
 
-data_path <- if (file.exists("../atelier-02-regression/data/performance_succursales_quebec.csv")) {
-  "../atelier-02-regression/data/performance_succursales_quebec.csv"
-} else {
-  "modules/atelier-02-regression/data/performance_succursales_quebec.csv"
-}
-
-performance <- readr::read_csv(data_path, show_col_types = FALSE)
-```
-
-## Objectifs de la séance
-
-::: {.keypoints}
-- Réviser les modules 01 à 04.
-- Structurer une réponse d'analyse.
-- Lire une sortie R sans recopier mécaniquement.
-- Justifier le modèle ou le graphique utilisé.
-- Interpréter les résultats avec les unités.
-- Formuler une limite défendable.
+::: {.note-box}
+Intra prévu le dimanche 25 octobre 2026. La synthèse détaillée, les exemples et les exercices sont accessibles depuis la page d'entrée du module.
 :::
 
-## Point de départ
+## Deux temps de travail
 
-::: {.lead}
-L'ancien matériel de préparation intra utilisait des exemples de régression
-linéaire et logistique et insistait sur le rapport reproductible.
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Préparer</span>
+<span class="text">R, ressources et correction après une tentative.</span>
+:::
+::: {.concept-card}
+<span class="tag">Vérifier l'autonomie</span>
+<span class="text">Questions individuelles sans aide ni IA.</span>
+:::
 :::
 
 ::: {.note-box}
-La version actuelle recentre la préparation sur les compétences évaluables avant
-l'intra : analyse descriptive, R, régression linéaire, transformations et
-communication.
+Le module 06 prépare les évaluations suivantes. Il n'est pas ajouté à la matière de l'intra. Le matériel d'examen est confirmé dans Brio.
 :::
 
-## Ce qui doit être maîtrisé
+## Lire une ligne avant de calculer
 
-| Bloc | Compétence | Trace attendue |
-|---|---|---|
-| Module 01 | Lire un tableau | unité, variables, limites |
-| Module 02 | Travailler avec R | importation, résumé, graphique |
-| Module 03 | Régression linéaire | pente, `R²`, résidus |
-| Module 04 | Transformations | comparaison de modèles |
-
-## Structure d'une réponse
-
-::: {.keypoints}
-1. Question.
-2. Données et variables.
-3. Méthode.
-4. Résultat.
-5. Interprétation.
-6. Diagnostic.
-7. Limite.
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Observation</span>
+<span class="text">Une combinaison mois-succursale.</span>
 :::
-
-## Question de révision
-
-::: {.lead}
-Les ventes mensuelles des succursales sont-elles associées à l'achalandage et
-aux ruptures de stock?
+::: {.concept-card}
+<span class="tag">Mesure</span>
+<span class="text">Ventes mensuelles en dollars; score moyen sur 10.</span>
+:::
 :::
 
 ::: {.note-box}
-La question porte sur une association. Il faut éviter de conclure directement à
-un effet causal.
+60 lignes peuvent décrire cinq succursales pendant douze mois. Un score de 8 sur 10 n'est pas une proportion de clients satisfaits.
 :::
 
-## Inspecter les données
+## Types et qualité
 
-```{r}
-#| label: apercu-module-05-notes
-performance |>
-  slice_head(n = 6)
-```
-
-## Résumé minimal
-
-```{r}
-#| label: resume-module-05-notes
-performance |>
-  summarise(
-    observations = n(),
-    succursales = n_distinct(succursale),
-    ventes_moyennes = mean(ventes),
-    achalandage_moyen = mean(achalandage),
-    ruptures_moyennes = mean(ruptures_stock)
-  )
-```
-
-## Graphique avant modèle
-
-```{r}
-#| label: graphique-module-05-notes
-#| fig-width: 10
-#| fig-height: 5.6
-ggplot(performance, aes(x = achalandage, y = ventes)) +
-  geom_point(aes(colour = ruptures_stock), alpha = 0.8, size = 2.6) +
-  geom_smooth(method = "lm", se = FALSE, colour = "#0B4F6C", linewidth = 1.1) +
-  labs(
-    title = "Ventes selon l'achalandage",
-    subtitle = "La couleur indique le nombre de ruptures de stock",
-    x = "Achalandage mensuel",
-    y = "Ventes",
-    colour = "Ruptures"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
-```
-
-## Modèle de révision
-
-```{r}
-#| label: modele-module-05-notes
-modele <- lm(
-  ventes ~ achalandage + ruptures_stock,
-  data = performance
-)
-
-summary(modele)
-```
-
-## Interpréter les coefficients
-
-```{r}
-#| label: coefficients-module-05-notes
-coef(modele)
-```
-
-::: {.keypoints}
-- `achalandage` : association moyenne avec les ventes, à ruptures constantes.
-- `ruptures_stock` : association moyenne avec les ventes, à achalandage constant.
-- L'unité doit être nommée.
-- Le résultat reste observationnel.
-:::
-
-## Résidus
-
-```{r}
-#| label: residus-module-05-notes
-performance_modele <- performance |>
-  mutate(
-    ventes_predites = predict(modele),
-    residu = residuals(modele)
-  )
-```
-
-```{r}
-#| label: graphique-residus-module-05-notes
-#| fig-width: 10
-#| fig-height: 5.6
-ggplot(performance_modele, aes(x = ventes_predites, y = residu)) +
-  geom_hline(yintercept = 0, colour = "#7A1C24", linewidth = 1) +
-  geom_point(alpha = 0.8, colour = "#0B4F6C", size = 2.6) +
-  labs(
-    title = "Résidus selon les ventes prédites",
-    x = "Ventes prédites",
-    y = "Résidu"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(panel.grid.minor = element_blank())
-```
-
-## Réponse courte attendue
+| Vérification | Question utile |
+|---|---|
+| Type et sens | Quantité, catégorie, date ou identifiant? |
+| Clé | La paire mois-succursale est-elle répétée? |
+| NA | Quelles variables et combien de valeurs? |
+| Unité et plage | Montant, compte, proportion ou score? |
 
 ::: {.note-box}
-Les ventes semblent positivement associées à l'achalandage. Le modèle inclut les
-ruptures de stock pour tenir compte d'une contrainte opérationnelle. Les
-coefficients doivent être interprétés comme des associations moyennes, à
-variables incluses dans le modèle constantes. Le graphique des résidus ne doit
-pas montrer de structure majeure. La conclusion ne prouve pas une causalité.
+Un code numérique peut être une catégorie. NA n'est pas zéro; supprimer une ligne demande une justification.
 :::
 
-## Erreurs fréquentes
+## Choisir une représentation
+
+| Question | Graphique |
+|---|---|
+| Une distribution numérique | Histogramme |
+| Une mesure entre groupes | Boîtes à moustaches |
+| Deux variables numériques | Nuage de points |
+| Totaux déjà calculés | Barres avec geom_col() |
+
+::: {.note-box}
+Lire centre, dispersion, forme et effectif. Un graphique ne prouve pas une cause.
+:::
+
+## Un nombre ou un ratio?
+
+::: {.example-box}
+$$\text{Ventes par client sur la période}=
+\frac{\sum\text{ventes}}{\sum\text{clients}}.$$
+:::
+
+::: {.note-box}
+Le ratio total pondère les mois par leur nombre de clients. La moyenne des ratios mensuels donne le même poids à chaque mois. Le dénominateur change la question.
+:::
+
+## Du code à la réponse
+
+::: {.journey}
+::: {.journey-step}
+<span class="num">1</span><span class="text">importer et inspecter</span>
+:::
+::: {.journey-step}
+<span class="num">2</span><span class="text">préparer et vérifier</span>
+:::
+::: {.journey-step}
+<span class="num">3</span><span class="text">résumer ou modéliser</span>
+:::
+::: {.journey-step}
+<span class="num">4</span><span class="text">interpréter et limiter</span>
+:::
+:::
+
+::: {.note-box}
+Les bibliothèques et l'importation doivent être dans le fichier. Redémarrer R puis relancer Render vérifie que l'analyse peut être reconstruite.
+:::
+
+## La droite estimée
+
+$$\widehat y=b_0+b_1x.$$
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Pente</span>
+<span class="text">Différence de réponse moyenne estimée pour une unité de x.</span>
+:::
+::: {.concept-card}
+<span class="tag">Intercept</span>
+<span class="text">Valeur estimée à x = 0; vérifier la plage et le contexte.</span>
+:::
+:::
+
+::: {.note-box}
+La droite des moindres carrés minimise la somme des résidus au carré. Pour une hausse h de x, la différence prédite est b1 × h.
+:::
+
+## Exemple : service et satisfaction
+
+::: {.example-box}
+$$\widehat{\text{score}}\approx9{,}774-0{,}326\times\text{délai en minutes}.$$
+:::
+
+::: {.note-box}
+Une minute supplémentaire est associée à un score moyen estimé inférieur d'environ 0,326 point sur 10. La plage observée est 3,6 à 8,7 minutes; zéro minute est hors de cette plage. Données simulées du laboratoire 02.
+:::
+
+## Lire la sortie R
+
+| Colonne | Sens |
+|---|---|
+| Estimate | Coefficient estimé |
+| Std. Error | Erreur-type du coefficient |
+| t value | Écart à zéro rapporté à l'erreur-type |
+| Pr(>\|t\|) | Valeur p du test bilatéral |
+
+::: {.note-box}
+Une petite valeur p ne mesure ni l'ampleur de l'association ni une causalité. Lire aussi la pente, son intervalle et les diagnostics.
+:::
+
+## Tester une pente nulle
+
+$$H_0:\beta_1=0,\qquad H_1:\beta_1\ne0.$$
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">p ≤ seuil</span>
+<span class="text">Rejeter H0 sous les hypothèses du modèle.</span>
+:::
+::: {.concept-card}
+<span class="tag">p > seuil</span>
+<span class="text">Ne pas rejeter H0; une pente nulle n'est pas prouvée.</span>
+:::
+:::
+
+::: {.note-box}
+La valeur p est calculée sous H0 et les hypothèses. Elle n'est pas la probabilité que H0 soit vraie.
+:::
+
+## Prédiction et résidu
+
+$$e_i=y_i-\widehat y_i.$$
+
+::: {.metric-grid}
+::: {.metric}
+<span class="value">e > 0</span><span class="label">sous-estimation</span>
+:::
+::: {.metric}
+<span class="value">e < 0</span><span class="label">surestimation</span>
+:::
+::: {.metric}
+<span class="value">Unité de y</span><span class="label">pour le résidu</span>
+:::
+:::
+
+::: {.note-box}
+Une prédiction est une estimation sous le modèle. Vérifier la plage et le contexte; une extrapolation demande une validation supplémentaire.
+:::
+
+## Lire les résidus
+
+| Motif | Signal possible |
+|---|---|
+| U | Forme moyenne insuffisante |
+| Éventail | Dispersion non constante |
+| Écarts entre groupes | Structure de groupe à examiner |
+| Point éloigné | Valeur et contexte à vérifier |
+
+::: {.note-box}
+Une moyenne globale nulle vient de l'ajustement avec constante. Elle ne valide pas toutes les hypothèses, notamment l'indépendance des mois répétés.
+:::
+
+## Lire R² et corrélation
+
+$$R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}}.$$
+
+::: {.note-box}
+R² résume la variation de la réponse décrite sur l'ajustement. Il ne donne pas un pourcentage de prédictions correctes. En régression simple avec constante, R² = r²; le signe de la corrélation est perdu.
+:::
+
+## Deux intervalles, deux cibles
+
+::: {.concept-grid}
+::: {.concept-card .accent}
+<span class="tag">Confiance</span>
+<span class="text">Incertitude sur la réponse moyenne pour x donné.</span>
+:::
+::: {.concept-card}
+<span class="tag">Prédiction</span>
+<span class="text">Incertitude pour une nouvelle observation; inclut sa dispersion.</span>
+:::
+:::
+
+::: {.note-box}
+Au même niveau et scénario, l'intervalle de prédiction est plus large. Les calculs classiques exacts supposent une forme correcte, indépendance, variance constante et normalité des erreurs.
+:::
+
+## Trois formes enseignées
+
+| Forme | Moyenne estimée |
+|---|---|
+| Droite | $b_0+b_1x$ |
+| Quadratique | $b_0+b_1x+b_2x^2$ |
+| Logarithmique | $b_0+b_1\ln(x)$, x > 0 |
+
+::: {.note-box}
+Les formes restent linéaires en coefficients et s'ajustent avec lm(). La réponse demeure dans son unité originale; seul x est transformé.
+:::
+
+## Dans une quadratique
+
+$$\widehat y(x+h)-\widehat y(x)=b_1h+b_2(2xh+h^2).$$
+
+::: {.note-box}
+x et x² changent ensemble. La variation dépend du point de départ. Utiliser x + I(x^2), en gardant le terme simple. Si x est en milliers de visites, 100 visites valent h = 0,1.
+:::
+
+## Dans un logarithme
+
+$$\widehat y(x_2)-\widehat y(x_1)=b_1\ln(x_2/x_1).$$
+
+::: {.note-box}
+Une hausse de 10 % de x donne b1 × ln(1,10) unités de réponse. Logarithmique et logistique sont différents. Un logarithme croissant n'a pas de plafond fini; une quadratique peut redescendre.
+:::
+
+## Comparer équitablement
 
 ::: {.keypoints}
-- Oublier l'unité d'observation.
-- Interpréter une pente sans unité.
-- Confondre association et causalité.
-- Choisir un modèle sans graphique.
-- Oublier les résidus.
-- Écrire une réponse seulement en code.
+- Même cible et unité.
+- Mêmes lignes pour ajuster.
+- Mêmes observations pour valider.
+- Forme, résidus, erreur et interprétation.
 :::
 
-## Utiliser R efficacement
+::: {.note-box}
+Ajouter un carré ne réduit pas le R² d'apprentissage sur les mêmes lignes. Le R² ajusté pénalise les paramètres, mais ne remplace pas une validation.
+:::
+
+## RMSE et choix provisoire
+
+$$\mathrm{RMSE}=\sqrt{n^{-1}\sum_i(y_i-\widehat y_i)^2}.$$
+
+::: {.example-box}
+Cas guidé du module 04 : RMSE de validation d'environ 10 155 $ pour la droite, 7 237 $ pour la quadratique et 8 409 $ pour le logarithme.
+:::
+
+::: {.note-box}
+La quadratique est le choix provisoire selon ce critère. La validation a servi au choix; elle n'est pas un test final indépendant. Aucun classement universel n'est établi.
+:::
+
+## Conclure à la bonne échelle
+
+::: {.journey}
+::: {.journey-step}
+<span class="num">Résultat</span><span class="text">valeur et unités</span>
+:::
+::: {.journey-step}
+<span class="num">Diagnostic</span><span class="text">vérification observée</span>
+:::
+::: {.journey-step}
+<span class="num">Décision</span><span class="text">proportionnée</span>
+:::
+::: {.journey-step}
+<span class="num">Limite</span><span class="text">contexte et prochaine étape</span>
+:::
+:::
+
+::: {.note-box}
+Une association n'isole pas l'effet d'une intervention. Une prédiction n'est pas une garantie. Les unités mois-succursale ne sont pas des clients individuels.
+:::
+
+## Production autonome
+
+::: {.self-check}
+- Une première réponse sans aide.
+- Une correction expliquée.
+- Deux compétences à reprendre.
+- Une nouvelle tentative deux jours plus tard.
+:::
+
+::: {.note-box}
+Huit exercices progressifs et dix questions individuelles sont accessibles depuis la page d'entrée. Les corrigés sont fermés par défaut et s'ouvrent après une tentative.
+:::
+
+## Sources du support
 
 ::: {.keypoints}
-- Commencer par `glimpse()`, `summary()` ou un résumé ciblé.
-- Nommer les objets clairement.
-- Garder seulement les résultats nécessaires.
-- Relier chaque sortie à une phrase d'interprétation.
-:::
-
-## À retenir pour l'examen
-
-::: {.callout-warning}
-L'examen individuel en personne ne permet pas l'utilisation de l'IA. La
-préparation peut inclure des outils d'apprentissage, mais la compréhension doit
-être personnelle et défendable.
-:::
-
-## Sources et prolongements
-
-::: {.keypoints}
-- Ancien matériel MQT-2101, séance 05 : exemples de préparation à l'examen,
-  modèle linéaire, modèle logistique et rapport reproductible.
-- Modules 01 à 04 du site actuel.
-- Documentation R : `lm()`, `summary.lm()` et `predict.lm()`.
+- MQT-2101, supports des modules 01 à 04, 2026.
+- Laboratoires 01 et 02, questionnaire formatif et fiche de l'intra.
+- Données simulées du cours; calculs reproduits dans les exemples commentés.
 :::

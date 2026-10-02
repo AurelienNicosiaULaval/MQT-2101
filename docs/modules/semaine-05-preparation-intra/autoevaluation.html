@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Capsules - Module 05 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Autoévaluation et erreurs fréquentes - Module 05 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -3995,6 +3995,21 @@ vertical-align: -.125em;
     "search-label": "Recherche"
   }
 }</script>
+<style>
+
+@media (max-width: 767px) {
+main table {
+display: block;
+max-width: 100%;
+overflow-x: auto;
+}
+main .math.display {
+display: block;
+max-width: 100%;
+overflow-x: auto;
+}
+}
+</style>
 
 
 <style type="text/css">@media (min-width: 992px) {
@@ -7017,15 +7032,12 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#capsule-1---lire-la-question-avant-de-calculer" id="toc-capsule-1---lire-la-question-avant-de-calculer" class="nav-link" data-scroll-target="#capsule-1---lire-la-question-avant-de-calculer">Capsule 1 - Lire la question avant de calculer</a></li>
-  <li><a href="#capsule-2---préparer-les-données-et-le-diagnostic-minimal" id="toc-capsule-2---préparer-les-données-et-le-diagnostic-minimal" class="nav-link" data-scroll-target="#capsule-2---préparer-les-données-et-le-diagnostic-minimal">Capsule 2 - Préparer les données et le diagnostic minimal</a></li>
-  <li><a href="#capsule-3---répondre-à-une-question-descriptive" id="toc-capsule-3---répondre-à-une-question-descriptive" class="nav-link" data-scroll-target="#capsule-3---répondre-à-une-question-descriptive">Capsule 3 - Répondre à une question descriptive</a></li>
-  <li><a href="#capsule-4---répondre-à-une-question-de-régression" id="toc-capsule-4---répondre-à-une-question-de-régression" class="nav-link" data-scroll-target="#capsule-4---répondre-à-une-question-de-régression">Capsule 4 - Répondre à une question de régression</a></li>
-  <li><a href="#capsule-5---choisir-entre-deux-modèles" id="toc-capsule-5---choisir-entre-deux-modèles" class="nav-link" data-scroll-target="#capsule-5---choisir-entre-deux-modèles">Capsule 5 - Choisir entre deux modèles</a></li>
-  <li><a href="#capsule-6---relire-et-finaliser-une-réponse-dexamen" id="toc-capsule-6---relire-et-finaliser-une-réponse-dexamen" class="nav-link" data-scroll-target="#capsule-6---relire-et-finaliser-une-réponse-dexamen">Capsule 6 - Relire et finaliser une réponse d’examen</a></li>
-  <li><a href="#après-les-capsules" id="toc-après-les-capsules" class="nav-link" data-scroll-target="#après-les-capsules">Après les capsules</a></li>
+  <ul class="collapse">
+  <li><a href="#évaluer-une-compétence-à-partir-dune-réponse" id="toc-évaluer-une-compétence-à-partir-dune-réponse" class="nav-link active" data-scroll-target="#évaluer-une-compétence-à-partir-dune-réponse">Évaluer une compétence à partir d’une réponse</a></li>
+  <li><a href="#vérifier-un-choix-et-sa-justification" id="toc-vérifier-un-choix-et-sa-justification" class="nav-link" data-scroll-target="#vérifier-un-choix-et-sa-justification">Vérifier un choix et sa justification</a></li>
+  <li><a href="#erreurs-fréquentes-et-correction-à-apporter" id="toc-erreurs-fréquentes-et-correction-à-apporter" class="nav-link" data-scroll-target="#erreurs-fréquentes-et-correction-à-apporter">Erreurs fréquentes et correction à apporter</a></li>
+  <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
+  <li><a href="#deux-façons-de-vérifier" id="toc-deux-façons-de-vérifier" class="nav-link" data-scroll-target="#deux-façons-de-vérifier">Deux façons de vérifier</a></li>
   </ul>
 </nav>
     </div>
@@ -7034,7 +7046,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Capsules - Module 05</h1>
+<h1 class="title">Autoévaluation et erreurs fréquentes - Module 05</h1>
 </div>
 
 
@@ -7051,92 +7063,279 @@ display: none;
 </header>
 
 
-<section id="objectif" class="level2">
-<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>Cette page rassemble les six capsules de révision du module 05. Elles ne présentent pas une nouvelle méthode : elles organisent les réflexes nécessaires pour répondre clairement à une question d’examen sur les modules 01 à 04.</p>
-<p>Pour chaque capsule, ouvrez le support HTML ou PDF, puis réalisez la courte activité proposée. Les supports sont complets et utilisables de façon autonome; les vidéos servent de complément lorsqu’elles sont disponibles.</p>
+<section id="évaluer-une-compétence-à-partir-dune-réponse" class="level2">
+<h2 class="anchored" data-anchor-id="évaluer-une-compétence-à-partir-dune-réponse">Évaluer une compétence à partir d’une réponse</h2>
+<p>Après les <a href="../../modules/semaine-05-preparation-intra/exercices.html">exercices progressifs</a>, puis la <a href="../../modules/semaine-05-preparation-intra/pratique.html">pratique individuelle</a>, attribuez un état à chaque ligne : acquis si vous répondez et justifiez sans aide; à consolider si le résultat est juste mais le raisonnement hésitant; à reprendre si une correction ou une aide reste nécessaire. Une réussite obtenue après lecture du corrigé sert à apprendre; refaites une question analogue sans aide pour vérifier l’acquisition.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Je peux…</th>
+<th>Preuve à rechercher</th>
+<th>Où vérifier</th>
+<th>État et action à noter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nommer l’unité et classer les variables</td>
+<td>Jour-point, lot ou inscription; code, date, mesure et unités</td>
+<td>Ex. 1 et 2; Q1</td>
+<td>___</td>
+</tr>
+<tr class="even">
+<td>Diagnostiquer les données</td>
+<td>NA comptés, agrégats séparés, clé répétée à vérifier</td>
+<td>Ex. 1; Q1 et Q4</td>
+<td>___</td>
+</tr>
+<tr class="odd">
+<td>Choisir et lire tableau et graphique</td>
+<td>Question, axes, centre, dispersion et dénominateur</td>
+<td>Ex. 2 et 3; Q2 et Q3</td>
+<td>___</td>
+</tr>
+<tr class="even">
+<td>Lire une droite et une sortie R</td>
+<td>Réponse, pente, intercept, unités et test</td>
+<td>Ex. 4; Q5</td>
+<td>___</td>
+</tr>
+<tr class="odd">
+<td>Calculer une prédiction et un résidu</td>
+<td>Substitution, unité, signe et plage</td>
+<td>Ex. 4; Q6</td>
+<td>___</td>
+</tr>
+<tr class="even">
+<td>Lire R² et corrélation</td>
+<td>Variation d’ajustement; association linéaire</td>
+<td>Ex. 4 et 8; Q5</td>
+<td>___</td>
+</tr>
+<tr class="odd">
+<td>Utiliser quadratique et logarithme</td>
+<td>Carré avec terme simple, x positif, différence de prédictions</td>
+<td>Ex. 7; Q8 et Q9</td>
+<td>___</td>
+</tr>
+<tr class="even">
+<td>Lire les résidus</td>
+<td>Motif décrit et vérification justifiée</td>
+<td>Ex. 5; Q7</td>
+<td>___</td>
+</tr>
+<tr class="odd">
+<td>Comparer sur les mêmes observations</td>
+<td>Même cible, unité, lignes; RMSE de validation</td>
+<td>Ex. 5; Q9</td>
+<td>___</td>
+</tr>
+<tr class="even">
+<td>Distinguer les intervalles</td>
+<td>Moyenne ou nouvelle observation; hypothèses</td>
+<td>Ex. 8; Q10</td>
+<td>___</td>
+</tr>
+<tr class="odd">
+<td>Conclure avec mesure et prudence</td>
+<td>Résultat, décision, diagnostic et limite précise</td>
+<td>Ex. 6; Q10</td>
+<td>___</td>
+</tr>
+<tr class="even">
+<td>Reconstruire l’analyse avec R</td>
+<td>Bibliothèques, tableaux et calculs présents dans le fichier; rendu autonome</td>
+<td>Ex. 1 à 5</td>
+<td>___</td>
+</tr>
+</tbody>
+</table>
+<p>Les numéros Q renvoient à la pratique individuelle. Pour la reprise, la <a href="../../modules/semaine-05-preparation-intra/questions-courtes.html">série de vrai ou faux et de choix multiples</a> associe ses 24 questions aux compétences du cours. Cette grille ne calcule pas une note d’examen et ne prédit pas la réussite.</p>
 </section>
-<section id="capsule-1---lire-la-question-avant-de-calculer" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-1---lire-la-question-avant-de-calculer">Capsule 1 - Lire la question avant de calculer</h2>
-<p>Cette capsule prépare le premier réflexe d’examen : reformuler la question et identifier ce qui est demandé.</p>
-<div class="support-icons" aria-label="Supports de la capsule 1">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-01-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-01-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
-</div>
-<p>À faire après la capsule : Prenez une question des exercices et reformulez-la en une phrase avant d’écrire du code.</p>
+<section id="vérifier-un-choix-et-sa-justification" class="level2">
+<h2 class="anchored" data-anchor-id="vérifier-un-choix-et-sa-justification">Vérifier un choix et sa justification</h2>
+<p>Après la série courte, distinguez le verdict ou la lettre de l’argument. Une lettre correcte obtenue par élimination incertaine ne suffit pas pour déclarer la compétence acquise.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Je peux…</th>
+<th>Trace à garder</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Corriger un vrai ou faux erroné</td>
+<td>La phrase corrigée et le détail de l’énoncé qui la justifie</td>
+</tr>
+<tr class="even">
+<td>Justifier mon choix multiple</td>
+<td>Le résultat pertinent et une explication de l’erreur d’une autre option</td>
+</tr>
+<tr class="odd">
+<td>Situer un calcul</td>
+<td>L’unité, le sens du signe et la cible : moyenne ou nouvelle observation</td>
+</tr>
+<tr class="even">
+<td>Reconnaître une conclusion excessive</td>
+<td>Ce que les données permettent de dire et la vérification encore nécessaire</td>
+</tr>
+</tbody>
+</table>
+<p>Reprenez en priorité une réponse fausse donnée avec assurance et une bonne réponse dont vous ne pouvez pas expliquer le raisonnement. Comparez votre nouvelle justification sans aide à celle conservée lors de la première tentative.</p>
 </section>
-<section id="capsule-2---préparer-les-données-et-le-diagnostic-minimal" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-2---préparer-les-données-et-le-diagnostic-minimal">Capsule 2 - Préparer les données et le diagnostic minimal</h2>
-<p>Cette capsule rappelle les vérifications minimales : unité d’observation, types, valeurs manquantes et cohérence.</p>
-<div class="support-icons" aria-label="Supports de la capsule 2">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-02-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-02-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
-</div>
-<p>À faire après la capsule : Écrivez la liste des vérifications minimales à faire avant une analyse.</p>
+<section id="erreurs-fréquentes-et-correction-à-apporter" class="level2">
+<h2 class="anchored" data-anchor-id="erreurs-fréquentes-et-correction-à-apporter">Erreurs fréquentes et correction à apporter</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Erreur</th>
+<th>Pourquoi elle pose problème</th>
+<th>Réflexe de correction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>« 60 lignes, donc 60 succursales »</td>
+<td>Des succursales sont répétées à différents mois</td>
+<td>Lire la clé mois-succursale</td>
+</tr>
+<tr class="even">
+<td>Moyenner un identifiant numérique</td>
+<td>Le code distingue des catégories</td>
+<td>Revenir au dictionnaire de variables</td>
+</tr>
+<tr class="odd">
+<td>Remplacer NA par zéro ou tout supprimer</td>
+<td>Change le sens des données ou perd des lignes utiles</td>
+<td>Compter les NA; cibler les variables nécessaires</td>
+</tr>
+<tr class="even">
+<td>Présenter un score sur 10 comme un pourcentage de personnes</td>
+<td>Le score agrégé ne donne pas les réponses individuelles</td>
+<td>Nommer le score moyen et sa portée</td>
+</tr>
+<tr class="odd">
+<td>Confondre n total et n disponible</td>
+<td>Le résumé peut utiliser moins de valeurs</td>
+<td>Montrer les deux effectifs</td>
+</tr>
+<tr class="even">
+<td>Comparer des ventes totales sans examiner le volume</td>
+<td>Le classement peut refléter la taille</td>
+<td>Justifier un ratio et son dénominateur</td>
+</tr>
+<tr class="odd">
+<td>Choisir un histogramme pour deux variables</td>
+<td>Il ne montre pas leur association</td>
+<td>Utiliser un nuage de points</td>
+</tr>
+<tr class="even">
+<td>Inverser <code>ventes ~ clients</code></td>
+<td>Change la question et le modèle</td>
+<td>Placer la réponse à gauche de <code>~</code></td>
+</tr>
+<tr class="odd">
+<td>Oublier de convertir centaines ou milliers</td>
+<td>Multiplie mal la pente ou le scénario</td>
+<td>Écrire l’unité de x avant de substituer</td>
+</tr>
+<tr class="even">
+<td>Lire l’intercept hors de la plage comme une observation</td>
+<td>Zéro peut être une extrapolation</td>
+<td>Dire ce que b0 signifie algébriquement et sa limite</td>
+</tr>
+<tr class="odd">
+<td>Calculer ajusté moins observé</td>
+<td>Inverse le signe du résidu du cours</td>
+<td>Écrire e = observé - ajusté</td>
+</tr>
+<tr class="even">
+<td>« R² = proportion de prédictions correctes »</td>
+<td>R² décrit une variation sur l’ajustement</td>
+<td>Nommer les données d’ajustement</td>
+</tr>
+<tr class="odd">
+<td>« p = probabilité que H0 soit vraie »</td>
+<td>Inverse le conditionnement du test</td>
+<td>Interpréter sous H0 et les hypothèses</td>
+</tr>
+<tr class="even">
+<td>Garder seulement <code>x^2</code> ou l’écrire sans <code>I()</code></td>
+<td>Ne représente pas la quadratique attendue</td>
+<td>Utiliser <code>y ~ x + I(x^2)</code></td>
+</tr>
+<tr class="odd">
+<td>« Le coefficient de x est la pente constante de la quadratique »</td>
+<td>x² change également</td>
+<td>Soustraire les deux prédictions</td>
+</tr>
+<tr class="even">
+<td>« Logarithmique = logistique »</td>
+<td>Le premier cas transforme x et garde une réponse quantitative</td>
+<td>Revenir aux trois formes enseignées au module 04</td>
+</tr>
+<tr class="odd">
+<td>« Log(x) impose un plateau »</td>
+<td>Le logarithme croissant n’est pas borné</td>
+<td>Distinguer ralentissement et plafond</td>
+</tr>
+<tr class="even">
+<td>Retenir le plus grand R² automatiquement</td>
+<td>L’ajout de termes augmente mécaniquement l’ajustement</td>
+<td>Examiner validation, forme et résidus</td>
+</tr>
+<tr class="odd">
+<td>Comparer apprentissage et validation entre modèles</td>
+<td>Les erreurs portent sur des données différentes</td>
+<td>Même période et mêmes lignes pour les deux modèles</td>
+</tr>
+<tr class="even">
+<td>« Résidus moyens nuls, donc toutes les hypothèses sont valides »</td>
+<td>La moyenne nulle est une propriété de l’ajustement avec constante</td>
+<td>Examiner motifs, groupes et contexte</td>
+</tr>
+<tr class="odd">
+<td>« Petite valeur p, donc cause démontrée »</td>
+<td>Le test porte sur une association dans le modèle</td>
+<td>Nommer les facteurs possibles et la limite causale</td>
+</tr>
+<tr class="even">
+<td>Recommander une prédiction très au-delà de la plage</td>
+<td>La forme n’y a pas été validée</td>
+<td>Donner la plage et demander une nouvelle vérification</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="capsule-3---répondre-à-une-question-descriptive" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-3---répondre-à-une-question-descriptive">Capsule 3 - Répondre à une question descriptive</h2>
-<p>Cette capsule structure les réponses sans modèle : tableau, graphique, constat et limite.</p>
-<div class="support-icons" aria-label="Supports de la capsule 3">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-03-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-03-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
-</div>
-<p>À faire après la capsule : Formulez un constat descriptif qui nomme la variable, le groupe et la limite.</p>
+<section id="trace-finale" class="level2">
+<h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
+<p>Conservez vos premières réponses, les corrections expliquées et un plan personnel de trois lignes :</p>
+<ol type="1">
+<li>La compétence à reprendre et l’erreur précise observée.</li>
+<li>Le passage du cours et l’exercice à refaire.</li>
+<li>Une date de reprise, idéalement deux jours plus tard, avec une question analogue sans aide.</li>
+</ol>
+<p>Exemple : « J’ai appliqué une pente par cent affiches au nombre d’affiches. Je reprends les unités de la pente au module 03 et l’exercice 4. Deux jours plus tard, je reconstruis une prédiction pour un autre lot sans ouvrir le corrigé. »</p>
 </section>
-<section id="capsule-4---répondre-à-une-question-de-régression" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-4---répondre-à-une-question-de-régression">Capsule 4 - Répondre à une question de régression</h2>
-<p>Cette capsule rappelle comment présenter une régression linéaire : graphique, modèle, coefficients, diagnostics et conclusion.</p>
-<div class="support-icons" aria-label="Supports de la capsule 4">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-04-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-04-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
-</div>
-<p>À faire après la capsule : Écrivez une phrase d’interprétation de pente avec unités et prudence causale.</p>
-</section>
-<section id="capsule-5---choisir-entre-deux-modèles" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-5---choisir-entre-deux-modèles">Capsule 5 - Choisir entre deux modèles</h2>
-<p>Cette capsule prépare les questions de comparaison : droite ou courbe, modèle simple ou transformé.</p>
-<div class="support-icons" aria-label="Supports de la capsule 5">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-05-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-05-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
-</div>
-<p>À faire après la capsule : Préparez une justification en trois critères pour choisir entre deux modèles.</p>
-</section>
-<section id="capsule-6---relire-et-finaliser-une-réponse-dexamen" class="level2">
-<h2 class="anchored" data-anchor-id="capsule-6---relire-et-finaliser-une-réponse-dexamen">Capsule 6 - Relire et finaliser une réponse d’examen</h2>
-<p>Cette capsule donne une liste de vérification finale pour produire une réponse courte, complète et défendable.</p>
-<div class="support-icons" aria-label="Supports de la capsule 6">
-  <a class="support-icon support-icon-html" href="media/qmd/capsule-06-support.html" aria-label="Ouvrir le support HTML" title="HTML">
-    <i class="bi bi-filetype-html" aria-hidden="true"></i>
-  </a>
-  <a class="support-icon support-icon-pdf" href="media/pdf/capsule-06-support.pdf" aria-label="Ouvrir le PDF" title="PDF">
-    <i class="bi bi-filetype-pdf" aria-hidden="true"></i>
-  </a>
-</div>
-<p>À faire après la capsule : Relisez une réponse et cochez les éléments présents : question, méthode, résultat, diagnostic, limite.</p>
-</section>
-<section id="après-les-capsules" class="level2">
-<h2 class="anchored" data-anchor-id="après-les-capsules">Après les capsules</h2>
-<p>Poursuivez avec les <a href="demonstrations.html">démonstrations R</a>, puis les <a href="exercices.html">exercices</a>. Les capsules servent à structurer la réponse; les démonstrations montrent une réponse complète; les exercices testent l’autonomie.</p>
+<section id="deux-façons-de-vérifier" class="level2">
+<h2 class="anchored" data-anchor-id="deux-façons-de-vérifier">Deux façons de vérifier</h2>
+<p>Avec R et les ressources : reproduisez les résultats, inspectez le graphique, puis expliquez chaque sortie. Une aide du cours ou le GPT du cours peut clarifier une erreur après une tentative, conformément à la <a href="../../ressources/ia.html">politique IA</a>. Lisez et vérifiez toute aide conservée.</p>
+<p>Sans aide ni IA : refaites une question en expliquant le raisonnement avec les unités. Si vous bloquez, notez l’endroit exact puis passez à la suite. Ouvrez le corrigé après la série et retravaillez la compétence ciblée. Cet entraînement est une consigne pédagogique; le matériel autorisé à l’examen est confirmé dans Brio.</p>
 
 
 </section>

@@ -10,21 +10,23 @@ Consolider les compétences des modules 01 à 04 : lire un tableau, produire une
 
 Organisation
 
-À votre rythme
+4 h 30, puis reprise ciblée
 
 Outils
 
-R, Quarto, interprétation
+R pour préparer; pratique sans aide
 
 Données
 
-Jeux de données déjà vus
+Données du cours et cas fictifs variés
 
 Production
 
-Canevas de réponse
+Réponses et plan de reprise
 
 ## Objectif de la préparation
+
+L’examen intra est prévu le dimanche 25 octobre 2026. Ce module consolide les compétences des modules 01 à 04, sans ajouter les séries chronologiques du module 06. Les activités sont formatives et ne sont pas les questions du futur examen.
 
 Cette séance ne sert pas à apprendre une nouvelle méthode. Elle sert à rendre les gestes essentiels plus fiables :
 
@@ -41,11 +43,42 @@ Cette séance ne sert pas à apprendre une nouvelle méthode. Elle sert à rendr
 >
 > Les règles officielles de l’examen sont décrites dans la page [Examen intra](../../evaluations/examen-intra.llms.md). La préparation peut utiliser les ressources du cours, mais l’examen individuel en personne ne permet pas l’utilisation de l’IA.
 
+## Prérequis
+
+Avoir travaillé les modules 01 à 04 et les laboratoires 01 et 02, en gardant les premières réponses et la rétroaction reçue. Pour les étapes avec R, disposer d’un environnement fonctionnel et des données du cours. Retrouvez au besoin `read_csv()`, `mutate()`, `group_by()`, `summarise()`, `ggplot()`, `lm()` et `predict()` dans les modules précédents.
+
+Si vous ne savez pas encore nommer l’unité d’observation, traiter un NA ou lire une pente, commencez par le passage correspondant de la [synthèse](../../modules/semaine-05-preparation-intra/synthese.llms.md) avant de poursuivre les questions plus complexes.
+
 ## Votre parcours
+
+### Organisation recommandée
+
+| Étape | Temps indicatif | Travail et résultat attendu |
+|----|---:|----|
+| 1\. Repérer ses besoins | 15 min | Faire une première tentative du [questionnaire formatif de régression](../../evaluations/questionnaire-regression.llms.md), sans aide; noter deux hésitations |
+| 2\. Consolider | 40 min | Lire la [synthèse structurée](../../modules/semaine-05-preparation-intra/synthese.llms.md), en priorité sur les notions fragiles; expliquer chaque formule avec ses unités |
+| 3\. Reproduire le raisonnement | 45 min | Exécuter les [exemples commentés avec R](../../modules/semaine-05-preparation-intra/demonstrations.llms.md); relier sortie, diagnostic et conclusion |
+| 4\. S’exercer progressivement | 80 min | Faire les [huit exercices](../../modules/semaine-05-preparation-intra/exercices.llms.md), avec R et ressources; ouvrir chaque corrigé après une tentative |
+| 5\. Vérifier l’autonomie | 60 min | Faire la [série de dix questions](../../modules/semaine-05-preparation-intra/pratique.llms.md), individuellement sans notes, sans exécuter R et sans IA |
+| 6\. Corriger et planifier | 30 min | Expliquer les corrections avec la [grille d’autoévaluation](../../modules/semaine-05-preparation-intra/autoevaluation.llms.md); choisir deux exercices à reprendre |
+
+Le parcours principal représente environ 4 h 30, à répartir sur plusieurs séances. Pour la reprise, faites la [série de 12 vrai ou faux et 12 choix multiples](../../modules/semaine-05-preparation-intra/questions-courtes.llms.md) : 30 minutes sans aide ni IA, puis 20 minutes de correction expliquée, idéalement deux jours après votre première série. Avec cette reprise, prévoyez environ 5 h 20 au total. Ces durées sont des estimations de travail, pas une durée d’examen. Les six supports de capsules ci-dessous sont des rappels facultatifs à consulter selon vos besoins.
+
+La série courte entraîne à prendre position, repérer une réponse plausible mais incorrecte et justifier son choix. Les huit mini-cas entraînent à construire une analyse plus longue. Alternez ces formats en gardant une trace de vos premières réponses.
+
+### Préparation et autonomie
+
+La préparation avec R et les ressources sert à comprendre et vérifier les gestes. Une aide, y compris le GPT du cours selon la politique du cours, peut expliquer une erreur après une tentative; vous devez vérifier son explication. La pratique individuelle mesure ensuite votre capacité à reconstruire le raisonnement sans aide ni IA. Ces deux étapes ont des objectifs différents.
+
+La [fiche de l’intra](../../evaluations/examen-intra.llms.md) confirme un examen individuel en personne, sans IA, accès Internet ou appareil connecté. Le matériel permis sera confirmé dans Brio. La feuille de référence et R utilisés pendant la préparation ne sont donc pas annoncés comme autorisés à l’examen.
+
+### Rappels par compétence
 
 > **NOTE:**
 >
-> Le support global de notes de cours est disponible en [HTML](../../modules/semaine-05-preparation-intra/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse de révision; les supports détaillés sont associés aux capsules.
+> La [synthèse structurée](../../modules/semaine-05-preparation-intra/synthese.llms.md) est le document principal de révision autonome. Le support compact de notes reste disponible en [HTML](../../modules/semaine-05-preparation-intra/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf). Les supports détaillés sont associés aux capsules.
+
+Les [huit exercices](../../modules/semaine-05-preparation-intra/exercices.llms.md) proposent des situations distinctes des capsules : audit de collecte, présence aux formations, préparation de kits, impression, céramique et service de bibliothèque. Les rappels ci-dessous servent à retrouver une compétence, sans imposer de refaire le scénario d’une capsule.
 
 Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.
 
@@ -165,7 +198,7 @@ Pour une question d’analyse, une réponse solide suit généralement cet ordre
 
 ## Ressources du module
 
-[CapsulesSix capsules de révision avec supports HTML/PDF.](capsules.llms.md) [Notes de coursSynthèse globale de préparation à l'examen intra.](notes-cours.llms.md) [Démonstrations RVoir une réponse complète à partir de données déjà utilisées.](demonstrations.llms.md) [ExercicesTester son autonomie avec des questions courtes.](exercices.llms.md) [LecturesPrioriser les ressources utiles pour la révision.](lectures.llms.md)
+[CapsulesSix capsules de révision avec supports HTML/PDF.](capsules.llms.md) [Synthèse structuréeNotions, formules, unités et limites des modules 01 à 04.](synthese.llms.md) [Notes de coursSynthèse globale de préparation à l'examen intra.](notes-cours.llms.md) [Démonstrations RVoir une réponse complète à partir de données déjà utilisées.](demonstrations.llms.md) [ExercicesExaminer huit mini-cas : export, ratios, graphiques, budget et modèles.](exercices.llms.md) [Vrai ou faux et choix multiples24 questions à justifier sans aide, puis corrigés et explication de chaque option.](questions-courtes.llms.md) [Pratique individuelleDix questions sans aide ni IA, puis solutions expliquées.](pratique.llms.md) [Autoévaluation et erreurs fréquentesVérifier une réponse et choisir une reprise ciblée.](autoevaluation.llms.md) [LecturesPrioriser les ressources utiles pour la révision.](lectures.llms.md)
 
 > **WARNING:**
 >
@@ -178,6 +211,8 @@ Pour une question d’analyse, une réponse solide suit généralement cet ordre
 > - Utiliser l’IA comme substitut à la compréhension personnelle pendant la préparation.
 
 ## Auto-vérification
+
+Complétez la [grille détaillée](../../modules/semaine-05-preparation-intra/autoevaluation.llms.md) après les exercices et la pratique. Conservez une première réponse, sa correction expliquée et un plan de reprise : c’est la trace finale de ce module.
 
 Avant de considérer la préparation comme terminée, je peux dire que :
 

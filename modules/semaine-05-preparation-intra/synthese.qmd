@@ -1,0 +1,168 @@
+---
+title: "Synthèse de révision - Modules 01 à 04"
+lang: fr
+format:
+  html:
+    embed-resources: true
+    include-in-header: media/affichage-mobile.html
+    toc-depth: 2
+---
+
+
+## Comment utiliser cette synthèse
+
+L'intra du dimanche 25 octobre 2026 porte sur les compétences des modules 01 à 04. Cette synthèse organise les notions déjà travaillées dans ces modules et dans les laboratoires 01 et 02. Elle accompagne les [exemples commentés](demonstrations.qmd), puis les [exercices](exercices.qmd). Les séries chronologiques du module 06 préparent les évaluations suivantes.
+
+Pour chaque section, expliquez la notion avec vos mots et reconstruisez un exemple. Une formule mémorisée sans unité, contexte ou justification ne suffit pas.
+
+## 1. Comprendre et vérifier les données {#donnees}
+
+Une observation est l'unité décrite par une ligne. Une variable est une caractéristique décrite par une colonne. L'unité de mesure indique ce que représente sa valeur. Dans les fichiers de succursales du cours, une ligne représente généralement une combinaison mois-succursale, et non un client individuel. Soixante lignes peuvent représenter cinq succursales observées pendant douze mois.
+
+| Type ou rôle | Exemple | Traitement pertinent |
+|---|---|---|
+| Numérique discrète | Nombre de clients ou de ruptures | Résumé numérique; indiquer la période |
+| Numérique continue | Délai moyen, montant des ventes | Centre, dispersion, graphique et unités |
+| Catégorielle nominale | Ville, canal, oui/non | Effectifs, proportions, groupes |
+| Catégorielle ordinale | Niveau faible, moyen, élevé | Garder l'ordre des modalités |
+| Date | Premier jour désignant un mois | Garder l'année et l'ordre temporel |
+| Identifiant ou code | Code de succursale; jour codé 1 à 7 | Étiquette; sa moyenne n'est pas un indicateur utile |
+
+Le type informatique lu par R doit être confronté au sens statistique. Un code numérique peut représenter une catégorie. Un score mensuel moyen de 8 sur 10 ne signifie pas que 80 % des personnes sont satisfaites.
+
+Avant l'analyse, vérifiez les dimensions, les noms et types, la période, les unités, les plages plausibles, les valeurs manquantes et les doublons de la clé attendue. Une même succursale à deux mois différents n'est pas un doublon. Deux lignes pour le même mois et la même succursale demandent une vérification avant toute suppression.
+
+`NA` signifie valeur inconnue; il ne signifie pas zéro. `na.rm = TRUE` exclut les valeurs manquantes du calcul, sans les remplacer et sans supprimer le risque de biais. Indiquez séparément le nombre de lignes et le nombre de valeurs disponibles. Pour un nuage de points ou un modèle, comptez les lignes complètes sur les variables utilisées. Évitez `drop_na()` sur toutes les colonnes quand seules deux variables servent à l'analyse.
+
+Sources du cours : [module 01](../semaine-01-introduction/index.qmd), [module 02](../semaine-02-r-quarto/index.qmd), [laboratoire 01](../atelier-01-r/guide-atelier.qmd).
+
+## 2. Choisir un résumé et un graphique {#graphiques}
+
+| Question | Tableau ou indicateur | Graphique | Commentaire attendu |
+|---|---|---|---|
+| Décrire une variable numérique | Effectif valide, moyenne, médiane, quartiles, étendue | Histogramme | Centre, dispersion, forme, valeurs inhabituelles |
+| Décrire une catégorie | Effectifs et proportions, avec dénominateur | Barres d'effectifs ou de proportions | Modalités et fréquence |
+| Comparer une mesure entre groupes | Résumés par groupe, avec effectifs | Boîtes à moustaches | Médianes, dispersion, recouvrement |
+| Comparer des totaux déjà calculés | Sommes sur une même période | Barres avec `geom_col()` | Volume et unités; attention à la taille des groupes |
+| Étudier deux variables numériques | Résumé ciblé; corrélation si la question est linéaire | Nuage de points | Direction, forme, dispersion, groupes, points à vérifier |
+| Décrire une évolution déjà observée | Dates et valeurs par groupe | Courbes avec `geom_line()` | Ordre des dates et groupes; aucune méthode de prévision nouvelle |
+
+La moyenne est sensible aux valeurs extrêmes; la médiane résume une position centrale plus robuste. L'intervalle interquartile est $Q_3-Q_1$. Ni le minimum ni une moyenne seule ne décrit toute la distribution.
+
+Un nombre brut mesure un volume. Un taux ou un ratio ramène ce volume à une exposition pertinente. Pour les ventes par client sur une période, `sum(ventes) / sum(clients)` donne le même poids à chaque client compté; la moyenne simple des ratios mensuels donne le même poids à chaque mois. Justifiez le dénominateur et comparez des périodes compatibles. Un taux de retour de 0,04 vaut 4 %; passer de 4 % à 5 % représente un point de pourcentage.
+
+La corrélation $r$ décrit la direction et l'intensité de l'association linéaire, entre -1 et 1. Elle n'a pas d'unité. Un $r$ proche de zéro n'exclut pas une relation courbée. Une association forte ne démontre pas une causalité.
+
+Sources du cours : modules [01](../semaine-01-introduction/notes-cours.qmd), [02](../semaine-02-r-quarto/exercices.qmd) et [03](../semaine-03-regression-lineaire/notes-cours.qmd), laboratoire [01](../atelier-01-r/guide-atelier.qmd).
+
+## 3. Lire un court code R {#code}
+
+| Geste | Commandes enseignées | Vérification |
+|---|---|---|
+| Charger et importer | `library(tidyverse)`, `read_csv()` | Séparateur, noms, chemin relatif |
+| Inspecter | `glimpse()`, `dim()`, `summary()`, `range()` | Sens des colonnes et valeurs plausibles |
+| Préparer | `mutate()`, `factor()`, `as.Date()` | Type adapté et transformations expliquées |
+| Sélectionner | `select()`, `filter()`, `drop_na()` | Colonnes et lignes gardées; `==` teste l'égalité |
+| Résumer | `group_by()`, `summarise()`, `n()`, `is.na()` | Groupe, unité, effectif disponible |
+| Représenter | `ggplot()`, `aes()`, `geom_point()`, `geom_col()` | Variable dans `aes()`, axes et groupes |
+| Modéliser | `lm()`, `coef()`, `summary()`, `predict()` | Réponse à gauche de `~`; noms des scénarios |
+
+Dans un projet, gardez les données dans `data/` et utilisez un chemin relatif. Un objet créé seulement dans la Console ne rend pas le rapport reproductible. Le `.qmd` doit charger les bibliothèques, importer et produire les résultats dans l'ordre. Redémarrer R et relancer Render permet de vérifier cette autonomie. Une erreur de code doit être corrigée en fonction de la question, puis le résultat doit être inspecté.
+
+Source du cours : [module 02](../semaine-02-r-quarto/index.qmd).
+
+## 4. Régression linéaire simple {#regression}
+
+Pour une réponse quantitative $Y$ et une explicative $x$ :
+
+$$Y_i=\beta_0+\beta_1x_i+\varepsilon_i,
+\qquad \widehat y_i=b_0+b_1x_i.$$
+
+Les coefficients $b_0$ et $b_1$ sont estimés. La droite des moindres carrés minimise $\sum_i(y_i-\widehat y_i)^2$.
+
+- La pente $b_1$ est la différence de réponse moyenne estimée pour une unité supplémentaire de $x$. Pour une hausse $h$, la différence prédite est $b_1h$. Indiquez les unités de $x$ et de $y$.
+- L'intercept $b_0$ est la valeur estimée à $x=0$. Il peut être sans interprétation pratique si zéro est hors de la plage observée ou impossible dans le contexte.
+- Une prédiction remplace $x$ par la valeur demandée. Elle ne garantit pas la valeur d'une observation particulière. Vérifiez la plage et le contexte avant de l'utiliser.
+- Si l'unité de $x$ change, le coefficient change pour représenter la même droite. Une pente par client n'est pas une pente par cent clients.
+
+Dans `summary(lm(...))`, `Estimate` contient les coefficients, `Std. Error` leur erreur-type, `t value` la statistique du test, `Pr(>|t|)` sa valeur p. L'erreur-type mesure l'incertitude d'estimation sous le modèle, pas une erreur de programmation.
+
+Pour $H_0:\beta_1=0$ contre $H_1:\beta_1\ne0$, $t=b_1/\operatorname{SE}(b_1)$. Au seuil fixé, une valeur p inférieure ou égale au seuil conduit à rejeter $H_0$, sous les hypothèses du modèle. Sinon, on ne rejette pas $H_0$; on n'a pas prouvé une pente nulle. La valeur p n'est ni la probabilité que $H_0$ soit vraie ni une mesure de l'ampleur de l'association. Le test ne démontre pas une cause.
+
+Un intervalle de confiance de pente donne une plage de coefficients compatible avec la procédure d'estimation. Ses bornes s'interprètent dans les mêmes unités que la pente. Les calculs classiques exacts supposent notamment une moyenne correctement spécifiée, des erreurs indépendantes, une variance constante et la normalité des erreurs. Calculer une droite ne suffit pas à vérifier ces hypothèses.
+
+Source du cours : [module 03, notes et exemples](../semaine-03-regression-lineaire/notes-cours.qmd).
+
+## 5. Résidus, R² et intervalles {#diagnostic}
+
+Le résidu est $e_i=y_i-\widehat y_i$, dans l'unité de la réponse. Un résidu positif signifie que le modèle sous-estime l'observation; un résidu négatif signifie qu'il la surestime.
+
+| Motif dans les résidus | Interprétation prudente | Suite pertinente |
+|---|---|---|
+| Courbe en U | Forme moyenne possiblement mal spécifiée | Examiner une courbure ou une transformation enseignée |
+| Dispersion en éventail | Variance possiblement non constante | Examiner la dispersion; prudence sur l'incertitude classique |
+| Points très éloignés | Observations à vérifier | Contrôler données et contexte avant de supprimer |
+| Écarts de signe par groupe | Structure de groupe omise possible | Comparer les résidus par succursale ou région |
+| Aucun motif évident | Pas de problème manifeste dans cette vue | Ne valide pas toutes les hypothèses |
+
+Avec une constante et les moindres carrés ordinaires, la moyenne globale des résidus est proche de zéro par construction. Cela ne prouve ni une bonne forme ni l'indépendance. Les mêmes succursales reviennent chaque mois : ce contexte demande une vérification supplémentaire de l'indépendance, sans ajouter ici de méthode de séries chronologiques.
+
+Pour une régression avec constante :
+
+$$R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}},\qquad
+\mathrm{SSE}=\sum_i(y_i-\widehat y_i)^2,\quad
+\mathrm{SST}=\sum_i(y_i-\bar y)^2.$$
+
+Un $R^2=0{,}70$ signifie que le modèle décrit 70 % de la variation observée de la réponse autour de sa moyenne sur les données d'ajustement. Il ne signifie pas 70 % de prédictions correctes. En régression simple avec constante, $R^2=r^2$; le signe de $r$ est donc perdu. Le R² ajusté pénalise l'ajout de paramètres mais reste un indicateur d'ajustement.
+
+`predict(..., interval = "confidence")` vise la moyenne pour un $x$ donné. `interval = "prediction"` vise une nouvelle observation et inclut sa dispersion autour de cette moyenne. Pour le même modèle, scénario et niveau, l'intervalle de prédiction est plus large. `fit` est l'estimation ponctuelle, `lwr` et `upr` les bornes. Les intervalles classiques sont conditionnels aux hypothèses du modèle; ils ne réparent pas une mauvaise forme et ne prennent pas automatiquement en compte la sélection du modèle.
+
+Source du cours : [module 03](../semaine-03-regression-lineaire/exercices.qmd) et [module 04](../semaine-04-regression-nonlineaire/notes-cours.qmd).
+
+## 6. Les formes enseignées au module 04 {#transformations}
+
+| Forme | Prédiction | Code de la formule | Point de vigilance |
+|---|---|---|---|
+| Droite | $b_0+b_1x$ | `y ~ x` | Variation constante par unité de x |
+| Quadratique | $b_0+b_1x+b_2x^2$ | `y ~ x + I(x^2)` | x et x² changent ensemble; garder le terme simple |
+| Logarithmique | $b_0+b_1\ln(x)$ | `y ~ log(x)` | x strictement positif; `log()` est le logarithme naturel |
+
+Ces formes sont linéaires en leurs coefficients et s'ajustent avec `lm()`. Le mot « non linéaire » décrit ici la forme de la relation à $x$. La réponse demeure dans son unité originale. Le parcours transforme l'explicative, sans demander une transformation logarithmique de la réponse ni une régression logistique.
+
+Pour une quadratique, comparez les prédictions aux deux valeurs demandées :
+
+$$\widehat y(x+h)-\widehat y(x)=b_1h+b_2(2xh+h^2).$$
+
+La hausse dépend de $x$. Pour un logarithme :
+
+$$\widehat y(x_2)-\widehat y(x_1)=b_1\ln(x_2/x_1).$$
+
+Une hausse de 10 % de $x$ donne $b_1\ln(1{,}10)$ unités de réponse, et non automatiquement 10 % de réponse en plus. Si $x$ est exprimé en milliers de visites, 100 visites supplémentaires correspondent à $h=0{,}1$.
+
+Une courbe qui ralentit n'établit pas un plafond : un logarithme croissant n'a pas de limite supérieure finie; une quadratique peut redescendre. Évitez de transformer une forme ajustée en mécanisme démontré.
+
+Source du cours : [module 04, démonstration](../semaine-04-regression-nonlineaire/demonstrations.qmd), [laboratoire 02](../atelier-02-regression/guide-atelier.qmd).
+
+## 7. Comparer des modèles équitablement {#comparaison}
+
+Comparez la même réponse, dans la même unité, sur les mêmes lignes. Les modèles doivent apprendre sur le même ensemble et être évalués sur les mêmes observations laissées de côté. Pour les cas du cours où les derniers mois sont conservés, la séparation est fixée avant de regarder leurs résultats.
+
+$$\mathrm{RMSE}=\sqrt{\frac1n\sum_i(y_i-\widehat y_i)^2}.$$
+
+La RMSE s'exprime dans l'unité de la réponse et accorde davantage de poids aux grandes erreurs. La MAE, également travaillée dans les exercices du module 04, est $n^{-1}\sum_i|y_i-\widehat y_i|$. Distinguez l'erreur d'apprentissage de l'erreur sur les observations mises de côté. N'opposez pas l'une à l'autre pour classer deux modèles.
+
+Sur les mêmes lignes, ajouter $x^2$ à une droite avec constante ne peut pas diminuer le R² d'apprentissage. Ce gain mécanique ne suffit pas. Appuyez le choix sur la forme, les résidus, l'erreur de validation et l'interprétabilité. Un gain faible peut justifier de conserver la forme simple; aucun seuil universel de gain n'est imposé ici.
+
+Si la validation sert au choix, elle ne constitue plus un test final indépendant de ce choix. Une courte période et des succursales déjà connues limitent la généralisation. Une extrapolation reste fragile même si la RMSE observée est faible.
+
+Source du cours : [module 04](../semaine-04-regression-nonlineaire/demonstrations.qmd) et [laboratoire 02](../atelier-02-regression/guide-atelier.qmd).
+
+## 8. Conclure dans la portée des données {#conclusion}
+
+Une conclusion utilisable répond à la question, donne un résultat avec unités, propose une décision proportionnée et explique une limite précise. Pour un modèle, ajoutez un diagnostic et la plage d'utilisation pertinente.
+
+Une association indique que des variables varient ensemble. Une prédiction donne une valeur estimée sous un modèle. Une conclusion causale porte sur l'effet d'une intervention : les tableaux observationnels du cours ne suffisent pas à l'établir. La taille, la période, la clientèle ou les ressources peuvent intervenir dans les associations observées.
+
+Canevas : « Dans [données et contexte], [résultat chiffré et unités] est associé à [variable]. [Diagnostic ou comparaison] appuie [choix provisoire]. [Limite précise] conduit à [prochaine vérification], avant [décision opérationnelle]. »
+
+La [grille d'autoévaluation](autoevaluation.qmd) permet de vérifier la réponse. Les modalités confirmées figurent dans la [fiche de l'intra](../../evaluations/examen-intra.qmd); une ressource utilisée pour réviser n'est pas automatiquement autorisée à l'examen.

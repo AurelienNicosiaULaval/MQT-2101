@@ -213,6 +213,31 @@ for (unit_id in learning_units) {
     next
   }
 
+  exercise_text <- read_text(exercise_path)
+
+  # La révision de l'intra utilise huit mini-cas autonomes intégrés à la page.
+  # Les autres unités conservent le contrôle d'un fichier de transfert unique.
+  embedded_revision <- unit_id == "semaine-05-preparation-intra" &&
+    grepl("Tous les mini-cas de cette page sont fictifs.", exercise_text, fixed = TRUE)
+  if (embedded_revision) {
+    required_tables <- c("collecte", "presence", "kits", "impression",
+                         "ceramique", "bornes", "formation")
+    for (table_name in required_tables) {
+      pattern <- paste0("(?m)^", table_name, "[[:space:]]*<-[[:space:]]*(tibble|tribble)\\(")
+      if (!grepl(pattern, exercise_text, perl = TRUE)) {
+        add_error(paste0(unit_id, " : tableau du mini-cas manquant : ", table_name, "."))
+      }
+    }
+    if (count_matches("(?m)^## Exercice [0-9]+", exercise_text) != 8L ||
+        count_matches('title="Solution détaillée [0-9]+"', exercise_text) != 8L) {
+      add_error(paste0(unit_id, " : huit mini-cas et huit solutions sont attendus."))
+    }
+    if (length(extract_csv_names(exercise_text)) > 0L) {
+      add_error(paste0(unit_id, " : les mini-cas annoncés doivent fournir leurs données dans la page."))
+    }
+    next
+  }
+
   transfer_dataset <- extract_transfer_dataset(exercise_path)
   if (length(transfer_dataset) != 1L) {
     add_error(paste0(unit_id, " : un seul jeu de données de transfert doit être annoncé."))
