@@ -8,7 +8,7 @@ Les sorties R de la pratique individuelle utilisent `ventes_pme_quebec.csv`, à 
 
 ## Exercices progressifs, révision du 2 octobre 2026
 
-Les huit exercices utilisent des mini-cas entièrement fictifs, distincts des données et scénarios des capsules. Les petits tableaux sont fournis dans `exercices.qmd`, avec le code R qui les crée. Ils ne décrivent aucune organisation réelle et ne nécessitent aucun nouveau fichier à télécharger.
+Les huit exercices utilisent des mini-cas entièrement fictifs, distincts des données et scénarios des exemples commentés. Les petits tableaux sont fournis dans `exercices.qmd`, avec le code R qui les crée. Ils ne décrivent aucune organisation réelle et ne nécessitent aucun nouveau fichier à télécharger.
 
 | Cas | Unité et variables principales | Construction pédagogique |
 |---|---|---|

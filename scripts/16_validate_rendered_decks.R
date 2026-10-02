@@ -37,8 +37,8 @@ cat("Supports :", length(files), "\n")
 cat("Diapositives :", nrow(slides), "\n")
 cat("Diapositives vides ou quasi vides :", nrow(blank_like), "\n")
 
-if (length(files) != 50) {
-  stop("Le nombre de supports rendus devrait être 50.")
+if (length(files) != 44) {
+  stop("Le nombre de supports rendus devrait être 44; le module 05 est une révision sans capsules.")
 }
 
 if (nrow(blank_like) > 0) {

@@ -15,7 +15,7 @@ course_modules <- data.frame(
     "semaine-09-variables-externes-autocorrelation",
     "semaine-10-classification-modeles-avances"
   ),
-  capsules = c(6L, 6L, 6L, 6L, 6L, 4L, 4L, 4L, 4L, 4L),
+  capsules = c(6L, 6L, 6L, 6L, 0L, 4L, 4L, 4L, 4L, 4L),
   stringsAsFactors = FALSE
 )
 
@@ -82,12 +82,21 @@ for (i in seq_len(nrow(course_modules))) {
   expected_capsules <- course_modules$capsules[[i]]
   directory <- file.path("modules", module_id)
 
-  check_required_files(module_id, required_module_files)
+  # Le module 05 est un parcours de révision, sans nouvelle capsule.
+  is_revision <- module_id == "semaine-05-preparation-intra"
+  required_files <- if (is_revision) {
+    c(setdiff(required_module_files, "capsules.qmd"),
+      "synthese.qmd", "pratique.qmd", "questions-courtes.qmd", "autoevaluation.qmd")
+  } else {
+    required_module_files
+  }
+  check_required_files(module_id, required_files)
 
   capsules_path <- file.path(directory, "capsules.qmd")
   index_path <- file.path(directory, "index.qmd")
 
   if (file.exists(capsules_path)) {
+    if (is_revision) add_error("Module 05 : une page de capsules ne fait pas partie du parcours de révision.")
     capsules_text <- read_text(capsules_path)
     actual_capsules <- count_matches("(?m)^## Capsule [0-9]+", capsules_text)
 
@@ -159,6 +168,10 @@ for (i in seq_len(nrow(course_modules))) {
 
   module_paths <- list.files(directory, pattern = "[.]qmd$", full.names = TRUE)
   module_text <- paste(vapply(module_paths, read_text, character(1)), collapse = "\n")
+  if (is_revision && grepl("capsules[.](qmd|html)|<video\\b|youtube[.]com|youtu[.]be",
+                           module_text, ignore.case = TRUE, perl = TRUE)) {
+    add_error("Module 05 : une ressource de révision renvoie encore à une capsule ou une vidéo.")
+  }
   has_concrete_trace <- any(vapply(
     c("Trace finale", "Production attendue", "À produire", ">Production<"),
     grepl,

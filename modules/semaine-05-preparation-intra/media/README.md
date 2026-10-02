@@ -1,15 +1,7 @@
-# Médias - Semaine 05
+# Ressources de révision du module 05
 
-Ce dossier sert à préparer les médias publics du module.
+Ce dossier contient le PDF du support compact de révision (`pdf/notes-cours.pdf`) et les éléments d’affichage des pages du module.
 
-## Sous-dossiers
+La préparation repose sur la synthèse, les exemples commentés, les exercices, les questions individuelles et leurs corrigés. Les contenus reprennent les modules 01 à 04.
 
-- `videos/` : vidéos courtes intégrées dans les capsules.
-- `pdf/` : supports PDF générés à partir des contenus Quarto.
-
-## Règles
-
-- ne pas publier de documents privés ou protégés sans validation;
-- privilégier des vidéos courtes;
-- garder le même numéro de capsule entre vidéo, support;
-- documenter toute source ancienne utilisée.
+Le PDF et le support HTML de révision doivent rester synchronisés.

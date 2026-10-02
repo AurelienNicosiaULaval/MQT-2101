@@ -26,12 +26,12 @@ if (!dir_exists(docs_dir)) {
 deck_sources <- dir_ls(
   path(project_dir, "modules"),
   recurse = TRUE,
-  regexp = "semaine-0[1-5].*/media/qmd/capsule-[0-9]{2}-support\\.qmd$"
+  regexp = "semaine-0[1-4].*/media/qmd/capsule-[0-9]{2}-support\\.qmd$"
 ) |>
   sort()
 
-if (length(deck_sources) != 30L) {
-  stop(glue("30 supports PDF étaient attendus; {length(deck_sources)} ont été trouvés."))
+if (length(deck_sources) != 24L) {
+  stop(glue("24 supports PDF étaient attendus; {length(deck_sources)} ont été trouvés."))
 }
 
 server_log <- tempfile("mqt2101-pdf-server-", fileext = ".log")
@@ -108,4 +108,4 @@ generate_pdf <- function(source_path) {
 }
 
 walk(deck_sources, generate_pdf)
-message("30 PDF de capsules ont été régénérés à partir des supports HTML validés.")
+message("24 PDF de capsules ont été régénérés à partir des supports HTML validés.")

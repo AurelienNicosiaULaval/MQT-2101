@@ -62,7 +62,7 @@ Si vous ne savez pas encore nommer l’unité d’observation, traiter un NA ou 
 | 5\. Vérifier l’autonomie | 60 min | Faire la [série de dix questions](../../modules/semaine-05-preparation-intra/pratique.llms.md), individuellement sans notes, sans exécuter R et sans IA |
 | 6\. Corriger et planifier | 30 min | Expliquer les corrections avec la [grille d’autoévaluation](../../modules/semaine-05-preparation-intra/autoevaluation.llms.md); choisir deux exercices à reprendre |
 
-Le parcours principal représente environ 4 h 30, à répartir sur plusieurs séances. Pour la reprise, faites la [série de 12 vrai ou faux et 12 choix multiples](../../modules/semaine-05-preparation-intra/questions-courtes.llms.md) : 30 minutes sans aide ni IA, puis 20 minutes de correction expliquée, idéalement deux jours après votre première série. Avec cette reprise, prévoyez environ 5 h 20 au total. Ces durées sont des estimations de travail, pas une durée d’examen. Les six supports de capsules ci-dessous sont des rappels facultatifs à consulter selon vos besoins.
+Le parcours principal représente environ 4 h 30, à répartir sur plusieurs séances. Pour la reprise, faites la [série de 12 vrai ou faux et 12 choix multiples](../../modules/semaine-05-preparation-intra/questions-courtes.llms.md) : 30 minutes sans aide ni IA, puis 20 minutes de correction expliquée, idéalement deux jours après votre première série. Avec cette reprise, prévoyez environ 5 h 20 au total. Ces durées sont des estimations de travail, pas une durée d’examen.
 
 La série courte entraîne à prendre position, repérer une réponse plausible mais incorrecte et justifier son choix. Les huit mini-cas entraînent à construire une analyse plus longue. Alternez ces formats en gardant une trace de vos premières réponses.
 
@@ -76,83 +76,71 @@ La [fiche de l’intra](../../evaluations/examen-intra.llms.md) confirme un exam
 
 > **NOTE:**
 >
-> La [synthèse structurée](../../modules/semaine-05-preparation-intra/synthese.llms.md) est le document principal de révision autonome. Le support compact de notes reste disponible en [HTML](../../modules/semaine-05-preparation-intra/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf). Les supports détaillés sont associés aux capsules.
+> La [synthèse structurée](../../modules/semaine-05-preparation-intra/synthese.llms.md) est le document principal de révision autonome. Un support compact de révision est aussi disponible en [HTML](../../modules/semaine-05-preparation-intra/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf).
 
-Les [huit exercices](../../modules/semaine-05-preparation-intra/exercices.llms.md) proposent des situations distinctes des capsules : audit de collecte, présence aux formations, préparation de kits, impression, céramique et service de bibliothèque. Les rappels ci-dessous servent à retrouver une compétence, sans imposer de refaire le scénario d’une capsule.
+Les [huit exercices](../../modules/semaine-05-preparation-intra/exercices.llms.md) proposent des situations variées : audit de collecte, présence aux formations, préparation de kits, impression, céramique et service de bibliothèque. Les repères ci-dessous permettent de retrouver directement les passages de la synthèse et les exercices utiles à votre révision.
 
-Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.
+Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour retrouver une compétence, ses ressources écrites et les éléments à vérifier dans votre réponse.
 
-1Lire la questionReformuler la demande avant de calculer.[Capsule 1](capsules.llms.md#capsule-1---lire-la-question-avant-de-calculer)[Ex. 1](exercices.llms.md#exercice-1---identifier-la-question)Ouvrir l'étapeRéduire
+1Lire la question et les donnéesNommer la demande, les observations et les variables.[Synthèse](synthese.llms.md#donnees)[Exercice 1](exercices.llms.md#exercice-1---identifier-la-question)Ouvrir le repèreRéduire
 
-Objectif Distinguer décrire, comparer, modéliser, prédire et interpréter.
+Objectif Distinguer décrire, comparer, modéliser et prédire avant tout calcul.
 
-Ressource [Capsule 1](capsules.llms.md#capsule-1---lire-la-question-avant-de-calculer) [Exercice 1](exercices.llms.md#exercice-1---identifier-la-question)
+Ressources [Synthèse](synthese.llms.md#donnees) [Exercice 1](exercices.llms.md#exercice-1---identifier-la-question)
 
-Action Écrire le plan de réponse avant le code.
+À vérifier dans votre réponse
 
-Activité 5.1 - Plan de réponse
+Reformulez une question en une phrase, puis nommez l'unité d'observation et une vérification de qualité.
 
-Reformulez une question en une phrase et nommez la méthode prévue.
+2Choisir un résumé et un graphiqueRelier la représentation à la question et aux types de variables.[Synthèse](synthese.llms.md#graphiques)[Exercice 3](exercices.llms.md#exercice-3---réponse-descriptive-courte)Ouvrir le repèreRéduire
 
-2Diagnostiquer les donnéesVérifier unité d'observation, types et valeurs manquantes.[Capsule 2](capsules.llms.md#capsule-2---préparer-les-données-et-le-diagnostic-minimal)Ouvrir l'étapeRéduire
+Objectif Justifier le graphique et le résumé retenus, avec le bon dénominateur.
 
-Objectif Installer les vérifications minimales avant toute analyse.
+Ressources [Synthèse](synthese.llms.md#graphiques) [Exercice 3](exercices.llms.md#exercice-3---réponse-descriptive-courte)
 
-Ressource [Capsule 2](capsules.llms.md#capsule-2---préparer-les-données-et-le-diagnostic-minimal)
+À vérifier dans votre réponse
 
-Action Nommer l'unité d'observation et les variables utilisées.
+Expliquez ce que montrent le centre, la dispersion et les observations particulières; vérifiez aussi les taux dans l'exercice 2.
 
-Activité 5.2 - Diagnostic minimal
+3Lire une régression et prédireInterpréter la sortie R et calculer avec les bonnes unités.[Synthèse](synthese.llms.md#regression)[Exercice 4](exercices.llms.md#exercice-4---interpréter-une-pente)Ouvrir le repèreRéduire
 
-Écrivez une phrase qui indique l'unité d'observation, les variables et une limite.
+Objectif Relier coefficients, unités, prédiction et plage observée.
 
-3Répondre descriptivementProduire tableau, graphique, constat et limite.[Capsule 3](capsules.llms.md#capsule-3---répondre-à-une-question-descriptive)[Ex. 3](exercices.llms.md#exercice-3---réponse-descriptive-courte)Ouvrir l'étapeRéduire
+Ressources [Synthèse](synthese.llms.md#regression) [Exercice 4](exercices.llms.md#exercice-4---interpréter-une-pente)
 
-Objectif Structurer une réponse descriptive courte et prudente.
+À vérifier dans votre réponse
 
-Ressource [Capsule 3](capsules.llms.md#capsule-3---répondre-à-une-question-descriptive) [Exercice 3](exercices.llms.md#exercice-3---réponse-descriptive-courte)
+Interprétez la pente, calculez une prédiction et indiquez si la constante a un sens dans le contexte.
 
-Action Relier un tableau, un graphique et un constat.
+4Reconnaître une forme et comparerJustifier le modèle avec la forme et l'erreur de validation.[Synthèse](synthese.llms.md#transformations)[Exercice 5](exercices.llms.md#exercice-5---choisir-entre-deux-modèles)Ouvrir le repèreRéduire
 
-Activité 5.3 - Réponse descriptive
+Objectif Comparer les formes enseignées sur une même cible et les mêmes observations de validation.
 
-Rédigez : méthode, résultat, constat, limite.
+Ressources [Synthèse](synthese.llms.md#transformations) [Exercice 5](exercices.llms.md#exercice-5---choisir-entre-deux-modèles)
 
-4Répondre avec une régressionInterpréter une pente, un ajustement et un diagnostic.[Capsule 4](capsules.llms.md#capsule-4---répondre-à-une-question-de-régression)[Démo](demonstrations.llms.md#ajuster-un-modèle)[Ex. 4](exercices.llms.md#exercice-4---interpréter-une-pente)Ouvrir l'étapeRéduire
+À vérifier dans votre réponse
 
-Objectif Répondre à une question de modèle sans se limiter à la sortie R.
+Justifiez le choix par la forme, l'erreur, les résidus et une limite; vérifiez les transformations dans l'exercice 7.
 
-Ressource [Capsule 4](capsules.llms.md#capsule-4---répondre-à-une-question-de-régression) [Démonstration](demonstrations.llms.md#ajuster-un-modèle) [Exercice 4](exercices.llms.md#exercice-4---interpréter-une-pente)
+5Lire les résidus et l’incertitudeExaminer la structure des erreurs et la cible de l'intervalle.[Synthèse](synthese.llms.md#diagnostic)[Exercice 6](exercices.llms.md#exercice-6---mini-réponse-complète)[Exercice 8](exercices.llms.md#exercice-8)Ouvrir le repèreRéduire
 
-Action Interpréter la pente avec unités et limite causale.
+Objectif Repérer un diagnostic insuffisant et distinguer moyenne prédite et nouvelle observation.
 
-Activité 5.4 - Pente et diagnostic
+Ressources [Synthèse](synthese.llms.md#diagnostic) [Exercice 6](exercices.llms.md#exercice-6---mini-réponse-complète) [Exercice 8](exercices.llms.md#exercice-8)
 
-Rédigez : question, pente, ajustement, diagnostic, limite, conclusion.
+À vérifier dans votre réponse
 
-5Choisir entre deux modèlesJustifier un choix avec plusieurs critères.[Capsule 5](capsules.llms.md#capsule-5---choisir-entre-deux-modèles)[Ex. 5](exercices.llms.md#exercice-5---choisir-entre-deux-modèles)Ouvrir l'étapeRéduire
+Décrivez les résidus sans affirmer que le modèle est validé; expliquez pourquoi l'intervalle de prédiction est plus large.
 
-Objectif Comparer deux modèles sans choisir automatiquement le plus complexe.
+6Construire une conclusion autonomeRédiger une réponse avec contexte, unités et limites.[Pratique individuelle](pratique.llms.md)[Autoévaluation](autoevaluation.llms.md)Ouvrir le repèreRéduire
 
-Ressource [Capsule 5](capsules.llms.md#capsule-5---choisir-entre-deux-modèles) [Exercice 5](exercices.llms.md#exercice-5---choisir-entre-deux-modèles)
+Objectif Reconstruire le raisonnement sans aide, puis expliquer les corrections.
 
-Action Préparer un argument visuel, un argument numérique et une limite.
+Ressources [Pratique individuelle](pratique.llms.md) [Autoévaluation](autoevaluation.llms.md)
 
-Activité 5.5 - Choix de modèle
+À vérifier dans votre réponse
 
-Justifiez un choix en utilisant graphique, erreur, résidus et interprétation.
-
-6Finaliser la réponseRelire question, méthode, résultat, diagnostic, limite et conclusion.[Capsule 6](capsules.llms.md#capsule-6---relire-et-finaliser-une-réponse-dexamen)[Ex. 6](exercices.llms.md#exercice-6---mini-réponse-complète)Ouvrir l'étapeRéduire
-
-Objectif Produire une réponse courte, complète et défendable.
-
-Ressource [Capsule 6](capsules.llms.md#capsule-6---relire-et-finaliser-une-réponse-dexamen) [Exercice 6](exercices.llms.md#exercice-6---mini-réponse-complète)
-
-Action Relire la réponse avec une checklist.
-
-Activité 5.6 - Checklist finale
-
-Cochez les éléments présents et corrigez ce qui manque.
+Vérifiez la présence de la question, du résultat, du diagnostic et de la limite; corrigez toute affirmation causale excessive.
 
 ## Ce qui est couvert
 
@@ -198,7 +186,7 @@ Pour une question d’analyse, une réponse solide suit généralement cet ordre
 
 ## Ressources du module
 
-[CapsulesSix capsules de révision avec supports HTML/PDF.](capsules.llms.md) [Synthèse structuréeNotions, formules, unités et limites des modules 01 à 04.](synthese.llms.md) [Notes de coursSynthèse globale de préparation à l'examen intra.](notes-cours.llms.md) [Démonstrations RVoir une réponse complète à partir de données déjà utilisées.](demonstrations.llms.md) [ExercicesExaminer huit mini-cas : export, ratios, graphiques, budget et modèles.](exercices.llms.md) [Vrai ou faux et choix multiples24 questions à justifier sans aide, puis corrigés et explication de chaque option.](questions-courtes.llms.md) [Pratique individuelleDix questions sans aide ni IA, puis solutions expliquées.](pratique.llms.md) [Autoévaluation et erreurs fréquentesVérifier une réponse et choisir une reprise ciblée.](autoevaluation.llms.md) [LecturesPrioriser les ressources utiles pour la révision.](lectures.llms.md)
+[Synthèse structuréeNotions, formules, unités et limites des modules 01 à 04.](synthese.llms.md) [Support compact de révisionRappels pour préparer l'intra, en HTML et en PDF.](notes-cours.llms.md) [Exemples commentés avec RReconstituer le raisonnement, vérifier les calculs et interpréter les résultats.](demonstrations.llms.md) [ExercicesExaminer huit mini-cas : export, ratios, graphiques, budget et modèles.](exercices.llms.md) [Vrai ou faux et choix multiples24 questions à justifier sans aide, puis corrigés et explication de chaque option.](questions-courtes.llms.md) [Pratique individuelleDix questions sans aide ni IA, puis solutions expliquées.](pratique.llms.md) [Autoévaluation et erreurs fréquentesVérifier une réponse et choisir une reprise ciblée.](autoevaluation.llms.md) [LecturesPrioriser les ressources utiles pour la révision.](lectures.llms.md)
 
 > **WARNING:**
 >
