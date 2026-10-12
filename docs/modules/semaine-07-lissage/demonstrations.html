@@ -7055,10 +7055,10 @@ display: none;
   <ul>
   <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
   <li><a href="#lisser-pour-explorer" id="toc-lisser-pour-explorer" class="nav-link" data-scroll-target="#lisser-pour-explorer">1. Lisser pour explorer</a></li>
-  <li><a href="#séparer-entraînement-et-test" id="toc-séparer-entraînement-et-test" class="nav-link" data-scroll-target="#séparer-entraînement-et-test">2. Séparer entraînement et test</a></li>
+  <li><a href="#séparer-apprentissage-et-validation" id="toc-séparer-apprentissage-et-validation" class="nav-link" data-scroll-target="#séparer-apprentissage-et-validation">2. Séparer apprentissage et validation</a></li>
   <li><a href="#produire-trois-prévisions" id="toc-produire-trois-prévisions" class="nav-link" data-scroll-target="#produire-trois-prévisions">3. Produire trois prévisions</a></li>
   <li><a href="#comparer-les-erreurs" id="toc-comparer-les-erreurs" class="nav-link" data-scroll-target="#comparer-les-erreurs">4. Comparer les erreurs</a></li>
-  <li><a href="#visualiser-la-période-test" id="toc-visualiser-la-période-test" class="nav-link" data-scroll-target="#visualiser-la-période-test">5. Visualiser la période test</a></li>
+  <li><a href="#visualiser-la-période-de-validation" id="toc-visualiser-la-période-de-validation" class="nav-link" data-scroll-target="#visualiser-la-période-de-validation">5. Visualiser la période de validation</a></li>
   <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
   </ul>
 </nav>
@@ -7135,8 +7135,8 @@ display: none;
 </div>
 </div>
 </section>
-<section id="séparer-entraînement-et-test" class="level2">
-<h2 class="anchored" data-anchor-id="séparer-entraînement-et-test">2. Séparer entraînement et test</h2>
+<section id="séparer-apprentissage-et-validation" class="level2">
+<h2 class="anchored" data-anchor-id="séparer-apprentissage-et-validation">2. Séparer apprentissage et validation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>horizon <span class="ot">&lt;-</span> <span class="dv">13</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> demande <span class="sc">|&gt;</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="fu">nrow</span>(demande) <span class="sc">-</span> horizon)</span>
@@ -7194,8 +7194,8 @@ display: none;
 </div>
 </div>
 </section>
-<section id="visualiser-la-période-test" class="level2">
-<h2 class="anchored" data-anchor-id="visualiser-la-période-test">5. Visualiser la période test</h2>
+<section id="visualiser-la-période-de-validation" class="level2">
+<h2 class="anchored" data-anchor-id="visualiser-la-période-de-validation">5. Visualiser la période de validation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>comparaison <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(naive<span class="sc">:</span>lissage_exponentiel, <span class="at">names_to =</span> <span class="st">&quot;methode&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;prevision&quot;</span>) <span class="sc">|&gt;</span></span>
@@ -7220,7 +7220,7 @@ display: none;
 </section>
 <section id="interprétation" class="level2">
 <h2 class="anchored" data-anchor-id="interprétation">Interprétation</h2>
-<p>Le tableau permet de classer les méthodes pour cette période test. Il ne garantit pas que le classement sera identique la saison suivante. La trace finale doit donc expliquer le choix et nommer cette limite.</p>
+<p>Le tableau permet de classer les méthodes pour cette période de validation. Il ne garantit pas que le classement sera identique la saison suivante. La trace finale doit donc expliquer le choix et nommer cette limite.</p>
 
 
 </section>

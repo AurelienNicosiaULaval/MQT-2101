@@ -60,7 +60,9 @@ ggplot(demande, aes(semaine, demande)) +
 >
 > Décrivez un motif stable, un motif incertain et une limite du graphique.
 
-## Étape 3 - Geler la période test
+## Étape 3 - Geler la période de validation
+
+Les treize dernières semaines reprennent le cas de transfert du module 06. Elles servent à comparer les méthodes annoncées ci-dessous. Les paramètres sont estimés sur les semaines précédentes; les scores obtenus ne constituent pas un test final indépendant du choix de méthode.
 
 ``` r
 horizon <- 13
@@ -68,9 +70,11 @@ entrainement <- demande |> slice_head(n = nrow(demande) - horizon)
 test <- demande |> slice_tail(n = horizon)
 ```
 
-Notez explicitement la dernière date d’entraînement et la première date de test.
+Notez explicitement la dernière date d’entraînement et la première date de validation.
 
 ## Étape 4 - Construire les références
+
+La [capsule 2 du module 07](../../modules/semaine-07-lissage/capsules.llms.md#holt) explique Holt : un niveau, une pente et, ici, un amortissement de la pente. Cette méthode complète les références naïves et le lissage simple; elle n’intègre pas explicitement la saisonnalité.
 
 ``` r
 serie <- ts(entrainement$demande, frequency = 52)
@@ -123,7 +127,7 @@ evaluation |>
   ggplot(aes(semaine)) +
   geom_line(aes(y = observe), colour = "black", linewidth = 1) +
   geom_line(aes(y = prevision, colour = methode), linewidth = 0.8) +
-  labs(title = "Comparaison sur la période test", x = NULL, y = "Demande", colour = "Méthode") +
+  labs(title = "Comparaison sur la période de validation", x = NULL, y = "Demande", colour = "Méthode") +
   theme_minimal(base_size = 12)
 ```
 
@@ -195,7 +199,13 @@ couts
 
 > **IMPORTANT:**
 >
-> Votre recommandation doit nommer la méthode, la preuve test, le coût simulé, une limite et le moment où la méthode sera réévaluée.
+> Votre recommandation doit nommer la méthode, la preuve de validation, le coût simulé, une limite et le moment où la méthode sera réévaluée.
+
+## Point de contrôle du mini-rapport 2
+
+Apportez la proposition de données validée et votre protocole. Pour la voie temporelle, précisez l’origine, l’horizon, les références et le bloc de validation. Pour la voie classification, préparez le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) : cible binaire, classe positive, séparation des données, probabilités, deux seuils et critère de décision.
+
+Le contrôle porte sur votre analyse autonome. Les résultats du cas de demande du laboratoire servent à l’entraînement et ne remplacent pas les résultats du mini-rapport.
 
 ## Vérification finale
 
@@ -203,7 +213,7 @@ Le fichier se rend en HTML.
 
 Les dates et unités sont explicites.
 
-La période test n’a pas servi à l’ajustement.
+La période de validation n’a pas servi à l’ajustement.
 
 La méthode saisonnière naïve est incluse comme référence.
 

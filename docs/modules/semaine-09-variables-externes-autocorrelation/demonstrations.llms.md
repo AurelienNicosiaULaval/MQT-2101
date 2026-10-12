@@ -87,6 +87,10 @@ Box.test(residus_lm, lag = 12, type = "Ljung-Box", fitdf = 0)
 
 ## 4. Ajuster une régression avec erreurs AR(1)
 
+> **NOTE:**
+>
+> Le code fournit au modèle les valeurs externes observées sur les douze mois de validation. Il compare donc les modèles conditionnellement à ces valeurs. L’indice de confiance futur, par exemple, n’est pas automatiquement connu à l’origine. Pour une prévision opérationnelle, remplacez ces entrées par des valeurs planifiées, prévues ou scénarisées disponibles à cette date. Les intervalles conditionnels ne résument pas toute l’incertitude de ces entrées.
+
 ``` r
 x_train <- model.matrix(
   ~ tendance + promotion + prix_moyen + indice_confiance + mois,
@@ -108,7 +112,7 @@ modele_ar1 <- Arima(
 prevision_ar1 <- forecast(modele_ar1, xreg = x_test, h = nrow(test))
 ```
 
-## 5. Comparer sur la période test
+## 5. Comparer sur la période de validation
 
 ``` r
 comparaison <- test |>

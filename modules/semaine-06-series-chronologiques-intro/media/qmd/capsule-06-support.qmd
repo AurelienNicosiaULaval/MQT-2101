@@ -1,0 +1,291 @@
+---
+title: "Capsule 6 - Communiquer l’incertitude"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| include: false
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
+```
+
+## Pourquoi ça compte
+
+::: {.question-line}
+Une seule valeur suffit-elle au suivi énergétique?
+:::
+::: {.note-box}
+Une prévision ponctuelle ne décrit pas l’incertitude autour des besoins mensuels en énergie.
+:::
+
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Distinguer point et intervalle.
+- Lire un cône de prédiction.
+- Nommer les hypothèses qui limitent l’intervalle.
+:::
+
+
+## Un point et une plage
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Point
+:::
+::: {.text}
+Une valeur prévue
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Intervalle
+:::
+::: {.text}
+Une plage avec un niveau nominal
+:::
+:::
+:::
+
+::: {.notes}
+Une plage plus large signale une incertitude plus importante. Un intervalle de prédiction vise une nouvelle observation; un intervalle de confiance pour une moyenne ou un paramètre vise un autre objet. La précision d’un point et la couverture d’un intervalle sont distinctes.
+:::
+
+## Interpréter 95 %
+
+::: {.note-box}
+Sur des répétitions comparables, une procédure calibrée à 95 % couvre la future observation dans environ 95 % des cas.
+:::
+
+::: {.notes}
+Cette interprétation suppose un modèle et des conditions adéquats. Elle n’est pas une garantie pour cette observation particulière. Un intervalle usuel par horizon n’est pas automatiquement une bande simultanée qui couvre toute la trajectoire à 95 %. La rupture de régime ou une variable future inconnue peut rendre l’intervalle trompeur.
+:::
+
+## Une approximation normale
+
+::: {.example-box}
+$$\widehat y_{T+h\mid T}\ \pm\ 1{,}96\,\widehat\sigma_h.$$
+:::
+::: {.note-box}
+Pour 95 %, si l’approximation normale et l’écart-type prédictif sont appropriés.
+:::
+
+::: {.notes}
+La distribution prédictive et la prise en compte de l’estimation doivent être justifiées. Un histogramme avec douze erreurs ne valide pas ces conditions. Des modèles et procédures simulées peuvent produire des intervalles asymétriques. Une formule de cours ne doit pas être appliquée à tout modèle sans contrôle.
+:::
+
+## Plus loin, plus incertain?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Niveau nominal plus élevé
+:::
+::: {.text}
+intervalle généralement plus large
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Horizon plus lointain
+:::
+::: {.text}
+incertitude souvent accrue
+:::
+:::
+:::
+
+::: {.notes}
+À modèle et horizon fixés, des intervalles emboîtés à 80 et 95 % ont des largeurs différentes. L’incertitude peut croître avec l’horizon, mais ce n’est pas une loi universelle pour toute série et toute méthode. Les saisonnalités et les paramètres peuvent modifier la forme du cône.
+:::
+
+## Lire un cône de prédiction
+
+```{r}
+#| label: m06-c6-cone
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.5
+#| out-width: "88%"
+prevision <- forecast(ets(analyse$serie, model = "AAN"), h = 12, level = c(80, 95))
+autoplot(prevision) + labs(title = "Prévisions et intervalles nominaux",
+  x = "Année", y = "Consommation (kWh)",
+  subtitle = "Illustration ETS(A,A,N), ajustée uniquement sur 2020 à 2024") +
+  scale_y_continuous(labels = function(x) nombre_fr(x))
+```
+
+::: {.note-box}
+À h = 12, la borne à 95 % devient négative : limite du modèle pour une consommation d’énergie.
+:::
+
+::: {.notes}
+La ligne centrale est la prévision ponctuelle; les zones représentent ici les niveaux 80 et 95 %. Le modèle est un exemple pour lire l’incertitude, pas un vainqueur sélectionné. Les détails du lissage seront étudiés au module 7. Dans ce cas, la borne inférieure à 95 % devient négative à h = 12, ce qui n’a pas de sens physique pour une consommation d’énergie. Cette limite invite à revoir la structure et la calibration du modèle avant un usage opérationnel.
+:::
+
+## Lire les trois lettres ETS
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+E
+:::
+::: {.label}
+type d’erreur
+:::
+:::
+::: {.metric}
+::: {.value}
+T
+:::
+::: {.label}
+type de tendance
+:::
+:::
+::: {.metric}
+::: {.value}
+S
+:::
+::: {.label}
+type de saisonnalité
+:::
+:::
+:::
+::: {.note-box}
+A : additif. M : multiplicatif. N : absence de tendance ou saisonnalité. Z : choix automatique dans forecast::ets().
+:::
+
+::: {.notes}
+AAN possède une erreur additive, une tendance additive et aucune saisonnalité; AAA possède une saisonnalité additive. Une tendance peut aussi être amortie. Toutes les combinaisons de lettres ne correspondent pas à un modèle admissible, et les composantes multiplicatives imposent des conditions de positivité. Le nombre de modèles admissibles dépend donc des restrictions de leurs composantes.
+:::
+
+## Comparer des cônes sans choisir à l’œil
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+ANN, AAN, AAA
+:::
+::: {.text}
+trois structures illustratives
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Validation
+:::
+::: {.text}
+comparer erreurs et couverture
+:::
+:::
+:::
+
+::: {.notes}
+Le code des démonstrations reproduit trois cônes sur la même origine. La largeur seule ne mesure pas la qualité: un intervalle très large peut couvrir sans être utile. Une comparaison sérieuse lit la couverture empirique, la largeur et les performances par horizon. Les rares observations de ce module n’établissent pas la calibration.
+:::
+
+## Relier l’intervalle à une décision
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Capacité
+:::
+::: {.text}
+risque de dépassement
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Budget
+:::
+::: {.text}
+marge et scénario défavorable
+:::
+:::
+:::
+
+::: {.notes}
+La décision demande un coût, une contrainte et parfois un quantile adapté. Le point moyen n’est pas toujours le seuil adapté au suivi énergétique. Les intervalles conditionnels à un scénario externe n’intègrent pas nécessairement l’incertitude de ce scénario.
+:::
+
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Point
+:::
+::: {.label}
+une prévision centrale
+:::
+:::
+::: {.metric}
+::: {.value}
+Plage
+:::
+::: {.label}
+un niveau nominal
+:::
+:::
+::: {.metric}
+::: {.value}
+Limite
+:::
+::: {.label}
+hypothèses et contexte
+:::
+:::
+:::
+
+
+## Production autonome 6.6
+
+::: {.lead}
+Produisez le cône ETS(A,A,N) à l’origine de décembre 2024. Comparez les intervalles à 80 % et 95 % pour h = 1 et h = 12. Expliquez son usage et une limite.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J’ai nommé l’origine, l’horizon et le niveau de chaque intervalle.
+- J’ai comparé les intervalles à 80 % et 95 % pour les horizons de un et douze mois.
+- J’ai expliqué un usage et une limite sans annoncer une certitude ni la couverture de toute la trajectoire.
+:::

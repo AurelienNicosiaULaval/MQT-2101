@@ -6,7 +6,9 @@
 
 ## Continuité du parcours
 
-Après les méthodes de lissage du module 07, vous cherchez maintenant une structure explicable dans la série. La même séparation entraînement-test et les mêmes mesures d’erreur restent nécessaires.
+Après les méthodes de lissage du module 07, vous cherchez maintenant une structure explicable dans la série. La même séparation apprentissage-validation et les mêmes mesures d’erreur restent nécessaires.
+
+Les composantes lues au module 06 deviennent ici des termes estimés dans une régression. Le bloc ultérieur sert à comparer les candidats : c’est une validation, après l’apprentissage. Un éventuel test final reste distinct du choix de modèle.
 
 ## Résultat attendu
 
@@ -16,7 +18,7 @@ Après les méthodes de lissage du module 07, vous cherchez maintenant une struc
 - représenter une saisonnalité mensuelle;
 - ajuster une régression avec tendance et mois;
 - interpréter un coefficient saisonnier relativement à un mois de référence;
-- produire des prévisions et intervalles pour une période test;
+- produire des prévisions et intervalles pour une période de validation;
 - comparer le modèle à une référence saisonnière naïve.
 
 ## Données
@@ -43,10 +45,14 @@ Le mois est traité comme une catégorie ordonnée pour l’affichage et comme f
 
 J’identifie la catégorie de référence avant d’interpréter les coefficients.
 
-Ma période test vient après l’entraînement.
+Ma période de validation vient après l’entraînement.
 
 Je communique l’incertitude de la prévision.
 
 ## Lien avec l’évaluation
 
 Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapport 2 et de l’examen final.
+
+> **NOTE:**
+>
+> La proposition de données est attendue à la fin de ce module. Pour la voie temporelle, utilisez les acquis des modules 06 à 08 et préparez les variables externes du module 09. Pour la voie classification, suivez dès maintenant le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe), puis utilisez le point de contrôle du laboratoire 3 pour vérifier votre protocole. Les supports écrits et exemples sont déjà disponibles : cette voie ne demande pas d’attendre le 2 décembre.

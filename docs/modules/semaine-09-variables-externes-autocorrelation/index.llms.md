@@ -8,6 +8,8 @@
 
 Le module 08 a modélisé tendance et calendrier à partir du passé de la série. Ici, vous ajoutez des prédicteurs externes, mais vous devez d’abord vérifier qu’ils seront réellement connus, prévus ou scénarisés au moment de la décision.
 
+Les douze derniers mois servent à comparer les modèles sur un bloc de validation. Les démonstrations utilisant les prédicteurs observés sur ces mois mesurent une performance conditionnelle à ces valeurs. Pour une prévision réalisable à l’origine, fournissez un scénario disponible à cette date et signalez l’incertitude des prédicteurs futurs.
+
 ## Résultat attendu
 
 À la fin du module, vous pourrez :
@@ -33,13 +35,13 @@ Le fichier [`ventes_promotions_quebec.csv`](data/ventes_promotions_quebec.csv) c
 
 ## Trace finale
 
-Comparez un modèle de régression avec variables externes et une version avec erreurs AR(1), sur les douze derniers mois. Incluez : justification des prédicteurs, statut de disponibilité future, diagnostic des résidus, MAE test, scénario de promotion et limite causale.
+Comparez un modèle de régression avec variables externes et une version avec erreurs AR(1), sur les douze derniers mois. Incluez : justification des prédicteurs, statut de disponibilité future, diagnostic des résidus, MAE de validation, scénario de promotion et limite causale.
 
 ## Auto-vérification
 
 Chaque prédicteur serait réellement disponible au point d’origine ou fait l’objet d’un scénario explicite.
 
-La période test suit l’entraînement.
+La période de validation suit l’entraînement.
 
 Les résidus sont examinés dans l’ordre du temps.
 

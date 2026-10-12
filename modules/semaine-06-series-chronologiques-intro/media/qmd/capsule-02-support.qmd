@@ -1,10 +1,12 @@
 ---
-title: "Capsule 2 - Lire un graphique temporel"
+title: "Capsule 2 - Lire les composantes d’une série"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -28,69 +30,227 @@ editor: visual
 ---
 
 ```{r}
-#| label: setup-m06-c02
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-train <- ventes |> filter(date < as.Date("2025-01-01"))
-test <- ventes |> filter(date >= as.Date("2025-01-01"))
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Le premier modèle est souvent un graphique bien construit.
-:::
-
 ::: {.question-line}
-Quels motifs le temps rend-il visibles?
+La hausse vient-elle du temps ou du calendrier?
+:::
+::: {.note-box}
+Une consommation plus élevée en hiver peut coexister avec une hausse durable. Les distinguer change les références de prévision.
 :::
 
-::: {.note-box}
-Un graphique temporel permet de voir le niveau, la tendance, les motifs récurrents et les ruptures avant de choisir une méthode.
-:::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Construire un graphique qui respecte l'ordre temporel.
-- Distinguer tendance, saisonnalité et variation irrégulière.
-- Relier un motif visuel à une question de prévision.
+- Lire un graphique temporel.
+- Distinguer les composantes.
+- Comparer les formes additive et multiplicative.
 :::
 
-## Décembre élevé ou véritable saisonnalité?
 
-::: {.example-box}
-Un décembre élevé une seule année peut être une observation inhabituelle. Il faut comparer plusieurs décembres.
-:::
-
-## Un motif doit se répéter pour devenir crédible
-
-::: {.keypoints}
-- La tendance est un mouvement de long terme.
-- La saisonnalité est un motif qui revient selon une période connue.
-- Une pointe isolée ne prouve pas une saisonnalité.
-:::
-
-## Tracer la série avant de modéliser
+## Respecter les axes
 
 ```{r}
-#| label: code-m06-c02
-#| echo: true
-#| eval: true
-ventes |> ggplot(aes(date, ventes)) +
-  geom_line(colour = "#0B4F6C", linewidth = 0.8) +
-  labs(x = NULL, y = "Ventes mensuelles ($)") +
-  theme_minimal(base_size = 14)
+#| label: m06-c2-serie
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+graphique_serie(apprentissage)
+```
+::: {.visual-note}
+Explorer ici 2020 à 2024. Garder 2025 pour la validation.
+:::
+
+::: {.notes}
+Lire d’abord les axes et les unités. La ligne relie des mesures mensuelles, sans prouver ce qui se produit entre elles. Une hausse et un motif annuel semblent présents; la génération simulée ne permet pas d’identifier un mécanisme causal réel.
+:::
+
+## Niveau et tendance
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Niveau
+:::
+::: {.text}
+Valeur de référence locale
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Tendance
+:::
+::: {.text}
+Évolution persistante
+:::
+:::
+:::
+
+::: {.notes}
+Le niveau n’est pas nécessairement la moyenne de toute la série lorsque celle-ci évolue. La tendance peut être linéaire, quadratique, exponentielle ou plus souple. Une forme descriptive ne garantit pas une extrapolation fiable.
+:::
+
+## Saisonnalité, cycle et reste
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Calendrier
+:::
+::: {.label}
+motif de période connue
+:::
+:::
+::: {.metric}
+::: {.value}
+Cycle
+:::
+::: {.label}
+fluctuation sans période fixe
+:::
+:::
+::: {.metric}
+::: {.value}
+Reste
+:::
+::: {.label}
+variation non expliquée
+:::
+:::
+:::
+
+::: {.notes}
+La saisonnalité revient à des périodes connues: mois, jours de la semaine ou saisons. Un cycle n’a pas obligatoirement une durée stable. Le reste peut comprendre bruit de mesure, événements et structure non modélisée; il n’est pas automatiquement un bruit blanc. Une seule pointe ne suffit pas pour établir une saisonnalité.
+:::
+
+## Additif ou multiplicatif?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Additif
+:::
+::: {.text}
+$y_t=T_t+S_t+R_t$
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Multiplicatif
+:::
+::: {.text}
+$y_t=T_t\times S_t\times R_t$
+:::
+:::
+:::
+::: {.note-box}
+$T_t$ regroupe ici niveau, tendance et cycle.
+:::
+
+::: {.notes}
+La distinction entre niveau, tendance, saisonnalité et bruit permet de décrire la série. Dans cette notation usuelle, T est la composante tendance-cycle incluant le niveau. Une amplitude saisonnière approximativement constante suggère une forme additive; une amplitude proportionnelle au niveau suggère une forme multiplicative. Cette dernière demande des valeurs compatibles, généralement strictement positives.
+:::
+
+## Montant ou pourcentage?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
++20 000 kWh
+:::
+::: {.text}
+même amplitude à deux niveaux
+:::
+:::
+::: {.concept-card}
+::: {.tag}
++10 %
+:::
+::: {.text}
+amplitude croissante avec le niveau
+:::
+:::
+:::
+
+::: {.notes}
+Ces valeurs sont un exemple didactique. Un supplément de 20 000 kWh représente 10 % de 200 000 kWh mais seulement 5 % de 400 000 kWh. Une variation de 10 % représente 20 000 puis 40 000 kWh. Observer ce comportement n’est pas ajuster une décomposition.
+:::
+
+## Comparer les mêmes mois
+
+```{r}
+#| label: m06-c2-saison
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+ggplot(apprentissage, aes(mois, consommation_kwh / 1000, group = annee, colour = factor(annee))) +
+  geom_line() + geom_point() + scale_x_continuous(breaks = 1:12) +
+  labs(x = "Mois", y = "Consommation (MWh)", colour = "Année")
 ```
 
-## Voir ensemble ne signifie pas causer
+::: {.notes}
+Les profils annuels aident à vérifier si des mois comparables se distinguent de façon répétée. La tendance peut aussi déplacer le niveau d’une année à l’autre. Il faut plusieurs répétitions et une justification de la fréquence saisonnière.
+:::
 
-::: {.warning-box}
-Attribuer une hausse à une promotion seulement parce que les deux apparaissent au même moment dépasse ce que montre le graphique.
+## Zoomer et changer d’échelle
+
+```{r}
+#| eval: false
+#| echo: true
+zoom <- apprentissage |> filter(date >= as.Date("2023-01-01"))
+graphique_serie(zoom)
+graphique_serie(apprentissage) + scale_y_log10()
+```
+
+::: {.notes}
+Un zoom précise les variations locales. Le logarithme modifie la lecture des écarts et exige des valeurs strictement positives. L’agrégation annuelle atténue le motif mensuel, mais n’équivaut pas à estimer une composante saisonnière. Des graphiques séparés par saison et une moyenne mobile sont d’autres diagnostics, approfondis ensuite.
+:::
+
+## L’objet ts et la fenêtre
+
+```{r}
+#| eval: false
+#| echo: true
+serie <- ts(apprentissage$consommation_kwh, start = c(2020, 1), frequency = 12)
+zoom_ts <- window(serie, start = c(2023, 1), end = c(2024, 12))
+```
+
+::: {.notes}
+La fréquence de ts est le nombre d’observations par cycle, ici 12 par an. ts ne vérifie pas les dates du CSV: contrôler d’abord le calendrier. window conserve la structure temporelle. Le module 2 a déjà introduit le projet Quarto utilisé ici pour réunir code, résultats et interprétation.
+:::
+
+## Une tendance descriptive
+
+```{r}
+#| label: m06-c2-tendance
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+graphique_serie(apprentissage) +
+  geom_line(aes(y = as.numeric(fitted(analyse$modele_tendance)) / 1000), colour = "#7A1C24", linewidth = 1)
+```
+
+::: {.notes}
+Le modèle tslm(serie ~ trend + I(trend^2)) reprend la tendance quadratique étudiée au module 4. La courbe rouge est ajustée sur 2020 à 2024; elle ne représente pas la composante saisonnière et ne prouve ni mécanisme ni performance future.
 :::
 
 ## À retenir
@@ -98,45 +258,41 @@ Attribuer une hausse à une promotion seulement parce que les deux apparaissent 
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Observer
 :::
 ::: {.label}
-Décrire un motif n'est pas expliquer sa cause.
+lire les axes et zoomer
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Distinguer
 :::
 ::: {.label}
-Chercher aussi les données manquantes et les changements de variabilité.
+tendance, saison, cycle, reste
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Nuancer
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+décrire avant d’extrapoler
 :::
 :::
 :::
 
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
-:::
 
 ## Production autonome 6.2
 
 ::: {.lead}
-Tracez les ventes selon la date, puis nommez deux motifs visibles et une question qui reste ouverte.
+Tracez la consommation de 2020 à 2024, puis les profils par mois et année. Décrivez deux motifs. Expliquez la différence entre +20 000 kWh et +10 % et ajoutez une limite.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- J'ai nommé la variable, l'unité, la période et l'horizon.
-- Je n'ai utilisé aucune information future.
-- Ma conclusion contient une limite explicite.
+- Mes graphiques et mon interprétation utilisent seulement les données de 2020 à 2024.
+- J’ai distingué la saisonnalité d’une hausse continue.
+- J’ai expliqué la différence entre une variation en kWh et une variation en pourcentage, avec une limite.
 :::

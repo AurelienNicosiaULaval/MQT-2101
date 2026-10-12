@@ -1,10 +1,12 @@
 ---
-title: "Capsule 3 - Définir la cible et l'horizon"
+title: "Capsule 3 - Préparer les données temporelles"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -28,68 +30,242 @@ editor: visual
 ---
 
 ```{r}
-#| label: setup-m06-c03
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-train <- ventes |> filter(date < as.Date("2025-01-01"))
-test <- ventes |> filter(date >= as.Date("2025-01-01"))
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une prévision utile répond à une décision concrète.
-:::
-
 ::: {.question-line}
-Que faut-il préciser avant de choisir un modèle?
+Un mois absent peut-il être traité comme un mois observé?
+:::
+::: {.note-box}
+Une panne de collecte et une fermeture n’ont pas le même sens. Un nettoyage automatique peut déformer la série.
 :::
 
-::: {.note-box}
-La cible, l'origine, la fréquence et l'horizon doivent être définis avant l'ajustement. Sinon, on ne sait pas quelle prévision est réellement évaluée.
-:::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Distinguer cible, origine et horizon.
-- Formuler une prévision liée à une décision.
-- Choisir un horizon compatible avec le délai de décision.
+- Auditer le calendrier et les mesures.
+- Justifier le traitement des anomalies.
+- Limiter le prétraitement à l’information disponible.
 :::
 
-## La prévision commence par une date d'origine
 
-::: {.keypoints}
-- La cible est la valeur future à prévoir.
-- L'horizon est la distance entre l'origine et la période visée.
-- La fréquence doit être compatible avec la décision.
+## Quatre vérifications
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Calendrier
+:::
+::: {.label}
+doublons et périodes absentes
+:::
+:::
+::: {.metric}
+::: {.value}
+Mesure
+:::
+::: {.label}
+NA, zéro, unités
+:::
+:::
+::: {.metric}
+::: {.value}
+Contexte
+:::
+::: {.label}
+extrêmes et ruptures
+:::
+:::
 :::
 
-## Écrire la cible, l'origine et l'horizon
+::: {.notes}
+Il faut distinguer une date absente du tableau, une date présente avec une valeur manquante et une véritable mesure égale à zéro. Documenter également le changement d’instrument, de périmètre ou de définition de la variable.
+:::
+
+## Mensuel ne signifie pas trente jours
 
 ```{r}
-#| label: code-m06-c03
+#| eval: false
 #| echo: true
-#| eval: true
-origine <- as.Date("2025-12-01")
-horizon_mois <- 3
-tibble(cible = "ventes mensuelles", origine, horizon_mois)
+dates_attendues <- seq.Date(min(apprentissage$date),
+                           max(apprentissage$date), by = "month")
+setdiff(dates_attendues, apprentissage$date)
+anyDuplicated(apprentissage$date)
 ```
 
-## Prévoir le trimestre au moment utile
-
-::: {.example-box}
-À la fin de décembre, prévoir les ventes mensuelles de janvier à mars pour planifier les achats du trimestre.
+::: {.notes}
+Le nombre de jours diffère selon le mois. La régularité mensuelle se vérifie par le calendrier et non par une différence constante en jours. Pour des observations hebdomadaires régulières, les intervalles sont de sept jours.
 :::
 
-## Une cible sans horizon reste ambiguë
+## Valeur manquante ou période absente
 
-::: {.warning-box}
-Dire seulement « prévoir les ventes » ne précise ni la période, ni le moment où la prévision est produite, ni son usage.
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Date présente, NA
+:::
+::: {.text}
+La mesure manque
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Date absente
+:::
+::: {.text}
+Le calendrier a un trou
+:::
+:::
+:::
+::: {.note-box}
+Retirer une ligne ne rend pas les périodes voisines consécutives.
+:::
+
+::: {.notes}
+Une grille complète rend les absences explicites. Certaines fonctions de modèle gèrent des valeurs manquantes, d’autres non. La compatibilité dépend de l’implémentation; il serait incorrect d’affirmer que tous les modèles ARIMA les refusent.
+:::
+
+## Imputer exige une règle
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Historique
+:::
+::: {.text}
+estimer avec l’information déjà disponible
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Sensibilité
+:::
+::: {.text}
+comparer plusieurs traitements
+:::
+:::
+:::
+
+::: {.notes}
+Une imputation peut utiliser un modèle, des valeurs proches ou des informations externes. Elle remplace une mesure inconnue par une estimation et ajoute de l’incertitude. Comparer des traitements, éventuellement leurs prévisions combinées, ne supprime pas ce problème. Pour chaque origine d’évaluation, le traitement est réestimé sans regarder au-delà de cette origine. On ne remplace pas les cibles de validation inconnues par des valeurs imputées pour calculer des scores comme si elles étaient observées.
+:::
+
+## Espacement irrégulier
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Événements
+:::
+::: {.text}
+arrivées à des heures variables
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Agrégation
+:::
+::: {.text}
+compte par jour ou semaine
+:::
+:::
+:::
+
+::: {.notes}
+Une suite de mesures à des instants irréguliers est une série temporelle, mais n’est pas directement un objet ts régulier. L’agrégation crée une nouvelle cible; l’interpolation crée des estimations. Le choix dépend de l’objectif et de la méthode, sans inventer de mesures.
+:::
+
+## Extrême : erreur ou événement?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Erreur vérifiée
+:::
+::: {.text}
+corriger et documenter
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Événement réel
+:::
+::: {.text}
+conserver ou modéliser le contexte
+:::
+:::
+:::
+::: {.note-box}
+Sans justification, ne pas supprimer automatiquement.
+:::
+
+::: {.notes}
+Une fermeture, une panne ou des travaux peuvent expliquer une valeur extrême. L’expertise du domaine et une analyse de sensibilité avec et sans traitement éclairent le choix. Une analyse qui retire un événement réel doit indiquer quel futur elle suppose.
+:::
+
+## Combien d’années utiliser?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Historique long
+:::
+::: {.text}
+davantage de répétitions
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Historique récent
+:::
+::: {.text}
+meilleure pertinence après une rupture
+:::
+:::
+:::
+
+::: {.notes}
+La durée utile n’est pas une règle fixe. Une fenêtre courte manque d’information; un passé ancien peut relever d’un autre régime. Comparer les fenêtres par une validation temporelle, sans supprimer les années difficiles après avoir vu les scores.
+:::
+
+## Les variables externes arrivent-elles à temps?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Connues à l’origine
+:::
+::: {.text}
+calendrier, fermeture planifiée
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Inconnues
+:::
+::: {.text}
+prix réalisé, demande future
+:::
+:::
+:::
+
+::: {.notes}
+Une variable externe n’est utilisable que si sa valeur, sa prévision ou un scénario explicite existe au moment de produire la prévision. Sa disponibilité historique dans un tableau ne prouve pas sa disponibilité opérationnelle. La collecte doit continuer après la mise en service.
 :::
 
 ## À retenir
@@ -97,45 +273,41 @@ Dire seulement « prévoir les ventes » ne précise ni la période, ni le momen
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Repérer
 :::
 ::: {.label}
-Une formulation précise évite une évaluation ambiguë.
+les anomalies de calendrier
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Documenter
 :::
 ::: {.label}
-L'horizon dépend du délai réel de décision.
+chaque traitement
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Respecter
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+l’information à l’origine
 :::
 :::
 :::
 
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
-:::
 
 ## Production autonome 6.3
 
 ::: {.lead}
-Formulez une cible compatible avec un délai de commande de six semaines.
+Auditez les dates et les valeurs manquantes sur l’apprentissage. Proposez un traitement documenté pour un mois absent, une erreur de saisie confirmée et un événement réel.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- J'ai nommé la variable, l'unité, la période et l'horizon.
-- Je n'ai utilisé aucune information future.
-- Ma conclusion contient une limite explicite.
+- J’ai distingué une valeur manquante, un zéro et une période absente.
+- J’ai justifié séparément le traitement d’un mois absent, d’une erreur de saisie et d’un événement réel.
+- Mes traitements sont estimés uniquement à partir des données d’apprentissage.
 :::

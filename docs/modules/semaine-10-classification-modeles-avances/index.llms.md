@@ -12,6 +12,16 @@ Le module 04 étudiait des relations non linéaires pour une réponse continue. 
 
 Vous conservez les principes de question claire, de séparation entraînement-test, de diagnostic et de limite. La différence est la cible : au lieu de prévoir une valeur continue, vous estimez la probabilité d’un événement puis justifiez une règle de décision.
 
+## Parcours anticipé pour le mini-rapport 2
+
+Si vous choisissez la voie classification, commencez ce parcours dès le module 08, avant la proposition des données. Les prérequis mobilisés sont la régression des modules 03 et 04, R/Quarto et la validation hors échantillon. La cible binaire et le lien logistique sont expliqués dans ce module.
+
+1.  Lisez les [quatre capsules et réalisez leurs activités](../../modules/semaine-10-classification-modeles-avances/capsules.llms.md) : cible binaire, probabilités, matrice de confusion et seuil.
+2.  Recalculez la [démonstration R](../../modules/semaine-10-classification-modeles-avances/demonstrations.llms.md) : modèle, calibration descriptive, mesures à deux seuils et coût.
+3.  Faites les [exercices de transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md), puis formulez votre cible, votre séparation des données et votre règle de décision pour le point de contrôle du laboratoire 3.
+
+La séance d’autoapprentissage du 2 décembre sert alors à consolider ces acquis avant le final. Les [consignes du mini-rapport 2](../../evaluations/mini-rapport-2.llms.md) fixent la remise; les exemples du module sont un entraînement et ne remplacent pas l’analyse autonome du rapport.
+
 ## Résultat attendu
 
 À la fin du module, vous pourrez :

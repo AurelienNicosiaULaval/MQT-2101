@@ -1,22 +1,106 @@
 ---
 title: "Lectures - Module 06"
+lang: fr
 format:
   html:
     embed-resources: true
+    code-copy: true
+    css: media/module06-pages.css
+execute:
+  warning: false
+  message: false
 ---
 
-## Lecture obligatoire
+## Comment utiliser ces lectures
 
-Hyndman, R. J., et Athanasopoulos, G. (2021), *Forecasting: Principles and Practice*, 3e édition :
+Les supports du cours en français constituent la lecture attendue. Ils permettent de réaliser les six activités sans la vidéo ni un ouvrage externe. Les pages du livre en anglais et la documentation R ci-dessous sont des compléments ciblés : consultez le passage correspondant à votre difficulté. Aucune ressource payante ni aucun compte externe n’est nécessaire.
 
-- [Section 1.4 - Forecasting data and methods](https://otexts.com/fpp3/data-methods.html), pour distinguer données temporelles et transversales;
-- [Chapitre 2 - Time series graphics](https://otexts.com/fpp3/graphics.html), particulièrement les graphiques temporels.
+Après la lecture, répondez à la question de vérification, fermez le support et reprenez votre propre explication. Corrigez votre rapport existant; ces lectures ne créent pas une deuxième production.
 
-Question de lecture : quelles caractéristiques du graphique doivent influencer le choix ultérieur d'une méthode?
+## Lectures intégrées au parcours {#lectures-parcours}
 
-## Lecture facultative
+| Moment | Lecture du cours en français | Vérification personnelle |
+| --- | --- | --- |
+| Avant la capsule 1 | [Préparation](demonstrations.qmd#preparation) et [dictionnaires](data/dictionnaires.md) | Donner unité d’observation, unités et périodes d’apprentissage/validation. |
+| Après la capsule 1 | Support écrit : [définir une prévision utile](capsules.qmd#capsule-1) | Nommer la décision, l’origine, la cible et l’horizon. |
+| Après la capsule 2 | Support écrit : [lire les composantes](capsules.qmd#capsule-2), puis [graphiques](demonstrations.qmd#composantes) | Distinguer tendance, saisonnalité, cycle et reste; comparer montant et proportion. |
+| Après la capsule 3 | Support écrit : [préparer les données](capsules.qmd#capsule-3), puis [audit du calendrier](demonstrations.qmd#pretraitement) | Distinguer période absente, mesure manquante et événement réel. |
+| Après la capsule 4 | Support écrit : [comparer les références](capsules.qmd#capsule-4), puis [origine fixe](demonstrations.qmd#references) | Dire quelles observations sont disponibles pour les douze prévisions. |
+| Après la capsule 5 | Support écrit : [mesurer les erreurs](capsules.qmd#capsule-5), puis [mesures et graphiques](demonstrations.qmd#erreurs) | Lire signe, unité et limites; expliquer le dénominateur MASE. |
+| Après la capsule 6 | Support écrit : [communiquer l’incertitude](capsules.qmd#capsule-6), puis [intervalles](demonstrations.qmd#incertitude) | Distinguer point, niveau nominal, largeur et horizon; ajouter une limite. |
 
-- [Section 1.6 - The basic steps in a forecasting task](https://otexts.com/fpp3/basic-steps.html), pour replacer l'exploration dans le processus complet;
-- page générale [Lectures et ressources](../../ressources/lectures.qmd), pour les autres ouvrages du cours.
+Les deux dernières parties de la [synthèse complète](notes-cours.qmd) sont des compléments facultatifs. Les opérations du lissage, de la régression saisonnière et des variables externes sont approfondies dans les modules 7 à 9.
 
-Ces ressources sont accessibles gratuitement en ligne. Consultez la page générale pour leur statut de licence et leur référence complète.
+## Compléments bibliographiques ciblés
+
+Les explications françaises dans les capsules et les démonstrations constituent le support de travail du module. Les passages ci-dessous d’Hyndman, R. J., et Athanasopoulos, G. (2021), Forecasting: Principles and Practice, 3e édition, servent de compléments facultatifs de lecture. Les exemples du livre utilisent souvent l’écosystème fable; nos calculs emploient ici tidyverse et forecast, pour les démonstrations reproductibles du cours.
+
+## Après la capsule 1 : définir la tâche {#lecture-1}
+
+[1.6, The basic steps in a forecasting task](https://otexts.com/fpp3/basic-steps.html).
+
+Repérez le rôle des utilisateurs et de l’expertise. Quels renseignements manquent à la phrase « prévoir la consommation »?
+
+## Après la capsule 2 : lire les composantes {#lecture-2}
+
+[3.2, Time series components](https://otexts.com/fpp3/components.html).
+
+Distinguez montant saisonnier constant et proportion constante. Complément : chapitre 2, graphiques temporels et saisonniers.
+
+## Après la capsule 3 : préparer les données {#lecture-3}
+
+[13.9, Dealing with outliers and missing values](https://otexts.com/fpp3/missing-outliers.html).
+
+Pourquoi ne faut-il pas remplacer toute valeur extrême automatiquement? Les méthodes acceptent-elles toutes les mêmes valeurs manquantes?
+
+## Après la capsule 4 : comparer les références {#lecture-4}
+
+[5.2, Some simple forecasting methods](https://otexts.com/fpp3/simple-methods.html).
+
+Quelles valeurs sont disponibles pour le naïf saisonnier lorsque l’horizon dépasse un cycle?
+
+## Après la capsule 5 : mesurer les erreurs {#lecture-5}
+
+[5.8, Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html).
+
+Repérez le dénominateur de la MASE et deux limites du MAPE.
+
+## Après la capsule 6 : lire l’incertitude {#lecture-6}
+
+[5.5, Distributional forecasts and prediction intervals](https://otexts.com/fpp3/prediction-intervals.html).
+
+Distinguez niveau nominal, largeur et horizon. Complément facultatif : section 8.5 pour la notation ETS.
+
+## Complément facultatif A : faire avancer l’origine {#lecture-7}
+
+[5.10, Time series cross-validation](https://otexts.com/fpp3/tscv.html).
+
+À chaque origine, quelles observations peuvent entrer dans le modèle? Pourquoi faut-il séparer les horizons?
+
+## Complément facultatif B : combiner les méthodes {#lecture-8}
+
+[13.4, Forecast combinations](https://otexts.com/fpp3/combinations.html).
+
+Une moyenne de prévisions garantit-elle un gain? Compléments facultatifs : chapitre 6 sur le jugement et section 7.6 sur les variables futures.
+
+## Lire activement, puis pratiquer
+
+Pour une difficulté précise, choisissez parmi les [exercices supplémentaires corrigés](exercices.qmd#pratique-supplementaire) :
+
+- cible, composantes et calendrier : exercices 9 à 11, après les capsules 1 à 3;
+- origine et mesures d’erreur : exercices 12 à 14, après les capsules 4 et 5;
+- incertitude et lecture critique : exercices 15 et 16, après la capsule 6.
+
+Les nombres de ces exercices sont fictifs et fournis dans les énoncés. Les corrigés détaillent le raisonnement; les calculs en R permettent de vérifier les valeurs. La pratique supplémentaire et les deux compléments ne sont pas requis pour terminer les rapports d’entraînement.
+
+## Un exercice ciblé de l’ouvrage {#exercice-ouvrage}
+
+Pour approfondir après les capsules 4 et 5, Hyndman et Athanasopoulos (2021), section 5.11, [exercice 6, assertions 2 à 5](https://otexts.com/fpp3/toolbox-exercises.html), propose une lecture critique de l’ajustement, des mesures, de la complexité et du choix d’une méthode. Ce complément est facultatif et ne demande ni jeu externe ni code `fable`. Justifiez vos réponses avec le protocole du cours; les corrigés des exercices 13, 14 et 16 de ce module donnent des repères sur les scores et les conclusions. Les autres exercices de ce chapitre ne sont pas requis.
+
+## Documentation R
+
+- [forecast : documentation officielle](https://pkg.robjhyndman.com/forecast/)
+- [ets : modèles d’espace d’état de lissage exponentiel](https://pkg.robjhyndman.com/forecast/reference/ets.html)
+- [accuracy : mesures et échelle de la MASE](https://pkg.robjhyndman.com/forecast/reference/accuracy.default.html)
+
+Ces compléments servent à vérifier les arguments et les conventions des fonctions, sans imposer un apprentissage supplémentaire de toutes les méthodes du package. Le cadre de lissage est approfondi au module 7.

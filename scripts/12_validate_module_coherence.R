@@ -15,7 +15,8 @@ course_modules <- data.frame(
     "semaine-09-variables-externes-autocorrelation",
     "semaine-10-classification-modeles-avances"
   ),
-  capsules = c(6L, 6L, 6L, 6L, 0L, 4L, 4L, 4L, 4L, 4L),
+  capsules = c(6L, 6L, 6L, 6L, 0L, 6L, 4L, 4L, 4L, 4L),
+  complements = c(0L, 0L, 0L, 0L, 0L, 2L, 0L, 0L, 0L, 0L),
   stringsAsFactors = FALSE
 )
 
@@ -65,7 +66,7 @@ read_text <- function(path) {
 
 count_matches <- function(pattern, text) {
   matches <- gregexpr(pattern, text, perl = TRUE)[[1]]
-  if (identical(matches, -1L)) 0L else length(matches)
+  if (matches[[1]] == -1L) 0L else length(matches)
 }
 
 check_required_files <- function(module_id, required_files) {
@@ -80,6 +81,7 @@ check_required_files <- function(module_id, required_files) {
 for (i in seq_len(nrow(course_modules))) {
   module_id <- course_modules$id[[i]]
   expected_capsules <- course_modules$capsules[[i]]
+  expected_complements <- course_modules$complements[[i]]
   directory <- file.path("modules", module_id)
 
   # Le module 05 est un parcours de révision, sans nouvelle capsule.
@@ -103,6 +105,10 @@ for (i in seq_len(nrow(course_modules))) {
     if (actual_capsules != expected_capsules) {
       add_error(paste0(module_id, " : ", actual_capsules, " capsules trouvées, ", expected_capsules, " attendues."))
     }
+    actual_complements <- count_matches("(?m)^## Complément [AB] -", capsules_text)
+    if (actual_complements != expected_complements) {
+      add_error(paste0(module_id, " : ", actual_complements, " compléments trouvés, ", expected_complements, " attendus."))
+    }
   }
 
   deck_paths <- sort(list.files(
@@ -111,18 +117,21 @@ for (i in seq_len(nrow(course_modules))) {
     full.names = TRUE
   ))
 
-  if (length(deck_paths) != expected_capsules) {
-    add_error(paste0(module_id, " : ", length(deck_paths), " decks RevealJS trouvés, ", expected_capsules, " attendus."))
+  if (length(deck_paths) != expected_capsules + expected_complements) {
+    add_error(paste0(module_id, " : ", length(deck_paths), " supports RevealJS trouvés, ", expected_capsules + expected_complements, " attendus."))
   }
 
+  actual_complement_decks <- 0L
   for (deck_path in deck_paths) {
     deck_text <- read_text(deck_path)
+    is_complement <- grepl('(?m)^title: "Complément [AB] -', deck_text, perl = TRUE)
+    actual_complement_decks <- actual_complement_decks + as.integer(is_complement)
     expected_sections <- c(
       "revealjs",
       "## Pourquoi ça compte",
-      "## Objectifs de la capsule",
+      if (is_complement) "## Objectifs du complément" else "## Objectifs de la capsule",
       "## À retenir",
-      "## Production autonome",
+      if (is_complement) "## Pratique facultative" else "## Production autonome",
       "### Auto-vérification"
     )
     missing_sections <- expected_sections[
@@ -136,6 +145,9 @@ for (i in seq_len(nrow(course_modules))) {
         paste(missing_sections, collapse = ", ")
       ))
     }
+  }
+  if (actual_complement_decks != expected_complements) {
+    add_error(paste0(module_id, " : le nombre de supports déclarés facultatifs est incohérent."))
   }
 
   if (file.exists(index_path)) {
@@ -362,7 +374,9 @@ if (sum(is_total) != 1L || anyNA(points) ||
 cat("Validation de cohérence MQT-2101\n")
 cat("Modules vérifiés :", nrow(course_modules), "\n")
 cat("Ateliers vérifiés :", length(workshops), "\n")
-cat("Decks RevealJS vérifiés :", sum(course_modules$capsules), "\n")
+cat("Capsules principales :", sum(course_modules$capsules), "\n")
+cat("Compléments facultatifs :", sum(course_modules$complements), "\n")
+cat("Supports RevealJS vérifiés :", sum(course_modules$capsules + course_modules$complements), "\n")
 cat("Cas de transfert vérifiés :", length(learning_units), "\n")
 cat("Packages employés :", paste(sort(used_packages), collapse = ", "), "\n")
 cat("Erreurs :", length(errors), "\n")

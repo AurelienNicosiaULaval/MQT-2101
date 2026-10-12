@@ -11,7 +11,7 @@
 - la cible, l’origine et l’horizon;
 - un audit de la série;
 - un graphique annoté;
-- une période test chronologique;
+- une période de validation chronologique;
 - au moins trois méthodes comparées;
 - MAE, RMSE et biais;
 - une recommandation de stock et une règle de surveillance.
@@ -35,7 +35,7 @@ Cet atelier est le point de contrôle pédagogique du [mini-rapport 2](../../eva
 
 Aucune information future n’entre dans l’entraînement.
 
-Les méthodes utilisent la même période test.
+Les méthodes utilisent la même période de validation.
 
 Une référence naïve est incluse.
 

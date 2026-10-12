@@ -1,54 +1,1655 @@
 ---
-title: "Notes de cours - Introduction aux séries chronologiques"
+title: "Module 06 - Séries chronologiques : synthèse"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
 format:
-  html:
+  revealjs:
+    auto-stretch: false
+    css: media/module06-capsules.css
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
 ---
 
-## 1. De l'observation à la prévision
+```{r}
+#| include: false
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
+```
 
-Une analyse transversale décrit des unités observées dans une même période. Une analyse temporelle étudie une même quantité à plusieurs moments. Dans une série chronologique, permuter les lignes détruit une partie de l'information.
+## Objectifs du module
 
-Avant tout modèle, documentez : la variable, l'unité d'observation, l'index temporel, la fréquence, la période couverte et les éventuelles interruptions de mesure.
+::: {.keypoints}
+- Préparer les données et définir la cible.
+- Comparer aux références sur un futur simulé.
+- Lire erreurs et incertitude.
+- Choisir et suivre une méthode.
+:::
 
-## 2. Composantes visibles
 
-- Niveau : valeur autour de laquelle la série évolue.
-- Tendance : évolution persistante de long terme.
-- Saisonnalité : motif répétitif associé au calendrier.
-- Cycle : fluctuation dont la périodicité n'est pas nécessairement fixe.
-- Variation irrégulière : partie non expliquée par les motifs précédents.
+## 1. Définir une prévision utile
 
-Ces termes décrivent la série. Ils ne constituent pas encore un modèle et ne démontrent pas de causalité.
+::: {.question-line}
+Quelle information faut-il pour préparer le suivi énergétique du prochain trimestre?
+:::
 
-## 3. Cible, origine et horizon
 
-Une prévision complète précise :
+## Un tableau ordonné dans le temps
 
-$$
-\text{information disponible à l'origine}
-\longrightarrow
-\text{cible aux horizons } h=1,\ldots,H.
-$$
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Transversal
+:::
+::: {.text}
+Plusieurs unités, une période
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Chronologique
+:::
+::: {.text}
+Une quantité, plusieurs dates
+:::
+:::
+:::
 
-L'horizon doit être choisi selon le délai de décision. Une organisation qui commande six semaines à l'avance a besoin d'une information différente de celle qui ajuste le personnel demain.
+::: {.notes}
+Une série chronologique est une suite de mesures repérées dans le temps. Avec plusieurs succursales, on possède plusieurs séries; il faut identifier la succursale et la date. La dépendance entre périodes doit être examinée et ne disparaît pas parce que les données sont en tableau.
+:::
 
-## 4. Évaluation chronologique
+## Le cas guidé
 
-La période d'entraînement précède toujours la période test. Toutes les transformations estimées, sélections de variables et décisions de modèle doivent utiliser seulement l'entraînement. La période test simule ensuite le futur.
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+72
+:::
+::: {.label}
+mois, de 2020 à 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+bâtiment fictif
+:::
+:::
+::: {.metric}
+::: {.value}
+kWh
+:::
+::: {.label}
+consommation mensuelle d’électricité
+:::
+:::
+:::
+::: {.note-box}
+Données simulées. Une ligne représente un mois; aucun bâtiment réel n’est décrit.
+:::
 
-Une référence simple, naïve ou saisonnière naïve, permet d'évaluer si la complexité ajoutée produit réellement une amélioration.
+::: {.notes}
+Le fichier contient le calendrier et le nombre de jours de chaque mois. La variable cible est consommation_kwh, une quantité d’énergie en kWh. La date désigne le mois entier, sans représenter une mesure faite uniquement le premier jour. Les valeurs sont simulées pour un bâtiment universitaire fictif au Québec.
+:::
 
-## 5. Mesures d'erreur
+## Origine, cible et horizon
 
-La MAE est facile à interpréter dans l'unité de la cible. La RMSE pénalise davantage les grandes erreurs. Le MAPE est une proportion, mais devient instable lorsque les valeurs réelles sont proches de zéro. Le choix doit tenir compte des coûts décisionnels, pas seulement de la commodité mathématique.
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Origine T
+:::
+::: {.text}
+Dernière information disponible
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Horizon h
+:::
+::: {.text}
+Nombre de périodes à prévoir
+:::
+:::
+:::
+::: {.note-box}
+$\widehat y_{T+h\mid T}$ : prévision de $y_{T+h}$ produite à l’origine $T$.
+:::
 
-## 6. Liste de contrôle
+::: {.notes}
+À la fin de décembre 2024, prévoir la consommation de janvier à décembre 2025 signifie produire douze valeurs, aux horizons 1 à 12 mois. Une prévision pour la consommation totale du trimestre est une cible différente des trois prévisions mensuelles.
+:::
 
-- Le temps est-il correctement encodé?
-- La fréquence est-elle régulière?
-- Des périodes manquent-elles?
-- La cible est-elle disponible à l'horizon choisi?
-- La période test reproduit-elle la décision réelle?
-- La méthode dépasse-t-elle une référence simple?
-- L'incertitude et les limites sont-elles communiquées?
+## Fréquence et granularité
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Fréquence
+:::
+::: {.text}
+Jour, semaine, mois
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Granularité
+:::
+::: {.text}
+Succursale, région, produit
+:::
+:::
+:::
+
+::: {.notes}
+La fréquence désigne la résolution temporelle. La granularité désigne le périmètre des mesures, spatial, démographique ou temporel. Agréger peut réduire le bruit, mais efface des détails. Une prévision provinciale ne fournit pas directement les besoins de chaque succursale. Désagréger exige une règle justifiée.
+:::
+
+## L’expertise complète les mesures
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Opérations
+:::
+::: {.text}
+Fermeture, chauffage, panne
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Gestion
+:::
+::: {.text}
+Occupation, horaires, travaux
+:::
+:::
+:::
+
+::: {.notes}
+Les personnes qui connaissent le domaine expliquent la collecte, les unités, les événements inhabituels et les conséquences des erreurs. La qualité des mesures et la continuité de la collecte conditionnent le suivi. Une interprétation exige de communiquer avec les utilisateurs de la prévision.
+:::
+
+## Le processus est une boucle
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Cadrer et préparer
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Comparer et choisir
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Prévoir et suivre
+:::
+:::
+:::
+
+::: {.notes}
+Une évaluation insuffisante peut conduire à revoir les méthodes, l’objectif ou la collecte. Les nouvelles observations alimentent le suivi et un éventuel réajustement. Ce processus ne garantit pas que les données permettent d’atteindre la précision souhaitée.
+:::
+
+## Préciser la décision
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Énergie
+:::
+::: {.text}
+Consommation et horizon mensuel
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Budget
+:::
+::: {.text}
+Tarifs et postes de facturation
+:::
+:::
+:::
+::: {.note-box}
+Le coût d’une sous-prévision peut différer du coût d’une sur-prévision.
+:::
+
+::: {.notes}
+Le choix de la mesure d’erreur et du niveau d’agrégation doit refléter la décision. Prévoir l’énergie mensuelle en kWh ne suffit pas à prévoir une pointe de puissance en kW. Pour convertir l’énergie en budget, il faudrait préciser les tarifs et les autres postes de la facture.
+:::
+
+## 2. Lire les composantes d’une série
+
+::: {.question-line}
+La hausse vient-elle du temps ou du calendrier?
+:::
+
+
+## Respecter les axes
+
+```{r}
+#| label: m06-c2-serie
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+graphique_serie(apprentissage)
+```
+::: {.visual-note}
+Explorer ici 2020 à 2024. Garder 2025 pour la validation.
+:::
+
+::: {.notes}
+Lire d’abord les axes et les unités. La ligne relie des mesures mensuelles, sans prouver ce qui se produit entre elles. Une hausse et un motif annuel semblent présents; la génération simulée ne permet pas d’identifier un mécanisme causal réel.
+:::
+
+## Niveau et tendance
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Niveau
+:::
+::: {.text}
+Valeur de référence locale
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Tendance
+:::
+::: {.text}
+Évolution persistante
+:::
+:::
+:::
+
+::: {.notes}
+Le niveau n’est pas nécessairement la moyenne de toute la série lorsque celle-ci évolue. La tendance peut être linéaire, quadratique, exponentielle ou plus souple. Une forme descriptive ne garantit pas une extrapolation fiable.
+:::
+
+## Saisonnalité, cycle et reste
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Calendrier
+:::
+::: {.label}
+motif de période connue
+:::
+:::
+::: {.metric}
+::: {.value}
+Cycle
+:::
+::: {.label}
+fluctuation sans période fixe
+:::
+:::
+::: {.metric}
+::: {.value}
+Reste
+:::
+::: {.label}
+variation non expliquée
+:::
+:::
+:::
+
+::: {.notes}
+La saisonnalité revient à des périodes connues: mois, jours de la semaine ou saisons. Un cycle n’a pas obligatoirement une durée stable. Le reste peut comprendre bruit de mesure, événements et structure non modélisée; il n’est pas automatiquement un bruit blanc. Une seule pointe ne suffit pas pour établir une saisonnalité.
+:::
+
+## Additif ou multiplicatif?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Additif
+:::
+::: {.text}
+$y_t=T_t+S_t+R_t$
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Multiplicatif
+:::
+::: {.text}
+$y_t=T_t\times S_t\times R_t$
+:::
+:::
+:::
+::: {.note-box}
+$T_t$ regroupe ici niveau, tendance et cycle.
+:::
+
+::: {.notes}
+La distinction entre niveau, tendance, saisonnalité et bruit permet de décrire la série. Dans cette notation usuelle, T est la composante tendance-cycle incluant le niveau. Une amplitude saisonnière approximativement constante suggère une forme additive; une amplitude proportionnelle au niveau suggère une forme multiplicative. Cette dernière demande des valeurs compatibles, généralement strictement positives.
+:::
+
+## Montant ou pourcentage?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
++20 000 kWh
+:::
+::: {.text}
+même amplitude à deux niveaux
+:::
+:::
+::: {.concept-card}
+::: {.tag}
++10 %
+:::
+::: {.text}
+amplitude croissante avec le niveau
+:::
+:::
+:::
+
+::: {.notes}
+Ces valeurs sont un exemple didactique. Un supplément de 20 000 kWh représente 10 % de 200 000 kWh mais seulement 5 % de 400 000 kWh. Une variation de 10 % représente 20 000 puis 40 000 kWh. Observer ce comportement n’est pas ajuster une décomposition.
+:::
+
+## Comparer les mêmes mois
+
+```{r}
+#| label: m06-c2-saison
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+ggplot(apprentissage, aes(mois, consommation_kwh / 1000, group = annee, colour = factor(annee))) +
+  geom_line() + geom_point() + scale_x_continuous(breaks = 1:12) +
+  labs(x = "Mois", y = "Consommation (MWh)", colour = "Année")
+```
+
+::: {.notes}
+Les profils annuels aident à vérifier si des mois comparables se distinguent de façon répétée. La tendance peut aussi déplacer le niveau d’une année à l’autre. Il faut plusieurs répétitions et une justification de la fréquence saisonnière.
+:::
+
+## Zoomer et changer d’échelle
+
+```{r}
+#| eval: false
+#| echo: true
+zoom <- apprentissage |> filter(date >= as.Date("2023-01-01"))
+graphique_serie(zoom)
+graphique_serie(apprentissage) + scale_y_log10()
+```
+
+::: {.notes}
+Un zoom précise les variations locales. Le logarithme modifie la lecture des écarts et exige des valeurs strictement positives. L’agrégation annuelle atténue le motif mensuel, mais n’équivaut pas à estimer une composante saisonnière. Des graphiques séparés par saison et une moyenne mobile sont d’autres diagnostics, approfondis ensuite.
+:::
+
+## L’objet ts et la fenêtre
+
+```{r}
+#| eval: false
+#| echo: true
+serie <- ts(apprentissage$consommation_kwh, start = c(2020, 1), frequency = 12)
+zoom_ts <- window(serie, start = c(2023, 1), end = c(2024, 12))
+```
+
+::: {.notes}
+La fréquence de ts est le nombre d’observations par cycle, ici 12 par an. ts ne vérifie pas les dates du CSV: contrôler d’abord le calendrier. window conserve la structure temporelle. Le module 2 a déjà introduit le projet Quarto utilisé ici pour réunir code, résultats et interprétation.
+:::
+
+## Une tendance descriptive
+
+```{r}
+#| label: m06-c2-tendance
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+graphique_serie(apprentissage) +
+  geom_line(aes(y = as.numeric(fitted(analyse$modele_tendance)) / 1000), colour = "#7A1C24", linewidth = 1)
+```
+
+::: {.notes}
+Le modèle tslm(serie ~ trend + I(trend^2)) reprend la tendance quadratique étudiée au module 4. La courbe rouge est ajustée sur 2020 à 2024; elle ne représente pas la composante saisonnière et ne prouve ni mécanisme ni performance future.
+:::
+
+## 3. Préparer les données temporelles
+
+::: {.question-line}
+Un mois absent peut-il être traité comme un mois observé?
+:::
+
+
+## Quatre vérifications
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Calendrier
+:::
+::: {.label}
+doublons et périodes absentes
+:::
+:::
+::: {.metric}
+::: {.value}
+Mesure
+:::
+::: {.label}
+NA, zéro, unités
+:::
+:::
+::: {.metric}
+::: {.value}
+Contexte
+:::
+::: {.label}
+extrêmes et ruptures
+:::
+:::
+:::
+
+::: {.notes}
+Il faut distinguer une date absente du tableau, une date présente avec une valeur manquante et une véritable mesure égale à zéro. Documenter également le changement d’instrument, de périmètre ou de définition de la variable.
+:::
+
+## Mensuel ne signifie pas trente jours
+
+```{r}
+#| eval: false
+#| echo: true
+dates_attendues <- seq.Date(min(apprentissage$date),
+                           max(apprentissage$date), by = "month")
+setdiff(dates_attendues, apprentissage$date)
+anyDuplicated(apprentissage$date)
+```
+
+::: {.notes}
+Le nombre de jours diffère selon le mois. La régularité mensuelle se vérifie par le calendrier et non par une différence constante en jours. Pour des observations hebdomadaires régulières, les intervalles sont de sept jours.
+:::
+
+## Valeur manquante ou période absente
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Date présente, NA
+:::
+::: {.text}
+La mesure manque
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Date absente
+:::
+::: {.text}
+Le calendrier a un trou
+:::
+:::
+:::
+::: {.note-box}
+Retirer une ligne ne rend pas les périodes voisines consécutives.
+:::
+
+::: {.notes}
+Une grille complète rend les absences explicites. Certaines fonctions de modèle gèrent des valeurs manquantes, d’autres non. La compatibilité dépend de l’implémentation; il serait incorrect d’affirmer que tous les modèles ARIMA les refusent.
+:::
+
+## Imputer exige une règle
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Historique
+:::
+::: {.text}
+estimer avec l’information déjà disponible
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Sensibilité
+:::
+::: {.text}
+comparer plusieurs traitements
+:::
+:::
+:::
+
+::: {.notes}
+Une imputation peut utiliser un modèle, des valeurs proches ou des informations externes. Elle remplace une mesure inconnue par une estimation et ajoute de l’incertitude. Comparer des traitements, éventuellement leurs prévisions combinées, ne supprime pas ce problème. Pour chaque origine d’évaluation, le traitement est réestimé sans regarder au-delà de cette origine. On ne remplace pas les cibles de validation inconnues par des valeurs imputées pour calculer des scores comme si elles étaient observées.
+:::
+
+## Espacement irrégulier
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Événements
+:::
+::: {.text}
+arrivées à des heures variables
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Agrégation
+:::
+::: {.text}
+compte par jour ou semaine
+:::
+:::
+:::
+
+::: {.notes}
+Une suite de mesures à des instants irréguliers est une série temporelle, mais n’est pas directement un objet ts régulier. L’agrégation crée une nouvelle cible; l’interpolation crée des estimations. Le choix dépend de l’objectif et de la méthode, sans inventer de mesures.
+:::
+
+## Extrême : erreur ou événement?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Erreur vérifiée
+:::
+::: {.text}
+corriger et documenter
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Événement réel
+:::
+::: {.text}
+conserver ou modéliser le contexte
+:::
+:::
+:::
+::: {.note-box}
+Sans justification, ne pas supprimer automatiquement.
+:::
+
+::: {.notes}
+Une fermeture, une panne ou des travaux peuvent expliquer une valeur extrême. L’expertise du domaine et une analyse de sensibilité avec et sans traitement éclairent le choix. Une analyse qui retire un événement réel doit indiquer quel futur elle suppose.
+:::
+
+## Combien d’années utiliser?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Historique long
+:::
+::: {.text}
+davantage de répétitions
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Historique récent
+:::
+::: {.text}
+meilleure pertinence après une rupture
+:::
+:::
+:::
+
+::: {.notes}
+La durée utile n’est pas une règle fixe. Une fenêtre courte manque d’information; un passé ancien peut relever d’un autre régime. Comparer les fenêtres par une validation temporelle, sans supprimer les années difficiles après avoir vu les scores.
+:::
+
+## Les variables externes arrivent-elles à temps?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Connues à l’origine
+:::
+::: {.text}
+calendrier, fermeture planifiée
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Inconnues
+:::
+::: {.text}
+prix réalisé, demande future
+:::
+:::
+:::
+
+::: {.notes}
+Une variable externe n’est utilisable que si sa valeur, sa prévision ou un scénario explicite existe au moment de produire la prévision. Sa disponibilité historique dans un tableau ne prouve pas sa disponibilité opérationnelle. La collecte doit continuer après la mise en service.
+:::
+
+## 4. Comparer des prévisions de référence
+
+::: {.question-line}
+Une méthode élaborée fait-elle mieux qu’une règle simple?
+:::
+
+
+## Bien ajuster n’est pas bien prévoir
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Apprentissage
+:::
+::: {.text}
+paramètres et structure
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Validation
+:::
+::: {.text}
+erreurs sur le futur simulé
+:::
+:::
+:::
+
+::: {.notes}
+Un modèle flexible peut ajuster le bruit. Le R² d’apprentissage et les résidus ne suffisent pas à mesurer la performance de prévision. Les données utilisées pour sélectionner un candidat ne fournissent pas ensuite une évaluation finale indépendante. Une comparaison à origine fixe garde le même passé pour tout l’horizon. À origine mobile, on avance dans le temps et on réajuste avec les observations déjà reçues, en gardant l’horizon de comparaison constant. Le complément A détaille ce protocole; il n’est pas nécessaire de programmer cette boucle pour terminer le parcours principal.
+:::
+
+## La séparation du cas guidé
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+60
+:::
+::: {.label}
+mois d’apprentissage : 2020 à 2024
+:::
+:::
+::: {.metric}
+::: {.value}
+12
+:::
+::: {.label}
+mois de validation : 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+T
+:::
+::: {.label}
+origine : décembre 2024
+:::
+:::
+:::
+
+::: {.notes}
+Les méthodes candidates sont fixées avant la comparaison. Le bloc de 2025 sert ici à les comparer: nous l’appelons validation. Un test final distinct est possible si la taille et le calendrier le permettent; il n’est ni interdit ni toujours disponible. Une séparation aléatoire mélangerait passé et futur et pourrait créer des trous.
+:::
+
+## Le naïf à origine fixe
+
+::: {.example-box}
+$$\widehat y_{T+h\mid T}=y_T,\qquad h\geq1.$$
+:::
+::: {.note-box}
+Une origine en décembre 2024. La dernière consommation mensuelle connue est répétée pour tous les mois de 2025.
+:::
+
+::: {.notes}
+Cette référence est simple et parfois utile en pratique, mais ignore tendance et saisonnalité. On ne lui donne pas la consommation de janvier 2025 pour prévoir février dans un scénario où les douze prévisions ont été émises en décembre 2024.
+:::
+
+## Le naïf saisonnier
+
+::: {.example-box}
+$$\widehat y_{T+h\mid T}=y_{T+h-m},\qquad 1\leq h\leq m.$$
+:::
+::: {.note-box}
+$m=12$ : reprendre les douze mois de la dernière année.
+:::
+
+::: {.notes}
+Pour un horizon dépassant un cycle, on répète le dernier cycle observé: on n’utilise pas une valeur future encore inconnue. Formellement, on choisit l’observation la plus récente de la même saison disponible à T. Le principe exige une période saisonnière justifiée.
+:::
+
+## Comparer sur les mêmes mois
+
+```{r}
+#| label: m06-c4-validation
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+graphique_validation(analyse)
+```
+
+::: {.notes}
+Les lignes colorées sont toutes produites en décembre 2024. Le noir montre les observations révélées ensuite. Le candidat tendance est une régression quadratique du temps, sans saisonnalité. Il ne devient pas préférable parce qu’il est plus complexe.
+:::
+
+## Du code à la référence
+
+```{r}
+#| eval: false
+#| echo: true
+refs <- prevoir_references(apprentissage$consommation_kwh, horizon = 12, periode = 12)
+validation |> mutate(naive = refs$naive,
+                     saisonniere = refs$saisonniere)
+```
+
+::: {.notes}
+Le code complet est dans les démonstrations et le projet téléchargeable. Une prévision saisonnière peut être décalée si le calendrier a des trous; d’où la vérification avant ts et avant la comparaison.
+:::
+
+## Choisir la période selon l’horizon
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Un mois
+:::
+::: {.text}
+répéter plusieurs origines à h = 1
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Un an
+:::
+::: {.text}
+évaluer aussi les horizons jusqu’à 12
+:::
+:::
+:::
+
+::: {.notes}
+La validation doit contenir les horizons utiles. Un score à un mois ne renseigne pas directement sur une décision à douze mois. Une origine fixe donne ici une erreur par horizon, ce qui motive la validation à origine mobile du complément A.
+:::
+
+## Réajuster avant la vraie prévision
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Évaluer sur 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Fixer le choix
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Réajuster sur 2020 à 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+4
+:::
+::: {.text}
+Prévoir 2026
+:::
+:::
+:::
+
+::: {.notes}
+Après l’évaluation, les observations récentes peuvent rejoindre l’apprentissage pour la prévision réelle. Les scores historiques restent ceux obtenus sans réajustement sur la validation. Refaire l’ajustement ne transforme pas les scores de validation en scores indépendants du choix.
+:::
+
+## 5. Mesurer et lire les erreurs
+
+::: {.question-line}
+Une erreur moyenne proche de zéro suffit-elle?
+:::
+
+
+## Une convention de signe
+
+::: {.example-box}
+$$e_{T+h}=y_{T+h}-\widehat y_{T+h\mid T}.$$
+:::
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+e > 0
+:::
+::: {.text}
+sous-prévision
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+e < 0
+:::
+::: {.text}
+sur-prévision
+:::
+:::
+:::
+
+::: {.notes}
+Un résidu concerne les données utilisées pour ajuster; une erreur de prévision compare une observation future à une valeur émise avant de la connaître. Pour éviter une ambiguïté, nommer l’origine et l’horizon.
+:::
+
+## ME, MAE et RMSE
+
+::: {.example-box}
+$$\mathrm{ME}=\frac1n\sum e_i,\qquad\mathrm{MAE}=\frac1n\sum |e_i|.$$
+
+$$\mathrm{RMSE}=\sqrt{\frac1n\sum e_i^2}.$$
+:::
+::: {.note-box}
+Même unité que la cible. MAE est aussi appelée MAD.
+:::
+
+::: {.notes}
+La ME décrit le biais moyen signé, la MAE l’ampleur absolue moyenne et la RMSE donne plus de poids aux grandes erreurs. Les trois sont en kWh dans le cas guidé. Elles peuvent classer les méthodes différemment.
+:::
+
+## Les erreurs peuvent s’annuler
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+−20, +20
+:::
+::: {.label}
+deux erreurs, en unités
+:::
+:::
+::: {.metric}
+::: {.value}
+ME = 0
+:::
+::: {.label}
+aucun biais moyen ici
+:::
+:::
+::: {.metric}
+::: {.value}
+MAE = 20
+:::
+::: {.label}
+erreur absolue persistante
+:::
+:::
+:::
+::: {.note-box}
+RMSE = 20 également dans cet exemple.
+:::
+
+::: {.notes}
+La moyenne signée n’est pas une mesure suffisante de précision. Le suivi énergétique peut alterner sous-estimation et surestimation des besoins même si les erreurs se compensent en moyenne.
+:::
+
+## Le MAPE et ses limites
+
+::: {.example-box}
+$$\mathrm{MAPE}=\frac{100}{n}\sum\left|\frac{e_i}{y_i}\right|.$$
+:::
+::: {.note-box}
+Zéro : indéfini. Valeur proche de zéro : instabilité. Zéro arbitraire : pourcentage inadapté.
+:::
+
+::: {.notes}
+Le MAPE est sans unité, mais requiert une échelle où le zéro a un sens. Il ne convient pas aux températures en degrés Celsius. Exclure les cibles nulles change l’ensemble évalué et peut cacher des erreurs. À observation fixée, des écarts opposés de même amplitude ont le même MAPE; l’asymétrie se manifeste notamment dans le choix de prévisions qui minimisent ce score.
+:::
+
+## La MASE : une échelle d’apprentissage
+
+::: {.example-box}
+$$q_m=\frac{1}{T-m}\sum_{t=m+1}^{T}|y_t-y_{t-m}|,\qquad\mathrm{MASE}=\frac{\mathrm{MAE}_{\mathrm{validation}}}{q_m}.$$
+:::
+::: {.note-box}
+$m=1$ : référence naïve. $m=12$ : référence saisonnière mensuelle.
+:::
+
+::: {.notes}
+Le dénominateur utilise uniquement l’apprentissage. La MASE est sans unité et tolère des observations de validation nulles lorsque q est positif. Si toutes les différences de référence valent zéro, elle est indéfinie. Les méthodes d’une comparaison doivent partager le même dénominateur.
+:::
+
+## Que signifie MASE < 1?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Interprétation
+:::
+::: {.text}
+MAE plus petite que q_m
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Limite
+:::
+::: {.text}
+pas une victoire garantie sur la validation
+:::
+:::
+:::
+
+::: {.notes}
+La comparaison se fait avec l’erreur moyenne de référence sur l’apprentissage, pas avec l’erreur de la référence sur les mêmes mois de validation. Pour affirmer une amélioration sur la validation, comparer directement les deux MAE de validation.
+:::
+
+## Le résultat du cas guidé
+
+```{r}
+#| label: m06-c5-mesures
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+knitr::kable(analyse$comparaison, digits = 2,
+  col.names = c("Méthode", "ME (kWh)", "MAE (kWh)", "RMSE (kWh)", "MAPE (%)", "MASE"),
+  format.args = list(decimal.mark = ",", big.mark = " "))
+```
+
+::: {.notes}
+Lire le classement obtenu, sans annoncer un vainqueur universel. Les méthodes sont naïve, saisonnière et tendance. Les cinq mesures utilisent les douze mêmes observations de validation. La MASE emploie m égal à 12 pour toutes les méthodes.
+:::
+
+## Lire le temps et la distribution
+
+```{r}
+#| label: m06-c5-erreurs
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+ggplot(analyse$evaluation |> filter(methode == "saisonniere"), aes(date, erreur / 1000)) +
+  geom_hline(yintercept = 0, linetype = 2) + geom_line(colour = "#0B4F6C") +
+  geom_point() + labs(x = NULL, y = "Erreur (MWh)")
+```
+
+::: {.notes}
+Un graphique temporel peut montrer un biais, une évolution, une période difficile ou une succession d’erreurs de même signe. Un histogramme décrit leur distribution; douze erreurs ne suffisent pas à certifier normalité ou indépendance. Les dépendances sont approfondies au module 9.
+:::
+
+## 6. Communiquer l’incertitude
+
+::: {.question-line}
+Une seule valeur suffit-elle au suivi énergétique?
+:::
+
+
+## Un point et une plage
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Point
+:::
+::: {.text}
+Une valeur prévue
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Intervalle
+:::
+::: {.text}
+Une plage avec un niveau nominal
+:::
+:::
+:::
+
+::: {.notes}
+Une plage plus large signale une incertitude plus importante. Un intervalle de prédiction vise une nouvelle observation; un intervalle de confiance pour une moyenne ou un paramètre vise un autre objet. La précision d’un point et la couverture d’un intervalle sont distinctes.
+:::
+
+## Interpréter 95 %
+
+::: {.note-box}
+Sur des répétitions comparables, une procédure calibrée à 95 % couvre la future observation dans environ 95 % des cas.
+:::
+
+::: {.notes}
+Cette interprétation suppose un modèle et des conditions adéquats. Elle n’est pas une garantie pour cette observation particulière. Un intervalle usuel par horizon n’est pas automatiquement une bande simultanée qui couvre toute la trajectoire à 95 %. La rupture de régime ou une variable future inconnue peut rendre l’intervalle trompeur.
+:::
+
+## Une approximation normale
+
+::: {.example-box}
+$$\widehat y_{T+h\mid T}\ \pm\ 1{,}96\,\widehat\sigma_h.$$
+:::
+::: {.note-box}
+Pour 95 %, si l’approximation normale et l’écart-type prédictif sont appropriés.
+:::
+
+::: {.notes}
+La distribution prédictive et la prise en compte de l’estimation doivent être justifiées. Un histogramme avec douze erreurs ne valide pas ces conditions. Des modèles et procédures simulées peuvent produire des intervalles asymétriques. Une formule de cours ne doit pas être appliquée à tout modèle sans contrôle.
+:::
+
+## Plus loin, plus incertain?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Niveau nominal plus élevé
+:::
+::: {.text}
+intervalle généralement plus large
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Horizon plus lointain
+:::
+::: {.text}
+incertitude souvent accrue
+:::
+:::
+:::
+
+::: {.notes}
+À modèle et horizon fixés, des intervalles emboîtés à 80 et 95 % ont des largeurs différentes. L’incertitude peut croître avec l’horizon, mais ce n’est pas une loi universelle pour toute série et toute méthode. Les saisonnalités et les paramètres peuvent modifier la forme du cône.
+:::
+
+## Lire un cône de prédiction
+
+```{r}
+#| label: m06-c6-cone
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.5
+#| out-width: "88%"
+prevision <- forecast(ets(analyse$serie, model = "AAN"), h = 12, level = c(80, 95))
+autoplot(prevision) + labs(title = "Prévisions et intervalles nominaux",
+  x = "Année", y = "Consommation (kWh)",
+  subtitle = "Illustration ETS(A,A,N), ajustée uniquement sur 2020 à 2024") +
+  scale_y_continuous(labels = function(x) nombre_fr(x))
+```
+
+::: {.note-box}
+À h = 12, la borne à 95 % devient négative : limite du modèle pour une consommation d’énergie.
+:::
+
+::: {.notes}
+La ligne centrale est la prévision ponctuelle; les zones représentent ici les niveaux 80 et 95 %. Le modèle est un exemple pour lire l’incertitude, pas un vainqueur sélectionné. Les détails du lissage seront étudiés au module 7. Dans ce cas, la borne inférieure à 95 % devient négative à h = 12, ce qui n’a pas de sens physique pour une consommation d’énergie. Cette limite invite à revoir la structure et la calibration du modèle avant un usage opérationnel.
+:::
+
+## Lire les trois lettres ETS
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+E
+:::
+::: {.label}
+type d’erreur
+:::
+:::
+::: {.metric}
+::: {.value}
+T
+:::
+::: {.label}
+type de tendance
+:::
+:::
+::: {.metric}
+::: {.value}
+S
+:::
+::: {.label}
+type de saisonnalité
+:::
+:::
+:::
+::: {.note-box}
+A : additif. M : multiplicatif. N : absence de tendance ou saisonnalité. Z : choix automatique dans forecast::ets().
+:::
+
+::: {.notes}
+AAN possède une erreur additive, une tendance additive et aucune saisonnalité; AAA possède une saisonnalité additive. Une tendance peut aussi être amortie. Toutes les combinaisons de lettres ne correspondent pas à un modèle admissible, et les composantes multiplicatives imposent des conditions de positivité. Le nombre de modèles admissibles dépend donc des restrictions de leurs composantes.
+:::
+
+## Comparer des cônes sans choisir à l’œil
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+ANN, AAN, AAA
+:::
+::: {.text}
+trois structures illustratives
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Validation
+:::
+::: {.text}
+comparer erreurs et couverture
+:::
+:::
+:::
+
+::: {.notes}
+Le code des démonstrations reproduit trois cônes sur la même origine. La largeur seule ne mesure pas la qualité: un intervalle très large peut couvrir sans être utile. Une comparaison sérieuse lit la couverture empirique, la largeur et les performances par horizon. Les rares observations de ce module n’établissent pas la calibration.
+:::
+
+## Relier l’intervalle à une décision
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Capacité
+:::
+::: {.text}
+risque de dépassement
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Budget
+:::
+::: {.text}
+marge et scénario défavorable
+:::
+:::
+:::
+
+::: {.notes}
+La décision demande un coût, une contrainte et parfois un quantile adapté. Le point moyen n’est pas toujours le seuil adapté au suivi énergétique. Les intervalles conditionnels à un scénario externe n’intègrent pas nécessairement l’incertitude de ce scénario.
+:::
+
+## Complément A - Validation à plusieurs origines
+
+::: {.question-line}
+Le choix reste-t-il bon à un mois et à six mois?
+:::
+
+
+## Faire avancer l’origine
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Déc. 2024 → janv. 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Janv. 2025 → févr. 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Févr. 2025 → mars 2025
+:::
+:::
+:::
+
+::: {.notes}
+À chaque origine, l’apprentissage ne contient que les observations déjà disponibles. L’actualisation du modèle est réaliste lorsque les nouvelles mesures sont réellement arrivées. Il faut réestimer aussi les transformations et les imputations à cette origine.
+:::
+
+## Fixe ou mobile?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Fixe
+:::
+::: {.text}
+Douze horizons, une seule origine
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Mobile
+:::
+::: {.text}
+Un même horizon, plusieurs origines
+:::
+:::
+:::
+
+::: {.notes}
+Une colonne lag sur l’ensemble de la série peut représenter des prévisions à un pas réactualisées. Elle ne représente pas douze prévisions émises en décembre 2024. Les deux scénarios sont valides si la décision les exige, mais leurs scores répondent à des questions différentes.
+:::
+
+## Combien de comparaisons?
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+h = 1
+:::
+::: {.label}
+12 origines en 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+h = 6
+:::
+::: {.label}
+7 origines admissibles
+:::
+:::
+::: {.metric}
+::: {.value}
+h = 12
+:::
+::: {.label}
+1 origine admissible
+:::
+:::
+:::
+
+::: {.notes}
+Avec soixante mois initiaux et douze mois de validation, les origines vont de T égal à 60 à 72 moins h. Le nombre vaut 13 moins h, pour h de 1 à 12. Si les horizons restent dans la validation, les prévisions plus lointaines disposent de moins de répétitions.
+:::
+
+## Le geste à chaque origine
+
+```{r}
+#| eval: false
+#| echo: true
+origine <- 60
+h <- 6
+historique <- electricite$consommation_kwh[seq_len(origine)]
+refs <- prevoir_references(historique, horizon = h)
+erreur <- electricite$consommation_kwh[origine + h] - refs$naive[h]
+```
+
+::: {.notes}
+L’observation cible n’est consultée que pour calculer l’erreur après émission de la prévision. Le script complet boucle sur toutes les origines autorisées et les horizons 1 et 6.
+:::
+
+## Comparer par horizon
+
+```{r}
+#| label: m06-c7-mobile
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+knitr::kable(analyse$comparaison_mobile, digits = 1)
+```
+
+::: {.notes}
+La colonne n permet de vérifier les répétitions. Les deux méthodes utilisent les mêmes origines à un horizon donné. Les scores à h égal à 1 et h égal à 6 ne portent pas sur exactement les mêmes cibles. Le classement peut changer selon l’horizon.
+:::
+
+## Fenêtre croissante ou glissante
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Croissante
+:::
+::: {.text}
+conserver tout le passé disponible
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Glissante
+:::
+::: {.text}
+conserver un passé récent fixé
+:::
+:::
+:::
+
+::: {.notes}
+La fenêtre croissante de ce module ajoute les nouvelles observations. Une fenêtre glissante peut mieux refléter un changement de régime, mais perd des données. Sa longueur doit être choisie dans une validation cohérente, sans regarder le test final.
+:::
+
+## Réévaluer sans recycler le test
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Fixer les candidats
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Comparer plusieurs origines
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Retenir une méthode
+:::
+:::
+::: {.journey-step}
+::: {.num}
+4
+:::
+::: {.text}
+Suivre les nouvelles erreurs
+:::
+:::
+:::
+
+::: {.notes}
+Une sélection répétée sur les mêmes observations peut surajuster la validation. Rapporter le protocole et réserver une nouvelle période lorsque possible. Le suivi n’est pas une preuve que le modèle restera bon après une rupture.
+:::
+
+## Choisir selon la décision
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Budget
+:::
+::: {.text}
+horizon court et actualisation fréquente
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Approvisionnement
+:::
+::: {.text}
+horizon imposé par le délai
+:::
+:::
+:::
+
+::: {.notes}
+Le protocole doit reproduire le moment où l’on agit, l’information disponible et le délai. Un modèle peut être utile pour le personnel et insuffisant pour une commande à long délai; sa performance moyenne sur tous les horizons ne suffit pas.
+:::
+
+## Complément B - Familles de méthodes
+
+::: {.question-line}
+Faut-il plus de complexité pour améliorer la décision?
+:::
+
+
+## Structure explicite ou adaptation locale
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Structure explicite
+:::
+::: {.text}
+forme et paramètres d’un modèle
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Adaptation locale
+:::
+::: {.text}
+mémoire et pondération du passé
+:::
+:::
+:::
+
+::: {.notes}
+La distinction entre structure explicite et adaptation locale sert à comparer les méthodes. Les deux apprennent à partir des données et certaines ont une formulation statistique commune. Les modèles de lissage peuvent aussi être écrits comme des modèles d’espace d’état. Il ne s’agit donc pas de catégories exclusives.
+:::
+
+## Motif global et mémoire locale
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Global dans une série
+:::
+::: {.text}
+une structure sur toute la période
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Local dans une série
+:::
+::: {.text}
+une structure qui évolue
+:::
+:::
+:::
+
+::: {.notes}
+Un modèle simple estimé sur toute la série décrit une structure globale dans le temps. Un lissage peut accorder plus de poids aux dernières périodes. Mémoire courte: adaptation plus rapide et sensibilité au bruit; mémoire longue: stabilité et réaction plus lente. Le mot global ne désigne pas ici un modèle entraîné sur plusieurs séries.
+:::
+
+## Extrapoler ou utiliser des entrées?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Histoire de la cible
+:::
+::: {.text}
+naïf, lissage, ARIMA
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Informations externes
+:::
+::: {.text}
+calendrier, météo, occupation
+:::
+:::
+:::
+
+::: {.notes}
+Une régression du temps et du calendrier peut extrapoler la série. Une régression avec variables externes requiert leurs valeurs futures ou leurs scénarios. Les modèles économétriques peuvent s’appuyer sur une théorie causale, mais un bon score de prévision ne prouve pas la causalité. Des modèles multivariés décrivent des relations entre séries sans les rendre automatiquement causales.
+:::
+
+## Disponible au moment de prévoir
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Calendrier futur
+:::
+::: {.text}
+connu à l’origine
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Prix réalisé futur
+:::
+::: {.text}
+à prévoir ou scénariser
+:::
+:::
+:::
+
+::: {.notes}
+La disponibilité opérationnelle est une condition nécessaire. Une fermeture planifiée peut être connue; la température réellement observée dans le futur ne l’est pas et doit être prévue ou scénarisée. Les hypothèses des scénarios doivent apparaître dans le rapport et l’incertitude.
+:::
+
+## Manuel, automatisé, surveillé
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Automatiser
+:::
+::: {.text}
+calcul et actualisation
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Surveiller
+:::
+::: {.text}
+erreurs, ruptures, qualité
+:::
+:::
+:::
+
+::: {.notes}
+L’expertise peut compléter ou réviser une prévision, avec une trace de la modification. Automatiser ne dispense ni du contrôle des données ni de la validation. Les méthodes légères peuvent faciliter un grand nombre de séries, mais aucune famille n’élimine le surajustement ni le besoin d’entretien.
+:::
+
+## Combiner les prévisions
+
+::: {.example-box}
+$$\widehat y^{\mathrm{comb}}=w\widehat y^{(1)}+(1-w)\widehat y^{(2)},\quad 0\leq w\leq1.$$
+:::
+::: {.note-box}
+Exemple simple : moyenne à poids égaux, fixée avant la comparaison.
+:::
+
+::: {.notes}
+Une combinaison parallèle utilise plusieurs prévisions de la même cible, origine et horizon. Une stratégie peut également retenir différentes méthodes selon les horizons ou les périodes, à condition de valider la règle. Des poids choisis sur la validation doivent être évalués ensuite sur de nouvelles données ou de nouvelles origines.
+:::
+
+## Diversifier les erreurs
+
+::: {.example-box}
+$$\operatorname{Var}(we_1+(1-w)e_2)=w^2\operatorname{Var}(e_1)+(1-w)^2\operatorname{Var}(e_2)+2w(1-w)\operatorname{Cov}(e_1,e_2).$$
+:::
+::: {.note-box}
+Erreurs peu corrélées : diversification possible. Aucun gain garanti.
+:::
+
+::: {.notes}
+La covariance explique pourquoi la complémentarité des erreurs compte. Une covariance négative peut diminuer la variance combinée. Le biais des erreurs et leurs variances importent aussi; une combinaison ne garantit pas une MAE inférieure à celle de chaque candidat.
+:::
+
+## Corriger en deux étapes
+
+::: {.example-box}
+$\widehat y^{\mathrm{final}}=\widehat y^{\mathrm{base}}+\widehat e^{\mathrm{base}}$
+:::
+::: {.note-box}
+Modèle de base → prévision de ses erreurs → correction
+:::
+
+::: {.notes}
+Une méthode en cascade tente de prévoir la structure restante des erreurs. L’ajustement de cette correction exige des erreurs produites sans fuite temporelle et une nouvelle validation; on ne corrige pas une prévision en lui donnant son erreur future observée.
+:::
+
+## La suite du cours
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Module 7
+:::
+::: {.label}
+lissage et comparaison
+:::
+:::
+::: {.metric}
+::: {.value}
+Module 8
+:::
+::: {.label}
+tendance et saisonnalité
+:::
+:::
+::: {.metric}
+::: {.value}
+Module 9
+:::
+::: {.label}
+variables externes et autocorrélation
+:::
+:::
+:::
+
+::: {.notes}
+Ce module donne le cadre commun et des exemples opérationnels. Les modules suivants approfondissent les méthodes, sans remplacer la définition de la cible, les références, la validation temporelle ni la communication de l’incertitude.
+:::
+
+## Produire un rapport reproductible
+
+::: {.note-box}
+Une question, un calendrier vérifié, des graphiques, un protocole temporel, des erreurs et des limites.
+:::
+
+
+## Référence
+
+::: {.note-box}
+Hyndman, R. J., et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e édition.
+
+[Lectures ciblées et documentation](lectures.qmd)
+:::

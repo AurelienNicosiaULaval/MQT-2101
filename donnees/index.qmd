@@ -111,13 +111,13 @@ dataset_catalog <- tibble::tribble(
   "Comparer un modèle linéaire, un modèle quadratique et un modèle logarithmique pour décrire une relation avec saturation.",
   "Données simulées pour le cours.",
   "Données simulées pour le cours.",
-  "ventes_mensuelles_quebec",
-  "Ventes mensuelles fictives",
-  "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv",
+  "consommation_electrique_batiment_quebec",
+  "Consommation mensuelle d’électricité fictive",
+  "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv",
   "Module 06 - Séries chronologiques",
-  "Série mensuelle simulée de ventes et de clients sur 72 mois.",
+  "Consommation d’électricité entièrement simulée pour un bâtiment universitaire fictif au Québec sur 72 mois, en kWh.",
   "Définir une cible et un horizon, visualiser le temps et construire une référence naïve.",
-  "Données simulées pour le cours par scripts/10_create_second_block_data.R.",
+  "Données simulées pour le cours par scripts/24_create_module06_electricity.R, graine 210106.",
   "Données simulées redistribuables avec le matériel du cours.",
   "demande_hebdomadaire_quebec",
   "Demande hebdomadaire fictive",
@@ -777,39 +777,190 @@ plot_numeric_overview("achalandage_saturation_quebec")
 
 ## Jeux de données du bloc prévision et classification
 
-Les six jeux suivants sont entièrement simulés et reproductibles avec `scripts/10_create_second_block_data.R`. Les aperçus permettent de vérifier la structure avant téléchargement.
+Les six jeux suivants sont entièrement simulés. Le cas d’électricité du module 6 est reproductible avec `scripts/24_create_module06_electricity.R`; les autres avec `scripts/10_create_second_block_data.R`, qui appelle aussi le générateur d’électricité. Les aperçus permettent de vérifier la structure avant téléchargement.
+
+## Consommation mensuelle d’électricité fictive {#consommation_electrique_batiment_quebec}
 
 ```{r}
-#| label: details-donnees-bloc-2
+#| label: telecharger-consommation-electrique-batiment-quebec
+#| results: asis
 
-second_block_ids <- c(
-  "ventes_mensuelles_quebec",
-  "demande_hebdomadaire_quebec",
-  "ventes_saisonnieres_quebec",
-  "ventes_promotions_quebec",
-  "fidelisation_clients_quebec",
-  "cas_integrateur_quebec"
-)
+meta <- dataset_meta("consommation_electrique_batiment_quebec")
+cat(meta$description, "\n\n", download_link("consommation_electrique_batiment_quebec"), "\n")
+```
 
-second_block_sections <- purrr::map(second_block_ids, function(dataset_id) {
-  meta <- dataset_meta(dataset_id)
+### En bref
 
-  htmltools::tagList(
-    htmltools::tags$section(
-      id = dataset_id,
-      htmltools::tags$h2(meta$title),
-      htmltools::tags$p(meta$description),
-      htmltools::HTML(download_link(dataset_id)),
-      htmltools::tags$h3("En bref"),
-      htmltools::HTML(knitr::kable(dataset_facts(dataset_id), format = "html")),
-      htmltools::tags$h3("Aperçu interactif"),
-      dataset_table(dataset_id),
-      htmltools::tags$h3("Variables"),
-      htmltools::HTML(knitr::kable(dataset_profile(dataset_id), format = "html")),
-      htmltools::tags$hr()
-    )
-  )
-})
+```{r}
+#| label: fiche-consommation-electrique-batiment-quebec
+dataset_facts("consommation_electrique_batiment_quebec") |> knitr::kable()
+```
 
-htmltools::tagList(second_block_sections)
+### Aperçu interactif
+
+```{r}
+#| label: dt-consommation-electrique-batiment-quebec
+dataset_table("consommation_electrique_batiment_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-consommation-electrique-batiment-quebec
+dataset_profile("consommation_electrique_batiment_quebec") |> knitr::kable()
+```
+
+## Demande hebdomadaire fictive {#demande_hebdomadaire_quebec}
+
+```{r}
+#| label: telecharger-demande-hebdomadaire-quebec
+#| results: asis
+
+meta <- dataset_meta("demande_hebdomadaire_quebec")
+cat(meta$description, "\n\n", download_link("demande_hebdomadaire_quebec"), "\n")
+```
+
+### En bref
+
+```{r}
+#| label: fiche-demande-hebdomadaire-quebec
+dataset_facts("demande_hebdomadaire_quebec") |> knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-demande-hebdomadaire-quebec
+dataset_table("demande_hebdomadaire_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-demande-hebdomadaire-quebec
+dataset_profile("demande_hebdomadaire_quebec") |> knitr::kable()
+```
+
+## Ventes saisonnières fictives {#ventes_saisonnieres_quebec}
+
+```{r}
+#| label: telecharger-ventes-saisonnieres-quebec
+#| results: asis
+
+meta <- dataset_meta("ventes_saisonnieres_quebec")
+cat(meta$description, "\n\n", download_link("ventes_saisonnieres_quebec"), "\n")
+```
+
+### En bref
+
+```{r}
+#| label: fiche-ventes-saisonnieres-quebec
+dataset_facts("ventes_saisonnieres_quebec") |> knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-ventes-saisonnieres-quebec
+dataset_table("ventes_saisonnieres_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-ventes-saisonnieres-quebec
+dataset_profile("ventes_saisonnieres_quebec") |> knitr::kable()
+```
+
+## Ventes et promotions fictives {#ventes_promotions_quebec}
+
+```{r}
+#| label: telecharger-ventes-promotions-quebec
+#| results: asis
+
+meta <- dataset_meta("ventes_promotions_quebec")
+cat(meta$description, "\n\n", download_link("ventes_promotions_quebec"), "\n")
+```
+
+### En bref
+
+```{r}
+#| label: fiche-ventes-promotions-quebec
+dataset_facts("ventes_promotions_quebec") |> knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-ventes-promotions-quebec
+dataset_table("ventes_promotions_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-ventes-promotions-quebec
+dataset_profile("ventes_promotions_quebec") |> knitr::kable()
+```
+
+## Fidélisation de clients fictifs {#fidelisation_clients_quebec}
+
+```{r}
+#| label: telecharger-fidelisation-clients-quebec
+#| results: asis
+
+meta <- dataset_meta("fidelisation_clients_quebec")
+cat(meta$description, "\n\n", download_link("fidelisation_clients_quebec"), "\n")
+```
+
+### En bref
+
+```{r}
+#| label: fiche-fidelisation-clients-quebec
+dataset_facts("fidelisation_clients_quebec") |> knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-fidelisation-clients-quebec
+dataset_table("fidelisation_clients_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-fidelisation-clients-quebec
+dataset_profile("fidelisation_clients_quebec") |> knitr::kable()
+```
+
+## Cas intégrateur de succursales fictives {#cas_integrateur_quebec}
+
+```{r}
+#| label: telecharger-cas-integrateur-quebec
+#| results: asis
+
+meta <- dataset_meta("cas_integrateur_quebec")
+cat(meta$description, "\n\n", download_link("cas_integrateur_quebec"), "\n")
+```
+
+### En bref
+
+```{r}
+#| label: fiche-cas-integrateur-quebec
+dataset_facts("cas_integrateur_quebec") |> knitr::kable()
+```
+
+### Aperçu interactif
+
+```{r}
+#| label: dt-cas-integrateur-quebec
+dataset_table("cas_integrateur_quebec")
+```
+
+### Variables
+
+```{r}
+#| label: profil-cas-integrateur-quebec
+dataset_profile("cas_integrateur_quebec") |> knitr::kable()
 ```

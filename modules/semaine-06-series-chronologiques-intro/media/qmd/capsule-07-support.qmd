@@ -1,0 +1,322 @@
+---
+title: "Complément A - Valider à plusieurs origines"
+subtitle: "MQT-2101 - Approfondissement facultatif"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| include: false
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
+```
+
+## Pourquoi ça compte
+
+::: {.question-line}
+Le choix reste-t-il bon à un mois et à six mois?
+:::
+::: {.note-box}
+Une comparaison sur une seule origine peut dépendre de la période retenue. Les décisions de suivi énergétique exigent leurs propres horizons.
+:::
+
+
+## Objectifs du complément
+
+::: {.keypoints}
+- Construire une validation à origine mobile.
+- Comparer à horizons constants.
+- Distinguer mise à jour et accès au futur.
+:::
+
+
+## Faire avancer l’origine
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Déc. 2024 → janv. 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Janv. 2025 → févr. 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Févr. 2025 → mars 2025
+:::
+:::
+:::
+
+::: {.notes}
+À chaque origine, l’apprentissage ne contient que les observations déjà disponibles. L’actualisation du modèle est réaliste lorsque les nouvelles mesures sont réellement arrivées. Il faut réestimer aussi les transformations et les imputations à cette origine.
+:::
+
+## Fixe ou mobile?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Fixe
+:::
+::: {.text}
+Douze horizons, une seule origine
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Mobile
+:::
+::: {.text}
+Un même horizon, plusieurs origines
+:::
+:::
+:::
+
+::: {.notes}
+Une colonne lag sur l’ensemble de la série peut représenter des prévisions à un pas réactualisées. Elle ne représente pas douze prévisions émises en décembre 2024. Les deux scénarios sont valides si la décision les exige, mais leurs scores répondent à des questions différentes.
+:::
+
+## Combien de comparaisons?
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+h = 1
+:::
+::: {.label}
+12 origines en 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+h = 6
+:::
+::: {.label}
+7 origines admissibles
+:::
+:::
+::: {.metric}
+::: {.value}
+h = 12
+:::
+::: {.label}
+1 origine admissible
+:::
+:::
+:::
+
+::: {.notes}
+Avec soixante mois initiaux et douze mois de validation, les origines vont de T égal à 60 à 72 moins h. Le nombre vaut 13 moins h, pour h de 1 à 12. Si les horizons restent dans la validation, les prévisions plus lointaines disposent de moins de répétitions.
+:::
+
+## Le geste à chaque origine
+
+```{r}
+#| eval: false
+#| echo: true
+origine <- 60
+h <- 6
+historique <- electricite$consommation_kwh[seq_len(origine)]
+refs <- prevoir_references(historique, horizon = h)
+erreur <- electricite$consommation_kwh[origine + h] - refs$naive[h]
+```
+
+::: {.notes}
+L’observation cible n’est consultée que pour calculer l’erreur après émission de la prévision. Le script complet boucle sur toutes les origines autorisées et les horizons 1 et 6.
+:::
+
+## Comparer par horizon
+
+```{r}
+#| label: m06-c7-mobile
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+knitr::kable(analyse$comparaison_mobile, digits = 1)
+```
+
+::: {.notes}
+La colonne n permet de vérifier les répétitions. Les deux méthodes utilisent les mêmes origines à un horizon donné. Les scores à h égal à 1 et h égal à 6 ne portent pas sur exactement les mêmes cibles. Le classement peut changer selon l’horizon.
+:::
+
+## Fenêtre croissante ou glissante
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Croissante
+:::
+::: {.text}
+conserver tout le passé disponible
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Glissante
+:::
+::: {.text}
+conserver un passé récent fixé
+:::
+:::
+:::
+
+::: {.notes}
+La fenêtre croissante de ce module ajoute les nouvelles observations. Une fenêtre glissante peut mieux refléter un changement de régime, mais perd des données. Sa longueur doit être choisie dans une validation cohérente, sans regarder le test final.
+:::
+
+## Réévaluer sans recycler le test
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Fixer les candidats
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Comparer plusieurs origines
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Retenir une méthode
+:::
+:::
+::: {.journey-step}
+::: {.num}
+4
+:::
+::: {.text}
+Suivre les nouvelles erreurs
+:::
+:::
+:::
+
+::: {.notes}
+Une sélection répétée sur les mêmes observations peut surajuster la validation. Rapporter le protocole et réserver une nouvelle période lorsque possible. Le suivi n’est pas une preuve que le modèle restera bon après une rupture.
+:::
+
+## Choisir selon la décision
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Budget
+:::
+::: {.text}
+horizon court et actualisation fréquente
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Approvisionnement
+:::
+::: {.text}
+horizon imposé par le délai
+:::
+:::
+:::
+
+::: {.notes}
+Le protocole doit reproduire le moment où l’on agit, l’information disponible et le délai. Un modèle peut être utile pour le personnel et insuffisant pour une commande à long délai; sa performance moyenne sur tous les horizons ne suffit pas.
+:::
+
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Origines
+:::
+::: {.label}
+plusieurs futurs simulés
+:::
+:::
+::: {.metric}
+::: {.value}
+Horizon
+:::
+::: {.label}
+une comparaison par délai
+:::
+:::
+::: {.metric}
+::: {.value}
+Information
+:::
+::: {.label}
+le passé à chaque origine
+:::
+:::
+:::
+
+
+## Pratique facultative 6.7
+
+::: {.lead}
+Comparez les références à h = 1 et h = 6 mois. Vérifiez le nombre d’origines, le classement et les dernières dates possibles. Distinguez ces scores de ceux à origine fixe.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J’ai comparé les candidats à horizon constant, séparément pour un et six mois.
+- J’ai vérifié les douze origines à un mois, les sept origines à six mois et les dernières dates possibles.
+- À chaque origine, seules les observations déjà connues servent à produire la prévision.
+:::

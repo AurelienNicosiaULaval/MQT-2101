@@ -1,10 +1,12 @@
 ---
-title: "Capsule 1 - Reconnaître une série chronologique"
+title: "Capsule 1 - Définir une prévision utile"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -28,67 +30,238 @@ editor: visual
 ---
 
 ```{r}
-#| label: setup-m06-c01
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-train <- ventes |> filter(date < as.Date("2025-01-01"))
-test <- ventes |> filter(date >= as.Date("2025-01-01"))
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Prévoir exige de respecter le temps.
-:::
-
 ::: {.question-line}
-Qu'est-ce qui transforme un tableau en série chronologique?
+Quelle information faut-il pour préparer le suivi énergétique du prochain trimestre?
+:::
+::: {.note-box}
+Une équipe planifie le suivi énergétique d’un bâtiment universitaire fictif au Québec. La décision détermine la cible, la fréquence et l’horizon.
 :::
 
-::: {.note-box}
-L'ordre des observations porte de l'information. Une ligne de mars ne peut pas être traitée comme interchangeable avec une ligne de février.
-:::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Nommer l'unité d'observation, la fréquence et la période.
-- Distinguer données transversales et données temporelles.
-- Vérifier que l'ordre des lignes respecte la chronologie.
+- Définir une série et sa fréquence.
+- Relier la cible à une décision.
+- Décrire le processus de prévision.
 :::
 
-## Le temps change l'unité d'analyse
 
-::: {.keypoints}
-- Une série est repérée dans le temps.
-- La date et la fréquence doivent être explicites.
-- La chronologie ne doit pas être détruite.
+## Un tableau ordonné dans le temps
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Transversal
+:::
+::: {.text}
+Plusieurs unités, une période
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Chronologique
+:::
+::: {.text}
+Une quantité, plusieurs dates
+:::
+:::
 :::
 
-## Une ligne, deux identifiants
-
-::: {.example-box}
-Une ligne peut représenter un mois-succursale, mais seulement si la date et la succursale sont toutes deux identifiées.
+::: {.notes}
+Une série chronologique est une suite de mesures repérées dans le temps. Avec plusieurs succursales, on possède plusieurs séries; il faut identifier la succursale et la date. La dépendance entre périodes doit être examinée et ne disparaît pas parce que les données sont en tableau.
 :::
 
-## Vérifier l'ordre et la fréquence en R
+## Le cas guidé
 
-```{r}
-#| label: code-m06-c01
-#| echo: true
-#| eval: true
-library(tidyverse)
-ventes |> arrange(date) |> glimpse()
-```
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+72
+:::
+::: {.label}
+mois, de 2020 à 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+1
+:::
+::: {.label}
+bâtiment fictif
+:::
+:::
+::: {.metric}
+::: {.value}
+kWh
+:::
+::: {.label}
+consommation mensuelle d’électricité
+:::
+:::
+:::
+::: {.note-box}
+Données simulées. Une ligne représente un mois; aucun bâtiment réel n’est décrit.
+:::
 
-## Quand un tri alphabétique détruit le temps
+::: {.notes}
+Le fichier contient le calendrier et le nombre de jours de chaque mois. La variable cible est consommation_kwh, une quantité d’énergie en kWh. La date désigne le mois entier, sans représenter une mesure faite uniquement le premier jour. Les valeurs sont simulées pour un bâtiment universitaire fictif au Québec.
+:::
 
-::: {.warning-box}
-Trier une date stockée comme texte peut produire un ordre faux. Vérifiez toujours la classe de la date.
+## Origine, cible et horizon
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Origine T
+:::
+::: {.text}
+Dernière information disponible
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Horizon h
+:::
+::: {.text}
+Nombre de périodes à prévoir
+:::
+:::
+:::
+::: {.note-box}
+$\widehat y_{T+h\mid T}$ : prévision de $y_{T+h}$ produite à l’origine $T$.
+:::
+
+::: {.notes}
+À la fin de décembre 2024, prévoir la consommation de janvier à décembre 2025 signifie produire douze valeurs, aux horizons 1 à 12 mois. Une prévision pour la consommation totale du trimestre est une cible différente des trois prévisions mensuelles.
+:::
+
+## Fréquence et granularité
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Fréquence
+:::
+::: {.text}
+Jour, semaine, mois
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Granularité
+:::
+::: {.text}
+Succursale, région, produit
+:::
+:::
+:::
+
+::: {.notes}
+La fréquence désigne la résolution temporelle. La granularité désigne le périmètre des mesures, spatial, démographique ou temporel. Agréger peut réduire le bruit, mais efface des détails. Une prévision provinciale ne fournit pas directement les besoins de chaque succursale. Désagréger exige une règle justifiée.
+:::
+
+## L’expertise complète les mesures
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Opérations
+:::
+::: {.text}
+Fermeture, chauffage, panne
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Gestion
+:::
+::: {.text}
+Occupation, horaires, travaux
+:::
+:::
+:::
+
+::: {.notes}
+Les personnes qui connaissent le domaine expliquent la collecte, les unités, les événements inhabituels et les conséquences des erreurs. La qualité des mesures et la continuité de la collecte conditionnent le suivi. Une interprétation exige de communiquer avec les utilisateurs de la prévision.
+:::
+
+## Le processus est une boucle
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Cadrer et préparer
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Comparer et choisir
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Prévoir et suivre
+:::
+:::
+:::
+
+::: {.notes}
+Une évaluation insuffisante peut conduire à revoir les méthodes, l’objectif ou la collecte. Les nouvelles observations alimentent le suivi et un éventuel réajustement. Ce processus ne garantit pas que les données permettent d’atteindre la précision souhaitée.
+:::
+
+## Préciser la décision
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Énergie
+:::
+::: {.text}
+Consommation et horizon mensuel
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Budget
+:::
+::: {.text}
+Tarifs et postes de facturation
+:::
+:::
+:::
+::: {.note-box}
+Le coût d’une sous-prévision peut différer du coût d’une sur-prévision.
+:::
+
+::: {.notes}
+Le choix de la mesure d’erreur et du niveau d’agrégation doit refléter la décision. Prévoir l’énergie mensuelle en kWh ne suffit pas à prévoir une pointe de puissance en kW. Pour convertir l’énergie en budget, il faudrait préciser les tarifs et les autres postes de la facture.
 :::
 
 ## À retenir
@@ -96,45 +269,41 @@ Trier une date stockée comme texte peut produire un ordre faux. Vérifiez toujo
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Cible
 :::
 ::: {.label}
-Une unité, une variable, une fréquence et une période définissent la série.
+une quantité et une unité
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Temps
 :::
 ::: {.label}
-L'ordre temporel est une information, pas une colonne décorative.
+origine, fréquence, horizon
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Usage
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+une décision et un suivi
 :::
 :::
 :::
 
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
-:::
 
 ## Production autonome 6.1
 
 ::: {.lead}
-Pour chaque situation, indiquez si elle décrit une série chronologique et justifiez votre réponse.
+Formulez la prévision mensuelle de consommation d’électricité nécessaire pour préparer le suivi énergétique du premier trimestre 2025 à la fin de décembre 2024. Nommez le bâtiment concerné et une personne à consulter.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- J'ai nommé la variable, l'unité, la période et l'horizon.
-- Je n'ai utilisé aucune information future.
-- Ma conclusion contient une limite explicite.
+- J’ai précisé l’origine de décembre 2024 et les trois horizons mensuels.
+- Ma cible est la consommation mensuelle du bâtiment fictif, exprimée en kWh.
+- J’ai relié la prévision au suivi énergétique et nommé une personne à consulter.
 :::

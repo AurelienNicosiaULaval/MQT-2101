@@ -7281,6 +7281,16 @@ m_t=\frac{1}{k}\sum_{j=0}^{k-1}y_{t-j}.
 \ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}, \qquad 0&lt;\alpha&lt;1.
 \]</span></p>
 <p>Un alpha élevé donne plus de poids à la dernière observation et réagit rapidement. Un alpha faible produit une série plus stable. Cette méthode convient surtout lorsqu’il n’y a pas de tendance ou de saisonnalité forte non modélisée.</p>
+<section id="holt" class="level4">
+<h4 class="anchored" data-anchor-id="holt">Prolongement accompagné : Holt</h4>
+<p>Holt ajoute une pente <span class="math inline">\(b_t\)</span> au niveau <span class="math inline">\(\ell_t\)</span>. Sans amortissement, la prévision à l’horizon <span class="math inline">\(h\)</span> est <span class="math inline">\(\widehat y_{t+h\mid t}=\ell_t+h b_t\)</span>. Les deux états sont mis à jour à chaque observation.</p>
+<p>Avec une tendance amortie, <span class="math inline">\(0&lt;\phi&lt;1\)</span>, la prévision devient :</p>
+<p><span class="math display">\[
+\widehat y_{t+h\mid t}=\ell_t+(\phi+\phi^2+\cdots+\phi^h)b_t.
+\]</span></p>
+<p>L’effet de la pente diminue avec l’horizon. <code>forecast::holt(serie, h = horizon, damped = TRUE)</code> estime les paramètres sur l’apprentissage. La méthode ne modélise pas la saisonnalité : elle doit être comparée aux références et ne garantit pas une amélioration. Ce prolongement sert à comprendre les exemples fournis; le calcul des récurrences à la main n’est pas demandé.</p>
+<p>Source : Hyndman et Athanasopoulos (2021), <a href="https://otexts.com/fpp3/holt.html">section 8.2</a>; documentation de <a href="https://pkg.robjhyndman.com/forecast/reference/ses.html"><code>forecast::holt</code></a>.</p>
+</section>
 </div>
 </div>
 </div>
@@ -7376,7 +7386,7 @@ m_t=\frac{1}{k}\sum_{j=0}^{k-1}y_{t-j}.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Construire une période test commune et relier les mesures au choix de méthode.</p>
+<p>Construire une période de validation commune et relier les mesures au choix de méthode.</p>
 </div>
 </div>
 </div>
@@ -7384,7 +7394,8 @@ m_t=\frac{1}{k}\sum_{j=0}^{k-1}y_{t-j}.
 <p><a href="media/qmd/capsule-04-support.html">Ouvrir le support visuel RevealJS</a></p>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<p>Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période test et les mêmes mesures.</p>
+<p>Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période de validation et les mêmes mesures.</p>
+<p>Les paramètres sont estimés sur l’apprentissage. Les candidats sont annoncés avant la comparaison; le bloc de validation sert au choix de méthode. Un éventuel test final reste distinct et n’est pas utilisé pour retoucher ce choix.</p>
 <p>Le classement numérique ne suffit pas. Il faut aussi examiner : stabilité, interprétabilité, effort de maintenance, délai de calcul et conséquences des erreurs.</p>
 </div>
 </div>

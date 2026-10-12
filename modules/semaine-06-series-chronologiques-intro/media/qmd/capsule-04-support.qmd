@@ -1,10 +1,12 @@
 ---
-title: "Capsule 4 - Évaluer sans regarder le futur"
+title: "Capsule 4 - Comparer des prévisions de référence"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -28,72 +30,217 @@ editor: visual
 ---
 
 ```{r}
-#| label: setup-m06-c04
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_mensuelles_quebec.csv", "../../data/ventes_mensuelles_quebec.csv", "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-train <- ventes |> filter(date < as.Date("2025-01-01"))
-test <- ventes |> filter(date >= as.Date("2025-01-01"))
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
 ```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une bonne prévision doit survivre à des données qu'elle n'a pas vues.
-:::
-
 ::: {.question-line}
-Pourquoi réserver une période test chronologique?
+Une méthode élaborée fait-elle mieux qu’une règle simple?
+:::
+::: {.note-box}
+Un modèle peut très bien reproduire le passé et prévoir moins bien que la dernière valeur connue.
 :::
 
-::: {.note-box}
-L'évaluation doit reproduire la situation réelle : le futur n'était pas disponible au moment de prévoir.
-:::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Séparer entraînement et test dans l'ordre du temps.
-- Comparer un modèle à une référence naïve.
-- Interpréter la MAE dans l'unité de la cible.
-- Justifier une séparation chronologique des données.
+- Séparer apprentissage et validation.
+- Calculer les deux références naïves.
+- Distinguer ajustement et prévision.
 :::
 
-## Douze mois vraiment hors échantillon
+
+## Bien ajuster n’est pas bien prévoir
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Apprentissage
+:::
+::: {.text}
+paramètres et structure
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Validation
+:::
+::: {.text}
+erreurs sur le futur simulé
+:::
+:::
+:::
+
+::: {.notes}
+Un modèle flexible peut ajuster le bruit. Le R² d’apprentissage et les résidus ne suffisent pas à mesurer la performance de prévision. Les données utilisées pour sélectionner un candidat ne fournissent pas ensuite une évaluation finale indépendante. Une comparaison à origine fixe garde le même passé pour tout l’horizon. À origine mobile, on avance dans le temps et on réajuste avec les observations déjà reçues, en gardant l’horizon de comparaison constant. Le complément A détaille ce protocole; il n’est pas nécessaire de programmer cette boucle pour terminer le parcours principal.
+:::
+
+## La séparation du cas guidé
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+60
+:::
+::: {.label}
+mois d’apprentissage : 2020 à 2024
+:::
+:::
+::: {.metric}
+::: {.value}
+12
+:::
+::: {.label}
+mois de validation : 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+T
+:::
+::: {.label}
+origine : décembre 2024
+:::
+:::
+:::
+
+::: {.notes}
+Les méthodes candidates sont fixées avant la comparaison. Le bloc de 2025 sert ici à les comparer: nous l’appelons validation. Un test final distinct est possible si la taille et le calendrier le permettent; il n’est ni interdit ni toujours disponible. Une séparation aléatoire mélangerait passé et futur et pourrait créer des trous.
+:::
+
+## Le naïf à origine fixe
 
 ::: {.example-box}
-Une méthode complexe qui ne bat pas la méthode naïve n'a pas encore démontré une valeur pratique supplémentaire.
+$$\widehat y_{T+h\mid T}=y_T,\qquad h\geq1.$$
+:::
+::: {.note-box}
+Une origine en décembre 2024. La dernière consommation mensuelle connue est répétée pour tous les mois de 2025.
 :::
 
-## Geler la période test
+::: {.notes}
+Cette référence est simple et parfois utile en pratique, mais ignore tendance et saisonnalité. On ne lui donne pas la consommation de janvier 2025 pour prévoir février dans un scénario où les douze prévisions ont été émises en décembre 2024.
+:::
+
+## Le naïf saisonnier
+
+::: {.example-box}
+$$\widehat y_{T+h\mid T}=y_{T+h-m},\qquad 1\leq h\leq m.$$
+:::
+::: {.note-box}
+$m=12$ : reprendre les douze mois de la dernière année.
+:::
+
+::: {.notes}
+Pour un horizon dépassant un cycle, on répète le dernier cycle observé: on n’utilise pas une valeur future encore inconnue. Formellement, on choisit l’observation la plus récente de la même saison disponible à T. Le principe exige une période saisonnière justifiée.
+:::
+
+## Comparer sur les mêmes mois
 
 ```{r}
-#| label: code-m06-c04
-#| echo: true
-#| eval: true
-tibble(
-  periode = c("Entraînement", "Test"),
-  debut = c(min(train$date), min(test$date)),
-  fin = c(max(train$date), max(test$date)),
-  mois = c(nrow(train), nrow(test))
-)
+#| label: m06-c4-validation
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+graphique_validation(analyse)
 ```
 
-## Le test doit vraiment représenter le futur
-
-::: {.keypoints}
-- Le test vient après l'entraînement.
-- La méthode naïve utilise la dernière valeur observée.
-- La MAE mesure une erreur moyenne dans l'unité de la cible.
+::: {.notes}
+Les lignes colorées sont toutes produites en décembre 2024. Le noir montre les observations révélées ensuite. Le candidat tendance est une régression quadratique du temps, sans saisonnalité. Il ne devient pas préférable parce qu’il est plus complexe.
 :::
 
-## Le mélange aléatoire regarde vers le futur
+## Du code à la référence
 
-::: {.warning-box}
-Mélanger aléatoirement les mois donne au modèle une information qui aurait été future au point d'origine.
+```{r}
+#| eval: false
+#| echo: true
+refs <- prevoir_references(apprentissage$consommation_kwh, horizon = 12, periode = 12)
+validation |> mutate(naive = refs$naive,
+                     saisonniere = refs$saisonniere)
+```
+
+::: {.notes}
+Le code complet est dans les démonstrations et le projet téléchargeable. Une prévision saisonnière peut être décalée si le calendrier a des trous; d’où la vérification avant ts et avant la comparaison.
+:::
+
+## Choisir la période selon l’horizon
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Un mois
+:::
+::: {.text}
+répéter plusieurs origines à h = 1
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Un an
+:::
+::: {.text}
+évaluer aussi les horizons jusqu’à 12
+:::
+:::
+:::
+
+::: {.notes}
+La validation doit contenir les horizons utiles. Un score à un mois ne renseigne pas directement sur une décision à douze mois. Une origine fixe donne ici une erreur par horizon, ce qui motive la validation à origine mobile du complément A.
+:::
+
+## Réajuster avant la vraie prévision
+
+::: {.journey}
+::: {.journey-step}
+::: {.num}
+1
+:::
+::: {.text}
+Évaluer sur 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+2
+:::
+::: {.text}
+Fixer le choix
+:::
+:::
+::: {.journey-step}
+::: {.num}
+3
+:::
+::: {.text}
+Réajuster sur 2020 à 2025
+:::
+:::
+::: {.journey-step}
+::: {.num}
+4
+:::
+::: {.text}
+Prévoir 2026
+:::
+:::
+:::
+
+::: {.notes}
+Après l’évaluation, les observations récentes peuvent rejoindre l’apprentissage pour la prévision réelle. Les scores historiques restent ceux obtenus sans réajustement sur la validation. Refaire l’ajustement ne transforme pas les scores de validation en scores indépendants du choix.
 :::
 
 ## À retenir
@@ -101,45 +248,41 @@ Mélanger aléatoirement les mois donne au modèle une information qui aurait é
 ::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Même origine
 :::
 ::: {.label}
-L'évaluation temporelle protège contre la fuite vers le futur.
+même information disponible
 :::
 :::
 ::: {.metric}
 ::: {.value}
-2
+Référence
 :::
 ::: {.label}
-La référence simple est un seuil minimal de valeur.
+naïve et saisonnière
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Séparation
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+comparer avant de réajuster
 :::
 :::
 :::
 
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
-:::
 
 ## Production autonome 6.4
 
 ::: {.lead}
-Expliquez en deux phrases pourquoi une séparation aléatoire des mois est irréaliste.
+Produisez les douze prévisions naïves et saisonnières à la fin de 2024. Superposez-les à la consommation de 2025. Expliquez pourquoi une colonne lag(consommation_kwh) sur tout le fichier répond à un autre scénario.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- J'ai nommé la variable, l'unité, la période et l'horizon.
-- Je n'ai utilisé aucune information future.
-- Ma conclusion contient une limite explicite.
+- Mes deux références partagent l’origine de décembre 2024, le calendrier et les douze horizons.
+- Je n’ai utilisé aucune valeur de 2025 pour calculer les prévisions à origine fixe.
+- J’ai expliqué pourquoi un décalage sur tout le fichier correspond à un autre scénario.
 :::

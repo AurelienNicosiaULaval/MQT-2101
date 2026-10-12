@@ -1,0 +1,274 @@
+---
+title: "Capsule 5 - Mesurer et lire les erreurs"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| include: false
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
+```
+
+## Pourquoi ça compte
+
+::: {.question-line}
+Une erreur moyenne proche de zéro suffit-elle?
+:::
+::: {.note-box}
+Les sur-prévisions et les sous-prévisions peuvent s’annuler. Leur ampleur et leur coût restent présents.
+:::
+
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Calculer les cinq mesures d’erreur.
+- Interpréter le signe et les unités.
+- Examiner les erreurs au-delà d’un score.
+:::
+
+
+## Une convention de signe
+
+::: {.example-box}
+$$e_{T+h}=y_{T+h}-\widehat y_{T+h\mid T}.$$
+:::
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+e > 0
+:::
+::: {.text}
+sous-prévision
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+e < 0
+:::
+::: {.text}
+sur-prévision
+:::
+:::
+:::
+
+::: {.notes}
+Un résidu concerne les données utilisées pour ajuster; une erreur de prévision compare une observation future à une valeur émise avant de la connaître. Pour éviter une ambiguïté, nommer l’origine et l’horizon.
+:::
+
+## ME, MAE et RMSE
+
+::: {.example-box}
+$$\mathrm{ME}=\frac1n\sum e_i,\qquad\mathrm{MAE}=\frac1n\sum |e_i|.$$
+
+$$\mathrm{RMSE}=\sqrt{\frac1n\sum e_i^2}.$$
+:::
+::: {.note-box}
+Même unité que la cible. MAE est aussi appelée MAD.
+:::
+
+::: {.notes}
+La ME décrit le biais moyen signé, la MAE l’ampleur absolue moyenne et la RMSE donne plus de poids aux grandes erreurs. Les trois sont en kWh dans le cas guidé. Elles peuvent classer les méthodes différemment.
+:::
+
+## Les erreurs peuvent s’annuler
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+−20, +20
+:::
+::: {.label}
+deux erreurs, en unités
+:::
+:::
+::: {.metric}
+::: {.value}
+ME = 0
+:::
+::: {.label}
+aucun biais moyen ici
+:::
+:::
+::: {.metric}
+::: {.value}
+MAE = 20
+:::
+::: {.label}
+erreur absolue persistante
+:::
+:::
+:::
+::: {.note-box}
+RMSE = 20 également dans cet exemple.
+:::
+
+::: {.notes}
+La moyenne signée n’est pas une mesure suffisante de précision. Le suivi énergétique peut alterner sous-estimation et surestimation des besoins même si les erreurs se compensent en moyenne.
+:::
+
+## Le MAPE et ses limites
+
+::: {.example-box}
+$$\mathrm{MAPE}=\frac{100}{n}\sum\left|\frac{e_i}{y_i}\right|.$$
+:::
+::: {.note-box}
+Zéro : indéfini. Valeur proche de zéro : instabilité. Zéro arbitraire : pourcentage inadapté.
+:::
+
+::: {.notes}
+Le MAPE est sans unité, mais requiert une échelle où le zéro a un sens. Il ne convient pas aux températures en degrés Celsius. Exclure les cibles nulles change l’ensemble évalué et peut cacher des erreurs. À observation fixée, des écarts opposés de même amplitude ont le même MAPE; l’asymétrie se manifeste notamment dans le choix de prévisions qui minimisent ce score.
+:::
+
+## La MASE : une échelle d’apprentissage
+
+::: {.example-box}
+$$q_m=\frac{1}{T-m}\sum_{t=m+1}^{T}|y_t-y_{t-m}|,\qquad\mathrm{MASE}=\frac{\mathrm{MAE}_{\mathrm{validation}}}{q_m}.$$
+:::
+::: {.note-box}
+$m=1$ : référence naïve. $m=12$ : référence saisonnière mensuelle.
+:::
+
+::: {.notes}
+Le dénominateur utilise uniquement l’apprentissage. La MASE est sans unité et tolère des observations de validation nulles lorsque q est positif. Si toutes les différences de référence valent zéro, elle est indéfinie. Les méthodes d’une comparaison doivent partager le même dénominateur.
+:::
+
+## Que signifie MASE < 1?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Interprétation
+:::
+::: {.text}
+MAE plus petite que q_m
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Limite
+:::
+::: {.text}
+pas une victoire garantie sur la validation
+:::
+:::
+:::
+
+::: {.notes}
+La comparaison se fait avec l’erreur moyenne de référence sur l’apprentissage, pas avec l’erreur de la référence sur les mêmes mois de validation. Pour affirmer une amélioration sur la validation, comparer directement les deux MAE de validation.
+:::
+
+## Le résultat du cas guidé
+
+```{r}
+#| label: m06-c5-mesures
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+knitr::kable(analyse$comparaison, digits = 2,
+  col.names = c("Méthode", "ME (kWh)", "MAE (kWh)", "RMSE (kWh)", "MAPE (%)", "MASE"),
+  format.args = list(decimal.mark = ",", big.mark = " "))
+```
+
+::: {.notes}
+Lire le classement obtenu, sans annoncer un vainqueur universel. Les méthodes sont naïve, saisonnière et tendance. Les cinq mesures utilisent les douze mêmes observations de validation. La MASE emploie m égal à 12 pour toutes les méthodes.
+:::
+
+## Lire le temps et la distribution
+
+```{r}
+#| label: m06-c5-erreurs
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.2
+#| out-width: "88%"
+ggplot(analyse$evaluation |> filter(methode == "saisonniere"), aes(date, erreur / 1000)) +
+  geom_hline(yintercept = 0, linetype = 2) + geom_line(colour = "#0B4F6C") +
+  geom_point() + labs(x = NULL, y = "Erreur (MWh)")
+```
+
+::: {.notes}
+Un graphique temporel peut montrer un biais, une évolution, une période difficile ou une succession d’erreurs de même signe. Un histogramme décrit leur distribution; douze erreurs ne suffisent pas à certifier normalité ou indépendance. Les dépendances sont approfondies au module 9.
+:::
+
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Signe
+:::
+::: {.label}
+sous-prévision ou sur-prévision
+:::
+:::
+::: {.metric}
+::: {.value}
+Ampleur
+:::
+::: {.label}
+MAE, RMSE, MAPE, MASE
+:::
+:::
+::: {.metric}
+::: {.value}
+Diagnostic
+:::
+::: {.label}
+temps et distribution
+:::
+:::
+:::
+
+
+## Production autonome 6.5
+
+::: {.lead}
+Calculez ME, MAE, RMSE, MAPE et MASE des trois candidats. Interprétez les unités et le signe de ME. Comparez directement leurs MAE puis lisez le graphique et l’histogramme des erreurs.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J’ai interprété les unités des mesures et le signe de ME.
+- L’échelle de ma MASE utilise uniquement les données d’apprentissage.
+- J’ai signalé les limites du MAPE en présence de zéros sans les supprimer.
+- J’ai distingué les erreurs de validation des résidus d’apprentissage.
+:::

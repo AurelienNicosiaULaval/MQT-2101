@@ -19,7 +19,8 @@ mois_fr <- c(
   "juillet", "août", "septembre", "octobre", "novembre", "décembre"
 )
 
-# Module 06 : première lecture d'une série mensuelle.
+# Base historique de simulation conservée pour le module 08.
+# Le module 06 utilise désormais sa propre série d’électricité (script 24).
 dates_mensuelles <- seq.Date(as.Date("2020-01-01"), as.Date("2025-12-01"), by = "month")
 t_mois <- seq_along(dates_mensuelles)
 saison_mois <- c(-0.10, -0.07, -0.02, 0.01, 0.04, 0.07, 0.03, 0.02, 0.08, 0.12, 0.23, 0.31)
@@ -43,11 +44,6 @@ ventes_mensuelles <- tibble(
     ventes = pmax(ventes, 100000),
     clients = pmax(clients, 1000)
   )
-
-write_course_csv(
-  ventes_mensuelles,
-  "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv"
-)
 
 # Module 07 et atelier 03 : demande hebdomadaire avec tendance, saisonnalité et promotions.
 dates_hebdomadaires <- seq.Date(as.Date("2024-01-01"), by = "week", length.out = 104)
@@ -204,3 +200,6 @@ write_course_csv(
   cas_integrateur,
   "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
 )
+
+# Génération indépendante : elle préserve l’état aléatoire de ce script.
+source("scripts/24_create_module06_electricity.R")

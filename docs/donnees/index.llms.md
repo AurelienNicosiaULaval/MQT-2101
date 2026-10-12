@@ -86,13 +86,13 @@ Jeu de données simulé sur l’achalandage, la saturation opérationnelle et le
 
 Module 06 - Séries chronologiques
 
-## Ventes mensuelles fictives
+## Consommation mensuelle d’électricité fictive
 
-Série mensuelle simulée de ventes et de clients sur 72 mois.
+Consommation d’électricité entièrement simulée pour un bâtiment universitaire fictif au Québec sur 72 mois, en kWh.
 
-72 observations · 8 variables
+72 observations · 7 variables
 
-[Télécharger le CSV](../modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv)
+[Télécharger le CSV](../modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv)
 
 Module 07 et Atelier 03
 
@@ -463,13 +463,13 @@ Profil des variables de achalandage_saturation_quebec.csv {.caption-top .table .
 
 ## Jeux de données du bloc prévision et classification
 
-Les six jeux suivants sont entièrement simulés et reproductibles avec `scripts/10_create_second_block_data.R`. Les aperçus permettent de vérifier la structure avant téléchargement.
+Les six jeux suivants sont entièrement simulés. Le cas d’électricité du module 6 est reproductible avec `scripts/24_create_module06_electricity.R`; les autres avec `scripts/10_create_second_block_data.R`, qui appelle aussi le générateur d’électricité. Les aperçus permettent de vérifier la structure avant téléchargement.
 
-## Ventes mensuelles fictives
+## Consommation mensuelle d’électricité fictive
 
-Série mensuelle simulée de ventes et de clients sur 72 mois.
+Consommation d’électricité entièrement simulée pour un bâtiment universitaire fictif au Québec sur 72 mois, en kWh.
 
-[Télécharger ventes_mensuelles_quebec.csv](../modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv)
+[Télécharger consommation_electrique_batiment_quebec.csv](../modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv)
 
 ### En bref
 
@@ -477,8 +477,179 @@ Série mensuelle simulée de ventes et de clients sur 72 mois.
 |:---|:---|
 | Module | Module 06 - Séries chronologiques |
 | Observations | 72 |
-| Variables | 8 |
+| Variables | 7 |
 | Valeurs manquantes | 0 |
 | Utilisation dans le cours | Définir une cible et un horizon, visualiser le temps et construire une référence naïve. |
 
-\>
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| date | Date | 0 | 0 % | 72 | 2020-01-01 |
+| annee | numeric | 0 | 0 % | 6 | 2020 |
+| mois | numeric | 0 | 0 % | 12 | 1 |
+| mois_label | character | 0 | 0 % | 12 | janvier |
+| trimestre | character | 0 | 0 % | 4 | T1 |
+| jours_mois | numeric | 0 | 0 % | 4 | 31 |
+| consommation_kwh | numeric | 0 | 0 % | 71 | 201898 |
+
+## Demande hebdomadaire fictive
+
+Série hebdomadaire simulée de demande, prix et promotion sur 104 semaines.
+
+[Télécharger demande_hebdomadaire_quebec.csv](../modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv)
+
+### En bref
+
+| information | valeur |
+|:---|:---|
+| Module | Module 07 et Atelier 03 |
+| Observations | 104 |
+| Variables | 5 |
+| Valeurs manquantes | 0 |
+| Utilisation dans le cours | Comparer moyenne mobile, méthodes naïves et lissage exponentiel sur une période test. |
+
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| semaine | Date | 0 | 0 % | 104 | 2024-01-01 |
+| numero_semaine | numeric | 0 | 0 % | 52 | 1 |
+| promotion | character | 0 | 0 % | 2 | non |
+| prix_moyen | numeric | 0 | 0 % | 90 | 42.04 |
+| demande | numeric | 0 | 0 % | 93 | 1234 |
+
+## Ventes saisonnières fictives
+
+Série mensuelle simulée avec tendance, saisonnalité et budget cible.
+
+[Télécharger ventes_saisonnieres_quebec.csv](../modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv)
+
+### En bref
+
+| information | valeur |
+|:---|:---|
+| Module | Module 08 - Tendance et saisonnalité |
+| Observations | 72 |
+| Variables | 8 |
+| Valeurs manquantes | 0 |
+| Utilisation dans le cours | Ajuster et valider une régression avec tendance et calendrier. |
+
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| date | Date | 0 | 0 % | 72 | 2020-01-01 |
+| annee | numeric | 0 | 0 % | 6 | 2020 |
+| mois | numeric | 0 | 0 % | 12 | 1 |
+| mois_label | character | 0 | 0 % | 12 | janvier |
+| trimestre | character | 0 | 0 % | 4 | T1 |
+| indice_temps | numeric | 0 | 0 % | 72 | 1 |
+| ventes | numeric | 0 | 0 % | 72 | 279411 |
+| budget_cible | numeric | 0 | 0 % | 72 | 214100 |
+
+## Ventes et promotions fictives
+
+Série mensuelle simulée avec promotions, prix et dépendance temporelle.
+
+[Télécharger ventes_promotions_quebec.csv](../modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv)
+
+### En bref
+
+| information | valeur |
+|:---|:---|
+| Module | Module 09 - Variables externes |
+| Observations | 72 |
+| Variables | 10 |
+| Valeurs manquantes | 0 |
+| Utilisation dans le cours | Auditer la disponibilité future, ajuster une régression et diagnostiquer l’autocorrélation. |
+
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| date | Date | 0 | 0 % | 72 | 2020-01-01 |
+| annee | numeric | 0 | 0 % | 6 | 2020 |
+| mois | numeric | 0 | 0 % | 12 | 1 |
+| mois_label | character | 0 | 0 % | 12 | janvier |
+| tendance | numeric | 0 | 0 % | 72 | 1 |
+| promotion | character | 0 | 0 % | 2 | non |
+| prix_moyen | numeric | 0 | 0 % | 68 | 59.67 |
+| indice_confiance | numeric | 0 | 0 % | 52 | 99.6 |
+| budget_marketing | numeric | 0 | 0 % | 71 | 14982 |
+| ventes | numeric | 0 | 0 % | 72 | 309720 |
+
+## Fidélisation de clients fictifs
+
+Données transversales simulées de 650 clients avec cible de départ à 90 jours.
+
+[Télécharger fidelisation_clients_quebec.csv](../modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv)
+
+### En bref
+
+| information | valeur |
+|:---|:---|
+| Module | Module 10 - Classification |
+| Observations | 650 |
+| Variables | 9 |
+| Valeurs manquantes | 0 |
+| Utilisation dans le cours | Ajuster une régression logistique, comparer des seuils et relier les erreurs aux coûts. |
+
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| client_id | character | 0 | 0 % | 650 | CL0001 |
+| anciennete_mois | numeric | 0 | 0 % | 82 | 39 |
+| utilisation_mensuelle | numeric | 0 | 0 % | 200 | 16.8 |
+| tickets_service_6m | numeric | 0 | 0 % | 7 | 0 |
+| satisfaction | numeric | 0 | 0 % | 65 | 7.7 |
+| type_contrat | character | 0 | 0 % | 2 | annuel |
+| rabais_actuel | character | 0 | 0 % | 3 | fidélité |
+| valeur_mensuelle | numeric | 0 | 0 % | 631 | 79.6 |
+| depart_90j | numeric | 0 | 0 % | 2 | 0 |
+
+## Cas intégrateur de succursales fictives
+
+Données mensuelles simulées pour quatre succursales avec réponses continue et binaire.
+
+[Télécharger cas_integrateur_quebec.csv](../modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv)
+
+### En bref
+
+| information | valeur |
+|:---|:---|
+| Module | Atelier 04 - Intégration |
+| Observations | 288 |
+| Variables | 12 |
+| Valeurs manquantes | 0 |
+| Utilisation dans le cours | Choisir une voie de régression-prévision ou de classification et produire une recommandation validée. |
+
+### Aperçu interactif
+
+### Variables
+
+| variable | type | valeurs_manquantes | proportion_manquante | valeurs_distinctes | exemple |
+|:---|:---|---:|:---|---:|:---|
+| date | Date | 0 | 0 % | 72 | 2020-01-01 |
+| succursale | character | 0 | 0 % | 4 | Gatineau |
+| indice_temps | numeric | 0 | 0 % | 72 | 1 |
+| promotion | character | 0 | 0 % | 2 | non |
+| capacite | numeric | 0 | 0 % | 4 | 2100 |
+| achalandage | numeric | 0 | 0 % | 267 | 1521 |
+| ruptures_stock | numeric | 0 | 0 % | 7 | 3 |
+| temps_attente | numeric | 0 | 0 % | 44 | 3.2 |
+| satisfaction | numeric | 0 | 0 % | 31 | 7.3 |
+| taux_utilisation | numeric | 0 | 0 % | 276 | 0.724285714285714 |
+| ventes | numeric | 0 | 0 % | 286 | 154567 |
+| service_insuffisant_mois_suivant | numeric | 0 | 0 % | 2 | 0 |

@@ -45,7 +45,7 @@ demande_lissee |>
 
 ![](demonstrations_files/figure-html/unnamed-chunk-1-1.png)
 
-## 2. Séparer entraînement et test
+## 2. Séparer apprentissage et validation
 
 ``` r
 horizon <- 13
@@ -103,7 +103,7 @@ mesures
     2 lissage_exponentiel  114.  144. 106.
     3 naive                185.  209. 185.
 
-## 5. Visualiser la période test
+## 5. Visualiser la période de validation
 
 ``` r
 comparaison |>
@@ -124,4 +124,4 @@ comparaison |>
 
 ## Interprétation
 
-Le tableau permet de classer les méthodes pour cette période test. Il ne garantit pas que le classement sera identique la saison suivante. La trace finale doit donc expliquer le choix et nommer cette limite.
+Le tableau permet de classer les méthodes pour cette période de validation. Il ne garantit pas que le classement sera identique la saison suivante. La trace finale doit donc expliquer le choix et nommer cette limite.

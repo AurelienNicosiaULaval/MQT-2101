@@ -91,10 +91,41 @@ autoplot(fit) +
   theme_minimal(base_size = 14)
 ```
 
-## Le test ne sert pas à choisir alpha
+## Estimer les paramètres, puis comparer les méthodes
 
 ::: {.warning-box}
-Alpha est estimé sur les données d'entraînement. La méthode est ensuite évaluée une seule fois sur la période test; le test ne sert pas à choisir alpha.
+Alpha est estimé sur l'apprentissage. Les méthodes candidates sont comparées sur la validation. Un test final distinct ne sert pas à retoucher le choix.
+:::
+
+## Prolongement : Holt ajoute une pente
+
+::: {.formula-box}
+$$
+\widehat y_{t+h\mid t}=\ell_t+h b_t
+$$
+:::
+
+::: {.keypoints}
+- $\ell_t$ : niveau estimé; $b_t$ : pente estimée.
+- Deux états mis à jour avec les observations passées.
+- Aucune saisonnalité explicite.
+:::
+
+## Amortir la tendance à mesure que l'horizon augmente
+
+::: {.formula-box}
+$$
+\widehat y_{t+h\mid t}=\ell_t+(\phi+\cdots+\phi^h)b_t,\quad 0<\phi<1
+$$
+:::
+
+::: {.note-box}
+`holt(serie, h = horizon, damped = TRUE)` estime les paramètres sur l'apprentissage. Le code est fourni; le calcul manuel des récurrences n'est pas demandé.
+:::
+
+::: {.notes}
+La pente prolonge une évolution récente; l'amortissement réduit sa contribution quand l'horizon augmente. Il ne garantit pas une meilleure prévision et ne remplace pas une composante saisonnière. Ce prolongement prépare la comparaison de la capsule 4 et le laboratoire 3.
+Source : Hyndman et Athanasopoulos (2021), section 8.2, https://otexts.com/fpp3/holt.html.
 :::
 
 ## À retenir
@@ -140,7 +171,7 @@ Comparez qualitativement les effets de alpha = 0,2 et alpha = 0,8 pour une deman
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période test.
+- Toutes les méthodes utilisent la même période de validation.
 - J'ai interprété l'erreur dans son unité.
 - J'ai relié le résultat à une décision et à une limite.
 :::

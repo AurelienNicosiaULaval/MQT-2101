@@ -7058,7 +7058,7 @@ display: none;
   <li><a href="#ajuster-une-régression-ordinaire" id="toc-ajuster-une-régression-ordinaire" class="nav-link" data-scroll-target="#ajuster-une-régression-ordinaire">2. Ajuster une régression ordinaire</a></li>
   <li><a href="#diagnostiquer-les-résidus-temporels" id="toc-diagnostiquer-les-résidus-temporels" class="nav-link" data-scroll-target="#diagnostiquer-les-résidus-temporels">3. Diagnostiquer les résidus temporels</a></li>
   <li><a href="#ajuster-une-régression-avec-erreurs-ar1" id="toc-ajuster-une-régression-avec-erreurs-ar1" class="nav-link" data-scroll-target="#ajuster-une-régression-avec-erreurs-ar1">4. Ajuster une régression avec erreurs AR(1)</a></li>
-  <li><a href="#comparer-sur-la-période-test" id="toc-comparer-sur-la-période-test" class="nav-link" data-scroll-target="#comparer-sur-la-période-test">5. Comparer sur la période test</a></li>
+  <li><a href="#comparer-sur-la-période-de-validation" id="toc-comparer-sur-la-période-de-validation" class="nav-link" data-scroll-target="#comparer-sur-la-période-de-validation">5. Comparer sur la période de validation</a></li>
   <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
   </ul>
 </nav>
@@ -7181,6 +7181,19 @@ X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 </section>
 <section id="ajuster-une-régression-avec-erreurs-ar1" class="level2">
 <h2 class="anchored" data-anchor-id="ajuster-une-régression-avec-erreurs-ar1">4. Ajuster une régression avec erreurs AR(1)</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Information disponible au moment de prévoir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Information disponible au moment de prévoir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le code fournit au modèle les valeurs externes observées sur les douze mois de validation. Il compare donc les modèles conditionnellement à ces valeurs. L’indice de confiance futur, par exemple, n’est pas automatiquement connu à l’origine. Pour une prévision opérationnelle, remplacez ces entrées par des valeurs planifiées, prévues ou scénarisées disponibles à cette date. Les intervalles conditionnels ne résument pas toute l’incertitude de ces entrées.</p>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x_train <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> tendance <span class="sc">+</span> promotion <span class="sc">+</span> prix_moyen <span class="sc">+</span> indice_confiance <span class="sc">+</span> mois,</span>
@@ -7202,8 +7215,8 @@ X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>prevision_ar1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(modele_ar1, <span class="at">xreg =</span> x_test, <span class="at">h =</span> <span class="fu">nrow</span>(test))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="comparer-sur-la-période-test" class="level2">
-<h2 class="anchored" data-anchor-id="comparer-sur-la-période-test">5. Comparer sur la période test</h2>
+<section id="comparer-sur-la-période-de-validation" class="level2">
+<h2 class="anchored" data-anchor-id="comparer-sur-la-période-de-validation">5. Comparer sur la période de validation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>comparaison <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>

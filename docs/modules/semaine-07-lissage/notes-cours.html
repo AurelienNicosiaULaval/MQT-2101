@@ -7159,6 +7159,7 @@ display: none;
   <ul>
   <li><a href="#moyennes-mobiles" id="toc-moyennes-mobiles" class="nav-link active" data-scroll-target="#moyennes-mobiles">Moyennes mobiles</a></li>
   <li><a href="#lissage-exponentiel" id="toc-lissage-exponentiel" class="nav-link" data-scroll-target="#lissage-exponentiel">Lissage exponentiel</a></li>
+  <li><a href="#prolongement-niveau-et-pente-avec-holt" id="toc-prolongement-niveau-et-pente-avec-holt" class="nav-link" data-scroll-target="#prolongement-niveau-et-pente-avec-holt">Prolongement : niveau et pente avec Holt</a></li>
   <li><a href="#erreurs" id="toc-erreurs" class="nav-link" data-scroll-target="#erreurs">Erreurs</a></li>
   <li><a href="#choisir-une-méthode" id="toc-choisir-une-méthode" class="nav-link" data-scroll-target="#choisir-une-méthode">Choisir une méthode</a></li>
   <li><a href="#surveillance" id="toc-surveillance" class="nav-link" data-scroll-target="#surveillance">Surveillance</a></li>
@@ -7195,6 +7196,15 @@ display: none;
 <h2 class="anchored" data-anchor-id="lissage-exponentiel">Lissage exponentiel</h2>
 <p>Le lissage exponentiel simple estime un niveau qui est mis à jour après chaque observation. Les poids des observations passées diminuent exponentiellement. La méthode ne modélise pas explicitement une tendance ou une saisonnalité.</p>
 </section>
+<section id="prolongement-niveau-et-pente-avec-holt" class="level2">
+<h2 class="anchored" data-anchor-id="prolongement-niveau-et-pente-avec-holt">Prolongement : niveau et pente avec Holt</h2>
+<p>Holt étend le lissage simple en estimant un niveau <span class="math inline">\(\ell_t\)</span> et une pente <span class="math inline">\(b_t\)</span>. Sa prévision non amortie est <span class="math inline">\(\widehat y_{t+h\mid t}=\ell_t+h b_t\)</span>. Avec <span class="math inline">\(0&lt;\phi&lt;1\)</span>, la pente est amortie :</p>
+<p><span class="math display">\[
+\widehat y_{t+h\mid t}=\ell_t+\left(\sum_{j=1}^{h}\phi^j\right)b_t.
+\]</span></p>
+<p>Le code <code>holt(..., damped = TRUE)</code> ajuste ce prolongement sur l’apprentissage. Il ne représente pas la saisonnalité. Les supports fournissent son utilisation pour la comparaison et le laboratoire; le rapport principal demande toujours naïf, moyenne des quatre dernières semaines et lissage simple.</p>
+<p>Source : Hyndman et Athanasopoulos (2021), <a href="https://otexts.com/fpp3/holt.html">section 8.2</a>.</p>
+</section>
 <section id="erreurs" class="level2">
 <h2 class="anchored" data-anchor-id="erreurs">Erreurs</h2>
 <p>Pour <span class="math inline">\(e_t=y_t-\widehat y_t\)</span> :</p>
@@ -7208,6 +7218,7 @@ display: none;
 <section id="choisir-une-méthode" class="level2">
 <h2 class="anchored" data-anchor-id="choisir-une-méthode">Choisir une méthode</h2>
 <p>Le choix combine : performance hors échantillon, stabilité, coût des erreurs, interprétabilité, disponibilité des données et maintenance. Une différence minime entre deux MAE ne justifie pas automatiquement une méthode beaucoup plus complexe.</p>
+<p>Le bloc utilisé pour comparer les candidats est une validation, après l’apprentissage. Ses scores ont participé au choix : ils ne remplacent pas un test final indépendant de ce choix. La reprise des treize semaines du module 06 est un entraînement pédagogique sur un cas connu.</p>
 </section>
 <section id="surveillance" class="level2">
 <h2 class="anchored" data-anchor-id="surveillance">Surveillance</h2>

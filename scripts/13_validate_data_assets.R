@@ -23,8 +23,8 @@ specifications <- list(
        columns = c("mois", "mois_label", "region", "canal", "saison", "budget_marketing", "visites_site", "rabais", "ventes", "satisfaction")),
   list(path = "modules/semaine-04-regression-nonlineaire/data/achalandage_saturation_quebec.csv", rows = 72L, missing = 0L,
        columns = c("mois", "mois_label", "saison", "succursale", "region", "surface_m2", "capacite_reference", "campagne_locale", "depenses_marketing", "achalandage", "taux_occupation", "ruptures_stock", "temps_attente_minutes", "panier_moyen", "satisfaction", "ventes")),
-  list(path = "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv", rows = 72L, missing = 0L,
-       columns = c("date", "annee", "mois", "mois_label", "trimestre", "jours_ouverture", "clients", "ventes")),
+  list(path = "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv", rows = 72L, missing = 0L,
+       columns = c("date", "annee", "mois", "mois_label", "trimestre", "jours_mois", "consommation_kwh")),
   list(path = "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv", rows = 104L, missing = 0L,
        columns = c("semaine", "numero_semaine", "promotion", "prix_moyen", "demande")),
   list(path = "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv", rows = 72L, missing = 0L,
@@ -113,7 +113,7 @@ if (file.exists(weekly_source) && file.exists(weekly_workshop) &&
 time_specs <- list(
   list(path = weekly_source, column = "semaine", group = NULL, expected_step = 7),
   list(path = weekly_workshop, column = "semaine", group = NULL, expected_step = 7),
-  list(path = "modules/semaine-06-series-chronologiques-intro/data/ventes_mensuelles_quebec.csv", column = "date", group = NULL, expected_step = NULL),
+  list(path = "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv", column = "date", group = NULL, expected_step = NULL),
   list(path = "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv", column = "date", group = NULL, expected_step = NULL),
   list(path = "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv", column = "date", group = NULL, expected_step = NULL),
   list(path = "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv", column = "date", group = "succursale", expected_step = NULL)

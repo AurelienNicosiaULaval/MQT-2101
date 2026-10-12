@@ -33,7 +33,7 @@ Une analyste essaie six modèles sur les douze derniers mois, choisit celui dont
 
 Expliquez précisément :
 
-- quelle décision a utilisé la période test;
+- quelle décision a utilisé la période de validation;
 - pourquoi la performance annoncée est optimiste;
 - comment créer une validation chronologique à l’intérieur de l’entraînement;
 - quand les douze derniers mois peuvent enfin être utilisés.

@@ -50,6 +50,18 @@ Le lissage exponentiel simple met à jour un niveau estimé :
 
 Un alpha élevé donne plus de poids à la dernière observation et réagit rapidement. Un alpha faible produit une série plus stable. Cette méthode convient surtout lorsqu’il n’y a pas de tendance ou de saisonnalité forte non modélisée.
 
+#### Prolongement accompagné : Holt
+
+Holt ajoute une pente \\b_t\\ au niveau \\\ell_t\\. Sans amortissement, la prévision à l’horizon \\h\\ est \\\widehat y\_{t+h\mid t}=\ell_t+h b_t\\. Les deux états sont mis à jour à chaque observation.
+
+Avec une tendance amortie, \\0\<\phi\<1\\, la prévision devient :
+
+\\ \widehat y\_{t+h\mid t}=\ell_t+(\phi+\phi^2+\cdots+\phi^h)b_t. \\
+
+L’effet de la pente diminue avec l’horizon. `forecast::holt(serie, h = horizon, damped = TRUE)` estime les paramètres sur l’apprentissage. La méthode ne modélise pas la saisonnalité : elle doit être comparée aux références et ne garantit pas une amélioration. Ce prolongement sert à comprendre les exemples fournis; le calcul des récurrences à la main n’est pas demandé.
+
+Source : Hyndman et Athanasopoulos (2021), [section 8.2](https://otexts.com/fpp3/holt.html); documentation de [`forecast::holt`](https://pkg.robjhyndman.com/forecast/reference/ses.html).
+
 ### Activité 7.2
 
 Pour une demande récente en hausse rapide, comparez qualitativement les effets de \\\alpha=0{,}2\\ et \\\alpha=0{,}8\\.
@@ -94,7 +106,7 @@ Deux méthodes ont la même MAE, mais la seconde produit une erreur extrême. Qu
 
 > **NOTE:**
 >
-> Construire une période test commune et relier les mesures au choix de méthode.
+> Construire une période de validation commune et relier les mesures au choix de méthode.
 
 ## Deck de capsule
 
@@ -102,7 +114,9 @@ Deux méthodes ont la même MAE, mais la seconde produit une erreur extrême. Qu
 
 ## Support écrit
 
-Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période test et les mêmes mesures.
+Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période de validation et les mêmes mesures.
+
+Les paramètres sont estimés sur l’apprentissage. Les candidats sont annoncés avant la comparaison; le bloc de validation sert au choix de méthode. Un éventuel test final reste distinct et n’est pas utilisé pour retoucher ce choix.
 
 Le classement numérique ne suffit pas. Il faut aussi examiner : stabilité, interprétabilité, effort de maintenance, délai de calcul et conséquences des erreurs.
 

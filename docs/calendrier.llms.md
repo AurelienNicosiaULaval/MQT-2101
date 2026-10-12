@@ -34,7 +34,7 @@ Les liens ouvrent la page de travail correspondante. Les locaux, le matériel pe
 | Dimanche 25 octobre, 9 h à 11 h 50 | Examen en personne | [Examen intra](evaluations/examen-intra.llms.md) | Local et paramètres restants à confirmer |
 | Du 26 au 30 octobre | Relâche | Aucune activité prévue | Semaine de lecture |
 | Mercredi 4 novembre | Autoapprentissage | [Module 07 - Lissage et erreurs](modules/semaine-07-lissage/index.llms.md) |  |
-| Mercredi 11 novembre | Autoapprentissage | [Module 08 - Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) |  |
+| Mercredi 11 novembre | Autoapprentissage | [Module 08 - Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) | Pour la voie classification du mini-rapport 2 : [parcours anticipé du module 10](modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) |
 | Mercredi 18 novembre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 03 - Prévoir la demande](modules/atelier-03-series-chronologiques/index.llms.md) | Point de contrôle du [mini-rapport 2](evaluations/mini-rapport-2.llms.md) |
 | Mercredi 25 novembre | Autoapprentissage | [Module 09 - Variables externes et autocorrélation](modules/semaine-09-variables-externes-autocorrelation/index.llms.md) |  |
 | Mercredi 2 décembre | Autoapprentissage | [Module 10 - Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) | [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md); remise du mini-rapport 2 à 23 h 59 |
@@ -98,7 +98,7 @@ Bloc 3
 11. 11
     11 novembre Autoapprentissage
 
-    [Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md)
+    [Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) [Classification : préparation anticipée pour la voie B](modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe)
 12. 12
     18 novembre Atelier en classe
 

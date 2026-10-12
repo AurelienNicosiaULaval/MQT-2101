@@ -359,6 +359,11 @@ module_specs <- list(
   )
 )
 
+# Le module 06 a des supports révisés maintenus dans media/qmd/.
+# Ses projets sont préparés par scripts/23_prepare_module06.R.
+# Ne pas les écraser avec le gabarit historique à quatre capsules.
+module_specs[["semaine-06-series-chronologiques-intro"]] <- NULL
+
 for (module_name in names(module_specs)) {
   output_dir <- file.path("modules", module_name, "media", "qmd")
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)

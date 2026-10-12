@@ -8,6 +8,16 @@ Une moyenne mobile arrière est un outil descriptif et une référence de prévi
 
 Le lissage exponentiel simple estime un niveau qui est mis à jour après chaque observation. Les poids des observations passées diminuent exponentiellement. La méthode ne modélise pas explicitement une tendance ou une saisonnalité.
 
+## Prolongement : niveau et pente avec Holt
+
+Holt étend le lissage simple en estimant un niveau \\\ell_t\\ et une pente \\b_t\\. Sa prévision non amortie est \\\widehat y\_{t+h\mid t}=\ell_t+h b_t\\. Avec \\0\<\phi\<1\\, la pente est amortie :
+
+\\ \widehat y\_{t+h\mid t}=\ell_t+\left(\sum\_{j=1}^{h}\phi^j\right)b_t. \\
+
+Le code `holt(..., damped = TRUE)` ajuste ce prolongement sur l’apprentissage. Il ne représente pas la saisonnalité. Les supports fournissent son utilisation pour la comparaison et le laboratoire; le rapport principal demande toujours naïf, moyenne des quatre dernières semaines et lissage simple.
+
+Source : Hyndman et Athanasopoulos (2021), [section 8.2](https://otexts.com/fpp3/holt.html).
+
 ## Erreurs
 
 Pour \\e_t=y_t-\widehat y_t\\ :
@@ -19,6 +29,8 @@ Le biais moyen \\\overline e\\ indique une tendance générale à sous-prévoir 
 ## Choisir une méthode
 
 Le choix combine : performance hors échantillon, stabilité, coût des erreurs, interprétabilité, disponibilité des données et maintenance. Une différence minime entre deux MAE ne justifie pas automatiquement une méthode beaucoup plus complexe.
+
+Le bloc utilisé pour comparer les candidats est une validation, après l’apprentissage. Ses scores ont participé au choix : ils ne remplacent pas un test final indépendant de ce choix. La reprise des treize semaines du module 06 est un entraînement pédagogique sur un cas connu.
 
 ## Surveillance
 

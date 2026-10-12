@@ -9,6 +9,6 @@ Question de lecture : pourquoi aucune mesure d’erreur n’est-elle universelle
 
 ## Lecture facultative
 
-- [Section 8.2 - Methods with trend](https://otexts.com/fpp3/holt.html), pour préparer le module suivant.
+- [Section 8.2 - Methods with trend](https://otexts.com/fpp3/holt.html), pour approfondir le prolongement accompagné de Holt présenté dans la capsule 2 et utilisé au laboratoire 3.
 
 Les ressources sont accessibles gratuitement sur le site officiel de l’ouvrage.

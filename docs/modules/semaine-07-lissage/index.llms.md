@@ -6,7 +6,9 @@
 
 ## Continuité du parcours
 
-Le module 06 a défini la cible, l’horizon et une période test chronologique. Vous utilisez maintenant ce protocole pour comparer des méthodes simples et mesurer leurs erreurs sur les mêmes semaines futures.
+Le module 06 a défini la cible, l’horizon et une période de validation chronologique. Vous utilisez maintenant ce protocole pour comparer des méthodes simples et mesurer leurs erreurs sur les mêmes semaines futures.
+
+Le bloc qui sert à comparer les candidats est une validation. Un test final, s’il est disponible, reste réservé à la méthode choisie. Les treize dernières semaines sont déjà connues depuis le transfert du module 06 : elles servent ici à apprendre la comparaison de nouvelles méthodes, sans constituer un nouveau test indépendant.
 
 ## Résultat attendu
 
@@ -15,8 +17,10 @@ Le module 06 a défini la cible, l’horizon et une période test chronologique.
 - calculer et interpréter une moyenne mobile;
 - expliquer le rôle du paramètre de lissage exponentiel;
 - produire des prévisions naïves et par lissage exponentiel simple;
-- comparer des méthodes sur une période test avec MAE et RMSE;
+- comparer des méthodes sur une période de validation avec MAE et RMSE;
 - choisir une méthode selon son erreur et son utilité opérationnelle.
+
+Holt et sa tendance amortie sont expliqués comme prolongement du lissage simple dans la capsule 2, puis illustrés dans la comparaison de la capsule 4 et au laboratoire 3. Le rapport principal conserve les trois méthodes annoncées ci-dessous; une programmation manuelle de Holt n’est pas demandée.
 
 ## Données
 

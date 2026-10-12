@@ -4,6 +4,8 @@
 
 Le cas de transfert utilise des ventes influencées par des promotions et le prix. La question n’est plus seulement de détecter une saison, mais de vérifier si le motif saisonnier demeure après la prise en compte de variables commerciales.
 
+Ce cas prolonge la régression multiple déjà pratiquée et prépare le module 09. Les variables prix et promotion ne doivent pas être interprétées comme des causes démontrées. L’exploration et l’ajustement ci-dessous utilisent l’apprentissage; les douze derniers mois restent réservés à la comparaison.
+
 Jeu de données de transfert : [ventes_promotions_quebec.csv](../../donnees/#ventes_promotions_quebec).
 
 ``` r
@@ -26,6 +28,9 @@ ventes <- read_csv(
     promotion = factor(promotion)
   ) |>
   arrange(date)
+
+entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
+test <- ventes |> slice_tail(n = 12)
 ```
 
 ## Exercice 1 - Isoler la tendance
@@ -35,10 +40,10 @@ Ajustez d’abord un modèle avec tendance, promotion et prix, mais sans mois. E
 ``` r
 modele_sans_saison <- lm(
   ventes ~ tendance + promotion + prix_moyen,
-  data = ventes
+  data = entrainement
 )
 
-augment(modele_sans_saison, data = ventes) |>
+augment(modele_sans_saison, data = entrainement) |>
   group_by(mois) |>
   summarise(
     residu_moyen = mean(.resid),
@@ -60,17 +65,20 @@ Repérez les mois systématiquement sous-prévus ou sur-prévus. Expliquez pourq
 Comparez les coefficients mensuels d’un modèle sans variables commerciales et d’un modèle qui contrôle la promotion et le prix.
 
 ``` r
-ventes <- ventes |>
+entrainement <- entrainement |>
   mutate(mois = relevel(mois, ref = "1"))
+
+test <- test |>
+  mutate(mois = factor(mois, levels = levels(entrainement$mois)))
 
 modele_calendrier <- lm(
   ventes ~ tendance + mois,
-  data = ventes
+  data = entrainement
 )
 
 modele_complet <- lm(
   ventes ~ tendance + mois + promotion + prix_moyen,
-  data = ventes
+  data = entrainement
 )
 
 bind_rows(
@@ -87,13 +95,9 @@ Interprétez décembre par rapport à janvier et expliquez pourquoi le coefficie
 
 Réservez les douze derniers mois. Comparez les deux modèles et calculez la MAE séparément pour les mois avec et sans promotion.
 
+La comparaison avec prix et promotion utilise ici leurs valeurs observées dans le bloc de validation : elle est conditionnelle à ce contexte. Pour une prévision émise avant ces mois, il faudrait des prix et promotions déjà planifiés, prévus ou scénarisés, sans utiliser rétroactivement une information inconnue à l’origine.
+
 ``` r
-entrainement <- ventes |>
-  slice_head(n = nrow(ventes) - 12)
-
-test <- ventes |>
-  slice_tail(n = 12)
-
 modele_test_calendrier <- lm(
   ventes ~ tendance + mois,
   data = entrainement

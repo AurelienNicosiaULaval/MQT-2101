@@ -10,7 +10,9 @@ La phrase doit nommer le point d’origine, la cible, l’horizon et la décisio
 
 ## Repère 2 - Préserver le futur
 
-La période test sera constituée des treize dernières semaines. Elle ne doit servir ni au choix de la fenêtre, ni à l’estimation du lissage, ni à une transformation apprise.
+La période de validation sera constituée des treize dernières semaines. Les fenêtres et méthodes candidates sont fixées avant la comparaison; les paramètres de lissage et transformations sont estimés sur l’apprentissage. La validation permet ensuite de comparer les candidats.
+
+Ces semaines ont déjà été utilisées au module 06. Le laboratoire prolonge l’entraînement sur ce cas connu; il ne fournit pas un nouveau test indépendant. La performance de la méthode retenue devra être suivie sur de nouvelles observations.
 
 > **WARNING:**
 >
@@ -38,4 +40,4 @@ Une sous-prévision peut créer une rupture; une sur-prévision peut créer du s
 
 > **TIP:**
 >
-> 1.  La RMSE. 2. Une sous-prévision moyenne. 3. Les structures et les chocs de la série changent; une seule période test fournit une preuve limitée.
+> 1.  La RMSE. 2. Une sous-prévision moyenne. 3. Les structures et les chocs de la série changent; une seule période de validation fournit une preuve limitée.

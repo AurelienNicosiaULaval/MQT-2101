@@ -45,7 +45,7 @@ ggplot(ventes, aes(mois_label, ventes)) +
 
 ![](demonstrations_files/figure-html/unnamed-chunk-2-1.png)
 
-## 2. Créer entraînement et test
+## 2. Créer apprentissage et validation
 
 ``` r
 entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
@@ -67,7 +67,7 @@ tidy(modele, conf.int = TRUE) |>
     1 indice_temps          2884.      71.9     40.1  5.03e-38    2740.     3029.
     2 mois_labeldécembre   32705.    6026.       5.43 1.96e- 6   20582.    44829.
 
-## 4. Prévoir la période test
+## 4. Prévoir la période de validation
 
 ``` r
 saison_naive <- entrainement |>
@@ -103,7 +103,7 @@ ggplot(predictions, aes(date)) +
   geom_line(aes(y = fit), colour = "#0B4F6C", linewidth = 1) +
   geom_point(aes(y = ventes), colour = "black") +
   labs(
-    title = "Prévisions et observations de la période test",
+    title = "Prévisions et observations de la période de validation",
     subtitle = "Ruban : intervalle de prédiction à 95 %",
     x = NULL,
     y = "Ventes"

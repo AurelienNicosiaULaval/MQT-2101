@@ -1,0 +1,307 @@
+---
+title: "Complément B - Choisir une famille de méthodes"
+subtitle: "MQT-2101 - Approfondissement facultatif"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: ../module06-capsules.css
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| include: false
+chemins <- c("../../R/analyse-module06.R", "R/analyse-module06.R",
+             "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R")
+chemin <- chemins[file.exists(chemins)][1]
+stopifnot(!is.na(chemin))
+source(chemin)
+chemins_donnees <- c("../../data/consommation_electrique_batiment_quebec.csv", "data/consommation_electrique_batiment_quebec.csv",
+                    "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv")
+analyse <- charger_module06(chemins_donnees[file.exists(chemins_donnees)][1])
+electricite <- analyse$electricite
+apprentissage <- analyse$apprentissage
+validation <- analyse$validation
+theme_set(theme_minimal(base_size = 17))
+```
+
+## Pourquoi ça compte
+
+::: {.question-line}
+Faut-il plus de complexité pour améliorer la décision?
+:::
+::: {.note-box}
+Le prochain bloc présente plusieurs méthodes. Leurs exigences et leur entretien comptent autant que leur nom.
+:::
+
+
+## Objectifs du complément
+
+::: {.keypoints}
+- Comparer les familles de méthodes.
+- Vérifier les entrées et le suivi.
+- Comprendre la combinaison de prévisions.
+:::
+
+
+## Structure explicite ou adaptation locale
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Structure explicite
+:::
+::: {.text}
+forme et paramètres d’un modèle
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Adaptation locale
+:::
+::: {.text}
+mémoire et pondération du passé
+:::
+:::
+:::
+
+::: {.notes}
+La distinction entre structure explicite et adaptation locale sert à comparer les méthodes. Les deux apprennent à partir des données et certaines ont une formulation statistique commune. Les modèles de lissage peuvent aussi être écrits comme des modèles d’espace d’état. Il ne s’agit donc pas de catégories exclusives.
+:::
+
+## Motif global et mémoire locale
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Global dans une série
+:::
+::: {.text}
+une structure sur toute la période
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Local dans une série
+:::
+::: {.text}
+une structure qui évolue
+:::
+:::
+:::
+
+::: {.notes}
+Un modèle simple estimé sur toute la série décrit une structure globale dans le temps. Un lissage peut accorder plus de poids aux dernières périodes. Mémoire courte: adaptation plus rapide et sensibilité au bruit; mémoire longue: stabilité et réaction plus lente. Le mot global ne désigne pas ici un modèle entraîné sur plusieurs séries.
+:::
+
+## Extrapoler ou utiliser des entrées?
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Histoire de la cible
+:::
+::: {.text}
+naïf, lissage, ARIMA
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Informations externes
+:::
+::: {.text}
+calendrier, météo, occupation
+:::
+:::
+:::
+
+::: {.notes}
+Une régression du temps et du calendrier peut extrapoler la série. Une régression avec variables externes requiert leurs valeurs futures ou leurs scénarios. Les modèles économétriques peuvent s’appuyer sur une théorie causale, mais un bon score de prévision ne prouve pas la causalité. Des modèles multivariés décrivent des relations entre séries sans les rendre automatiquement causales.
+:::
+
+## Disponible au moment de prévoir
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Calendrier futur
+:::
+::: {.text}
+connu à l’origine
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Prix réalisé futur
+:::
+::: {.text}
+à prévoir ou scénariser
+:::
+:::
+:::
+
+::: {.notes}
+La disponibilité opérationnelle est une condition nécessaire. Une fermeture planifiée peut être connue; la température réellement observée dans le futur ne l’est pas et doit être prévue ou scénarisée. Les hypothèses des scénarios doivent apparaître dans le rapport et l’incertitude.
+:::
+
+## Manuel, automatisé, surveillé
+
+::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Automatiser
+:::
+::: {.text}
+calcul et actualisation
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Surveiller
+:::
+::: {.text}
+erreurs, ruptures, qualité
+:::
+:::
+:::
+
+::: {.notes}
+L’expertise peut compléter ou réviser une prévision, avec une trace de la modification. Automatiser ne dispense ni du contrôle des données ni de la validation. Les méthodes légères peuvent faciliter un grand nombre de séries, mais aucune famille n’élimine le surajustement ni le besoin d’entretien.
+:::
+
+## Combiner les prévisions
+
+::: {.example-box}
+$$\widehat y^{\mathrm{comb}}=w\widehat y^{(1)}+(1-w)\widehat y^{(2)},\quad 0\leq w\leq1.$$
+:::
+::: {.note-box}
+Exemple simple : moyenne à poids égaux, fixée avant la comparaison.
+:::
+
+::: {.notes}
+Une combinaison parallèle utilise plusieurs prévisions de la même cible, origine et horizon. Une stratégie peut également retenir différentes méthodes selon les horizons ou les périodes, à condition de valider la règle. Des poids choisis sur la validation doivent être évalués ensuite sur de nouvelles données ou de nouvelles origines.
+:::
+
+## Diversifier les erreurs
+
+::: {.example-box}
+$$\operatorname{Var}(we_1+(1-w)e_2)=w^2\operatorname{Var}(e_1)+(1-w)^2\operatorname{Var}(e_2)+2w(1-w)\operatorname{Cov}(e_1,e_2).$$
+:::
+::: {.note-box}
+Erreurs peu corrélées : diversification possible. Aucun gain garanti.
+:::
+
+::: {.notes}
+La covariance explique pourquoi la complémentarité des erreurs compte. Une covariance négative peut diminuer la variance combinée. Le biais des erreurs et leurs variances importent aussi; une combinaison ne garantit pas une MAE inférieure à celle de chaque candidat.
+:::
+
+## Corriger en deux étapes
+
+::: {.example-box}
+$\widehat y^{\mathrm{final}}=\widehat y^{\mathrm{base}}+\widehat e^{\mathrm{base}}$
+:::
+::: {.note-box}
+Modèle de base → prévision de ses erreurs → correction
+:::
+
+::: {.notes}
+Une méthode en cascade tente de prévoir la structure restante des erreurs. L’ajustement de cette correction exige des erreurs produites sans fuite temporelle et une nouvelle validation; on ne corrige pas une prévision en lui donnant son erreur future observée.
+:::
+
+## La suite du cours
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Module 7
+:::
+::: {.label}
+lissage et comparaison
+:::
+:::
+::: {.metric}
+::: {.value}
+Module 8
+:::
+::: {.label}
+tendance et saisonnalité
+:::
+:::
+::: {.metric}
+::: {.value}
+Module 9
+:::
+::: {.label}
+variables externes et autocorrélation
+:::
+:::
+:::
+
+::: {.notes}
+Ce module donne le cadre commun et des exemples opérationnels. Les modules suivants approfondissent les méthodes, sans remplacer la définition de la cible, les références, la validation temporelle ni la communication de l’incertitude.
+:::
+
+## À retenir
+
+::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Adéquation
+:::
+::: {.label}
+structure, horizon, données
+:::
+:::
+::: {.metric}
+::: {.value}
+Entretien
+:::
+::: {.label}
+disponibilité et suivi
+:::
+:::
+::: {.metric}
+::: {.value}
+Combinaison
+:::
+::: {.label}
+complémentarité à vérifier
+:::
+:::
+:::
+
+
+## Pratique facultative 6.8
+
+::: {.lead}
+Proposez deux familles à comparer pour la consommation d’électricité. Calculez la moyenne à poids égaux des deux références et sa MAE sur 2025. Justifiez sa disponibilité et précisez comment réévaluer ce choix.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Mes deux références partagent la cible, l’origine et l’horizon.
+- J’ai calculé la moyenne à poids égaux et comparé sa MAE sur 2025.
+- J’ai justifié la disponibilité des prévisions et expliqué comment réévaluer le choix.
+- Je ne suppose pas que la combinaison améliore le résultat sans vérifier les erreurs.
+:::

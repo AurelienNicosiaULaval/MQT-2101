@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Module 06 - Introduction aux séries chronologiques – MQT-2101 : Analyse et modélisation des données</title>
+<title>Module 06 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -6837,6 +6837,12 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7018,14 +7024,23 @@ display: none;
     <h2 id="toc-title">Sur cette page</h2>
 
   <ul>
-  <li><a href="#passage-au-bloc-de-prévision" id="toc-passage-au-bloc-de-prévision" class="nav-link active" data-scroll-target="#passage-au-bloc-de-prévision">Passage au bloc de prévision</a></li>
-  <li><a href="#résultat-attendu" id="toc-résultat-attendu" class="nav-link" data-scroll-target="#résultat-attendu">Résultat attendu</a></li>
-  <li><a href="#données-du-module" id="toc-données-du-module" class="nav-link" data-scroll-target="#données-du-module">Données du module</a></li>
-  <li><a href="#parcours-recommandé" id="toc-parcours-recommandé" class="nav-link" data-scroll-target="#parcours-recommandé">Parcours recommandé</a></li>
+  <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
   <li><a href="#avant-de-commencer" id="toc-avant-de-commencer" class="nav-link" data-scroll-target="#avant-de-commencer">Avant de commencer</a></li>
+  <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a>
+  <ul class="collapse">
+  <li><a href="#consolider-après-une-première-tentative" id="toc-consolider-après-une-première-tentative" class="nav-link" data-scroll-target="#consolider-après-une-première-tentative">Consolider après une première tentative</a></li>
+  </ul></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
+  <li><a href="#lien-avec-lévaluation" id="toc-lien-avec-lévaluation" class="nav-link" data-scroll-target="#lien-avec-lévaluation">Pour préparer les évaluations</a></li>
+  <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
-  <li><a href="#lien-avec-lévaluation" id="toc-lien-avec-lévaluation" class="nav-link" data-scroll-target="#lien-avec-lévaluation">Lien avec l’évaluation</a></li>
+  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a>
+  <ul class="collapse">
+  <li><a href="#compléments-facultatifs" id="toc-compléments-facultatifs" class="nav-link" data-scroll-target="#compléments-facultatifs">Compléments facultatifs</a></li>
+  <li><a href="#passage-au-bloc-de-prévision" id="toc-passage-au-bloc-de-prévision" class="nav-link" data-scroll-target="#passage-au-bloc-de-prévision">Passage au bloc de prévision</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -7034,7 +7049,8 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Module 06 - Introduction aux séries chronologiques</h1>
+<h1 class="title">Module 06</h1>
+<p class="subtitle lead">Introduction aux séries chronologiques et à la prévision</p>
 </div>
 
 
@@ -7051,96 +7067,253 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi ça compte">
+<div class="learning-hero">
+<p class="hero-kicker">
+Séance autonome
+</p>
+<h2 class="anchored">
+Prévoir en respectant le temps
+</h2>
+<p>Définir une décision, préparer une série et comparer des prévisions avec les informations réellement disponibles à leur origine.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Organisation
+</div>
+<div class="fact-value">
+À votre rythme
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio et Quarto
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Données du parcours guidé
+</div>
+<div class="fact-value">
+<a class="data-link" href="../../donnees/#consommation_electrique_batiment_quebec">consommation_electrique_batiment_quebec.csv</a>
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Trace finale
+</div>
+<div class="fact-value">
+Deux rapports Quarto courts
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="on-passe-au-concret" class="level2">
+<h2 class="anchored" data-anchor-id="on-passe-au-concret">On passe au concret</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="La question du module">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pourquoi ça compte
+<span class="screen-reader-only">Note</span>La question du module
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une décision de stock, de personnel ou de capacité porte sur le futur. Une série chronologique oblige à respecter l’ordre du temps et à distinguer ce qui était connu au moment où la prévision aurait réellement été produite.</p>
+<p>Une équipe doit préparer le suivi énergétique d’un bâtiment universitaire fictif au Québec. Pour décider, elle a besoin de prévisions adaptées à ses délais, d’une référence simple et d’une indication de l’incertitude. Un bon ajustement du passé ne suffit pas.</p>
 </div>
 </div>
-<section id="passage-au-bloc-de-prévision" class="level2">
-<h2 class="anchored" data-anchor-id="passage-au-bloc-de-prévision">Passage au bloc de prévision</h2>
-<p>Les modules 01 à 04 ont développé la lecture d’un tableau, la régression et les diagnostics. Ici, ces réflexes restent nécessaires, mais la chronologie change le protocole : une observation future ne peut pas servir à préparer, ajuster ou évaluer une prévision du passé.</p>
-</section>
-<section id="résultat-attendu" class="level2">
-<h2 class="anchored" data-anchor-id="résultat-attendu">Résultat attendu</h2>
-<p>À la fin du module, vous pourrez :</p>
+<p>À la fin du module, vous devriez pouvoir :</p>
 <ul>
-<li>reconnaître une série chronologique et préciser sa fréquence;</li>
-<li>construire un graphique temporel lisible;</li>
+<li>définir la cible, les unités, la fréquence, l’origine et l’horizon d’une prévision;</li>
 <li>distinguer tendance, saisonnalité, cycle et variation irrégulière;</li>
-<li>définir une cible et un horizon de prévision;</li>
-<li>séparer chronologiquement les données d’entraînement et de test;</li>
-<li>comparer une prévision à une méthode naïve.</li>
+<li>auditer le calendrier et documenter les anomalies;</li>
+<li>séparer apprentissage et validation dans l’ordre temporel;</li>
+<li>comparer des références et interpréter ME, MAE, RMSE, MAPE et MASE;</li>
+<li>communiquer une prévision, son incertitude et ses limites.</li>
 </ul>
-</section>
-<section id="données-du-module" class="level2">
-<h2 class="anchored" data-anchor-id="données-du-module">Données du module</h2>
-<p>Le fichier <a href="data/ventes_mensuelles_quebec.csv"><code>ventes_mensuelles_quebec.csv</code></a> contient 72 mois de ventes fictives d’une organisation québécoise. Chaque ligne représente un mois. Les données sont simulées et ne décrivent aucune organisation réelle.</p>
-</section>
-<section id="parcours-recommandé" class="level2">
-<h2 class="anchored" data-anchor-id="parcours-recommandé">Parcours recommandé</h2>
-<ol type="1">
-<li>Parcourez les quatre <a href="../../modules/semaine-06-series-chronologiques-intro/capsules.html">capsules et activités</a>.</li>
-<li>Consultez les <a href="../../modules/semaine-06-series-chronologiques-intro/notes-cours.html">notes de cours</a> pour consolider le vocabulaire.</li>
-<li>Reproduisez les <a href="../../modules/semaine-06-series-chronologiques-intro/demonstrations.html">démonstrations R</a>.</li>
-<li>Faites les <a href="../../modules/semaine-06-series-chronologiques-intro/exercices.html">exercices</a> avant d’ouvrir les solutions cachées.</li>
-<li>Ciblez les passages indiqués dans les <a href="../../modules/semaine-06-series-chronologiques-intro/lectures.html">lectures</a>.</li>
-<li>Produisez la trace finale.</li>
-</ol>
+<p>Les outils des modules 1 à 4 restent utiles. Le protocole doit maintenant respecter la chronologie : préparer et ajuster avec le passé, puis comparer sur les périodes suivantes.</p>
 </section>
 <section id="avant-de-commencer" class="level2">
 <h2 class="anchored" data-anchor-id="avant-de-commencer">Avant de commencer</h2>
-<p>Sans calculer, répondez à ces trois questions :</p>
-<ol type="1">
-<li>Pourquoi ne peut-on pas mélanger aléatoirement le passé et le futur pour évaluer une prévision?</li>
-<li>Quelle différence faites-vous entre une cible et un horizon?</li>
-<li>Une hausse observée chaque mois est-elle nécessairement saisonnière?</li>
-</ol>
-<p>Conservez vos réponses. Vous les reprendrez à la fin du module.</p>
+<p>Préalables : importer un CSV, lire un graphique et rendre un document Quarto (modules 1 et 2), comprendre ajustement, résidu et prédiction (modules 3 et 4).</p>
+<p>Téléchargez et décompressez le <a href="telechargements/prevision-electricite.zip">projet guidé <code>prevision-electricite</code></a> et le <a href="telechargements/prevision-demande.zip">projet distinct <code>prevision-demande</code></a>, puis ouvrez leur fichier <code>.Rproj</code>. Les CSV et les dictionnaires sont fournis. Les <a href="../../modules/semaine-06-series-chronologiques-intro/demonstrations.html#preparation">démonstrations</a> reprennent les étapes depuis une session neuve.</p>
+<p>Le cas guidé contient 72 mois de consommation d’électricité d’un bâtiment universitaire fictif au Québec, de janvier 2020 à décembre 2025. Une ligne représente un mois; la cible est la consommation totale du mois, en kWh. Les données sont entièrement simulées, sans mesure d’un établissement réel. Fixez d’abord le protocole : 2020 à 2024 pour l’apprentissage, 2025 pour la validation à l’origine de décembre 2024.</p>
+<p>Pour les cônes ETS de ce module, utilisez le code fourni et concentrez-vous sur la lecture des intervalles. L’estimation des paramètres de lissage et les diagnostics d’autocorrélation ne sont pas des préalables aux activités 6.1 à 6.6. Les fonctions R partagées sont fournies : il n’est pas demandé de les programmer depuis zéro.</p>
 </section>
-<section id="trace-finale" class="level2">
-<h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Produisez une page Quarto comprenant :</p>
-<ul>
-<li>la définition de l’unité d’observation et de la fréquence;</li>
-<li>un graphique temporel annoté;</li>
-<li>deux caractéristiques visibles de la série;</li>
-<li>une cible de prévision et un horizon justifiés;</li>
-<li>une séparation entraînement-test respectant le temps;</li>
-<li>une prévision naïve et son erreur absolue moyenne sur la période test;</li>
-<li>une limite décisionnelle.</li>
-</ul>
-<div class="callout callout-style-default callout-important callout-titled" title="Critère de réussite">
+<section id="votre-parcours" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Suivez les six étapes du parcours principal. Les productions autonomes des capsules et les activités 6.1 à 6.6 ci-dessous sont les mêmes tâches : faites-les une seule fois dans <code>prevision_electricite.qmd</code>. Les exercices utilisent un autre jeu de données et se font dans <code>prevision_demande.qmd</code> après chaque étape. Ouvrez leurs corrigés après une tentative.</p>
+<p>Les <a href="../../modules/semaine-06-series-chronologiques-intro/capsules.html">capsules et supports</a> comprennent les onglets Vidéo, PDF, HTML et Support écrit. Les vidéos sont en attente d’enregistrement.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Notes de cours">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Critère de réussite
+<span class="screen-reader-only">Note</span>Notes de cours
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une personne qui ne connaît pas le jeu de données doit comprendre ce qui est prévu, pour quelle période, avec quelles données et à quelle décision la prévision pourrait servir.</p>
+<p>Le support global de notes de cours est disponible en <a href="../../modules/semaine-06-series-chronologiques-intro/notes-cours.html">HTML</a> et en <a href="media/pdf/notes-cours.pdf">PDF</a>. Il sert de synthèse du module; les supports détaillés sont associés aux capsules.</p>
+</div>
+</div>
+<p>Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.</p>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1">
+<summary><span class="path-number">1</span><span class="path-title">Définir une prévision utile</span><span class="path-preview">Quelle consommation faut-il prévoir pour préparer le suivi énergétique?</span>
+<span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#preparation">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Définir une série et sa fréquence.</p>
+<p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a> <a class="resource-link demo-link" href="demonstrations.html#preparation">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-1">Exercice 1</a> <a href="lectures.html#lecture-1">Lecture ciblée</a></p>
+<p><span class="step-label">Action</span> Formuler la décision, la cible et l’horizon avant de choisir une méthode.</p>
+<div class="ae-box"><p class="ae-title">Activité 6.1 - Cible et horizon</p><p>Formulez la prévision mensuelle de consommation d’électricité nécessaire pour préparer le suivi énergétique du premier trimestre 2025 à la fin de décembre 2024. Nommez le bâtiment concerné et une personne à consulter.</p></div>
+<p><span class="step-label">Exercice d’application</span> Après cette activité, faites l’exercice 1 sur la demande hebdomadaire dans <code>prevision_demande.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-2">
+<summary><span class="path-number">2</span><span class="path-title">Lire les composantes d’une série</span><span class="path-preview">La hausse vient-elle du temps ou du calendrier?</span>
+<span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#composantes">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Lire un graphique temporel.</p>
+<p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a> <a class="resource-link demo-link" href="demonstrations.html#composantes">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-2">Exercice 2</a> <a href="lectures.html#lecture-2">Lecture ciblée</a></p>
+<p><span class="step-label">Action</span> Produire les graphiques temporels sur l’apprentissage et décrire les motifs observés.</p>
+<div class="ae-box"><p class="ae-title">Activité 6.2 - Lecture des composantes</p><p>Tracez la consommation de 2020 à 2024, puis les profils par mois et année. Décrivez deux motifs. Expliquez la différence entre +20 000 kWh et +10 % et ajoutez une limite.</p></div>
+<p><span class="step-label">Exercice d’application</span> Après cette activité, faites l’exercice 2 sur la demande hebdomadaire dans <code>prevision_demande.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-3">
+<summary><span class="path-number">3</span><span class="path-title">Préparer les données temporelles</span><span class="path-preview">Comment documenter un mois absent sans déformer le calendrier?</span>
+<span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#pretraitement">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Auditer le calendrier et les mesures.</p>
+<p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a> <a class="resource-link demo-link" href="demonstrations.html#pretraitement">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-3">Exercice 3</a> <a href="lectures.html#lecture-3">Lecture ciblée</a></p>
+<p><span class="step-label">Action</span> Vérifier dates, périodes absentes et anomalies avant de préparer la série.</p>
+<div class="ae-box"><p class="ae-title">Activité 6.3 - Audit du calendrier</p><p>Auditez les dates et les valeurs manquantes sur l’apprentissage. Proposez un traitement documenté pour un mois absent, une erreur de saisie confirmée et un événement réel.</p></div>
+<p><span class="step-label">Exercice d’application</span> Après cette activité, faites l’exercice 3 sur la demande hebdomadaire dans <code>prevision_demande.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-4">
+<summary><span class="path-number">4</span><span class="path-title">Comparer des prévisions de référence</span><span class="path-preview">Une méthode élaborée fait-elle mieux qu’une règle simple?</span>
+<span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#references">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4">Ex. 4</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Séparer apprentissage et validation.</p>
+<p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a> <a class="resource-link demo-link" href="demonstrations.html#references">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-4">Exercice 4</a> <a href="lectures.html#lecture-4">Lecture ciblée</a></p>
+<p><span class="step-label">Action</span> Construire les références avec les données de 2020 à 2024, puis les comparer à 2025.</p>
+<div class="ae-box"><p class="ae-title">Activité 6.4 - Références à origine fixe</p><p>Produisez les douze prévisions naïves et saisonnières à la fin de 2024. Superposez-les à la consommation de 2025. Expliquez pourquoi une colonne lag(consommation_kwh) sur tout le fichier répond à un autre scénario.</p></div>
+<p><span class="step-label">Exercice d’application</span> Après cette activité, faites l’exercice 4 sur la demande hebdomadaire dans <code>prevision_demande.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-5">
+<summary><span class="path-number">5</span><span class="path-title">Mesurer et lire les erreurs</span><span class="path-preview">Une erreur moyenne proche de zéro suffit-elle?</span>
+<span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#erreurs">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5">Ex. 5</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Calculer les cinq mesures d’erreur.</p>
+<p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-5">Capsule 5</a> <a class="resource-link demo-link" href="demonstrations.html#erreurs">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-5">Exercice 5</a> <a href="lectures.html#lecture-5">Lecture ciblée</a></p>
+<p><span class="step-label">Action</span> Calculer les mesures d’erreur et examiner les écarts que leur résumé ne montre pas.</p>
+<div class="ae-box"><p class="ae-title">Activité 6.5 - Mesures et lecture des erreurs</p><p>Calculez ME, MAE, RMSE, MAPE et MASE des trois candidats. Interprétez les unités et le signe de ME. Comparez directement leurs MAE puis lisez le graphique et l’histogramme des erreurs.</p></div>
+<p><span class="step-label">Exercice d’application</span> Après cette activité, faites l’exercice 5 sur la demande hebdomadaire dans <code>prevision_demande.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-6">
+<summary><span class="path-number">6</span><span class="path-title">Communiquer l’incertitude</span><span class="path-preview">Une seule valeur suffit-elle au suivi énergétique?</span>
+<span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-6">Capsule 6</a><a class="summary-resource-link demo-link" href="demonstrations.html#incertitude">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-6">Ex. 6</a></span>
+<span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Distinguer point et intervalle.</p>
+<p><span class="step-label">Ressource</span> <a class="resource-link video-link" href="capsules.html#capsule-6">Capsule 6</a> <a class="resource-link demo-link" href="demonstrations.html#incertitude">Démonstration</a> <a class="resource-link exercise-link" href="exercices.html#exercice-6">Exercice 6</a> <a href="lectures.html#lecture-6">Lecture ciblée</a></p>
+<p><span class="step-label">Action</span> Lire le cône de prédiction fourni et expliquer ce qu’il apporte à la décision.</p>
+<div class="ae-box"><p class="ae-title">Activité 6.6 - Prévision et incertitude</p><p>Produisez le cône ETS(A,A,N) à l’origine de décembre 2024. Comparez les intervalles à 80 % et 95 % pour h = 1 et h = 12. Expliquez son usage et une limite.</p></div>
+<p><span class="step-label">Exercice d’application</span> Après cette activité, faites l’exercice 6 sur la demande hebdomadaire dans <code>prevision_demande.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+</div>
+</section>
+<section id="exercices-dapplication" class="level2">
+<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
+<p>Les <a href="../../modules/semaine-06-series-chronologiques-intro/exercices.html">six premiers exercices</a> se font progressivement dans le projet distinct <code>prevision-demande</code>, aux étapes indiquées ci-dessus. Ils utilisent la demande hebdomadaire et se conservent dans <code>prevision_demande.qmd</code>. Si vous les avez déjà réalisés, terminez les exercices restants et relisez vos réponses. Tentez chaque exercice avant d’ouvrir sa solution détaillée.</p>
+<section id="consolider-après-une-première-tentative" class="level3">
+<h3 class="anchored" data-anchor-id="consolider-après-une-première-tentative">Consolider après une première tentative</h3>
+<p>Les <a href="../../modules/semaine-06-series-chronologiques-intro/exercices.html#pratique-supplementaire">huit exercices supplémentaires corrigés</a> sont facultatifs et indépendants des deux rapports. Ils renforcent les cibles, les composantes, le calendrier, les erreurs et les intervalles avec de petits exemples fictifs. Choisissez ceux qui répondent à une difficulté, tentez une réponse, puis refaites la question sans son corrigé. Ils ne demandent pas les méthodes des modules suivants.</p>
+<p>La page <a href="../../modules/semaine-06-series-chronologiques-intro/lectures.html">Lectures</a> précise les lectures ciblées et les exercices des ouvrages associés aux étapes du module.</p>
+</section>
+</section>
+<section id="trace-finale" class="level2">
+<h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
+<p>Le parcours guidé produit <code>prevision_electricite.qmd</code>. Il doit contenir :</p>
+<ol type="1">
+<li>la cible, l’unité d’observation, les unités, l’origine et l’horizon;</li>
+<li>l’audit du calendrier et le traitement documenté des anomalies;</li>
+<li>les graphiques sur l’apprentissage et leur lecture;</li>
+<li>la séparation temporelle et les prévisions de référence à origine fixe;</li>
+<li>les mesures et graphiques d’erreur, avec leurs unités et limites;</li>
+<li>un cône de prédiction commenté;</li>
+<li>une conclusion avec une limite et une règle de suivi.</li>
+</ol>
+<p>Les exercices produisent <code>prevision_demande.qmd</code>. La section <a href="../../modules/semaine-06-series-chronologiques-intro/exercices.html#trace-finale">Trace finale</a> précise comment réunir les six réponses et conclure. L’<a href="../../modules/semaine-06-series-chronologiques-intro/exercices.html#exercice-6">exercice 6</a> porte sur les erreurs et l’incertitude.</p>
+<p>Les calculs complets figurent dans la <a href="telechargements/demonstration-electricite.zip">démonstration téléchargeable</a>. Les <a href="../../modules/semaine-06-series-chronologiques-intro/exercices.html">exercices et corrigés</a> permettent le transfert. Dans RStudio, choisissez Session &gt; Restart R, puis Render pour vérifier chacun des deux documents : aucun objet créé seulement dans la console ne doit être nécessaire.</p>
+</section>
+<section id="lien-avec-lévaluation" class="level2">
+<h2 class="anchored" data-anchor-id="lien-avec-lévaluation">Pour préparer les évaluations</h2>
+<p>Ce module prépare le mini-rapport 2 et l’examen final. L’intra porte sur les modules 1 à 4 : les séries chronologiques n’y sont pas évaluées. Les rapports de ce module sont des entraînements; les règles des travaux évalués sont dans <a href="../../evaluations/index.html">Évaluations</a>.</p>
+<p>Le cas de demande hebdomadaire sera repris au module 7 et au laboratoire 3 pour ajouter des méthodes et analyser le coût des erreurs. Il s’agit d’une progression sur un cas connu; les rapports et corrigés de ce module sont des entraînements, et le mini-rapport 2 exige une analyse autonome. Consultez ses <a href="../../evaluations/mini-rapport-2.html">consignes</a> et la <a href="../../evaluations/validation-donnees.html">procédure de validation des données</a>.</p>
+<p><span id="ressources-et-suite"></span></p>
+</section>
+<section id="ressources-du-module" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
+<div class="resource-list">
+  <a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Six capsules, deux compléments facultatifs et leurs supports écrits, PDF et HTML. Vidéos à venir.</span></span></a>
+  <a class="resource-row" href="notes-cours.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Notes de cours</span><span class="resource-row-text">Synthèse du module en diapositives HTML et PDF.</span></span></a>
+  <a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Analyse complète de la consommation mensuelle d’électricité, avec code copiable et projet téléchargeable.</span></span></a>
+  <a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices et solutions détaillées</span><span class="resource-row-text">Six exercices suivis sur la demande hebdomadaire, deux compléments et huit exercices supplémentaires, avec corrigés repliables.</span></span></a>
+  <a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Lectures ciblées par étape, références et exercices des ouvrages.</span></span></a>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Erreurs fréquentes à éviter">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Erreurs fréquentes à éviter
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Évaluer un modèle sur les mêmes observations qui ont servi à l’ajuster.</li>
+<li>Fournir au modèle une valeur qui n’était pas disponible à l’origine.</li>
+<li>Comprimer le calendrier en supprimant une période absente.</li>
+<li>Confondre erreur moyenne nulle et erreurs petites.</li>
+<li>Calculer le MAPE en retirant les zéros sans expliquer le changement de comparaison.</li>
+<li>Lire MASE inférieur à 1 comme une victoire automatique sur la référence de validation.</li>
+<li>Présenter un intervalle à 95 % comme une garantie pour toute la trajectoire.</li>
+</ul>
 </div>
 </div>
 </section>
 <section id="auto-vérification" class="level2">
 <h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<p>Avant de passer au module suivant, je peux dire que :</p>
+<div class="checklist-box">
 <ul class="task-list">
-<li><label><input type="checkbox">Ma date est reconnue comme une date dans R.</label></li>
-<li><label><input type="checkbox">Mon graphique respecte l’ordre chronologique.</label></li>
-<li><label><input type="checkbox">Je distingue description du passé et prévision du futur.</label></li>
-<li><label><input type="checkbox">Mon horizon correspond à une décision réelle.</label></li>
-<li><label><input type="checkbox">Ma période test vient après ma période d’entraînement.</label></li>
-<li><label><input type="checkbox">Je compare mon résultat à une référence simple.</label></li>
+<li><label><input type="checkbox">Je distingue fréquence, granularité, origine, cible et horizon.</label></li>
+<li><label><input type="checkbox">Le calendrier est vérifié avant le modèle et les anomalies sont documentées.</label></li>
+<li><label><input type="checkbox">Je distingue tendance, saisonnalité, cycle et variation irrégulière.</label></li>
+<li><label><input type="checkbox">Les prévisions comparées partagent les mêmes dates et informations disponibles.</label></li>
+<li><label><input type="checkbox">Je sais lire ME, MAE, RMSE, MAPE et MASE avec leurs limites.</label></li>
+<li><label><input type="checkbox">Je distingue résidu, erreur de prévision et intervalle de prédiction.</label></li>
+<li><label><input type="checkbox">Je distingue une comparaison à origine fixe de la réévaluation à de nouvelles origines.</label></li>
+<li><label><input type="checkbox">Mon choix reste provisoire et prévoit une réévaluation.</label></li>
 </ul>
+</div>
 <div class="callout callout-style-default callout-note callout-titled" title="Usage de l&#39;IA">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7154,12 +7327,76 @@ display: none;
 <p>Vous pouvez utiliser le GPT du cours pour faire critiquer votre définition de la cible et de l’horizon. Demandez-lui de relever une ambiguïté sans proposer la formulation finale. Vérifiez ensuite la réponse à l’aide des données et des notes de cours.</p>
 </div>
 </div>
+<p>Vous pouvez aussi vérifier votre trace sans IA : utilisez la liste ci-dessus, les résultats de vos calculs et les corrigés après votre tentative, puis notez une correction à apporter à votre raisonnement. Aucun compte externe ni outil payant n’est nécessaire. Si vous utilisez le <a href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">GPT du cours</a>, ne transmettez pas de données personnelles ou confidentielles et appliquez les <a href="../../ressources/ia.html">règles du cours</a> et la <a href="../../ressources/declaration-ia.html">déclaration d’usage</a>.</p>
 </section>
-<section id="lien-avec-lévaluation" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-lévaluation">Lien avec l’évaluation</h2>
-<p>Ce module prépare le mini-rapport 2 et l’examen final. Vous devez pouvoir expliquer pourquoi l’ordre temporel modifie la manière de visualiser, d’entraîner et d’évaluer un modèle.</p>
+<section id="je-suis-bloquée" class="level2">
+<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
+<div class="help-box">
+<p>Vérifiez dans l’ordre :</p>
+<ol type="1">
+<li>Le projet <code>.Rproj</code> est ouvert après avoir décompressé toute l’archive; les dossiers <code>data/</code> et <code>R/</code> sont présents.</li>
+<li><code>tidyverse</code> et <code>forecast</code> se chargent et <code>R/analyse-module06.R</code> est disponible.</li>
+<li>Les dates sont triées, distinctes et espacées d’un mois ou d’une semaine selon le fichier; les unités correspondent à la cible.</li>
+<li>La séparation est identique à celle des consignes : 60 mois puis 12 mois pour la consommation d’électricité; 91 semaines puis 13 semaines pour la demande.</li>
+<li>La prévision utilise seulement les données disponibles à l’origine. Les observations de validation servent ensuite à calculer les erreurs.</li>
+<li>Vous avez relancé la <a href="../../modules/semaine-06-series-chronologiques-intro/demonstrations.html#preparation">préparation des démonstrations</a> depuis une session R redémarrée. Si R bloque encore, conservez le message d’erreur complet et le petit morceau de code concerné.</li>
+</ol>
+<p>Pour retrouver une commande, utilisez l’<a href="../../ressources/aide-memoire-r.html">aide-mémoire R</a>. La <a href="../../ressources/feuille-reference.html#prevision">feuille de référence du cours</a> rappelle cible, origine, horizon et mesures. Dans les comparaisons de ce module, les données réservées servent à choisir une méthode : nous les appelons validation.</p>
+</div>
+</section>
+<section id="pour-aller-plus-loin" class="level2">
+<h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
+<section id="compléments-facultatifs" class="level3">
+<h3 class="anchored" data-anchor-id="compléments-facultatifs">Compléments facultatifs</h3>
+<p>Après les six capsules, vous pouvez approfondir deux questions avec les supports écrits et visuels :</p>
+<ul>
+<li><a href="../../modules/semaine-06-series-chronologiques-intro/capsules.html#capsule-7">Validation à plusieurs origines</a> : fixer l’horizon, faire avancer l’origine et comparer les fenêtres. La pratique 6.7 et l’exercice 7 sont facultatifs.</li>
+<li><a href="../../modules/semaine-06-series-chronologiques-intro/capsules.html#capsule-8">Familles et combinaisons de méthodes</a> : structure, mémoire, variables externes, automatisation et complémentarité des erreurs. La pratique 6.8 et l’exercice 8 sont facultatifs.</li>
+</ul>
+<p>Ces compléments ne sont pas nécessaires pour terminer les deux rapports d’entraînement du module. Les modules 7 à 9 approfondissent ensuite les méthodes de lissage, la régression saisonnière et les variables externes. Les fonctions des exemples sont fournies.</p>
+</section>
+<section id="passage-au-bloc-de-prévision" class="level3">
+<h3 class="anchored" data-anchor-id="passage-au-bloc-de-prévision">Passage au bloc de prévision</h3>
+<p>Les modules 1 à 4 ont développé la lecture des données, la régression et les diagnostics. Ces outils restent utiles, mais le protocole doit maintenant reproduire la chronologie : préparer et ajuster avec le passé, puis comparer sur les périodes suivantes.</p>
+<p>Ce module installe le cadre commun de la prévision. Les notions de tendance, de saisonnalité, d’incertitude et de familles de méthodes seront reprises avec de nouvelles opérations dans les modules suivants.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Étape</th>
+<th>Ce que vous apprenez à faire</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Module 6</td>
+<td>Définir la décision, auditer la série, construire les références, mesurer les erreurs et respecter le temps dans la validation.</td>
+</tr>
+<tr class="even">
+<td><a href="../semaine-07-lissage/index.html">Module 7</a></td>
+<td>Calculer les moyennes mobiles, comprendre le lissage simple et découvrir le prolongement accompagné de Holt.</td>
+</tr>
+<tr class="odd">
+<td><a href="../semaine-08-tendance-saisonnalite/index.html">Module 8</a></td>
+<td>Ajuster et interpréter une régression avec tendance et effets du mois.</td>
+</tr>
+<tr class="even">
+<td><a href="../atelier-03-series-chronologiques/index.html">Laboratoire 3</a></td>
+<td>Intégrer les méthodes des modules 6 à 8 et traduire les erreurs en décision de stock.</td>
+</tr>
+<tr class="odd">
+<td><a href="../semaine-09-variables-externes-autocorrelation/index.html">Module 9</a></td>
+<td>Ajouter des variables externes disponibles et diagnostiquer la dépendance temporelle des résidus.</td>
+</tr>
+<tr class="even">
+<td><a href="../semaine-10-classification-modeles-avances/index.html">Module 10</a></td>
+<td>Passer à une cible binaire, une probabilité et une règle de classification.</td>
+</tr>
+</tbody>
+</table>
+<p>Pour choisir la voie classification du mini-rapport 2, le <a href="../../modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe">parcours anticipé du module 10</a> commence dès le module 8. La voie temporelle suit les modules 6 à 9.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -7642,7 +7879,7 @@ display: none;
 <p>MQT-2101 - Université Laval</p>
 </div>
     <div class="nav-footer-center">
-
+       
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>
