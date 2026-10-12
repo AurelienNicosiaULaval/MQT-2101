@@ -2,6 +2,8 @@
 
 Les six capsules principales couvrent le cadre de la prévision, la définition de la décision, le calendrier, les références, les erreurs et l’incertitude. Les vidéos seront ajoutées après l’enregistrement. Les supports écrits, les diapositives HTML et les PDF permettent déjà de suivre le parcours.
 
+Pour récupérer tous les supports sur une tablette, téléchargez le [dossier PDF du 12 octobre 2026](telechargements/module-06-pdf-2026-10-12.zip). L’archive contient neuf PDF : les six capsules principales, les deux compléments facultatifs et les notes de cours. Après décompression, le dossier porte la date de cette version.
+
 Travaillez dans le projet guidé `prevision-electricite`. Les productions 6.1 à 6.6 alimentent un seul rapport; les activités du parcours reprennent ces productions, sans travail à refaire. Les exercices utilisent un cas distinct sur la demande hebdomadaire.
 
 ## Capsule 1 - Définir une prévision utile
