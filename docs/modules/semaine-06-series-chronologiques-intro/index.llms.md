@@ -55,7 +55,7 @@ Pour les cônes ETS de ce module, utilisez le code fourni et concentrez-vous sur
 
 Suivez les six étapes du parcours principal. Les productions autonomes des capsules et les activités 6.1 à 6.6 ci-dessous sont les mêmes tâches : faites-les une seule fois dans `prevision_electricite.qmd`. Les exercices utilisent un autre jeu de données et se font dans `prevision_demande.qmd` après chaque étape. Ouvrez leurs corrigés après une tentative.
 
-Les [six capsules principales](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md) proposent les onglets Vidéo, PDF, PDF annoté, HTML et Support écrit. Les [capsules supplémentaires 7 et 8](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#pour-approfondir-après-le-parcours-principal), facultatives, sont disponibles en PDF, HTML et support écrit.
+Les [six capsules principales](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md) proposent les onglets Vidéo, PDF, PDF annoté et HTML. Les [capsules supplémentaires 7 et 8](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#pour-approfondir-après-le-parcours-principal), facultatives, sont disponibles en PDF et HTML.
 
 > **NOTE:**
 >
