@@ -55,13 +55,13 @@ Pour les cônes ETS de ce module, utilisez le code fourni et concentrez-vous sur
 
 Suivez les six étapes du parcours principal. Les productions autonomes des capsules et les activités 6.1 à 6.6 ci-dessous sont les mêmes tâches : faites-les une seule fois dans `prevision_electricite.qmd`. Les exercices utilisent un autre jeu de données et se font dans `prevision_demande.qmd` après chaque étape. Ouvrez leurs corrigés après une tentative.
 
-Les [capsules et supports](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md) comprennent les onglets Vidéo, PDF, HTML et Support écrit. Les vidéos sont en attente d’enregistrement.
+Les [six capsules principales](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md) proposent les onglets Vidéo, PDF, PDF annoté, HTML et Support écrit. Les [capsules supplémentaires 7 et 8](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#pour-approfondir-après-le-parcours-principal), facultatives, sont disponibles en PDF, HTML et support écrit.
 
 > **NOTE:**
 >
 > Le support global de notes de cours est disponible en [HTML](../../modules/semaine-06-series-chronologiques-intro/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
 >
-> Pour récupérer tous les supports sur une tablette, téléchargez le [dossier des neuf PDF du 12 octobre 2026](telechargements/module-06-pdf-2026-10-12.zip), puis décompressez l’archive.
+> Pour récupérer tous les supports sur une tablette, téléchargez le [dossier des PDF du 13 octobre 2026](telechargements/module-06-pdf-2026-10-13.zip), puis décompressez l’archive. Elle contient les neuf supports du module et les six versions annotées.
 
 Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.
 
@@ -183,7 +183,7 @@ Le cas de demande hebdomadaire sera repris au module 7 et au laboratoire 3 pour 
 
 ## Ressources du module
 
-[CapsulesSix capsules, deux compléments facultatifs et leurs supports écrits, PDF et HTML. Vidéos à venir.](capsules.llms.md) [Notes de coursSynthèse du module en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse complète de la consommation mensuelle d’électricité, avec code copiable et projet téléchargeable.](demonstrations.llms.md) [Exercices et solutions détailléesSix exercices suivis sur la demande hebdomadaire, deux compléments et huit exercices supplémentaires, avec corrigés repliables.](exercices.llms.md) [LecturesLectures ciblées par étape, références et exercices des ouvrages.](lectures.llms.md)
+[CapsulesSix capsules vidéo avec PDF annotés, et deux capsules supplémentaires facultatives en PDF et HTML.](capsules.llms.md) [Notes de coursSynthèse du module en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse complète de la consommation mensuelle d’électricité, avec code copiable et projet téléchargeable.](demonstrations.llms.md) [Exercices et solutions détailléesSix exercices suivis sur la demande hebdomadaire, deux compléments et huit exercices supplémentaires, avec corrigés repliables.](exercices.llms.md) [LecturesLectures ciblées par étape, références et exercices des ouvrages.](lectures.llms.md)
 
 > **WARNING:**
 >
@@ -236,12 +236,12 @@ Pour retrouver une commande, utilisez l’[aide-mémoire R](../../ressources/aid
 
 ## Pour aller plus loin
 
-### Compléments facultatifs
+### Capsules supplémentaires 7 et 8 (facultatives)
 
-Après les six capsules, vous pouvez approfondir deux questions avec les supports écrits et visuels :
+Après les six capsules, vous pouvez approfondir deux questions avec les supports écrits et visuels des deux capsules supplémentaires :
 
-- [Validation à plusieurs origines](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#capsule-7) : fixer l’horizon, faire avancer l’origine et comparer les fenêtres. La pratique 6.7 et l’exercice 7 sont facultatifs.
-- [Familles et combinaisons de méthodes](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#capsule-8) : structure, mémoire, variables externes, automatisation et complémentarité des erreurs. La pratique 6.8 et l’exercice 8 sont facultatifs.
+- [Capsule 7 - Validation à plusieurs origines](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#capsule-7) : fixer l’horizon, faire avancer l’origine et comparer les fenêtres. La pratique 6.7 et l’exercice 7 sont facultatifs.
+- [Capsule 8 - Familles et combinaisons de méthodes](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#capsule-8) : structure, mémoire, variables externes, automatisation et complémentarité des erreurs. La pratique 6.8 et l’exercice 8 sont facultatifs.
 
 Ces compléments ne sont pas nécessaires pour terminer les deux rapports d’entraînement du module. Les modules 7 à 9 approfondissent ensuite les méthodes de lissage, la régression saisonnière et les variables externes. Les fonctions des exemples sont fournies.
 

@@ -1,8 +1,8 @@
 # Capsules - Module 06
 
-Les six capsules principales couvrent le cadre de la prévision, la définition de la décision, le calendrier, les références, les erreurs et l’incertitude. Les vidéos seront ajoutées après l’enregistrement. Les supports écrits, les diapositives HTML et les PDF permettent déjà de suivre le parcours.
+Les six capsules principales couvrent le cadre de la prévision, la définition de la décision, le calendrier, les références, les erreurs et l’incertitude. Les six vidéos sont disponibles ci-dessous, avec leurs supports écrits, diapositives HTML et PDF. Les versions annotées accompagnent les capsules principales.
 
-Pour récupérer tous les supports sur une tablette, téléchargez le [dossier PDF du 12 octobre 2026](telechargements/module-06-pdf-2026-10-12.zip). L’archive contient neuf PDF : les six capsules principales, les deux compléments facultatifs et les notes de cours. Après décompression, le dossier porte la date de cette version.
+Pour récupérer tous les supports sur une tablette, téléchargez le [dossier PDF du 13 octobre 2026](telechargements/module-06-pdf-2026-10-13.zip). L’archive contient quinze PDF : les six supports principaux, leurs six versions annotées, les deux compléments facultatifs et les notes de cours. Après décompression, le dossier porte la date de cette version.
 
 Travaillez dans le projet guidé `prevision-electricite`. Les productions 6.1 à 6.6 alimentent un seul rapport; les activités du parcours reprennent ces productions, sans travail à refaire. Les exercices utilisent un cas distinct sur la demande hebdomadaire.
 
@@ -12,15 +12,19 @@ Une équipe planifie le suivi énergétique d’un bâtiment universitaire ficti
 
 ## Vidéo
 
-Enregistrement à venir. Utilisez les supports ci-dessous pour cette étape.
+[Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=zwbILhjM6l0)
 
 ## PDF
 
 [Ouvrir ou télécharger le PDF](media/pdf/capsule-01-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-01-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-01-support-annote.pdf)
+
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-01-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
 
 ## Support écrit
 
@@ -68,15 +72,19 @@ Une consommation plus élevée en hiver peut coexister avec une hausse durable. 
 
 ## Vidéo
 
-Enregistrement à venir. Utilisez les supports ci-dessous pour cette étape.
+[Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=nALn0iVEcUg)
 
 ## PDF
 
 [Ouvrir ou télécharger le PDF](media/pdf/capsule-02-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-02-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-02-support-annote.pdf)
+
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-02-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
 
 ## Support écrit
 
@@ -132,15 +140,19 @@ Une panne de collecte et une fermeture n’ont pas le même sens. Un nettoyage a
 
 ## Vidéo
 
-Enregistrement à venir. Utilisez les supports ci-dessous pour cette étape.
+[Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=7rziXbW13Zk)
 
 ## PDF
 
 [Ouvrir ou télécharger le PDF](media/pdf/capsule-03-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-03-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-03-support-annote.pdf)
+
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-03-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
 
 ## Support écrit
 
@@ -192,15 +204,19 @@ Un modèle peut très bien reproduire le passé et prévoir moins bien que la de
 
 ## Vidéo
 
-Enregistrement à venir. Utilisez les supports ci-dessous pour cette étape.
+[Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=GObOpRihSUk)
 
 ## PDF
 
 [Ouvrir ou télécharger le PDF](media/pdf/capsule-04-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
+
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-04-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
 
 ## Support écrit
 
@@ -252,15 +268,19 @@ Les sur-prévisions et les sous-prévisions peuvent s’annuler. Leur ampleur et
 
 ## Vidéo
 
-Enregistrement à venir. Utilisez les supports ci-dessous pour cette étape.
+[Ouvrir la capsule 5 sur YouTube](https://www.youtube.com/watch?v=znfTfjqILaM)
 
 ## PDF
 
 [Ouvrir ou télécharger le PDF](media/pdf/capsule-05-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-05-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-05-support-annote.pdf)
+
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-05-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
 
 ## Support écrit
 
@@ -312,15 +332,19 @@ Une prévision ponctuelle ne décrit pas l’incertitude autour des besoins mens
 
 ## Vidéo
 
-Enregistrement à venir. Utilisez les supports ci-dessous pour cette étape.
+[Ouvrir la capsule 6 sur YouTube](https://www.youtube.com/watch?v=oCiMhNALEbk)
 
 ## PDF
 
 [Ouvrir ou télécharger le PDF](media/pdf/capsule-06-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-06-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-06-support-annote.pdf)
+
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-06-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-06-support.llms.md)
 
 ## Support écrit
 
@@ -368,9 +392,9 @@ Produisez le cône ETS(A,A,N) à l’origine de décembre 2024. Comparez les int
 
 ## Pour approfondir après le parcours principal
 
-Les deux supports suivants sont des compléments facultatifs. Ils disposent de diapositives et d’un texte autonome, sans capsule vidéo à enregistrer pour le parcours principal. Leurs pratiques et les exercices 7 et 8 ne sont pas requis pour terminer le module.
+Les capsules supplémentaires 7 et 8 sont des compléments facultatifs proposés en PDF, HTML et support écrit. Elles ne comportent pas de vidéo. Leurs pratiques et les exercices 7 et 8 ne sont pas requis pour terminer le module.
 
-## Complément A - Valider à plusieurs origines
+## Complément A - Capsule supplémentaire 7 : Valider à plusieurs origines
 
 Une comparaison sur une seule origine peut dépendre de la période retenue. Les décisions de suivi énergétique exigent leurs propres horizons.
 
@@ -380,7 +404,7 @@ Une comparaison sur une seule origine peut dépendre de la période retenue. Les
 
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-07-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-07-support.llms.md)
 
 ## Support écrit
 
@@ -426,7 +450,7 @@ Comparez les références à h = 1 et h = 6 mois. Vérifiez le nombre d’origin
 
 [Démonstration correspondante](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#origine-mobile) · [Lecture ciblée](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-7) · [Exercice complémentaire 7](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#exercice-7)
 
-## Complément B - Choisir une famille de méthodes
+## Complément B - Capsule supplémentaire 8 : Choisir une famille de méthodes
 
 Le prochain bloc présente plusieurs méthodes. Leurs exigences et leur entretien comptent autant que leur nom.
 
@@ -436,7 +460,7 @@ Le prochain bloc présente plusieurs méthodes. Leurs exigences et leur entretie
 
 ## HTML
 
-[Ouvrir les diapositives avec le code copiable](media/qmd/capsule-08-support.llms.md)
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-08-support.llms.md)
 
 ## Support écrit
 
