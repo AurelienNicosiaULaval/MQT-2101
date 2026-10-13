@@ -1,5 +1,7 @@
 # Capsules - Module 06
 
+## Objectif
+
 Les six capsules principales couvrent le cadre de la prévision, la définition de la décision, le calendrier, les références, les erreurs et l’incertitude. Les six vidéos sont disponibles ci-dessous. Chaque capsule principale propose quatre onglets : Vidéo, PDF, PDF annoté et HTML. Les explications détaillées sont regroupées dans les [lectures du cours](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lectures-parcours).
 
 Pour récupérer tous les supports sur une tablette, téléchargez le [dossier PDF du 13 octobre 2026](telechargements/module-06-pdf-2026-10-13.zip). L’archive contient quinze PDF : les six supports principaux, leurs six versions annotées, les deux compléments facultatifs et les notes de cours. Après décompression, le dossier porte la date de cette version.

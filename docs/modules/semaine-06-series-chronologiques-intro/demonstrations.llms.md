@@ -1,5 +1,9 @@
 # Démonstrations R - Module 06
 
+## Objectif
+
+Construire une analyse de prévision sur la consommation mensuelle d’électricité d’un bâtiment universitaire fictif. Définir la cible, vérifier le calendrier, comparer les références et communiquer les erreurs et l’incertitude. Les six étapes du parcours utilisent les mêmes données simulées.
+
 ## Préparation
 
 Décompressez le [projet de démonstration complet](telechargements/demonstration-electricite.zip), puis ouvrez `demonstration-electricite.Rproj`. Il contient le CSV, le dictionnaire, les fonctions R et ce document. Pour produire votre propre analyse, utilisez le [projet guidé](telechargements/prevision-electricite.zip).

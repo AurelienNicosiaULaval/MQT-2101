@@ -8,15 +8,15 @@ Après la lecture, répondez à la question de vérification, fermez le support 
 
 ## Lectures intégrées au parcours
 
-| Moment | Lecture du cours en français | Vérification personnelle |
-|----|----|----|
-| Avant la capsule 1 | [Préparation](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#preparation) et [dictionnaires](data/dictionnaires.md) | Donner unité d’observation, unités et périodes d’apprentissage/validation. |
-| Après la capsule 1 | Lecture du cours : [définir une prévision utile](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-1) | Nommer la décision, l’origine, la cible et l’horizon. |
-| Après la capsule 2 | Lecture du cours : [lire les composantes](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-2), puis [graphiques](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#composantes) | Distinguer tendance, saisonnalité, cycle et reste; comparer montant et proportion. |
-| Après la capsule 3 | Lecture du cours : [préparer les données](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-3), puis [audit du calendrier](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#pretraitement) | Distinguer période absente, mesure manquante et événement réel. |
-| Après la capsule 4 | Lecture du cours : [comparer les références](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-4), puis [origine fixe](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#references) | Dire quelles observations sont disponibles pour les douze prévisions. |
-| Après la capsule 5 | Lecture du cours : [mesurer les erreurs](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-5), puis [mesures et graphiques](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#erreurs) | Lire signe, unité et limites; expliquer le dénominateur MASE. |
-| Après la capsule 6 | Lecture du cours : [communiquer l’incertitude](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-6), puis [intervalles](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#incertitude) | Distinguer point, niveau nominal, largeur et horizon; ajouter une limite. |
+| Moment | Statut et passage à lire | Ce qu’il faut en retenir | Vérification personnelle |
+|----|----|----|----|
+| Avant la capsule 1 | Obligatoire : [préparation](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#preparation) et [dictionnaires](data/dictionnaires.md) | Unité d’observation, unités, calendrier et séparation temporelle. | Donner les périodes d’apprentissage et de validation. |
+| Après la capsule 1 | Obligatoire : [définir une prévision utile](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-1) | La décision détermine la cible, l’origine, la fréquence et l’horizon. | Nommer la décision, l’origine, la cible et l’horizon. |
+| Après la capsule 2 | Obligatoire : [lire les composantes](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-2), puis [graphiques](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#composantes) | Tendance, saisonnalité, cycle et reste; montant ou proportion. | Distinguer les composantes et comparer montant et proportion. |
+| Après la capsule 3 | Obligatoire : [préparer les données](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-3), puis [audit du calendrier](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#pretraitement) | Une période absente, une mesure manquante et un événement réel ne sont pas équivalents. | Justifier un traitement utilisant seulement le passé disponible. |
+| Après la capsule 4 | Obligatoire : [comparer les références](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-4), puis [origine fixe](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#references) | Les candidats partagent la même origine et les mêmes cibles; validation et test ont des rôles distincts. | Dire quelles observations sont disponibles pour les douze prévisions. |
+| Après la capsule 5 | Obligatoire : [mesurer les erreurs](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-5), puis [mesures et graphiques](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#erreurs) | Lire signe, unité, limites du MAPE et dénominateur d’apprentissage de la MASE. | Expliquer le dénominateur de la MASE et une limite d’un score. |
+| Après la capsule 6 | Obligatoire : [communiquer l’incertitude](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lecture-6), puis [intervalles](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#incertitude) | Point, niveau nominal, largeur et horizon; un intervalle n’est pas une garantie. | Comparer deux niveaux et nommer une limite. |
 
 Les deux dernières parties de la [synthèse complète](../../modules/semaine-06-series-chronologiques-intro/notes-cours.llms.md) sont des compléments facultatifs. Les opérations du lissage, de la régression saisonnière et des variables externes sont approfondies dans les modules 7 à 9.
 
@@ -42,7 +42,7 @@ Le fichier contient le calendrier et le nombre de jours de chaque mois. La varia
 
 #### Fréquence et granularité
 
-La fréquence désigne la résolution temporelle. La granularité désigne le périmètre des mesures, spatial, démographique ou temporel. Agréger peut réduire le bruit, mais efface des détails. Une prévision provinciale ne fournit pas directement les besoins de chaque succursale. Désagréger exige une règle justifiée.
+La fréquence désigne la résolution temporelle. La granularité désigne le périmètre des mesures, spatial, démographique ou temporel. Agréger peut réduire le bruit, mais efface des détails. Une prévision provinciale ne fournit pas directement les besoins de chaque succursale. Désagréger exige une règle justifiée. Une couverture très fine peut produire de faibles comptes, des zéros et une série plus bruyante. Le niveau d’agrégation doit donc être choisi avec le prétraitement, la méthode et les mesures d’erreur, selon la décision à prendre.
 
 #### L’expertise complète les mesures
 
@@ -62,7 +62,7 @@ Le choix de la mesure d’erreur et du niveau d’agrégation doit refléter la 
 
 ### Complément bibliographique facultatif
 
-[1.6, The basic steps in a forecasting task](https://otexts.com/fpp3/basic-steps.html).
+[1.6, The basic steps in a forecasting task](https://otexts.com/fpp3/intro.html#sec-basic-steps).
 
 Repérez le rôle des utilisateurs et de l’expertise. Quels renseignements manquent à la phrase « prévoir la consommation »?
 
@@ -112,7 +112,7 @@ Le modèle tslm(serie ~ trend + I(trend^2)) reprend la tendance quadratique étu
 
 ### Complément bibliographique facultatif
 
-[3.2, Time series components](https://otexts.com/fpp3/components.html).
+[3.2, Time series components](https://otexts.com/fpp3/decomposition.html#sec-components).
 
 Distinguez montant saisonnier constant et proportion constante. Complément : chapitre 2, graphiques temporels et saisonniers.
 
@@ -134,7 +134,9 @@ Une grille complète rend les absences explicites. Certaines fonctions de modèl
 
 #### Imputer exige une règle
 
-Une imputation peut utiliser un modèle, des valeurs proches ou des informations externes. Elle remplace une mesure inconnue par une estimation et ajoute de l’incertitude. Comparer des traitements, éventuellement leurs prévisions combinées, ne supprime pas ce problème. Pour chaque origine d’évaluation, le traitement est réestimé sans regarder au-delà de cette origine. On ne remplace pas les cibles de validation inconnues par des valeurs imputées pour calculer des scores comme si elles étaient observées.
+Une imputation peut utiliser un modèle, des valeurs proches dans le passé ou des informations externes disponibles. Elle conserve les positions du calendrier, remplace une mesure inconnue par une estimation et ajoute de l’incertitude. Une méthode compatible avec les valeurs manquantes travaille avec moins d’information observée. Pour chaque origine d’évaluation, le traitement est réestimé sans regarder au-delà de cette origine. On ne remplace pas les cibles de validation inconnues par des valeurs imputées pour calculer des scores comme si elles étaient observées.
+
+On peut aussi comparer, ou combiner après validation, une prévision obtenue après imputation et celle d’une méthode acceptant des valeurs manquantes. Cette comparaison ne supprime pas l’incertitude d’imputation. Les deux approches doivent garder le calendrier, la même cible et la même information disponible à l’origine. Supprimer des lignes sans conserver leurs positions ne constitue pas une solution équivalente.
 
 #### Espacement irrégulier
 
@@ -158,7 +160,7 @@ Une variable externe n’est utilisable que si sa valeur, sa prévision ou un sc
 
 ### Complément bibliographique facultatif
 
-[13.9, Dealing with outliers and missing values](https://otexts.com/fpp3/missing-outliers.html).
+[13.9, Dealing with outliers and missing values](https://otexts.com/fpp3/practical.html#sec-missing-outliers).
 
 Pourquoi ne faut-il pas remplacer toute valeur extrême automatiquement? Les méthodes acceptent-elles toutes les mêmes valeurs manquantes?
 
@@ -169,6 +171,12 @@ Pourquoi ne faut-il pas remplacer toute valeur extrême automatiquement? Les mé
 #### Bien ajuster n’est pas bien prévoir
 
 Un modèle flexible peut ajuster le bruit. Le R² d’apprentissage et les résidus ne suffisent pas à mesurer la performance de prévision. Les données utilisées pour sélectionner un candidat ne fournissent pas ensuite une évaluation finale indépendante. Une comparaison à origine fixe garde le même passé pour tout l’horizon. À origine mobile, on avance dans le temps et on réajuste avec les observations déjà reçues, en gardant l’horizon de comparaison constant. Le complément A détaille ce protocole; il n’est pas nécessaire de programmer cette boucle pour terminer le parcours principal.
+
+#### Apprentissage, validation et test
+
+Pour des observations transversales indépendantes, un découpage aléatoire peut former trois ensembles : l’apprentissage sert à estimer les paramètres; la validation sert à comparer les candidats; le test sert à évaluer le choix final sur des données qui n’ont pas participé à cette sélection.
+
+Pour prévoir une série, le découpage respecte l’ordre temporel et reproduit l’information disponible au moment d’agir. Une période finale de test reste possible si l’historique le permet. Un tirage aléatoire peut faire entrer le futur dans l’apprentissage et ne reproduit pas la décision de prévision. Le rôle des ensembles importe davantage que leur nom.
 
 #### La séparation du cas guidé
 
@@ -196,7 +204,7 @@ La validation doit contenir les horizons utiles. Un score à un mois ne renseign
 
 #### Réajuster avant la vraie prévision
 
-Après l’évaluation, les observations récentes peuvent rejoindre l’apprentissage pour la prévision réelle. Les scores historiques restent ceux obtenus sans réajustement sur la validation. Refaire l’ajustement ne transforme pas les scores de validation en scores indépendants du choix.
+Après l’évaluation, les observations récentes peuvent rejoindre l’apprentissage pour la prévision réelle. Les scores historiques restent ceux obtenus sans réajustement sur la validation. Refaire l’ajustement ne transforme pas les scores de validation en scores indépendants du choix. Les observations récentes apportent une information plus proche du futur visé; davantage de données peuvent aider l’estimation, sans garantie en cas de rupture. Réajuster rapproche aussi l’origine du futur à prévoir : après douze mois de validation, le prochain mois est à h = 1 depuis la nouvelle origine, mais à h = 13 depuis l’ancienne.
 
 > **TIP:**
 >
@@ -204,7 +212,7 @@ Après l’évaluation, les observations récentes peuvent rejoindre l’apprent
 
 ### Complément bibliographique facultatif
 
-[5.2, Some simple forecasting methods](https://otexts.com/fpp3/simple-methods.html).
+[5.2, Some simple forecasting methods](https://otexts.com/fpp3/toolbox.html#sec-simple-methods).
 
 Quelles valeurs sont disponibles pour le naïf saisonnier lorsque l’horizon dépasse un cycle?
 
@@ -226,7 +234,9 @@ La moyenne signée n’est pas une mesure suffisante de précision. Le suivi én
 
 #### Le MAPE et ses limites
 
-Le MAPE est sans unité, mais requiert une échelle où le zéro a un sens. Il ne convient pas aux températures en degrés Celsius. Exclure les cibles nulles change l’ensemble évalué et peut cacher des erreurs. À observation fixée, des écarts opposés de même amplitude ont le même MAPE; l’asymétrie se manifeste notamment dans le choix de prévisions qui minimisent ce score.
+Le MAPE est sans unité, mais requiert une échelle où le zéro a un sens. Il ne convient pas aux températures en degrés Celsius. Exclure les cibles nulles change l’ensemble évalué et peut cacher des erreurs.
+
+Pour des observations et des prévisions positives, une sous-prévision ne dépasse pas 100 % d’erreur relative, alors qu’une sur-prévision peut dépasser 100 %. Cette asymétrie peut influencer les comparaisons et le choix de prévisions qui minimisent ce score. À observation fixée, deux prévisions à la même distance de part et d’autre de cette observation donnent cependant le même pourcentage absolu : il faut préciser ce qui est comparé.
 
 #### La MASE : une échelle d’apprentissage
 
@@ -250,7 +260,7 @@ Un graphique temporel peut montrer un biais, une évolution, une période diffic
 
 ### Complément bibliographique facultatif
 
-[5.8, Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html).
+[5.8, Evaluating point forecast accuracy](https://otexts.com/fpp3/toolbox.html#sec-accuracy).
 
 Repérez le dénominateur de la MASE et deux limites du MAPE.
 
@@ -296,7 +306,7 @@ La décision demande un coût, une contrainte et parfois un quantile adapté. Le
 
 ### Complément bibliographique facultatif
 
-[5.5, Distributional forecasts and prediction intervals](https://otexts.com/fpp3/prediction-intervals.html).
+[5.5, Distributional forecasts and prediction intervals](https://otexts.com/fpp3/toolbox.html#sec-prediction-intervals).
 
 Distinguez niveau nominal, largeur et horizon. Complément facultatif : section 8.5 pour la notation ETS.
 
@@ -342,7 +352,7 @@ Le protocole doit reproduire le moment où l’on agit, l’information disponib
 
 ### Complément bibliographique facultatif
 
-[5.10, Time series cross-validation](https://otexts.com/fpp3/tscv.html).
+[5.10, Time series cross-validation](https://otexts.com/fpp3/toolbox.html#sec-tscv).
 
 À chaque origine, quelles observations peuvent entrer dans le modèle? Pourquoi faut-il séparer les horizons?
 
@@ -353,6 +363,8 @@ Le protocole doit reproduire le moment où l’on agit, l’information disponib
 #### Structure explicite ou adaptation locale
 
 La distinction entre structure explicite et adaptation locale sert à comparer les méthodes. Les deux apprennent à partir des données et certaines ont une formulation statistique commune. Les modèles de lissage peuvent aussi être écrits comme des modèles d’espace d’état. Il ne s’agit donc pas de catégories exclusives.
+
+Une structure parcimonieuse peut être utile pour une série courte si ses hypothèses sont défendables. Une méthode adaptative peut suivre une structure changeante, mais elle exige assez d’information pour régler sa mémoire et sa saisonnalité. Ces avantages sont conditionnels : le choix reste fondé sur une validation cohérente.
 
 #### Motif global et mémoire locale
 
@@ -392,7 +404,7 @@ Ce module donne le cadre commun et des exemples opérationnels. Les modules suiv
 
 ### Complément bibliographique facultatif
 
-[13.4, Forecast combinations](https://otexts.com/fpp3/combinations.html).
+[13.4, Forecast combinations](https://otexts.com/fpp3/practical.html#sec-combinations).
 
 Une moyenne de prévisions garantit-elle un gain? Compléments facultatifs : chapitre 6 sur le jugement et section 7.6 sur les variables futures.
 
@@ -408,7 +420,13 @@ Les nombres de ces exercices sont fictifs et fournis dans les énoncés. Les cor
 
 ## Un exercice ciblé de l’ouvrage
 
-Pour approfondir après les capsules 4 et 5, Hyndman et Athanasopoulos (2021), section 5.11, [exercice 6, assertions 2 à 5](https://otexts.com/fpp3/toolbox-exercises.html), propose une lecture critique de l’ajustement, des mesures, de la complexité et du choix d’une méthode. Ce complément est facultatif et ne demande ni jeu externe ni code `fable`. Justifiez vos réponses avec le protocole du cours; les corrigés des exercices 13, 14 et 16 de ce module donnent des repères sur les scores et les conclusions. Les autres exercices de ce chapitre ne sont pas requis.
+Pour approfondir après les capsules 4 et 5, Hyndman et Athanasopoulos (2021), section 5.11, [exercice 6, assertions 2 à 5](https://otexts.com/fpp3/toolbox.html#sec-toolbox-exercises), propose une lecture critique de l’ajustement, des mesures, de la complexité et du choix d’une méthode. Ce complément est facultatif et ne demande ni jeu externe ni code `fable`. Justifiez vos réponses avec le protocole du cours; les corrigés des exercices 13, 14 et 16 de ce module donnent des repères sur les scores et les conclusions. Les autres exercices de ce chapitre ne sont pas requis.
+
+## Lecture historique pour approfondir
+
+David, M., Bonnieux, F., et Rainelli, P. (1983), [Introduction au traitement des séries chronologiques](https://www.persee.fr/doc/ecoru_0013-0559_1983_num_157_1_2997), Économie rurale, 157, 49-56.
+
+Cette lecture, déjà présente dans l’archive du cours, reste disponible comme complément historique. Elle aborde la désaisonnalisation, l’analyse spectrale et la démarche de Box et Jenkins. Ces développements dépassent les calculs demandés dans le module 6; ils ne sont pas des prérequis pour terminer les deux rapports d’entraînement.
 
 ## Documentation R
 

@@ -216,3 +216,11 @@ Une capsule respecte la charte si :
 - [ ] la capsule se termine par **À retenir** (3 cartes) puis **Production autonome** + auto-vérification ;
 - [ ] les liens `.data-link` et les chunks R fonctionnent (chemins robustes) ;
 - [ ] sur l'ensemble du module, les **deux publics** sont servis.
+
+## 11. Pages qui accompagnent les capsules
+
+Les quatre premiers modules sont la référence de présentation. Avec vidéo et annotations disponibles, reprendre les quatre onglets des modules 3 et 4 : Vidéo, PDF, PDF annoté et HTML. Ne pas ajouter un onglet de texte théorique; conserver les explications détaillées dans les lectures du cours. Les compléments facultatifs sans vidéo utilisent PDF et HTML.
+
+Présenter une production guidée après les supports, puis un encadré pour l'exercice d'application distinct. La production correspond à l'activité du parcours, à réaliser une seule fois. Conserver les corrigés de transfert repliés jusqu'à la tentative.
+
+Pour les pages, reprendre le sommaire de niveau 2 et les réglages de copie et de retour à la ligne du code du module 4. L'accueil conserve ses six cartes de parcours et ses cinq ressources de bas de page. Toute vérification complète porte sur les sources, les pages rendues, toutes les diapositives, tous les PDF et les archives distribuées. Le contrôle automatique du module 6 complète l'inspection visuelle; il ne la remplace pas.

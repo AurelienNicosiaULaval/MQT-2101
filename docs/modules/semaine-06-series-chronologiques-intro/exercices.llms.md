@@ -1,5 +1,9 @@
 # Exercices et corrigés - Module 06
 
+## Objectif
+
+Appliquer le protocole des six capsules à un cas distinct de demande hebdomadaire. Les six premiers exercices construisent un seul rapport de transfert; les compléments 7 et 8 et les huit exercices supplémentaires sont facultatifs. Faites une première tentative avant de consulter le corrigé.
+
 ## Préparation
 
 Jeu de données de transfert : [demande_hebdomadaire_quebec.csv](../atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv).
