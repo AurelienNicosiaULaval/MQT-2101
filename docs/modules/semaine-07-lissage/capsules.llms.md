@@ -4,15 +4,23 @@
 
 Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans `lissage_demande.qmd`. Le [projet de départ](telechargements/lissage-demande.zip), les [lectures françaises](../../modules/semaine-07-lissage/lectures.llms.md) et les [démonstrations complètes](../../modules/semaine-07-lissage/demonstrations.llms.md) permettent de travailler sans vidéo.
 
-Les supports disponibles sont PDF et HTML. Aucune vidéo ni annotation n’a été produite ici. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03.zip) regroupe les quatre capsules, le complément Holt et la synthèse.
+Les vidéos des capsules 1 et 2 sont disponibles. Les supports PDF et HTML sont fournis pour les quatre capsules principales, le complément Holt et la synthèse. Les PDF annotés des capsules 1 et 2 sont également disponibles; ils conservent les notes manuscrites et la mise en page de l’enregistrement, qui diffère légèrement des supports harmonisés. Le contenu et l’ordre des diapositives restent les mêmes. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03-harmonise.zip) regroupe les quatre capsules, le complément Holt, la synthèse et les deux PDF annotés, soit huit fichiers.
 
 ## Capsule 1 - Choisir une fenêtre de lissage
 
 Que peut-on savoir avant la semaine suivante? Consultez la [lecture 1](../../modules/semaine-07-lissage/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#moyennes-mobiles).
 
+## Vidéo
+
+[Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=MR7lv5m5A8U)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-01-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-01-support-annote.pdf)
 
 ## HTML
 
@@ -34,9 +42,17 @@ Auto-vérification:
 
 Quelle part de l’écart faut-il corriger? Consultez la [lecture 2](../../modules/semaine-07-lissage/lectures.llms.md#lecture-2) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#lissage-exponentiel).
 
+## Vidéo
+
+[Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=WBqpUEJTrC0)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-02-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-02-support-annote.pdf)
 
 ## HTML
 

@@ -106,7 +106,7 @@ Le rapport guidé contient un tableau de disponibilité, la régression et son i
 
 ## Ressources du module
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF révisé du 3 novembre 2026](telechargements/module-09-pdf-2026-11-03-revu.zip).
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-09-pdf-2026-11-03-harmonise.zip).
 
 - [Capsules et productions](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md), [démonstrations R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md), [lectures françaises](../../modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md) et [exercices avec corrigés](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md).
 - [Notes de synthèse HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).

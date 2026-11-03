@@ -1666,90 +1666,6 @@
     "text": "Production autonome 8.1\n\nSur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale."
   },
   {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "",
-    "text": "Séance autonome\n\n\nDistinguer la hausse générale des mois récurrents, puis comparer une prévision simple et communiquer son incertitude.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nVentes mensuelles fictives au Québec\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nDeux rapports Quarto courts"
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#on-passe-au-concret",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#on-passe-au-concret",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "On passe au concret",
-    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne direction prépare sa planification annuelle. Ses ventes augmentent, mais certains mois sont régulièrement plus forts. Comment tenir compte de ces deux structures sans présenter le budget futur comme certain?\n\n\nLe module 06 a appris à lire les composantes et à respecter le temps; le module 07 a construit des niveaux lissés. Ici, la tendance et les mois deviennent des termes d’une régression. Vous apprendrez à ajuster un modèle simple, interpréter ses coefficients, examiner les résidus et le comparer à une référence sur les mêmes cibles."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#avant-de-commencer",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#avant-de-commencer",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Avant de commencer",
-    "text": "Avant de commencer\nPréalables: importer un CSV et rendre un document Quarto (module 02), lire une droite, un résidu et un intervalle (modules 03 et 04), définir origine, horizon et validation temporelle (module 06). Reprenez au besoin les lectures du module 03 et les références temporelles du module 06.\nTéléchargez et décompressez le projet guidé tendance-ventes et le projet de transfert tendance-commerce. Ouvrez leur .Rproj. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la préparation depuis une session neuve, avec tidyverse et broom.\nLes deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à décembre 2025 et des ventes en dollars canadiens. Les 60 premiers mois servent à apprendre; les douze mois de 2025 servent à comparer à l’origine de décembre 2024. Les prédicteurs futurs sont le calendrier connu et un indice qui continue de 61 à 72. Les dictionnaires expliquent les autres variables.\n\nCe qu’il faut apprendre ici\nLe socle porte sur cinq gestes: lire les motifs, ajuster tendance linéaire et mois, lire les résidus, comparer les prévisions et communiquer l’incertitude. Les quatre candidats sont fixés avant les scores: tendance seule, saison seule, tendance avec mois et naïf saisonnier.\nLe cahier facultatif conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. Décomposition détaillée, harmoniques et stationnarité sont des approfondissements; ils ne sont pas nécessaires pour terminer les deux rapports."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#votre-parcours",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#votre-parcours",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Votre parcours",
-    "text": "Votre parcours\nLes activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans tendance_ventes.qmd. Les exercices de transfert sont distincts et se conservent dans tendance_commerce.qmd, après une première tentative avant le corrigé.\nLes cinq capsules principales sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La synthèse est aussi disponible en PDF. Le lot révisé du 3 novembre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.\n\n1Repérer tendance et saisonnalitéLa hausse vient-elle du temps ou du calendrier?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Repérer tendance et saisonnalité.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.1Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.Transfert distinct Faites l’exercice 1 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n2Ajuster tendance et moisQue représente un coefficient de décembre?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Ajuster tendance et mois.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.2Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.Auto-vérification Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.Transfert distinct Faites l’exercice 2 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n3Lire les résidusQu’est-ce que le modèle laisse encore dans la série?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les résidus.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.3Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.Auto-vérification Je distingue observation, valeur ajustée et résidu. J’examine le temps et la dispersion au-delà des moyennes. Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.Transfert distinct Faites l’exercice 3 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n4Comparer sur une validation communeLe calendrier fait-il mieux que reprendre la dernière année?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Comparer sur une validation commune.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.4Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.Auto-vérification Les quatre candidats utilisent les mêmes douze cibles et informations disponibles. Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur. Mon choix repose sur les erreurs de validation et reste provisoire.Transfert distinct Faites l’exercice 4 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n5Communiquer l’incertitude et la décisionQue peut-on annoncer sans promettre le budget futur?Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\nObjectif Communiquer l’incertitude et la décision.Ressource Capsule 5 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.5Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.Auto-vérification Je distingue moyenne conditionnelle et nouvelle observation. Je lis les intervalles comme marginaux et dépendants des hypothèses. Ma recommandation nomme les unités, une limite et une réévaluation future.Transfert distinct Faites l’exercice 5 dans tendance_commerce.qmd, avant d’ouvrir son corrigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#exercices-dapplication",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#exercices-dapplication",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Exercices d’application",
-    "text": "Exercices d’application\nLes cinq exercices suivis portent sur des ventes fictives dans un contexte commercial changeant. Le calendrier seul doit y être interprété avec davantage de prudence; on ne recopie pas les coefficients, les scores ni la recommandation du cas guidé.\nLes huit pratiques ciblées, facultatives, renforcent les cinq gestes principaux. Les exercices accompagnés 14 et 15 conservent l’analyse avec prix et promotions en préparation du module 09. Leur statut conditionnel est explicite et ils ne s’ajoutent pas à la trace principale."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#trace-finale",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#trace-finale",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Trace finale",
-    "text": "Trace finale\ntendance_ventes.qmd rassemble les cinq productions, une seule fois:\n\nprotocole, graphiques sur l’apprentissage et lecture des motifs;\nindice, facteur, trois ajustements et interprétation des coefficients;\ndiagnostics et limites des résidus;\nquatre prévisions sur des cibles communes et ME, MAE, RMSE;\nintervalles commentés, recommandation, limite et surveillance.\n\ntendance_commerce.qmd réunit les cinq exercices et la conclusion de transfert. Redémarrez R, puis faites Render pour chacun: aucun objet créé seulement dans la console ne doit être nécessaire.\nAprès votre tentative, utilisez la démonstration complète et le corrigé complet du transfert pour vérifier la démarche. Le projet des compléments est une ressource facultative distincte, sans nouveau rapport exigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#pour-préparer-les-évaluations-et-la-suite",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#pour-préparer-les-évaluations-et-la-suite",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Pour préparer les évaluations et la suite",
-    "text": "Pour préparer les évaluations et la suite\nCe module prépare la partie tendance, saisonnalité et incertitude du mini-rapport 2 et de l’examen final. Les rapports du module sont des entraînements. Les consignes d’évaluation restent la référence, et le mini-rapport demande une analyse autonome.\n\n\n\n\n\n\nNoteChoisir la voie du mini-rapport 2\n\n\n\nLa proposition de données est attendue à la fin de ce module. Pour la voie temporelle, utilisez les acquis des modules 06 à 08 et préparez les variables externes du module 09. Pour la voie classification, suivez dès maintenant le parcours anticipé du module 10, puis utilisez le point de contrôle du laboratoire 3 pour vérifier votre protocole. Les supports écrits et exemples sont déjà disponibles : cette voie ne demande pas d’attendre le 2 décembre."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#ressources-du-module",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#ressources-du-module",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Ressources du module",
-    "text": "Ressources du module\n\nCapsulesCinq supports en PDF et HTML, avec leurs productions communes au parcours.\nNotes de coursSynthèse du socle en diapositives HTML et PDF.\nDémonstrations RAnalyse guidée complète, depuis le CSV jusqu’à la recommandation.\nExercicesCinq exercices suivis et pratiques ciblées, avec corrigés repliables.\nLecturesExplications françaises du socle et accès au cahier facultatif."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#erreurs-fréquentes",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#erreurs-fréquentes",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Erreurs fréquentes",
-    "text": "Erreurs fréquentes\n\nRecommencer l’indice temporel à 1 en validation.\nConfondre ordre d’affichage des mois et facteur ordonné dans le modèle.\nInterpréter un contraste comme un effet causal.\nValider le modèle seulement avec une pente significative ou des moyennes résiduelles nulles.\nIntroduire une vente, un prix ou une promotion futurs inconnus à l’origine.\nLire les intervalles ponctuels comme une garantie pour toute l’année."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#auto-vérification",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#auto-vérification",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Auto-vérification",
-    "text": "Auto-vérification\n\n\nJe distingue tendance et motif mensuel.\nJe vérifie l’indice, le facteur et la référence avant l’ajustement.\nJe sais lire la pente et décembre dans leurs unités.\nJe regarde les résidus au-delà de leur moyenne.\nMes quatre candidats partagent origine, cibles et information disponible.\nJe distingue confiance de la moyenne et prédiction d’une observation.\nMes deux recommandations utilisent leurs résultats propres et nomment une limite.\nMes rapports se rendent après redémarrage de R."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#je-suis-bloquée",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#je-suis-bloquée",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Je suis bloqué·e",
-    "text": "Je suis bloqué·e\n\nVérifiez dans l’ordre:\n\nLe .Rproj est ouvert après extraction de toute l’archive, avec R/ et data/ présents.\ntidyverse et broom se chargent et R/fonctions-module08.R existe.\nLes dates sont distinctes, triées et espacées d’un mois; la cible est en dollars canadiens.\nL’apprentissage contient 60 mois, la validation 12 mois, avec indices futurs 61 à 72.\nLe facteur mois est non ordonné, avec janvier comme référence.\nLes blocs visibles sont exécutés dans l’ordre après la préparation commune.\n\nReprenez la lecture ciblée ou la démonstration. Si le blocage persiste, conservez le message d’erreur complet et le court extrait concerné pour demander de l’aide. L’aide-mémoire R rappelle les commandes usuelles.\n\nLes lectures, calculs et corrigés permettent de travailler sans IA. Si vous utilisez le GPT du cours après une tentative, vérifiez ses critiques et respectez les règles d’usage et la déclaration du cours. Ne transmettez pas de données personnelles ou confidentielles."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#pour-aller-plus-loin",
-    "href": "modules/semaine-08-tendance-saisonnalite/index.html#pour-aller-plus-loin",
-    "title": "Module 08 - Tendance et saisonnalité",
-    "section": "Pour aller plus loin",
-    "text": "Pour aller plus loin\nLe cahier facultatif garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 intègre les acquis des modules 06 à 08 sur le cas de demande hebdomadaire connu, sans le transformer en nouveau test indépendant."
-  },
-  {
     "objectID": "modules/semaine-08-tendance-saisonnalite/demonstrations.html",
     "href": "modules/semaine-08-tendance-saisonnalite/demonstrations.html",
     "title": "Démonstrations R - Module 08",
@@ -1811,62 +1727,6 @@
     "title": "Démonstrations R - Module 08",
     "section": "Pour consolider ou approfondir",
     "text": "Pour consolider ou approfondir\nLe cahier facultatif conserve les tendances quadratique et exponentielle, le retour à l’échelle des dollars, la décomposition, les harmoniques, le pont vers tslm() et les tests de stationnarité des anciens scripts. Ces calculs ne sont pas requis pour les deux rapports principaux. Les exercices commerciaux accompagnés préparent le module 09."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html",
-    "title": "Capsules - Module 08",
-    "section": "",
-    "text": "Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans tendance_ventes.qmd. Les lectures françaises, la démonstration complète et le projet guidé permettent de travailler sans vidéo.\nSeuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le lot PDF daté contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un cahier facultatif, sans nouvelle production obligatoire."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#le-parcours-principal",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#le-parcours-principal",
-    "title": "Capsules - Module 08",
-    "section": "",
-    "text": "Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans tendance_ventes.qmd. Les lectures françaises, la démonstration complète et le projet guidé permettent de travailler sans vidéo.\nSeuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le lot PDF daté contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un cahier facultatif, sans nouvelle production obligatoire."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-1",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-1",
-    "title": "Capsules - Module 08",
-    "section": "Capsule 1 - Repérer tendance et saisonnalité",
-    "text": "Capsule 1 - Repérer tendance et saisonnalité\nLa hausse vient-elle du temps ou du calendrier? Consultez la lecture 1 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\nAuto-vérification:\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 1 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-2",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-2",
-    "title": "Capsules - Module 08",
-    "section": "Capsule 2 - Ajuster tendance et mois",
-    "text": "Capsule 2 - Ajuster tendance et mois\nQue représente un coefficient de décembre? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.2, à réaliser une seule fois : Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.\nAuto-vérification:\n\nMon indice augmente d’une unité par mois et mon facteur n’est pas ordonné.\nJe précise janvier comme référence et les unités des coefficients.\nJe distingue comparaison conditionnelle et effet causal.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-3",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-3",
-    "title": "Capsules - Module 08",
-    "section": "Capsule 3 - Lire les résidus",
-    "text": "Capsule 3 - Lire les résidus\nQu’est-ce que le modèle laisse encore dans la série? Consultez la lecture 3 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.3, à réaliser une seule fois : Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.\nAuto-vérification:\n\nJe distingue observation, valeur ajustée et résidu.\nJ’examine le temps et la dispersion au-delà des moyennes.\nJe sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 3 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-4",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-4",
-    "title": "Capsules - Module 08",
-    "section": "Capsule 4 - Comparer sur une validation commune",
-    "text": "Capsule 4 - Comparer sur une validation commune\nLe calendrier fait-il mieux que reprendre la dernière année? Consultez la lecture 4 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.4, à réaliser une seule fois : Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.\nAuto-vérification:\n\nLes quatre candidats utilisent les mêmes douze cibles et informations disponibles.\nJe n’ai utilisé ni ventes futures ni budget cible comme prédicteur.\nMon choix repose sur les erreurs de validation et reste provisoire.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 4 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-5",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-5",
-    "title": "Capsules - Module 08",
-    "section": "Capsule 5 - Communiquer l’incertitude et la décision",
-    "text": "Capsule 5 - Communiquer l’incertitude et la décision\nQue peut-on annoncer sans promettre le budget futur? Consultez la lecture 5 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.5, à réaliser une seule fois : Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.\nAuto-vérification:\n\nJe distingue moyenne conditionnelle et nouvelle observation.\nJe lis les intervalles comme marginaux et dépendants des hypothèses.\nMa recommandation nomme les unités, une limite et une réévaluation future.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 5 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#après-le-parcours-consolider-ou-approfondir",
-    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#après-le-parcours-consolider-ou-approfondir",
-    "title": "Capsules - Module 08",
-    "section": "Après le parcours: consolider ou approfondir",
-    "text": "Après le parcours: consolider ou approfondir\nLe cahier facultatif conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, décomposition, harmoniques, tslm(), stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les exercices commerciaux accompagnés préparent le module 09."
   },
   {
     "objectID": "modules/semaine-07-lissage/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
@@ -2072,90 +1932,6 @@
     "text": "Production autonome 7.1\n\nSur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.\n\nAuto-vérification\n\n\nJ’ai utilisé seulement les 91 semaines d’apprentissage.\nJ’obtiens 1 050 unités et je précise quand la moyenne est disponible.\nJe distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible."
   },
   {
-    "objectID": "modules/semaine-07-lissage/index.html",
-    "href": "modules/semaine-07-lissage/index.html",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "",
-    "text": "Séance autonome\n\n\nConstruire un niveau lissé, comparer des prévisions et relier leurs erreurs à une décision.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nDemande hebdomadaire fictive au Québec\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nDeux rapports Quarto courts"
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#on-passe-au-concret",
-    "href": "modules/semaine-07-lissage/index.html#on-passe-au-concret",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "On passe au concret",
-    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne équipe d’approvisionnement doit prévoir la demande des treize prochaines semaines. Comment stabiliser sa référence sans ignorer une hausse récente? Une moyenne plus lisse n’est pas automatiquement une meilleure prévision.\n\n\nÀ la fin du module, vous pourrez calculer une moyenne mobile arrière, mettre à jour un niveau exponentiel, distinguer lissage et prévision, puis comparer les erreurs et leur coût sur des cibles communes. La demande hebdomadaire annoncée au module 06 est reprise ici et au laboratoire 03. Le transfert porte sur la planification énergétique d’un bâtiment fictif; il demande une interprétation différente du classement."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#avant-de-commencer",
-    "href": "modules/semaine-07-lissage/index.html#avant-de-commencer",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Avant de commencer",
-    "text": "Avant de commencer\nPrérequis présents dans les supports: importer un CSV et rendre un document Quarto (module 02), définir cible, origine et horizon, vérifier un calendrier, construire les références naïves et lire ME, MAE et RMSE (module 06). Si nécessaire, reprenez les démonstrations du module 06 et ses lectures sur les erreurs. L’acquisition de ces gestes n’est pas présumée vérifiée individuellement.\nTéléchargez et décompressez les projets lissage-demande et lissage-electricite. Ouvrez leur .Rproj; les données, dictionnaires et fonctions sont fournis. tidyverse, slider et forecast sont nécessaires. La préparation R repart d’une session neuve.\nLe cas guidé comprend 104 semaines simulées, du 1er janvier 2024 au 22 décembre 2025. Une ligne est une semaine, la demande se mesure en unités de produit. On apprend sur les 91 premières semaines et on compare sur les treize dernières à une seule origine. L’électricité compte 72 mois, de janvier 2020 à décembre 2025, en kWh: 60 mois pour apprendre, puis les douze mois de 2025 pour comparer. Les dictionnaires détaillent les variables et les limites du calendrier.\n\n\n\n\n\n\nAvertissementUne validation déjà connue\n\n\n\nCes périodes ont déjà été examinées au module 06. Elles servent à apprendre la comparaison de nouvelles méthodes, sans nouveau test indépendant. Les fenêtres et candidats sont annoncés avant les scores; les paramètres estimés utilisent seulement l’apprentissage.\n\n\n\nCe qui change depuis le module 06\nLe calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales et une cinquième étape facultative sur Holt. Ce complément accompagné ajoute une pente au niveau lissé; différenciation, ETS saisonnier et autres méthodes restent aussi facultatifs."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#votre-parcours",
-    "href": "modules/semaine-07-lissage/index.html#votre-parcours",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Votre parcours",
-    "text": "Votre parcours\nLes productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous et leurs rappels sur la page des capsules désignent le même travail. Réalisez chaque production une seule fois dans lissage_demande.qmd. Les quatre exercices de transfert sont distincts et alimentent lissage_electricite.qmd. Ouvrez leurs corrigés après une tentative.\nLes quatre capsules principales et le complément Holt sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie pour le moment. La synthèse est aussi disponible en PDF. Le lot PDF du 3 novembre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Les quatre premières cartes forment le parcours principal. La cinquième propose un prolongement facultatif sur Holt, avec des supports PDF et HTML, une lecture et du code fourni. Revenez ici pour garder le fil.\n\n1Choisir une fenêtre de lissageQue peut-on savoir avant la semaine suivante?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Choisir une fenêtre de lissage.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.1 - Fenêtre et disponibilitéSur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.Auto-vérification J’ai utilisé seulement les 91 semaines d’apprentissage. J’obtiens 1 050 unités et je précise quand la moyenne est disponible. Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.Exercice d’application distinct Faites l’exercice 1 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n2Mettre à jour un niveauQuelle part de l’écart faut-il corriger?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Mettre à jour un niveau.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.2 - Niveau et alphaAvec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.Auto-vérification Les deux calculs partagent le même état initial. J’obtiens 108 puis 114,4 et 132 puis 138,4. J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.Exercice d’application distinct Faites l’exercice 2 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n3Lire les erreurs de prévisionQuelle erreur le score moyen cache-t-il?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les erreurs de prévision.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.3 - Erreurs et unitésÉmettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.Auto-vérification Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future. Mes scores sont en unités de produit, avec erreur = observé moins prévu. Je relie le classement au graphique et je distingue validation et test indépendant.Exercice d’application distinct Faites l’exercice 3 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n4Choisir et surveiller une référenceLe plus petit score suffit-il pour décider?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Choisir et surveiller une référence.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.4 - Coût et recommandationComparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.Auto-vérification Les coefficients du coût sont annoncés avant le calcul. Ma recommandation utilise les résultats de cette validation connue. Je nomme les informations manquantes pour commander et une réévaluation future.Exercice d’application distinct Faites l’exercice 4 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n5Holt accompagné (facultatif)Qu’ajoute une pente au niveau lissé?PDF et HTMLDémoEx. 13Ouvrir l’étapeRéduire\nObjectif Distinguer le niveau, la pente et son amortissement.Prérequis Niveau lissé, origine, horizon et pente.Ressources Supports PDF et HTML · Démonstration avec code complet · Lecture françaiseAction facultative Réaliser cette pratique une seule fois si vous choisissez ce prolongement. Elle ne s’ajoute pas aux deux rapports principaux.\nPratique facultative 7.5 - Niveau et penteComparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.Auto-vérification Je conserve le même apprentissage et les mêmes cibles. Je distingue pente et saisonnalité. Je garde ce complément séparé de la trace principale.Autre cas, facultatif Tentez l’exercice 13 sur l’électricité après la démonstration."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#exercices-dapplication",
-    "href": "modules/semaine-07-lissage/index.html#exercices-dapplication",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Exercices d’application",
-    "text": "Exercices d’application\nLes quatre exercices suivis reprennent l’électricité du module 06 avec des fenêtres, deux réactivités et un coût pédagogique. Le changement de cible, de calendrier et de décision oblige à lire les résultats obtenus. Le classement de la demande ne peut pas être recopié.\nLes huit pratiques supplémentaires, facultatives, renforcent les fenêtres, la fuite temporelle, la récurrence, les scores et la décision. Choisissez selon vos difficultés, tentez une réponse, puis refaites la question sans regarder le corrigé. L’exercice 13 accompagne Holt séparément."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#trace-finale",
-    "href": "modules/semaine-07-lissage/index.html#trace-finale",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Trace finale",
-    "text": "Trace finale\nVotre rapport lissage_demande.qmd rassemble, une seule fois:\n\nle protocole, les fenêtres et leur interprétation;\nles mises à jour manuelles, les deux lissages et le SES estimé;\nles quatre trajectoires, leurs erreurs et ME, MAE, RMSE;\nle coût annoncé, une recommandation chiffrée, une limite et une règle de surveillance.\n\nLe rapport distinct lissage_electricite.qmd réunit les quatre exercices et la conclusion de transfert. Redémarrez R, puis faites Render pour chacun: aucun objet créé uniquement dans la console ne doit être requis.\nLes projets démonstration complète de demande et corrigé complet d’électricité permettent de vérifier votre démarche après votre tentative."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#pour-préparer-la-suite",
-    "href": "modules/semaine-07-lissage/index.html#pour-préparer-la-suite",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Pour préparer la suite",
-    "text": "Pour préparer la suite\nLe module prépare la comparaison des méthodes et la lecture des erreurs au laboratoire 03, au mini-rapport 2 et à l’examen final. Les deux rapports sont des entraînements. Les consignes d’évaluation restent la référence pour les travaux évalués. Le mini-rapport 2 exige une analyse autonome.\nAu laboratoire, apportez votre trace. Le complément Holt reste disponible si vous souhaitez explorer le lissage avec une pente. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#ressources-du-module",
-    "href": "modules/semaine-07-lissage/index.html#ressources-du-module",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Ressources du module",
-    "text": "Ressources du module\n\nCapsulesQuatre capsules principales et un complément Holt en PDF et HTML.\nNotes de coursSynthèse du parcours en diapositives HTML et PDF.\nDémonstrations RAnalyse guidée complète, graphiques, scores et interprétations.\nExercicesQuatre exercices suivis, huit pratiques et un complément corrigés.\nLecturesExplications françaises et passages externes ciblés."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#erreurs-fréquentes",
-    "href": "modules/semaine-07-lissage/index.html#erreurs-fréquentes",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Erreurs fréquentes",
-    "text": "Erreurs fréquentes\n\nComparer une observation à une moyenne qui la contient comme si elle avait été prévue auparavant.\nConfondre une fenêtre arrière et une moyenne centrée.\nMettre à jour une prévision à origine fixe avec des observations futures.\nDonner des états initiaux différents aux deux alphas sans le dire.\nCroire que frequency = 52 rend le SES saisonnier.\nRetenir le plus petit score sans ses unités, son coût et ses limites.\nTransformer une prévision en commande ou une consommation en facture."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#auto-vérification",
-    "href": "modules/semaine-07-lissage/index.html#auto-vérification",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Auto-vérification",
-    "text": "Auto-vérification\n\n\nJe sais quand la fenêtre et le niveau sont disponibles.\nMes mises à jour manuelles concordent avec le code.\nJe distingue alpha imposé et estimation sur l’apprentissage.\nLes candidats partagent cibles, origine, horizons et information disponible.\nJ’interprète les scores et la perte asymétrique avec leurs unités.\nMes deux recommandations reposent sur leurs résultats propres.\nJe nomme la validation connue et une réévaluation future.\nMes deux rapports se rendent après redémarrage de R."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#je-suis-bloquée",
-    "href": "modules/semaine-07-lissage/index.html#je-suis-bloquée",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Je suis bloqué·e",
-    "text": "Je suis bloqué·e\n\nVérifiez dans l’ordre:\n\nToute l’archive est décompressée et son .Rproj est ouvert.\nLes trois bibliothèques se chargent; data/ et R/fonctions-module07.R sont présents.\nLes dates sont triées et le bon calendrier est utilisé: semaines ou mois.\nLe découpage est 91 + 13 pour la demande, 60 + 12 pour l’électricité.\nLes blocs visibles sont exécutés dans l’ordre; les corrigés 1 à 4 suivent la préparation commune.\nLa lecture ciblée explique le geste qui bloque. Pour une commande, consultez l’aide-mémoire R.\n\nSi le blocage persiste, conservez le message d’erreur complet et le court morceau de code concerné pour demander de l’aide.\n\nVous pouvez travailler sans IA avec les lectures, la liste de vérification et les corrigés. Si vous utilisez le GPT du cours, demandez une critique de votre protocole après votre tentative, vérifiez sa réponse et respectez les règles d’usage et la déclaration du cours. Ne transmettez aucune donnée personnelle ou confidentielle."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/index.html#pour-aller-plus-loin",
-    "href": "modules/semaine-07-lissage/index.html#pour-aller-plus-loin",
-    "title": "Module 07 - Lissage et évaluation des prévisions",
-    "section": "Pour aller plus loin",
-    "text": "Pour aller plus loin\nLe complément Holt explique niveau, pente et amortissement avec code fourni. Il est facultatif pour les deux rapports. Les autres lectures facultatives conservent différenciation, Holt-Winters, ETS et les pistes avancées de l’ancien matériel, avec leurs prérequis et limites.\n\nCahier facultatif de méthodes conservées\nLe cahier de lissage conserve les différences et leur réintégration, Holt-Winters, ETS, BATS, TBATS et STL avec ETS, avec explications françaises et code complet. Son projet autonome permet de les explorer sur l’électricité mensuelle. Ce sont des ressources de consolidation ou d’ouverture; elles ne s’ajoutent pas aux quatre productions principales et ne doivent pas toutes être utilisées dans une analyse."
-  },
-  {
     "objectID": "modules/semaine-07-lissage/demonstrations.html",
     "href": "modules/semaine-07-lissage/demonstrations.html",
     "title": "Démonstrations R - Module 07",
@@ -2210,62 +1986,6 @@
     "title": "Démonstrations R - Module 07",
     "section": "Complément accompagné : Holt",
     "text": "Complément accompagné : Holt\nFacultatif pour les deux rapports. Pour le laboratoire 03, savoir lire le niveau, la pente et l’amortissement; le code est fourni et les récurrences manuelles ne sont pas demandées.\n\n# Facultatif : comparer une tendance amortie, sans composante saisonnière.\nmodele_holt &lt;- holt(serie, h = horizon, damped = TRUE)\ncomparaison_holt &lt;- bind_rows(\n  scores |&gt; select(methode, ME, MAE, RMSE),\n  mesures_erreurs(validation$demande, as.numeric(modele_holt$mean)) |&gt;\n    mutate(methode = \"Holt amorti\") |&gt; select(methode, ME, MAE, RMSE)\n)\ncomparaison_holt |&gt; arrange(MAE)\n\n# A tibble: 5 × 4\n  methode        ME   MAE  RMSE\n  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 MM4          82.6  100.  128.\n2 SES         106.   114.  144.\n3 Holt amorti 152.   152.  189.\n4 Saisonnier  143.   179.  194.\n5 Naive       185.   185.  209.\n\n\nHolt amorti a ici une MAE d’environ 152,2 unités. Ajouter une pente n’améliore donc pas automatiquement le score. La méthode ne modélise pas la saisonnalité. Les lectures facultatives conservent les autres pistes de l’ancien matériel."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html",
-    "href": "modules/semaine-07-lissage/capsules.html",
-    "title": "Capsules - Module 07",
-    "section": "",
-    "text": "Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans lissage_demande.qmd. Le projet de départ, les lectures françaises et les démonstrations complètes permettent de travailler sans vidéo.\nLes supports disponibles sont PDF et HTML. Aucune vidéo ni annotation n’a été produite ici. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le lot PDF du 3 novembre 2026 regroupe les quatre capsules, le complément Holt et la synthèse."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#objectif",
-    "href": "modules/semaine-07-lissage/capsules.html#objectif",
-    "title": "Capsules - Module 07",
-    "section": "",
-    "text": "Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans lissage_demande.qmd. Le projet de départ, les lectures françaises et les démonstrations complètes permettent de travailler sans vidéo.\nLes supports disponibles sont PDF et HTML. Aucune vidéo ni annotation n’a été produite ici. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le lot PDF du 3 novembre 2026 regroupe les quatre capsules, le complément Holt et la synthèse."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-1",
-    "href": "modules/semaine-07-lissage/capsules.html#capsule-1",
-    "title": "Capsules - Module 07",
-    "section": "Capsule 1 - Choisir une fenêtre de lissage",
-    "text": "Capsule 1 - Choisir une fenêtre de lissage\nQue peut-on savoir avant la semaine suivante? Consultez la lecture 1 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.1, à réaliser une seule fois : Sur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.\nAuto-vérification:\n\nJ’ai utilisé seulement les 91 semaines d’apprentissage.\nJ’obtiens 1 050 unités et je précise quand la moyenne est disponible.\nJe distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 1 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-2",
-    "href": "modules/semaine-07-lissage/capsules.html#capsule-2",
-    "title": "Capsules - Module 07",
-    "section": "Capsule 2 - Mettre à jour un niveau",
-    "text": "Capsule 2 - Mettre à jour un niveau\nQuelle part de l’écart faut-il corriger? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.2, à réaliser une seule fois : Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.\nAuto-vérification:\n\nLes deux calculs partagent le même état initial.\nJ’obtiens 108 puis 114,4 et 132 puis 138,4.\nJ’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé.\n\n\n\nProlongement facultatif : Holt\nHolt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le complément accompagné ci-dessous, la lecture et le code fourni permettent d’explorer le lissage avec une pente. Il ne s’ajoute pas aux candidats du rapport principal."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-3",
-    "href": "modules/semaine-07-lissage/capsules.html#capsule-3",
-    "title": "Capsules - Module 07",
-    "section": "Capsule 3 - Lire les erreurs de prévision",
-    "text": "Capsule 3 - Lire les erreurs de prévision\nQuelle erreur le score moyen cache-t-il? Consultez la lecture 3 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.3, à réaliser une seule fois : Émettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.\nAuto-vérification:\n\nLes quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future.\nMes scores sont en unités de produit, avec erreur = observé moins prévu.\nJe relie le classement au graphique et je distingue validation et test indépendant.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 3 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-4",
-    "href": "modules/semaine-07-lissage/capsules.html#capsule-4",
-    "title": "Capsules - Module 07",
-    "section": "Capsule 4 - Choisir et surveiller une référence",
-    "text": "Capsule 4 - Choisir et surveiller une référence\nLe plus petit score suffit-il pour décider? Consultez la lecture 4 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.4, à réaliser une seule fois : Comparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.\nAuto-vérification:\n\nLes coefficients du coût sont annoncés avant le calcul.\nMa recommandation utilise les résultats de cette validation connue.\nJe nomme les informations manquantes pour commander et une réévaluation future.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 4 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-5",
-    "href": "modules/semaine-07-lissage/capsules.html#capsule-5",
-    "title": "Capsules - Module 07",
-    "section": "Capsule 5 - Holt accompagné (facultatif)",
-    "text": "Capsule 5 - Holt accompagné (facultatif)\nPrérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour explorer cette méthode; le calcul manuel des récurrences n’est pas demandé.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nPratique facultative 7.5, à réaliser une seule fois : Comparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.\nAuto-vérification:\n\nJe conserve le même apprentissage et les mêmes cibles.\nJe distingue pente et saisonnalité.\nJe garde ce complément séparé de la trace principale.\n\nUtilisez le code complet. Pour un autre cas, tentez l’exercice 13. Ces ajouts ne sont pas requis dans les deux traces principales."
-  },
-  {
-    "objectID": "modules/semaine-07-lissage/capsules.html#autres-méthodes-conservées-cahier-facultatif",
-    "href": "modules/semaine-07-lissage/capsules.html#autres-méthodes-conservées-cahier-facultatif",
-    "title": "Capsules - Module 07",
-    "section": "Autres méthodes conservées: cahier facultatif",
-    "text": "Autres méthodes conservées: cahier facultatif\nLe cahier de méthodes donne les explications françaises et le code complet des différences, de Holt-Winters, d’ETS et des méthodes avancées. Il complète les lectures sans nouvelle capsule, sans nouvelle vidéo et sans production obligatoire. Choisissez un prolongement selon votre besoin; le parcours principal reste celui des activités 7.1 à 7.4."
   },
   {
     "objectID": "modules/semaine-06-series-chronologiques-intro/media/qmd/capsule-08-support.html#pourquoi-ça-compte",
@@ -10717,48 +10437,6 @@
     "text": "Sources ciblées\n\nHyndman, R. J., et Athanasopoulos, G. (2021), Forecasting: Principles and Practice, 3e édition : méthodes simples et exactitude, prédicteurs temporels et lissage exponentiel.\nÉquipe forecast, documentation de ses() et holt(), consultée le 27 octobre 2026. Les versions réellement exécutées sont dans le bilan interne; la documentation en ligne peut être plus récente.\nLes données sont simulées pour le cours à partir de scripts/10_create_second_block_data.R, graine 210110. Le dictionnaire précise variables, unités et reproduction.\n\nLes consignes du mini-rapport 2 définissent l’évaluation et les deux voies. Le laboratoire est une pratique distincte et son exemple ne remplace pas l’analyse autonome demandée."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
-    "title": "Capsules - Module 09",
-    "section": "",
-    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 1 - Auditer les variables",
-    "text": "Capsule 1 - Auditer les variables\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.1\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\nAuto-vérification : Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 2 - Ajuster et interpréter",
-    "text": "Capsule 2 - Ajuster et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.2\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\nAuto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 3 - Diagnostiquer dans le temps",
-    "text": "Capsule 3 - Diagnostiquer dans le temps\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.3\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\nAuto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 4 - Comparer deux modèles",
-    "text": "Capsule 4 - Comparer deux modèles\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.4\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\nAuto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 5 - Communiquer un scénario",
-    "text": "Capsule 5 - Communiquer un scénario\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.5\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\nAuto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html",
     "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html",
     "title": "Démonstrations R - Module 09",
@@ -10813,69 +10491,6 @@
     "title": "Démonstrations R - Module 09",
     "section": "Pour conclure",
     "text": "Pour conclure\nComparez les scores calculés sans présumer quel modèle gagne. Un meilleur résultat sur ce bloc ne garantit pas une amélioration future; testez un scénario disponible à l’origine et une période ultérieure quand elles existeront."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "",
-    "text": "Séance autonome\n\n\nUne promotion ou un prix peuvent aider à expliquer les ventes. Encore faut-il connaître ou scénariser ces valeurs au moment de prévoir.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nVentes mensuelles fictives\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nRapport guidé et transfert"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "On passe au concret",
-    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne direction veut prévoir ses ventes avant l’année suivante. Comment utiliser une promotion et un prix prévus sans prétendre connaître l’indice économique futur, et que faire si les erreurs se suivent?\n\n\nLe module 08 a introduit tendance et calendrier; son transfert utilisait déjà ces données commerciales. Le module 09 ajoute les variables externes et le diagnostic temporel. Les 12 mois de 2025 ont déjà été examinés : ils ne sont pas un test indépendant. Les scores utilisant les valeurs externes réalisées en 2025 sont conditionnels à ces valeurs."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Avant de commencer",
-    "text": "Avant de commencer\nRevoir la régression et ses résidus (module 03), l’origine et les mesures d’erreur (module 06), puis la tendance et les mois (module 08). Les données fictives et les unités sont décrites dans le dictionnaire. Installez tidyverse et forecast, ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto.\nTéléchargez le projet guidé et le projet de transfert. Les cinq productions 9.1 à 9.5 sont les mêmes dans cet accueil, les capsules et les diapositives : faites chacune une seule fois dans variables_ventes.qmd. Le transfert se réalise séparément dans variables_succursales.qmd."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Votre parcours",
-    "text": "Votre parcours\nLes cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.\n\n\n\n1Auditer les variablesActivité 9.1Capsule 1DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 9.1\n\n\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\n\n\n\nAuto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Ajuster et interpréterActivité 9.2Capsule 2DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 9.2\n\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\n\n\nAuto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Diagnostiquer dans le tempsActivité 9.3Capsule 3DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 9.3\n\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\n\n\nAuto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Comparer deux modèlesActivité 9.4Capsule 4DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 9.4\n\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\n\n\nAuto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Communiquer un scénarioActivité 9.5Capsule 5DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 9.5\n\n\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\n\n\n\nAuto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Trace finale",
-    "text": "Trace finale\nLe rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Ressources du module",
-    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026.\n\nCapsules et productions, démonstrations R, lectures françaises et exercices avec corrigés.\nNotes de synthèse HTML et PDF.\nDémonstration complète et corrigé de transfert.\nCompléments facultatifs : retards, événements, modèle en deux étapes et repères ARIMA; télécharger le cahier."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Auto-vérification",
-    "text": "Auto-vérification\n\nJe situe l’origine et la disponibilité de chaque prédicteur.\nJ’explique une association sans prétendre à la causalité.\nJe lis les résidus et l’ACF dans leur ordre temporel.\nJe compare les modèles sur les mêmes cibles et indique les valeurs externes utilisées.\nJe nomme les hypothèses et les limites du scénario."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Je suis bloqué·e",
-    "text": "Je suis bloqué·e\nCommencez par la préparation complète, puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Comparez vos tentatives aux corrigés repliables, puis demandez de l’aide dans les canaux habituels du cours."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Lien avec l’évaluation",
-    "text": "Lien avec l’évaluation\nCe module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Les activités sont des entraînements."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
@@ -10997,48 +10612,6 @@
     "text": "Références et crédits\nMatériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition."
   },
   {
-    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html",
-    "href": "modules/semaine-10-classification-modeles-avances/capsules.html",
-    "title": "Capsules - Module 10",
-    "section": "",
-    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ni version annotée n’est annoncée avant sa mise à disposition. Chaque production est celle de l’accueil et de la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-1",
-    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-1",
-    "title": "Capsules - Module 10",
-    "section": "Capsule 1 - Définir la cible et les partitions",
-    "text": "Capsule 1 - Définir la cible et les partitions\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.1\nDéfinissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.\nAuto-vérification : Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-2",
-    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-2",
-    "title": "Capsules - Module 10",
-    "section": "Capsule 2 - Estimer et interpréter",
-    "text": "Capsule 2 - Estimer et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.2\nAjustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.\nAuto-vérification : Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-3",
-    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-3",
-    "title": "Capsules - Module 10",
-    "section": "Capsule 3 - Lire une matrice de confusion",
-    "text": "Capsule 3 - Lire une matrice de confusion\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.3\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\nAuto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-4",
-    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-4",
-    "title": "Capsules - Module 10",
-    "section": "Capsule 4 - Choisir une règle avant le test",
-    "text": "Capsule 4 - Choisir une règle avant le test\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.4\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\nAuto-vérification : Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-5",
-    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-5",
-    "title": "Capsules - Module 10",
-    "section": "Capsule 5 - Évaluer et recommander",
-    "text": "Capsule 5 - Évaluer et recommander\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.5\nAppliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.\nAuto-vérification : Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
     "objectID": "modules/semaine-10-classification-modeles-avances/demonstrations.html",
     "href": "modules/semaine-10-classification-modeles-avances/demonstrations.html",
     "title": "Démonstrations R - Module 10",
@@ -11079,76 +10652,6 @@
     "title": "Démonstrations R - Module 10",
     "section": "Évaluer et communiquer",
     "text": "Évaluer et communiquer\nLe test estime la performance de la règle retenue sur ce partage fictif. La référence prédit toujours la classe majoritaire déterminée sur l’apprentissage, et non sur le test. La calibration compare, par groupes, probabilités moyennes et fréquences observées; les petits groupes et un seul partage limitent sa précision. Le score de Brier est la moyenne des carrés entre probabilités et résultats; plus petit n’implique pas à lui seul une bonne calibration. La règle des 15 % est une autre règle fixée avant le test, illustrative; l’observation des deux règles sur le même test ne justifie pas une nouvelle sélection sur ce test.\n\ntest &lt;- test |&gt; mutate(probabilite = predict(modele, newdata = test, type = \"response\"))\nresultat_test &lt;- mesures_seuil(test$depart_90j, test$probabilite, seuil_retenu)\nresultat_test |&gt; select(seuil, VP, FP, VN, FN, cout)\n\n# A tibble: 1 × 6\n  seuil    VP    FP    VN    FN  cout\n  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;\n1   0.3    22    28    63    18   100\n\nresultat_test |&gt; select(seuil, sensibilite, specificite, precision, proportion_ciblee)\n\n# A tibble: 1 × 5\n  seuil sensibilite specificite precision proportion_ciblee\n  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;\n1   0.3        0.55       0.692      0.44             0.382\n\n# Référence : toujours prédire la classe majoritaire de l’apprentissage.\n# Une égalité est départagée en faveur de la classe 0.\nclasse_majoritaire &lt;- as.integer(mean(apprentissage$depart_90j) &gt; 0.5)\nseuil_reference &lt;- if (classe_majoritaire == 1) 0 else 1.01\nreference &lt;- mesures_seuil(test$depart_90j, test$probabilite, seuil_reference)\nreference |&gt; select(VP, FP, VN, FN, exactitude, sensibilite, precision)\n\n# A tibble: 1 × 7\n     VP    FP    VN    FN exactitude sensibilite precision\n  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;\n1     0     0    91    40      0.695           0        NA\n\ncalibration &lt;- test |&gt; mutate(groupe = ntile(probabilite, 5)) |&gt; group_by(groupe) |&gt;\n  summarise(n = n(), probabilite_moyenne = mean(probabilite),\n            frequence_depart = mean(depart_90j), .groups = \"drop\")\ncalibration\n\n# A tibble: 5 × 4\n  groupe     n probabilite_moyenne frequence_depart\n   &lt;int&gt; &lt;int&gt;               &lt;dbl&gt;            &lt;dbl&gt;\n1      1    27              0.0643            0.185\n2      2    26              0.137             0.115\n3      3    26              0.233             0.346\n4      4    26              0.369             0.346\n5      5    26              0.573             0.538\n\nbrier &lt;- mean((test$probabilite - test$depart_90j)^2)\nbrier\n\n[1] 0.1910233\n\n# Règle alternative fixée à l’avance : au plus 15 % des clients test.\n# En cas d’égalité de probabilités, trier selon client_id.\nn_capacite &lt;- floor(0.15 * nrow(test))\nselection &lt;- test |&gt; arrange(desc(probabilite), client_id) |&gt; slice_head(n = n_capacite)\ntibble(clients = nrow(test), cibles = nrow(selection),\n       departs_detectes = sum(selection$depart_90j), precision = mean(selection$depart_90j))\n\n# A tibble: 1 × 4\n  clients cibles departs_detectes precision\n    &lt;int&gt;  &lt;int&gt;            &lt;dbl&gt;     &lt;dbl&gt;\n1     131     19               12     0.632\n\n\nUn ciblage efficace exige aussi qu’un contact puisse aider, ce que ce modèle de risque ne mesure pas. Examiner les coûts réels, la disponibilité des variables, les populations touchées et une période ultérieure avant toute utilisation."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "",
-    "text": "Séance autonome\n\n\nEstimer une probabilité de départ, choisir une règle sur une validation et évaluer cette règle sur des clients distincts.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nClients fictifs au Québec\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nRapport guidé et transfert"
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#on-passe-au-concret",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#on-passe-au-concret",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "On passe au concret",
-    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne organisation ne peut contacter qu’une partie de sa clientèle. Comment utiliser un risque de départ prévu, choisir qui cibler et reconnaître les erreurs sans supposer que le contact empêchera le départ?\n\n\nLe module 04 étudiait une réponse continue; ici, la cible vaut 0 ou 1. La régression logistique estime une probabilité et une règle distincte la transforme en action. Les fichiers sont fictifs : ils ne prouvent pas qu’une intervention serait efficace."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Parcours anticipé pour le mini-rapport 2",
-    "text": "Parcours anticipé pour le mini-rapport 2\nSi vous choisissez la voie classification, commencez dès le module 08, avant la proposition des données. Les prérequis sont les modules 03 et 04, R/Quarto et la validation hors échantillon. Pour préparer le choix des données et le point de contrôle de l’atelier 03, commencez par la capsule 1 et sa production : définissez une cible binaire, sa date, les prédicteurs disponibles et les partitions. Lisez ensuite les repères de la capsule 3 et les lectures 2 à 4 pour situer la probabilité, les types d’erreur, le seuil et la validation. L’activité 10.3 utilise le modèle ajusté à l’activité 10.2 : réalisez ces deux productions dans l’ordre lorsque vous poursuivrez le parcours. Poursuivez les autres capsules, productions et exercices pour terminer l’analyse et le mini-rapport; la séance du 2 décembre consolide ces acquis. Les consignes du mini-rapport 2 fixent les modalités; ces exemples sont un entraînement et ne remplacent pas votre analyse autonome."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#avant-de-commencer",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#avant-de-commencer",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Avant de commencer",
-    "text": "Avant de commencer\nRevoir une variable réponse, une régression et un résidu (module 03), la comparaison hors échantillon (module 04) et l’importation dans R (module 02). La lecture française explique les cotes, les mesures et la calibration. Installez tidyverse, puis téléchargez et ouvrez dans RStudio le projet guidé et le projet de transfert. Les deux données et leurs unités figurent dans le dictionnaire.\nDans le cas guidé, le partage stratifié est de l’ordre de 60 % pour l’apprentissage, 20 % pour la validation et 20 % pour le test. Les deux seuils et les coûts fictifs sont fixés avant la comparaison; la validation choisit la règle et le test évalue la règle retenue. Le partage aléatoire est pédagogique : le fichier ne contient pas les dates permettant une validation temporelle réelle."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#votre-parcours",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#votre-parcours",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Votre parcours",
-    "text": "Votre parcours\nLes activités 10.1 à 10.5 dans l’accueil, les capsules et les diapositives sont les mêmes productions. Réalisez chacune une seule fois dans classification_clients.qmd. Les exercices portent sur une décision distincte et se réalisent séparément dans classification_service.qmd.\nLes cinq capsules correspondent aux décisions de définir la cible, estimer, lire les erreurs, choisir la règle et évaluer l’action. La calibration et la capacité restent ensemble au moment de communiquer la décision, afin de conserver un parcours cohérent.\n\n\n\n1Définir la cible et les partitionsActivité 10.1Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 10.1\n\n\nDéfinissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.\n\n\n\nAuto-vérification Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Estimer et interpréterActivité 10.2Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 10.2\n\n\nAjustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.\n\n\n\nAuto-vérification Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Lire une matrice de confusionActivité 10.3Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 10.3\n\n\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\n\n\n\nAuto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Choisir une règle avant le testActivité 10.4Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 10.4\n\n\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\n\n\n\nAuto-vérification Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Évaluer et recommanderActivité 10.5Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 10.5\n\n\nAppliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.\n\n\n\nAuto-vérification Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.\n\n\nTransfert distinct Faites l’exercice 5 avant d’ouvrir son corrigé."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#trace-finale",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#trace-finale",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Trace finale",
-    "text": "Trace finale\nDans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#ressources-du-module",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#ressources-du-module",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Ressources du module",
-    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026.\n\nCapsules, démonstrations R, exercices et corrigés et lectures.\nNotes de synthèse HTML et PDF.\nDémonstration complète, corrigé du transfert et cahier facultatif.\nCompléments facultatifs en ligne : cotes, vraisemblance, ROC, arbre et réseaux de neurones."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#auto-vérification",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#auto-vérification",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Auto-vérification",
-    "text": "Auto-vérification\n\nJe définis la classe positive, l’origine et l’horizon.\nJe distingue cote, probabilité et décision.\nJe calcule les erreurs et les mesures avec les bons dénominateurs.\nJe choisis la règle en validation puis je l’évalue sur le test.\nJe nomme les coûts supposés, la capacité et les limites de calibration.\nJe distingue un risque prédit de l’effet d’une intervention."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#je-suis-bloquée",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#je-suis-bloquée",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Je suis bloqué·e",
-    "text": "Je suis bloqué·e\nCommencez par la préparation complète, puis ajoutez les activités une par une. Vérifiez le dossier du projet, la classe positive et les noms de variables. Faites une première tentative avant les corrigés, puis utilisez les canaux habituels du cours pour demander de l’aide."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#lien-avec-lévaluation",
-    "href": "modules/semaine-10-classification-modeles-avances/index.html#lien-avec-lévaluation",
-    "title": "Module 10 - Résultats binaires et classification",
-    "section": "Lien avec l’évaluation",
-    "text": "Lien avec l’évaluation\nLe module prépare la classification et l’interprétation décisionnelle du final, ainsi que la voie classification du mini-rapport 2. Les activités sont formatives."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
@@ -12087,5 +11590,502 @@
     "title": "Laboratoire 04 - Analyse intégratrice et décision",
     "section": "Un seuil ne garantit pas une capacité",
     "text": "Un seuil ne garantit pas une capacité\n\nUn seuil calibré sur les scores de 2024 ne garantit pas 20 % d’interventions en 2025. Une capacité stricte exige une règle adaptée au moment des décisions."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "",
+    "text": "Séance autonome\n\n\nDistinguer la hausse générale des mois récurrents, puis comparer une prévision simple et communiquer son incertitude.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nVentes mensuelles fictives au Québec\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nDeux rapports Quarto courts"
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#on-passe-au-concret",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#on-passe-au-concret",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "On passe au concret",
+    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne direction prépare sa planification annuelle. Ses ventes augmentent, mais certains mois sont régulièrement plus forts. Comment tenir compte de ces deux structures sans présenter le budget futur comme certain?\n\n\nLe module 06 a appris à lire les composantes et à respecter le temps; le module 07 a construit des niveaux lissés. Ici, la tendance et les mois deviennent des termes d’une régression. Vous apprendrez à ajuster un modèle simple, interpréter ses coefficients, examiner les résidus et le comparer à une référence sur les mêmes cibles."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#avant-de-commencer",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#avant-de-commencer",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Avant de commencer",
+    "text": "Avant de commencer\nPréalables: importer un CSV et rendre un document Quarto (module 02), lire une droite, un résidu et un intervalle (modules 03 et 04), définir origine, horizon et validation temporelle (module 06). Reprenez au besoin les lectures du module 03 et les références temporelles du module 06.\nTéléchargez et décompressez le projet guidé tendance-ventes et le projet de transfert tendance-commerce. Ouvrez leur .Rproj. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la préparation depuis une session neuve, avec tidyverse et broom.\nLes deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à décembre 2025 et des ventes en dollars canadiens. Les 60 premiers mois servent à apprendre; les douze mois de 2025 servent à comparer à l’origine de décembre 2024. Les prédicteurs futurs sont le calendrier connu et un indice qui continue de 61 à 72. Les dictionnaires expliquent les autres variables.\n\nCe qu’il faut apprendre ici\nLe socle porte sur cinq gestes: lire les motifs, ajuster tendance linéaire et mois, lire les résidus, comparer les prévisions et communiquer l’incertitude. Les quatre candidats sont fixés avant les scores: tendance seule, saison seule, tendance avec mois et naïf saisonnier.\nLe cahier facultatif conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. Décomposition détaillée, harmoniques et stationnarité sont des approfondissements; ils ne sont pas nécessaires pour terminer les deux rapports."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#votre-parcours",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#votre-parcours",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Votre parcours",
+    "text": "Votre parcours\nLes activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans tendance_ventes.qmd. Les exercices de transfert sont distincts et se conservent dans tendance_commerce.qmd, après une première tentative avant le corrigé.\nLes cinq capsules principales sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La synthèse est aussi disponible en PDF. Le lot PDF harmonisé du 3 novembre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.\n\n1Repérer tendance et saisonnalitéLa hausse vient-elle du temps ou du calendrier?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Repérer tendance et saisonnalité.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.1Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.Transfert distinct Faites l’exercice 1 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n2Ajuster tendance et moisQue représente un coefficient de décembre?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Ajuster tendance et mois.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.2Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.Auto-vérification Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.Transfert distinct Faites l’exercice 2 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n3Lire les résidusQu’est-ce que le modèle laisse encore dans la série?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les résidus.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.3Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.Auto-vérification Je distingue observation, valeur ajustée et résidu. J’examine le temps et la dispersion au-delà des moyennes. Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.Transfert distinct Faites l’exercice 3 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n4Comparer sur une validation communeLe calendrier fait-il mieux que reprendre la dernière année?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Comparer sur une validation commune.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.4Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.Auto-vérification Les quatre candidats utilisent les mêmes douze cibles et informations disponibles. Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur. Mon choix repose sur les erreurs de validation et reste provisoire.Transfert distinct Faites l’exercice 4 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n5Communiquer l’incertitude et la décisionQue peut-on annoncer sans promettre le budget futur?Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\nObjectif Communiquer l’incertitude et la décision.Ressource Capsule 5 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.5Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.Auto-vérification Je distingue moyenne conditionnelle et nouvelle observation. Je lis les intervalles comme marginaux et dépendants des hypothèses. Ma recommandation nomme les unités, une limite et une réévaluation future.Transfert distinct Faites l’exercice 5 dans tendance_commerce.qmd, avant d’ouvrir son corrigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#exercices-dapplication",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#exercices-dapplication",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Exercices d’application",
+    "text": "Exercices d’application\nLes cinq exercices suivis portent sur des ventes fictives dans un contexte commercial changeant. Le calendrier seul doit y être interprété avec davantage de prudence; on ne recopie pas les coefficients, les scores ni la recommandation du cas guidé.\nLes huit pratiques ciblées, facultatives, renforcent les cinq gestes principaux. Les exercices accompagnés 14 et 15 conservent l’analyse avec prix et promotions en préparation du module 09. Leur statut conditionnel est explicite et ils ne s’ajoutent pas à la trace principale."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#trace-finale",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#trace-finale",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Trace finale",
+    "text": "Trace finale\ntendance_ventes.qmd rassemble les cinq productions, une seule fois:\n\nprotocole, graphiques sur l’apprentissage et lecture des motifs;\nindice, facteur, trois ajustements et interprétation des coefficients;\ndiagnostics et limites des résidus;\nquatre prévisions sur des cibles communes et ME, MAE, RMSE;\nintervalles commentés, recommandation, limite et surveillance.\n\ntendance_commerce.qmd réunit les cinq exercices et la conclusion de transfert. Redémarrez R, puis faites Render pour chacun: aucun objet créé seulement dans la console ne doit être nécessaire.\nAprès votre tentative, utilisez la démonstration complète et le corrigé complet du transfert pour vérifier la démarche. Le projet des compléments est une ressource facultative distincte, sans nouveau rapport exigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#pour-préparer-les-évaluations-et-la-suite",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#pour-préparer-les-évaluations-et-la-suite",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Pour préparer les évaluations et la suite",
+    "text": "Pour préparer les évaluations et la suite\nCe module prépare la partie tendance, saisonnalité et incertitude du mini-rapport 2 et de l’examen final. Les rapports du module sont des entraînements. Les consignes d’évaluation restent la référence, et le mini-rapport demande une analyse autonome.\n\n\n\n\n\n\nNoteChoisir la voie du mini-rapport 2\n\n\n\nLa proposition de données est attendue à la fin de ce module. Pour la voie temporelle, utilisez les acquis des modules 06 à 08 et préparez les variables externes du module 09. Pour la voie classification, suivez dès maintenant le parcours anticipé du module 10, puis utilisez le point de contrôle du laboratoire 3 pour vérifier votre protocole. Les supports écrits et exemples sont déjà disponibles : cette voie ne demande pas d’attendre le 2 décembre."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#ressources-du-module",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#ressources-du-module",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Ressources du module",
+    "text": "Ressources du module\n\nCapsulesCinq supports en PDF et HTML, avec leurs productions communes au parcours.\nNotes de coursSynthèse du socle en diapositives HTML et PDF.\nDémonstrations RAnalyse guidée complète, depuis le CSV jusqu’à la recommandation.\nExercicesCinq exercices suivis et pratiques ciblées, avec corrigés repliables.\nLecturesExplications françaises du socle et accès au cahier facultatif."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#erreurs-fréquentes",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#erreurs-fréquentes",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Erreurs fréquentes",
+    "text": "Erreurs fréquentes\n\nRecommencer l’indice temporel à 1 en validation.\nConfondre ordre d’affichage des mois et facteur ordonné dans le modèle.\nInterpréter un contraste comme un effet causal.\nValider le modèle seulement avec une pente significative ou des moyennes résiduelles nulles.\nIntroduire une vente, un prix ou une promotion futurs inconnus à l’origine.\nLire les intervalles ponctuels comme une garantie pour toute l’année."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#auto-vérification",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#auto-vérification",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\n\nJe distingue tendance et motif mensuel.\nJe vérifie l’indice, le facteur et la référence avant l’ajustement.\nJe sais lire la pente et décembre dans leurs unités.\nJe regarde les résidus au-delà de leur moyenne.\nMes quatre candidats partagent origine, cibles et information disponible.\nJe distingue confiance de la moyenne et prédiction d’une observation.\nMes deux recommandations utilisent leurs résultats propres et nomment une limite.\nMes rapports se rendent après redémarrage de R."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#je-suis-bloquée",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#je-suis-bloquée",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Je suis bloqué·e",
+    "text": "Je suis bloqué·e\n\nVérifiez dans l’ordre:\n\nLe .Rproj est ouvert après extraction de toute l’archive, avec R/ et data/ présents.\ntidyverse et broom se chargent et R/fonctions-module08.R existe.\nLes dates sont distinctes, triées et espacées d’un mois; la cible est en dollars canadiens.\nL’apprentissage contient 60 mois, la validation 12 mois, avec indices futurs 61 à 72.\nLe facteur mois est non ordonné, avec janvier comme référence.\nLes blocs visibles sont exécutés dans l’ordre après la préparation commune.\n\nReprenez la lecture ciblée ou la démonstration. Si le blocage persiste, conservez le message d’erreur complet et le court extrait concerné pour demander de l’aide. L’aide-mémoire R rappelle les commandes usuelles.\n\nLes lectures, calculs et corrigés permettent de travailler sans IA. Si vous utilisez le GPT du cours après une tentative, vérifiez ses critiques et respectez les règles d’usage et la déclaration du cours. Ne transmettez pas de données personnelles ou confidentielles."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#pour-aller-plus-loin",
+    "href": "modules/semaine-08-tendance-saisonnalite/index.html#pour-aller-plus-loin",
+    "title": "Module 08 - Tendance et saisonnalité",
+    "section": "Pour aller plus loin",
+    "text": "Pour aller plus loin\nLe cahier facultatif garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 intègre les acquis des modules 06 à 08 sur le cas de demande hebdomadaire connu, sans le transformer en nouveau test indépendant."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html",
+    "title": "Capsules - Module 08",
+    "section": "",
+    "text": "Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans tendance_ventes.qmd. Les lectures françaises, la démonstration complète et le projet guidé permettent de travailler sans vidéo.\nSeuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le lot PDF daté contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un cahier facultatif, sans nouvelle production obligatoire."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#le-parcours-principal",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#le-parcours-principal",
+    "title": "Capsules - Module 08",
+    "section": "",
+    "text": "Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans tendance_ventes.qmd. Les lectures françaises, la démonstration complète et le projet guidé permettent de travailler sans vidéo.\nSeuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le lot PDF daté contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un cahier facultatif, sans nouvelle production obligatoire."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-1",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-1",
+    "title": "Capsules - Module 08",
+    "section": "Capsule 1 - Repérer tendance et saisonnalité",
+    "text": "Capsule 1 - Repérer tendance et saisonnalité\nLa hausse vient-elle du temps ou du calendrier? Consultez la lecture 1 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\nAuto-vérification:\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 1 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-2",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-2",
+    "title": "Capsules - Module 08",
+    "section": "Capsule 2 - Ajuster tendance et mois",
+    "text": "Capsule 2 - Ajuster tendance et mois\nQue représente un coefficient de décembre? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.2, à réaliser une seule fois : Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.\nAuto-vérification:\n\nMon indice augmente d’une unité par mois et mon facteur n’est pas ordonné.\nJe précise janvier comme référence et les unités des coefficients.\nJe distingue comparaison conditionnelle et effet causal.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-3",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-3",
+    "title": "Capsules - Module 08",
+    "section": "Capsule 3 - Lire les résidus",
+    "text": "Capsule 3 - Lire les résidus\nQu’est-ce que le modèle laisse encore dans la série? Consultez la lecture 3 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.3, à réaliser une seule fois : Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.\nAuto-vérification:\n\nJe distingue observation, valeur ajustée et résidu.\nJ’examine le temps et la dispersion au-delà des moyennes.\nJe sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 3 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-4",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-4",
+    "title": "Capsules - Module 08",
+    "section": "Capsule 4 - Comparer sur une validation commune",
+    "text": "Capsule 4 - Comparer sur une validation commune\nLe calendrier fait-il mieux que reprendre la dernière année? Consultez la lecture 4 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.4, à réaliser une seule fois : Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.\nAuto-vérification:\n\nLes quatre candidats utilisent les mêmes douze cibles et informations disponibles.\nJe n’ai utilisé ni ventes futures ni budget cible comme prédicteur.\nMon choix repose sur les erreurs de validation et reste provisoire.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 4 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-5",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-5",
+    "title": "Capsules - Module 08",
+    "section": "Capsule 5 - Communiquer l’incertitude et la décision",
+    "text": "Capsule 5 - Communiquer l’incertitude et la décision\nQue peut-on annoncer sans promettre le budget futur? Consultez la lecture 5 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.5, à réaliser une seule fois : Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.\nAuto-vérification:\n\nJe distingue moyenne conditionnelle et nouvelle observation.\nJe lis les intervalles comme marginaux et dépendants des hypothèses.\nMa recommandation nomme les unités, une limite et une réévaluation future.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 5 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#après-le-parcours-consolider-ou-approfondir",
+    "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#après-le-parcours-consolider-ou-approfondir",
+    "title": "Capsules - Module 08",
+    "section": "Après le parcours: consolider ou approfondir",
+    "text": "Après le parcours: consolider ou approfondir\nLe cahier facultatif conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, décomposition, harmoniques, tslm(), stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les exercices commerciaux accompagnés préparent le module 09."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html",
+    "href": "modules/semaine-07-lissage/index.html",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "",
+    "text": "Séance autonome\n\n\nConstruire un niveau lissé, comparer des prévisions et relier leurs erreurs à une décision.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nDemande hebdomadaire fictive au Québec\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nDeux rapports Quarto courts"
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#on-passe-au-concret",
+    "href": "modules/semaine-07-lissage/index.html#on-passe-au-concret",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "On passe au concret",
+    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne équipe d’approvisionnement doit prévoir la demande des treize prochaines semaines. Comment stabiliser sa référence sans ignorer une hausse récente? Une moyenne plus lisse n’est pas automatiquement une meilleure prévision.\n\n\nÀ la fin du module, vous pourrez calculer une moyenne mobile arrière, mettre à jour un niveau exponentiel, distinguer lissage et prévision, puis comparer les erreurs et leur coût sur des cibles communes. La demande hebdomadaire annoncée au module 06 est reprise ici et au laboratoire 03. Le transfert porte sur la planification énergétique d’un bâtiment fictif; il demande une interprétation différente du classement."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#avant-de-commencer",
+    "href": "modules/semaine-07-lissage/index.html#avant-de-commencer",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Avant de commencer",
+    "text": "Avant de commencer\nPrérequis présents dans les supports: importer un CSV et rendre un document Quarto (module 02), définir cible, origine et horizon, vérifier un calendrier, construire les références naïves et lire ME, MAE et RMSE (module 06). Si nécessaire, reprenez les démonstrations du module 06 et ses lectures sur les erreurs. L’acquisition de ces gestes n’est pas présumée vérifiée individuellement.\nTéléchargez et décompressez les projets lissage-demande et lissage-electricite. Ouvrez leur .Rproj; les données, dictionnaires et fonctions sont fournis. tidyverse, slider et forecast sont nécessaires. La préparation R repart d’une session neuve.\nLe cas guidé comprend 104 semaines simulées, du 1er janvier 2024 au 22 décembre 2025. Une ligne est une semaine, la demande se mesure en unités de produit. On apprend sur les 91 premières semaines et on compare sur les treize dernières à une seule origine. L’électricité compte 72 mois, de janvier 2020 à décembre 2025, en kWh: 60 mois pour apprendre, puis les douze mois de 2025 pour comparer. Les dictionnaires détaillent les variables et les limites du calendrier.\n\n\n\n\n\n\nAvertissementUne validation déjà connue\n\n\n\nCes périodes ont déjà été examinées au module 06. Elles servent à apprendre la comparaison de nouvelles méthodes, sans nouveau test indépendant. Les fenêtres et candidats sont annoncés avant les scores; les paramètres estimés utilisent seulement l’apprentissage.\n\n\n\nCe qui change depuis le module 06\nLe calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales et une cinquième étape facultative sur Holt. Ce complément accompagné ajoute une pente au niveau lissé; différenciation, ETS saisonnier et autres méthodes restent aussi facultatifs."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#votre-parcours",
+    "href": "modules/semaine-07-lissage/index.html#votre-parcours",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Votre parcours",
+    "text": "Votre parcours\nLes productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous et leurs rappels sur la page des capsules désignent le même travail. Réalisez chaque production une seule fois dans lissage_demande.qmd. Les quatre exercices de transfert sont distincts et alimentent lissage_electricite.qmd. Ouvrez leurs corrigés après une tentative.\nLes quatre capsules principales et le complément Holt sont disponibles en PDF et HTML. Les capsules 1 et 2 disposent aussi de leur vidéo et de leur PDF annoté. Les autres capsules restent disponibles en PDF et HTML. La synthèse est aussi disponible en PDF. Le lot PDF harmonisé du 3 novembre 2026 contient ces six supports et les deux PDF annotés.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Les quatre premières cartes forment le parcours principal. La cinquième propose un prolongement facultatif sur Holt, avec des supports PDF et HTML, une lecture et du code fourni. Revenez ici pour garder le fil.\n\n1Choisir une fenêtre de lissageQue peut-on savoir avant la semaine suivante?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Choisir une fenêtre de lissage.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.1 - Fenêtre et disponibilitéSur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.Auto-vérification J’ai utilisé seulement les 91 semaines d’apprentissage. J’obtiens 1 050 unités et je précise quand la moyenne est disponible. Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.Exercice d’application distinct Faites l’exercice 1 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n2Mettre à jour un niveauQuelle part de l’écart faut-il corriger?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Mettre à jour un niveau.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.2 - Niveau et alphaAvec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.Auto-vérification Les deux calculs partagent le même état initial. J’obtiens 108 puis 114,4 et 132 puis 138,4. J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.Exercice d’application distinct Faites l’exercice 2 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n3Lire les erreurs de prévisionQuelle erreur le score moyen cache-t-il?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les erreurs de prévision.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.3 - Erreurs et unitésÉmettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.Auto-vérification Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future. Mes scores sont en unités de produit, avec erreur = observé moins prévu. Je relie le classement au graphique et je distingue validation et test indépendant.Exercice d’application distinct Faites l’exercice 3 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n4Choisir et surveiller une référenceLe plus petit score suffit-il pour décider?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Choisir et surveiller une référence.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.4 - Coût et recommandationComparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.Auto-vérification Les coefficients du coût sont annoncés avant le calcul. Ma recommandation utilise les résultats de cette validation connue. Je nomme les informations manquantes pour commander et une réévaluation future.Exercice d’application distinct Faites l’exercice 4 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n5Holt accompagné (facultatif)Qu’ajoute une pente au niveau lissé?PDF et HTMLDémoEx. 13Ouvrir l’étapeRéduire\nObjectif Distinguer le niveau, la pente et son amortissement.Prérequis Niveau lissé, origine, horizon et pente.Ressources Supports PDF et HTML · Démonstration avec code complet · Lecture françaiseAction facultative Réaliser cette pratique une seule fois si vous choisissez ce prolongement. Elle ne s’ajoute pas aux deux rapports principaux.\nPratique facultative 7.5 - Niveau et penteComparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.Auto-vérification Je conserve le même apprentissage et les mêmes cibles. Je distingue pente et saisonnalité. Je garde ce complément séparé de la trace principale.Autre cas, facultatif Tentez l’exercice 13 sur l’électricité après la démonstration."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#exercices-dapplication",
+    "href": "modules/semaine-07-lissage/index.html#exercices-dapplication",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Exercices d’application",
+    "text": "Exercices d’application\nLes quatre exercices suivis reprennent l’électricité du module 06 avec des fenêtres, deux réactivités et un coût pédagogique. Le changement de cible, de calendrier et de décision oblige à lire les résultats obtenus. Le classement de la demande ne peut pas être recopié.\nLes huit pratiques supplémentaires, facultatives, renforcent les fenêtres, la fuite temporelle, la récurrence, les scores et la décision. Choisissez selon vos difficultés, tentez une réponse, puis refaites la question sans regarder le corrigé. L’exercice 13 accompagne Holt séparément."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#trace-finale",
+    "href": "modules/semaine-07-lissage/index.html#trace-finale",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Trace finale",
+    "text": "Trace finale\nVotre rapport lissage_demande.qmd rassemble, une seule fois:\n\nle protocole, les fenêtres et leur interprétation;\nles mises à jour manuelles, les deux lissages et le SES estimé;\nles quatre trajectoires, leurs erreurs et ME, MAE, RMSE;\nle coût annoncé, une recommandation chiffrée, une limite et une règle de surveillance.\n\nLe rapport distinct lissage_electricite.qmd réunit les quatre exercices et la conclusion de transfert. Redémarrez R, puis faites Render pour chacun: aucun objet créé uniquement dans la console ne doit être requis.\nLes projets démonstration complète de demande et corrigé complet d’électricité permettent de vérifier votre démarche après votre tentative."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#pour-préparer-la-suite",
+    "href": "modules/semaine-07-lissage/index.html#pour-préparer-la-suite",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Pour préparer la suite",
+    "text": "Pour préparer la suite\nLe module prépare la comparaison des méthodes et la lecture des erreurs au laboratoire 03, au mini-rapport 2 et à l’examen final. Les deux rapports sont des entraînements. Les consignes d’évaluation restent la référence pour les travaux évalués. Le mini-rapport 2 exige une analyse autonome.\nAu laboratoire, apportez votre trace. Le complément Holt reste disponible si vous souhaitez explorer le lissage avec une pente. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#ressources-du-module",
+    "href": "modules/semaine-07-lissage/index.html#ressources-du-module",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Ressources du module",
+    "text": "Ressources du module\n\nCapsulesVidéos et PDF annotés des capsules 1 et 2; quatre capsules principales et un complément Holt en PDF et HTML.\nNotes de coursSynthèse du parcours en diapositives HTML et PDF.\nDémonstrations RAnalyse guidée complète, graphiques, scores et interprétations.\nExercicesQuatre exercices suivis, huit pratiques et un complément corrigés.\nLecturesExplications françaises et passages externes ciblés."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#erreurs-fréquentes",
+    "href": "modules/semaine-07-lissage/index.html#erreurs-fréquentes",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Erreurs fréquentes",
+    "text": "Erreurs fréquentes\n\nComparer une observation à une moyenne qui la contient comme si elle avait été prévue auparavant.\nConfondre une fenêtre arrière et une moyenne centrée.\nMettre à jour une prévision à origine fixe avec des observations futures.\nDonner des états initiaux différents aux deux alphas sans le dire.\nCroire que frequency = 52 rend le SES saisonnier.\nRetenir le plus petit score sans ses unités, son coût et ses limites.\nTransformer une prévision en commande ou une consommation en facture."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#auto-vérification",
+    "href": "modules/semaine-07-lissage/index.html#auto-vérification",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\n\nJe sais quand la fenêtre et le niveau sont disponibles.\nMes mises à jour manuelles concordent avec le code.\nJe distingue alpha imposé et estimation sur l’apprentissage.\nLes candidats partagent cibles, origine, horizons et information disponible.\nJ’interprète les scores et la perte asymétrique avec leurs unités.\nMes deux recommandations reposent sur leurs résultats propres.\nJe nomme la validation connue et une réévaluation future.\nMes deux rapports se rendent après redémarrage de R."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#je-suis-bloquée",
+    "href": "modules/semaine-07-lissage/index.html#je-suis-bloquée",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Je suis bloqué·e",
+    "text": "Je suis bloqué·e\n\nVérifiez dans l’ordre:\n\nToute l’archive est décompressée et son .Rproj est ouvert.\nLes trois bibliothèques se chargent; data/ et R/fonctions-module07.R sont présents.\nLes dates sont triées et le bon calendrier est utilisé: semaines ou mois.\nLe découpage est 91 + 13 pour la demande, 60 + 12 pour l’électricité.\nLes blocs visibles sont exécutés dans l’ordre; les corrigés 1 à 4 suivent la préparation commune.\nLa lecture ciblée explique le geste qui bloque. Pour une commande, consultez l’aide-mémoire R.\n\nSi le blocage persiste, conservez le message d’erreur complet et le court morceau de code concerné pour demander de l’aide.\n\nVous pouvez travailler sans IA avec les lectures, la liste de vérification et les corrigés. Si vous utilisez le GPT du cours, demandez une critique de votre protocole après votre tentative, vérifiez sa réponse et respectez les règles d’usage et la déclaration du cours. Ne transmettez aucune donnée personnelle ou confidentielle."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/index.html#pour-aller-plus-loin",
+    "href": "modules/semaine-07-lissage/index.html#pour-aller-plus-loin",
+    "title": "Module 07 - Lissage et évaluation des prévisions",
+    "section": "Pour aller plus loin",
+    "text": "Pour aller plus loin\nLe complément Holt explique niveau, pente et amortissement avec code fourni. Il est facultatif pour les deux rapports. Les autres lectures facultatives conservent différenciation, Holt-Winters, ETS et les pistes avancées de l’ancien matériel, avec leurs prérequis et limites.\n\nCahier facultatif de méthodes conservées\nLe cahier de lissage conserve les différences et leur réintégration, Holt-Winters, ETS, BATS, TBATS et STL avec ETS, avec explications françaises et code complet. Son projet autonome permet de les explorer sur l’électricité mensuelle. Ce sont des ressources de consolidation ou d’ouverture; elles ne s’ajoutent pas aux quatre productions principales et ne doivent pas toutes être utilisées dans une analyse."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html",
+    "href": "modules/semaine-07-lissage/capsules.html",
+    "title": "Capsules - Module 07",
+    "section": "",
+    "text": "Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans lissage_demande.qmd. Le projet de départ, les lectures françaises et les démonstrations complètes permettent de travailler sans vidéo.\nLes vidéos des capsules 1 et 2 sont disponibles. Les supports PDF et HTML sont fournis pour les quatre capsules principales, le complément Holt et la synthèse. Les PDF annotés des capsules 1 et 2 sont également disponibles; ils conservent les notes manuscrites et la mise en page de l’enregistrement, qui diffère légèrement des supports harmonisés. Le contenu et l’ordre des diapositives restent les mêmes. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le lot PDF harmonisé du 3 novembre 2026 regroupe les quatre capsules, le complément Holt, la synthèse et les deux PDF annotés, soit huit fichiers."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#objectif",
+    "href": "modules/semaine-07-lissage/capsules.html#objectif",
+    "title": "Capsules - Module 07",
+    "section": "",
+    "text": "Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans lissage_demande.qmd. Le projet de départ, les lectures françaises et les démonstrations complètes permettent de travailler sans vidéo.\nLes vidéos des capsules 1 et 2 sont disponibles. Les supports PDF et HTML sont fournis pour les quatre capsules principales, le complément Holt et la synthèse. Les PDF annotés des capsules 1 et 2 sont également disponibles; ils conservent les notes manuscrites et la mise en page de l’enregistrement, qui diffère légèrement des supports harmonisés. Le contenu et l’ordre des diapositives restent les mêmes. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le lot PDF harmonisé du 3 novembre 2026 regroupe les quatre capsules, le complément Holt, la synthèse et les deux PDF annotés, soit huit fichiers."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-1",
+    "href": "modules/semaine-07-lissage/capsules.html#capsule-1",
+    "title": "Capsules - Module 07",
+    "section": "Capsule 1 - Choisir une fenêtre de lissage",
+    "text": "Capsule 1 - Choisir une fenêtre de lissage\nQue peut-on savoir avant la semaine suivante? Consultez la lecture 1 et la démonstration associée.\n\nVidéoPDFPDF annotéHTML\n\n\n\n  \n\nOuvrir la capsule 1 sur YouTube\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le PDF annoté · Télécharger le PDF annoté\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.1, à réaliser une seule fois : Sur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.\nAuto-vérification:\n\nJ’ai utilisé seulement les 91 semaines d’apprentissage.\nJ’obtiens 1 050 unités et je précise quand la moyenne est disponible.\nJe distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 1 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-2",
+    "href": "modules/semaine-07-lissage/capsules.html#capsule-2",
+    "title": "Capsules - Module 07",
+    "section": "Capsule 2 - Mettre à jour un niveau",
+    "text": "Capsule 2 - Mettre à jour un niveau\nQuelle part de l’écart faut-il corriger? Consultez la lecture 2 et la démonstration associée.\n\nVidéoPDFPDF annotéHTML\n\n\n\n  \n\nOuvrir la capsule 2 sur YouTube\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le PDF annoté · Télécharger le PDF annoté\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.2, à réaliser une seule fois : Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.\nAuto-vérification:\n\nLes deux calculs partagent le même état initial.\nJ’obtiens 108 puis 114,4 et 132 puis 138,4.\nJ’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé.\n\n\n\nProlongement facultatif : Holt\nHolt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le complément accompagné ci-dessous, la lecture et le code fourni permettent d’explorer le lissage avec une pente. Il ne s’ajoute pas aux candidats du rapport principal."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-3",
+    "href": "modules/semaine-07-lissage/capsules.html#capsule-3",
+    "title": "Capsules - Module 07",
+    "section": "Capsule 3 - Lire les erreurs de prévision",
+    "text": "Capsule 3 - Lire les erreurs de prévision\nQuelle erreur le score moyen cache-t-il? Consultez la lecture 3 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.3, à réaliser une seule fois : Émettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.\nAuto-vérification:\n\nLes quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future.\nMes scores sont en unités de produit, avec erreur = observé moins prévu.\nJe relie le classement au graphique et je distingue validation et test indépendant.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 3 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-4",
+    "href": "modules/semaine-07-lissage/capsules.html#capsule-4",
+    "title": "Capsules - Module 07",
+    "section": "Capsule 4 - Choisir et surveiller une référence",
+    "text": "Capsule 4 - Choisir et surveiller une référence\nLe plus petit score suffit-il pour décider? Consultez la lecture 4 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.4, à réaliser une seule fois : Comparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.\nAuto-vérification:\n\nLes coefficients du coût sont annoncés avant le calcul.\nMa recommandation utilise les résultats de cette validation connue.\nJe nomme les informations manquantes pour commander et une réévaluation future.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 4 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#capsule-5",
+    "href": "modules/semaine-07-lissage/capsules.html#capsule-5",
+    "title": "Capsules - Module 07",
+    "section": "Capsule 5 - Holt accompagné (facultatif)",
+    "text": "Capsule 5 - Holt accompagné (facultatif)\nPrérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour explorer cette méthode; le calcul manuel des récurrences n’est pas demandé.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nPratique facultative 7.5, à réaliser une seule fois : Comparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.\nAuto-vérification:\n\nJe conserve le même apprentissage et les mêmes cibles.\nJe distingue pente et saisonnalité.\nJe garde ce complément séparé de la trace principale.\n\nUtilisez le code complet. Pour un autre cas, tentez l’exercice 13. Ces ajouts ne sont pas requis dans les deux traces principales."
+  },
+  {
+    "objectID": "modules/semaine-07-lissage/capsules.html#autres-méthodes-conservées-cahier-facultatif",
+    "href": "modules/semaine-07-lissage/capsules.html#autres-méthodes-conservées-cahier-facultatif",
+    "title": "Capsules - Module 07",
+    "section": "Autres méthodes conservées: cahier facultatif",
+    "text": "Autres méthodes conservées: cahier facultatif\nLe cahier de méthodes donne les explications françaises et le code complet des différences, de Holt-Winters, d’ETS et des méthodes avancées. Il complète les lectures sans nouvelle capsule, sans nouvelle vidéo et sans production obligatoire. Choisissez un prolongement selon votre besoin; le parcours principal reste celui des activités 7.1 à 7.4."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
+    "title": "Capsules - Module 09",
+    "section": "",
+    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF harmonisé du 3 novembre 2026."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 1 - Auditer les variables",
+    "text": "Capsule 1 - Auditer les variables\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.1\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\nAuto-vérification : Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 2 - Ajuster et interpréter",
+    "text": "Capsule 2 - Ajuster et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.2\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\nAuto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 3 - Diagnostiquer dans le temps",
+    "text": "Capsule 3 - Diagnostiquer dans le temps\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.3\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\nAuto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 4 - Comparer deux modèles",
+    "text": "Capsule 4 - Comparer deux modèles\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.4\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\nAuto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 5 - Communiquer un scénario",
+    "text": "Capsule 5 - Communiquer un scénario\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.5\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\nAuto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "",
+    "text": "Séance autonome\n\n\nUne promotion ou un prix peuvent aider à expliquer les ventes. Encore faut-il connaître ou scénariser ces valeurs au moment de prévoir.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nVentes mensuelles fictives\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nRapport guidé et transfert"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "On passe au concret",
+    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne direction veut prévoir ses ventes avant l’année suivante. Comment utiliser une promotion et un prix prévus sans prétendre connaître l’indice économique futur, et que faire si les erreurs se suivent?\n\n\nLe module 08 a introduit tendance et calendrier; son transfert utilisait déjà ces données commerciales. Le module 09 ajoute les variables externes et le diagnostic temporel. Les 12 mois de 2025 ont déjà été examinés : ils ne sont pas un test indépendant. Les scores utilisant les valeurs externes réalisées en 2025 sont conditionnels à ces valeurs."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Avant de commencer",
+    "text": "Avant de commencer\nRevoir la régression et ses résidus (module 03), l’origine et les mesures d’erreur (module 06), puis la tendance et les mois (module 08). Les données fictives et les unités sont décrites dans le dictionnaire. Installez tidyverse et forecast, ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto.\nTéléchargez le projet guidé et le projet de transfert. Les cinq productions 9.1 à 9.5 sont les mêmes dans cet accueil, les capsules et les diapositives : faites chacune une seule fois dans variables_ventes.qmd. Le transfert se réalise séparément dans variables_succursales.qmd."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Votre parcours",
+    "text": "Votre parcours\nLes cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.\n\n\n\n1Auditer les variablesActivité 9.1Capsule 1DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 9.1\n\n\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\n\n\n\nAuto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Ajuster et interpréterActivité 9.2Capsule 2DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 9.2\n\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\n\n\nAuto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Diagnostiquer dans le tempsActivité 9.3Capsule 3DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 9.3\n\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\n\n\nAuto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Comparer deux modèlesActivité 9.4Capsule 4DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 9.4\n\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\n\n\nAuto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Communiquer un scénarioActivité 9.5Capsule 5DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 9.5\n\n\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\n\n\n\nAuto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Trace finale",
+    "text": "Trace finale\nLe rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Ressources du module",
+    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF harmonisé du 3 novembre 2026.\n\nCapsules et productions, démonstrations R, lectures françaises et exercices avec corrigés.\nNotes de synthèse HTML et PDF.\nDémonstration complète et corrigé de transfert.\nCompléments facultatifs : retards, événements, modèle en deux étapes et repères ARIMA; télécharger le cahier."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\nJe situe l’origine et la disponibilité de chaque prédicteur.\nJ’explique une association sans prétendre à la causalité.\nJe lis les résidus et l’ACF dans leur ordre temporel.\nJe compare les modèles sur les mêmes cibles et indique les valeurs externes utilisées.\nJe nomme les hypothèses et les limites du scénario."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Je suis bloqué·e",
+    "text": "Je suis bloqué·e\nCommencez par la préparation complète, puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Comparez vos tentatives aux corrigés repliables, puis demandez de l’aide dans les canaux habituels du cours."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Lien avec l’évaluation",
+    "text": "Lien avec l’évaluation\nCe module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Les activités sont des entraînements."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html",
+    "href": "modules/semaine-10-classification-modeles-avances/capsules.html",
+    "title": "Capsules - Module 10",
+    "section": "",
+    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ni version annotée n’est annoncée avant sa mise à disposition. Chaque production est celle de l’accueil et de la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF harmonisé du 3 novembre 2026."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-1",
+    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-1",
+    "title": "Capsules - Module 10",
+    "section": "Capsule 1 - Définir la cible et les partitions",
+    "text": "Capsule 1 - Définir la cible et les partitions\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.1\nDéfinissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.\nAuto-vérification : Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-2",
+    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-2",
+    "title": "Capsules - Module 10",
+    "section": "Capsule 2 - Estimer et interpréter",
+    "text": "Capsule 2 - Estimer et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.2\nAjustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.\nAuto-vérification : Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-3",
+    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-3",
+    "title": "Capsules - Module 10",
+    "section": "Capsule 3 - Lire une matrice de confusion",
+    "text": "Capsule 3 - Lire une matrice de confusion\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.3\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\nAuto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-4",
+    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-4",
+    "title": "Capsules - Module 10",
+    "section": "Capsule 4 - Choisir une règle avant le test",
+    "text": "Capsule 4 - Choisir une règle avant le test\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.4\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\nAuto-vérification : Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-5",
+    "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-5",
+    "title": "Capsules - Module 10",
+    "section": "Capsule 5 - Évaluer et recommander",
+    "text": "Capsule 5 - Évaluer et recommander\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.5\nAppliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.\nAuto-vérification : Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "",
+    "text": "Séance autonome\n\n\nEstimer une probabilité de départ, choisir une règle sur une validation et évaluer cette règle sur des clients distincts.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nClients fictifs au Québec\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nRapport guidé et transfert"
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#on-passe-au-concret",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#on-passe-au-concret",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "On passe au concret",
+    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne organisation ne peut contacter qu’une partie de sa clientèle. Comment utiliser un risque de départ prévu, choisir qui cibler et reconnaître les erreurs sans supposer que le contact empêchera le départ?\n\n\nLe module 04 étudiait une réponse continue; ici, la cible vaut 0 ou 1. La régression logistique estime une probabilité et une règle distincte la transforme en action. Les fichiers sont fictifs : ils ne prouvent pas qu’une intervention serait efficace."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Parcours anticipé pour le mini-rapport 2",
+    "text": "Parcours anticipé pour le mini-rapport 2\nSi vous choisissez la voie classification, commencez dès le module 08, avant la proposition des données. Les prérequis sont les modules 03 et 04, R/Quarto et la validation hors échantillon. Pour préparer le choix des données et le point de contrôle de l’atelier 03, commencez par la capsule 1 et sa production : définissez une cible binaire, sa date, les prédicteurs disponibles et les partitions. Lisez ensuite les repères de la capsule 3 et les lectures 2 à 4 pour situer la probabilité, les types d’erreur, le seuil et la validation. L’activité 10.3 utilise le modèle ajusté à l’activité 10.2 : réalisez ces deux productions dans l’ordre lorsque vous poursuivrez le parcours. Poursuivez les autres capsules, productions et exercices pour terminer l’analyse et le mini-rapport; la séance du 2 décembre consolide ces acquis. Les consignes du mini-rapport 2 fixent les modalités; ces exemples sont un entraînement et ne remplacent pas votre analyse autonome."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#avant-de-commencer",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#avant-de-commencer",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Avant de commencer",
+    "text": "Avant de commencer\nRevoir une variable réponse, une régression et un résidu (module 03), la comparaison hors échantillon (module 04) et l’importation dans R (module 02). La lecture française explique les cotes, les mesures et la calibration. Installez tidyverse, puis téléchargez et ouvrez dans RStudio le projet guidé et le projet de transfert. Les deux données et leurs unités figurent dans le dictionnaire.\nDans le cas guidé, le partage stratifié est de l’ordre de 60 % pour l’apprentissage, 20 % pour la validation et 20 % pour le test. Les deux seuils et les coûts fictifs sont fixés avant la comparaison; la validation choisit la règle et le test évalue la règle retenue. Le partage aléatoire est pédagogique : le fichier ne contient pas les dates permettant une validation temporelle réelle."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#votre-parcours",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#votre-parcours",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Votre parcours",
+    "text": "Votre parcours\nLes activités 10.1 à 10.5 dans l’accueil, les capsules et les diapositives sont les mêmes productions. Réalisez chacune une seule fois dans classification_clients.qmd. Les exercices portent sur une décision distincte et se réalisent séparément dans classification_service.qmd.\nLes cinq capsules correspondent aux décisions de définir la cible, estimer, lire les erreurs, choisir la règle et évaluer l’action. La calibration et la capacité restent ensemble au moment de communiquer la décision, afin de conserver un parcours cohérent.\n\n\n\n1Définir la cible et les partitionsActivité 10.1Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 10.1\n\n\nDéfinissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.\n\n\n\nAuto-vérification Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Estimer et interpréterActivité 10.2Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 10.2\n\n\nAjustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.\n\n\n\nAuto-vérification Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Lire une matrice de confusionActivité 10.3Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 10.3\n\n\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\n\n\n\nAuto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Choisir une règle avant le testActivité 10.4Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 10.4\n\n\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\n\n\n\nAuto-vérification Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Évaluer et recommanderActivité 10.5Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 10.5\n\n\nAppliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.\n\n\n\nAuto-vérification Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.\n\n\nTransfert distinct Faites l’exercice 5 avant d’ouvrir son corrigé."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#trace-finale",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#trace-finale",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Trace finale",
+    "text": "Trace finale\nDans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#ressources-du-module",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#ressources-du-module",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Ressources du module",
+    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF harmonisé du 3 novembre 2026.\n\nCapsules, démonstrations R, exercices et corrigés et lectures.\nNotes de synthèse HTML et PDF.\nDémonstration complète, corrigé du transfert et cahier facultatif.\nCompléments facultatifs en ligne : cotes, vraisemblance, ROC, arbre et réseaux de neurones."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#auto-vérification",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#auto-vérification",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification\n\nJe définis la classe positive, l’origine et l’horizon.\nJe distingue cote, probabilité et décision.\nJe calcule les erreurs et les mesures avec les bons dénominateurs.\nJe choisis la règle en validation puis je l’évalue sur le test.\nJe nomme les coûts supposés, la capacité et les limites de calibration.\nJe distingue un risque prédit de l’effet d’une intervention."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#je-suis-bloquée",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#je-suis-bloquée",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Je suis bloqué·e",
+    "text": "Je suis bloqué·e\nCommencez par la préparation complète, puis ajoutez les activités une par une. Vérifiez le dossier du projet, la classe positive et les noms de variables. Faites une première tentative avant les corrigés, puis utilisez les canaux habituels du cours pour demander de l’aide."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/index.html#lien-avec-lévaluation",
+    "href": "modules/semaine-10-classification-modeles-avances/index.html#lien-avec-lévaluation",
+    "title": "Module 10 - Résultats binaires et classification",
+    "section": "Lien avec l’évaluation",
+    "text": "Lien avec l’évaluation\nLe module prépare la classification et l’interprétation décisionnelle du final, ainsi que la voie classification du mini-rapport 2. Les activités sont formatives."
   }
 ]

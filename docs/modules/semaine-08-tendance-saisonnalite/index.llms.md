@@ -48,7 +48,7 @@ Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complement
 
 Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les exercices de transfert sont distincts et se conservent dans `tendance_commerce.qmd`, après une première tentative avant le corrigé.
 
-Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot révisé du 3 novembre 2026](telechargements/module-08-pdf-2026-11-03-revu.zip) contient ces six supports.
+Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-08-pdf-2026-11-03-harmonise.zip) contient ces six supports.
 
 Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.
 

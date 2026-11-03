@@ -280,12 +280,17 @@ Avant de modifier un fichier partagé, examiner ses différences locales et pré
 - [ ] Les onglets correspondent aux médias disponibles et fonctionnent tous.
 - [ ] Les productions utilisent `.lead`; leurs critères utilisent une liste `.self-check`.
 - [ ] Toutes les diapositives et pages PDF modifiées ont été inspectées, y compris les formules, tableaux et figures.
+- [ ] Les diapositives HTML sont aussi vérifiées dans le cadre réel des onglets, sous 900 px de largeur : les colonnes, les titres et les retours à la ligne restent ceux du canevas de présentation.
+- [ ] Le PDF conserve la géométrie du HTML : marges, titres, cartes, formules, numérotation et marque du cours. Vérifier le nombre de pages du fichier PDF final et comparer les pages rasterisées, pas seulement le DOM d’impression.
+- [ ] L’export attend la fin du moteur mathématique réellement chargé, y compris `MathJax.Hub.Queue` pour MathJax 2. Une promesse `startup` de MathJax 3 ne valide pas MathJax 2.
 - [ ] Les références détaillées et notes de préparation sont dans le guide séparé; aucun petit texte de source n’a été ajouté au parcours projeté.
 - [ ] Les cartes, corrigés, téléchargements et boutons de copie ont été essayés dans le navigateur.
 - [ ] Les pages ont été examinées sur ordinateur et petit écran; le tableau des lectures ne fait pas déborder la page entière.
 - [ ] Les liens et ancres fonctionnent; les anciennes ancres utiles ont été préservées ou les liens corrigés.
 - [ ] La rédaction respecte le français du cours, sans tiret cadratin ni gras ajouté pour décorer.
 - [ ] Les déclarations d’usage de l’IA, licences et attributions existantes sont conservées.
+
+Les scripts `33_export_module07_pdfs.cjs` et `34_export_slides_bloc_final.cjs` utilisent le même export dans `35_export_supports_coherents.cjs`. Il conserve les éléments déjà composés à l’écran et vérifie leur géométrie en plein écran, dans un cadre de 800 × 450 et dans le PDF. Le thème ne recompose pas les colonnes d’un diaporama selon la largeur du cadre : Reveal effectue déjà la mise à l’échelle du canevas.
 
 Les scripts existants apportent des contrôles complémentaires. Depuis la racine du projet, après les rendus nécessaires :
 

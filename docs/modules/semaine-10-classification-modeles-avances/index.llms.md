@@ -112,7 +112,7 @@ Dans le rapport guidé, présentez la cible et les partitions, les probabilités
 
 ## Ressources du module
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF révisé du 3 novembre 2026](telechargements/module-10-pdf-2026-11-03-revu.zip).
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-10-pdf-2026-11-03-harmonise.zip).
 
 - [Capsules](../../modules/semaine-10-classification-modeles-avances/capsules.llms.md), [démonstrations R](../../modules/semaine-10-classification-modeles-avances/demonstrations.llms.md), [exercices et corrigés](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md) et [lectures](../../modules/semaine-10-classification-modeles-avances/lectures.llms.md).
 - Notes de synthèse [HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).

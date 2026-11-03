@@ -50,7 +50,7 @@ Le calendrier, les références et les mesures d’erreur sont des rappels utile
 
 Les productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous et leurs rappels sur la page des capsules désignent le même travail. Réalisez chaque production une seule fois dans `lissage_demande.qmd`. Les quatre exercices de transfert sont distincts et alimentent `lissage_electricite.qmd`. Ouvrez leurs corrigés après une tentative.
 
-Les [quatre capsules principales et le complément Holt](../../modules/semaine-07-lissage/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie pour le moment. La [synthèse](../../modules/semaine-07-lissage/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03.zip) contient ces six supports.
+Les [quatre capsules principales et le complément Holt](../../modules/semaine-07-lissage/capsules.llms.md) sont disponibles en PDF et HTML. Les [capsules 1 et 2](../../modules/semaine-07-lissage/capsules.llms.md#capsule-1) disposent aussi de leur vidéo et de leur PDF annoté. Les autres capsules restent disponibles en PDF et HTML. La [synthèse](../../modules/semaine-07-lissage/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03-harmonise.zip) contient ces six supports et les deux PDF annotés.
 
 Cliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Les quatre premières cartes forment le parcours principal. La cinquième propose un prolongement facultatif sur Holt, avec des supports PDF et HTML, une lecture et du code fourni. Revenez ici pour garder le fil.
 
@@ -163,7 +163,7 @@ Au laboratoire, apportez votre trace. Le [complément Holt](../../modules/semain
 
 ## Ressources du module
 
-[CapsulesQuatre capsules principales et un complément Holt en PDF et HTML.](capsules.llms.md) [Notes de coursSynthèse du parcours en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse guidée complète, graphiques, scores et interprétations.](demonstrations.llms.md) [ExercicesQuatre exercices suivis, huit pratiques et un complément corrigés.](exercices.llms.md) [LecturesExplications françaises et passages externes ciblés.](lectures.llms.md)
+[CapsulesVidéos et PDF annotés des capsules 1 et 2; quatre capsules principales et un complément Holt en PDF et HTML.](capsules.llms.md) [Notes de coursSynthèse du parcours en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse guidée complète, graphiques, scores et interprétations.](demonstrations.llms.md) [ExercicesQuatre exercices suivis, huit pratiques et un complément corrigés.](exercices.llms.md) [LecturesExplications françaises et passages externes ciblés.](lectures.llms.md)
 
 ## Erreurs fréquentes
 

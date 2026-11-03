@@ -4,7 +4,7 @@
 
 Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md), la [démonstration complète](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
 
-Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03-revu.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
+Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03-harmonise.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
 
 ## Capsule 1 - Repérer tendance et saisonnalité
 

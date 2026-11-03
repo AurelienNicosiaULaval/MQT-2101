@@ -19,7 +19,7 @@ execute:
 
 Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans `lissage_demande.qmd`. Le [projet de départ](telechargements/lissage-demande.zip), les [lectures françaises](lectures.qmd) et les [démonstrations complètes](demonstrations.qmd) permettent de travailler sans vidéo.
 
-Les supports disponibles sont PDF et HTML. Aucune vidéo ni annotation n’a été produite ici. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03.zip) regroupe les quatre capsules, le complément Holt et la synthèse.
+Les vidéos des capsules 1 et 2 sont disponibles. Les supports PDF et HTML sont fournis pour les quatre capsules principales, le complément Holt et la synthèse. Les PDF annotés des capsules 1 et 2 sont également disponibles; ils conservent les notes manuscrites et la mise en page de l’enregistrement, qui diffère légèrement des supports harmonisés. Le contenu et l’ordre des diapositives restent les mêmes. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03-harmonise.zip) regroupe les quatre capsules, le complément Holt, la synthèse et les deux PDF annotés, soit huit fichiers.
 
 ## Capsule 1 - Choisir une fenêtre de lissage {#capsule-1}
 
@@ -27,11 +27,31 @@ Que peut-on savoir avant la semaine suivante? Consultez la [lecture 1](lectures.
 
 ::: {.panel-tabset}
 
+### Vidéo
+
+```{=html}
+<div class="video-embed">
+  <iframe data-video-src="https://www.youtube.com/embed/MR7lv5m5A8U"
+    title="Capsule 1 : Choisir une fenêtre de lissage" loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="https://www.youtube.com/watch?v=MR7lv5m5A8U">Ouvrir la capsule 1 sur YouTube</a></p>
+```
+
 ### PDF
 
 ```{=html}
 <div class="pdf-viewer"><iframe src="media/pdf/capsule-01-support.pdf" title="PDF - Capsule 1" loading="lazy"></iframe></div>
 <p class="resource-fallback"><a href="media/pdf/capsule-01-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-01-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### PDF annoté
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-01-support-annote.pdf" title="PDF annoté - Capsule 1" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-01-support-annote.pdf" target="_blank" rel="noopener">Ouvrir le PDF annoté</a> · <a href="media/pdf/capsule-01-support-annote.pdf" download>Télécharger le PDF annoté</a></p>
 ```
 
 ### HTML
@@ -61,11 +81,31 @@ Quelle part de l’écart faut-il corriger? Consultez la [lecture 2](lectures.qm
 
 ::: {.panel-tabset}
 
+### Vidéo
+
+```{=html}
+<div class="video-embed">
+  <iframe data-video-src="https://www.youtube.com/embed/WBqpUEJTrC0"
+    title="Capsule 2 : Mettre à jour un niveau" loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>
+<p class="resource-fallback"><a href="https://www.youtube.com/watch?v=WBqpUEJTrC0">Ouvrir la capsule 2 sur YouTube</a></p>
+```
+
 ### PDF
 
 ```{=html}
 <div class="pdf-viewer"><iframe src="media/pdf/capsule-02-support.pdf" title="PDF - Capsule 2" loading="lazy"></iframe></div>
 <p class="resource-fallback"><a href="media/pdf/capsule-02-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-02-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### PDF annoté
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-02-support-annote.pdf" title="PDF annoté - Capsule 2" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-02-support-annote.pdf" target="_blank" rel="noopener">Ouvrir le PDF annoté</a> · <a href="media/pdf/capsule-02-support-annote.pdf" download>Télécharger le PDF annoté</a></p>
 ```
 
 ### HTML
@@ -196,6 +236,9 @@ Utilisez le [code complet](demonstrations.qmd#holt). Pour un autre cas, tentez l
 ```{=html}
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("iframe[data-video-src]").forEach((iframe) => {
+    iframe.src = iframe.dataset.videoSrc;
+  });
   const loadVisibleSupports = () => {
     document.querySelectorAll(".tab-pane.active iframe[data-support-src]").forEach((iframe) => {
       if (!iframe.hasAttribute("src")) iframe.src = iframe.dataset.supportSrc;

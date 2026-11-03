@@ -500,26 +500,9 @@ $presentation-font-size-root: 38px !default;
   display: none !important;
 }
 
-@media (max-width: 900px) {
-  .reveal .metric-grid,
-  .reveal .journey,
-  .reveal .concept-grid,
-  .reveal .check-grid,
-  .reveal .statement-grid,
-  .reveal .data-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .reveal #title-slide h1,
-  .reveal #title-slide .title,
-  .reveal #title-slide .subtitle,
-  .reveal .section-red h2,
-  .reveal .section-gold h2,
-  .reveal .section-grey h2,
-  .reveal .closing-slide h2 {
-    max-width: 100%;
-  }
-}
+// Reveal met déjà à l’échelle un canevas fixe. Les colonnes et les largeurs
+// de titre doivent rester identiques dans un cadre intégré et en plein écran.
+// Une règle fondée sur la largeur de la fenêtre les recomposait une seconde fois.
 
 @media print {
   .reveal .metric-grid {
