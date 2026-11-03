@@ -4,7 +4,7 @@
 
 Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans `lissage_demande.qmd`. Le [projet de départ](telechargements/lissage-demande.zip), les [lectures françaises](../../modules/semaine-07-lissage/lectures.llms.md) et les [démonstrations complètes](../../modules/semaine-07-lissage/demonstrations.llms.md) permettent de travailler sans vidéo.
 
-Les vidéos des capsules 1 et 2 sont disponibles. Les supports PDF et HTML sont fournis pour les quatre capsules principales, le complément Holt et la synthèse. Les PDF annotés des capsules 1 et 2 sont également disponibles; ils conservent les notes manuscrites et la mise en page de l’enregistrement, qui diffère légèrement des supports harmonisés. Le contenu et l’ordre des diapositives restent les mêmes. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03-harmonise.zip) regroupe les quatre capsules, le complément Holt, la synthèse et les deux PDF annotés, soit huit fichiers.
+Les vidéos des quatre capsules principales sont disponibles. Les supports PDF et HTML sont fournis pour les quatre capsules principales, le complément Holt et la synthèse. Les PDF annotés des quatre capsules principales sont également disponibles; ils conservent les notes manuscrites et la mise en page de l’enregistrement, qui diffère légèrement des supports harmonisés. Le contenu et l’ordre des diapositives restent les mêmes. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03-harmonise.zip) regroupe les quatre capsules, le complément Holt, la synthèse et les quatre PDF annotés, soit dix fichiers.
 
 ## Capsule 1 - Choisir une fenêtre de lissage
 
@@ -78,9 +78,17 @@ Holt ajoute une pente au niveau, et son amortissement limite la contribution de 
 
 Quelle erreur le score moyen cache-t-il? Consultez la [lecture 3](../../modules/semaine-07-lissage/lectures.llms.md#lecture-3) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#erreurs).
 
+## Vidéo
+
+[Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=E1QwIkisdKk)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-03-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-03-support-annote.pdf)
 
 ## HTML
 
@@ -102,9 +110,17 @@ Auto-vérification:
 
 Le plus petit score suffit-il pour décider? Consultez la [lecture 4](../../modules/semaine-07-lissage/lectures.llms.md#lecture-4) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#decision).
 
+## Vidéo
+
+[Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=AMla4tFwuHA)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
 
 ## HTML
 

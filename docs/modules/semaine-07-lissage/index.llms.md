@@ -163,7 +163,7 @@ Au laboratoire, apportez votre trace. Le [complément Holt](../../modules/semain
 
 ## Ressources du module
 
-[CapsulesVidéos et PDF annotés des capsules 1 et 2; quatre capsules principales et un complément Holt en PDF et HTML.](capsules.llms.md) [Notes de coursSynthèse du parcours en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse guidée complète, graphiques, scores et interprétations.](demonstrations.llms.md) [ExercicesQuatre exercices suivis, huit pratiques et un complément corrigés.](exercices.llms.md) [LecturesExplications françaises et passages externes ciblés.](lectures.llms.md)
+[CapsulesVidéos et PDF annotés des quatre capsules principales; complément Holt en PDF et HTML.](capsules.llms.md) [Notes de coursSynthèse du parcours en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse guidée complète, graphiques, scores et interprétations.](demonstrations.llms.md) [ExercicesQuatre exercices suivis, huit pratiques et un complément corrigés.](exercices.llms.md) [LecturesExplications françaises et passages externes ciblés.](lectures.llms.md)
 
 ## Erreurs fréquentes
 

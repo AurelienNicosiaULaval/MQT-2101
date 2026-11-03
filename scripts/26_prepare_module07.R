@@ -1,11 +1,17 @@
 # Préparer les quatre projets du module 07 à partir des sources publiques actuelles.
 library(knitr)
+# Sans argument : les quatre projets. Un ou plusieurs noms limitent la reconstruction.
+noms_projets <- c("lissage-demande", "lissage-electricite",
+                  "demonstration-lissage-demande", "corrige-lissage-electricite")
+arguments <- commandArgs(trailingOnly = TRUE)
+projets_a_preparer <- if (length(arguments)) unique(arguments) else noms_projets
+stopifnot(all(projets_a_preparer %in% noms_projets))
 module <- "modules/semaine-07-lissage"
 destination <- file.path(module, "telechargements")
 dir.create(destination, recursive = TRUE, showWarnings = FALSE)
 lire <- function(p) paste(readLines(p, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
-entete <- function(titre) paste0('---\ntitle: "', titre,
-  '"\nlang: fr\nformat:\n  html:\n    embed-resources: true\n    code-copy: true\n    code-fold: false\n    code-overflow: wrap\nexecute:\n  warning: false\n  message: false\n---\n\n')
+entete <- function(titre, css = NULL) paste0('---\ntitle: "', titre,
+  '"\nlang: fr\nformat:\n  html:\n    embed-resources: true\n    code-copy: true\n    code-fold: false\n    code-overflow: wrap\n', if (!is.null(css)) paste0('    css: ', css, '\n') else '', 'execute:\n  warning: false\n  message: false\n---\n\n')
 source_portable <- function(fichier, titre) {
   s <- lire(file.path(module, fichier))
   s <- sub("(?s)^---\\n.*?\\n---\\n", "", s, perl = TRUE)
@@ -16,7 +22,7 @@ source_portable <- function(fichier, titre) {
   # qui peut précéder ce projet local. Les ancres internes restent fonctionnelles.
   s <- gsub('\\[([^]\\n]+)\\]\\((telechargements/[^)]+|(lectures|demonstrations|exercices|capsules|notes-cours|index)\\.qmd[^)]*)\\)',
             '\\1', s, perl = TRUE)
-  paste0(entete(titre), s, "\n")
+  paste0(entete(titre, css = if (fichier == "exercices.qmd") "media/module07-exercices.css" else NULL), s, "\n")
 }
 bloc <- function(s, label) {
   motif <- paste0("(?s)```\\{r\\}\\n#\\| label: ", label, "\\n.*?```")
@@ -37,16 +43,23 @@ preparer <- function(nom, texte, complet = FALSE) {
   nom_rapport <- if (grepl("electricite", nom)) "lissage_electricite" else "lissage_demande"
   qmd <- file.path(dossier, paste0(nom_rapport, ".qmd"))
   writeLines(texte, qmd, useBytes = TRUE)
-  if (complet) knitr::purl(qmd, output = sub("qmd$", "R", qmd), quiet = TRUE)
+  if (complet) {
+    knitr::purl(qmd, output = sub("qmd$", "R", qmd), quiet = TRUE)
+    if (grepl("electricite", nom)) {
+      dir.create(file.path(dossier, "media"))
+      stopifnot(file.copy(file.path(module, "media/module07-exercices.css"),
+                          file.path(dossier, "media/module07-exercices.css")))
+    }
+  }
   writeLines(c("Version: 1.0", "RestoreWorkspace: No", "SaveWorkspace: No",
                "AlwaysSaveHistory: No"), file.path(dossier, paste0(nom, ".Rproj")))
-  writeLines(c(paste0("# ", nom), "", "Version locale du 26 octobre 2026.",
+  writeLines(c(paste0("# ", nom), "", "Version locale du 3 novembre 2026.",
     "1. Décompressez toute l’archive et ouvrez le .Rproj.",
     "2. Installez une fois tidyverse, slider et forecast si nécessaire. R, RStudio et Quarto sont requis.",
     "3. Ouvrez le .qmd, redémarrez R, puis faites Render. Le projet de départ se rend avant d’être complété.",
     if (complet) "4. Les blocs visibles sont exécutables dans l’ordre. Le script .R reprend les calculs." else
       "4. Réalisez chaque activité une seule fois. Les sections indiquent le travail à ajouter.",
-    "5. Conservez data/ et R/. Les calculs ne nécessitent ni connexion au dépôt ni données distantes.",
+    "5. Conservez data/, R/ et media/ si présent. Les calculs ne nécessitent ni connexion au dépôt ni données distantes.",
     "", "Deux séries fictives québécoises, sans mesure réelle. Les périodes de validation sont déjà connues du module 06.",
     "Les coûts sont pédagogiques, sans tarif réel. Ce rapport est un entraînement, pas une remise évaluée.",
     "Les compléments Holt et les pratiques supplémentaires sont facultatifs.",
@@ -88,8 +101,12 @@ depart_electricite <- paste0(entete("Électricité : mon analyse de lissage"),
   "## Préparation\n\n", bloc(corrige, "preparation-transfert-m07"), "\n\n",
   "Données simulées; 60 mois puis 12 mois de validation connue. Candidats: naïf, MM3, SES02, SES08, saisonnier. Même initialisation pour les deux alphas.\n\n",
   paste0(enonces, "\n\nAjoutez votre code et votre interprétation avant le corrigé.\n\n", collapse = ""))
-preparer("lissage-demande", depart_demande)
-preparer("lissage-electricite", depart_electricite)
-preparer("demonstration-lissage-demande", demo, TRUE)
-preparer("corrige-lissage-electricite", corrige, TRUE)
-message("Quatre projets préparés à partir des sources actuelles.")
+textes_projets <- list("lissage-demande" = depart_demande,
+                       "lissage-electricite" = depart_electricite,
+                       "demonstration-lissage-demande" = demo,
+                       "corrige-lissage-electricite" = corrige)
+for (nom in projets_a_preparer) {
+  preparer(nom, textes_projets[[nom]],
+           complet = nom %in% c("demonstration-lissage-demande", "corrige-lissage-electricite"))
+}
+message(length(projets_a_preparer), " projet(s) préparé(s) à partir des sources actuelles.")
