@@ -4,9 +4,9 @@
 
 Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md), la [démonstration complète](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
 
-Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
+Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03-revu.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
 
-## Capsule 1 - Lire le temps et les motifs
+## Capsule 1 - Repérer tendance et saisonnalité
 
 La hausse vient-elle du temps ou du calendrier? Consultez la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
 
@@ -46,7 +46,7 @@ Production guidée 8.2, à réaliser une seule fois : Vérifiez l’indice conti
 
 Auto-vérification:
 
-- L’indice augmente d’une unité par mois et le facteur n’est pas ordonné.
+- Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné.
 - Je précise janvier comme référence et les unités des coefficients.
 - Je distingue comparaison conditionnelle et effet causal.
 

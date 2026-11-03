@@ -602,13 +602,6 @@
     "text": "4. Conclure\nPour la voie retenue, présentez la cible, la référence, les mesures et leurs unités, la décision, puis une limite et une date ou condition de révision. Une association de promotion n’est pas une preuve d’effet causal; la prévision d’un risque ne mesure pas l’effet d’une intervention. Les autres méthodes des modules 07 à 10 demeurent des compléments, non des exigences supplémentaires pour la synthèse."
   },
   {
-    "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#une-décision-à-partir-dun-risque",
-    "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#une-décision-à-partir-dun-risque",
-    "title": "Synthèse - Résultats binaires et classification",
-    "section": "Une décision à partir d’un risque",
-    "text": "Une décision à partir d’un risque\n\nQue savons-nous avant d’agir et quelles erreurs pouvons-nous accepter?"
-  },
-  {
     "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#cible-unité-et-séparation",
     "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#cible-unité-et-séparation",
     "title": "Synthèse - Résultats binaires et classification",
@@ -620,21 +613,21 @@
     "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#logistique-cotes-et-probabilités",
     "title": "Synthèse - Résultats binaires et classification",
     "section": "Logistique, cotes et probabilités",
-    "text": "Logistique, cotes et probabilités\n\n\nPour une probabilité p, la cote vaut p/(1-p).\nLa régression logistique pose la formule logistique et transforme ce prédicteur en probabilité comprise entre 0 et 1.\nPour une unité supplémentaire de x, à autres variables fixées, les cotes sont multipliées par exp(β1)."
+    "text": "Logistique, cotes et probabilités\n\n\\[p=\\frac{1}{1+\\exp(-\\eta)},\\qquad \\text{cote}=\\frac{p}{1-p}.\\]\n\n\n\n\\(\\eta\\) est le score linéaire du modèle.\nPour une unité supplémentaire de \\(x\\), à autres variables fixées, les cotes sont multipliées par \\(\\exp(\\beta_1)\\).\nUn rapport de cotes n’est pas un rapport de probabilités."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#matrice-et-mesures",
     "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#matrice-et-mesures",
     "title": "Synthèse - Résultats binaires et classification",
     "section": "Matrice et mesures",
-    "text": "Matrice et mesures\n\n\nLes vrais positifs VP sont les événements ciblés; les faux négatifs FN sont les événements manqués.\nLes faux positifs FP sont des non-événements ciblés et les vrais négatifs VN les non-événements écartés.\nSensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP), exactitude = (VP+VN)/N."
+    "text": "Matrice et mesures\n\n\nVrai positif (VP) : départ ciblé; faux négatif (FN) : départ non ciblé.\nFaux positif (FP) : non-départ ciblé; vrai négatif (VN) : non-départ non ciblé."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#seuil-coût-et-capacité",
     "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#seuil-coût-et-capacité",
     "title": "Synthèse - Résultats binaires et classification",
     "section": "Seuil, coût et capacité",
-    "text": "Seuil, coût et capacité\n\n\nLe seuil transforme une probabilité en classe.\nAbaisser le seuil ne diminue pas le nombre de personnes ciblées ni le nombre de vrais positifs pour des scores fixés; la précision peut augmenter ou diminuer.\nLes coûts fictifs ou la capacité guident la règle."
+    "text": "Seuil, coût et capacité\n\n\nLe seuil transforme une probabilité en classe.\nPour des probabilités fixées, abaisser le seuil cible au moins autant de clients et de vrais départs.\nLa précision peut augmenter ou diminuer. Les coûts et la capacité guident le choix."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#calibration-et-action",
@@ -648,7 +641,7 @@
     "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#à-retenir",
     "title": "Synthèse - Résultats binaires et classification",
     "section": "À retenir",
-    "text": "À retenir\n\n\nUne probabilité ne suffit pas à fixer une action.\nLe seuil se choisit en validation et s’évalue sur un test distinct.\nLe risque prédit n’est pas l’effet causal d’un contact."
+    "text": "À retenir\n\n\n\nProbabilité\n\n\nun risque prédit, sans certitude ni effet causal\n\n\n\n\nRègle\n\n\nchoisir en validation avant d’évaluer sur le test\n\n\n\n\nDécision\n\n\ncoûts, capacité et limites explicités"
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#références-et-crédits",
@@ -662,21 +655,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
     "title": "Capsule 4 - Choisir une règle avant le test",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nComment choisir sans consulter le test?\n\n\nUne décision utile relie les probabilités à une action et à ses conséquences."
+    "text": "Pourquoi ça compte\n\nComment choisir sans consulter le test?\n\n\nLe choix du seuil dépend des conséquences des erreurs et des ressources disponibles."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "title": "Capsule 4 - Choisir une règle avant le test",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nChoisir une règle avant le test.\nAppliquer le raisonnement au cas de fidélisation.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#le-raisonnement",
-    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#le-raisonnement",
-    "title": "Capsule 4 - Choisir une règle avant le test",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nComparer 0,30 et 0,50 sur la validation.\nCoût fictif : 4 par faux négatif et 1 par faux positif.\nRetenir le plus petit coût; en cas d’égalité, 0,30."
+    "text": "Objectifs de la capsule\n\n\nFixer les coûts et les seuils à comparer.\nChoisir le seuil sur la validation seulement.\nConserver cette règle pour l’évaluation sur le test."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#une-règle-de-coût-explicite",
@@ -690,14 +676,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#à-retenir",
     "title": "Capsule 4 - Choisir une règle avant le test",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nSeuil\n\n\nLe seuil 0,5 n’est pas obligatoire.\n\n\n\n\nDécision\n\n\nLes coûts et la capacité doivent être justifiés."
+    "text": "À retenir\n\n\n\nCoûts\n\n\nhypothèses fixées avant la comparaison\n\n\n\n\nValidation\n\n\nchoisir entre 0,30 et 0,50\n\n\n\n\nTest\n\n\névaluer la règle retenue sans modifier le seuil"
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#production-autonome-10.4",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#production-autonome-10.4",
     "title": "Capsule 4 - Choisir une règle avant le test",
     "section": "Production autonome 10.4",
-    "text": "Production autonome 10.4\n\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe fixe les coûts et les seuils avant la comparaison.\nLe test ne sert pas au choix.\nJe présente le coût comme une hypothèse pédagogique."
+    "text": "Production autonome 10.4\n\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe fixe les coûts et les seuils avant la comparaison.\nJe n’utilise pas le test pour choisir le seuil.\nJe présente le coût comme une hypothèse pédagogique."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#références-et-crédits",
@@ -711,21 +697,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
     "title": "Capsule 2 - Estimer et interpréter",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQue dit une probabilité?\n\n\nUne décision utile relie les probabilités à une action et à ses conséquences."
+    "text": "Pourquoi ça compte\n\nQue dit une probabilité?\n\n\nDeux profils peuvent avoir des risques différents. Le modèle décrit une association, pas l’effet d’un contact."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
     "title": "Capsule 2 - Estimer et interpréter",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nEstimer et interpréter.\nAppliquer le raisonnement au cas de fidélisation.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#le-raisonnement",
-    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#le-raisonnement",
-    "title": "Capsule 2 - Estimer et interpréter",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nLa régression logistique traduit un prédicteur linéaire en probabilité.\nUne cote vaut p/(1-p); exp(coefficient) multiplie les cotes.\nUne probabilité n’est ni une certitude ni un effet causal."
+    "text": "Objectifs de la capsule\n\n\nAjuster une régression logistique sur l’apprentissage.\nDistinguer probabilité et cote.\nInterpréter un rapport de cotes sans conclusion causale."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#une-courbe-entre-0-et-1",
@@ -739,7 +718,7 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#à-retenir",
     "title": "Capsule 2 - Estimer et interpréter",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nCotes\n\n\nUn rapport de cotes n’est pas un rapport de probabilités.\n\n\n\n\nRéférence\n\n\nLa référence et les variables fixées comptent."
+    "text": "À retenir\n\n\n\nProbabilité\n\n\nrisque compris entre 0 et 1, sans certitude individuelle\n\n\n\n\nCotes\n\n\nun rapport de cotes n’est pas un rapport de probabilités\n\n\n\n\nRéférence\n\n\ncatégorie de comparaison et autres variables fixées"
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#production-autonome-10.2",
@@ -931,13 +910,6 @@
     "text": "Réseau autorégressif pour une série continue\nLa présentation et un exercice anciens utilisaient forecast::nnetar pour une série numérique. Cette ouverture est distincte de la classification : la sortie ci-dessous prévoit des ventes continues. Un réseau NNAR utilise des retards comme entrées et peut inclure des prédicteurs externes avec xreg; leurs valeurs futures devraient alors être fournies. La normalisation par défaut de nnetar soustrait les moyennes et divise par les écarts-types des entrées, plutôt que de toujours ramener les valeurs à un intervalle fixe. Installer forecast au besoin.\n\nlibrary(forecast)\nventes_mensuelles &lt;- read_csv(file.path(racine, \"data/cas_integrateur_quebec.csv\"), show_col_types = FALSE) |&gt;\n  mutate(date = as.Date(date)) |&gt; group_by(date) |&gt;\n  summarise(ventes = sum(ventes), .groups = \"drop\") |&gt; arrange(date)\nventes_ts &lt;- ts(ventes_mensuelles$ventes, start = c(2020, 1), frequency = 12)\nserie_train &lt;- window(ventes_ts, end = c(2023, 12))\nserie_validation &lt;- window(ventes_ts, start = c(2024, 1), end = c(2024, 12))\nset.seed(210110)\nreseau_ts &lt;- nnetar(serie_train, p = 2, P = 1, size = 2, repeats = 3,\n                    scale.inputs = TRUE, maxit = 2000)\nvapply(reseau_ts$model, function(x) x$convergence, integer(1))\n\n[1] 0 0 0\n\nprevision_ts &lt;- forecast(reseau_ts, h = 12)$mean\nreference_ts &lt;- snaive(serie_train, h = 12)$mean\ntibble(methode = c(\"NNAR\", \"Naïf saisonnier\"),\n       MAE = c(mean(abs(serie_validation - prevision_ts)), mean(abs(serie_validation - reference_ts))),\n       RMSE = c(sqrt(mean((serie_validation - prevision_ts)^2)), sqrt(mean((serie_validation - reference_ts)^2))))\n\n# A tibble: 2 × 3\n  methode            MAE   RMSE\n  &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;\n1 NNAR            37136. 44236.\n2 Naïf saisonnier 55387. 65907.\n\n\nLes trois initialisations donnent des modèles dont les prévisions sont moyennées. Le vecteur affiché indique leur convergence : 0 est un arrêt normal, 1 signale que la limite d’itérations a été atteinte. Une prévision à plusieurs pas utilise récursivement des valeurs prévues quand les retards futurs sont inconnus. Cette comparaison sur douze mois et des données simulées ne démontre pas la supériorité générale des réseaux; les observations de 2025 ne sont pas utilisées ici.\nLes forêts aléatoires combinent plusieurs arbres; elles demandent d’autres choix et vérifications. Elles ne sont pas requises dans le socle. La discrétisation systématique des variables continues n’est pas nécessaire et peut perdre de l’information; toute transformation apprise doit être estimée sans le test."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#une-prévision-utile",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#une-prévision-utile",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Une prévision utile",
-    "text": "Une prévision utile\n\nQuelles informations sont réellement disponibles au moment de prévoir?"
-  },
-  {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#disponibilité-et-fuite",
     "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#disponibilité-et-fuite",
     "title": "Synthèse - Variables externes et autocorrélation",
@@ -949,35 +921,28 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-contexte",
     "title": "Synthèse - Variables externes et autocorrélation",
     "section": "Régression avec contexte",
-    "text": "Régression avec contexte\n\n\nLa régression combine tendance, mois, promotion, prix et indice.\nLa promotion binaire se lit par rapport à la catégorie non, en dollars, les autres termes du modèle étant fixés.\nUne association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison."
+    "text": "Régression avec contexte\n\n\nLa régression combine tendance, mois, promotion, prix et indice.\nLe coefficient de promotion compare « oui » à « non », en dollars, avec les autres variables maintenues fixes.\nUne association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#résidus-et-autocorrélation",
     "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#résidus-et-autocorrélation",
     "title": "Synthèse - Variables externes et autocorrélation",
     "section": "Résidus et autocorrélation",
-    "text": "Résidus et autocorrélation\n\n\nLe résidu est l’observation moins la valeur ajustée.\nUn retard 1 rapproche les erreurs de deux mois consécutifs; un retard 12 compare des mois séparés d’une année.\nDes signes positifs persistants peuvent signaler une sous-prévision répétée."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Régression avec erreurs AR",
-    "text": "Régression avec erreurs AR\n\n\nLa partie non expliquée par les prédicteurs peut avoir une mémoire d’un mois.\nLes innovations ε ne sont pas la même chose que les erreurs de régression η.\nLe modèle est estimé sur les 60 premiers mois."
+    "text": "Résidus et autocorrélation\n\n\nLe résidu est l’observation moins la valeur ajustée.\nUn retard de 1 compare les résidus de deux mois consécutifs; un retard de 12 compare des mois séparés d’une année.\nDes résidus durablement positifs signalent des valeurs ajustées trop basses sur cette période."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#scénarios-et-décision",
     "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#scénarios-et-décision",
     "title": "Synthèse - Variables externes et autocorrélation",
     "section": "Scénarios et décision",
-    "text": "Scénarios et décision\n\n\nUne prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis.\nLes intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs.\nPour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire."
+    "text": "Scénarios et décision\n\n\nUne prévision sous scénario est conditionnelle au prix, à la promotion et à l’indice de confiance fournis.\nLes intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs.\nPour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#à-retenir",
     "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#à-retenir",
     "title": "Synthèse - Variables externes et autocorrélation",
     "section": "À retenir",
-    "text": "À retenir\n\n\nLes prédicteurs futurs sont connus, prévus ou scénarisés.\nLes résidus et la validation répondent à des questions différentes.\nUn scénario et une association ne prouvent pas la causalité."
+    "text": "À retenir\n\n\n\nInformation\n\n\ndisponible à l’origine, prévue ou scénarisée\n\n\n\n\nValidation\n\n\ncomparer sans confondre avec un test indépendant\n\n\n\n\nDécision\n\n\nhypothèses explicites et portée limitée"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#références-et-crédits",
@@ -991,21 +956,14 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
     "title": "Capsule 4 - Comparer deux modèles",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nLa mémoire des erreurs améliore-t-elle la prévision?\n\n\nLa qualité d’une prévision dépend du modèle et de l’information disponible."
+    "text": "Pourquoi ça compte\n\nLa mémoire des erreurs améliore-t-elle la prévision?\n\n\nAjouter une dépendance temporelle ne garantit pas une meilleure prévision. La comparaison doit rester commune."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "title": "Capsule 4 - Comparer deux modèles",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nComparer deux modèles.\nRelier le résultat au cas guidé.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#le-raisonnement",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#le-raisonnement",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nLa régression ordinaire et la régression avec erreurs AR(1) utilisent les mêmes prédicteurs.\nL’erreur AR(1) relie la partie non expliquée à la période précédente.\nComparer MAE et RMSE sur les mêmes mois."
+    "text": "Objectifs de la capsule\n\n\nComparer les deux modèles sur les mêmes mois.\nInterpréter la MAE et la RMSE en dollars.\nNommer les limites de la comparaison conditionnelle."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparaison-des-douze-mois-de-2025",
@@ -1019,14 +977,14 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#à-retenir",
     "title": "Capsule 4 - Comparer deux modèles",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nPrédicteurs\n\n\nLes valeurs externes réalisées en 2025 donnent une comparaison conditionnelle.\n\n\n\n\nValidation\n\n\nLes mêmes douze mois ne sont pas un nouveau test indépendant."
+    "text": "À retenir\n\n\n\nComparaison\n\n\nmêmes mois et mêmes prédicteurs pour les deux modèles\n\n\n\n\nInformation\n\n\nvaleurs externes observées en 2025 : résultats conditionnels\n\n\n\n\nValidation\n\n\ndouze mois déjà examinés, sans nouveau test indépendant"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#production-autonome-9.4",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#production-autonome-9.4",
     "title": "Capsule 4 - Comparer deux modèles",
     "section": "Production autonome 9.4",
-    "text": "Production autonome 9.4\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nLes deux modèles utilisent les mêmes observations et prédicteurs.\nLes scores sont en dollars.\nJe présente cette comparaison comme conditionnelle aux valeurs réalisées."
+    "text": "Production autonome 9.4\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe compare les deux modèles sur les mêmes observations et prédicteurs.\nJ’exprime les scores en dollars.\nJe présente cette comparaison comme conditionnelle aux valeurs réalisées."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#références-et-crédits",
@@ -1040,42 +998,35 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
     "title": "Capsule 2 - Ajuster et interpréter",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQue signifie le coefficient de promotion?\n\n\nLa qualité d’une prévision dépend du modèle et de l’information disponible."
+    "text": "Pourquoi ça compte\n\nQue signifie le coefficient de promotion?\n\n\nUne direction veut comprendre l’association entre une promotion et les ventes, sans lui attribuer automatiquement une cause."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
     "title": "Capsule 2 - Ajuster et interpréter",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nAjuster et interpréter.\nRelier le résultat au cas guidé.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#le-raisonnement",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#le-raisonnement",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nVentes = tendance + mois + promotion + prix + indice + résidu.\nComparer oui à non, en dollars, à autres variables fixées.\nLa régression mesure une association conditionnelle."
+    "text": "Objectifs de la capsule\n\n\nAjuster la régression sur les mois d’apprentissage.\nInterpréter le coefficient de promotion en dollars.\nDistinguer association conditionnelle et effet causal."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#une-association-dans-le-cas-guidé",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#une-association-dans-le-cas-guidé",
     "title": "Capsule 2 - Ajuster et interpréter",
     "section": "Une association dans le cas guidé",
-    "text": "Une association dans le cas guidé\n\nÀ prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».\n\n\nCe résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’effet causal d’une promotion."
+    "text": "Une association dans le cas guidé\n\nÀ prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».\n\n\nCe résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’effet causal d’une promotion."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#à-retenir",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#à-retenir",
     "title": "Capsule 2 - Ajuster et interpréter",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nPromotion\n\n\nLes décisions de promotion ne sont pas nécessairement aléatoires.\n\n\n\n\nAssociation\n\n\nAssociation ne signifie pas effet causal établi."
+    "text": "À retenir\n\n\n\nRéférence\n\n\npromotion « oui » comparée à « non »\n\n\n\n\nUnité\n\n\ndifférence de ventes en dollars par mois\n\n\n\n\nPortée\n\n\nune association conditionnelle, sans effet causal établi"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#production-autonome-9.2",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#production-autonome-9.2",
     "title": "Capsule 2 - Ajuster et interpréter",
     "section": "Production autonome 9.2",
-    "text": "Production autonome 9.2\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe nomme la catégorie de référence et les unités.\nJe distingue association conditionnelle et causalité.\nLes douze mois de validation ne servent pas à ajuster le modèle."
+    "text": "Production autonome 9.2\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe nomme la catégorie de référence et les unités.\nJe distingue association conditionnelle et causalité.\nJe n’utilise pas les douze mois de validation pour ajuster le modèle."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#références-et-crédits",
@@ -1243,7 +1194,7 @@
     "href": "modules/atelier-03-series-chronologiques/presentation.html#pourquoi-ça-compte",
     "title": "Laboratoire 03 - Prévoir la demande",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQuelle prévision peut aider une équipe d’approvisionnement à se préparer?\n\n\nNous comparons des méthodes sur les mêmes treize semaines et rendons les limites visibles."
+    "text": "Pourquoi ça compte\n\nQuelle prévision peut aider une équipe d’approvisionnement à se préparer?\n\n\nL’équipe compare les méthodes sur les mêmes treize semaines avant de recommander une prévision de référence."
   },
   {
     "objectID": "modules/atelier-03-series-chronologiques/presentation.html#objectifs-du-laboratoire",
@@ -1274,18 +1225,11 @@
     "text": "Examiner le passé"
   },
   {
-    "objectID": "modules/atelier-03-series-chronologiques/presentation.html#cinq-prévisions-à-la-même-origine",
-    "href": "modules/atelier-03-series-chronologiques/presentation.html#cinq-prévisions-à-la-même-origine",
-    "title": "Laboratoire 03 - Prévoir la demande",
-    "section": "Cinq prévisions à la même origine",
-    "text": "Cinq prévisions à la même origine\n\n\n\nQuatre références\n\n\nnaïve, MM4, SES, naïve saisonnière\n\n\n\n\nTendance\n\n\nune droite sur l’indice des semaines\n\n\n\n\nMême origine\n\n\nles mêmes treize semaines prévues\n\n\n\n\nLa liste change depuis le module 07 : comparez les résultats sans supposer le même classement."
-  },
-  {
     "objectID": "modules/atelier-03-series-chronologiques/presentation.html#comparer-et-interpréter",
     "href": "modules/atelier-03-series-chronologiques/presentation.html#comparer-et-interpréter",
     "title": "Laboratoire 03 - Prévoir la demande",
     "section": "Comparer et interpréter",
-    "text": "Comparer et interpréter\n\n\n\nME\n\n\nsigne moyen de l’erreur\n\n\n\n\nMAE\n\n\namplitude moyenne\n\n\n\n\nRMSE\n\n\npoids accru aux grands écarts\n\n\n\n\nErreur = observation − prévision. Les mesures sont en unités de produit."
+    "text": "Comparer et interpréter\n\n\n\nME\n\n\nerreur moyenne signée\n\n\n\n\nMAE\n\n\nmoyenne des erreurs absolues\n\n\n\n\nRMSE\n\n\nracine de l’erreur quadratique moyenne\n\n\n\n\nErreur = observation − prévision. Les mesures sont en unités de produit.\n\n\nLe lissage exponentiel simple est désigné par le sigle SES. La RMSE accorde plus de poids aux grandes erreurs."
   },
   {
     "objectID": "modules/atelier-03-series-chronologiques/presentation.html#quelle-incertitude",
@@ -1313,14 +1257,14 @@
     "href": "modules/atelier-03-series-chronologiques/presentation.html#production-du-laboratoire",
     "title": "Laboratoire 03 - Prévoir la demande",
     "section": "Production du laboratoire",
-    "text": "Production du laboratoire\n\nDans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.\n\nAuto-vérification\n\n\nJ’ai précisé l’origine, les dates et les unités.\nJe compare les cinq méthodes sur les mêmes cibles.\nJe distingue l’intervalle du SES et la méthode retenue.\nMa recommandation cite des résultats, une limite et un suivi."
+    "text": "Production du laboratoire\n\nDans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.\n\nCette production se réalise une seule fois dans rapport-labo-03.qmd.\nAuto-vérification\n\n\nJ’ai précisé l’origine, les dates et les unités.\nJe compare les cinq méthodes sur les mêmes cibles.\nJe distingue l’intervalle du SES et la méthode retenue.\nMa recommandation cite des résultats, une limite et un suivi."
   },
   {
     "objectID": "modules/atelier-03-series-chronologiques/presentation.html#rétroaction-et-suite",
     "href": "modules/atelier-03-series-chronologiques/presentation.html#rétroaction-et-suite",
     "title": "Laboratoire 03 - Prévoir la demande",
     "section": "Rétroaction et suite",
-    "text": "Rétroaction et suite\n\n\nPrésenter sa question et son protocole après une première tentative.\nFaire relire le rapport et corriger un point précis.\nApporter son projet autonome au point de contrôle du mini-rapport 2.\nRedémarrer R et rendre le rapport avec ses données."
+    "text": "Rétroaction et suite\n\n\nPrésentez votre question et votre protocole après une première tentative.\nFaites relire le rapport et corrigez un point précis.\nApportez votre projet autonome au point de contrôle du mini-rapport 2.\nRedémarrez R et rendez le rapport avec ses données."
   },
   {
     "objectID": "modules/atelier-03-series-chronologiques/presentation.html#références-et-crédits",
@@ -1523,21 +1467,21 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
     "title": "Capsule 5 - Communiquer l’incertitude et la décision",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQue peut-on annoncer sans promettre le budget futur?\n\n\nLa prévision centrale et sa plage sous hypothèses nourrissent la décision, sans supprimer le risque."
+    "text": "Pourquoi ça compte\n\nQuelle plage de ventes peut-on annoncer pour planifier?\n\n\nLa prévision centrale et son intervalle aident à planifier; leur validité dépend des hypothèses du modèle."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "title": "Capsule 5 - Communiquer l’incertitude et la décision",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDistinguer confiance et prédiction.\nLire les intervalles ponctuels.\nFormuler une recommandation avec suivi."
+    "text": "Objectifs de la capsule\n\n\nDistinguer intervalle de confiance et intervalle de prédiction.\nLire les intervalles ponctuels.\nFormuler une recommandation avec suivi."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#deux-intervalles-différents",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#deux-intervalles-différents",
     "title": "Capsule 5 - Communiquer l’incertitude et la décision",
     "section": "Deux intervalles différents",
-    "text": "Deux intervalles différents\n\n\n\nConfiance\n\n\nmoyenne conditionnelle\n\n\n\n\nPrédiction\n\n\nnouvelle observation\n\n\n\n\nMême niveau\n\n\nla prédiction ajoute sa variabilité"
+    "text": "Deux intervalles différents\n\n\n\nConfiance\n\n\nmoyenne conditionnelle\n\n\n\n\nPrédiction\n\n\nnouvelle observation\n\n\n\n\nMême niveau\n\n\nla prédiction inclut la variabilité d’une nouvelle observation"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#janvier-2025-dans-le-cas-guidé",
@@ -1559,13 +1503,6 @@
     "title": "Capsule 5 - Communiquer l’incertitude et la décision",
     "section": "Un niveau nominal, sous des hypothèses",
     "text": "Un niveau nominal, sous des hypothèses\n\n\nForme pertinente et variance constante.\nErreurs indépendantes; normalité pour les intervalles classiques exacts.\nUne rupture ou une dépendance restante peut modifier la couverture."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#douze-intervalles-ne-font-pas-une-garantie-annuelle",
-    "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#douze-intervalles-ne-font-pas-une-garantie-annuelle",
-    "title": "Capsule 5 - Communiquer l’incertitude et la décision",
-    "section": "Douze intervalles ne font pas une garantie annuelle",
-    "text": "Douze intervalles ne font pas une garantie annuelle\n\nLes intervalles sont marginaux. Douze observations couvertes ne prouvent pas la calibration future, et additionner les bornes ne produit pas automatiquement un intervalle annuel à 95 %."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#le-transfert-demande-une-autre-prudence",
@@ -1593,21 +1530,21 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#production-autonome-8.5",
     "title": "Capsule 5 - Communiquer l’incertitude et la décision",
     "section": "Production autonome 8.5",
-    "text": "Production autonome 8.5\n\nProduisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.\n\nAuto-vérification\n\n\nJe distingue moyenne conditionnelle et nouvelle observation.\nJe lis les intervalles comme marginaux et dépendants des hypothèses.\nMa recommandation nomme les unités, une limite et une réévaluation future."
+    "text": "Production autonome 8.5\n\nProduisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe distingue moyenne conditionnelle et nouvelle observation.\nJe lis les intervalles comme marginaux et dépendants des hypothèses.\nMa recommandation nomme les unités, une limite et une réévaluation future."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
     "title": "Capsule 3 - Lire les résidus",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQu’est-ce que le modèle laisse encore dans la série?\n\n\nUn modèle peut capturer les moyennes mensuelles et laisser une structure importante dans ses écarts."
+    "text": "Pourquoi ça compte\n\nQu’est-ce que le modèle laisse encore dans la série?\n\n\nUn modèle peut décrire les moyennes mensuelles et laisser une structure importante dans ses écarts."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "title": "Capsule 3 - Lire les résidus",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDistinguer observation, ajustement et résidu.\nLire le temps et la dispersion.\nNommer une limite qui reste à vérifier."
+    "text": "Objectifs de la capsule\n\n\nDistinguer observation, ajustement et résidu.\nExaminer l’ordre temporel et la dispersion des résidus.\nNommer une limite qui reste à vérifier."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-03-support.html#le-signe-du-résidu",
@@ -1656,77 +1593,77 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-03-support.html#production-autonome-8.3",
     "title": "Capsule 3 - Lire les résidus",
     "section": "Production autonome 8.3",
-    "text": "Production autonome 8.3\n\nExaminez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.\n\nAuto-vérification\n\n\nJe distingue observation, valeur ajustée et résidu.\nJ’examine le temps et la dispersion au-delà des moyennes.\nJe sais que les indicatrices imposent des sommes résiduelles mensuelles nulles."
+    "text": "Production autonome 8.3\n\nExaminez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe distingue observation, valeur ajustée et résidu.\nJ’examine le temps et la dispersion au-delà des moyennes.\nJe sais que les indicatrices imposent des sommes résiduelles mensuelles nulles."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nLa hausse vient-elle du temps ou du calendrier?\n\n\nUne direction doit distinguer croissance générale et mois récurrents pour planifier l’année."
+    "text": "Pourquoi ça compte\n\nComment distinguer la tendance du motif saisonnier?\n\n\nUne direction doit distinguer tendance générale et variations saisonnières pour planifier l’année."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Objectifs de la capsule",
     "text": "Objectifs de la capsule\n\n\nDéfinir l’unité et la période.\nLire une tendance et un motif saisonnier.\nExplorer le passé avant de comparer."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#deux-séries-fictives-deux-décisions",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#deux-séries-fictives-deux-décisions",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Deux séries fictives, deux décisions",
     "text": "Deux séries fictives, deux décisions\n\n\n\nGuidé\n\n\nventes et planification annuelle\n\n\n\n\nTransfert\n\n\nventes avec contexte commercial variable\n\n\n\n\n$ CA\n\n\ndollars canadiens par mois"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#séparer-avant-de-choisir",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#séparer-avant-de-choisir",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Séparer avant de choisir",
     "text": "Séparer avant de choisir\n\n\n\n2020 à 2024\n\n\n60 mois d’apprentissage\n\n\n\n\n2025\n\n\n12 mois de validation\n\n\n\n\nOrigine\n\n\nfin de décembre 2024"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#lire-la-trajectoire",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#lire-la-trajectoire",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Lire la trajectoire",
     "text": "Lire la trajectoire"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#comparer-les-mêmes-mois-entre-années",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#comparer-les-mêmes-mois-entre-années",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Comparer les mêmes mois entre années",
     "text": "Comparer les mêmes mois entre années"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#deux-structures-peuvent-coexister",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#deux-structures-peuvent-coexister",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Deux structures peuvent coexister",
     "text": "Deux structures peuvent coexister\n\n\nLa tendance fait évoluer le niveau général.\nLa saisonnalité revient selon un calendrier connu.\nUne seule année ne démontre pas la répétition."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#décrire-sans-inventer-une-cause",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#décrire-sans-inventer-une-cause",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Décrire sans inventer une cause",
-    "text": "Décrire sans inventer une cause\n\nUn mois élevé ne prouve pas un effet causal du calendrier. Un événement commercial ou un changement d’activité peut intervenir."
+    "text": "Décrire sans inventer une cause\n\nDes ventes élevées pendant un mois ne prouvent pas un effet causal du calendrier. Un événement commercial ou un changement d’activité peut intervenir."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#à-retenir",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#à-retenir",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "À retenir",
     "text": "À retenir\n\n\n\nTemps\n\n\nconserver l’ordre\n\n\n\n\nSaison\n\n\nchercher une répétition\n\n\n\n\nLimite\n\n\nun graphique ne démontre pas une cause"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#production-autonome-8.1",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-01-support.html#production-autonome-8.1",
-    "title": "Capsule 1 - Lire le temps et les motifs",
+    "title": "Capsule 1 - Repérer tendance et saisonnalité",
     "section": "Production autonome 8.1",
-    "text": "Production autonome 8.1\n\nSur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\n\nAuto-vérification\n\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale."
+    "text": "Production autonome 8.1\n\nSur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/index.html",
@@ -1754,7 +1691,7 @@
     "href": "modules/semaine-08-tendance-saisonnalite/index.html#votre-parcours",
     "title": "Module 08 - Tendance et saisonnalité",
     "section": "Votre parcours",
-    "text": "Votre parcours\nLes activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans tendance_ventes.qmd. Les exercices de transfert sont distincts et se conservent dans tendance_commerce.qmd, après une première tentative avant le corrigé.\nLes cinq capsules principales sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La synthèse est aussi disponible en PDF. Le lot du 26 octobre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.\n\n1Lire le temps et les motifsLa hausse vient-elle du temps ou du calendrier?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Lire le temps et les motifs.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.1Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.Transfert distinct Faites l’exercice 1 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n2Ajuster tendance et moisQue représente un coefficient de décembre?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Ajuster tendance et mois.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.2Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.Auto-vérification L’indice augmente d’une unité par mois et le facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.Transfert distinct Faites l’exercice 2 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n3Lire les résidusQu’est-ce que le modèle laisse encore dans la série?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les résidus.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.3Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.Auto-vérification Je distingue observation, valeur ajustée et résidu. J’examine le temps et la dispersion au-delà des moyennes. Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.Transfert distinct Faites l’exercice 3 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n4Comparer sur une validation communeLe calendrier fait-il mieux que reprendre la dernière année?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Comparer sur une validation commune.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.4Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.Auto-vérification Les quatre candidats utilisent les mêmes douze cibles et informations disponibles. Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur. Mon choix repose sur les erreurs de validation et reste provisoire.Transfert distinct Faites l’exercice 4 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n5Communiquer l’incertitude et la décisionQue peut-on annoncer sans promettre le budget futur?Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\nObjectif Communiquer l’incertitude et la décision.Ressource Capsule 5 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.5Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.Auto-vérification Je distingue moyenne conditionnelle et nouvelle observation. Je lis les intervalles comme marginaux et dépendants des hypothèses. Ma recommandation nomme les unités, une limite et une réévaluation future.Transfert distinct Faites l’exercice 5 dans tendance_commerce.qmd, avant d’ouvrir son corrigé."
+    "text": "Votre parcours\nLes activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans tendance_ventes.qmd. Les exercices de transfert sont distincts et se conservent dans tendance_commerce.qmd, après une première tentative avant le corrigé.\nLes cinq capsules principales sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La synthèse est aussi disponible en PDF. Le lot révisé du 3 novembre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.\n\n1Repérer tendance et saisonnalitéLa hausse vient-elle du temps ou du calendrier?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Repérer tendance et saisonnalité.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.1Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.Transfert distinct Faites l’exercice 1 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n2Ajuster tendance et moisQue représente un coefficient de décembre?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Ajuster tendance et mois.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.2Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.Auto-vérification Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.Transfert distinct Faites l’exercice 2 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n3Lire les résidusQu’est-ce que le modèle laisse encore dans la série?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les résidus.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.3Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.Auto-vérification Je distingue observation, valeur ajustée et résidu. J’examine le temps et la dispersion au-delà des moyennes. Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.Transfert distinct Faites l’exercice 3 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n4Comparer sur une validation communeLe calendrier fait-il mieux que reprendre la dernière année?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Comparer sur une validation commune.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.4Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.Auto-vérification Les quatre candidats utilisent les mêmes douze cibles et informations disponibles. Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur. Mon choix repose sur les erreurs de validation et reste provisoire.Transfert distinct Faites l’exercice 4 dans tendance_commerce.qmd, avant d’ouvrir son corrigé.\n5Communiquer l’incertitude et la décisionQue peut-on annoncer sans promettre le budget futur?Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\nObjectif Communiquer l’incertitude et la décision.Ressource Capsule 5 · Démonstration · Lecture françaiseAction Ajouter cette étape au rapport guidé.Activité 8.5Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.Auto-vérification Je distingue moyenne conditionnelle et nouvelle observation. Je lis les intervalles comme marginaux et dépendants des hypothèses. Ma recommandation nomme les unités, une limite et une réévaluation future.Transfert distinct Faites l’exercice 5 dans tendance_commerce.qmd, avant d’ouvrir son corrigé."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/index.html#exercices-dapplication",
@@ -1893,15 +1830,15 @@
     "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-1",
     "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-1",
     "title": "Capsules - Module 08",
-    "section": "Capsule 1 - Lire le temps et les motifs",
-    "text": "Capsule 1 - Lire le temps et les motifs\nLa hausse vient-elle du temps ou du calendrier? Consultez la lecture 1 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\nAuto-vérification:\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 1 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+    "section": "Capsule 1 - Repérer tendance et saisonnalité",
+    "text": "Capsule 1 - Repérer tendance et saisonnalité\nLa hausse vient-elle du temps ou du calendrier? Consultez la lecture 1 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.\nAuto-vérification:\n\nJ’ai limité l’exploration à 2020 à 2024.\nMes axes indiquent les mois et les dollars canadiens.\nJe distingue tendance, répétition et explication causale.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 1 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-2",
     "href": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-2",
     "title": "Capsules - Module 08",
     "section": "Capsule 2 - Ajuster tendance et mois",
-    "text": "Capsule 2 - Ajuster tendance et mois\nQue représente un coefficient de décembre? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.2, à réaliser une seule fois : Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.\nAuto-vérification:\n\nL’indice augmente d’une unité par mois et le facteur n’est pas ordonné.\nJe précise janvier comme référence et les unités des coefficients.\nJe distingue comparaison conditionnelle et effet causal.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
+    "text": "Capsule 2 - Ajuster tendance et mois\nQue représente un coefficient de décembre? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 8.2, à réaliser une seule fois : Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.\nAuto-vérification:\n\nMon indice augmente d’une unité par mois et mon facteur n’est pas ordonné.\nJe précise janvier comme référence et les unités des coefficients.\nJe distingue comparaison conditionnelle et effet causal.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 dans tendance_commerce.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/capsules.html#capsule-3",
@@ -2153,14 +2090,14 @@
     "href": "modules/semaine-07-lissage/index.html#avant-de-commencer",
     "title": "Module 07 - Lissage et évaluation des prévisions",
     "section": "Avant de commencer",
-    "text": "Avant de commencer\nPrérequis présents dans les supports: importer un CSV et rendre un document Quarto (module 02), définir cible, origine et horizon, vérifier un calendrier, construire les références naïves et lire ME, MAE et RMSE (module 06). Si nécessaire, reprenez les démonstrations du module 06 et ses lectures sur les erreurs. L’acquisition de ces gestes n’est pas présumée vérifiée individuellement.\nTéléchargez et décompressez les projets lissage-demande et lissage-electricite. Ouvrez leur .Rproj; les données, dictionnaires et fonctions sont fournis. tidyverse, slider et forecast sont nécessaires. La préparation R repart d’une session neuve.\nLe cas guidé comprend 104 semaines simulées, du 1er janvier 2024 au 22 décembre 2025. Une ligne est une semaine, la demande se mesure en unités de produit. On apprend sur les 91 premières semaines et on compare sur les treize dernières à une seule origine. L’électricité compte 72 mois, de janvier 2020 à décembre 2025, en kWh: 60 mois pour apprendre, puis les douze mois de 2025 pour comparer. Les dictionnaires détaillent les variables et les limites du calendrier.\n\n\n\n\n\n\nAvertissementUne validation déjà connue\n\n\n\nCes périodes ont déjà été examinées au module 06. Elles servent à apprendre la comparaison de nouvelles méthodes, sans nouveau test indépendant. Les fenêtres et candidats sont annoncés avant les scores; les paramètres estimés utilisent seulement l’apprentissage.\n\n\n\nCe qui change depuis le module 06\nLe calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales. Holt est un complément accompagné pour préparer le laboratoire; différenciation, ETS saisonnier et autres méthodes restent facultatifs."
+    "text": "Avant de commencer\nPrérequis présents dans les supports: importer un CSV et rendre un document Quarto (module 02), définir cible, origine et horizon, vérifier un calendrier, construire les références naïves et lire ME, MAE et RMSE (module 06). Si nécessaire, reprenez les démonstrations du module 06 et ses lectures sur les erreurs. L’acquisition de ces gestes n’est pas présumée vérifiée individuellement.\nTéléchargez et décompressez les projets lissage-demande et lissage-electricite. Ouvrez leur .Rproj; les données, dictionnaires et fonctions sont fournis. tidyverse, slider et forecast sont nécessaires. La préparation R repart d’une session neuve.\nLe cas guidé comprend 104 semaines simulées, du 1er janvier 2024 au 22 décembre 2025. Une ligne est une semaine, la demande se mesure en unités de produit. On apprend sur les 91 premières semaines et on compare sur les treize dernières à une seule origine. L’électricité compte 72 mois, de janvier 2020 à décembre 2025, en kWh: 60 mois pour apprendre, puis les douze mois de 2025 pour comparer. Les dictionnaires détaillent les variables et les limites du calendrier.\n\n\n\n\n\n\nAvertissementUne validation déjà connue\n\n\n\nCes périodes ont déjà été examinées au module 06. Elles servent à apprendre la comparaison de nouvelles méthodes, sans nouveau test indépendant. Les fenêtres et candidats sont annoncés avant les scores; les paramètres estimés utilisent seulement l’apprentissage.\n\n\n\nCe qui change depuis le module 06\nLe calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales et une cinquième étape facultative sur Holt. Ce complément accompagné ajoute une pente au niveau lissé; différenciation, ETS saisonnier et autres méthodes restent aussi facultatifs."
   },
   {
     "objectID": "modules/semaine-07-lissage/index.html#votre-parcours",
     "href": "modules/semaine-07-lissage/index.html#votre-parcours",
     "title": "Module 07 - Lissage et évaluation des prévisions",
     "section": "Votre parcours",
-    "text": "Votre parcours\nLes productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous et leurs rappels sur la page des capsules désignent le même travail. Réalisez chaque production une seule fois dans lissage_demande.qmd. Les quatre exercices de transfert sont distincts et alimentent lissage_electricite.qmd. Ouvrez leurs corrigés après une tentative.\nLes quatre capsules principales et le complément Holt sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie pour le moment. La synthèse est aussi disponible en PDF. Le lot PDF du 3 novembre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Revenez ici pour garder le fil.\n\n1Choisir une fenêtre de lissageQue peut-on savoir avant la semaine suivante?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Choisir une fenêtre de lissage.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.1 - Fenêtre et disponibilitéSur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.Auto-vérification J’ai utilisé seulement les 91 semaines d’apprentissage. J’obtiens 1 050 unités et je précise quand la moyenne est disponible. Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.Exercice d’application distinct Faites l’exercice 1 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n2Mettre à jour un niveauQuelle part de l’écart faut-il corriger?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Mettre à jour un niveau.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.2 - Niveau et alphaAvec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.Auto-vérification Les deux calculs partagent le même état initial. J’obtiens 108 puis 114,4 et 132 puis 138,4. J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.Exercice d’application distinct Faites l’exercice 2 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n3Lire les erreurs de prévisionQuelle erreur le score moyen cache-t-il?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les erreurs de prévision.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.3 - Erreurs et unitésÉmettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.Auto-vérification Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future. Mes scores sont en unités de produit, avec erreur = observé moins prévu. Je relie le classement au graphique et je distingue validation et test indépendant.Exercice d’application distinct Faites l’exercice 3 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n4Choisir et surveiller une référenceLe plus petit score suffit-il pour décider?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Choisir et surveiller une référence.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.4 - Coût et recommandationComparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.Auto-vérification Les coefficients du coût sont annoncés avant le calcul. Ma recommandation utilise les résultats de cette validation connue. Je nomme les informations manquantes pour commander et une réévaluation future.Exercice d’application distinct Faites l’exercice 4 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé."
+    "text": "Votre parcours\nLes productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous et leurs rappels sur la page des capsules désignent le même travail. Réalisez chaque production une seule fois dans lissage_demande.qmd. Les quatre exercices de transfert sont distincts et alimentent lissage_electricite.qmd. Ouvrez leurs corrigés après une tentative.\nLes quatre capsules principales et le complément Holt sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie pour le moment. La synthèse est aussi disponible en PDF. Le lot PDF du 3 novembre 2026 contient ces six supports.\nCliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Les quatre premières cartes forment le parcours principal. La cinquième propose un prolongement facultatif sur Holt, avec des supports PDF et HTML, une lecture et du code fourni. Revenez ici pour garder le fil.\n\n1Choisir une fenêtre de lissageQue peut-on savoir avant la semaine suivante?Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\nObjectif Choisir une fenêtre de lissage.Ressource Capsule 1 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.1 - Fenêtre et disponibilitéSur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.Auto-vérification J’ai utilisé seulement les 91 semaines d’apprentissage. J’obtiens 1 050 unités et je précise quand la moyenne est disponible. Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.Exercice d’application distinct Faites l’exercice 1 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n2Mettre à jour un niveauQuelle part de l’écart faut-il corriger?Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\nObjectif Mettre à jour un niveau.Ressource Capsule 2 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.2 - Niveau et alphaAvec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.Auto-vérification Les deux calculs partagent le même état initial. J’obtiens 108 puis 114,4 et 132 puis 138,4. J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.Exercice d’application distinct Faites l’exercice 2 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n3Lire les erreurs de prévisionQuelle erreur le score moyen cache-t-il?Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\nObjectif Lire les erreurs de prévision.Ressource Capsule 3 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.3 - Erreurs et unitésÉmettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.Auto-vérification Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future. Mes scores sont en unités de produit, avec erreur = observé moins prévu. Je relie le classement au graphique et je distingue validation et test indépendant.Exercice d’application distinct Faites l’exercice 3 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n4Choisir et surveiller une référenceLe plus petit score suffit-il pour décider?Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\nObjectif Choisir et surveiller une référence.Ressource Capsule 4 · Démonstration · Lecture françaiseAction Ajouter cette étape au même rapport guidé.\nActivité 7.4 - Coût et recommandationComparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.Auto-vérification Les coefficients du coût sont annoncés avant le calcul. Ma recommandation utilise les résultats de cette validation connue. Je nomme les informations manquantes pour commander et une réévaluation future.Exercice d’application distinct Faites l’exercice 4 sur l’électricité dans lissage_electricite.qmd. Tentez une réponse avant d’ouvrir le corrigé.\n5Holt accompagné (facultatif)Qu’ajoute une pente au niveau lissé?PDF et HTMLDémoEx. 13Ouvrir l’étapeRéduire\nObjectif Distinguer le niveau, la pente et son amortissement.Prérequis Niveau lissé, origine, horizon et pente.Ressources Supports PDF et HTML · Démonstration avec code complet · Lecture françaiseAction facultative Réaliser cette pratique une seule fois si vous choisissez ce prolongement. Elle ne s’ajoute pas aux deux rapports principaux.\nPratique facultative 7.5 - Niveau et penteComparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.Auto-vérification Je conserve le même apprentissage et les mêmes cibles. Je distingue pente et saisonnalité. Je garde ce complément séparé de la trace principale.Autre cas, facultatif Tentez l’exercice 13 sur l’électricité après la démonstration."
   },
   {
     "objectID": "modules/semaine-07-lissage/index.html#exercices-dapplication",
@@ -2181,7 +2118,7 @@
     "href": "modules/semaine-07-lissage/index.html#pour-préparer-la-suite",
     "title": "Module 07 - Lissage et évaluation des prévisions",
     "section": "Pour préparer la suite",
-    "text": "Pour préparer la suite\nLe module prépare la comparaison des méthodes et la lecture des erreurs au laboratoire 03, au mini-rapport 2 et à l’examen final. Les deux rapports sont des entraînements. Les consignes d’évaluation restent la référence pour les travaux évalués. Le mini-rapport 2 exige une analyse autonome.\nAu laboratoire, apportez votre trace et consultez le complément Holt si nécessaire. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales."
+    "text": "Pour préparer la suite\nLe module prépare la comparaison des méthodes et la lecture des erreurs au laboratoire 03, au mini-rapport 2 et à l’examen final. Les deux rapports sont des entraînements. Les consignes d’évaluation restent la référence pour les travaux évalués. Le mini-rapport 2 exige une analyse autonome.\nAu laboratoire, apportez votre trace. Le complément Holt reste disponible si vous souhaitez explorer le lissage avec une pente. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales."
   },
   {
     "objectID": "modules/semaine-07-lissage/index.html#ressources-du-module",
@@ -2300,7 +2237,7 @@
     "href": "modules/semaine-07-lissage/capsules.html#capsule-2",
     "title": "Capsules - Module 07",
     "section": "Capsule 2 - Mettre à jour un niveau",
-    "text": "Capsule 2 - Mettre à jour un niveau\nQuelle part de l’écart faut-il corriger? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.2, à réaliser une seule fois : Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.\nAuto-vérification:\n\nLes deux calculs partagent le même état initial.\nJ’obtiens 108 puis 114,4 et 132 puis 138,4.\nJ’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé.\n\n\n\nPour le laboratoire : prolongement Holt\nHolt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le complément accompagné ci-dessous, la lecture et le code fourni préparent l’appel utilisé au laboratoire 03. Il ne s’ajoute pas aux candidats du rapport principal."
+    "text": "Capsule 2 - Mettre à jour un niveau\nQuelle part de l’écart faut-il corriger? Consultez la lecture 2 et la démonstration associée.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nProduction guidée 7.2, à réaliser une seule fois : Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.\nAuto-vérification:\n\nLes deux calculs partagent le même état initial.\nJ’obtiens 108 puis 114,4 et 132 puis 138,4.\nJ’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.\n\n\n\n\n\n\n\nNoteExercice d’application distinct\n\n\n\nFaites l’exercice 2 sur l’électricité dans lissage_electricite.qmd, après la préparation commune. Tentez une réponse avant d’ouvrir le corrigé.\n\n\n\nProlongement facultatif : Holt\nHolt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le complément accompagné ci-dessous, la lecture et le code fourni permettent d’explorer le lissage avec une pente. Il ne s’ajoute pas aux candidats du rapport principal."
   },
   {
     "objectID": "modules/semaine-07-lissage/capsules.html#capsule-3",
@@ -2321,7 +2258,7 @@
     "href": "modules/semaine-07-lissage/capsules.html#capsule-5",
     "title": "Capsules - Module 07",
     "section": "Capsule 5 - Holt accompagné (facultatif)",
-    "text": "Capsule 5 - Holt accompagné (facultatif)\nPrérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour préparer le laboratoire; le calcul manuel des récurrences n’est pas demandé.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nPratique facultative 7.5: comparez la prévision de Holt amorti à MM4 sur la demande avec le code complet. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE. Pour un autre cas, tentez l’exercice 13. Ces ajouts ne sont pas requis dans les deux traces principales."
+    "text": "Capsule 5 - Holt accompagné (facultatif)\nPrérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour explorer cette méthode; le calcul manuel des récurrences n’est pas demandé.\n\nPDFHTML\n\n\n\nOuvrir le PDF · Télécharger le PDF\n\n\n\nOuvrir le support HTML dans un nouvel onglet\n\n\n\nPratique facultative 7.5, à réaliser une seule fois : Comparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.\nAuto-vérification:\n\nJe conserve le même apprentissage et les mêmes cibles.\nJe distingue pente et saisonnalité.\nJe garde ce complément séparé de la trace principale.\n\nUtilisez le code complet. Pour un autre cas, tentez l’exercice 13. Ces ajouts ne sont pas requis dans les deux traces principales."
   },
   {
     "objectID": "modules/semaine-07-lissage/capsules.html#autres-méthodes-conservées-cahier-facultatif",
@@ -10374,18 +10311,11 @@
     "text": "Objectifs de la capsule\n\n\nCoder temps et mois.\nAjuster trois structures simples.\nInterpréter pente et référence."
   },
   {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#lindice-continue-le-mois-revient",
-    "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#lindice-continue-le-mois-revient",
-    "title": "Capsule 2 - Ajuster tendance et mois",
-    "section": "L’indice continue, le mois revient",
-    "text": "L’indice continue, le mois revient\n\n\n\n1 à 60\n\n\nindices de l’apprentissage\n\n\n\n\n61 à 72\n\n\nindices de 2025\n\n\n\n\nJanvier\n\n\nréférence du facteur mois"
-  },
-  {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#trois-questions-trois-modèles",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#trois-questions-trois-modèles",
     "title": "Capsule 2 - Ajuster tendance et mois",
     "section": "Trois questions, trois modèles",
-    "text": "Trois questions, trois modèles\n\n\nTendance seule: le niveau augmente-t-il?\nSaison seule: quels mois se répètent?\nTendance avec mois: comment combiner les deux?"
+    "text": "Trois questions, trois modèles\n\n\nTendance seule : le niveau augmente-t-il?\nSaison seule : comment les ventes diffèrent-elles selon le mois?\nTendance avec mois : comment combiner les deux?"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#la-forme-combinée",
@@ -10399,21 +10329,21 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#le-mois-est-une-catégorie",
     "title": "Capsule 2 - Ajuster tendance et mois",
     "section": "Le mois est une catégorie",
-    "text": "Le mois est une catégorie\n\n\n\n12 mois\n\n\n11 contrastes avec la constante\n\n\n\n\nNon ordonné\n\n\ncontrasté par rapport à janvier\n\n\n\n\n13 coefficients\n\n\nconstante, pente et contrastes"
+    "text": "Le mois est une catégorie\n\n\n\n12 mois\n\n\n11 écarts par rapport à janvier\n\n\n\n\nNon ordonné\n\n\njanvier comme catégorie de référence\n\n\n\n\n13 coefficients\n\n\nconstante, pente et contrastes"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#lire-les-coefficients-calculés",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#lire-les-coefficients-calculés",
     "title": "Capsule 2 - Ajuster tendance et mois",
     "section": "Lire les coefficients calculés",
-    "text": "Lire les coefficients calculés\n\n\n\n\n\nTerme\nEstimation\nErreur-type\n\n\n\n\nTendance\n2 884\n72\n\n\nDécembre − janvier\n32 705\n6 026\n\n\n\n\n\n\nPente: dollars par mois à mois égal. Contraste: dollars à indice de temps égal, selon le modèle."
+    "text": "Lire les coefficients calculés\n\n\n\n\n\nTerme\nEstimation\nErreur-type\n\n\n\n\nTendance\n2 884\n72\n\n\nDécembre − janvier\n32 705\n6 026\n\n\n\n\n\n\nPente : dollars par unité d’indice, à mois du calendrier égal. Contraste : différence en dollars avec janvier, à indice égal."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#une-interprétation-conditionnelle",
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#une-interprétation-conditionnelle",
     "title": "Capsule 2 - Ajuster tendance et mois",
     "section": "Une interprétation conditionnelle",
-    "text": "Une interprétation conditionnelle\n\nDécembre est modélisé environ 32 705 $ au-dessus de janvier, à indice de temps égal.\n\n\nCette différence ne mesure pas un effet causal. Changer la référence réécrit les coefficients sans changer les prévisions."
+    "text": "Une interprétation conditionnelle\n\nÀ indice de temps égal, les ventes prédites de décembre dépassent celles de janvier d’environ 32 705 $.\n\n\nCette différence ne mesure pas un effet causal. Changer la référence réécrit les coefficients sans changer les prévisions."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#ajuster-dans-r",
@@ -10434,7 +10364,7 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#production-autonome-8.2",
     "title": "Capsule 2 - Ajuster tendance et mois",
     "section": "Production autonome 8.2",
-    "text": "Production autonome 8.2\n\nVérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.\n\nAuto-vérification\n\n\nL’indice augmente d’une unité par mois et le facteur n’est pas ordonné.\nJe précise janvier comme référence et les unités des coefficients.\nJe distingue comparaison conditionnelle et effet causal."
+    "text": "Production autonome 8.2\n\nVérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nMon indice augmente d’une unité par mois et mon facteur n’est pas ordonné.\nJe précise janvier comme référence et les unités des coefficients.\nJe distingue comparaison conditionnelle et effet causal."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
@@ -10448,7 +10378,7 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
     "title": "Capsule 4 - Comparer sur une validation commune",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nConstruire le calendrier futur.\nComparer les mêmes cibles à une seule origine.\nLire ME, MAE et RMSE en dollars."
+    "text": "Objectifs de la capsule\n\n\nConstruire le calendrier futur.\nComparer les mêmes cibles à une seule origine.\nInterpréter ME, MAE et RMSE en dollars."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#connaître-le-calendrier-pas-les-ventes",
@@ -10462,7 +10392,7 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#quatre-candidats-annoncés",
     "title": "Capsule 4 - Comparer sur une validation commune",
     "section": "Quatre candidats annoncés",
-    "text": "Quatre candidats annoncés\n\n\n\nTendance et saison\n\n\ndeux modèles séparés\n\n\n\n\nCalendrier\n\n\ntendance et mois ensemble\n\n\n\n\nSaisonnier naïf\n\n\nreprendre les douze mois de 2024"
+    "text": "Quatre candidats annoncés\n\n\n\nTendance et saison\n\n\ndeux modèles séparés\n\n\n\n\nCalendrier\n\n\ntendance et mois ensemble\n\n\n\n\nNaïf saisonnier\n\n\nreprendre les douze mois de 2024"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#des-informations-identiques",
@@ -10470,13 +10400,6 @@
     "title": "Capsule 4 - Comparer sur une validation commune",
     "section": "Des informations identiques",
     "text": "Des informations identiques\n\nUne seule origine à la fin de 2024. Douze horizons et douze cibles communs. Paramètres estimés sur 2020 à 2024.\n\n\nMettre à jour une prévision avec une vente de 2025 répondrait à un autre protocole."
-  },
-  {
-    "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#les-scores-réellement-calculés",
-    "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#les-scores-réellement-calculés",
-    "title": "Capsule 4 - Comparer sur une validation commune",
-    "section": "Les scores réellement calculés",
-    "text": "Les scores réellement calculés\n\n\n\n\n\nMéthode\nME ($ CA)\nMAE ($ CA)\nRMSE ($ CA)\n\n\n\n\nCalendrier\n-3 538\n9 891\n11 280\n\n\nTendance\n-4 347\n17 064\n20 292\n\n\nSaisonnier_naif\n29 067\n29 067\n30 170\n\n\nSaison\n100 302\n100 302\n100 872"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#les-trajectoires-complètent-le-classement",
@@ -10490,7 +10413,7 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#choisir-provisoirement",
     "title": "Capsule 4 - Comparer sur une validation commune",
     "section": "Choisir provisoirement",
-    "text": "Choisir provisoirement\n\n\nLe modèle combiné a ici la plus petite MAE.\nLa saison seule manque la croissance.\nLa validation sert au choix, sans test final indépendant.\nLe classement doit être réévalué à de nouvelles origines."
+    "text": "Choisir provisoirement\n\n\nLe modèle combiné a ici la plus petite MAE.\nLe modèle saisonnier seul ne décrit pas la croissance.\nLa validation sert au choix, sans test final indépendant.\nLe classement doit être réévalué à de nouvelles origines."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#à-retenir",
@@ -10504,14 +10427,14 @@
     "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#production-autonome-8.4",
     "title": "Capsule 4 - Comparer sur une validation commune",
     "section": "Production autonome 8.4",
-    "text": "Production autonome 8.4\n\nConstruisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.\n\nAuto-vérification\n\n\nLes quatre candidats utilisent les mêmes douze cibles et informations disponibles.\nJe n’ai utilisé ni ventes futures ni budget cible comme prédicteur.\nMon choix repose sur les erreurs de validation et reste provisoire."
+    "text": "Production autonome 8.4\n\nConstruisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nLes quatre candidats utilisent les mêmes douze cibles et informations disponibles.\nJe n’ai utilisé ni ventes futures ni budget cible comme prédicteur.\nMon choix repose sur les erreurs de validation et reste provisoire."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#pourquoi-ça-compte",
     "href": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#pourquoi-ça-compte",
     "title": "Synthèse - Tendance et saisonnalité",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nComment distinguer croissance et mois récurrents pour planifier?\n\n\nLe socle: une tendance linéaire, des mois, une comparaison commune et une décision prudente."
+    "text": "Pourquoi ça compte\n\nComment tenir compte de la tendance et des saisons pour planifier?\n\n\nUne tendance linéaire, des effets mensuels et une comparaison commune permettent de préparer une décision prudente."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#objectifs-du-module",
@@ -10539,21 +10462,21 @@
     "href": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#trois-modèles-une-référence",
     "title": "Synthèse - Tendance et saisonnalité",
     "section": "Trois modèles, une référence",
-    "text": "Trois modèles, une référence\n\n\n\nTendance\n\n\nhausse sans mois\n\n\n\n\nSaison\n\n\nmois sans hausse\n\n\n\n\nCombiné\n\n\nhausse et mois, comparés au saisonnier naïf"
+    "text": "Trois modèles, une référence\n\n\n\nTendance\n\n\nhausse sans mois\n\n\n\n\nSaison\n\n\nmois sans hausse\n\n\n\n\nCombiné\n\n\nhausse et mois, comparés au naïf saisonnier"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#interpréter-sans-causalité",
     "href": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#interpréter-sans-causalité",
     "title": "Synthèse - Tendance et saisonnalité",
     "section": "Interpréter sans causalité",
-    "text": "Interpréter sans causalité\n\n\nPente: dollars par mois à mois égal.\nDécembre: différence avec janvier à indice égal.\nChanger la référence réécrit les coefficients, sans changer les prévisions."
+    "text": "Interpréter sans causalité\n\n\nPente : dollars par unité d’indice, à mois du calendrier égal.\nDécembre : différence avec janvier à indice égal.\nChanger la référence réécrit les coefficients, sans changer les prévisions."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#examiner-les-résidus",
     "href": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#examiner-les-résidus",
     "title": "Synthèse - Tendance et saisonnalité",
     "section": "Examiner les résidus",
-    "text": "Examiner les résidus\n\n\nOrdre temporel et dispersion.\nLes indicatrices imposent des sommes mensuelles nulles.\nCette moyenne nulle ne valide pas la saison future."
+    "text": "Examiner les résidus\n\n\nOrdre temporel et dispersion.\nLes indicatrices imposent des sommes mensuelles nulles.\nCette moyenne nulle ne prouve pas la stabilité future de la saisonnalité."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#prévoir-avant-de-mesurer",
@@ -10567,14 +10490,14 @@
     "href": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#lire-les-scores-dans-le-contexte",
     "title": "Synthèse - Tendance et saisonnalité",
     "section": "Lire les scores dans le contexte",
-    "text": "Lire les scores dans le contexte\n\n\n\nGuidé\n\n\ncalendrier: MAE ≈ 9 891 $\n\n\n\n\nTransfert\n\n\ncalendrier: MAE ≈ 32 389 $\n\n\n\n\nValidation\n\n\nchoix provisoire, sans test indépendant"
+    "text": "Lire les scores dans le contexte\n\n\n\nGuidé\n\n\ncalendrier : MAE ≈ 9 891 $\n\n\n\n\nTransfert\n\n\ncalendrier : MAE ≈ 32 389 $\n\n\n\n\nValidation\n\n\nchoix provisoire, sans test indépendant"
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#communiquer-les-limites",
     "href": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#communiquer-les-limites",
     "title": "Synthèse - Tendance et saisonnalité",
     "section": "Communiquer les limites",
-    "text": "Communiquer les limites\n\n\nConfiance sur la moyenne, prédiction pour une observation.\nIntervalles marginaux sous hypothèses.\nPlanification et suivi, sans garantie de budget ou de capacité."
+    "text": "Communiquer les limites\n\n\nIntervalle de confiance pour la moyenne; intervalle de prédiction pour une observation.\nIntervalles marginaux sous hypothèses.\nPlanification et suivi, sans garantie de budget ou de capacité."
   },
   {
     "objectID": "modules/semaine-08-tendance-saisonnalite/notes-cours.html#à-retenir",
@@ -10798,7 +10721,7 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
     "title": "Capsules - Module 09",
     "section": "",
-    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé."
+    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
@@ -10812,21 +10735,21 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
     "title": "Capsules - Module 09",
     "section": "Capsule 2 - Ajuster et interpréter",
-    "text": "Capsule 2 - Ajuster et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.2\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\nAuto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Les douze mois de validation ne servent pas à ajuster le modèle.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+    "text": "Capsule 2 - Ajuster et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.2\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\nAuto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
     "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
     "title": "Capsules - Module 09",
     "section": "Capsule 3 - Diagnostiquer dans le temps",
-    "text": "Capsule 3 - Diagnostiquer dans le temps\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.3\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\nAuto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Une ACF peu marquée ne prouve pas l’indépendance.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+    "text": "Capsule 3 - Diagnostiquer dans le temps\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.3\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\nAuto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
     "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
     "title": "Capsules - Module 09",
     "section": "Capsule 4 - Comparer deux modèles",
-    "text": "Capsule 4 - Comparer deux modèles\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.4\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\nAuto-vérification : Les deux modèles utilisent les mêmes observations et prédicteurs. Les scores sont en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+    "text": "Capsule 4 - Comparer deux modèles\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.4\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\nAuto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
@@ -10917,7 +10840,7 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
     "title": "Module 09 - Variables externes et autocorrélation",
     "section": "Votre parcours",
-    "text": "Votre parcours\nLes cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.\n\n\n\n1Auditer les variablesActivité 9.1Capsule 1DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 9.1\n\n\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\n\n\n\nAuto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Ajuster et interpréterActivité 9.2Capsule 2DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 9.2\n\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\n\n\nAuto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Les douze mois de validation ne servent pas à ajuster le modèle.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Diagnostiquer dans le tempsActivité 9.3Capsule 3DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 9.3\n\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\n\n\nAuto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Une ACF peu marquée ne prouve pas l’indépendance.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Comparer deux modèlesActivité 9.4Capsule 4DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 9.4\n\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\n\n\nAuto-vérification Les deux modèles utilisent les mêmes observations et prédicteurs. Les scores sont en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Communiquer un scénarioActivité 9.5Capsule 5DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 9.5\n\n\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\n\n\n\nAuto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé."
+    "text": "Votre parcours\nLes cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.\n\n\n\n1Auditer les variablesActivité 9.1Capsule 1DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 9.1\n\n\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\n\n\n\nAuto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Ajuster et interpréterActivité 9.2Capsule 2DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 9.2\n\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\n\n\nAuto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Diagnostiquer dans le tempsActivité 9.3Capsule 3DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 9.3\n\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\n\n\nAuto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Comparer deux modèlesActivité 9.4Capsule 4DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 9.4\n\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\n\n\nAuto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Communiquer un scénarioActivité 9.5Capsule 5DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 9.5\n\n\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\n\n\n\nAuto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
@@ -10931,7 +10854,7 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
     "title": "Module 09 - Variables externes et autocorrélation",
     "section": "Ressources du module",
-    "text": "Ressources du module\n\nCapsules et productions, démonstrations R, lectures françaises et exercices avec corrigés.\nNotes de synthèse HTML et PDF.\nDémonstration complète et corrigé de transfert.\nCompléments facultatifs : retards, événements, modèle en deux étapes et repères ARIMA; télécharger le cahier."
+    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026.\n\nCapsules et productions, démonstrations R, lectures françaises et exercices avec corrigés.\nNotes de synthèse HTML et PDF.\nDémonstration complète et corrigé de transfert.\nCompléments facultatifs : retards, événements, modèle en deux étapes et repères ARIMA; télécharger le cahier."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
@@ -10959,21 +10882,14 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
     "title": "Capsule 1 - Auditer les variables",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQu’est-ce qui est connu à l’origine?\n\n\nLa qualité d’une prévision dépend du modèle et de l’information disponible."
+    "text": "Pourquoi ça compte\n\nQu’est-ce qui est connu à l’origine?\n\n\nUne direction doit prévoir avant de connaître les ventes et l’indice économique du mois à venir."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
     "title": "Capsule 1 - Auditer les variables",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nAuditer les variables.\nRelier le résultat au cas guidé.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#le-raisonnement",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#le-raisonnement",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nOrigine : fin décembre 2024.\nLe calendrier est connu; un prix ou une promotion peuvent être planifiés.\nL’indice futur est prévu ou scénarisé, pas observé d’avance."
+    "text": "Objectifs de la capsule\n\n\nClasser les variables selon leur disponibilité à l’origine.\nDistinguer information connue, prévision et scénario.\nRepérer une information future qui créerait une fuite."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-la-fin-de-2024",
@@ -10987,7 +10903,7 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-retenir",
     "title": "Capsule 1 - Auditer les variables",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nHistorique\n\n\nUn fichier historique montre ce qui s’est passé.\n\n\n\n\nPrévision\n\n\nUne prévision réalisable utilise ce qui était disponible."
+    "text": "À retenir\n\n\n\nOrigine\n\n\nfin décembre 2024 : information disponible à cette date\n\n\n\n\nDisponibilité\n\n\nvaleur connue, prévue ou scénarisée\n\n\n\n\nFuite\n\n\nune valeur future observée après coup ne peut être connue d’avance"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#production-autonome-9.1",
@@ -11008,42 +10924,28 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
     "title": "Capsule 3 - Diagnostiquer dans le temps",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nLes erreurs se suivent-elles?\n\n\nLa qualité d’une prévision dépend du modèle et de l’information disponible."
+    "text": "Pourquoi ça compte\n\nLes erreurs successives sont-elles liées?\n\n\nDes erreurs qui se suivent peuvent révéler une structure que les prédicteurs n’expliquent pas."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "title": "Capsule 3 - Diagnostiquer dans le temps",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDiagnostiquer dans le temps.\nRelier le résultat au cas guidé.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#le-raisonnement",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#le-raisonnement",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nRésidu : observation moins valeur ajustée.\nLe retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle.\nRegarder les résidus dans le temps et leur ACF.\nLe test de Ljung-Box est un complément facultatif."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#acf-des-résidus-sur-2020-à-2024",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#acf-des-résidus-sur-2020-à-2024",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "ACF des résidus sur 2020 à 2024",
-    "text": "ACF des résidus sur 2020 à 2024"
+    "text": "Objectifs de la capsule\n\n\nDistinguer résidu et erreur de prévision.\nLire la fonction d’autocorrélation des résidus.\nExpliquer les limites du diagnostic."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#à-retenir",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#à-retenir",
     "title": "Capsule 3 - Diagnostiquer dans le temps",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nIncertitude\n\n\nUne ACF peu marquée ne prouve pas l’indépendance.\n\n\n\n\nRésidus\n\n\nUne ACF des ventes brutes n’est pas celle des résidus."
+    "text": "À retenir\n\n\n\nRésidus\n\n\nécarts après ajustement, distincts des erreurs de prévision\n\n\n\n\nRetards\n\n\ncomparer les résidus à un ou plusieurs mois d’intervalle\n\n\n\n\nLimite\n\n\nune autocorrélation peu marquée ne prouve pas l’indépendance"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#production-autonome-9.3",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#production-autonome-9.3",
     "title": "Capsule 3 - Diagnostiquer dans le temps",
     "section": "Production autonome 9.3",
-    "text": "Production autonome 9.3\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe garde l’ordre des mois et distingue résidus et erreurs de prévision.\nJe décris les retards et les motifs visibles.\nUne ACF peu marquée ne prouve pas l’indépendance."
+    "text": "Production autonome 9.3\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe garde l’ordre des mois et distingue résidus et erreurs de prévision.\nJe décris les retards et les motifs visibles.\nJe sais qu’une ACF peu marquée ne prouve pas l’indépendance."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#références-et-crédits",
@@ -11057,35 +10959,28 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
     "title": "Capsule 5 - Communiquer un scénario",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQue dire sous deux scénarios?\n\n\nLa qualité d’une prévision dépend du modèle et de l’information disponible."
+    "text": "Pourquoi ça compte\n\nQue dire sous deux scénarios?\n\n\nUne prévision sous scénario dépend des valeurs supposées; elle ne garantit pas ce qui se produira."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "title": "Capsule 5 - Communiquer un scénario",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nCommuniquer un scénario.\nRelier le résultat au cas guidé.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#le-raisonnement",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#le-raisonnement",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nJanvier 2025 : prix de 60 $, indice de 100 points.\nComparer promotion oui et non avec les autres entrées identiques.\nNommer la cible, l’horizon et les hypothèses."
+    "text": "Objectifs de la capsule\n\n\nComparer deux scénarios pour janvier 2025.\nExpliciter leurs hypothèses communes.\nDistinguer différence prédite et effet causal."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#janvier-2025-sous-deux-scénarios",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#janvier-2025-sous-deux-scénarios",
     "title": "Capsule 5 - Communiquer un scénario",
     "section": "Janvier 2025 sous deux scénarios",
-    "text": "Janvier 2025 sous deux scénarios\n\n\n\n498 619 $\n\n\nSans promotion\n\n\n\n\n546 185 $\n\n\nAvec promotion\n\n\n\n\n60 $ et 100\n\n\nPrix et indice supposés"
+    "text": "Janvier 2025 sous deux scénarios\n\n\n\n498 619 $\n\n\nSans promotion\n\n\n\n\n546 185 $\n\n\nAvec promotion\n\n\n\n\n60 $ et 100\n\n\nPrix par unité et indice supposés"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#à-retenir",
     "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#à-retenir",
     "title": "Capsule 5 - Communiquer un scénario",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nScénario\n\n\nLa différence prédite n’est pas un effet causal démontré.\n\n\n\n\nIntervalle\n\n\nUn intervalle conditionnel ne couvre pas toute l’incertitude sur les prédicteurs."
+    "text": "À retenir\n\n\n\nScénarios\n\n\nprix de 60 $ et indice de 100 points dans les deux cas\n\n\n\n\nIntervalle\n\n\nconditionnel aux valeurs fixées des prédicteurs\n\n\n\n\nPortée\n\n\nune différence prédite, sans effet causal démontré"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#production-autonome-9.5",
@@ -11106,7 +11001,7 @@
     "href": "modules/semaine-10-classification-modeles-avances/capsules.html",
     "title": "Capsules - Module 10",
     "section": "",
-    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ni version annotée n’est annoncée avant sa mise à disposition. Chaque production est celle de l’accueil et de la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé."
+    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ni version annotée n’est annoncée avant sa mise à disposition. Chaque production est celle de l’accueil et de la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-1",
@@ -11127,14 +11022,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-3",
     "title": "Capsules - Module 10",
     "section": "Capsule 3 - Lire une matrice de confusion",
-    "text": "Capsule 3 - Lire une matrice de confusion\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.3\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\nAuto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Les dénominateurs et les éventuelles mesures indéfinies sont explicites.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+    "text": "Capsule 3 - Lire une matrice de confusion\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.3\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\nAuto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-4",
     "href": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-4",
     "title": "Capsules - Module 10",
     "section": "Capsule 4 - Choisir une règle avant le test",
-    "text": "Capsule 4 - Choisir une règle avant le test\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.4\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\nAuto-vérification : Je fixe les coûts et les seuils avant la comparaison. Le test ne sert pas au choix. Je présente le coût comme une hypothèse pédagogique.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
+    "text": "Capsule 4 - Choisir une règle avant le test\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 10.4\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\nAuto-vérification : Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/capsules.html#capsule-5",
@@ -11218,7 +11113,7 @@
     "href": "modules/semaine-10-classification-modeles-avances/index.html#votre-parcours",
     "title": "Module 10 - Résultats binaires et classification",
     "section": "Votre parcours",
-    "text": "Votre parcours\nLes activités 10.1 à 10.5 dans l’accueil, les capsules et les diapositives sont les mêmes productions. Réalisez chacune une seule fois dans classification_clients.qmd. Les exercices portent sur une décision distincte et se réalisent séparément dans classification_service.qmd.\nLes cinq capsules correspondent aux décisions de définir la cible, estimer, lire les erreurs, choisir la règle et évaluer l’action. La calibration et la capacité restent ensemble au moment de communiquer la décision, afin de conserver un parcours cohérent.\n\n\n\n1Définir la cible et les partitionsActivité 10.1Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 10.1\n\n\nDéfinissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.\n\n\n\nAuto-vérification Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Estimer et interpréterActivité 10.2Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 10.2\n\n\nAjustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.\n\n\n\nAuto-vérification Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Lire une matrice de confusionActivité 10.3Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 10.3\n\n\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\n\n\n\nAuto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Les dénominateurs et les éventuelles mesures indéfinies sont explicites.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Choisir une règle avant le testActivité 10.4Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 10.4\n\n\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\n\n\n\nAuto-vérification Je fixe les coûts et les seuils avant la comparaison. Le test ne sert pas au choix. Je présente le coût comme une hypothèse pédagogique.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Évaluer et recommanderActivité 10.5Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 10.5\n\n\nAppliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.\n\n\n\nAuto-vérification Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.\n\n\nTransfert distinct Faites l’exercice 5 avant d’ouvrir son corrigé."
+    "text": "Votre parcours\nLes activités 10.1 à 10.5 dans l’accueil, les capsules et les diapositives sont les mêmes productions. Réalisez chacune une seule fois dans classification_clients.qmd. Les exercices portent sur une décision distincte et se réalisent séparément dans classification_service.qmd.\nLes cinq capsules correspondent aux décisions de définir la cible, estimer, lire les erreurs, choisir la règle et évaluer l’action. La calibration et la capacité restent ensemble au moment de communiquer la décision, afin de conserver un parcours cohérent.\n\n\n\n1Définir la cible et les partitionsActivité 10.1Capsule 1DémoEx. 1Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 10.1\n\n\nDéfinissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.\n\n\n\nAuto-vérification Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Estimer et interpréterActivité 10.2Capsule 2DémoEx. 2Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 10.2\n\n\nAjustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.\n\n\n\nAuto-vérification Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n3Lire une matrice de confusionActivité 10.3Capsule 3DémoEx. 3Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 10.3\n\n\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\n\n\n\nAuto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.\n\n\nTransfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Choisir une règle avant le testActivité 10.4Capsule 4DémoEx. 4Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 10.4\n\n\nSur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.\n\n\n\nAuto-vérification Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.\n\n\nTransfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.\n\n\n\n\n\n5Évaluer et recommanderActivité 10.5Capsule 5DémoEx. 5Ouvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 10.5\n\n\nAppliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.\n\n\n\nAuto-vérification Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.\n\n\nTransfert distinct Faites l’exercice 5 avant d’ouvrir son corrigé."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/index.html#trace-finale",
@@ -11232,7 +11127,7 @@
     "href": "modules/semaine-10-classification-modeles-avances/index.html#ressources-du-module",
     "title": "Module 10 - Résultats binaires et classification",
     "section": "Ressources du module",
-    "text": "Ressources du module\n\nCapsules, démonstrations R, exercices et corrigés et lectures.\nNotes de synthèse HTML et PDF.\nDémonstration complète, corrigé du transfert et cahier facultatif.\nCompléments facultatifs en ligne : cotes, vraisemblance, ROC, arbre et réseaux de neurones."
+    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF révisé du 3 novembre 2026.\n\nCapsules, démonstrations R, exercices et corrigés et lectures.\nNotes de synthèse HTML et PDF.\nDémonstration complète, corrigé du transfert et cahier facultatif.\nCompléments facultatifs en ligne : cotes, vraisemblance, ROC, arbre et réseaux de neurones."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/index.html#auto-vérification",
@@ -11260,21 +11155,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
     "title": "Capsule 1 - Définir la cible et les partitions",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQui risque de partir et à quel moment?\n\n\nUne décision utile relie les probabilités à une action et à ses conséquences."
+    "text": "Pourquoi ça compte\n\nQui risque de partir et à quel moment?\n\n\nUne équipe veut repérer les clients susceptibles de partir dans les 90 jours pour préparer un contact."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
     "title": "Capsule 1 - Définir la cible et les partitions",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDéfinir la cible et les partitions.\nAppliquer le raisonnement au cas de fidélisation.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#le-raisonnement",
-    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#le-raisonnement",
-    "title": "Capsule 1 - Définir la cible et les partitions",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nUn client : une ligne; départ dans les 90 jours : classe positive.\nLes prédicteurs doivent être connus avant ce départ.\nApprentissage pour ajuster, validation pour choisir, test pour évaluer."
+    "text": "Objectifs de la capsule\n\n\nDéfinir le départ à prévoir et son horizon.\nVérifier la disponibilité des prédicteurs à la décision.\nSéparer apprentissage, validation et test."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#trois-ensembles-aux-rôles-distincts",
@@ -11288,7 +11176,7 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#à-retenir",
     "title": "Capsule 1 - Définir la cible et les partitions",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nCible\n\n\nLa cible et l’horizon précèdent le modèle.\n\n\n\n\nDisponibilité\n\n\nUne information future crée une fuite."
+    "text": "À retenir\n\n\n\nCible\n\n\ndépart observable dans les 90 jours\n\n\n\n\nDisponibilité\n\n\nprédicteurs connus au moment de la décision\n\n\n\n\nPartitions\n\n\napprentissage pour ajuster, validation pour choisir, test pour évaluer"
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#production-autonome-10.1",
@@ -11309,21 +11197,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
     "title": "Capsule 3 - Lire une matrice de confusion",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQuelles erreurs commet la règle?\n\n\nUne décision utile relie les probabilités à une action et à ses conséquences."
+    "text": "Pourquoi ça compte\n\nQuelles erreurs commet la règle?\n\n\nUn départ manqué et un client ciblé à tort n’ont pas les mêmes conséquences."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
     "title": "Capsule 3 - Lire une matrice de confusion",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nLire une matrice de confusion.\nAppliquer le raisonnement au cas de fidélisation.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#le-raisonnement",
-    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#le-raisonnement",
-    "title": "Capsule 3 - Lire une matrice de confusion",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nVP : départ ciblé; FN : départ non ciblé.\nFP : non-départ ciblé; VN : non-départ non ciblé.\nSensibilité = VP / (VP + FN); précision = VP / (VP + FP)."
+    "text": "Objectifs de la capsule\n\n\nIdentifier vrais et faux positifs et négatifs.\nCalculer les mesures avec le bon dénominateur.\nComparer les deux seuils sur la validation."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#exemple-sur-100-clients",
@@ -11337,14 +11218,14 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#à-retenir",
     "title": "Capsule 3 - Lire une matrice de confusion",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nDénominateur\n\n\nLa précision et la sensibilité ne partagent pas leur dénominateur.\n\n\n\n\nMesure\n\n\nUne mesure à dénominateur nul est indéfinie."
+    "text": "À retenir\n\n\n\nSensibilité\n\n\nparmi les départs : quelle part est ciblée?\n\n\n\n\nPrécision\n\n\nparmi les clients ciblés : quelle part part réellement?\n\n\n\n\nDénominateur\n\n\nune mesure à dénominateur nul reste indéfinie"
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#production-autonome-10.3",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#production-autonome-10.3",
     "title": "Capsule 3 - Lire une matrice de confusion",
     "section": "Production autonome 10.3",
-    "text": "Production autonome 10.3\n\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe vérifie la classe positive.\nJe distingue faux positifs et faux négatifs.\nLes dénominateurs et les éventuelles mesures indéfinies sont explicites."
+    "text": "Production autonome 10.3\n\nSur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe vérifie la classe positive.\nJe distingue faux positifs et faux négatifs.\nJe précise les dénominateurs et les mesures éventuellement indéfinies."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#références-et-crédits",
@@ -11358,35 +11239,21 @@
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
     "title": "Capsule 5 - Évaluer et recommander",
     "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nLe modèle suffit-il pour agir?\n\n\nUne décision utile relie les probabilités à une action et à ses conséquences."
+    "text": "Pourquoi ça compte\n\nLe modèle suffit-il pour agir?\n\n\nUne performance sur un test fictif ne suffit pas à garantir l’efficacité d’une intervention réelle."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
     "title": "Capsule 5 - Évaluer et recommander",
     "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nÉvaluer et recommander.\nAppliquer le raisonnement au cas de fidélisation.\nNommer une limite de l’interprétation."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#le-raisonnement",
-    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#le-raisonnement",
-    "title": "Capsule 5 - Évaluer et recommander",
-    "section": "Le raisonnement",
-    "text": "Le raisonnement\n\n\nAppliquer au test la règle retenue en validation.\nComparer probabilités moyennes et fréquences observées par groupes.\nUne règle de capacité cible les 15 % les plus élevés."
-  },
-  {
-    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#calibration-descriptive-sur-le-test",
-    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#calibration-descriptive-sur-le-test",
-    "title": "Capsule 5 - Évaluer et recommander",
-    "section": "Calibration descriptive sur le test",
-    "text": "Calibration descriptive sur le test\n\nUn groupe proche de la diagonale ne prouve pas une calibration parfaite."
+    "text": "Objectifs de la capsule\n\n\nÉvaluer la règle déjà choisie sur le test.\nDécrire l’accord entre probabilités et fréquences observées.\nFormuler une recommandation avec ses limites."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#à-retenir",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#à-retenir",
     "title": "Capsule 5 - Évaluer et recommander",
     "section": "À retenir",
-    "text": "À retenir\n\n\n\nRisque\n\n\nUn risque prédit ne mesure pas l’effet du contact.\n\n\n\n\nLimite\n\n\nLe test et les données simulées limitent la conclusion."
+    "text": "À retenir\n\n\n\nÉvaluation\n\n\nappliquer la règle fixée sur des clients du test\n\n\n\n\nCalibration\n\n\ndécrire l’accord entre probabilités et fréquences\n\n\n\n\nAction\n\n\nun risque prédit ne mesure pas l’effet du contact"
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#production-autonome-10.5",
@@ -11589,21 +11456,7 @@
     "href": "modules/atelier-04-recapitulation/presentation.html#une-direction-deux-questions",
     "title": "Laboratoire 04 - Analyse intégratrice et décision",
     "section": "Une direction, deux questions",
-    "text": "Une direction, deux questions\n\n\n\nVoie A\n\n\nPrévoir les ventes en dollars\n\n\n\n\nVoie B\n\n\nRepérer le service insuffisant\n\n\n\n\nUn rapport\n\n\nUne voie principale, l’autre résumée"
-  },
-  {
-    "objectID": "modules/atelier-04-recapitulation/presentation.html#observer-sans-fuir-le-futur",
-    "href": "modules/atelier-04-recapitulation/presentation.html#observer-sans-fuir-le-futur",
-    "title": "Laboratoire 04 - Analyse intégratrice et décision",
-    "section": "Observer sans fuir le futur",
-    "text": "Observer sans fuir le futur\n\n\nUne ligne représente un mois et une succursale fictive.\nPour les ventes, le calendrier est connu; la promotion future peut être incertaine.\nPour le service, la décision utilise les conditions du mois courant."
-  },
-  {
-    "objectID": "modules/atelier-04-recapitulation/presentation.html#la-chronologie-change-la-preuve",
-    "href": "modules/atelier-04-recapitulation/presentation.html#la-chronologie-change-la-preuve",
-    "title": "Laboratoire 04 - Analyse intégratrice et décision",
-    "section": "La chronologie change la preuve",
-    "text": "La chronologie change la preuve\n\nLes données de 2025 ont déjà été examinées dans les modules 09 et 10. Leur réutilisation ne produit pas un nouveau test indépendant."
+    "text": "Une direction, deux questions\n\n\n\nVoie A\n\n\nPrévoir les ventes en dollars\n\n\n\n\nVoie B\n\n\nRepérer un service insuffisant au mois suivant\n\n\n\n\nUn rapport\n\n\nUne voie principale, l’autre résumée"
   },
   {
     "objectID": "modules/atelier-04-recapitulation/presentation.html#voie-a-même-origine-et-mêmes-cibles",
@@ -11624,28 +11477,14 @@
     "href": "modules/atelier-04-recapitulation/presentation.html#voie-b-fixer-la-règle-avant-2025",
     "title": "Laboratoire 04 - Analyse intégratrice et décision",
     "section": "Voie B : fixer la règle avant 2025",
-    "text": "Voie B : fixer la règle avant 2025\n\n\nAjuster jusqu’en novembre 2023.\nUtiliser les scores de janvier à novembre 2024 pour un seuil au 80e percentile.\nÉvaluer les erreurs et la proportion ciblée en 2025."
-  },
-  {
-    "objectID": "modules/atelier-04-recapitulation/presentation.html#voie-b-lire-la-répartition",
-    "href": "modules/atelier-04-recapitulation/presentation.html#voie-b-lire-la-répartition",
-    "title": "Laboratoire 04 - Analyse intégratrice et décision",
-    "section": "Voie B : lire la répartition",
-    "text": "Voie B : lire la répartition\n\nLa répartition appelle une vérification de contexte et d’effectifs."
-  },
-  {
-    "objectID": "modules/atelier-04-recapitulation/presentation.html#un-seuil-nest-pas-une-capacité-garantie",
-    "href": "modules/atelier-04-recapitulation/presentation.html#un-seuil-nest-pas-une-capacité-garantie",
-    "title": "Laboratoire 04 - Analyse intégratrice et décision",
-    "section": "Un seuil n’est pas une capacité garantie",
-    "text": "Un seuil n’est pas une capacité garantie\n\nUn seuil calibré sur les scores de 2024 ne garantit pas 20 % d’interventions en 2025. Une capacité stricte exige une règle adaptée au moment des décisions."
+    "text": "Voie B : fixer la règle avant 2025\n\n\nAjuster jusqu’en novembre 2023.\nFixer le seuil au 80e percentile des probabilités prédites de janvier à novembre 2024.\nÉvaluer les erreurs et la proportion ciblée en 2025."
   },
   {
     "objectID": "modules/atelier-04-recapitulation/presentation.html#à-retenir",
     "href": "modules/atelier-04-recapitulation/presentation.html#à-retenir",
     "title": "Laboratoire 04 - Analyse intégratrice et décision",
     "section": "À retenir",
-    "text": "À retenir\n\n\nCible continue et cible binaire appellent des mesures différentes.\nUne référence et des données comparables donnent une preuve utile.\nUn risque prédit ne mesure pas l’effet d’une intervention."
+    "text": "À retenir\n\n\n\nCible\n\n\ncontinue ou binaire : des mesures différentes\n\n\n\n\nComparaison\n\n\nune méthode et sa référence sur les mêmes observations\n\n\n\n\nDécision\n\n\nle risque prédit n’est pas l’effet d’une intervention"
   },
   {
     "objectID": "modules/atelier-04-recapitulation/presentation.html#production-du-laboratoire",
@@ -12052,5 +11891,201 @@
     "title": "Lectures et ressources",
     "section": "Logiciels et environnement",
     "text": "Logiciels et environnement\n\n\n  \n    R\n    Langage principal utilisé dans le cours.\n    Télécharger R\n  \n\n  \n    RStudio Desktop\n    Environnement recommandé pour travailler avec R et Quarto.\n    Télécharger RStudio\n  \n\n  \n    Positron\n    Environnement moderne compatible avec R et les workflows de science des données.\n    Découvrir Positron\n  \n\n\n\n  Bibliothèque de packages R\n  Cette section rassemble les principaux packages R utilisés dans les exemples, démonstrations et travaux du cours.\n\n  \n    \n      \n      \n        tidyverse\n        Écosystème pour importer, transformer, visualiser et modéliser des données.\n      \n    \n\n    \n      \n      \n        ggplot2\n        Visualisation statistique avec la grammaire des graphiques.\n      \n    \n\n    \n      \n      \n        dplyr\n        Manipulation de tableaux avec des verbes lisibles.\n      \n    \n\n    \n      \n      \n        forecast\n        Méthodes classiques de prévision et séries temporelles dans R.\n      \n    \n\n    \n      \n      \n        fable\n        Modélisation et prévision avec l'écosystème tidyverts.\n      \n    \n\n    \n      \n      \n        tsibble\n        Structure de données tidy pour séries temporelles."
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#lindice-progresse-les-mois-se-répètent",
+    "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-02-support.html#lindice-progresse-les-mois-se-répètent",
+    "title": "Capsule 2 - Ajuster tendance et mois",
+    "section": "L’indice progresse, les mois se répètent",
+    "text": "L’indice progresse, les mois se répètent\n\n\n\n1 à 60\n\n\nindices de l’apprentissage\n\n\n\n\n61 à 72\n\n\nindices de 2025\n\n\n\n\nJanvier\n\n\nréférence du facteur mois"
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#les-erreurs-sur-la-validation",
+    "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-04-support.html#les-erreurs-sur-la-validation",
+    "title": "Capsule 4 - Comparer sur une validation commune",
+    "section": "Les erreurs sur la validation",
+    "text": "Les erreurs sur la validation\n\nME : erreur moyenne signée. MAE : erreur absolue moyenne. RMSE : racine de l’erreur quadratique moyenne.\n\n\n\n\n\n\nMéthode\nME ($ CA)\nMAE ($ CA)\nRMSE ($ CA)\n\n\n\n\nCalendrier\n-3 538\n9 891\n11 280\n\n\nTendance\n-4 347\n17 064\n20 292\n\n\nNaïf saisonnier\n29 067\n29 067\n30 170\n\n\nSaison\n100 302\n100 302\n100 872"
+  },
+  {
+    "objectID": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#douze-intervalles-ne-garantissent-pas-le-total-annuel",
+    "href": "modules/semaine-08-tendance-saisonnalite/media/qmd/capsule-05-support.html#douze-intervalles-ne-garantissent-pas-le-total-annuel",
+    "title": "Capsule 5 - Communiquer l’incertitude et la décision",
+    "section": "Douze intervalles ne garantissent pas le total annuel",
+    "text": "Douze intervalles ne garantissent pas le total annuel\n\nLes intervalles sont marginaux. Douze observations couvertes ne prouvent pas la calibration future, et additionner les bornes ne produit pas automatiquement un intervalle annuel à 95 %."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#ce-qui-est-disponible-à-la-fin-de-2024",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#ce-qui-est-disponible-à-la-fin-de-2024",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "Ce qui est disponible à la fin de 2024",
+    "text": "Ce qui est disponible à la fin de 2024\n\n\nOrigine : fin décembre 2024.\nLe calendrier est connu; un prix ou une promotion peuvent être planifiés.\nL’indice de confiance futur est prévu ou scénarisé; sa valeur réalisée est inconnue à l’origine."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#lire-le-coefficient-dans-son-contexte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#lire-le-coefficient-dans-son-contexte",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Lire le coefficient dans son contexte",
+    "text": "Lire le coefficient dans son contexte\n\n\nLe modèle explique les ventes par la tendance, le mois, la promotion, le prix et l’indice de confiance.\nComparer promotion « oui » à « non », en dollars, en maintenant les autres variables fixes.\nLa régression mesure une association conditionnelle."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#lire-les-corrélations-entre-résidus",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#lire-les-corrélations-entre-résidus",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Lire les corrélations entre résidus",
+    "text": "Lire les corrélations entre résidus\n\n\nRésidu : observation moins valeur ajustée.\nLe retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle.\nExaminer les résidus dans le temps et leur fonction d’autocorrélation (ACF).\nLe test de Ljung-Box est un complément facultatif."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#autocorrélation-des-résidus-de-2020-à-2024",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#autocorrélation-des-résidus-de-2020-à-2024",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Autocorrélation des résidus de 2020 à 2024",
+    "text": "Autocorrélation des résidus de 2020 à 2024\n\n\nLes pointillés sont des repères approximatifs, pas une preuve d’indépendance."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparer-sur-les-mêmes-douze-mois",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparer-sur-les-mêmes-douze-mois",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Comparer sur les mêmes douze mois",
+    "text": "Comparer sur les mêmes douze mois\n\n\nLa régression ordinaire et la régression avec erreurs AR(1) utilisent les mêmes prédicteurs.\nLes erreurs autorégressives d’ordre 1, AR(1), relient la partie non expliquée à celle du mois précédent.\nComparer l’erreur absolue moyenne (MAE) et la racine de l’erreur quadratique moyenne (RMSE) sur les mêmes mois."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#garder-les-autres-hypothèses-identiques",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#garder-les-autres-hypothèses-identiques",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Garder les autres hypothèses identiques",
+    "text": "Garder les autres hypothèses identiques\n\n\nJanvier 2025 : prix de 60 $ par unité, indice de confiance de 100 points.\nComparer promotion « oui » et « non » avec les autres valeurs identiques.\nNommer la cible, l’horizon et les hypothèses."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#pourquoi-ça-compte",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nQuelles informations sont réellement disponibles au moment de prévoir?\n\n\nUne direction veut utiliser une prévision réalisable, en tenant compte des informations et des erreurs."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#objectifs-du-module",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#objectifs-du-module",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Objectifs du module",
+    "text": "Objectifs du module\n\n\nAuditer les variables à l’origine de la prévision.\nInterpréter une régression et ses résidus temporels.\nComparer et communiquer sous des hypothèses explicites."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar1",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar1",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Régression avec erreurs AR(1)",
+    "text": "Régression avec erreurs AR(1)\n\n\nLa partie non expliquée par les prédicteurs peut avoir une mémoire d’un mois.\nUne innovation est la partie nouvelle de l’erreur, après prise en compte de sa dépendance au mois précédent.\nLe modèle est estimé sur les 60 premiers mois."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#les-deux-traces",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#les-deux-traces",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Les deux traces",
+    "text": "Les deux traces\n\nRassemblez les productions 9.1 à 9.5, réalisées une seule fois, dans variables_ventes.qmd. Conservez les exercices de transfert dans variables_succursales.qmd.\n\nAuto-vérification\n\n\nJe distingue les valeurs connues, prévues ou scénarisées.\nJe présente les scores comme conditionnels aux prédicteurs fournis.\nJe distingue association et effet causal.\nMes rapports se rendent après redémarrage de R."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#définir-la-cible-avant-dajuster",
+    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#définir-la-cible-avant-dajuster",
+    "title": "Capsule 1 - Définir la cible et les partitions",
+    "section": "Définir la cible avant d’ajuster",
+    "text": "Définir la cible avant d’ajuster\n\n\nUn client : une ligne; départ dans les 90 jours : classe positive.\nLes prédicteurs doivent être connus au moment de la décision.\nApprentissage pour ajuster, validation pour choisir, test pour évaluer."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#passer-du-modèle-à-une-probabilité",
+    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-02-support.html#passer-du-modèle-à-une-probabilité",
+    "title": "Capsule 2 - Estimer et interpréter",
+    "section": "Passer du modèle à une probabilité",
+    "text": "Passer du modèle à une probabilité\n\n\nLa régression logistique traduit un prédicteur linéaire en probabilité.\nPour une probabilité \\(p\\), la cote vaut \\(p/(1-p)\\).\nÀ autres variables fixées, \\(\\exp(\\beta)\\) multiplie les cotes pour une unité supplémentaire du prédicteur.\nUne probabilité n’est ni une certitude ni un effet causal."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#compter-les-décisions-et-leurs-erreurs",
+    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-03-support.html#compter-les-décisions-et-leurs-erreurs",
+    "title": "Capsule 3 - Lire une matrice de confusion",
+    "section": "Compter les décisions et leurs erreurs",
+    "text": "Compter les décisions et leurs erreurs\n\n\nVrai positif (VP) : départ ciblé; faux négatif (FN) : départ non ciblé.\nFaux positif (FP) : non-départ ciblé; vrai négatif (VN) : non-départ non ciblé.\nSensibilité = VP / (VP + FN); précision = VP / (VP + FP)."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#fixer-le-choix-avant-de-consulter-le-test",
+    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-04-support.html#fixer-le-choix-avant-de-consulter-le-test",
+    "title": "Capsule 4 - Choisir une règle avant le test",
+    "section": "Fixer le choix avant de consulter le test",
+    "text": "Fixer le choix avant de consulter le test\n\n\nComparer 0,30 et 0,50 sur la validation.\nCoût fictif : 4 par faux négatif et 1 par faux positif.\nRetenir le plus petit coût; en cas d’égalité, 0,30."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#évaluer-une-règle-déjà-choisie",
+    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#évaluer-une-règle-déjà-choisie",
+    "title": "Capsule 5 - Évaluer et recommander",
+    "section": "Évaluer une règle déjà choisie",
+    "text": "Évaluer une règle déjà choisie\n\n\nAppliquer au test la règle retenue en validation.\nComparer probabilités moyennes et fréquences observées par groupes.\nLa règle alternative préétablie cible au plus 15 % des clients, selon leur risque prédit."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#comparer-probabilités-et-fréquences-sur-le-test",
+    "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-05-support.html#comparer-probabilités-et-fréquences-sur-le-test",
+    "title": "Capsule 5 - Évaluer et recommander",
+    "section": "Comparer probabilités et fréquences sur le test",
+    "text": "Comparer probabilités et fréquences sur le test\n\nUn groupe proche de la diagonale ne prouve pas une calibration parfaite."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#pourquoi-ça-compte",
+    "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#pourquoi-ça-compte",
+    "title": "Synthèse - Résultats binaires et classification",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte\n\nQue savons-nous avant d’agir et quelles erreurs pouvons-nous accepter?\n\n\nLe risque de départ aide à préparer une décision; il ne mesure pas ce qu’un contact changerait."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#objectifs-du-module",
+    "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#objectifs-du-module",
+    "title": "Synthèse - Résultats binaires et classification",
+    "section": "Objectifs du module",
+    "text": "Objectifs du module\n\n\nDéfinir une cible binaire et des partitions adaptées.\nInterpréter probabilités, cotes et mesures de classification.\nChoisir puis évaluer une règle avant de recommander une action."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#lire-les-mesures",
+    "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#lire-les-mesures",
+    "title": "Synthèse - Résultats binaires et classification",
+    "section": "Lire les mesures",
+    "text": "Lire les mesures\n\n\n\nSensibilité\n\n\n\\(\\mathrm{VP}/(\\mathrm{VP}+\\mathrm{FN})\\)\n\n\n\n\nSpécificité\n\n\n\\(\\mathrm{VN}/(\\mathrm{VN}+\\mathrm{FP})\\)\n\n\n\n\nPrécision\n\n\n\\(\\mathrm{VP}/(\\mathrm{VP}+\\mathrm{FP})\\)\n\n\n\n\nL’exactitude est \\((\\mathrm{VP}+\\mathrm{VN})/N\\), où \\(N\\) est le nombre de clients. Un dénominateur nul rend la mesure concernée indéfinie."
+  },
+  {
+    "objectID": "modules/semaine-10-classification-modeles-avances/notes-cours.html#les-deux-traces",
+    "href": "modules/semaine-10-classification-modeles-avances/notes-cours.html#les-deux-traces",
+    "title": "Synthèse - Résultats binaires et classification",
+    "section": "Les deux traces",
+    "text": "Les deux traces\n\nRassemblez les productions 10.1 à 10.5, réalisées une seule fois, dans classification_clients.qmd. Conservez les exercices de transfert dans classification_service.qmd.\n\nAuto-vérification\n\n\nJe distingue probabilité, cote et classe prédite.\nJe sépare le choix en validation de l’évaluation sur le test.\nJe justifie les coûts, la capacité et les limites.\nMes rapports se rendent après redémarrage de R."
+  },
+  {
+    "objectID": "modules/atelier-03-series-chronologiques/presentation.html#cinq-méthodes-à-la-même-origine",
+    "href": "modules/atelier-03-series-chronologiques/presentation.html#cinq-méthodes-à-la-même-origine",
+    "title": "Laboratoire 03 - Prévoir la demande",
+    "section": "Cinq méthodes à la même origine",
+    "text": "Cinq méthodes à la même origine\n\n\n\nModule 07\n\n\nnaïf, moyenne mobile sur 4 semaines, SES, naïf saisonnier\n\n\n\n\nTendance\n\n\nune droite sur l’indice des semaines\n\n\n\n\nMême origine\n\n\nles mêmes treize semaines prévues\n\n\n\n\nLa liste change depuis le module 07 : comparez les résultats sans supposer le même classement."
+  },
+  {
+    "objectID": "modules/atelier-04-recapitulation/presentation.html#utiliser-les-informations-disponibles",
+    "href": "modules/atelier-04-recapitulation/presentation.html#utiliser-les-informations-disponibles",
+    "title": "Laboratoire 04 - Analyse intégratrice et décision",
+    "section": "Utiliser les informations disponibles",
+    "text": "Utiliser les informations disponibles\n\n\nUne ligne représente un mois et une succursale fictive.\nPour les ventes, le calendrier est connu; la promotion future peut être incertaine.\nPour le service du mois suivant, la décision utilise les conditions connues du mois courant."
+  },
+  {
+    "objectID": "modules/atelier-04-recapitulation/presentation.html#une-validation-déjà-examinée",
+    "href": "modules/atelier-04-recapitulation/presentation.html#une-validation-déjà-examinée",
+    "title": "Laboratoire 04 - Analyse intégratrice et décision",
+    "section": "Une validation déjà examinée",
+    "text": "Une validation déjà examinée\n\nLes données de 2025 ont déjà été examinées dans les modules 09 et 10. Leur réutilisation ne produit pas un nouveau test indépendant."
+  },
+  {
+    "objectID": "modules/atelier-04-recapitulation/presentation.html#voie-b-examiner-la-répartition-du-ciblage",
+    "href": "modules/atelier-04-recapitulation/presentation.html#voie-b-examiner-la-répartition-du-ciblage",
+    "title": "Laboratoire 04 - Analyse intégratrice et décision",
+    "section": "Voie B : examiner la répartition du ciblage",
+    "text": "Voie B : examiner la répartition du ciblage\n\nExaminez les effectifs et le contexte de chaque succursale avant d’interpréter cette répartition."
+  },
+  {
+    "objectID": "modules/atelier-04-recapitulation/presentation.html#un-seuil-ne-garantit-pas-une-capacité",
+    "href": "modules/atelier-04-recapitulation/presentation.html#un-seuil-ne-garantit-pas-une-capacité",
+    "title": "Laboratoire 04 - Analyse intégratrice et décision",
+    "section": "Un seuil ne garantit pas une capacité",
+    "text": "Un seuil ne garantit pas une capacité\n\nUn seuil calibré sur les scores de 2024 ne garantit pas 20 % d’interventions en 2025. Une capacité stricte exige une règle adaptée au moment des décisions."
   }
 ]

@@ -20,16 +20,30 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
   message: false
 ---
 
-## Une prévision utile
+## Pourquoi ça compte
 
 ::: {.question-line}
 Quelles informations sont réellement disponibles au moment de prévoir?
+:::
+
+::: {.note-box}
+Une direction veut utiliser une prévision réalisable, en tenant compte des informations et des erreurs.
+:::
+
+## Objectifs du module
+
+::: {.keypoints}
+- Auditer les variables à l’origine de la prévision.
+- Interpréter une régression et ses résidus temporels.
+- Comparer et communiquer sous des hypothèses explicites.
 :::
 
 ## Disponibilité et fuite
@@ -44,7 +58,7 @@ Quelles informations sont réellement disponibles au moment de prévoir?
 
 ::: {.keypoints}
 - La régression combine tendance, mois, promotion, prix et indice.
-- La promotion binaire se lit par rapport à la catégorie non, en dollars, les autres termes du modèle étant fixés.
+- Le coefficient de promotion compare « oui » à « non », en dollars, avec les autres variables maintenues fixes.
 - Une association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison.
 :::
 
@@ -52,32 +66,68 @@ Quelles informations sont réellement disponibles au moment de prévoir?
 
 ::: {.keypoints}
 - Le résidu est l’observation moins la valeur ajustée.
-- Un retard 1 rapproche les erreurs de deux mois consécutifs; un retard 12 compare des mois séparés d’une année.
-- Des signes positifs persistants peuvent signaler une sous-prévision répétée.
+- Un retard de 1 compare les résidus de deux mois consécutifs; un retard de 12 compare des mois séparés d’une année.
+- Des résidus durablement positifs signalent des valeurs ajustées trop basses sur cette période.
 :::
 
-## Régression avec erreurs AR
+## Régression avec erreurs AR(1)
 
 ::: {.keypoints}
 - La partie non expliquée par les prédicteurs peut avoir une mémoire d’un mois.
-- Les innovations ε ne sont pas la même chose que les erreurs de régression η.
+- Une innovation est la partie nouvelle de l’erreur, après prise en compte de sa dépendance au mois précédent.
 - Le modèle est estimé sur les 60 premiers mois.
 :::
 
 ## Scénarios et décision
 
 ::: {.keypoints}
-- Une prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis.
+- Une prévision sous scénario est conditionnelle au prix, à la promotion et à l’indice de confiance fournis.
 - Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs.
 - Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire.
 :::
 
 ## À retenir
 
-::: {.keypoints}
-- Les prédicteurs futurs sont connus, prévus ou scénarisés.
-- Les résidus et la validation répondent à des questions différentes.
-- Un scénario et une association ne prouvent pas la causalité.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Information
+:::
+::: {.label}
+disponible à l’origine, prévue ou scénarisée
+:::
+:::
+::: {.metric}
+::: {.value}
+Validation
+:::
+::: {.label}
+comparer sans confondre avec un test indépendant
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+hypothèses explicites et portée limitée
+:::
+:::
+::::
+
+## Les deux traces
+
+::: {.lead}
+Rassemblez les productions 9.1 à 9.5, réalisées une seule fois, dans `variables_ventes.qmd`. Conservez les exercices de transfert dans `variables_succursales.qmd`.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Je distingue les valeurs connues, prévues ou scénarisées.
+- Je présente les scores comme conditionnels aux prédicteurs fournis.
+- Je distingue association et effet causal.
+- Mes rapports se rendent après redémarrage de R.
 :::
 
 ## Références et crédits

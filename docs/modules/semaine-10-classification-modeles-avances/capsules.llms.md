@@ -2,6 +2,8 @@
 
 Les supports PDF et HTML sont disponibles; aucune vidéo ni version annotée n’est annoncée avant sa mise à disposition. Chaque production est celle de l’accueil et de la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.
 
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF révisé du 3 novembre 2026](telechargements/module-10-pdf-2026-11-03-revu.zip).
+
 ## Capsule 1 - Définir la cible et les partitions
 
 ## PDF
@@ -52,7 +54,7 @@ La production se réalise une seule fois. Poursuivez avec le [transfert](../../m
 
 Sur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.
 
-Auto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Les dénominateurs et les éventuelles mesures indéfinies sont explicites.
+Auto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.
 
 La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-3).
 
@@ -70,7 +72,7 @@ La production se réalise une seule fois. Poursuivez avec le [transfert](../../m
 
 Sur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.
 
-Auto-vérification : Je fixe les coûts et les seuils avant la comparaison. Le test ne sert pas au choix. Je présente le coût comme une hypothèse pédagogique.
+Auto-vérification : Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.
 
 La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-4).
 

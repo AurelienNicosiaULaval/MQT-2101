@@ -78,7 +78,7 @@ Activité 10.3
 
 Sur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.
 
-Auto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Les dénominateurs et les éventuelles mesures indéfinies sont explicites.
+Auto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.
 
 Transfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.
 
@@ -90,7 +90,7 @@ Activité 10.4
 
 Sur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.
 
-Auto-vérification Je fixe les coûts et les seuils avant la comparaison. Le test ne sert pas au choix. Je présente le coût comme une hypothèse pédagogique.
+Auto-vérification Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.
 
 Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
 
@@ -111,6 +111,8 @@ Transfert distinct Faites l’exercice 5 avant d’ouvrir son corrigé.
 Dans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois.
 
 ## Ressources du module
+
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF révisé du 3 novembre 2026](telechargements/module-10-pdf-2026-11-03-revu.zip).
 
 - [Capsules](../../modules/semaine-10-classification-modeles-avances/capsules.llms.md), [démonstrations R](../../modules/semaine-10-classification-modeles-avances/demonstrations.llms.md), [exercices et corrigés](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md) et [lectures](../../modules/semaine-10-classification-modeles-avances/lectures.llms.md).
 - Notes de synthèse [HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).

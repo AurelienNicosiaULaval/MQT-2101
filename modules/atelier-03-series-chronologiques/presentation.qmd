@@ -46,7 +46,7 @@ Quelle prévision peut aider une équipe d’approvisionnement à se préparer?
 :::
 
 ::: {.note-box}
-Nous comparons des méthodes sur les mêmes treize semaines et rendons les limites visibles.
+L’équipe compare les méthodes sur les mêmes treize semaines avant de recommander une prévision de référence.
 :::
 
 ## Objectifs du laboratoire
@@ -105,19 +105,20 @@ Dernière semaine d’apprentissage : lundi 22 septembre au dimanche 28 septembr
 #| fig-height: 4.6
 ggplot(apprentissage, aes(semaine, demande)) +
   geom_line(colour = "#0B4F6C") +
-  labs(x = NULL, y = "Demande hebdomadaire (unités)") +
+  scale_y_continuous(labels = scales::label_number(big.mark = " ", decimal.mark = ",")) +
+  labs(x = "Début de la semaine", y = "Demande hebdomadaire (unités)") +
   theme_minimal(base_size = 20)
 ```
 
-## Cinq prévisions à la même origine
+## Cinq méthodes à la même origine
 
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Quatre références
+Module 07
 :::
 ::: {.label}
-naïve, MM4, SES, naïve saisonnière
+naïf, moyenne mobile sur 4 semaines, SES, naïf saisonnier
 :::
 :::
 ::: {.metric}
@@ -150,7 +151,7 @@ La liste change depuis le module 07 : comparez les résultats sans supposer le m
 ME
 :::
 ::: {.label}
-signe moyen de l’erreur
+erreur moyenne signée
 :::
 :::
 ::: {.metric}
@@ -158,7 +159,7 @@ signe moyen de l’erreur
 MAE
 :::
 ::: {.label}
-amplitude moyenne
+moyenne des erreurs absolues
 :::
 :::
 ::: {.metric}
@@ -166,13 +167,17 @@ amplitude moyenne
 RMSE
 :::
 ::: {.label}
-poids accru aux grands écarts
+racine de l’erreur quadratique moyenne
 :::
 :::
 ::::
 
 ::: {.note-box}
 Erreur = observation − prévision. Les mesures sont en unités de produit.
+:::
+
+::: {.note-box}
+Le lissage exponentiel simple est désigné par le sigle SES. La RMSE accorde plus de poids aux grandes erreurs.
 :::
 
 ## Quelle incertitude?
@@ -251,6 +256,8 @@ coût fictif, limite et suivi
 Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
 :::
 
+Cette production se réalise une seule fois dans `rapport-labo-03.qmd`.
+
 ### Auto-vérification
 
 ::: {.self-check}
@@ -263,10 +270,10 @@ Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les 
 ## Rétroaction et suite
 
 ::: {.keypoints}
-- Présenter sa question et son protocole après une première tentative.
-- Faire relire le rapport et corriger un point précis.
-- Apporter son projet autonome au point de contrôle du mini-rapport 2.
-- Redémarrer R et rendre le rapport avec ses données.
+- Présentez votre question et votre protocole après une première tentative.
+- Faites relire le rapport et corrigez un point précis.
+- Apportez votre projet autonome au point de contrôle du mini-rapport 2.
+- Redémarrez R et rendez le rapport avec ses données.
 :::
 
 ## Références et crédits

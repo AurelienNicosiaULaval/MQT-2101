@@ -55,3 +55,10 @@ fr <- function(x, digits = 0) formatC(x, format = "f", digits = digits,
                                      big.mark = " ", decimal.mark = ",")
 theme_set(theme_minimal(base_size = 18) +
           theme(panel.grid.minor = element_blank(), legend.position = "bottom"))
+
+# Libellés français indépendants de la langue du système.
+dates_fr <- function(x) {
+  mois_courts <- c("janv.", "févr.", "mars", "avr.", "mai", "juin",
+                   "juill.", "août", "sept.", "oct.", "nov.", "déc.")
+  paste(mois_courts[as.integer(format(x, "%m"))], format(x, "%Y"))
+}

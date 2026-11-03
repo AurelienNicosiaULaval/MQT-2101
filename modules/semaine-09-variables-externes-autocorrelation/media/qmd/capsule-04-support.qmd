@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -33,23 +35,23 @@ La mémoire des erreurs améliore-t-elle la prévision?
 :::
 
 ::: {.note-box}
-La qualité d’une prévision dépend du modèle et de l’information disponible.
+Ajouter une dépendance temporelle ne garantit pas une meilleure prévision. La comparaison doit rester commune.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Comparer deux modèles.
-- Relier le résultat au cas guidé.
-- Nommer une limite de l’interprétation.
+- Comparer les deux modèles sur les mêmes mois.
+- Interpréter la MAE et la RMSE en dollars.
+- Nommer les limites de la comparaison conditionnelle.
 :::
 
-## Le raisonnement
+## Comparer sur les mêmes douze mois
 
 ::: {.keypoints}
 - La régression ordinaire et la régression avec erreurs AR(1) utilisent les mêmes prédicteurs.
-- L’erreur AR(1) relie la partie non expliquée à la période précédente.
-- Comparer MAE et RMSE sur les mêmes mois.
+- Les erreurs autorégressives d’ordre 1, AR(1), relient la partie non expliquée à celle du mois précédent.
+- Comparer l’erreur absolue moyenne (MAE) et la racine de l’erreur quadratique moyenne (RMSE) sur les mêmes mois.
 :::
 
 ## Comparaison des douze mois de 2025
@@ -63,10 +65,18 @@ La ligne noire représente les ventes observées.
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Prédicteurs
+Comparaison
 :::
 ::: {.label}
-Les valeurs externes réalisées en 2025 donnent une comparaison conditionnelle.
+mêmes mois et mêmes prédicteurs pour les deux modèles
+:::
+:::
+::: {.metric}
+::: {.value}
+Information
+:::
+::: {.label}
+valeurs externes observées en 2025 : résultats conditionnels
 :::
 :::
 ::: {.metric}
@@ -74,7 +84,7 @@ Les valeurs externes réalisées en 2025 donnent une comparaison conditionnelle.
 Validation
 :::
 ::: {.label}
-Les mêmes douze mois ne sont pas un nouveau test indépendant.
+douze mois déjà examinés, sans nouveau test indépendant
 :::
 :::
 ::::
@@ -90,8 +100,8 @@ Cette production se réalise une seule fois dans le rapport guidé.
 ### Auto-vérification
 
 ::: {.self-check}
-- Les deux modèles utilisent les mêmes observations et prédicteurs.
-- Les scores sont en dollars.
+- Je compare les deux modèles sur les mêmes observations et prédicteurs.
+- J’exprime les scores en dollars.
 - Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
 :::
 

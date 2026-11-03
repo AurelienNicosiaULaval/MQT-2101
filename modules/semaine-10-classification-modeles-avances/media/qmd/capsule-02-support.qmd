@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -33,22 +35,23 @@ Que dit une probabilité?
 :::
 
 ::: {.note-box}
-Une décision utile relie les probabilités à une action et à ses conséquences.
+Deux profils peuvent avoir des risques différents. Le modèle décrit une association, pas l’effet d’un contact.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Estimer et interpréter.
-- Appliquer le raisonnement au cas de fidélisation.
-- Nommer une limite de l’interprétation.
+- Ajuster une régression logistique sur l’apprentissage.
+- Distinguer probabilité et cote.
+- Interpréter un rapport de cotes sans conclusion causale.
 :::
 
-## Le raisonnement
+## Passer du modèle à une probabilité
 
 ::: {.keypoints}
 - La régression logistique traduit un prédicteur linéaire en probabilité.
-- Une cote vaut p/(1-p); exp(coefficient) multiplie les cotes.
+- Pour une probabilité $p$, la cote vaut $p/(1-p)$.
+- À autres variables fixées, $\exp(\beta)$ multiplie les cotes pour une unité supplémentaire du prédicteur.
 - Une probabilité n’est ni une certitude ni un effet causal.
 :::
 
@@ -61,10 +64,18 @@ Une décision utile relie les probabilités à une action et à ses conséquence
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
+Probabilité
+:::
+::: {.label}
+risque compris entre 0 et 1, sans certitude individuelle
+:::
+:::
+::: {.metric}
+::: {.value}
 Cotes
 :::
 ::: {.label}
-Un rapport de cotes n’est pas un rapport de probabilités.
+un rapport de cotes n’est pas un rapport de probabilités
 :::
 :::
 ::: {.metric}
@@ -72,7 +83,7 @@ Un rapport de cotes n’est pas un rapport de probabilités.
 Référence
 :::
 ::: {.label}
-La référence et les variables fixées comptent.
+catégorie de comparaison et autres variables fixées
 :::
 :::
 ::::

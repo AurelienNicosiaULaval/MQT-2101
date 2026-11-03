@@ -51,7 +51,7 @@ Un bon ajustement ne garantit pas une prévision utile des prochains mois.
 ::: {.keypoints}
 - Construire le calendrier futur.
 - Comparer les mêmes cibles à une seule origine.
-- Lire ME, MAE et RMSE en dollars.
+- Interpréter ME, MAE et RMSE en dollars.
 :::
 
 ## Connaître le calendrier, pas les ventes
@@ -84,7 +84,7 @@ tendance et mois ensemble
 :::
 ::: {.metric}
 ::: {.value}
-Saisonnier naïf
+Naïf saisonnier
 :::
 ::: {.label}
 reprendre les douze mois de 2024
@@ -101,13 +101,18 @@ Une seule origine à la fin de 2024. Douze horizons et douze cibles communs. Par
 Mettre à jour une prévision avec une vente de 2025 répondrait à un autre protocole.
 :::
 
-## Les scores réellement calculés
+## Les erreurs sur la validation
+
+::: {.note-box}
+ME : erreur moyenne signée. MAE : erreur absolue moyenne. RMSE : racine de l’erreur quadratique moyenne.
+:::
 
 ```{r}
 #| label: m08-c4-scores
 #| echo: false
 scores |>
   select(methode, ME, MAE, RMSE) |>
+  mutate(methode = recode(methode, Saisonnier_naif = "Naïf saisonnier")) |>
   mutate(across(where(is.numeric), ~ fr(.x))) |>
   knitr::kable(col.names = c("Méthode", "ME ($ CA)", "MAE ($ CA)", "RMSE ($ CA)"))
 ```
@@ -123,6 +128,10 @@ scores |>
 ggplot() +
   geom_line(data = validation, aes(date, ventes / 1000), linewidth = 1) +
   geom_line(data = previsions, aes(date, prevision / 1000, colour = methode)) +
+  scale_colour_discrete(labels = c(Calendrier = "Calendrier", Saison = "Saison",
+                                   Saisonnier_naif = "Naïf saisonnier", Tendance = "Tendance")) +
+  scale_x_date(date_breaks = "3 months", labels = dates_fr) +
+  scale_y_continuous(labels = scales::label_number(big.mark = " ", decimal.mark = ",")) +
   labs(x = NULL, y = "Ventes (milliers de $ CA)", colour = "Méthode")
 ```
 
@@ -130,7 +139,7 @@ ggplot() +
 
 ::: {.keypoints}
 - Le modèle combiné a ici la plus petite MAE.
-- La saison seule manque la croissance.
+- Le modèle saisonnier seul ne décrit pas la croissance.
 - La validation sert au choix, sans test final indépendant.
 - Le classement doit être réévalué à de nouvelles origines.
 :::
@@ -169,6 +178,8 @@ un résultat limité à ce protocole
 ::: {.lead}
 Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.
 :::
+
+Cette production se réalise une seule fois dans le rapport guidé.
 
 ### Auto-vérification
 

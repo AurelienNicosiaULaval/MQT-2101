@@ -44,7 +44,7 @@ Le cas guidé comprend 104 semaines simulées, du 1er janvier 2024 au 22 décemb
 
 ### Ce qui change depuis le module 06
 
-Le calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales. Holt est un complément accompagné pour préparer le laboratoire; différenciation, ETS saisonnier et autres méthodes restent facultatifs.
+Le calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales et une cinquième étape facultative sur Holt. Ce complément accompagné ajoute une pente au niveau lissé; différenciation, ETS saisonnier et autres méthodes restent aussi facultatifs.
 
 ## Votre parcours
 
@@ -52,7 +52,7 @@ Les productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous
 
 Les [quatre capsules principales et le complément Holt](../../modules/semaine-07-lissage/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie pour le moment. La [synthèse](../../modules/semaine-07-lissage/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03.zip) contient ces six supports.
 
-Cliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Revenez ici pour garder le fil.
+Cliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Les quatre premières cartes forment le parcours principal. La cinquième propose un prolongement facultatif sur Holt, avec des supports PDF et HTML, une lecture et du code fourni. Revenez ici pour garder le fil.
 
 1Choisir une fenêtre de lissageQue peut-on savoir avant la semaine suivante?[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md#moyennes-mobiles)[Ex. 1](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
 
@@ -118,6 +118,24 @@ Auto-vérification Les coefficients du coût sont annoncés avant le calcul. Ma 
 
 Exercice d’application distinct Faites l’[exercice 4](exercices.llms.md#exercice-4) sur l’électricité dans `lissage_electricite.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 
+5Holt accompagné (facultatif)Qu’ajoute une pente au niveau lissé?[PDF et HTML](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md#holt)[Ex. 13](exercices.llms.md#exercice-13)Ouvrir l’étapeRéduire
+
+Objectif Distinguer le niveau, la pente et son amortissement.
+
+Prérequis Niveau lissé, origine, horizon et pente.
+
+Ressources [Supports PDF et HTML](capsules.llms.md#capsule-5) · [Démonstration avec code complet](demonstrations.llms.md#holt) · [Lecture française](lectures.llms.md#holt)
+
+Action facultative Réaliser cette pratique une seule fois si vous choisissez ce prolongement. Elle ne s’ajoute pas aux deux rapports principaux.
+
+Pratique facultative 7.5 - Niveau et pente
+
+Comparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.
+
+Auto-vérification Je conserve le même apprentissage et les mêmes cibles. Je distingue pente et saisonnalité. Je garde ce complément séparé de la trace principale.
+
+Autre cas, facultatif Tentez l’[exercice 13](exercices.llms.md#exercice-13) sur l’électricité après la démonstration.
+
 ## Exercices d’application
 
 Les [quatre exercices suivis](../../modules/semaine-07-lissage/exercices.llms.md) reprennent l’électricité du module 06 avec des fenêtres, deux réactivités et un coût pédagogique. Le changement de cible, de calendrier et de décision oblige à lire les résultats obtenus. Le classement de la demande ne peut pas être recopié.
@@ -141,7 +159,7 @@ Les projets [démonstration complète de demande](telechargements/demonstration-
 
 Le module prépare la comparaison des méthodes et la lecture des erreurs au laboratoire 03, au mini-rapport 2 et à l’examen final. Les deux rapports sont des entraînements. Les [consignes d’évaluation](../../evaluations/index.llms.md) restent la référence pour les travaux évalués. Le mini-rapport 2 exige une analyse autonome.
 
-Au laboratoire, apportez votre trace et consultez le [complément Holt](../../modules/semaine-07-lissage/capsules.llms.md#holt) si nécessaire. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales.
+Au laboratoire, apportez votre trace. Le [complément Holt](../../modules/semaine-07-lissage/capsules.llms.md#capsule-5) reste disponible si vous souhaitez explorer le lissage avec une pente. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales.
 
 ## Ressources du module
 

@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -33,29 +35,29 @@ Que signifie le coefficient de promotion?
 :::
 
 ::: {.note-box}
-La qualité d’une prévision dépend du modèle et de l’information disponible.
+Une direction veut comprendre l’association entre une promotion et les ventes, sans lui attribuer automatiquement une cause.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Ajuster et interpréter.
-- Relier le résultat au cas guidé.
-- Nommer une limite de l’interprétation.
+- Ajuster la régression sur les mois d’apprentissage.
+- Interpréter le coefficient de promotion en dollars.
+- Distinguer association conditionnelle et effet causal.
 :::
 
-## Le raisonnement
+## Lire le coefficient dans son contexte
 
 ::: {.keypoints}
-- Ventes = tendance + mois + promotion + prix + indice + résidu.
-- Comparer oui à non, en dollars, à autres variables fixées.
+- Le modèle explique les ventes par la tendance, le mois, la promotion, le prix et l’indice de confiance.
+- Comparer promotion « oui » à « non », en dollars, en maintenant les autres variables fixes.
 - La régression mesure une association conditionnelle.
 :::
 
 ## Une association dans le cas guidé
 
 ::: {.example-box}
-À prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».
+À prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».
 :::
 
 ::: {.warning-box}
@@ -67,18 +69,26 @@ Ce résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’e
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Promotion
+Référence
 :::
 ::: {.label}
-Les décisions de promotion ne sont pas nécessairement aléatoires.
+promotion « oui » comparée à « non »
 :::
 :::
 ::: {.metric}
 ::: {.value}
-Association
+Unité
 :::
 ::: {.label}
-Association ne signifie pas effet causal établi.
+différence de ventes en dollars par mois
+:::
+:::
+::: {.metric}
+::: {.value}
+Portée
+:::
+::: {.label}
+une association conditionnelle, sans effet causal établi
 :::
 :::
 ::::
@@ -96,7 +106,7 @@ Cette production se réalise une seule fois dans le rapport guidé.
 ::: {.self-check}
 - Je nomme la catégorie de référence et les unités.
 - Je distingue association conditionnelle et causalité.
-- Les douze mois de validation ne servent pas à ajuster le modèle.
+- Je n’utilise pas les douze mois de validation pour ajuster le modèle.
 :::
 
 ## Références et crédits

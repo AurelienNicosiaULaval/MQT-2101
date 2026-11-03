@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -29,51 +31,63 @@ execute:
 ## Pourquoi ça compte
 
 ::: {.question-line}
-Les erreurs se suivent-elles?
+Les erreurs successives sont-elles liées?
 :::
 
 ::: {.note-box}
-La qualité d’une prévision dépend du modèle et de l’information disponible.
+Des erreurs qui se suivent peuvent révéler une structure que les prédicteurs n’expliquent pas.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Diagnostiquer dans le temps.
-- Relier le résultat au cas guidé.
-- Nommer une limite de l’interprétation.
+- Distinguer résidu et erreur de prévision.
+- Lire la fonction d’autocorrélation des résidus.
+- Expliquer les limites du diagnostic.
 :::
 
-## Le raisonnement
+## Lire les corrélations entre résidus
 
 ::: {.keypoints}
 - Résidu : observation moins valeur ajustée.
 - Le retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle.
-- Regarder les résidus dans le temps et leur ACF.
+- Examiner les résidus dans le temps et leur fonction d’autocorrélation (ACF).
 - Le test de Ljung-Box est un complément facultatif.
 :::
 
-## ACF des résidus sur 2020 à 2024
+## Autocorrélation des résidus de 2020 à 2024
 
 ![](../acf-residus.png){fig-alt="Autocorrélations des résidus de la régression aux retards de 0 à 12 mois" width="85%"}
+
+::: {.note-box}
+Les pointillés sont des repères approximatifs, pas une preuve d’indépendance.
+:::
 
 ## À retenir
 
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Incertitude
+Résidus
 :::
 ::: {.label}
-Une ACF peu marquée ne prouve pas l’indépendance.
+écarts après ajustement, distincts des erreurs de prévision
 :::
 :::
 ::: {.metric}
 ::: {.value}
-Résidus
+Retards
 :::
 ::: {.label}
-Une ACF des ventes brutes n’est pas celle des résidus.
+comparer les résidus à un ou plusieurs mois d’intervalle
+:::
+:::
+::: {.metric}
+::: {.value}
+Limite
+:::
+::: {.label}
+une autocorrélation peu marquée ne prouve pas l’indépendance
 :::
 :::
 ::::
@@ -91,7 +105,7 @@ Cette production se réalise une seule fois dans le rapport guidé.
 ::: {.self-check}
 - Je garde l’ordre des mois et distingue résidus et erreurs de prévision.
 - Je décris les retards et les motifs visibles.
-- Une ACF peu marquée ne prouve pas l’indépendance.
+- Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.
 :::
 
 ## Références et crédits

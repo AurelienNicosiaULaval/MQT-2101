@@ -40,10 +40,10 @@ source("R/analyse-supports.R")
 ## Pourquoi ça compte
 
 ::: {.question-line}
-Comment distinguer croissance et mois récurrents pour planifier?
+Comment tenir compte de la tendance et des saisons pour planifier?
 :::
 ::: {.note-box}
-Le socle: une tendance linéaire, des mois, une comparaison commune et une décision prudente.
+Une tendance linéaire, des effets mensuels et une comparaison commune permettent de préparer une décision prudente.
 :::
 
 ## Objectifs du module
@@ -118,7 +118,7 @@ mois sans hausse
 Combiné
 :::
 ::: {.label}
-hausse et mois, comparés au saisonnier naïf
+hausse et mois, comparés au naïf saisonnier
 :::
 :::
 ::::
@@ -126,8 +126,8 @@ hausse et mois, comparés au saisonnier naïf
 ## Interpréter sans causalité
 
 ::: {.keypoints}
-- Pente: dollars par mois à mois égal.
-- Décembre: différence avec janvier à indice égal.
+- Pente : dollars par unité d’indice, à mois du calendrier égal.
+- Décembre : différence avec janvier à indice égal.
 - Changer la référence réécrit les coefficients, sans changer les prévisions.
 :::
 
@@ -136,7 +136,7 @@ hausse et mois, comparés au saisonnier naïf
 ::: {.keypoints}
 - Ordre temporel et dispersion.
 - Les indicatrices imposent des sommes mensuelles nulles.
-- Cette moyenne nulle ne valide pas la saison future.
+- Cette moyenne nulle ne prouve pas la stabilité future de la saisonnalité.
 :::
 
 ## Prévoir avant de mesurer
@@ -155,7 +155,7 @@ hausse et mois, comparés au saisonnier naïf
 Guidé
 :::
 ::: {.label}
-calendrier: MAE ≈ 9 891 $
+calendrier : MAE ≈ 9 891 $
 :::
 :::
 ::: {.metric}
@@ -163,7 +163,7 @@ calendrier: MAE ≈ 9 891 $
 Transfert
 :::
 ::: {.label}
-calendrier: MAE ≈ 32 389 $
+calendrier : MAE ≈ 32 389 $
 :::
 :::
 ::: {.metric}
@@ -179,7 +179,7 @@ choix provisoire, sans test indépendant
 ## Communiquer les limites
 
 ::: {.keypoints}
-- Confiance sur la moyenne, prédiction pour une observation.
+- Intervalle de confiance pour la moyenne; intervalle de prédiction pour une observation.
 - Intervalles marginaux sous hypothèses.
 - Planification et suivi, sans garantie de budget ou de capacité.
 :::

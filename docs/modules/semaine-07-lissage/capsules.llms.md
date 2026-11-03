@@ -54,9 +54,9 @@ Auto-vérification:
 >
 > Faites l’[exercice 2](../../modules/semaine-07-lissage/exercices.llms.md#exercice-2) sur l’électricité dans `lissage_electricite.qmd`, après la [préparation commune](../../modules/semaine-07-lissage/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-### Pour le laboratoire : prolongement Holt
+### Prolongement facultatif : Holt
 
-Holt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le [complément accompagné ci-dessous](#capsule-5), la [lecture](../../modules/semaine-07-lissage/lectures.llms.md#holt) et le [code fourni](../../modules/semaine-07-lissage/demonstrations.llms.md#holt) préparent l’appel utilisé au laboratoire 03. Il ne s’ajoute pas aux candidats du rapport principal.
+Holt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le [complément accompagné ci-dessous](#capsule-5), la [lecture](../../modules/semaine-07-lissage/lectures.llms.md#holt) et le [code fourni](../../modules/semaine-07-lissage/demonstrations.llms.md#holt) permettent d’explorer le lissage avec une pente. Il ne s’ajoute pas aux candidats du rapport principal.
 
 ## Capsule 3 - Lire les erreurs de prévision
 
@@ -108,7 +108,7 @@ Auto-vérification:
 
 ## Capsule 5 - Holt accompagné (facultatif)
 
-Prérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour préparer le laboratoire; le calcul manuel des récurrences n’est pas demandé.
+Prérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour explorer cette méthode; le calcul manuel des récurrences n’est pas demandé.
 
 ## PDF
 
@@ -118,7 +118,15 @@ Prérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
 
-Pratique facultative 7.5: comparez la prévision de Holt amorti à MM4 sur la demande avec le [code complet](../../modules/semaine-07-lissage/demonstrations.llms.md#holt). Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE. Pour un autre cas, tentez l’[exercice 13](../../modules/semaine-07-lissage/exercices.llms.md#exercice-13). Ces ajouts ne sont pas requis dans les deux traces principales.
+Pratique facultative 7.5, à réaliser une seule fois : Comparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.
+
+Auto-vérification:
+
+- Je conserve le même apprentissage et les mêmes cibles.
+- Je distingue pente et saisonnalité.
+- Je garde ce complément séparé de la trace principale.
+
+Utilisez le [code complet](../../modules/semaine-07-lissage/demonstrations.llms.md#holt). Pour un autre cas, tentez l’[exercice 13](../../modules/semaine-07-lissage/exercices.llms.md#exercice-13). Ces ajouts ne sont pas requis dans les deux traces principales.
 
 ## Autres méthodes conservées: cahier facultatif
 

@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -33,26 +35,26 @@ Le modèle suffit-il pour agir?
 :::
 
 ::: {.note-box}
-Une décision utile relie les probabilités à une action et à ses conséquences.
+Une performance sur un test fictif ne suffit pas à garantir l’efficacité d’une intervention réelle.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Évaluer et recommander.
-- Appliquer le raisonnement au cas de fidélisation.
-- Nommer une limite de l’interprétation.
+- Évaluer la règle déjà choisie sur le test.
+- Décrire l’accord entre probabilités et fréquences observées.
+- Formuler une recommandation avec ses limites.
 :::
 
-## Le raisonnement
+## Évaluer une règle déjà choisie
 
 ::: {.keypoints}
 - Appliquer au test la règle retenue en validation.
 - Comparer probabilités moyennes et fréquences observées par groupes.
-- Une règle de capacité cible les 15 % les plus élevés.
+- La règle alternative préétablie cible au plus 15 % des clients, selon leur risque prédit.
 :::
 
-## Calibration descriptive sur le test
+## Comparer probabilités et fréquences sur le test
 
 ![](../calibration.png){fig-alt="Fréquence de départ observée et probabilité moyenne dans cinq groupes de risque sur le test" width="85%"}
 
@@ -63,18 +65,26 @@ Un groupe proche de la diagonale ne prouve pas une calibration parfaite.
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Risque
+Évaluation
 :::
 ::: {.label}
-Un risque prédit ne mesure pas l’effet du contact.
+appliquer la règle fixée sur des clients du test
 :::
 :::
 ::: {.metric}
 ::: {.value}
-Limite
+Calibration
 :::
 ::: {.label}
-Le test et les données simulées limitent la conclusion.
+décrire l’accord entre probabilités et fréquences
+:::
+:::
+::: {.metric}
+::: {.value}
+Action
+:::
+::: {.label}
+un risque prédit ne mesure pas l’effet du contact
 :::
 :::
 ::::

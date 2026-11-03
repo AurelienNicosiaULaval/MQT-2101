@@ -54,7 +54,7 @@ Un indice continu représente la tendance; un facteur mois représente les diff�
 - Interpréter pente et référence.
 :::
 
-## L’indice continue, le mois revient
+## L’indice progresse, les mois se répètent
 
 :::: {.metric-grid}
 ::: {.metric}
@@ -86,9 +86,9 @@ référence du facteur mois
 ## Trois questions, trois modèles
 
 ::: {.keypoints}
-- Tendance seule: le niveau augmente-t-il?
-- Saison seule: quels mois se répètent?
-- Tendance avec mois: comment combiner les deux?
+- Tendance seule : le niveau augmente-t-il?
+- Saison seule : comment les ventes diffèrent-elles selon le mois?
+- Tendance avec mois : comment combiner les deux?
 :::
 
 ## La forme combinée
@@ -108,7 +108,7 @@ Une pente globale et des écarts mensuels constants en dollars, avec janvier com
 12 mois
 :::
 ::: {.label}
-11 contrastes avec la constante
+11 écarts par rapport à janvier
 :::
 :::
 ::: {.metric}
@@ -116,7 +116,7 @@ Une pente globale et des écarts mensuels constants en dollars, avec janvier com
 Non ordonné
 :::
 ::: {.label}
-contrasté par rapport à janvier
+janvier comme catégorie de référence
 :::
 :::
 ::: {.metric}
@@ -141,13 +141,13 @@ tidy(modele_calendrier) |>
   knitr::kable()
 ```
 ::: {.note-box}
-Pente: dollars par mois à mois égal. Contraste: dollars à indice de temps égal, selon le modèle.
+Pente : dollars par unité d’indice, à mois du calendrier égal. Contraste : différence en dollars avec janvier, à indice égal.
 :::
 
 ## Une interprétation conditionnelle
 
 ::: {.example-box}
-Décembre est modélisé environ 32 705 $ au-dessus de janvier, à indice de temps égal.
+À indice de temps égal, les ventes prédites de décembre dépassent celles de janvier d’environ 32 705 $.
 :::
 ::: {.warning-box}
 Cette différence ne mesure pas un effet causal. Changer la référence réécrit les coefficients sans changer les prévisions.
@@ -204,10 +204,12 @@ une pente et des écarts mensuels fixes
 Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.
 :::
 
+Cette production se réalise une seule fois dans le rapport guidé.
+
 ### Auto-vérification
 
 ::: {.self-check}
-- L’indice augmente d’une unité par mois et le facteur n’est pas ordonné.
+- Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné.
 - Je précise janvier comme référence et les unités des coefficients.
 - Je distingue comparaison conditionnelle et effet causal.
 :::

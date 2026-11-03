@@ -20,16 +20,30 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
   message: false
 ---
 
-## Une décision à partir d’un risque
+## Pourquoi ça compte
 
 ::: {.question-line}
 Que savons-nous avant d’agir et quelles erreurs pouvons-nous accepter?
+:::
+
+::: {.note-box}
+Le risque de départ aide à préparer une décision; il ne mesure pas ce qu’un contact changerait.
+:::
+
+## Objectifs du module
+
+::: {.keypoints}
+- Définir une cible binaire et des partitions adaptées.
+- Interpréter probabilités, cotes et mesures de classification.
+- Choisir puis évaluer une règle avant de recommander une action.
 :::
 
 ## Cible, unité et séparation
@@ -42,26 +56,61 @@ Que savons-nous avant d’agir et quelles erreurs pouvons-nous accepter?
 
 ## Logistique, cotes et probabilités
 
+::: {.formula-box}
+$$p=\frac{1}{1+\exp(-\eta)},\qquad \text{cote}=\frac{p}{1-p}.$$
+:::
 ::: {.keypoints}
-- Pour une probabilité p, la cote vaut p/(1-p).
-- La régression logistique pose la formule logistique et transforme ce prédicteur en probabilité comprise entre 0 et 1.
-- Pour une unité supplémentaire de x, à autres variables fixées, les cotes sont multipliées par exp(β1).
+- $\eta$ est le score linéaire du modèle.
+- Pour une unité supplémentaire de $x$, à autres variables fixées, les cotes sont multipliées par $\exp(\beta_1)$.
+- Un rapport de cotes n’est pas un rapport de probabilités.
 :::
 
 ## Matrice et mesures
 
 ::: {.keypoints}
-- Les vrais positifs VP sont les événements ciblés; les faux négatifs FN sont les événements manqués.
-- Les faux positifs FP sont des non-événements ciblés et les vrais négatifs VN les non-événements écartés.
-- Sensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP), exactitude = (VP+VN)/N.
+- Vrai positif (VP) : départ ciblé; faux négatif (FN) : départ non ciblé.
+- Faux positif (FP) : non-départ ciblé; vrai négatif (VN) : non-départ non ciblé.
+:::
+
+## Lire les mesures
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Sensibilité
+:::
+::: {.label}
+$\mathrm{VP}/(\mathrm{VP}+\mathrm{FN})$
+:::
+:::
+::: {.metric}
+::: {.value}
+Spécificité
+:::
+::: {.label}
+$\mathrm{VN}/(\mathrm{VN}+\mathrm{FP})$
+:::
+:::
+::: {.metric}
+::: {.value}
+Précision
+:::
+::: {.label}
+$\mathrm{VP}/(\mathrm{VP}+\mathrm{FP})$
+:::
+:::
+::::
+
+::: {.note-box}
+L’exactitude est $(\mathrm{VP}+\mathrm{VN})/N$, où $N$ est le nombre de clients. Un dénominateur nul rend la mesure concernée indéfinie.
 :::
 
 ## Seuil, coût et capacité
 
 ::: {.keypoints}
 - Le seuil transforme une probabilité en classe.
-- Abaisser le seuil ne diminue pas le nombre de personnes ciblées ni le nombre de vrais positifs pour des scores fixés; la précision peut augmenter ou diminuer.
-- Les coûts fictifs ou la capacité guident la règle.
+- Pour des probabilités fixées, abaisser le seuil cible au moins autant de clients et de vrais départs.
+- La précision peut augmenter ou diminuer. Les coûts et la capacité guident le choix.
 :::
 
 ## Calibration et action
@@ -74,10 +123,46 @@ Que savons-nous avant d’agir et quelles erreurs pouvons-nous accepter?
 
 ## À retenir
 
-::: {.keypoints}
-- Une probabilité ne suffit pas à fixer une action.
-- Le seuil se choisit en validation et s’évalue sur un test distinct.
-- Le risque prédit n’est pas l’effet causal d’un contact.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Probabilité
+:::
+::: {.label}
+un risque prédit, sans certitude ni effet causal
+:::
+:::
+::: {.metric}
+::: {.value}
+Règle
+:::
+::: {.label}
+choisir en validation avant d’évaluer sur le test
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+coûts, capacité et limites explicités
+:::
+:::
+::::
+
+## Les deux traces
+
+::: {.lead}
+Rassemblez les productions 10.1 à 10.5, réalisées une seule fois, dans `classification_clients.qmd`. Conservez les exercices de transfert dans `classification_service.qmd`.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Je distingue probabilité, cote et classe prédite.
+- Je sépare le choix en validation de l’évaluation sur le test.
+- Je justifie les coûts, la capacité et les limites.
+- Mes rapports se rendent après redémarrage de R.
 :::
 
 ## Références et crédits

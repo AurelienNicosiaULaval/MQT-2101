@@ -40,16 +40,16 @@ source("R/analyse-supports.R")
 ## Pourquoi ça compte
 
 ::: {.question-line}
-Que peut-on annoncer sans promettre le budget futur?
+Quelle plage de ventes peut-on annoncer pour planifier?
 :::
 ::: {.note-box}
-La prévision centrale et sa plage sous hypothèses nourrissent la décision, sans supprimer le risque.
+La prévision centrale et son intervalle aident à planifier; leur validité dépend des hypothèses du modèle.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Distinguer confiance et prédiction.
+- Distinguer intervalle de confiance et intervalle de prédiction.
 - Lire les intervalles ponctuels.
 - Formuler une recommandation avec suivi.
 :::
@@ -78,7 +78,7 @@ nouvelle observation
 Même niveau
 :::
 ::: {.label}
-la prédiction ajoute sa variabilité
+la prédiction inclut la variabilité d’une nouvelle observation
 :::
 :::
 ::::
@@ -124,6 +124,8 @@ ggplot(previsions_intervalle, aes(date)) +
   geom_ribbon(aes(ymin = lwr / 1000, ymax = upr / 1000), fill = "#BFDDE5", alpha = 0.6) +
   geom_line(aes(y = fit / 1000), colour = "#0B4F6C") +
   geom_point(aes(y = observe / 1000)) +
+  scale_x_date(date_breaks = "3 months", labels = dates_fr) +
+  scale_y_continuous(labels = scales::label_number(big.mark = " ", decimal.mark = ",")) +
   labs(x = NULL, y = "Ventes (milliers de $ CA)")
 ```
 
@@ -135,7 +137,7 @@ ggplot(previsions_intervalle, aes(date)) +
 - Une rupture ou une dépendance restante peut modifier la couverture.
 :::
 
-## Douze intervalles ne font pas une garantie annuelle
+## Douze intervalles ne garantissent pas le total annuel
 
 ::: {.warning-box}
 Les intervalles sont marginaux. Douze observations couvertes ne prouvent pas la calibration future, et additionner les bornes ne produit pas automatiquement un intervalle annuel à 95 %.
@@ -192,6 +194,8 @@ limite et surveillance explicites
 ::: {.lead}
 Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.
 :::
+
+Cette production se réalise une seule fois dans le rapport guidé.
 
 ### Auto-vérification
 

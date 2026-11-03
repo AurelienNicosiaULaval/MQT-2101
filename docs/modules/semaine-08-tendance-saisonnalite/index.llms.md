@@ -48,13 +48,13 @@ Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complement
 
 Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les exercices de transfert sont distincts et se conservent dans `tendance_commerce.qmd`, après une première tentative avant le corrigé.
 
-Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot du 26 octobre 2026](telechargements/module-08-pdf-2026-11-03.zip) contient ces six supports.
+Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot révisé du 3 novembre 2026](telechargements/module-08-pdf-2026-11-03-revu.zip) contient ces six supports.
 
 Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.
 
-1Lire le temps et les motifsLa hausse vient-elle du temps ou du calendrier?[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md#exploration)[Ex. 1](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
+1Repérer tendance et saisonnalitéLa hausse vient-elle du temps ou du calendrier?[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md#exploration)[Ex. 1](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
 
-Objectif Lire le temps et les motifs.
+Objectif Repérer tendance et saisonnalité.
 
 Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Démonstration](demonstrations.llms.md#exploration) · [Lecture française](lectures.llms.md#lecture-1)
 
@@ -80,7 +80,7 @@ Activité 8.2
 
 Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.
 
-Auto-vérification L’indice augmente d’une unité par mois et le facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.
+Auto-vérification Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.
 
 Transfert distinct Faites l’[exercice 2](exercices.llms.md#exercice-2) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 

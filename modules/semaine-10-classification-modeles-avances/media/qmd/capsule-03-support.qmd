@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -33,22 +35,22 @@ Quelles erreurs commet la règle?
 :::
 
 ::: {.note-box}
-Une décision utile relie les probabilités à une action et à ses conséquences.
+Un départ manqué et un client ciblé à tort n’ont pas les mêmes conséquences.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Lire une matrice de confusion.
-- Appliquer le raisonnement au cas de fidélisation.
-- Nommer une limite de l’interprétation.
+- Identifier vrais et faux positifs et négatifs.
+- Calculer les mesures avec le bon dénominateur.
+- Comparer les deux seuils sur la validation.
 :::
 
-## Le raisonnement
+## Compter les décisions et leurs erreurs
 
 ::: {.keypoints}
-- VP : départ ciblé; FN : départ non ciblé.
-- FP : non-départ ciblé; VN : non-départ non ciblé.
+- Vrai positif (VP) : départ ciblé; faux négatif (FN) : départ non ciblé.
+- Faux positif (FP) : non-départ ciblé; vrai négatif (VN) : non-départ non ciblé.
 - Sensibilité = VP / (VP + FN); précision = VP / (VP + FP).
 :::
 
@@ -88,18 +90,26 @@ La précision est 20 / 35, environ 57 %.
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Dénominateur
+Sensibilité
 :::
 ::: {.label}
-La précision et la sensibilité ne partagent pas leur dénominateur.
+parmi les départs : quelle part est ciblée?
 :::
 :::
 ::: {.metric}
 ::: {.value}
-Mesure
+Précision
 :::
 ::: {.label}
-Une mesure à dénominateur nul est indéfinie.
+parmi les clients ciblés : quelle part part réellement?
+:::
+:::
+::: {.metric}
+::: {.value}
+Dénominateur
+:::
+::: {.label}
+une mesure à dénominateur nul reste indéfinie
 :::
 :::
 ::::
@@ -117,7 +127,7 @@ Cette production se réalise une seule fois dans le rapport guidé.
 ::: {.self-check}
 - Je vérifie la classe positive.
 - Je distingue faux positifs et faux négatifs.
-- Les dénominateurs et les éventuelles mesures indéfinies sont explicites.
+- Je précise les dénominateurs et les mesures éventuellement indéfinies.
 :::
 
 ## Références et crédits

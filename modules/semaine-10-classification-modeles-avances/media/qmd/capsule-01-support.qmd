@@ -20,6 +20,8 @@ format:
     progress: true
     hash: true
     transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
@@ -33,22 +35,22 @@ Qui risque de partir et à quel moment?
 :::
 
 ::: {.note-box}
-Une décision utile relie les probabilités à une action et à ses conséquences.
+Une équipe veut repérer les clients susceptibles de partir dans les 90 jours pour préparer un contact.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Définir la cible et les partitions.
-- Appliquer le raisonnement au cas de fidélisation.
-- Nommer une limite de l’interprétation.
+- Définir le départ à prévoir et son horizon.
+- Vérifier la disponibilité des prédicteurs à la décision.
+- Séparer apprentissage, validation et test.
 :::
 
-## Le raisonnement
+## Définir la cible avant d’ajuster
 
 ::: {.keypoints}
 - Un client : une ligne; départ dans les 90 jours : classe positive.
-- Les prédicteurs doivent être connus avant ce départ.
+- Les prédicteurs doivent être connus au moment de la décision.
 - Apprentissage pour ajuster, validation pour choisir, test pour évaluer.
 :::
 
@@ -91,7 +93,7 @@ Les proportions sont approximatives et stratifiées par classe.
 Cible
 :::
 ::: {.label}
-La cible et l’horizon précèdent le modèle.
+départ observable dans les 90 jours
 :::
 :::
 ::: {.metric}
@@ -99,7 +101,15 @@ La cible et l’horizon précèdent le modèle.
 Disponibilité
 :::
 ::: {.label}
-Une information future crée une fuite.
+prédicteurs connus au moment de la décision
+:::
+:::
+::: {.metric}
+::: {.value}
+Partitions
+:::
+::: {.label}
+apprentissage pour ajuster, validation pour choisir, test pour évaluer
 :::
 :::
 ::::

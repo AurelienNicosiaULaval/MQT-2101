@@ -60,7 +60,7 @@ Activité 9.2
 
 Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.
 
-Auto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Les douze mois de validation ne servent pas à ajuster le modèle.
+Auto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.
 
 Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
 
@@ -72,7 +72,7 @@ Activité 9.3
 
 Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.
 
-Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Une ACF peu marquée ne prouve pas l’indépendance.
+Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.
 
 Transfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.
 
@@ -84,7 +84,7 @@ Activité 9.4
 
 À partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.
 
-Auto-vérification Les deux modèles utilisent les mêmes observations et prédicteurs. Les scores sont en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
+Auto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
 
 Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
 
@@ -105,6 +105,8 @@ Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
 Le rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité.
 
 ## Ressources du module
+
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF révisé du 3 novembre 2026](telechargements/module-09-pdf-2026-11-03-revu.zip).
 
 - [Capsules et productions](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md), [démonstrations R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md), [lectures françaises](../../modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md) et [exercices avec corrigés](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md).
 - [Notes de synthèse HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).
