@@ -1,116 +1,93 @@
 # Capsules - Module 09
 
-## Capsule 1 - Variables externes disponibles
+Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.
 
-## Objectif
+## Capsule 1 - Auditer les variables
 
-> **NOTE:**
->
-> Classer prix, promotion, calendrier et indicateur économique selon leur disponibilité au moment de prévoir.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+## HTML
 
-## Support écrit
-
-Un prédicteur externe apporte de l’information autre que le passé de la cible. Avant de l’utiliser, classez-le :
-
-- connu : calendrier ou promotion déjà planifiée;
-- scénarisé : prix envisagé ou budget proposé;
-- prévu séparément : indicateur économique futur;
-- indisponible : valeur observée seulement après la période cible.
-
-Utiliser une variable indisponible dans le futur crée une fuite d’information et une performance irréaliste.
+[Ouvrir les diapositives](media/qmd/capsule-01-support.llms.md)
 
 ### Activité 9.1
 
-Classez la météo du mois prochain, une promotion déjà approuvée et les ventes réelles du mois prochain.
+Classez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.
 
-> **TIP:**
->
-> La promotion est connue. La météo est prévue séparément et donc incertaine. Les ventes futures sont la cible et ne peuvent pas servir de prédicteur.
+Auto-vérification : Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.
 
-## Capsule 2 - Régression conditionnelle
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-1).
 
-## Objectif
+## Capsule 2 - Ajuster et interpréter
 
-> **NOTE:**
->
-> Ajuster une régression avec tendance, promotion, prix et calendrier.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+## HTML
 
-## Support écrit
-
-Une régression temporelle peut s’écrire :
-
-\\ y_t=\beta_0+\beta_1t+\beta_2x\_{t}+\gamma\_{m(t)}+\eta_t. \\
-
-Le coefficient de promotion est une association conditionnelle aux autres variables du modèle. Si les promotions ont été choisies précisément durant les mois faibles, une comparaison brute peut même sous-estimer leur contribution. Une analyse causale exigerait un plan différent.
+[Ouvrir les diapositives](media/qmd/capsule-02-support.llms.md)
 
 ### Activité 9.2
 
-Pourquoi les ventes prévues sous « promotion oui » et « promotion non » ne constituent-elles pas automatiquement une estimation causale de la promotion?
+Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.
 
-> **TIP:**
->
-> Le modèle observationnel peut omettre des facteurs associés au choix de la promotion et aux ventes. La différence est conditionnelle au modèle, pas à une assignation expérimentale.
+Auto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Les douze mois de validation ne servent pas à ajuster le modèle.
 
-## Capsule 3 - Autocorrélation des résidus
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2).
 
-## Objectif
+## Capsule 3 - Diagnostiquer dans le temps
 
-> **NOTE:**
->
-> Lire une fonction d’autocorrélation et interpréter le test de Ljung-Box.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+## HTML
 
-## Support écrit
-
-L’autocorrélation mesure la relation entre une série et ses valeurs décalées. Après modélisation, les résidus devraient idéalement ressembler à un bruit sans structure prévisible.
-
-Un pic au retard 1 indique que des résidus voisins tendent à se ressembler. Le test de Ljung-Box évalue collectivement plusieurs autocorrélations. Une petite valeur p signale une incompatibilité avec l’absence globale d’autocorrélation, mais ne mesure pas à elle seule l’importance opérationnelle.
+[Ouvrir les diapositives](media/qmd/capsule-03-support.llms.md)
 
 ### Activité 9.3
 
-Si les résidus positifs sont souvent suivis de résidus positifs, quel défaut pratique peut apparaître?
+Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.
 
-> **TIP:**
->
-> Le modèle peut sous-prévoir plusieurs périodes consécutives. Les erreurs ne sont pas indépendantes et certaines structures temporelles restent inutilisées.
+Auto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Une ACF peu marquée ne prouve pas l’indépendance.
 
-## Capsule 4 - Erreurs AR et scénarios
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3).
 
-## Objectif
+## Capsule 4 - Comparer deux modèles
 
-> **NOTE:**
->
-> Comparer régression ordinaire et régression avec erreurs AR(1), puis prévoir sous scénarios.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+## HTML
 
-## Support écrit
-
-Un modèle avec erreurs AR(1) suppose :
-
-\\ \eta_t=\phi\eta\_{t-1}+\varepsilon_t, \\
-
-où \\\varepsilon_t\\ n’est plus autocorrélé. Le modèle combine l’information des variables externes et la dépendance des erreurs.
-
-Pour prévoir, il faut fournir les valeurs futures des prédicteurs. Si elles sont scénarisées, le résultat doit être présenté comme « prévision conditionnelle à ce scénario ».
+[Ouvrir les diapositives](media/qmd/capsule-04-support.llms.md)
 
 ### Activité 9.4
 
-Rédigez une phrase complète présentant une prévision sous un scénario où une promotion est maintenue et le prix reste stable.
+À partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.
 
-> **TIP:**
->
-> La phrase doit nommer l’horizon, la cible et les hypothèses de promotion et de prix; elle ne doit pas présenter le résultat comme inconditionnel.
+Auto-vérification : Les deux modèles utilisent les mêmes observations et prédicteurs. Les scores sont en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
+
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).
+
+## Capsule 5 - Communiquer un scénario
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## HTML
+
+[Ouvrir les diapositives](media/qmd/capsule-05-support.llms.md)
+
+### Activité 9.5
+
+Pour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.
+
+Auto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.
+
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).

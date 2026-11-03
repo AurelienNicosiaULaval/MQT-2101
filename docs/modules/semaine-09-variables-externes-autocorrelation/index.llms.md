@@ -1,54 +1,132 @@
 # Module 09 - Variables externes et autocorrélation
 
+Séance autonome
+
+## Prévoir avec une information disponible
+
+Une promotion ou un prix peuvent aider à expliquer les ventes. Encore faut-il connaître ou scénariser ces valeurs au moment de prévoir.
+
+Organisation
+
+À votre rythme
+
+Outils
+
+R, RStudio et Quarto
+
+Cas guidé
+
+Ventes mensuelles fictives
+
+Trace finale
+
+Rapport guidé et transfert
+
+## On passe au concret
+
 > **NOTE:**
 >
-> Les promotions, les prix et les indicateurs économiques peuvent améliorer une prévision, mais seulement si leur valeur future est connue ou peut être scénarisée au moment de prévoir. Les résidus doivent aussi être examinés dans leur ordre temporel : une dépendance restante indique que le modèle laisse de l’information exploitable.
+> Une direction veut prévoir ses ventes avant l’année suivante. Comment utiliser une promotion et un prix prévus sans prétendre connaître l’indice économique futur, et que faire si les erreurs se suivent?
 
-## Continuité du parcours
+Le module 08 a introduit tendance et calendrier; son transfert utilisait déjà ces données commerciales. Le module 09 ajoute les variables externes et le diagnostic temporel. Les 12 mois de 2025 ont déjà été examinés : ils ne sont pas un test indépendant. Les scores utilisant les valeurs externes réalisées en 2025 sont conditionnels à ces valeurs.
 
-Le module 08 a modélisé tendance et calendrier à partir du passé de la série. Ici, vous ajoutez des prédicteurs externes, mais vous devez d’abord vérifier qu’ils seront réellement connus, prévus ou scénarisés au moment de la décision.
+## Avant de commencer
 
-Les douze derniers mois servent à comparer les modèles sur un bloc de validation. Les démonstrations utilisant les prédicteurs observés sur ces mois mesurent une performance conditionnelle à ces valeurs. Pour une prévision réalisable à l’origine, fournissez un scénario disponible à cette date et signalez l’incertitude des prédicteurs futurs.
+Revoir la régression et ses résidus (module 03), l’origine et les mesures d’erreur (module 06), puis la tendance et les mois (module 08). Les données fictives et les unités sont décrites dans le [dictionnaire](data/dictionnaires.md). Installez `tidyverse` et `forecast`, ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto.
 
-## Résultat attendu
+Téléchargez le [projet guidé](telechargements/variables-ventes.zip) et le [projet de transfert](telechargements/variables-succursales.zip). Les cinq productions 9.1 à 9.5 sont les mêmes dans cet accueil, les capsules et les diapositives : faites chacune une seule fois dans `variables_ventes.qmd`. Le transfert se réalise séparément dans `variables_succursales.qmd`.
 
-À la fin du module, vous pourrez :
+## Votre parcours
 
-- distinguer une variable future connue, scénarisée ou inconnue;
-- construire une régression de ventes avec facteurs externes;
-- interpréter un coefficient sans lui attribuer automatiquement une causalité;
-- représenter et tester l’autocorrélation des résidus;
-- comparer une régression ordinaire à une régression avec erreurs AR(1);
-- formuler une prévision conditionnelle à un scénario.
+Les cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.
 
-## Données
+1Auditer les variablesActivité 9.1[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
 
-Le fichier [`ventes_promotions_quebec.csv`](data/ventes_promotions_quebec.csv) contient 72 mois fictifs de ventes, promotions, prix moyen, budget marketing et indice de confiance.
+Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Lecture française](lectures.llms.md#lecture-1)
 
-## Parcours
+Activité 9.1
 
-1.  [Capsules et activités](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md)
-2.  [Notes de cours](../../modules/semaine-09-variables-externes-autocorrelation/notes-cours.llms.md)
-3.  [Démonstrations R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md)
-4.  [Exercices](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md)
-5.  [Lectures ciblées](../../modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md)
+Classez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.
+
+Auto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.
+
+Transfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.
+
+2Ajuster et interpréterActivité 9.2[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
+
+Ressource [Capsule 2](capsules.llms.md#capsule-2) · [Lecture française](lectures.llms.md#lecture-2)
+
+Activité 9.2
+
+Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.
+
+Auto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Les douze mois de validation ne servent pas à ajuster le modèle.
+
+Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
+
+3Diagnostiquer dans le tempsActivité 9.3[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
+
+Ressource [Capsule 3](capsules.llms.md#capsule-3) · [Lecture française](lectures.llms.md#lecture-3)
+
+Activité 9.3
+
+Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.
+
+Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Une ACF peu marquée ne prouve pas l’indépendance.
+
+Transfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.
+
+4Comparer deux modèlesActivité 9.4[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-4)Ouvrir l’étapeRéduire
+
+Ressource [Capsule 4](capsules.llms.md#capsule-4) · [Lecture française](lectures.llms.md#lecture-4)
+
+Activité 9.4
+
+À partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.
+
+Auto-vérification Les deux modèles utilisent les mêmes observations et prédicteurs. Les scores sont en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
+
+Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
+
+5Communiquer un scénarioActivité 9.5[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-4)Ouvrir l’étapeRéduire
+
+Ressource [Capsule 5](capsules.llms.md#capsule-5) · [Lecture française](lectures.llms.md#lecture-5)
+
+Activité 9.5
+
+Pour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.
+
+Auto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.
+
+Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
 
 ## Trace finale
 
-Comparez un modèle de régression avec variables externes et une version avec erreurs AR(1), sur les douze derniers mois. Incluez : justification des prédicteurs, statut de disponibilité future, diagnostic des résidus, MAE de validation, scénario de promotion et limite causale.
+Le rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité.
+
+## Ressources du module
+
+- [Capsules et productions](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md), [démonstrations R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md), [lectures françaises](../../modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md) et [exercices avec corrigés](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md).
+- [Notes de synthèse HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).
+- [Démonstration complète](telechargements/demonstration-variables.zip) et [corrigé de transfert](telechargements/corrige-succursales.zip).
+- [Compléments facultatifs](../../modules/semaine-09-variables-externes-autocorrelation/complements.llms.md) : retards, événements, modèle en deux étapes et repères ARIMA; [télécharger le cahier](telechargements/complements-variables.zip).
 
 ## Auto-vérification
 
-Chaque prédicteur serait réellement disponible au point d’origine ou fait l’objet d’un scénario explicite.
+Je situe l’origine et la disponibilité de chaque prédicteur.
 
-La période de validation suit l’entraînement.
+J’explique une association sans prétendre à la causalité.
 
-Les résidus sont examinés dans l’ordre du temps.
+Je lis les résidus et l’ACF dans leur ordre temporel.
 
-Une association de promotion n’est pas présentée comme un effet causal prouvé.
+Je compare les modèles sur les mêmes cibles et indique les valeurs externes utilisées.
 
-La prévision est identifiée comme conditionnelle au scénario des prédicteurs.
+Je nomme les hypothèses et les limites du scénario.
+
+## Je suis bloqué·e
+
+Commencez par la [préparation complète](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation), puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Comparez vos tentatives aux corrigés repliables, puis demandez de l’aide dans les canaux habituels du cours.
 
 ## Lien avec l’évaluation
 
-Ce module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle.
+Ce module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Les activités sont des entraînements.

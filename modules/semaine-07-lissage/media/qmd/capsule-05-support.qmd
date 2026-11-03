@@ -1,0 +1,138 @@
+---
+title: "Capsule 5 - Holt accompagné (facultatif)"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: ../module07-capsules.css
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+```{r}
+#| label: preparation-support-m07
+#| include: false
+racines <- c("../..", ".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
+```
+## Pourquoi ça compte
+
+::: {.question-line}
+Un niveau seul peut-il prolonger une hausse?
+:::
+::: {.note-box}
+Complément accompagné, facultatif pour les rapports. Le code est fourni pour préparer le laboratoire 03.
+:::
+
+## Objectifs du complément
+
+::: {.keypoints}
+- Distinguer le niveau et la pente.
+- Lire l’effet de l’amortissement.
+- Comparer les erreurs sans supposer qu’une méthode plus complexe fera mieux.
+:::
+
+## Holt ajoute une pente locale
+
+::: {.formula-box}
+$$\widehat y_{T+h\mid T}=\ell_T+h b_T.$$
+:::
+::: {.keypoints}
+- $\ell_T$ est le niveau à l’origine; $b_T$ est la variation prévue par période.
+- Le niveau et la pente sont mis à jour sur l’apprentissage.
+- La pente décrit une évolution, sans en expliquer la cause.
+- Aucune composante saisonnière n’est ajoutée.
+:::
+
+## L’amortissement limite la contribution de la pente
+
+::: {.formula-box}
+$$\widehat y_{T+h\mid T}=\ell_T+(\phi+\cdots+\phi^h)b_T,\qquad 0<\phi<1.$$
+:::
+::: {.note-box}
+Chaque période ajoute moins que la précédente. La contribution totale de la pente se stabilise à long terme; elle ne disparaît pas dès le deuxième horizon.
+:::
+
+## Une méthode de plus ne garantit pas un gain
+
+```{r}
+#| label: m07-c5-table
+#| echo: false
+bind_rows(
+  scores |> select(methode, MAE),
+  mesures_erreurs(validation$demande, as.numeric(modele_holt$mean)) |>
+    mutate(methode = "Holt amorti") |> select(methode, MAE)
+) |>
+  arrange(MAE) |>
+  mutate(methode = recode(methode, Naive = "Naïf", Saisonnier = "Naïf saisonnier"),
+         MAE = fr(MAE)) |>
+  knitr::kable(col.names = c("Méthode", "MAE (unités)"))
+```
+::: {.note-box}
+Même comparaison sur les treize semaines de validation. Dans ce cas, Holt amorti a une MAE plus élevée que MM4.
+:::
+
+## À retenir
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Niveau
+:::
+::: {.label}
+position locale
+:::
+:::
+::: {.metric}
+::: {.value}
+Pente
+:::
+::: {.label}
+évolution locale
+:::
+:::
+::: {.metric}
+::: {.value}
+Amortissement
+:::
+::: {.label}
+contribution qui se stabilise
+:::
+:::
+::::
+
+## Pratique facultative 7.5
+
+::: {.lead}
+Comparez Holt amorti à MM4 avec le code fourni. Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Je conserve le même apprentissage et les mêmes cibles.
+- Je distingue pente et saisonnalité.
+- Je garde ce complément séparé de la trace principale.
+:::

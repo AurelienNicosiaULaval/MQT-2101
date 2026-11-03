@@ -6872,6 +6872,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7052,15 +7083,12 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
-  <li><a href="#examiner-la-cible" id="toc-examiner-la-cible" class="nav-link" data-scroll-target="#examiner-la-cible">1. Examiner la cible</a></li>
-  <li><a href="#ajuster-une-régression-logistique" id="toc-ajuster-une-régression-logistique" class="nav-link" data-scroll-target="#ajuster-une-régression-logistique">2. Ajuster une régression logistique</a></li>
-  <li><a href="#produire-les-probabilités-test" id="toc-produire-les-probabilités-test" class="nav-link" data-scroll-target="#produire-les-probabilités-test">3. Produire les probabilités test</a></li>
-  <li><a href="#calculer-les-mesures-à-un-seuil" id="toc-calculer-les-mesures-à-un-seuil" class="nav-link" data-scroll-target="#calculer-les-mesures-à-un-seuil">4. Calculer les mesures à un seuil</a></li>
-  <li><a href="#relier-le-seuil-à-une-capacité" id="toc-relier-le-seuil-à-une-capacité" class="nav-link" data-scroll-target="#relier-le-seuil-à-une-capacité">5. Relier le seuil à une capacité</a></li>
-  <li><a href="#vérifier-sommairement-la-calibration" id="toc-vérifier-sommairement-la-calibration" class="nav-link" data-scroll-target="#vérifier-sommairement-la-calibration">6. Vérifier sommairement la calibration</a></li>
-  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
+  <ul class="collapse">
+  <li><a href="#preparation" id="toc-preparation" class="nav-link active" data-scroll-target="#preparation">Préparation et cible</a></li>
+  <li><a href="#modele" id="toc-modele" class="nav-link" data-scroll-target="#modele">Régression et probabilités</a></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices de confusion</a></li>
+  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation">Choisir en validation</a></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test">Évaluer et communiquer</a></li>
   </ul>
 </nav>
     </div>
@@ -7086,171 +7114,192 @@ display: none;
 </header>
 
 
-<section id="préparation" class="level2">
-<h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
+<p>Le cas est fictif et porte sur un départ dans les 90 jours. Les coûts et la capacité sont des hypothèses d’exercice; un score de risque ne mesure pas l’effet d’un contact. Les trois partitions sont fixes pour tout le parcours. L’absence de date dans le fichier empêche de vérifier une validation chronologique réaliste.</p>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Préparation et cible</h2>
+<p>Installez <code>tidyverse</code> si nécessaire, ouvrez le projet et exécutez les blocs dans l’ordre à partir d’une session neuve. Classe positive : départ = 1. L’identifiant sert aux vérifications et aux égalités, pas comme prédicteur.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;data/fidelisation_clients_quebec.csv&quot;</span>)) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;data/fidelisation_clients_quebec.csv&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv&quot;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>clients <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_contrat =</span> <span class="fu">factor</span>(type_contrat), <span class="at">rabais_actuel =</span> <span class="fu">factor</span>(rabais_actuel))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">210110</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ids_entrainement <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(depart_90j) <span class="sc">|&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.75</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(client_id)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span> <span class="fu">filter</span>(client_id <span class="sc">%in%</span> ids_entrainement)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span>client_id <span class="sc">%in%</span> ids_entrainement)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="examiner-la-cible" class="level2">
-<h2 class="anchored" data-anchor-id="examiner-la-cible">1. Examiner la cible</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>clients <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(depart_90j) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>racines <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;.&quot;</span>, <span class="st">&quot;modules/semaine-10-classification-modeles-avances&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>racine <span class="ot">&lt;-</span> racines[<span class="fu">file.exists</span>(<span class="fu">file.path</span>(racines, <span class="st">&quot;data/fidelisation_clients_quebec.csv&quot;</span>))][<span class="dv">1</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">is.na</span>(racine))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>clients <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(racine, <span class="st">&quot;data/fidelisation_clients_quebec.csv&quot;</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_contrat =</span> <span class="fu">factor</span>(type_contrat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;annuel&quot;</span>, <span class="st">&quot;mensuel&quot;</span>)),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">rabais_actuel =</span> <span class="fu">factor</span>(rabais_actuel, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;aucun&quot;</span>, <span class="st">&quot;fidélité&quot;</span>, <span class="st">&quot;rétention&quot;</span>)))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(clients) <span class="sc">==</span> <span class="dv">650</span>, <span class="sc">!</span><span class="fu">anyDuplicated</span>(clients<span class="sc">$</span>client_id),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>          <span class="sc">!</span><span class="fu">anyNA</span>(clients), <span class="fu">all</span>(clients<span class="sc">$</span>depart_90j <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">210110</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>clients <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span> <span class="fu">group_by</span>(depart_90j) <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tirage =</span> <span class="fu">sample.int</span>(<span class="fu">n</span>()),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">partition =</span> <span class="fu">case_when</span>(tirage <span class="sc">&lt;=</span> <span class="fu">floor</span>(<span class="fl">0.60</span> <span class="sc">*</span> <span class="fu">n</span>()) <span class="sc">~</span> <span class="st">&quot;apprentissage&quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                               tirage <span class="sc">&lt;=</span> <span class="fu">floor</span>(<span class="fl">0.80</span> <span class="sc">*</span> <span class="fu">n</span>()) <span class="sc">~</span> <span class="st">&quot;validation&quot;</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;test&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">ungroup</span>()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>apprentissage <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span> <span class="fu">filter</span>(partition <span class="sc">==</span> <span class="st">&quot;apprentissage&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>validation <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span> <span class="fu">filter</span>(partition <span class="sc">==</span> <span class="st">&quot;validation&quot;</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> clients <span class="sc">|&gt;</span> <span class="fu">filter</span>(partition <span class="sc">==</span> <span class="st">&quot;test&quot;</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">length</span>(<span class="fu">intersect</span>(apprentissage<span class="sc">$</span>client_id, validation<span class="sc">$</span>client_id)) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>          <span class="fu">length</span>(<span class="fu">intersect</span>(apprentissage<span class="sc">$</span>client_id, test<span class="sc">$</span>client_id)) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>          <span class="fu">length</span>(<span class="fu">intersect</span>(validation<span class="sc">$</span>client_id, test<span class="sc">$</span>client_id)) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>clients <span class="sc">|&gt;</span> <span class="fu">count</span>(partition, depart_90j)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  depart_90j     n proportion
-       &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-1          0   452      0.695
-2          1   198      0.305</code></pre>
+<pre><code># A tibble: 6 × 3
+  partition     depart_90j     n
+  &lt;chr&gt;              &lt;dbl&gt; &lt;int&gt;
+1 apprentissage          0   271
+2 apprentissage          1   118
+3 test                   0    91
+4 test                   1    40
+5 validation             0    90
+6 validation             1    40</code></pre>
 </div>
 </div>
 </section>
-<section id="ajuster-une-régression-logistique" class="level2">
-<h2 class="anchored" data-anchor-id="ajuster-une-régression-logistique">2. Ajuster une régression logistique</h2>
+<section id="modele" class="level2">
+<h2 class="anchored" data-anchor-id="modele">Régression et probabilités</h2>
+<p>Un rapport de cotes de 1,5 signifie des cotes multipliées par 1,5, pas une probabilité augmentée de 50 %. Les profils comparés sont hypothétiques. L’association conditionnelle n’est pas une preuve causale.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>modele <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  depart_90j <span class="sc">~</span> anciennete_mois <span class="sc">+</span> utilisation_mensuelle <span class="sc">+</span> tickets_service_6m <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    satisfaction <span class="sc">+</span> type_contrat <span class="sc">+</span> rabais_actuel,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> entrainement,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(modele, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">&quot;(Intercept)&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modele <span class="ot">&lt;-</span> <span class="fu">glm</span>(depart_90j <span class="sc">~</span> anciennete_mois <span class="sc">+</span> utilisation_mensuelle <span class="sc">+</span> tickets_service_6m <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                satisfaction <span class="sc">+</span> type_contrat <span class="sc">+</span> rabais_actuel,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> apprentissage, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(modele<span class="sc">$</span>converged, <span class="fu">all</span>(<span class="fu">is.finite</span>(<span class="fu">coef</span>(modele))))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modele))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 7
-  term                   estimate std.error statistic p.value conf.low conf.high
-  &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 anciennete_mois           0.970   0.00752    -4.08  4.54e-5    0.955     0.984
-2 utilisation_mensuelle     0.907   0.0230     -4.26  2.02e-5    0.866     0.948
-3 tickets_service_6m        1.63    0.0962      5.10  3.47e-7    1.36      1.98
-4 satisfaction              0.679   0.0966     -4.01  5.95e-5    0.559     0.817
-5 type_contratmensuel       2.26    0.250       3.26  1.13e-3    1.40      3.74
-6 rabais_actuelfidélité     1.26    0.252       0.929 3.53e-1    0.769     2.07
-7 rabais_actuelrétention    1.81    0.315       1.88  5.94e-2    0.973     3.36 </code></pre>
+<pre><code>           (Intercept)        anciennete_mois  utilisation_mensuelle
+            89.1555181              0.9698880              0.9025786
+    tickets_service_6m           satisfaction    type_contratmensuel
+             1.4428952              0.5410943              1.9203206
+ rabais_actuelfidélité rabais_actuelrétention
+             0.8721358              1.7765345 </code></pre>
 </div>
-</div>
-<p>Les valeurs exponentiées sont des rapports de cotes, pas des différences directes de probabilité.</p>
-</section>
-<section id="produire-les-probabilités-test" class="level2">
-<h2 class="anchored" data-anchor-id="produire-les-probabilités-test">3. Produire les probabilités test</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>evaluation <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_depart =</span> <span class="fu">predict</span>(modele, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>evaluation <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">probabilite_min =</span> <span class="fu">min</span>(prob_depart),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">probabilite_mediane =</span> <span class="fu">median</span>(prob_depart),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">probabilite_max =</span> <span class="fu">max</span>(prob_depart)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>profils <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">anciennete_mois =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">24</span>), <span class="at">utilisation_mensuelle =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">12</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tickets_service_6m =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">satisfaction =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">7</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type_contrat =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;mensuel&quot;</span>, <span class="st">&quot;mensuel&quot;</span>), <span class="at">levels =</span> <span class="fu">levels</span>(clients<span class="sc">$</span>type_contrat)),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rabais_actuel =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;aucun&quot;</span>, <span class="st">&quot;aucun&quot;</span>), <span class="at">levels =</span> <span class="fu">levels</span>(clients<span class="sc">$</span>rabais_actuel)))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>profils <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">probabilite =</span> <span class="fu">predict</span>(modele, <span class="at">newdata =</span> profils, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(tickets_service_6m, probabilite)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  probabilite_min probabilite_mediane probabilite_max
-            &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;
-1         0.00760               0.266           0.896</code></pre>
+<pre><code># A tibble: 2 × 2
+  tickets_service_6m probabilite
+               &lt;dbl&gt;       &lt;dbl&gt;
+1                  1       0.320
+2                  3       0.495</code></pre>
 </div>
 </div>
 </section>
-<section id="calculer-les-mesures-à-un-seuil" class="level2">
-<h2 class="anchored" data-anchor-id="calculer-les-mesures-à-un-seuil">4. Calculer les mesures à un seuil</h2>
+<section id="matrices" class="level2">
+<h2 class="anchored" data-anchor-id="matrices">Matrices de confusion</h2>
+<p>Pour la classe positive 1 : VP = départ ciblé; FN = départ non ciblé; FP = non-départ ciblé; VN = non-départ non ciblé. La précision est indéfinie si aucun client n’est ciblé; la fonction retourne alors <code>NA</code> plutôt que 0.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mesures_seuil <span class="ot">&lt;-</span> <span class="cf">function</span>(data, seuil) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prediction =</span> <span class="fu">as.integer</span>(prob_depart <span class="sc">&gt;=</span> seuil)) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">seuil =</span> seuil,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">VP =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> depart_90j <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">FP =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> depart_90j <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">VN =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> depart_90j <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">FN =</span> <span class="fu">sum</span>(prediction <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> depart_90j <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">exactitude =</span> (VP <span class="sc">+</span> VN) <span class="sc">/</span> (VP <span class="sc">+</span> FP <span class="sc">+</span> VN <span class="sc">+</span> FN),</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">sensibilite =</span> VP <span class="sc">/</span> (VP <span class="sc">+</span> FN),</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">specificite =</span> VN <span class="sc">/</span> (VN <span class="sc">+</span> FP),</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">precision =</span> VP <span class="sc">/</span> (VP <span class="sc">+</span> FP),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">proportion_ciblee =</span> (VP <span class="sc">+</span> FP) <span class="sc">/</span> (VP <span class="sc">+</span> FP <span class="sc">+</span> VN <span class="sc">+</span> FN)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mesures_seuil</span>(evaluation, <span class="fl">0.30</span>),</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mesures_seuil</span>(evaluation, <span class="fl">0.50</span>)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mesures_seuil <span class="ot">&lt;-</span> <span class="cf">function</span>(observe, probabilite, seuil, <span class="at">cout_fp =</span> <span class="dv">1</span>, <span class="at">cout_fn =</span> <span class="dv">4</span>) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">length</span>(observe) <span class="sc">==</span> <span class="fu">length</span>(probabilite), <span class="fu">all</span>(observe <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all</span>(<span class="fu">is.finite</span>(probabilite)), <span class="fu">all</span>(probabilite <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> probabilite <span class="sc">&lt;=</span> <span class="dv">1</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  predit <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(probabilite <span class="sc">&gt;=</span> seuil)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  vp <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">1</span>); fp <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  vn <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">0</span>); fn <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ratio <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) <span class="cf">if</span> (b <span class="sc">==</span> <span class="dv">0</span>) <span class="cn">NA_real_</span> <span class="cf">else</span> a <span class="sc">/</span> b</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(seuil, <span class="at">VP =</span> vp, <span class="at">FP =</span> fp, <span class="at">VN =</span> vn, <span class="at">FN =</span> fn,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">exactitude =</span> <span class="fu">ratio</span>(vp <span class="sc">+</span> vn, <span class="fu">length</span>(observe)), <span class="at">sensibilite =</span> <span class="fu">ratio</span>(vp, vp <span class="sc">+</span> fn),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">specificite =</span> <span class="fu">ratio</span>(vn, vn <span class="sc">+</span> fp), <span class="at">precision =</span> <span class="fu">ratio</span>(vp, vp <span class="sc">+</span> fp),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">proportion_ciblee =</span> <span class="fu">ratio</span>(vp <span class="sc">+</span> fp, <span class="fu">length</span>(observe)), <span class="at">cout =</span> cout_fp <span class="sc">*</span> fp <span class="sc">+</span> cout_fn <span class="sc">*</span> fn)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="validation" class="level2">
+<h2 class="anchored" data-anchor-id="validation">Choisir en validation</h2>
+<p>La validation sert au choix. Un faux négatif coûte ici 4 unités et un faux positif 1 unité, uniquement pour illustrer une décision; la comparaison n’est valide que pour ces hypothèses. En cas d’égalité, la règle fixe le seuil inférieur. Une fois le seuil choisi, ne pas l’ajuster en regardant le test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>validation <span class="ot">&lt;-</span> validation <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">probabilite =</span> <span class="fu">predict</span>(modele, <span class="at">newdata =</span> validation, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>resultats_validation <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="fu">mesures_seuil</span>(validation<span class="sc">$</span>depart_90j, validation<span class="sc">$</span>probabilite, <span class="fl">0.30</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">mesures_seuil</span>(validation<span class="sc">$</span>depart_90j, validation<span class="sc">$</span>probabilite, <span class="fl">0.50</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>resultats_validation <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, VP, FP, VN, FN, cout)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 10
-  seuil    VP    FP    VN    FN exactitude sensibilite specificite precision
-  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-1   0.3    41    35    78     9      0.730        0.82       0.690     0.539
-2   0.5    23     6   107    27      0.798        0.46       0.947     0.793
-# ℹ 1 more variable: proportion_ciblee &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 2 × 6
+  seuil    VP    FP    VN    FN  cout
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1   0.3    30    19    71    10    59
+2   0.5    17     7    83    23    99</code></pre>
 </div>
-</div>
-</section>
-<section id="relier-le-seuil-à-une-capacité" class="level2">
-<h2 class="anchored" data-anchor-id="relier-le-seuil-à-une-capacité">5. Relier le seuil à une capacité</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>capacite <span class="ot">&lt;-</span> <span class="fl">0.15</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>seuil_capacite <span class="ot">&lt;-</span> <span class="fu">quantile</span>(evaluation<span class="sc">$</span>prob_depart, <span class="at">probs =</span> <span class="dv">1</span> <span class="sc">-</span> capacite)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mesures_seuil</span>(evaluation, seuil_capacite)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>resultats_validation <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, sensibilite, specificite, precision, proportion_ciblee)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 10
-  seuil    VP    FP    VN    FN exactitude sensibilite specificite precision
-  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-1 0.532    19     6   107    31      0.773        0.38       0.947      0.76
-# ℹ 1 more variable: proportion_ciblee &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 2 × 5
+  seuil sensibilite specificite precision proportion_ciblee
+  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
+1   0.3       0.75        0.789     0.612             0.377
+2   0.5       0.425       0.922     0.708             0.185</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>seuil_retenu <span class="ot">&lt;-</span> resultats_validation <span class="sc">|&gt;</span> <span class="fu">arrange</span>(cout, seuil) <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(seuil)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>seuil_retenu</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3</code></pre>
 </div>
 </div>
 </section>
-<section id="vérifier-sommairement-la-calibration" class="level2">
-<h2 class="anchored" data-anchor-id="vérifier-sommairement-la-calibration">6. Vérifier sommairement la calibration</h2>
+<section id="test" class="level2">
+<h2 class="anchored" data-anchor-id="test">Évaluer et communiquer</h2>
+<p>Le test estime la performance de la règle retenue sur ce partage fictif. La référence prédit toujours la classe majoritaire déterminée sur l’apprentissage, et non sur le test. La calibration compare, par groupes, probabilités moyennes et fréquences observées; les petits groupes et un seul partage limitent sa précision. Le score de Brier est la moyenne des carrés entre probabilités et résultats; plus petit n’implique pas à lui seul une bonne calibration. La règle des 15 % est une autre règle fixée avant le test, illustrative; l’observation des deux règles sur le même test ne justifie pas une nouvelle sélection sur ce test.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>evaluation <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">groupe_risque =</span> <span class="fu">ntile</span>(prob_depart, <span class="dv">5</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(groupe_risque) <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">probabilite_moyenne =</span> <span class="fu">mean</span>(prob_depart),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">frequence_observee =</span> <span class="fu">mean</span>(depart_90j),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">clients =</span> <span class="fu">n</span>(),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">probabilite =</span> <span class="fu">predict</span>(modele, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>resultat_test <span class="ot">&lt;-</span> <span class="fu">mesures_seuil</span>(test<span class="sc">$</span>depart_90j, test<span class="sc">$</span>probabilite, seuil_retenu)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>resultat_test <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, VP, FP, VN, FN, cout)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  seuil    VP    FP    VN    FN  cout
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1   0.3    22    28    63    18   100</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>resultat_test <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, sensibilite, specificite, precision, proportion_ciblee)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  seuil sensibilite specificite precision proportion_ciblee
+  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
+1   0.3        0.55       0.692      0.44             0.382</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Référence : toujours prédire la classe majoritaire de l’apprentissage.</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Une égalité est départagée en faveur de la classe 0.</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>classe_majoritaire <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">mean</span>(apprentissage<span class="sc">$</span>depart_90j) <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>seuil_reference <span class="ot">&lt;-</span> <span class="cf">if</span> (classe_majoritaire <span class="sc">==</span> <span class="dv">1</span>) <span class="dv">0</span> <span class="cf">else</span> <span class="fl">1.01</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>reference <span class="ot">&lt;-</span> <span class="fu">mesures_seuil</span>(test<span class="sc">$</span>depart_90j, test<span class="sc">$</span>probabilite, seuil_reference)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>reference <span class="sc">|&gt;</span> <span class="fu">select</span>(VP, FP, VN, FN, exactitude, sensibilite, precision)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+     VP    FP    VN    FN exactitude sensibilite precision
+  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+1     0     0    91    40      0.695           0        NA</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>calibration <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">groupe =</span> <span class="fu">ntile</span>(probabilite, <span class="dv">5</span>)) <span class="sc">|&gt;</span> <span class="fu">group_by</span>(groupe) <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">probabilite_moyenne =</span> <span class="fu">mean</span>(probabilite),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">frequence_depart =</span> <span class="fu">mean</span>(depart_90j), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>calibration</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
-  groupe_risque probabilite_moyenne frequence_observee clients
-          &lt;int&gt;               &lt;dbl&gt;              &lt;dbl&gt;   &lt;int&gt;
-1             1              0.0664              0          33
-2             2              0.170               0.152      33
-3             3              0.286               0.242      33
-4             4              0.410               0.375      32
-5             5              0.672               0.781      32</code></pre>
+  groupe     n probabilite_moyenne frequence_depart
+   &lt;int&gt; &lt;int&gt;               &lt;dbl&gt;            &lt;dbl&gt;
+1      1    27              0.0643            0.185
+2      2    26              0.137             0.115
+3      3    26              0.233             0.346
+4      4    26              0.369             0.346
+5      5    26              0.573             0.538</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>brier <span class="ot">&lt;-</span> <span class="fu">mean</span>((test<span class="sc">$</span>probabilite <span class="sc">-</span> test<span class="sc">$</span>depart_90j)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>brier</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1910233</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Règle alternative fixée à l’avance : au plus 15 % des clients test.</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># En cas d’égalité de probabilités, trier selon client_id.</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>n_capacite <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fl">0.15</span> <span class="sc">*</span> <span class="fu">nrow</span>(test))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>selection <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(probabilite), client_id) <span class="sc">|&gt;</span> <span class="fu">slice_head</span>(<span class="at">n =</span> n_capacite)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">clients =</span> <span class="fu">nrow</span>(test), <span class="at">cibles =</span> <span class="fu">nrow</span>(selection),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">departs_detectes =</span> <span class="fu">sum</span>(selection<span class="sc">$</span>depart_90j), <span class="at">precision =</span> <span class="fu">mean</span>(selection<span class="sc">$</span>depart_90j))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  clients cibles departs_detectes precision
+    &lt;int&gt;  &lt;int&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+1     131     19               12     0.632</code></pre>
 </div>
 </div>
-</section>
-<section id="interprétation" class="level2">
-<h2 class="anchored" data-anchor-id="interprétation">Interprétation</h2>
-<p>Le modèle ordonne des risques selon les données simulées. Avant une utilisation réelle, il faudrait valider les mesures sur une autre période, examiner la stabilité, documenter les populations touchées et s’assurer que l’intervention proposée est proportionnée et respectueuse.</p>
+<p>Un ciblage efficace exige aussi qu’un contact puisse aider, ce que ce modèle de risque ne mesure pas. Examiner les coûts réels, la disponibilité des variables, les populations touchées et une période ultérieure avant toute utilisation.</p>
 
 
 </section>

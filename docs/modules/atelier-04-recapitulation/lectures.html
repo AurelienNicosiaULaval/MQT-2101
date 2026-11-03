@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Lectures - Atelier 04 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Lectures et repères - Laboratoire 04 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,8 +7048,12 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#références-de-synthèse" id="toc-références-de-synthèse" class="nav-link active" data-scroll-target="#références-de-synthèse">Références de synthèse</a></li>
+  <ul class="collapse">
+  <li><a href="#relier-cible-et-décision" id="toc-relier-cible-et-décision" class="nav-link active" data-scroll-target="#relier-cible-et-décision">Relier cible et décision</a></li>
+  <li><a href="#reprendre-la-preuve-temporelle" id="toc-reprendre-la-preuve-temporelle" class="nav-link" data-scroll-target="#reprendre-la-preuve-temporelle">Reprendre la preuve temporelle</a></li>
+  <li><a href="#reprendre-la-classification" id="toc-reprendre-la-classification" class="nav-link" data-scroll-target="#reprendre-la-classification">Reprendre la classification</a></li>
+  <li><a href="#interpréter-et-communiquer" id="toc-interpréter-et-communiquer" class="nav-link" data-scroll-target="#interpréter-et-communiquer">Interpréter et communiquer</a></li>
+  <li><a href="#pour-approfondir" id="toc-pour-approfondir" class="nav-link" data-scroll-target="#pour-approfondir">Pour approfondir</a></li>
   </ul>
 </nav>
     </div>
@@ -7027,7 +7062,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures - Atelier 04</h1>
+<h1 class="title">Lectures et repères - Laboratoire 04</h1>
 </div>
 
 
@@ -7044,15 +7079,26 @@ display: none;
 </header>
 
 
-<section id="références-de-synthèse" class="level2">
-<h2 class="anchored" data-anchor-id="références-de-synthèse">Références de synthèse</h2>
-<ul>
-<li><a href="https://otexts.com/fpp3/basic-steps.html">Étapes d’une tâche de prévision</a>;</li>
-<li><a href="https://otexts.com/fpp3/regression-evaluation.html">Évaluation d’une régression temporelle</a>;</li>
-<li>James et coll., <a href="https://www.statlearning.com/">An Introduction to Statistical Learning</a>, chapitres sur régression et classification;</li>
-<li><a href="https://yardstick.tidymodels.org/">Documentation <code>yardstick</code></a>, pour les mesures de classification.</li>
-</ul>
-<p>Utilisez ces ressources pour vérifier une définition ou une interprétation précise. Le livrable doit rester centré sur votre question et vos résultats.</p>
+<section id="relier-cible-et-décision" class="level2">
+<h2 class="anchored" data-anchor-id="relier-cible-et-décision">Relier cible et décision</h2>
+<p>Une question sur les ventes porte sur un montant en dollars; une question sur un service insuffisant porte sur une étiquette 0 ou 1. Le modèle ne détermine pas la question. Pour une prévision, l’origine et les variables disponibles précèdent le choix de la méthode.</p>
+</section>
+<section id="reprendre-la-preuve-temporelle" class="level2">
+<h2 class="anchored" data-anchor-id="reprendre-la-preuve-temporelle">Reprendre la preuve temporelle</h2>
+<p>La référence saisonnière compare chaque mois de 2025 à son correspondant de 2024. ME garde le signe observé moins prévu; MAE et RMSE résument des écarts en dollars. Les observations du même lieu au fil des mois sont dépendantes. Le bloc utilisé plusieurs fois pour comparer ou ajuster des choix ne devient pas un nouveau test indépendant.</p>
+</section>
+<section id="reprendre-la-classification" class="level2">
+<h2 class="anchored" data-anchor-id="reprendre-la-classification">Reprendre la classification</h2>
+<p>La classe positive est l’étiquette simulée de service insuffisant le mois suivant. Sensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP). Les mesures à dénominateur nul sont indéfinies. Un seuil évalué avant la période cible peut conduire à une proportion différente de 20 %; une capacité stricte nécessite une règle opérationnelle appropriée.</p>
+</section>
+<section id="interpréter-et-communiquer" class="level2">
+<h2 class="anchored" data-anchor-id="interpréter-et-communiquer">Interpréter et communiquer</h2>
+<p>Une moyenne globale peut masquer des écarts par succursale. Des différences de ciblage demandent une analyse de contexte et de dénominateurs; elles ne suffisent pas à conclure à l’iniquité. Une association n’est pas une preuve causale et un score de risque ne mesure pas l’effet d’une intervention. La recommandation énonce une limite et un suivi.</p>
+</section>
+<section id="pour-approfondir" class="level2">
+<h2 class="anchored" data-anchor-id="pour-approfondir">Pour approfondir</h2>
+<p>Les <a href="../../modules/semaine-07-lissage/complements.html">compléments du module 07</a> conservent les familles de lissage et les modèles plus avancés; ceux du <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">module 08</a> traitent de décomposition, tendances et différenciation. Le <a href="../../modules/semaine-10-classification-modeles-avances/complements.html">module 10</a> approfondit cotes, calibration, réseaux et retards. Ces compléments ne s’ajoutent pas à la synthèse obligatoire du laboratoire.</p>
+<p>Hyndman et Athanasopoulos (2021), <em>Forecasting: Principles and Practice</em>, <a href="https://otexts.com/fpp3/toolbox.html">boîte à outils, section 5.8</a> et <a href="https://otexts.com/fpp3/regression.html">régression temporelle</a>. James, Witten, Hastie et Tibshirani (2021), <a href="https://www.statlearning.com/"><em>An Introduction to Statistical Learning</em></a>, chapitre 4; <a href="https://yardstick.tidymodels.org/reference/sens.html">sensibilité dans yardstick</a>.</p>
 
 
 </section>

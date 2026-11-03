@@ -1,30 +1,87 @@
 ---
-title: "Notes de cours - Variables externes et autocorrélation"
+title: "Synthèse - Variables externes et autocorrélation"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
 format:
-  html:
+  revealjs:
+    auto-stretch: false
+    css: media/module09-capsules.css
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
     embed-resources: true
+execute:
+  warning: false
+  message: false
 ---
 
-## Disponibilité des prédicteurs
+## Une prévision utile
 
-Une prévision ex ante utilise seulement l'information réellement disponible à son origine. Les prédicteurs futurs connus peuvent être utilisés directement; les prédicteurs inconnus exigent une prévision séparée ou des scénarios.
+::: {.question-line}
+Quelles informations sont réellement disponibles au moment de prévoir?
+:::
 
-## Régression temporelle
+## Disponibilité et fuite
 
-La régression explique la cible par tendance, calendrier et facteurs externes. Ses coefficients sont conditionnels aux variables incluses. Avec des données observationnelles, l'interprétation causale n'est pas automatique.
+::: {.keypoints}
+- Une prévision doit reposer sur l’information disponible à son origine.
+- Le calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques.
+- L’indice économique peut nécessiter sa propre prévision.
+:::
 
-## Autocorrélation
+## Régression avec contexte
 
-Pour un retard $k$, l'autocorrélation mesure la ressemblance entre $e_t$ et $e_{t-k}$. L'ACF montre plusieurs retards. Le test de Ljung-Box évalue si un groupe d'autocorrélations est compatible avec zéro.
+::: {.keypoints}
+- La régression combine tendance, mois, promotion, prix et indice.
+- La promotion binaire se lit par rapport à la catégorie non, en dollars, les autres termes du modèle étant fixés.
+- Une association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison.
+:::
 
-## Erreurs autorégressives
+## Résidus et autocorrélation
 
-Un modèle AR(1) pour les erreurs écrit $\eta_t=\phi\eta_{t-1}+\varepsilon_t$. Il conserve la régression pour la moyenne tout en modélisant une dépendance résiduelle d'une période à l'autre.
+::: {.keypoints}
+- Le résidu est l’observation moins la valeur ajustée.
+- Un retard 1 rapproche les erreurs de deux mois consécutifs; un retard 12 compare des mois séparés d’une année.
+- Des signes positifs persistants peuvent signaler une sous-prévision répétée.
+:::
 
-## Prévisions conditionnelles
+## Régression avec erreurs AR
 
-Une prévision avec variables externes doit nommer son scénario. Si le prix futur change, la prévision change. Cette dépendance doit être visible dans la communication aux décideurs.
+::: {.keypoints}
+- La partie non expliquée par les prédicteurs peut avoir une mémoire d’un mois.
+- Les innovations ε ne sont pas la même chose que les erreurs de régression η.
+- Le modèle est estimé sur les 60 premiers mois.
+:::
 
-## Décision
+## Scénarios et décision
 
-Une variable externe est utile si elle est pertinente, disponible, mesurée de façon stable et suffisamment bénéfique hors échantillon pour justifier son coût de collecte et de maintenance.
+::: {.keypoints}
+- Une prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis.
+- Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs.
+- Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Les prédicteurs futurs sont connus, prévus ou scénarisés.
+- Les résidus et la validation répondent à des questions différentes.
+- Un scénario et une association ne prouvent pas la causalité.
+:::
+
+## Références et crédits
+
+Hyndman et Athanasopoulos (2021), *Forecasting: Principles and Practice*, 3e édition.
+
+Données fictives du cours MQT-2101, Université Laval.

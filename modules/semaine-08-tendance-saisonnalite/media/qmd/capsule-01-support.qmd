@@ -1,10 +1,12 @@
 ---
-title: "Capsule 1 - Distinguer tendance et saisonnalité"
+title: "Capsule 1 - Lire le temps et les motifs"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module08-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,118 +28,171 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m08-c01
+#| label: preparation-support-m08
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
-ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
-train <- ventes |> slice_head(n = 60)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+racines <- c("../..", ".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-Un niveau qui monte peut masquer des mois systématiquement forts ou faibles.
-:::
-
 ::: {.question-line}
-Comment séparer l'évolution de long terme des effets de calendrier?
+La hausse vient-elle du temps ou du calendrier?
 :::
-
 ::: {.note-box}
-La tendance change graduellement le niveau. La saisonnalité est un motif récurrent à une fréquence connue. Les deux peuvent être présents simultanément.
+Une direction doit distinguer croissance générale et mois récurrents pour planifier l’année.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Définir tendance et saisonnalité.
-- Chercher une récurrence sur plusieurs cycles.
-- Comparer les mêmes mois sur plusieurs années.
+- Définir l’unité et la période.
+- Lire une tendance et un motif saisonnier.
+- Explorer le passé avant de comparer.
 :::
 
-## Tendance et saisonnalité répondent à deux questions
+## Deux séries fictives, deux décisions
 
-::: {.keypoints}
-- Une seule année ne prouve pas la saisonnalité.
-- Comparer les mêmes mois sur plusieurs années.
-- La tendance peut modifier le niveau général.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Guidé
 :::
-
-## Comparer janvier avec janvier
-
-::: {.example-box}
-Regrouper les observations de janvier permet de comparer janvier d'une année à l'autre malgré une tendance globale.
+::: {.label}
+ventes et planification annuelle
 :::
+:::
+::: {.metric}
+::: {.value}
+Transfert
+:::
+::: {.label}
+ventes avec contexte commercial variable
+:::
+:::
+::: {.metric}
+::: {.value}
+$ CA
+:::
+::: {.label}
+dollars canadiens par mois
+:::
+:::
+::::
 
-## Visualiser les mois sur plusieurs années
+## Séparer avant de choisir
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+2020 à 2024
+:::
+::: {.label}
+60 mois d’apprentissage
+:::
+:::
+::: {.metric}
+::: {.value}
+2025
+:::
+::: {.label}
+12 mois de validation
+:::
+:::
+::: {.metric}
+::: {.value}
+Origine
+:::
+::: {.label}
+fin de décembre 2024
+:::
+:::
+::::
+
+## Lire la trajectoire
 
 ```{r}
-#| label: code-m08-c01
-#| echo: true
-#| eval: true
-ventes |> ggplot(aes(mois_label, ventes)) +
-  geom_boxplot()
+#| label: m08-c1-temps
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot(apprentissage, aes(date, ventes / 1000)) +
+  geom_line(colour = "#0B4F6C", linewidth = 0.8) +
+  labs(x = NULL, y = "Ventes mensuelles (milliers de $ CA)")
 ```
 
-## Une seule année ne prouve pas une saisonnalité
+## Comparer les mêmes mois entre années
+
+```{r}
+#| label: m08-c1-mois
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot(apprentissage, aes(mois, ventes / 1000,
+                          group = factor(annee), colour = factor(annee))) +
+  geom_line() + geom_point() +
+  labs(x = NULL, y = "Ventes (milliers de $ CA)", colour = "Année") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Deux structures peuvent coexister
+
+::: {.keypoints}
+- La tendance fait évoluer le niveau général.
+- La saisonnalité revient selon un calendrier connu.
+- Une seule année ne démontre pas la répétition.
+:::
+
+## Décrire sans inventer une cause
 
 ::: {.warning-box}
-Interpréter une hausse de janvier à décembre dans une seule année comme une saisonnalité confond un trajet unique et un motif récurrent.
+Un mois élevé ne prouve pas un effet causal du calendrier. Un événement commercial ou un changement d’activité peut intervenir.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Temps
 :::
 ::: {.label}
-La tendance est un mouvement de long terme.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-La saisonnalité revient selon un calendrier.
+conserver l’ordre
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Saison
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+chercher une répétition
 :::
 :::
+::: {.metric}
+::: {.value}
+Limite
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+un graphique ne démontre pas une cause
 :::
+:::
+::::
 
 ## Production autonome 8.1
 
 ::: {.lead}
-Expliquez pourquoi il est utile de comparer toutes les observations de janvier.
+Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- J’ai limité l’exploration à 2020 à 2024.
+- Mes axes indiquent les mois et les dollars canadiens.
+- Je distingue tendance, répétition et explication causale.
 :::

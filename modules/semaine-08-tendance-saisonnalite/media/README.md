@@ -1,15 +1,7 @@
-# Médias - Semaine 08
+# Médias du module 08
 
-Ce dossier sert à préparer les médias publics du module.
+Version du 3 novembre 2026. Les six PDF ont été réexportés et inspectés avec les cartes en trois colonnes; le lot courant est `module-08-pdf-2026-11-03.zip`. Cinq capsules principales et une synthèse sont disponibles en HTML et PDF. Les onglets affichent uniquement PDF et HTML; aucune vidéo ni version annotée n’est disponible ici.
 
-## Sous-dossiers
+Le thème UL/FSA et les composants des modules 04 et 06 sont repris. Le guide séparé `interne/guide-preparation-module-08.md` contient les références détaillées, notes d’animation, hypothèses complémentaires et correspondance avec les anciennes sources. La synthèse termine par les crédits nécessaires. Le cahier facultatif est un document HTML avec code R et projet autonome, distinct du parcours projeté.
 
-- `videos/` : vidéos courtes intégrées dans les capsules.
-- `pdf/` : supports PDF générés à partir des contenus Quarto.
-
-## Règles
-
-- ne pas publier de documents privés ou protégés sans validation;
-- privilégier des vidéos courtes;
-- garder le même numéro de capsule entre vidéo, support;
-- documenter toute source ancienne utilisée.
+Les données sont simulées. Les anciens PDF et données de tiers ne sont pas redistribués. Lors de l’ajout ultérieur de médias réels vérifiés, respecter l’ordre Vidéo, PDF, PDF annoté, HTML et préserver les annotations originales.

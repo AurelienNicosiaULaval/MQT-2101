@@ -1,166 +1,350 @@
 ---
 title: "Exercices - Module 08"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module08-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-## Préparation
+## Un transfert vers la planification commerciale
 
-Le cas de transfert utilise des ventes influencées par des promotions et le prix.
-La question n'est plus seulement de détecter une saison, mais de vérifier si le
-motif saisonnier demeure après la prise en compte de variables commerciales.
+Une direction de commerce fictif doit planifier les ventes mensuelles alors que promotions et prix changent. Le parcours principal utilise seulement le calendrier connu à l’origine; les erreurs et les coefficients demandent une interprétation différente du cas guidé. Les variables commerciales ne sont pas employées comme prédicteurs futurs dans les cinq premiers exercices.
 
-Ce cas prolonge la régression multiple déjà pratiquée et prépare le module 09. Les variables prix et promotion ne doivent pas être interprétées comme des causes démontrées. L'exploration et l'ajustement ci-dessous utilisent l'apprentissage; les douze derniers mois restent réservés à la comparaison.
+Ces cinq exercices se suivent après les capsules correspondantes et alimentent `tendance_commerce.qmd`. Tentez chaque réponse avant d’ouvrir son corrigé. Leur code s’exécute dans l’ordre après la préparation commune. Huit [pratiques ciblées](#pratique-supplementaire) et deux exercices commerciaux accompagnés sont facultatifs.
 
-Jeu de données de transfert :
-<a class="data-link" href="../../donnees/#ventes_promotions_quebec">ventes_promotions_quebec.csv</a>.
+Téléchargez le [projet de transfert](telechargements/tendance-commerce.zip) ou le [corrigé complet](telechargements/corrige-tendance-commerce.zip). Les données, [dictionnaires](data/dictionnaires.md) et fonctions sont fournis.
+
+## Préparation {#preparation}
+
+Ouvrez le `.Rproj`; conservez `R/` et `data/`. Apprentissage: janvier 2020 à décembre 2024, 60 mois. Validation: les douze mois de 2025, prévus à l’origine de décembre 2024. Les quatre candidats sont tendance seule, saison seule, tendance avec mois et naïf saisonnier. Aucun prix ou promotion futur observé ne sert à ces prévisions.
 
 ```{r}
-#| eval: false
-
+#| include: false
+racines <- c(".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/fonctions-module08.R"))][1]
+stopifnot(!is.na(racine))
+knitr::opts_knit$set(root.dir = normalizePath(racine))
+```
+```{r}
+#| label: preparation-transfert-m08
 library(tidyverse)
 library(broom)
-
-data_path <- if (file.exists("../semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")) {
-  "../semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
-} else {
-  "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv"
-}
-
-ventes <- read_csv(
-  data_path,
-  show_col_types = FALSE
-) |>
-  mutate(
-    date = as.Date(date),
-    mois = factor(mois),
-    promotion = factor(promotion)
-  ) |>
-  arrange(date)
-
-entrainement <- ventes |> slice_head(n = nrow(ventes) - 12)
-test <- ventes |> slice_tail(n = 12)
+source("R/fonctions-module08.R")
+commerce <- read_csv("data/ventes_promotions_quebec.csv", show_col_types = FALSE) |>
+  preparer_calendrier()
+stopifnot(nrow(commerce) == 72L)
+apprentissage <- commerce |> slice_head(n = 60)
+validation <- commerce |> slice_tail(n = 12)
+# Les prédicteurs futurs sont construits sans les ventes ni le budget de validation.
+futur <- calendrier_futur("2025-01-01", horizon = 12, dernier_indice = 60)
+serie <- ts(apprentissage$ventes, frequency = 12, start = c(2020, 1))
 ```
 
-## Exercice 1 - Isoler la tendance
+## Exercice 1 - Lire une série dans son contexte {#exercice-1}
 
-Ajustez d'abord un modèle avec tendance, promotion et prix, mais sans mois.
-Examinez les résidus par mois de calendrier.
+Tracez les ventes d’apprentissage dans le temps et les profils mensuels par année. Indiquez les promotions sur le graphique temporel. Distinguez hausse générale, récurrence et événements possibles. Que manque-t-il avant d’attribuer une fluctuation à une cause?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 1"}
 
 ```{r}
-#| eval: false
+#| label: solution-08-1
+#| fig-width: 9
+#| fig-height: 4.3
+ggplot(apprentissage, aes(date, ventes / 1000)) +
+  geom_line(colour = "#0B4F6C") + geom_point(aes(shape = promotion)) +
+  labs(x = NULL, y = "Ventes mensuelles (milliers de $ CA)") +
+  theme_minimal(base_size = 12)
+ggplot(apprentissage, aes(mois, ventes / 1000, group = factor(annee), colour = factor(annee))) +
+  geom_line() + geom_point() +
+  labs(x = NULL, y = "Ventes mensuelles (milliers de $ CA)", colour = "Année") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
-modele_sans_saison <- lm(
-  ventes ~ tendance + promotion + prix_moyen,
-  data = entrainement
-)
+La série progresse et présente des fluctuations commerciales. Les profils mensuels comparent les années, mais les promotions ne surviennent pas nécessairement aux mêmes dates. Une association graphique ne suffit pas à démontrer un effet causal. Le modèle principal de calendrier ne prétend pas isoler celui du prix ou des promotions.
 
-augment(modele_sans_saison, data = entrainement) |>
-  group_by(mois) |>
-  summarise(
-    residu_moyen = mean(.resid),
-    residu_median = median(.resid),
-    .groups = "drop"
-  ) |>
-  ggplot(aes(x = mois, y = residu_moyen, group = 1)) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_line(colour = "#0B4F6C") +
-  geom_point(colour = "#0B4F6C") +
-  labs(x = "Mois", y = "Résidu moyen") +
+::::
+
+## Exercice 2 - Un calendrier, trois structures {#exercice-2}
+
+Vérifiez l’indice de temps et le facteur mois, avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et décembre dans le modèle combiné. Comparez la précision du contraste décembre-janvier au cas guidé, sans conclure qu’une valeur p non faible prouve une absence de saisonnalité.
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 2"}
+
+```{r}
+#| label: solution-08-2
+# La cible, le calendrier et la séparation sont vérifiés avant l’ajustement.
+apprentissage |> select(date, indice_temps, mois) |> slice(c(1, 2, 12, 13, 60))
+modele_tendance <- lm(ventes ~ indice_temps, data = apprentissage)
+modele_saison <- lm(ventes ~ mois, data = apprentissage,
+                    contrasts = list(mois = "contr.treatment"))
+modele_calendrier <- lm(ventes ~ indice_temps + mois, data = apprentissage,
+                        contrasts = list(mois = "contr.treatment"))
+modeles <- list(Tendance = modele_tendance, Saison = modele_saison,
+                Calendrier = modele_calendrier)
+model.matrix(modele_calendrier)[c(1, 2, 12), c(1, 2, 3, 13)]
+tidy(modele_calendrier, conf.int = TRUE) |>
+  filter(term %in% c("indice_temps", "moisdécembre"))
+```
+
+La pente vaut environ 3 540 $ par mois. Le contraste décembre-janvier vaut environ 13 191 $, avec une erreur-type d’environ 21 067 $. Il est moins précis que dans le cas guidé. Ce résultat est conditionnel à la forme du modèle; il ne prouve ni causalité du calendrier ni absence de motif saisonnier. La catégorie de référence donne un point de comparaison, sans désigner un meilleur mois.
+
+::::
+
+## Exercice 3 - Ce que les résidus révèlent et imposent {#exercice-3}
+
+Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Pourquoi leur moyenne mensuelle presque nulle dans les modèles avec mois ne suffit-elle pas? Nommez une information que le modèle principal laisse de côté.
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 3"}
+
+```{r}
+#| label: solution-08-3
+#| fig-width: 9
+#| fig-height: 4.2
+diagnostic <- apprentissage |>
+  mutate(ajuste = fitted(modele_calendrier), residu = residuals(modele_calendrier))
+ggplot(diagnostic, aes(date, residu / 1000)) +
+  geom_hline(yintercept = 0, colour = "grey60") + geom_line() +
+  labs(x = NULL, y = "Résidu (milliers de $ CA)") + theme_minimal(base_size = 12)
+ggplot(diagnostic, aes(ajuste / 1000, residu / 1000)) +
+  geom_hline(yintercept = 0, colour = "grey60") + geom_point() +
+  labs(x = "Valeur ajustée (milliers de $ CA)", y = "Résidu (milliers de $ CA)") +
+  theme_minimal(base_size = 12)
+# Comparer ce qui reste par mois avec et sans terme de calendrier.
+residus_mensuels <- imap_dfr(modeles, function(modele, nom) {
+  tibble(mois = apprentissage$mois, residu = residuals(modele), methode = nom)
+}) |>
+  group_by(methode, mois) |> summarise(residu_moyen = mean(residu), .groups = "drop")
+residus_mensuels |>
+  ggplot(aes(mois, residu_moyen / 1000, colour = methode, group = methode)) +
+  geom_hline(yintercept = 0, colour = "grey60") + geom_line() + geom_point() +
+  labs(x = NULL, y = "Résidu mensuel moyen (milliers de $ CA)", colour = "Méthode") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+La moyenne nulle par mois découle des équations des moindres carrés lorsque les indicatrices sont présentes. Il faut encore regarder la dispersion et la structure temporelle. Le modèle principal ne représente pas explicitement prix et promotion; des erreurs de même signe ou des écarts lors d’événements commerciaux motivent le travail du module 09. Un graphique ne suffit pas à vérifier l’indépendance.
+
+::::
+
+## Exercice 4 - Comparer avec les mêmes informations {#exercice-4}
+
+Prévoyez les douze mois de 2025 à une origine fixe. Comparez les quatre candidats avec ME, MAE et RMSE en dollars. Lisez ensuite les erreurs du modèle calendrier séparément pour les mois avec et sans promotion. Pourquoi cette lecture rétrospective n’est-elle pas une utilisation des promotions futures pour prévoir?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 4"}
+
+```{r}
+#| label: solution-08-4
+#| fig-width: 9
+#| fig-height: 4.3
+previsions <- imap_dfr(modeles, function(modele, nom) {
+  tibble(date = futur$date, observe = validation$ventes, methode = nom,
+         prevision = as.numeric(predict(modele, newdata = futur)))
+}) |>
+  bind_rows(tibble(date = futur$date, observe = validation$ventes,
+                   methode = "Saisonnier_naif", prevision = tail(apprentissage$ventes, 12)))
+scores <- previsions |> group_by(methode) |>
+  group_modify(~ mesures08(.x$observe, .x$prevision)) |> ungroup() |> arrange(MAE)
+scores
+ggplot() +
+  geom_line(data = validation, aes(date, ventes / 1000), linewidth = 1) +
+  geom_line(data = previsions, aes(date, prevision / 1000, colour = methode)) +
+  labs(x = NULL, y = "Ventes mensuelles (milliers de $ CA)", colour = "Méthode") +
+  theme_minimal(base_size = 12)
+previsions |> left_join(validation |> select(date, promotion), by = "date") |>
+  filter(methode == "Calendrier") |>
+  group_by(promotion) |>
+  summarise(mois = n(), MAE = mean(abs(observe - prevision)), .groups = "drop")
+```
+
+Le modèle combiné a ici la plus faible MAE des quatre candidats: environ 32 389 $, avec une RMSE d’environ 34 721 $. Le naïf saisonnier a une MAE d’environ 54 348 $. Les erreurs sont nettement plus élevées que dans le cas guidé, même si la famille gagnante est la même. Le regroupement par promotion intervient après l’émission des prévisions et ne change pas leurs prédicteurs. Les groupes de huit et quatre mois sont descriptifs et trop petits pour conclure à une stabilité générale.
+
+::::
+
+## Exercice 5 - Communiquer une recommandation adaptée {#exercice-5}
+
+Produisez les intervalles classiques du modèle calendrier, puis rédigez une note à la direction: deux scores, contraste mensuel, limite des intervalles, rôle du plan commercial et règle de surveillance. Expliquez pourquoi la conclusion ne peut pas recopier celle du cas guidé.
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 5"}
+
+```{r}
+#| label: solution-08-5
+#| fig-width: 9
+#| fig-height: 4.3
+ip_commerce <- predict(modele_calendrier, futur, interval = "prediction", level = 0.95)
+tibble(date = futur$date, observe = validation$ventes,
+       fit = ip_commerce[, "fit"], lwr = ip_commerce[, "lwr"], upr = ip_commerce[, "upr"]) |>
+  ggplot(aes(date)) +
+  geom_ribbon(aes(ymin = lwr / 1000, ymax = upr / 1000), fill = "#BFDDE5", alpha = 0.6) +
+  geom_line(aes(y = fit / 1000), colour = "#0B4F6C") +
+  geom_point(aes(y = observe / 1000)) +
+  labs(x = NULL, y = "Ventes (milliers de $ CA)",
+       subtitle = "Intervalles classiques conditionnels au modèle, sans plan commercial futur") +
   theme_minimal(base_size = 12)
 ```
 
-Repérez les mois systématiquement sous-prévus ou sur-prévus. Expliquez pourquoi
-ce motif soutient l'ajout d'une composante de calendrier.
+Exemple acceptable: « Le modèle calendrier réduit la MAE de validation à environ 32 389 $, contre 54 348 $ pour le naïf saisonnier; sa RMSE vaut environ 34 721 $. Le contraste décembre-janvier est d’environ 13 191 $, mais sa précision est limitée. Le calendrier seul ne représente pas les changements commerciaux. Les intervalles supposent une structure d’erreurs qui reste à vérifier; ils ne garantissent pas le risque commercial réel. »
 
-## Exercice 2 - Interpréter une saison
+Demander le plan disponible à l’origine avant d’ajouter des prédicteurs futurs, documenter des scénarios et réévaluer les erreurs aux nouvelles origines. Une plage de ventes ne détermine pas seule les stocks ou le personnel. L’analyse avec contexte observé, disponible plus bas, n’est pas une validation de prévision ex ante.
 
-Comparez les coefficients mensuels d'un modèle sans variables commerciales et
-d'un modèle qui contrôle la promotion et le prix.
+::::
+
+## Trace finale {#trace-finale}
+
+Réunissez ces cinq réponses dans `tendance_commerce.qmd`: protocole, graphiques, trois ajustements, interprétations, diagnostics, quatre prévisions, scores et note de décision. Redémarrez R, puis faites Render. Le parcours guidé reste dans `tendance_ventes.qmd`. Les exercices facultatifs ne créent pas un troisième rapport.
+
+## Pratique supplémentaire {#pratique-supplementaire}
+
+Huit questions indépendantes. Tentez une réponse avant le corrigé. Elles ne demandent pas les méthodes avancées du cahier facultatif.
+
+## Exercice 6 - Continuer l’indice {#exercice-6}
+
+L’apprentissage va de t = 1 à 60. Une personne code 2025 avec t = 1 à 12. Que faut-il corriger?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 6"}
+
+Les indices continuent de 61 à 72. Recommencer à 1 efface cinq années de tendance. Les mois reviennent à janvier: catégorie mensuelle et temps écoulé sont deux variables distinctes.
+::::
+
+## Exercice 7 - Compter les coefficients {#exercice-7}
+
+Combien de coefficients le modèle avec constante, pente et douze mois estime-t-il? Pourquoi pas douze indicatrices en plus de la constante?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 7"}
+
+Treize: une constante, une pente et onze contrastes. Les douze indicatrices plus la constante sont linéairement dépendantes. La référence est identifiée quand les onze autres indicatrices valent zéro.
+::::
+
+## Exercice 8 - Lire un contraste {#exercice-8}
+
+La pente vaut 2 000 $ par mois et le contraste décembre-janvier 30 000 $. Que disent ces nombres?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 8"}
+
+Selon le modèle, les ventes moyennes augmentent de 2 000 $ par mois à mois égal. Décembre est modélisé 30 000 $ au-dessus de janvier à indice de temps égal. Ce sont des relations conditionnelles, sans effet causal démontré. L’égalité de l’indice est une comparaison construite par le modèle.
+::::
+
+## Exercice 9 - Prévoir à une seule origine {#exercice-9}
+
+Pour prévoir les douze mois de 2025 fin 2024, peut-on employer lag(ventes, 1) calculé sur tout le fichier comme naïf pour chaque mois?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 9"}
+
+Après janvier, ce code incorpore des ventes de 2025 inconnues à l’origine. Il correspond à des origines mises à jour. Le naïf à origine fixe répéterait décembre 2024; le naïf saisonnier reprend les douze mois de 2024.
+::::
+
+## Exercice 10 - Changer la référence {#exercice-10}
+
+Si décembre devient la référence, la MAE doit-elle changer?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 10"}
+
+Avec les mêmes observations et le même modèle, les valeurs ajustées et les prévisions restent identiques à la précision numérique près. Les coefficients changent d’écriture. Choisir la référence ne choisit pas le meilleur modèle.
+::::
+
+## Exercice 11 - Une pente significative suffit-elle? {#exercice-11}
+
+Une pente a une valeur p très faible, mais les résidus dessinent une vague annuelle. Quelle conclusion est défendable?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 11"}
+
+Le modèle contient une variation temporelle, mais laisse une structure saisonnière. La significativité de la pente ne démontre ni l’adéquation du modèle ni une bonne prévision. Comparer les modèles candidats à information et périodes communes, puis examiner les erreurs.
+::::
+
+## Exercice 12 - Confiance ou prédiction {#exercice-12}
+
+Pour un même modèle et un même mois, pourquoi l’intervalle de prédiction est-il plus large que l’intervalle de confiance de la moyenne?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 12"}
+
+La prédiction ajoute la variabilité d’une nouvelle observation à l’incertitude de la moyenne. Le niveau, l’origine et les hypothèses doivent rester les mêmes pour cette comparaison. Un intervalle plus large n’est pas une garantie de calibration.
+::::
+
+## Exercice 13 - Douze intervalles {#exercice-13}
+
+Douze observations sont dans leurs intervalles ponctuels à 95 %. Est-ce une garantie à 95 % pour toute l’année? Peut-on additionner les bornes pour le total annuel?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 13"}
+
+Non. Une couverture observée sur douze cibles ne prouve pas la calibration future. Les intervalles sont marginaux. Une bande simultanée ou un intervalle de total nécessite un calcul qui tient compte de la dépendance; la somme des bornes ne conserve pas automatiquement le niveau voulu.
+::::
+
+## Exercice 14 - Prix, promotion et saison (complément accompagné) {#exercice-14}
+
+Cet exercice conserve l’analyse commerciale de la version précédente du module. Prérequis: régression multiple et interprétation conditionnelle. Utilisez la préparation et les objets des exercices 1 à 5. Le code est fourni; ce complément n’est pas requis dans la trace principale et prépare le module 09.
+
+Ajustez un modèle avec tendance, prix et promotion sans mois; examinez ses résidus mensuels. Ajoutez le mois et comparez les contrastes juillet et décembre. Évaluez ensuite par promotion en distinguant la prévision de calendrier et la comparaison conditionnelle aux prix et promotions observés après l’origine.
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 14"}
 
 ```{r}
-#| eval: false
-
-entrainement <- entrainement |>
-  mutate(mois = relevel(mois, ref = "1"))
-
-test <- test |>
-  mutate(mois = factor(mois, levels = levels(entrainement$mois)))
-
-modele_calendrier <- lm(
-  ventes ~ tendance + mois,
-  data = entrainement
-)
-
-modele_complet <- lm(
-  ventes ~ tendance + mois + promotion + prix_moyen,
-  data = entrainement
-)
-
-bind_rows(
-  tidy(modele_calendrier) |> mutate(modele = "Calendrier"),
-  tidy(modele_complet) |> mutate(modele = "Calendrier et contexte")
-) |>
-  filter(term %in% c("mois7", "mois12")) |>
+#| label: contexte-08
+#| fig-width: 9
+#| fig-height: 4.3
+# Complément accompagné: les valeurs futures observées servent ici à une
+# comparaison rétrospective conditionnelle, pas à une prévision réalisable ex ante.
+apprentissage <- apprentissage |>
+  mutate(promotion = factor(promotion, levels = c("non", "oui")))
+validation <- validation |>
+  mutate(promotion = factor(promotion, levels = c("non", "oui")))
+modele_contexte_sans_mois <- lm(ventes ~ indice_temps + promotion + prix_moyen,
+                               data = apprentissage)
+modele_contexte <- lm(ventes ~ indice_temps + mois + promotion + prix_moyen,
+                      data = apprentissage, contrasts = list(mois = "contr.treatment"))
+augment(modele_contexte_sans_mois, data = apprentissage) |>
+  group_by(mois) |> summarise(residu_moyen = mean(.resid), .groups = "drop") |>
+  ggplot(aes(mois, residu_moyen, group = 1)) +
+  geom_hline(yintercept = 0, colour = "grey60") + geom_line() + geom_point() +
+  labs(x = NULL, y = "Résidu moyen ($ CA)") + theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+bind_rows(tidy(modele_calendrier) |> mutate(modele = "Calendrier"),
+          tidy(modele_contexte) |> mutate(modele = "Calendrier et contexte")) |>
+  filter(term %in% c("moisjuillet", "moisdécembre")) |>
   select(modele, term, estimate, std.error)
+comparaison_conditionnelle <- bind_rows(
+  validation |> transmute(date, promotion, observe = ventes,
+    prevision = as.numeric(predict(modele_calendrier, futur)), modele = "Calendrier"),
+  validation |> transmute(date, promotion, observe = ventes,
+    prevision = as.numeric(predict(modele_contexte, validation)), modele = "Contexte observé")
+)
+comparaison_conditionnelle |> group_by(modele, promotion) |>
+  summarise(mois = n(), MAE = mean(abs(observe - prevision)),
+            ME = mean(observe - prevision), .groups = "drop")
 ```
 
-Interprétez décembre par rapport à janvier et expliquez pourquoi le coefficient
-peut changer lorsque promotion et prix sont ajoutés.
+Le contraste décembre-janvier passe d’environ 13 191 $ à 22 263 $ après ajout du contexte, sans preuve causale. Le modèle avec contexte observé a une MAE d’environ 3 781 $ sur huit mois sans promotion et 6 414 $ sur quatre mois avec promotion. Ces scores utilisent les valeurs commerciales effectivement observées en 2025: ils ne prouvent pas la performance d’une prévision qui aurait dû les connaître fin 2024. Ils ne valident pas non plus l’indépendance des erreurs. Le module 09 traite ces deux limites.
 
-## Exercice 3 - Tester le modèle
+::::
 
-Réservez les douze derniers mois. Comparez les deux modèles et calculez la MAE
-séparément pour les mois avec et sans promotion.
+## Exercice 15 - Scénario disponible à l’origine (facultatif) {#exercice-15}
 
-La comparaison avec prix et promotion utilise ici leurs valeurs observées dans le bloc de validation : elle est conditionnelle à ce contexte. Pour une prévision émise avant ces mois, il faudrait des prix et promotions déjà planifiés, prévus ou scénarisés, sans utiliser rétroactivement une information inconnue à l'origine.
+Après l’exercice 14, gardez le dernier prix d’apprentissage et comparez deux plans hypothétiques: aucune promotion ou promotion chaque mois. Pourquoi ne faut-il pas lire leurs prévisions comme une reconstitution validée du contexte réalisé?
+
+:::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 15"}
 
 ```{r}
-#| eval: false
-
-modele_test_calendrier <- lm(
-  ventes ~ tendance + mois,
-  data = entrainement
+#| label: scenario-08
+# Scénario hypothétique déclaré, sans utilisation des prix observés de 2025.
+# Le dernier prix d’apprentissage est répété. Deux plans de promotion sont comparés.
+scenarios <- bind_rows(
+  futur |> mutate(promotion = factor("non", levels = c("non", "oui")),
+                   prix_moyen = tail(apprentissage$prix_moyen, 1), plan = "Sans promotion"),
+  futur |> mutate(promotion = factor("oui", levels = c("non", "oui")),
+                   prix_moyen = tail(apprentissage$prix_moyen, 1), plan = "Avec promotion")
 )
-
-modele_test_complet <- lm(
-  ventes ~ tendance + mois + promotion + prix_moyen,
-  data = entrainement
-)
-
-evaluation <- bind_rows(
-  test |>
-    transmute(
-      promotion,
-      observe = ventes,
-      prevision = predict(modele_test_calendrier, newdata = test),
-      modele = "Calendrier"
-    ),
-  test |>
-    transmute(
-      promotion,
-      observe = ventes,
-      prevision = predict(modele_test_complet, newdata = test),
-      modele = "Calendrier et contexte"
-    )
-)
-
-evaluation |>
-  group_by(modele, promotion) |>
-  summarise(
-    observations = n(),
-    MAE = mean(abs(observe - prevision)),
-    biais = mean(observe - prevision),
-    .groups = "drop"
-  )
+scenarios$prevision <- as.numeric(predict(modele_contexte, newdata = scenarios))
+scenarios |> select(date, plan, prix_moyen, prevision) |> slice(c(1, 13))
 ```
 
-Choisissez un modèle en considérant la stabilité entre les deux types de mois,
-et non seulement la moyenne globale.
+La différence reflète le coefficient promotion conditionnel au prix et au calendrier; elle n’est pas un effet causal démontré. Ces plans sont hypothétiques, sans prétendre avoir été décidés historiquement. L’incertitude d’un prix ou d’un plan inconnu ne figure pas automatiquement dans les intervalles conditionnels usuels.
 
-## Exercice de synthèse
-
-Rédigez une note expliquant ce qui relève de la tendance, du calendrier et du
-contexte commercial. Ajoutez le résultat hors échantillon, une limite causale et
-une règle de mise à jour lorsque le plan de promotion change.
+::::

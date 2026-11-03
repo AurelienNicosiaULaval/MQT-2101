@@ -1,10 +1,12 @@
 ---
-title: "Capsule 2 - Coder le calendrier"
+title: "Capsule 2 - Ajuster tendance et mois"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module08-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,123 +28,186 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m08-c02
+#| label: preparation-support-m08
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
-ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
-train <- ventes |> slice_head(n = 60)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+racines <- c("../..", ".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
-
-::: {.kicker}
-Le calendrier devient utile lorsqu'il est représenté explicitement dans le modèle.
-:::
 
 ::: {.question-line}
 Que représente un coefficient de décembre?
 :::
-
 ::: {.note-box}
-Un indice de temps porte la tendance et un facteur mois porte les différences saisonnières par rapport à une référence choisie.
+Un indice continu représente la tendance; un facteur mois représente les différences récurrentes.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Créer un indice de temps et un facteur mois.
-- Interpréter une catégorie de référence.
-- Fixer explicitement la catégorie de référence.
+- Coder temps et mois.
+- Ajuster trois structures simples.
+- Interpréter pente et référence.
 :::
 
-## Le vrai coefficient de décembre
+## L’indice continue, le mois revient
 
-::: {.example-box}
-Dans les 60 mois d'entraînement, décembre est associé à environ 32 700 $ de ventes supplémentaires par rapport à janvier, à tendance égale.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1 à 60
 :::
+::: {.label}
+indices de l’apprentissage
+:::
+:::
+::: {.metric}
+::: {.value}
+61 à 72
+:::
+::: {.label}
+indices de 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+Janvier
+:::
+::: {.label}
+référence du facteur mois
+:::
+:::
+::::
 
-## Janvier ne devient référence que si on le demande
+## Trois questions, trois modèles
 
 ::: {.keypoints}
-- L'indice de temps augmente d'une unité par période.
-- Le mois est un facteur pour le modèle.
-- La référence fixe la comparaison, elle n'est pas la meilleure catégorie.
+- Tendance seule: le niveau augmente-t-il?
+- Saison seule: quels mois se répètent?
+- Tendance avec mois: comment combiner les deux?
 :::
 
-## Fixer janvier avant d'interpréter
+## La forme combinée
+
+::: {.formula-box}
+$$y_t=\beta_0+\beta_1t+\gamma_{m(t)}+\varepsilon_t.$$
+:::
+::: {.note-box}
+Une pente globale et des écarts mensuels constants en dollars, avec janvier comme référence.
+:::
+
+## Le mois est une catégorie
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+12 mois
+:::
+::: {.label}
+11 contrastes avec la constante
+:::
+:::
+::: {.metric}
+::: {.value}
+Non ordonné
+:::
+::: {.label}
+contrasté par rapport à janvier
+:::
+:::
+::: {.metric}
+::: {.value}
+13 coefficients
+:::
+::: {.label}
+constante, pente et contrastes
+:::
+:::
+::::
+
+## Lire les coefficients calculés
 
 ```{r}
-#| label: code-m08-c02
+#| label: m08-c2-coeffs
+#| echo: false
+tidy(modele_calendrier) |>
+  filter(term %in% c("indice_temps", "moisdécembre")) |>
+  transmute(Terme = c("Tendance", "Décembre − janvier"),
+            Estimation = fr(estimate), `Erreur-type` = fr(std.error)) |>
+  knitr::kable()
+```
+::: {.note-box}
+Pente: dollars par mois à mois égal. Contraste: dollars à indice de temps égal, selon le modèle.
+:::
+
+## Une interprétation conditionnelle
+
+::: {.example-box}
+Décembre est modélisé environ 32 705 $ au-dessus de janvier, à indice de temps égal.
+:::
+::: {.warning-box}
+Cette différence ne mesure pas un effet causal. Changer la référence réécrit les coefficients sans changer les prévisions.
+:::
+
+## Ajuster dans R
+
+```{r}
+#| label: m08-c2-code
+#| eval: false
 #| echo: true
-#| eval: true
-ventes <- ventes |>
-  mutate(mois_label = factor(mois_label, levels = mois_fr))
-modele_calendrier <- lm(ventes ~ indice_temps + mois_label, data = train)
-tibble(
-  reference = levels(train$mois_label)[1],
-  coefficient_decembre = coef(modele_calendrier)[["mois_labeldécembre"]]
+modele_calendrier <- lm(
+  ventes ~ indice_temps + mois,
+  data = apprentissage,
+  contrasts = list(mois = "contr.treatment")
 )
 ```
-
-## La référence implicite change l'interprétation
-
-::: {.warning-box}
-Présenter un coefficient de mois comme un effet causal du calendrier dépasse un modèle observationnel.
+::: {.note-box}
+La préparation complète, les bibliothèques et les données sont fournies dans la démonstration.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Indice
 :::
 ::: {.label}
-La référence est un point de comparaison.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Les coefficients se lisent conditionnellement au modèle.
+une unité par mois
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Référence
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+interpréter le contraste
 :::
 :::
+::: {.metric}
+::: {.value}
+Forme
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+une pente et des écarts mensuels fixes
 :::
+:::
+::::
 
 ## Production autonome 8.2
 
 ::: {.lead}
-Interprétez le coefficient de décembre affiché avec les mots « à tendance égale ».
+Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- L’indice augmente d’une unité par mois et le facteur n’est pas ordonné.
+- Je précise janvier comme référence et les unités des coefficients.
+- Je distingue comparaison conditionnelle et effet causal.
 :::

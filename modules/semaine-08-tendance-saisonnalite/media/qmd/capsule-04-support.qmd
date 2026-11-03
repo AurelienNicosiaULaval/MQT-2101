@@ -1,10 +1,12 @@
 ---
-title: "Capsule 4 - Prévoir et communiquer l'incertitude"
+title: "Capsule 4 - Comparer sur une validation commune"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module08-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,121 +28,152 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m08-c04
+#| label: preparation-support-m08
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
-ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
-train <- ventes |> slice_head(n = 60)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+racines <- c("../..", ".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-Un budget est une décision sous incertitude, pas une certitude déguisée.
-:::
-
 ::: {.question-line}
-Pourquoi montrer un intervalle de prédiction?
+Le calendrier fait-il mieux que reprendre la dernière année?
 :::
-
 ::: {.note-box}
-Une prévision ponctuelle donne une valeur centrale. L'intervalle de prédiction décrit une plage plausible pour une nouvelle observation, selon le modèle.
+Un bon ajustement ne garantit pas une prévision utile des prochains mois.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Produire une prévision ponctuelle et un intervalle.
-- Relier l'incertitude à un scénario budgétaire.
-- Distinguer valeur centrale et plage de prévision.
+- Construire le calendrier futur.
+- Comparer les mêmes cibles à une seule origine.
+- Lire ME, MAE et RMSE en dollars.
 :::
 
-## Trois scénarios plutôt qu'un chiffre certain
-
-::: {.example-box}
-Un budget peut utiliser une valeur centrale, un scénario prudent et un scénario de capacité élevée plutôt qu'un seul chiffre présenté comme certain.
-:::
-
-## Produire un intervalle de prédiction
-
-```{r}
-#| label: code-m08-c04
-#| echo: true
-#| eval: true
-pred <- as.data.frame(
-  predict(modele, newdata = test, interval = "prediction")
-)
-bind_cols(test |> select(date), pred) |>
-  slice_head(n = 4)
-```
-
-## Une prévision utile montre aussi son incertitude
+## Connaître le calendrier, pas les ventes
 
 ::: {.keypoints}
-- L'intervalle de prédiction concerne une nouvelle observation.
-- Il est généralement plus large que l'intervalle de confiance de la moyenne.
-- La décision peut prévoir des scénarios de capacité.
+- Les mois de 2025 sont connus fin 2024.
+- L’indice continue de 61 à 72.
+- Les ventes futures ne servent pas à prévoir.
+- Le budget cible ne sert pas de prédicteur.
 :::
 
-## La valeur centrale seule masque le risque
+## Quatre candidats annoncés
 
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Tendance et saison
+:::
+::: {.label}
+deux modèles séparés
+:::
+:::
+::: {.metric}
+::: {.value}
+Calendrier
+:::
+::: {.label}
+tendance et mois ensemble
+:::
+:::
+::: {.metric}
+::: {.value}
+Saisonnier naïf
+:::
+::: {.label}
+reprendre les douze mois de 2024
+:::
+:::
+::::
+
+## Des informations identiques
+
+::: {.note-box}
+Une seule origine à la fin de 2024. Douze horizons et douze cibles communs. Paramètres estimés sur 2020 à 2024.
+:::
 ::: {.warning-box}
-Communiquer seulement la valeur centrale masque la variabilité qui compte pour les stocks, les équipes et la capacité.
+Mettre à jour une prévision avec une vente de 2025 répondrait à un autre protocole.
+:::
+
+## Les scores réellement calculés
+
+```{r}
+#| label: m08-c4-scores
+#| echo: false
+scores |>
+  select(methode, ME, MAE, RMSE) |>
+  mutate(across(where(is.numeric), ~ fr(.x))) |>
+  knitr::kable(col.names = c("Méthode", "ME ($ CA)", "MAE ($ CA)", "RMSE ($ CA)"))
+```
+
+## Les trajectoires complètent le classement
+
+```{r}
+#| label: m08-c4-trajectoires
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot() +
+  geom_line(data = validation, aes(date, ventes / 1000), linewidth = 1) +
+  geom_line(data = previsions, aes(date, prevision / 1000, colour = methode)) +
+  labs(x = NULL, y = "Ventes (milliers de $ CA)", colour = "Méthode")
+```
+
+## Choisir provisoirement
+
+::: {.keypoints}
+- Le modèle combiné a ici la plus petite MAE.
+- La saison seule manque la croissance.
+- La validation sert au choix, sans test final indépendant.
+- Le classement doit être réévalué à de nouvelles origines.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Comparer
 :::
 ::: {.label}
-Une prévision doit être accompagnée de son incertitude.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Une décision robuste prévoit des scénarios.
+mêmes dates et informations
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Mesurer
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+erreurs en dollars
 :::
 :::
+::: {.metric}
+::: {.value}
+Choisir
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+un résultat limité à ce protocole
 :::
+:::
+::::
 
 ## Production autonome 8.4
 
 ::: {.lead}
-Expliquez pourquoi l'intervalle de prédiction est plus large que l'intervalle de confiance de la moyenne.
+Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Les quatre candidats utilisent les mêmes douze cibles et informations disponibles.
+- Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur.
+- Mon choix repose sur les erreurs de validation et reste provisoire.
 :::

@@ -1,0 +1,176 @@
+---
+title: "Cahier facultatif - Méthodes de lissage"
+lang: fr
+format:
+  html:
+    embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module07-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Statut et niveau
+
+Le socle du module 07 reste les quatre activités sur les moyennes mobiles, le SES, les erreurs et la décision. Ce cahier conserve les autres méthodes de l’ancienne séance avec explications et calculs complets, sans les ajouter aux compétences à démontrer dans les deux rapports. Il ne faut pas tout exécuter pour réussir le parcours principal.
+
+Les différences constituent une consolidation de la lecture temporelle. Holt-Winters et ETS sont des approfondissements de niveau, pente et saison. BATS, TBATS et STL avec ETS sont une ouverture avancée; leurs mécanismes ne sont pas à mémoriser. Les méthodes ne sont pas présentées comme des gains garantis ni comme un catalogue à essayer systématiquement.
+
+Le [projet facultatif](telechargements/complements-lissage.zip) fournit ce cahier, les deux CSV du module, les fonctions et un script R. Les blocs se suivent depuis une session neuve. On utilise l’électricité mensuelle déjà connue, avec cinq années d’apprentissage et un motif annuel; les deux années de demande hebdomadaire ne suffiraient pas à justifier automatiquement une comparaison de structures saisonnières riches.
+
+## Préparation
+
+```{r}
+#| include: false
+racines <- c(".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/fonctions-module07.R"))][1]
+stopifnot(!is.na(racine))
+knitr::opts_knit$set(root.dir = normalizePath(racine))
+```
+```{r}
+#| label: preparation-complements-07
+library(tidyverse)
+library(slider)
+library(forecast)
+source("R/fonctions-module07.R")
+electricite <- read_csv("data/consommation_electrique_batiment_quebec.csv", show_col_types = FALSE) |>
+  mutate(date = as.Date(date)) |> arrange(date)
+stopifnot(nrow(electricite) == 72L, !anyNA(electricite), !anyDuplicated(electricite$date),
+          identical(electricite$date, seq.Date(as.Date("2020-01-01"), by = "month", length.out = 72)))
+apprentissage <- electricite |> slice_head(n = 60)
+validation <- electricite |> slice_tail(n = 12)
+serie <- ts(apprentissage$consommation_kwh, frequency = 12, start = c(2020, 1))
+horizon <- 12L
+```
+
+La validation reprend 2025, déjà examinée dans le cours. Ces calculs servent à comprendre et comparer; ils ne créent pas un nouveau test indépendant. Les valeurs sont en kWh; les figures peuvent afficher des MWh avec leur axe.
+
+## 1. Différencier puis revenir au niveau {#differences}
+
+La différence à une période est y_t − y_(t−1); la saisonnière est y_t − y_(t−12). Leur composition peut atténuer des structures, sans garantie de retirer toute tendance ou saison. Un retard déplace une valeur; une différence soustrait deux valeurs. Les deux ne sont pas interchangeables.
+
+Une prévision de différence n’est pas une prévision du niveau original. Après une différence simple, on ajoute les différences prévues cumulées au dernier niveau observé. Après une différence saisonnière, pour les douze premiers horizons, on ajoute la différence prévue à la valeur correspondante de l’année précédente. Au-delà, il faudrait une réintégration récursive explicitée.
+
+```{r}
+#| label: differences-complements-07
+#| fig-width: 9
+#| fig-height: 6
+difference_simple <- diff(serie)
+difference_saison <- diff(serie, lag = 12)
+difference_double <- diff(difference_saison)
+par(mfrow = c(2, 2))
+plot(serie, main = "Niveau", xlab = "Année", ylab = "kWh")
+plot(difference_simple, main = "Différence à un mois", xlab = "Année", ylab = "Différence (kWh)")
+plot(difference_saison, main = "Différence à douze mois", xlab = "Année", ylab = "Différence (kWh)")
+plot(difference_double, main = "Deux différences", xlab = "Année", ylab = "Différence (kWh)")
+par(mfrow = c(1, 1))
+# Illustration de réintégration; ce SES des différences n’est pas un modèle retenu d’avance.
+prevision_diff_simple <- as.numeric(ses(difference_simple, h = horizon)$mean)
+prevision_niveau_simple <- tail(as.numeric(serie), 1) + cumsum(prevision_diff_simple)
+# Pour h <= 12, le niveau de l’année précédente est encore dans l’apprentissage.
+prevision_diff_saison <- as.numeric(ses(difference_saison, h = horizon)$mean)
+prevision_niveau_saison <- tail(as.numeric(serie), 12) + prevision_diff_saison
+```
+
+:::: {.callout-tip collapse="true" title="Vérifier sa compréhension"}
+
+Si le dernier niveau vaut 100 et les différences prévues sont 2 puis 3, les niveaux prévus sont 102 puis 105. On ne compare pas une RMSE des différences avec une RMSE du niveau. La réintégration des prévisions ponctuelles ne reconstruit pas, à elle seule, des intervalles corrects: il faut tenir compte de la dépendance des erreurs.
+::::
+
+## 2. Étendre le niveau à la saison: Holt-Winters et ETS {#ets}
+
+Le SES estime seulement un niveau. Holt ajoute une pente; son amortissement réduit la contribution de cette pente à long horizon. Holt-Winters ajoute un motif saisonnier qui est lui aussi mis à jour. Une saison additive représente des écarts en quantité; une saison multiplicative représente des facteurs et demande notamment des données positives dans les appels utilisés ici.
+
+Dans une formule avec saison multiplicative, le facteur saisonnier multiplie l’ensemble niveau et tendance. Oublier les parenthèses change le modèle. Un lissage saisonnier peut s’adapter aux nouvelles observations; cela ne signifie pas qu’il connaît les événements futurs.
+
+Les trois lettres ETS décrivent erreur, tendance et saisonnalité. A signifie additif, M multiplicatif, N absent; Z demande une sélection automatique d’une composante. Le type d’erreur est distinct du type de saison. Toutes les combinaisons théoriques ne sont pas autorisées ou admissibles dans `ets()`. Le défaut actuel de `ets()` utilise AICc parmi les candidats autorisés, et non la plus petite MAE sur notre validation.
+
+```{r}
+#| label: ets-complements-07
+prevision_ses <- ses(serie, h = horizon)
+prevision_holt <- holt(serie, h = horizon, damped = TRUE)
+prevision_hw_add <- hw(serie, h = horizon, seasonal = "additive")
+prevision_hw_mult <- hw(serie, h = horizon, seasonal = "multiplicative")
+modele_ets <- ets(serie)
+prevision_ets <- forecast(modele_ets, h = horizon)
+# ETS code erreur / tendance / saison; le critère utilisé est affiché explicitement.
+modele_ets$method
+tibble(AIC = modele_ets$aic, AICc = modele_ets$aicc, BIC = modele_ets$bic)
+```
+
+Le nom retourné décrit la structure effectivement retenue dans cette exécution; il ne faut pas le recopier à une autre série. Le nombre de combinaisons d’une ancienne grille ne constitue pas une obligation de les ajuster toutes.
+
+:::: {.callout-tip collapse="true" title="Vérifier sa compréhension"}
+
+ETS(A,A,N) a erreur additive, tendance additive et aucune saison. Une erreur multiplicative ne rend pas automatiquement la saison multiplicative. Une sélection AICc sur l’apprentissage reste à comparer aux références sur les mêmes périodes futures.
+::::
+
+## 3. BATS, TBATS et décomposition STL avec ETS {#methodes-avancees}
+
+Ces outils sont conservés comme repères avancés. BATS combine des composantes de transformation Box-Cox, erreurs ARMA, tendance et saison. TBATS emploie des composantes saisonnières trigonométriques; il peut représenter plusieurs périodes. Une spécification multiple, par exemple hebdomadaire et annuelle pour des données quotidiennes, exige des unités et un historique suffisants. Déclarer des périodes dans `msts()` ne crée pas l’information qui manque.
+
+STL sépare une saison et une tendance par lissage. `stlm(..., method = "ets")` modélise ensuite la série corrigée de la saison avec ETS, puis remet la saison dans les prévisions. Ici `s.window = "periodic"` impose un motif saisonnier fixe dans la décomposition. Une structure plus riche n’est pas automatiquement plus stable ni plus utile.
+
+```{r}
+#| label: avance-complements-07
+# Pas de parallélisme automatique: ces exemples restent bornés à la petite série.
+modele_bats <- bats(serie, use.parallel = FALSE)
+modele_tbats <- tbats(serie, use.parallel = FALSE)
+modele_stl <- stlm(serie, s.window = "periodic", method = "ets")
+prevision_bats <- forecast(modele_bats, h = horizon)
+prevision_tbats <- forecast(modele_tbats, h = horizon)
+prevision_stl <- forecast(modele_stl, h = horizon)
+```
+
+Tous les paramètres et choix automatiques sont estimés à partir de l’apprentissage seulement. Les modèles peuvent avoir des durées de calcul différentes; rien ne justifie de les imposer à chaque nouvelle analyse dans un cours d’introduction.
+
+## 4. Comparer sur l’échelle originale {#comparaison}
+
+```{r}
+#| label: comparaison-complements-07
+#| fig-width: 9
+#| fig-height: 4.3
+previsions <- list(
+  Saisonnier_naif = as.numeric(snaive(serie, h = horizon)$mean),
+  SES = as.numeric(prevision_ses$mean), Holt_amorti = as.numeric(prevision_holt$mean),
+  Holt_Winters_additif = as.numeric(prevision_hw_add$mean),
+  Holt_Winters_multiplicatif = as.numeric(prevision_hw_mult$mean),
+  ETS_auto = as.numeric(prevision_ets$mean), BATS = as.numeric(prevision_bats$mean),
+  TBATS = as.numeric(prevision_tbats$mean), STL_ETS = as.numeric(prevision_stl$mean),
+  SES_diff_simple_reintegree = prevision_niveau_simple,
+  SES_diff_saison_reintegree = prevision_niveau_saison
+)
+scores_complements <- imap_dfr(previsions, function(prevision, nom) {
+  mesures_erreurs(validation$consommation_kwh, prevision) |> mutate(methode = nom)
+}) |> select(methode, ME, MAE, RMSE) |> arrange(MAE)
+scores_complements
+courbes <- imap_dfr(previsions[c("Saisonnier_naif", "Holt_Winters_additif", "ETS_auto")],
+                   ~ tibble(date = validation$date, prevision = .x, methode = .y))
+ggplot() +
+  geom_line(data = validation, aes(date, consommation_kwh / 1000), linewidth = 1) +
+  geom_line(data = courbes, aes(date, prevision / 1000, colour = methode)) +
+  labs(x = NULL, y = "Énergie mensuelle (MWh)", colour = "Méthode") +
+  theme_minimal(base_size = 12)
+```
+
+Le tableau donne les résultats de cette exécution, sans supériorité universelle. Les onze candidats partagent les mêmes douze mois et les erreurs sont toutes calculées sur l’énergie en kWh, y compris après réintégration. Cette large comparaison est une illustration facultative; elle ne remplace pas les cinq candidats annoncés dans le transfert principal.
+
+Le choix automatique, la multiplication des méthodes et le meilleur score observé ne prouvent ni calibration future des intervalles ni efficacité opérationnelle. À des origines suivantes, il faudrait refaire une comparaison commune. Les coefficients du coût asymétrique et les contraintes de décision doivent rester justifiés séparément.
+
+:::: {.callout-tip collapse="true" title="Vérifier sa compréhension"}
+
+Une méthode plus complexe peut perdre face au naïf saisonnier. Les erreurs des mêmes mois ne sont pas des réplications indépendantes de performance. Les sorties ci-dessus sont des résultats calculés sur une validation connue, sans nouvelle preuve de généralisation.
+::::
+
+## Sources et provenance
+
+Hyndman et Athanasopoulos (2021), FPP3, 3e édition: [lissage exponentiel et méthodes saisonnières](https://otexts.com/fpp3/exponential-smoothing.html#sec-holt-winters), [stationnarité et différenciation](https://otexts.com/fpp3/arima.html#sec-stationarity). Les explications françaises ci-dessus permettent de suivre les calculs sans lecture intégrale de ces chapitres.
+
+Équipe forecast, documentations officielles consultées le 26 octobre 2026: [SES, Holt et Holt-Winters](https://pkg.robjhyndman.com/forecast/reference/ses.html), [ETS](https://pkg.robjhyndman.com/forecast/reference/ets.html), [BATS](https://pkg.robjhyndman.com/forecast/reference/bats.html), [TBATS](https://pkg.robjhyndman.com/forecast/reference/tbats.html), [STL et prévision](https://pkg.robjhyndman.com/forecast/reference/stlm.html). Les versions exécutées sont consignées dans le bilan; la documentation en ligne peut correspondre à une version plus récente.
+
+L’ancienne séance 07 et le script attribué à Paolo Landa (16 mars 2021) ont servi au relevé des notions. Les données actuelles sont les simulations du cours MQT-2101; aucune archive ancienne protégée n’est redistribuée. Le cahier remplace des renvois sommaires par des explications et du code sans rendre ces méthodes obligatoires.

@@ -1,17 +1,118 @@
 ---
 title: "Lectures - Module 08"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module08-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-## Lectures obligatoires
+## Le socle du module
 
-- Hyndman et Athanasopoulos, [Chapitre 3 - Time series decomposition](https://otexts.com/fpp3/decomposition.html), introduction aux composantes;
-- [Section 7.4 - Some useful predictors](https://otexts.com/fpp3/useful-predictors.html), sections sur tendance et variables saisonnières.
+Les explications françaises ci-dessous, les démonstrations et les corrigés suffisent aux cinq activités principales. Le but est de savoir construire et critiquer une prévision avec tendance linéaire et effets des mois. Les anciennes techniques plus nombreuses restent dans un [cahier facultatif](complements.qmd), sans devenir des compétences supplémentaires à démontrer dans les deux rapports.
 
-Question de lecture : dans quel cas une transformation logarithmique facilite-t-elle la modélisation de la saisonnalité?
+Les lectures améliorent les réponses déjà commencées dans `tendance_ventes.qmd` et `tendance_commerce.qmd`. Elles ne créent pas un troisième rapport. Les passages des ouvrages en anglais sont des compléments ciblés.
 
-## Lecture facultative
+## Lectures intégrées au parcours {#lectures-parcours}
 
-- [Section 8.3 - Methods with seasonality](https://otexts.com/fpp3/holt-winters.html), pour découvrir Holt-Winters avant d'aller plus loin.
+::: {.table-responsive tabindex="0" role="region" aria-label="Lectures intégrées au parcours"}
+
+| Moment | Statut et passage à lire | Ce qu’il faut en retenir | Vérification personnelle |
+| --- | --- | --- | --- |
+| Avant le parcours | Obligatoire: [préparation R](demonstrations.qmd#preparation) et [dictionnaires](data/dictionnaires.md) | Dates, dollars canadiens, origine, 60 mois puis 12 mois. | Construire le calendrier futur sans lire les ventes futures. |
+| Après la capsule 1 | Obligatoire: [lire les motifs](#lecture-1) | Tendance, répétition, profils par mois et années. | Donner deux observations et une limite du graphique. |
+| Après la capsule 2 | Obligatoire: [tendance et mois](#lecture-2) | Indice, facteur, référence, pente et contraste mensuel. | Interpréter décembre conditionnellement au modèle. |
+| Après la capsule 3 | Obligatoire: [diagnostics](#lecture-3) | Résidus dans le temps, dispersion, moyenne mensuelle imposée. | Expliquer pourquoi une moyenne résiduelle nulle ne suffit pas. |
+| Après la capsule 4 | Obligatoire: [validation commune](#lecture-4) | Quatre candidats, même origine, mêmes informations et dollars. | Distinguer erreur de prévision et résidu d’ajustement. |
+| Après la capsule 5 | Obligatoire: [incertitude et décision](#lecture-5) | Moyenne, observation future, intervalles marginaux et suivi. | Nommer une limite d’un ruban à 95 %. |
+| Après le parcours | Facultatif: [cahier des compléments](complements.qmd) | Formes de tendance, décomposition, harmoniques, stationnarité. | Identifier le prérequis et ce que chaque outil ajoute. |
+
+:::
+
+## 1. Lire les motifs sur l’apprentissage {#lecture-1}
+
+Une tendance décrit une évolution du niveau à long terme. La saisonnalité revient selon une période connue: douze mois dans nos deux séries. Un cycle peut avoir une durée variable, alors que le calendrier fixe la période saisonnière. Une seule hausse de janvier à décembre ne suffit pas à démontrer une répétition annuelle.
+
+Le graphique temporel conserve l’ordre des observations. Les profils mensuels comparent les mêmes mois entre années et montrent si une hausse générale se superpose à une saison. Une boîte par mois mélange aussi plusieurs niveaux de tendance; son centre n’est donc pas automatiquement un effet du mois ajusté pour la croissance.
+
+Dans les deux cas du cours, les données sont simulées. Un motif graphique ne prouve pas une cause dans une organisation réelle. Un mois élevé peut combiner calendrier, activité commerciale et événement inhabituel. Le parcours explore seulement l’apprentissage avant de calculer les scores futurs.
+
+Lecture facultative: Hyndman et Athanasopoulos (2021), [FPP3, composantes d’une série](https://otexts.com/fpp3/decomposition.html#sec-decomposition). Pour la décomposition additive ou multiplicative et ses calculs, consultez le [complément expliqué](complements.qmd#decomposition); elle n’est pas nécessaire à la trace principale.
+
+## 2. Ajouter tendance et mois dans la régression {#lecture-2}
+
+L’indice temporel t augmente d’une unité par mois. Il vaut 1 à 60 sur l’apprentissage et 61 à 72 en validation. Le mois est une catégorie qui revient chaque année. Recommencer t à 1 pour janvier 2025 ferait perdre les cinq années écoulées.
+
+Avec janvier comme référence, on pose gamma_janvier = 0:
+
+$$y_t=\beta_0+\beta_1t+\gamma_{m(t)}+\varepsilon_t.$$
+
+La pente beta_1 représente la variation moyenne en dollars par mois, à mois égal. Le contraste de décembre représente la différence décembre-janvier à indice de temps égal selon le modèle. Cette comparaison est construite par le modèle; deux mois différents n’existent pas simultanément à une même date. Elle ne démontre pas un effet causal du mois.
+
+La constante correspond à janvier à t = 0, avant les données t = 1 à 60. Elle n’est pas forcément un mois observé. Avec la constante, le facteur de douze mois ajoute onze indicatrices. Le modèle combiné estime donc treize coefficients: constante, pente et onze contrastes. Douze indicatrices plus une constante produiraient des colonnes dépendantes.
+
+Le facteur est non ordonné; ses niveaux suivent le calendrier pour l’affichage. Les appels à `lm()` imposent les contrastes de traitement, avec janvier comme référence. Un facteur ordonné peut utiliser des contrastes polynomiaux, dont les coefficients ne se lisent pas comme des différences à janvier. Changer la référence réécrit les contrastes sans changer les valeurs ajustées ni les prévisions pour un même modèle et les mêmes données.
+
+La tendance seule représente la hausse mais manque les différences mensuelles. La saison seule répète un profil fixe mais manque la hausse entre années. Le modèle combiné capture les deux sous une hypothèse simple: une même pente globale et des écarts saisonniers constants en dollars. Une amplitude qui augmente avec le niveau peut motiver une autre forme; le [cahier facultatif](complements.qmd#tendances) conserve les modèles quadratique et log avec du code complet.
+
+Lecture facultative: FPP3, [section 7.4, prédicteurs utiles](https://otexts.com/fpp3/regression.html#sec-useful-predictors), de Trend à Seasonal dummy variables. R Core Team, [lm](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html), arguments `formula`, `data` et `contrasts`.
+
+## 3. Lire ce qui reste dans les résidus {#lecture-3}
+
+Un résidu compare une observation d’apprentissage à sa valeur ajustée. Son signe est observation moins ajustement. Le graphique dans le temps peut montrer une courbure ou des séquences de signes. Le graphique selon les valeurs ajustées permet d’examiner la forme et la dispersion. Un événement inhabituel doit être compris avant de décider de l’écarter.
+
+Quand les indicatrices mensuelles sont présentes, les équations des moindres carrés imposent des sommes de résidus nulles par mois, à l’arrondi numérique près. Constater cette propriété ne prouve pas que la saison est correctement représentée dans le futur. La stabilité de la dispersion et la structure temporelle restent à examiner.
+
+Une pente significative ne suffit pas à choisir une droite. Inversement, un contraste de décembre peu précis ne démontre pas l’absence de saisonnalité. Il faut relier les coefficients à la forme, aux diagnostics et aux prévisions ultérieures. Un graphique ne prouve pas à lui seul l’indépendance des erreurs. Le module 09 approfondit l’autocorrélation et les erreurs AR(1); ces tests ne sont pas une nouvelle exigence du présent parcours.
+
+Lecture facultative: FPP3, [diagnostics de régression](https://otexts.com/fpp3/regression.html#sec-regression-evaluation), graphiques des résidus dans le temps et selon les valeurs ajustées. La stationnarité et KPSS de l’ancien matériel sont conservés dans un [complément critique](complements.qmd#stationnarite), sans être requis pour les cinq activités.
+
+## 4. Comparer des prévisions disponibles à la même origine {#lecture-4}
+
+Les quatre candidats partagent les douze mois de 2025, l’origine de fin décembre 2024 et les mêmes prédicteurs temporels connus à cette date. La référence saisonnière naïve reprend les douze valeurs de 2024. Une colonne `lag(ventes)` sur tout le fichier répondrait à une autre question, avec des observations de 2025 reçues progressivement.
+
+L’erreur de prévision est observation future moins valeur émise à l’origine. ME décrit une moyenne signée; les signes peuvent se compenser. MAE résume l’ampleur absolue et RMSE donne plus de poids aux grands écarts. Ces trois mesures restent en dollars canadiens. Le R² d’apprentissage, le nombre de paramètres et la valeur p ne remplacent pas cette comparaison.
+
+Le bloc futur sert à choisir les candidats: nous l’appelons validation. Aucun test final distinct n’est disponible ici. Modifier les candidats après lecture des scores puis présenter ce même score comme confirmation indépendante serait trompeur. Le choix reste à réévaluer à de nouvelles origines.
+
+Le budget cible n’est pas employé comme prédicteur: c’est un objectif fictif, sans statut de vérité future. Dans le transfert, prix et promotions observés après l’origine ne sont pas non plus employés comme prédicteurs principaux. Regrouper après coup les erreurs par promotion sert à localiser les difficultés, sans modifier les prévisions émises auparavant.
+
+Lecture facultative: FPP3, [évaluation des prévisions ponctuelles](https://otexts.com/fpp3/toolbox.html#sec-accuracy), de Forecast errors à Scale-dependent errors. Les [exercices commerciaux accompagnés](exercices.qmd#exercice-14) montrent séparément ce qui change quand on fournit le contexte effectivement observé.
+
+## 5. Communiquer l’incertitude et la décision {#lecture-5}
+
+Le calendrier futur est connu, mais les ventes ne le sont pas. L’intervalle de confiance décrit l’incertitude sur la moyenne conditionnelle. L’intervalle de prédiction ajoute la variabilité d’une nouvelle observation et est plus large à modèle, mois et niveau identiques.
+
+Les intervalles classiques de `predict.lm()` supposent une forme correcte et des erreurs indépendantes de variance constante; la normalité intervient dans les calculs exacts. Une dépendance temporelle restante, une promotion imprévue ou une rupture peuvent rendre leur couverture inadéquate. Le mot «95 %» n’annule pas ces hypothèses.
+
+Le ruban est une suite d’intervalles marginaux. Il ne garantit pas simultanément tous les mois de l’année avec une probabilité de 95 %. La somme des bornes mensuelles ne forme pas automatiquement un intervalle à 95 % pour le total annuel: la dépendance des erreurs et des paramètres compte. Une couverture observée de douze mois sur douze ne prouve pas la calibration future.
+
+Une recommandation donne le modèle retenu, deux scores avec unités, une interprétation du calendrier, une plage sous hypothèses et une limite. Elle propose une surveillance aux prochaines origines. Une prévision de ventes ne détermine pas seule les stocks, la capacité ou le personnel; il faut préciser les délais, les coûts et les contraintes.
+
+Pour une véritable période suivante, on réajuste la méthode retenue avec les observations disponibles à cette nouvelle origine. Les prévisions ne deviennent évaluables qu’à l’arrivée des observations futures. Leur émission n’est pas un nouveau résultat de validation.
+
+Lecture facultative: FPP3, [prévision par régression](https://otexts.com/fpp3/regression.html#sec-forecasting-regression), de Ex-ante versus ex-post forecasts à Prediction intervals. R Core Team, [predict.lm](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html), `newdata`, `interval` et `level`.
+
+## Consolider ou approfondir sans alourdir la trace {#complements}
+
+Les [huit pratiques 6 à 13](exercices.qmd#pratique-supplementaire) renforcent les cinq étapes, avec corrigés. Le [cahier facultatif](complements.qmd) conserve les autres outils de l’ancienne séance: formes de tendance, transformation log et Box-Cox, décomposition, harmoniques, `tslm`, stationnarité et différences. Chaque partie précise son niveau et ses limites. Aucun de ces outils n’est nécessaire pour terminer les rapports principaux.
+
+Les [exercices 14 et 15](exercices.qmd#exercice-14) conservent la régression commerciale déjà présente dans la version précédente du module. Ils préparent la distinction du module 09 entre variables futures connues, prévues ou scénarisées et comparaison conditionnelle au contexte observé.
+
+Les [exercices officiels du chapitre 7 de FPP3](https://otexts.com/fpp3/regression.html#sec-regression-exercises) sont un prolongement en anglais avec fable. Aucun numéro n’est imposé sans correspondance vérifiée avec nos outils. Aucune correction publique de ces exercices n’a été vérifiée; les pratiques françaises du module fournissent les corrections disponibles.
+
+## Références et provenance
+
+Hyndman, R. J., et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e édition, OTexts. Les liens et passages retenus ont été vérifiés le 26 octobre 2026. Les anciennes URL par notion peuvent rediriger vers les chapitres; les liens ci-dessus utilisent leurs ancres.
+
+R Core Team, documentations officielles de `lm` et `predict.lm`, consultées le 26 octobre 2026. Les versions réellement exécutées sont consignées dans le bilan et les projets. Le cahier facultatif cite les documentations des fonctions supplémentaires.
+
+Les données actuelles sont des simulations québécoises du cours. Le notebook Amtrak consulté pour l’ancienne séance est attribué à Paolo Landa, daté du 16 mars 2021. Les anciens fichiers de tiers et les anciennes consignes de remise ne sont pas redistribués. La correspondance détaillée entre anciens sujets, parcours et compléments figure dans le guide de préparation réservé à l’enseignant.

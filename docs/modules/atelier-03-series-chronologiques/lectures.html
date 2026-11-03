@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Lectures - Atelier 03 – MQT-2101 : Analyse et modélisation des données</title>
+<title>Lectures - Laboratoire 03 – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,8 +7048,12 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#à-consulter-pendant-latelier" id="toc-à-consulter-pendant-latelier" class="nav-link active" data-scroll-target="#à-consulter-pendant-latelier">À consulter pendant l’atelier</a></li>
+  <ul class="collapse">
+  <li><a href="#avant-et-pendant-la-séance" id="toc-avant-et-pendant-la-séance" class="nav-link active" data-scroll-target="#avant-et-pendant-la-séance">Avant et pendant la séance</a></li>
+  <li><a href="#lire-une-comparaison-temporelle" id="toc-lire-une-comparaison-temporelle" class="nav-link" data-scroll-target="#lire-une-comparaison-temporelle">Lire une comparaison temporelle</a></li>
+  <li><a href="#lire-lincertitude-et-le-coût" id="toc-lire-lincertitude-et-le-coût" class="nav-link" data-scroll-target="#lire-lincertitude-et-le-coût">Lire l’incertitude et le coût</a></li>
+  <li><a href="#compléments-et-ancien-matériel" id="toc-compléments-et-ancien-matériel" class="nav-link" data-scroll-target="#compléments-et-ancien-matériel">Compléments et ancien matériel</a></li>
+  <li><a href="#sources-ciblées" id="toc-sources-ciblées" class="nav-link" data-scroll-target="#sources-ciblées">Sources ciblées</a></li>
   </ul>
 </nav>
     </div>
@@ -7027,7 +7062,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures - Atelier 03</h1>
+<h1 class="title">Lectures - Laboratoire 03</h1>
 </div>
 
 
@@ -7044,14 +7079,66 @@ display: none;
 </header>
 
 
-<section id="à-consulter-pendant-latelier" class="level2">
-<h2 class="anchored" data-anchor-id="à-consulter-pendant-latelier">À consulter pendant l’atelier</h2>
+<section id="avant-et-pendant-la-séance" class="level2">
+<h2 class="anchored" data-anchor-id="avant-et-pendant-la-séance">Avant et pendant la séance</h2>
+<p>Ces explications et les <a href="../../modules/atelier-03-series-chronologiques/capsules.html">repères</a> suffisent pour suivre le <a href="../../modules/atelier-03-series-chronologiques/guide-atelier.html">guide</a>. Les passages externes sont facultatifs et ciblés; il n’est pas nécessaire de lire les chapitres entiers avant la séance.</p>
+<div class="table-responsive" tabindex="0" role="region" aria-label="Lectures du laboratoire">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Lecture française et vérification</th>
+<th>Complément facultatif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quand la semaine est-elle connue?</td>
+<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#audit">Démonstration : audit</a>. Une date de début n’est pas la fin de la période.</td>
+<td><a href="../../modules/semaine-06-series-chronologiques-intro/lectures.html">Module 06 : origine et horizon</a>.</td>
+</tr>
+<tr class="even">
+<td>Quels candidats sont disponibles?</td>
+<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#previsions">Démonstration : prévisions</a>. La même origine et les mêmes cibles s’appliquent à tous.</td>
+<td><a href="../../modules/semaine-07-lissage/lectures.html">Module 07 : lissage</a> et <a href="../../modules/semaine-08-tendance-saisonnalite/lectures.html#lecture-2">module 08 : tendance</a>.</td>
+</tr>
+<tr class="odd">
+<td>Comment lire les résultats?</td>
+<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#comparaison">Comparaison</a>. ME, MAE, RMSE et intervalle sont associés à des méthodes et unités précises.</td>
+<td>Hyndman et Athanasopoulos (2021), <a href="https://otexts.com/fpp3/toolbox.html#sec-accuracy">exactitude des prévisions</a>.</td>
+</tr>
+<tr class="even">
+<td>Comment traduire un risque?</td>
+<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#decision">Décision</a>. Le coût est un scénario fixé à l’avance, pas une facture observée.</td>
+<td><a href="../../modules/semaine-07-lissage/lectures.html">Module 07 : coût asymétrique</a>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="lire-une-comparaison-temporelle" class="level2">
+<h2 class="anchored" data-anchor-id="lire-une-comparaison-temporelle">Lire une comparaison temporelle</h2>
+<p>Le résidu est calculé sur les observations utilisées pour ajuster un modèle; l’erreur de prévision compare une observation future à une valeur émise auparavant. Des erreurs de même signe peuvent signaler une difficulté, mais treize semaines ne suffisent pas à prouver sa cause.</p>
+<p>Choisir la plus petite MAE sur les mêmes semaines utilisées pour l’afficher peut donner une appréciation optimiste. Cette validation est déjà connue des modules 06 et 07. Avant une utilisation réelle, il faudrait comparer à d’autres origines et documenter ce qui était connu à chacune. Une seule ME peut masquer des erreurs positives et négatives qui se compensent.</p>
+</section>
+<section id="lire-lincertitude-et-le-coût" class="level2">
+<h2 class="anchored" data-anchor-id="lire-lincertitude-et-le-coût">Lire l’incertitude et le coût</h2>
+<p>Un intervalle de prévision décrit une plage pour une observation future sous les hypothèses de la méthode nommée. Le rapport illustre le SES; les intervalles ne deviennent pas automatiquement ceux d’une autre méthode. Les intervalles marginaux de treize semaines ne garantissent pas une couverture simultanée de 95 % sur tout l’horizon.</p>
+<p>Les 18 $ et 5 $ sont des coefficients fictifs par unité d’écart. Le coût calculé est la somme dans ce scénario, sans données réelles de commandes, stock ou délais. Une comparaison de prévisions aide une décision, mais ne détermine pas seule la quantité à commander.</p>
+</section>
+<section id="compléments-et-ancien-matériel" class="level2">
+<h2 class="anchored" data-anchor-id="compléments-et-ancien-matériel">Compléments et ancien matériel</h2>
+<p>Le <a href="../../modules/semaine-07-lissage/complements.html">cahier du module 07</a> conserve les différences, la réintégration, Holt-Winters, ETS, BATS, TBATS et STL avec ETS; le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier du module 08</a> conserve les tendances plus souples, la décomposition, les harmoniques et la stationnarité. Ces prolongements demandent leurs prérequis et ne s’ajoutent pas à la mission.</p>
+<p>Les anciens exercices sur la température et les taux de change utilisaient des séries quotidiennes. La fréquence et les dates manquantes doivent être vérifiées dans chaque jeu : enlever des dates sans examiner le calendrier ne rend pas les observations régulièrement espacées. Les archives anciennes et leurs données de tiers ne sont pas redistribuées ici.</p>
+</section>
+<section id="sources-ciblées" class="level2">
+<h2 class="anchored" data-anchor-id="sources-ciblées">Sources ciblées</h2>
 <ul>
-<li><a href="https://otexts.com/fpp3/basic-steps.html">Étapes d’une tâche de prévision</a>, pour vérifier le processus;</li>
-<li><a href="https://otexts.com/fpp3/accuracy.html">Évaluation de l’exactitude</a>, pour revoir les mesures;</li>
-<li><a href="https://otexts.com/fpp3/expsmooth.html">Lissage exponentiel</a>, pour interpréter les méthodes.</li>
+<li>Hyndman, R. J., et Athanasopoulos, G. (2021), Forecasting: Principles and Practice, 3e édition : <a href="https://otexts.com/fpp3/toolbox.html#sec-accuracy">méthodes simples et exactitude</a>, <a href="https://otexts.com/fpp3/regression.html#sec-useful-predictors">prédicteurs temporels</a> et <a href="https://otexts.com/fpp3/exponential-smoothing.html#sec-ses">lissage exponentiel</a>.</li>
+<li>Équipe forecast, documentation de <a href="https://pkg.robjhyndman.com/forecast/reference/ses.html"><code>ses()</code> et <code>holt()</code></a>, consultée le 27 octobre 2026. Les versions réellement exécutées sont dans le bilan interne; la documentation en ligne peut être plus récente.</li>
+<li>Les données sont simulées pour le cours à partir de <code>scripts/10_create_second_block_data.R</code>, graine 210110. Le <a href="data/dictionnaires.md">dictionnaire</a> précise variables, unités et reproduction.</li>
 </ul>
-<p>La priorité n’est pas de lire les chapitres en entier pendant la séance. Utilisez les sections pour résoudre une question précise rencontrée dans l’analyse.</p>
+<p>Les <a href="../../evaluations/mini-rapport-2.html">consignes du mini-rapport 2</a> définissent l’évaluation et les deux voies. Le laboratoire est une pratique distincte et son exemple ne remplace pas l’analyse autonome demandée.</p>
 
 
 </section>

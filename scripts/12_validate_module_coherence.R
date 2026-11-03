@@ -15,8 +15,8 @@ course_modules <- data.frame(
     "semaine-09-variables-externes-autocorrelation",
     "semaine-10-classification-modeles-avances"
   ),
-  capsules = c(6L, 6L, 6L, 6L, 0L, 6L, 4L, 4L, 4L, 4L),
-  complements = c(0L, 0L, 0L, 0L, 0L, 2L, 0L, 0L, 0L, 0L),
+  capsules = c(6L, 6L, 6L, 6L, 0L, 6L, 4L, 5L, 5L, 5L),
+  complements = c(0L, 0L, 0L, 0L, 0L, 2L, 1L, 0L, 0L, 0L),
   stringsAsFactors = FALSE
 )
 
@@ -100,12 +100,13 @@ for (i in seq_len(nrow(course_modules))) {
   if (file.exists(capsules_path)) {
     if (is_revision) add_error("Module 05 : une page de capsules ne fait pas partie du parcours de révision.")
     capsules_text <- read_text(capsules_path)
-    actual_capsules <- count_matches("(?m)^## Capsule [0-9]+", capsules_text)
+    optional_numbered <- count_matches("(?m)^## Capsule [0-9]+[^\n]*\\(facultatif\\)", capsules_text)
+    actual_capsules <- count_matches("(?m)^## Capsule [0-9]+", capsules_text) - optional_numbered
 
     if (actual_capsules != expected_capsules) {
       add_error(paste0(module_id, " : ", actual_capsules, " capsules trouvées, ", expected_capsules, " attendues."))
     }
-    actual_complements <- count_matches("(?m)^## Complément [AB] -", capsules_text)
+    actual_complements <- count_matches("(?m)^## Complément [AB] -", capsules_text) + optional_numbered
     if (actual_complements != expected_complements) {
       add_error(paste0(module_id, " : ", actual_complements, " compléments trouvés, ", expected_complements, " attendus."))
     }
@@ -124,7 +125,7 @@ for (i in seq_len(nrow(course_modules))) {
   actual_complement_decks <- 0L
   for (deck_path in deck_paths) {
     deck_text <- read_text(deck_path)
-    is_complement <- grepl('(?m)^title: "Complément [AB] -', deck_text, perl = TRUE)
+    is_complement <- grepl('(?m)^title: "(Complément [AB] -|[^\n]*\\(facultatif\\))', deck_text, perl = TRUE)
     actual_complement_decks <- actual_complement_decks + as.integer(is_complement)
     expected_sections <- c(
       "revealjs",
@@ -222,6 +223,24 @@ extract_transfer_dataset <- function(path) {
   extract_csv_names(paste(following_lines, collapse = "\n"))
 }
 
+# Les parcours révisés décrivent leur cas dans la préparation plutôt que dans
+# l'ancien marqueur textuel. Vérifier leurs imports et la distinction des données.
+revised_transfers <- c(
+  "semaine-07-lissage" = "consommation_electrique_batiment_quebec.csv",
+  "semaine-08-tendance-saisonnalite" = "ventes_promotions_quebec.csv",
+  "semaine-09-variables-externes-autocorrelation" = "cas_integrateur_quebec.csv",
+  "semaine-10-classification-modeles-avances" = "cas_integrateur_quebec.csv",
+  "atelier-03-series-chronologiques" = "ventes_saisonnieres_quebec.csv",
+  "atelier-04-recapitulation" = "fidelisation_clients_quebec.csv"
+)
+revised_guided <- c(
+  "semaine-07-lissage" = "demande_hebdomadaire_quebec.csv",
+  "semaine-08-tendance-saisonnalite" = "ventes_saisonnieres_quebec.csv",
+  "semaine-09-variables-externes-autocorrelation" = "ventes_promotions_quebec.csv",
+  "semaine-10-classification-modeles-avances" = "fidelisation_clients_quebec.csv",
+  "atelier-03-series-chronologiques" = "demande_hebdomadaire_quebec.csv",
+  "atelier-04-recapitulation" = "cas_integrateur_quebec.csv"
+)
 learning_units <- c(course_modules$id, workshops)
 published_csv <- basename(list.files(
   "modules",
@@ -259,6 +278,21 @@ for (unit_id in learning_units) {
     }
     if (length(extract_csv_names(exercise_text)) > 0L) {
       add_error(paste0(unit_id, " : les mini-cas annoncés doivent fournir leurs données dans la page."))
+    }
+    next
+  }
+
+  if (unit_id %in% names(revised_transfers)) {
+    transfer <- revised_transfers[[unit_id]]
+    guided <- revised_guided[[unit_id]]
+    paths <- file.path(directory, "data", c(transfer, guided))
+    if (!grepl(transfer, exercise_text, fixed = TRUE) || !all(file.exists(paths))) {
+      add_error(paste0(unit_id, " : données du transfert ou du cas guidé absentes."))
+    } else if (transfer == guided || length(unique(unname(tools::md5sum(paths)))) != 2L) {
+      add_error(paste0(unit_id, " : les données de transfert doivent être distinctes du cas guidé."))
+    }
+    if (!grepl("collapse=\"true\"", exercise_text, fixed = TRUE)) {
+      add_error(paste0(unit_id, " : corrigés étudiants repliables absents."))
     }
     next
   }
@@ -321,12 +355,12 @@ for (audience in names(audience_markers)) {
 transition_checks <- c(
   "semaine-05-preparation-intra/index.qmd" = "Après l'examen intra",
   "semaine-06-series-chronologiques-intro/index.qmd" = "Passage au bloc de prévision",
-  "semaine-07-lissage/index.qmd" = "Continuité du parcours",
-  "semaine-08-tendance-saisonnalite/index.qmd" = "Continuité du parcours",
-  "semaine-09-variables-externes-autocorrelation/index.qmd" = "Continuité du parcours",
-  "semaine-10-classification-modeles-avances/index.qmd" = "Continuité du parcours",
-  "atelier-03-series-chronologiques/index.qmd" = "Lien avec le mini-rapport 2",
-  "atelier-04-recapitulation/index.qmd" = "Continuité vers la fin du cours"
+  "semaine-07-lissage/index.qmd" = "Pour préparer la suite",
+  "semaine-08-tendance-saisonnalite/index.qmd" = "Pour préparer les évaluations et la suite",
+  "semaine-09-variables-externes-autocorrelation/index.qmd" = "Le module 08 a introduit",
+  "semaine-10-classification-modeles-avances/index.qmd" = "parcours-anticipe",
+  "atelier-03-series-chronologiques/index.qmd" = "Point de contrôle du mini-rapport 2",
+  "atelier-04-recapitulation/index.qmd" = "la séance prépare la synthèse et le final"
 )
 
 for (path in names(transition_checks)) {

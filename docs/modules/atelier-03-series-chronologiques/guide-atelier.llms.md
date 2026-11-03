@@ -1,224 +1,100 @@
-# Guide en classe - Atelier 03
+# Guide de la mission - Laboratoire 03
 
-## Question centrale
+## Une seule mission
 
-> Quelle méthode fournit une prévision assez précise et assez stable pour planifier la demande des treize prochaines semaines?
+Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
 
-## Préparation
+Utilisez le [projet de départ](telechargements/laboratoire-03.zip), avec un seul rapport `rapport-labo-03.qmd`. Les étapes, repères et diapositives reprennent ce même travail. Tentez chaque étape avant d’ouvrir les indices. Un [exemple complet](../../modules/atelier-03-series-chronologiques/demonstrations.llms.md) et son [projet exécutable](telechargements/exemple-laboratoire-03.zip) restent disponibles pour débloquer ou vérifier.
 
-``` r
-library(tidyverse)
-library(slider)
-library(forecast)
+## Auto-vérification de la production
 
-data_path <- if (file.exists("data/demande_hebdomadaire_quebec.csv")) {
-  "data/demande_hebdomadaire_quebec.csv"
-} else {
-  "modules/atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv"
-}
+- J’ai précisé l’origine, les dates et les unités.
+- Je compare les cinq méthodes sur les mêmes cibles.
+- Je distingue l’intervalle du SES et la méthode retenue.
+- Ma recommandation cite des résultats, une limite et un suivi.
 
-demande <- read_csv(data_path, show_col_types = FALSE) |>
-  mutate(semaine = as.Date(semaine)) |>
-  arrange(semaine)
-```
+Les données sont fictives; la demande est en unités de produit par semaine. Une ligne commence un lundi et la demande de toute la semaine n’est connue que le dimanche suivant. Apprentissage : 91 semaines, dernière commençant le 22 septembre 2025. Origine : fin du 28 septembre. Validation : 13 semaines commençant le 29 septembre et se terminant le 28 décembre. Ces données et cette validation sont déjà connues des modules 06 et 07; aucun nouveau test final indépendant n’est créé.
 
-## Étape 1 - Auditer le temps
+## 1. Auditer et situer
 
-``` r
-demande |>
-  summarise(
-    debut = min(semaine),
-    fin = max(semaine),
-    semaines = n(),
-    dates_uniques = n_distinct(semaine),
-    valeurs_manquantes = sum(is.na(demande))
-  )
-```
-
-    # A tibble: 1 × 5
-      debut      fin        semaines dates_uniques valeurs_manquantes
-      <date>     <date>        <int>         <int>              <int>
-    1 2024-01-01 2025-12-22      104           104                  0
+Énoncez la cible, l’unité, le calendrier, l’origine et les 13 semaines de validation. Vérifiez dates distinctes, régularité et valeurs manquantes.
 
 > **TIP:**
 >
-> Écrivez l’unité d’observation, la fréquence, la période, la cible et l’horizon.
+> Comptez les lignes, dates distinctes, manquants et écarts entre dates triées. Une différence de sept jours et l’absence de doublon vérifient le calendrier ici. Précisez ce que représente le lundi, la fin de la dernière semaine d’apprentissage et la date de la première cible.
 
-## Étape 2 - Explorer
+## 2. Explorer le passé
 
-``` r
-ggplot(demande, aes(semaine, demande)) +
-  geom_line(colour = "#0B4F6C") +
-  geom_point(aes(shape = promotion), size = 1.5) +
-  labs(title = "Demande hebdomadaire fictive", x = NULL, y = "Unités", shape = "Promotion") +
-  theme_minimal(base_size = 12)
-```
-
-![](guide-atelier_files/figure-html/unnamed-chunk-2-1.png)
+Tracez la demande d’apprentissage, décrivez une tendance ou un motif possible et distinguez les promotions observées des informations futures.
 
 > **TIP:**
 >
-> Décrivez un motif stable, un motif incertain et une limite du graphique.
-
-## Étape 3 - Geler la période de validation
-
-Les treize dernières semaines reprennent le cas de transfert du module 06. Elles servent à comparer les méthodes annoncées ci-dessous. Les paramètres sont estimés sur les semaines précédentes; les scores obtenus ne constituent pas un test final indépendant du choix de méthode.
-
-``` r
-horizon <- 13
-entrainement <- demande |> slice_head(n = nrow(demande) - horizon)
-test <- demande |> slice_tail(n = horizon)
-```
-
-Notez explicitement la dernière date d’entraînement et la première date de validation.
-
-## Étape 4 - Construire les références
-
-La [capsule 2 du module 07](../../modules/semaine-07-lissage/capsules.llms.md#holt) explique Holt : un niveau, une pente et, ici, un amortissement de la pente. Cette méthode complète les références naïves et le lissage simple; elle n’intègre pas explicitement la saisonnalité.
-
-``` r
-serie <- ts(entrainement$demande, frequency = 52)
-prevision_holt <- holt(serie, h = horizon, damped = TRUE, level = c(80, 95))
-
-previsions <- test |>
-  transmute(
-    semaine,
-    observe = demande,
-    naive = tail(entrainement$demande, 1),
-    saison_naive = as.numeric(snaive(serie, h = horizon)$mean),
-    moyenne_4 = mean(tail(entrainement$demande, 4)),
-    SES = as.numeric(ses(serie, h = horizon)$mean),
-    Holt = as.numeric(prevision_holt$mean)
-  )
-```
-
-## Étape 5 - Comparer
-
-``` r
-evaluation <- previsions |>
-  pivot_longer(naive:Holt, names_to = "methode", values_to = "prevision") |>
-  mutate(erreur = observe - prevision)
-
-tableau_mesures <- evaluation |>
-  group_by(methode) |>
-  summarise(
-    MAE = mean(abs(erreur)),
-    RMSE = sqrt(mean(erreur^2)),
-    biais = mean(erreur),
-    erreur_max = max(abs(erreur)),
-    .groups = "drop"
-  ) |>
-  arrange(MAE)
-
-tableau_mesures
-```
-
-    # A tibble: 5 × 5
-      methode        MAE  RMSE biais erreur_max
-      <chr>        <dbl> <dbl> <dbl>      <dbl>
-    1 moyenne_4     100.  128.  82.6       264.
-    2 SES           114.  144. 106.        287.
-    3 Holt          152.  189. 152.        354.
-    4 saison_naive  179.  194. 143.        298
-    5 naive         185.  209. 185.        366
-
-``` r
-evaluation |>
-  ggplot(aes(semaine)) +
-  geom_line(aes(y = observe), colour = "black", linewidth = 1) +
-  geom_line(aes(y = prevision, colour = methode), linewidth = 0.8) +
-  labs(title = "Comparaison sur la période de validation", x = NULL, y = "Demande", colour = "Méthode") +
-  theme_minimal(base_size = 12)
-```
-
-![](guide-atelier_files/figure-html/unnamed-chunk-6-1.png)
-
-> **TIP:**
->
-> Choisissez une méthode et citez au moins deux mesures. Expliquez une raison de ne pas suivre aveuglément le classement.
-
-## Étape 5b - Rendre l’incertitude visible
-
-``` r
-tibble(
-  semaine = test$semaine,
-  prevision = as.numeric(prevision_holt$mean),
-  borne_80_inf = prevision_holt$lower[, "80%"],
-  borne_80_sup = prevision_holt$upper[, "80%"],
-  borne_95_inf = prevision_holt$lower[, "95%"],
-  borne_95_sup = prevision_holt$upper[, "95%"]
-) |>
-  mutate(across(where(is.numeric), ~ round(.x))) |>
-  knitr::kable()
-```
-
-| semaine    | prevision | borne_80_inf | borne_80_sup | borne_95_inf | borne_95_sup |
-|:-----------|----------:|-------------:|-------------:|-------------:|-------------:|
-| 2025-09-29 |      1280 |         1160 |         1401 |         1096 |         1464 |
-| 2025-10-06 |      1272 |         1148 |         1395 |         1082 |         1461 |
-| 2025-10-13 |      1264 |         1136 |         1392 |         1068 |         1460 |
-| 2025-10-20 |      1257 |         1123 |         1390 |         1053 |         1461 |
-| 2025-10-27 |      1251 |         1111 |         1390 |         1037 |         1464 |
-| 2025-11-03 |      1245 |         1099 |         1392 |         1021 |         1469 |
-| 2025-11-10 |      1240 |         1086 |         1394 |         1005 |         1476 |
-| 2025-11-17 |      1236 |         1074 |         1398 |          989 |         1483 |
-| 2025-11-24 |      1232 |         1062 |         1402 |          972 |         1492 |
-| 2025-12-01 |      1229 |         1050 |         1407 |          956 |         1501 |
-| 2025-12-08 |      1226 |         1039 |         1412 |          940 |         1511 |
-| 2025-12-15 |      1223 |         1027 |         1418 |          924 |         1522 |
-| 2025-12-22 |      1220 |         1016 |         1424 |          908 |         1532 |
+> Tracez les 91 semaines d’apprentissage avec leurs unités. Les promotions connues sur cet historique peuvent être indiquées, sans attribuer automatiquement un effet causal. Le prix et les promotions de validation ne sont pas des prédicteurs disponibles à l’origine.
 
 > **NOTE:**
 >
-> La prévision centrale sert à planifier, tandis que les intervalles décrivent des plages plausibles sous les hypothèses du modèle de Holt. Un intervalle à 95 % est plus large qu’un intervalle à 80 %. Ces bandes ne corrigent pas une rupture structurelle ou une promotion future inconnue.
+> Montrez la cible, l’origine, le calendrier et le graphique d’apprentissage. Expliquez ce que vous savez déjà sur les cinq candidats et ce qu’une tendance linéaire ajoute. Corrigez une ambiguïté avant la comparaison.
 
-## Étape 6 - Traduire en décision
+## 3. Émettre cinq prévisions
 
-Supposez qu’une unité sous-prévue coûte 18 dollars en urgence et qu’une unité sur-prévue coûte 5 dollars en stockage.
+Émettez à la même origine les cinq prévisions : naïve, moyenne des quatre dernières semaines, SES, naïve saisonnière et tendance linéaire.
 
-``` r
-couts <- evaluation |>
-  mutate(
-    cout = if_else(erreur > 0, 18 * erreur, 5 * abs(erreur))
-  ) |>
-  group_by(methode) |>
-  summarise(cout_total = sum(cout), .groups = "drop") |>
-  arrange(cout_total)
+| Méthode | Règle ou apport |
+|----|----|
+| Naïve | Répéter la dernière demande connue |
+| MM4 | Répéter la moyenne des quatre dernières semaines connues |
+| SES | Estimer le niveau et son initialisation sur l’apprentissage |
+| Naïve saisonnière | Répéter les semaines correspondantes à retard 52 |
+| Tendance linéaire | Ajuster une droite à l’indice 1 à 91, puis prévoir les indices 92 à 104 |
 
-couts
-```
-
-    # A tibble: 5 × 2
-      methode      cout_total
-      <chr>             <dbl>
-    1 moyenne_4        21944.
-    2 SES              25997.
-    3 Holt             35578.
-    4 saison_naive     38780
-    5 naive            43254
-
-> **IMPORTANT:**
+> **TIP:**
 >
-> Votre recommandation doit nommer la méthode, la preuve de validation, le coût simulé, une limite et le moment où la méthode sera réévaluée.
+> Construisez un calendrier futur avec `seq.Date()` et un indice continu. `mean(tail(..., 4))` est répété aux treize horizons. `ses()` estime le paramètre et l’état initial sur la série d’apprentissage; `snaive()` utilise la fréquence 52 comme retard. `lm(demande ~ indice)` et `predict(..., newdata = futur)` fournissent la tendance. La fréquence 52 ne rend pas le SES saisonnier.
 
-## Point de contrôle du mini-rapport 2
+Vous pouvez reprendre les quatre prévisions déjà produites au module 07 en vérifiant leur origine et leurs cibles. Ajoutez la tendance au même tableau.
 
-Apportez la proposition de données validée et votre protocole. Pour la voie temporelle, précisez l’origine, l’horizon, les références et le bloc de validation. Pour la voie classification, préparez le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) : cible binaire, classe positive, séparation des données, probabilités, deux seuils et critère de décision.
+La tendance seule n’est pas un modèle saisonnier. Le module 08 montre aussi des indicatrices mensuelles; ici, 91 semaines offrent moins de deux cycles de 52 semaines. Il n’est pas demandé d’estimer 52 effets hebdomadaires pour accomplir la mission.
 
-Le contrôle porte sur votre analyse autonome. Les résultats du cas de demande du laboratoire servent à l’entraînement et ne remplacent pas les résultats du mini-rapport.
+## 4. Comparer et lire l’incertitude
 
-## Vérification finale
+Comparez ME, MAE et RMSE, tracez les erreurs ou les prévisions et interprétez les intervalles à 80 % et 95 % du SES.
 
-Le fichier se rend en HTML.
+> **TIP:**
+>
+> Joignez les observations seulement après avoir construit les prévisions. Avec `erreur = observe - prevision`, la ME positive indique une sous-prévision moyenne. La MAE vaut `mean(abs(erreur))`; la RMSE vaut `sqrt(mean(erreur^2))`. Les trois sont en unités de produit. Comparez aussi les trajectoires, pas seulement leur rang.
+>
+> Les colonnes `lower` et `upper` de `ses(..., level = c(80, 95))` donnent deux intervalles de prédiction pour le SES, conditionnels aux hypothèses de son modèle. L’intervalle à 95 % est plus large que celui à 80 % pour le même horizon. Ce ne sont pas automatiquement les intervalles d’une autre méthode.
 
-Les dates et unités sont explicites.
+La validation sert à comparer et à choisir parmi les cinq candidats. Elle ne prouve pas la performance future et ne devient pas indépendante parce qu’on ajoute une méthode. L’ajout de la tendance modifie la liste des candidats utilisée au module 07; il peut donc modifier le classement.
 
-La période de validation n’a pas servi à l’ajustement.
+## 5. Décider et surveiller
 
-La méthode saisonnière naïve est incluse comme référence.
+Calculez les coûts fictifs, justifiez une méthode et rédigez une recommandation avec une limite et une prochaine vérification.
 
-Le graphique et le tableau racontent la même histoire.
+Le scénario pédagogique initial attribue un coût fictif de 18 \$ par unité sous-prévue et de 5 \$ par unité sur-prévue. Ces valeurs ne sont pas des tarifs mesurés. Calculez le coût sur les mêmes treize semaines pour les cinq méthodes.
 
-L’incertitude d’une méthode est montrée par des intervalles de prévision.
+> **TIP:**
+>
+> Pour `erreur = observe - prevision`, le coût hebdomadaire fictif est `18 * pmax(erreur, 0) + 5 * pmax(-erreur, 0)`. Additionnez les treize valeurs par méthode. Distinguez la méthode que vous retenez, les intervalles du SES, les limites du scénario et les informations de stock manquantes.
 
-La recommandation tient compte du coût asymétrique.
+Une prévision et un coût illustratif ne déterminent pas à eux seuls une commande ou un stock optimal. Il faudrait notamment connaître stock initial, délais, capacité, disponibilité et coûts réels. Proposez une surveillance aux prochaines origines et une action si les erreurs changent.
+
+## Rapport et relecture
+
+Dans `rapport-labo-03.qmd`, rassemblez la question et le protocole, les contrôles et le graphique, les cinq prévisions, les mesures et les coûts, l’intervalle identifié, la recommandation et un court bilan de rétroaction. Gardez les résultats lisibles et le code nécessaire à leur reproduction.
+
+| Critère | Pour vérifier |
+|----|----|
+| Calendrier | Cible, unités, origine, horizon et distinction début/fin de semaine |
+| Comparaison | Cinq prévisions sur les mêmes cibles, sans information future |
+| Interprétation | ME, MAE, RMSE et coût expliqués dans leurs unités |
+| Incertitude et décision | Méthode de l’intervalle nommée, hypothèses, limite et suivi |
+| Reproductibilité | Le rapport se rend en session neuve, avec les fichiers fournis |
+
+Avant le rendu final, une autre personne indique un point réussi et une amélioration précise. Corrigez ou justifiez votre choix et notez l’aide utilisée. Redémarrez R, faites Render et vérifiez le HTML. Conservez le dossier complet.
+
+## Point de contrôle et compléments
+
+Le point de contrôle porte sur votre projet autonome de [mini-rapport 2](../../evaluations/mini-rapport-2.llms.md). Pour la voie temporelle, apportez cible, origine, horizon et validation; pour la voie classification, reprenez le [parcours anticipé](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe). Les consignes de l’évaluation restent la référence.
+
+Si vous avez terminé, examinez [Holt et ses intervalles](../../modules/atelier-03-series-chronologiques/demonstrations.llms.md#holt), puis les [exercices mensuels](../../modules/atelier-03-series-chronologiques/exercices.llms.md). Le [cahier du module 07](../../modules/semaine-07-lissage/complements.llms.md) conserve ETS, Holt-Winters, BATS, TBATS et STL avec ETS; celui du [module 08](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres formes et décompositions. Ces compléments sont facultatifs.

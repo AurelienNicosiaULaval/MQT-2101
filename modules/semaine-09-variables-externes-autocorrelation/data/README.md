@@ -4,3 +4,4 @@
 
 Chaque ligne représente un mois. Les données comportent une dépendance temporelle simulée afin de soutenir le diagnostic d'autocorrélation. Elles sont générées par `scripts/10_create_second_block_data.R`, ne représentent aucune organisation réelle et peuvent être redistribuées avec le matériel du cours.
 
+Le transfert utilise `cas_integrateur_quebec.csv`, également simulé. Voir [dictionnaires.md](dictionnaires.md) pour les unités, les dépendances et la reproduction locale.

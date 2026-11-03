@@ -6872,6 +6872,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7052,13 +7083,16 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
-  <li><a href="#exercice-1---définir-le-problème" id="toc-exercice-1---définir-le-problème" class="nav-link" data-scroll-target="#exercice-1---définir-le-problème">Exercice 1 - Définir le problème</a></li>
-  <li><a href="#exercice-2---probabilités-et-coefficients" id="toc-exercice-2---probabilités-et-coefficients" class="nav-link" data-scroll-target="#exercice-2---probabilités-et-coefficients">Exercice 2 - Probabilités et coefficients</a></li>
-  <li><a href="#exercice-3---deux-seuils" id="toc-exercice-3---deux-seuils" class="nav-link" data-scroll-target="#exercice-3---deux-seuils">Exercice 3 - Deux seuils</a></li>
-  <li><a href="#exercice-4---règle-de-capacité" id="toc-exercice-4---règle-de-capacité" class="nav-link" data-scroll-target="#exercice-4---règle-de-capacité">Exercice 4 - Règle de capacité</a></li>
-  <li><a href="#exercice-de-synthèse" id="toc-exercice-de-synthèse" class="nav-link" data-scroll-target="#exercice-de-synthèse">Exercice de synthèse</a></li>
+  <ul class="collapse">
+  <li><a href="#preparation" id="toc-preparation" class="nav-link active" data-scroll-target="#preparation">Préparation</a></li>
+  <li><a href="#exercice-1" id="toc-exercice-1" class="nav-link" data-scroll-target="#exercice-1">Exercice 1 - Définir le problème</a></li>
+  <li><a href="#exercice-2" id="toc-exercice-2" class="nav-link" data-scroll-target="#exercice-2">Exercice 2 - Comparer deux profils</a></li>
+  <li><a href="#exercice-3" id="toc-exercice-3" class="nav-link" data-scroll-target="#exercice-3">Exercice 3 - Choisir un seuil</a></li>
+  <li><a href="#exercice-4" id="toc-exercice-4" class="nav-link" data-scroll-target="#exercice-4">Exercice 4 - Évaluer et vérifier la capacité</a></li>
+  <li><a href="#exercice-5" id="toc-exercice-5" class="nav-link" data-scroll-target="#exercice-5">Exercice 5 - Recommandation</a></li>
+  <li><a href="#exercice-6" id="toc-exercice-6" class="nav-link" data-scroll-target="#exercice-6">Exercice 6 - Cotes et probabilités</a></li>
+  <li><a href="#exercice-7" id="toc-exercice-7" class="nav-link" data-scroll-target="#exercice-7">Exercice 7 - Mesure indéfinie</a></li>
+  <li><a href="#exercice-8" id="toc-exercice-8" class="nav-link" data-scroll-target="#exercice-8">Exercice 8 - Fuite et disponibilité</a></li>
   </ul>
 </nav>
     </div>
@@ -7084,134 +7118,278 @@ display: none;
 </header>
 
 
-<section id="préparation" class="level2">
-<h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
-<p>Les capsules classent des clients selon leur risque de départ. Le cas de transfert classe plutôt des mois de succursale selon le risque de service insuffisant le mois suivant.</p>
-<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#cas_integrateur_quebec">cas_integrateur_quebec.csv</a>.</p>
+<p>Le transfert traite d’une intervention en succursale, différente du ciblage de clients. Essayez les cinq exercices suivis avant d’ouvrir les corrigés; les exercices 6 à 8 sont des pratiques supplémentaires. Les étiquettes et coûts sont simulés.</p>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Préparation</h2>
+<p>Les conditions du mois courant sont supposées connues à la décision. Les mois de décembre 2023 et décembre 2024 sont écartés afin que les étiquettes à horizon d’un mois soient disponibles avant la période suivante.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;../atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span>)) {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;../atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>service <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  data_path,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">as.Date</span>(date),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">cible =</span> service_insuffisant_mois_suivant</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date, succursale)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>))</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>racines <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;.&quot;</span>, <span class="st">&quot;modules/semaine-10-classification-modeles-avances&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>racine <span class="ot">&lt;-</span> racines[<span class="fu">file.exists</span>(<span class="fu">file.path</span>(racines, <span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span>))][<span class="dv">1</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">is.na</span>(racine))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>service <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(racine, <span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date), <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">cible =</span> service_insuffisant_mois_suivant) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(date, succursale)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(service) <span class="sc">==</span> <span class="dv">288</span>, <span class="sc">!</span><span class="fu">anyDuplicated</span>(service[<span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;succursale&quot;</span>)]),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(service<span class="sc">$</span>cible <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>apprentissage_service <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2023-11-01&quot;</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>validation_service <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2024-01-01&quot;</span>), date <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2024-11-01&quot;</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>test_service <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="exercice-1---définir-le-problème" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-1---définir-le-problème">Exercice 1 - Définir le problème</h2>
-<p>Définissez précisément :</p>
-<ul>
-<li>l’unité d’observation;</li>
-<li>la classe positive;</li>
-<li>la date à laquelle les variables explicatives sont mesurées;</li>
-<li>l’horizon de la cible;</li>
-<li>le coût opérationnel d’un faux négatif;</li>
-<li>le coût d’un faux positif.</li>
-</ul>
-<p>Expliquez pourquoi l’intitulé « succursale à risque » serait trop vague.</p>
-</section>
-<section id="exercice-2---probabilités-et-coefficients" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-2---probabilités-et-coefficients">Exercice 2 - Probabilités et coefficients</h2>
-<p>Ajustez une régression logistique avec des mesures du mois courant, puis comparez deux profils qui diffèrent seulement par le nombre de ruptures de stock.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>modele_service <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  cible <span class="sc">~</span> taux_utilisation <span class="sc">+</span> ruptures_stock <span class="sc">+</span> temps_attente <span class="sc">+</span> satisfaction,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> entrainement,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>profils <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">taux_utilisation =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.90</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ruptures_stock =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">temps_attente =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">satisfaction =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">7</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>profils <span class="sc">|&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">probabilite_predite =</span> <span class="fu">predict</span>(</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      modele_service,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">newdata =</span> profils,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">&quot;response&quot;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mesures_seuil <span class="ot">&lt;-</span> <span class="cf">function</span>(observe, probabilite, seuil, <span class="at">cout_fp =</span> <span class="dv">1</span>, <span class="at">cout_fn =</span> <span class="dv">4</span>) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">length</span>(observe) <span class="sc">==</span> <span class="fu">length</span>(probabilite), <span class="fu">all</span>(observe <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all</span>(<span class="fu">is.finite</span>(probabilite)), <span class="fu">all</span>(probabilite <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> probabilite <span class="sc">&lt;=</span> <span class="dv">1</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  predit <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(probabilite <span class="sc">&gt;=</span> seuil)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  vp <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">1</span>); fp <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  vn <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">0</span>); fn <span class="ot">&lt;-</span> <span class="fu">sum</span>(predit <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> observe <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ratio <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) <span class="cf">if</span> (b <span class="sc">==</span> <span class="dv">0</span>) <span class="cn">NA_real_</span> <span class="cf">else</span> a <span class="sc">/</span> b</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(seuil, <span class="at">VP =</span> vp, <span class="at">FP =</span> fp, <span class="at">VN =</span> vn, <span class="at">FN =</span> fn,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">exactitude =</span> <span class="fu">ratio</span>(vp <span class="sc">+</span> vn, <span class="fu">length</span>(observe)), <span class="at">sensibilite =</span> <span class="fu">ratio</span>(vp, vp <span class="sc">+</span> fn),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">specificite =</span> <span class="fu">ratio</span>(vn, vn <span class="sc">+</span> fp), <span class="at">precision =</span> <span class="fu">ratio</span>(vp, vp <span class="sc">+</span> fp),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">proportion_ciblee =</span> <span class="fu">ratio</span>(vp <span class="sc">+</span> fp, <span class="fu">length</span>(observe)), <span class="at">cout =</span> cout_fp <span class="sc">*</span> fp <span class="sc">+</span> cout_fn <span class="sc">*</span> fn)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Interprétez la différence comme une comparaison conditionnelle au modèle, sans la présenter comme une certitude individuelle ni comme un effet causal.</p>
 </section>
-<section id="exercice-3---deux-seuils" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-3---deux-seuils">Exercice 3 - Deux seuils</h2>
-<p>Comparez les seuils 0,25 et 0,50 sur l’année 2025.</p>
+<section id="exercice-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-1">Exercice 1 - Définir le problème</h2>
+<p>Définissez l’unité, la classe positive, le moment des variables, l’horizon et les deux erreurs. Pourquoi « succursale à risque » est-il trop vague?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 1">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>L’unité est un mois-succursale. La classe positive est le service insuffisant simulé le mois suivant. Les conditions du mois courant sont supposées connues à la décision. Un faux négatif manque une situation positive; un faux positif déclenche une intervention inutile. L’étiquette est simulée, non une observation reconstituée du mois suivant.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-2">Exercice 2 - Comparer deux profils</h2>
+<p>Ajustez une régression sur l’apprentissage et comparez deux profils ne différant que par les ruptures de stock. Interprétez prudemment.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mesures_seuil <span class="ot">&lt;-</span> <span class="cf">function</span>(observe, probabilite, seuil) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  predit <span class="ot">&lt;-</span> <span class="fu">if_else</span>(probabilite <span class="sc">&gt;=</span> seuil, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  vp <span class="ot">&lt;-</span> <span class="fu">sum</span>(observe <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> predit <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  vn <span class="ot">&lt;-</span> <span class="fu">sum</span>(observe <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> predit <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  fp <span class="ot">&lt;-</span> <span class="fu">sum</span>(observe <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> predit <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  fn <span class="ot">&lt;-</span> <span class="fu">sum</span>(observe <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> predit <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">seuil =</span> seuil,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sensibilite =</span> vp <span class="sc">/</span> (vp <span class="sc">+</span> fn),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">specificite =</span> vn <span class="sc">/</span> (vn <span class="sc">+</span> fp),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">precision =</span> vp <span class="sc">/</span> (vp <span class="sc">+</span> fp),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">proportion_ciblee =</span> <span class="fu">mean</span>(predit <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">faux_negatifs =</span> fn,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">faux_positifs =</span> fp</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>evaluation <span class="ot">&lt;-</span> test <span class="sc">|&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">probabilite =</span> <span class="fu">predict</span>(</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>      modele_service,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">newdata =</span> test,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">&quot;response&quot;</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mesures_seuil</span>(evaluation<span class="sc">$</span>cible, evaluation<span class="sc">$</span>probabilite, <span class="fl">0.25</span>),</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mesures_seuil</span>(evaluation<span class="sc">$</span>cible, evaluation<span class="sc">$</span>probabilite, <span class="fl">0.50</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modele_service <span class="ot">&lt;-</span> <span class="fu">glm</span>(cible <span class="sc">~</span> taux_utilisation <span class="sc">+</span> ruptures_stock <span class="sc">+</span> temps_attente <span class="sc">+</span> satisfaction,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> apprentissage_service, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(modele_service<span class="sc">$</span>converged, <span class="fu">all</span>(<span class="fu">is.finite</span>(<span class="fu">coef</span>(modele_service))))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>profils_service <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">taux_utilisation =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.90</span>), <span class="at">ruptures_stock =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">temps_attente =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>), <span class="at">satisfaction =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>profils_service <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">probabilite =</span> <span class="fu">predict</span>(modele_service, <span class="at">newdata =</span> profils_service, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  taux_utilisation ruptures_stock temps_attente satisfaction probabilite
+             &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+1              0.9              0             5            7       0.296
+2              0.9              5             5            7       0.335</code></pre>
 </div>
-<p>Choisissez un seuil lorsque manquer un mois de service insuffisant coûte quatre fois plus cher qu’une intervention inutile.</p>
+</div>
+<p>Ces probabilités dépendent des conditions fixées et du modèle. Elles ne sont ni des certitudes ni la preuve qu’une rupture cause un futur service insuffisant. Vérifiez aussi si les profils sont plausibles.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="exercice-4---règle-de-capacité" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-4---règle-de-capacité">Exercice 4 - Règle de capacité</h2>
-<p>L’équipe peut intervenir dans deux succursales par mois. Construisez une règle qui retient les deux probabilités les plus élevées à chaque date.</p>
+<section id="exercice-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-3">Exercice 3 - Choisir un seuil</h2>
+<p>En validation, comparez les seuils 0,25 et 0,50 avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Choisissez le coût le plus faible; en cas d’égalité retenez 0,25.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 3">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ciblage_capacite <span class="ot">&lt;-</span> evaluation <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(probabilite, <span class="at">n =</span> <span class="dv">2</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, succursale, probabilite, cible)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ciblage_capacite</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>validation_service <span class="ot">&lt;-</span> validation_service <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">probabilite =</span> <span class="fu">predict</span>(modele_service, <span class="at">newdata =</span> validation_service, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>comparaison_service <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="fu">mesures_seuil</span>(validation_service<span class="sc">$</span>cible, validation_service<span class="sc">$</span>probabilite, <span class="fl">0.25</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">mesures_seuil</span>(validation_service<span class="sc">$</span>cible, validation_service<span class="sc">$</span>probabilite, <span class="fl">0.50</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>comparaison_service <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, VP, FP, VN, FN, cout)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  seuil    VP    FP    VN    FN  cout
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1  0.25     4     9    25     6    33
+2  0.5      2     3    31     8    35</code></pre>
 </div>
-<p>Comparez cette règle au seuil choisi dans l’exercice 3. Vérifiez si une succursale est systématiquement priorisée et proposez une surveillance de cette concentration.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>comparaison_service <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, sensibilite, specificite, precision, proportion_ciblee)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  seuil sensibilite specificite precision proportion_ciblee
+  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
+1  0.25         0.4       0.735     0.308             0.295
+2  0.5          0.2       0.912     0.4               0.114</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>seuil_service <span class="ot">&lt;-</span> comparaison_service <span class="sc">|&gt;</span> <span class="fu">arrange</span>(cout, seuil) <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(seuil)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>seuil_service</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.25</code></pre>
+</div>
+</div>
+<p>Le seuil est choisi avant consultation du test. Les coûts sont des hypothèses de travail et les mesures en validation servent au choix; elles ne sont pas un test final indépendant.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="exercice-de-synthèse" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-de-synthèse">Exercice de synthèse</h2>
-<p>Rédigez une recommandation de huit lignes maximum. Elle doit nommer la cible et l’horizon, choisir entre seuil et capacité, rapporter les deux types d’erreur, indiquer le coût prioritaire et prévoir une vérification de stabilité entre les succursales.</p>
+<section id="exercice-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-4">Exercice 4 - Évaluer et vérifier la capacité</h2>
+<p>Sur 2025, appliquez le seuil choisi. Calculez aussi, comme règle alternative fixée à l’avance, le ciblage des deux probabilités les plus élevées par mois et la répartition entre succursales.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 4">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>test_service <span class="ot">&lt;-</span> test_service <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">probabilite =</span> <span class="fu">predict</span>(modele_service, <span class="at">newdata =</span> test_service, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>resultat_service <span class="ot">&lt;-</span> <span class="fu">mesures_seuil</span>(test_service<span class="sc">$</span>cible, test_service<span class="sc">$</span>probabilite, seuil_service)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>resultat_service <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, VP, FP, VN, FN, cout)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  seuil    VP    FP    VN    FN  cout
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1  0.25     6    16    24     2    24</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>resultat_service <span class="sc">|&gt;</span> <span class="fu">select</span>(seuil, sensibilite, specificite, precision, proportion_ciblee)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  seuil sensibilite specificite precision proportion_ciblee
+  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
+1  0.25        0.75         0.6     0.273             0.458</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Règle fixée à l’avance : deux interventions au plus par mois.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>selection_service <span class="ot">&lt;-</span> test_service <span class="sc">|&gt;</span> <span class="fu">group_by</span>(date) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(probabilite), succursale, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> <span class="fu">ungroup</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>selection_service <span class="sc">|&gt;</span> <span class="fu">count</span>(succursale, <span class="at">name =</span> <span class="st">&quot;mois_cibles&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  succursale mois_cibles
+  &lt;fct&gt;            &lt;int&gt;
+1 Gatineau            10
+2 Montréal             3
+3 Québec               4
+4 Sherbrooke           7</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>selection_service <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">cibles =</span> <span class="fu">n</span>(), <span class="at">positifs_detectes =</span> <span class="fu">sum</span>(cible), <span class="at">precision =</span> <span class="fu">mean</span>(cible))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  cibles positifs_detectes precision
+   &lt;int&gt;             &lt;dbl&gt;     &lt;dbl&gt;
+1     24                 6      0.25</code></pre>
+</div>
+</div>
+<p>La règle de capacité n’est pas identique à un seuil fixe. Les égalités sont départagées par le nom de succursale. La comparaison est descriptive sur ce test : une sélection supplémentaire à partir de ce même test nécessiterait une nouvelle évaluation indépendante.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-5">Exercice 5 - Recommandation</h2>
+<p>Rédigez une recommandation courte avec la cible, l’horizon, les erreurs, une limite de l’étiquette simulée et un suivi de la concentration du ciblage.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 5">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Rapportez les résultats effectivement calculés et les coûts supposés. Précisez que la cible est une étiquette simulée et que les lignes d’une même succursale se suivent dans le temps. Surveillez la répartition, puis vérifiez la règle sur une période ultérieure et des données réelles appropriées.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-6">Exercice 6 - Cotes et probabilités</h2>
+<p>Si une probabilité vaut 0,20 et que la cote est multipliée par 2, quelle est la nouvelle probabilité?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 6">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 6
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La cote initiale vaut 0,20 / 0,80 = 0,25. Après multiplication : 0,50. La probabilité correspondante vaut 0,50 / 1,50 = 1/3, environ 0,333; elle n’est pas égale à 0,40.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-7" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-7">Exercice 7 - Mesure indéfinie</h2>
+<p>Aucun client n’est ciblé. Quelle est la précision de la règle?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 7">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 7
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La précision VP / (VP + FP) a un dénominateur nul. Elle est indéfinie; le code retourne <code>NA</code>, pas 0. Les autres mesures ne sont calculables que si leur dénominateur est non nul.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-8" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-8">Exercice 8 - Fuite et disponibilité</h2>
+<p>Une variable « nombre de plaintes après le départ » améliore la performance historique. Peut-on l’utiliser pour cibler avant le départ?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 8">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 8
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Non : elle est connue après l’événement à prédire. Sa présence crée une fuite de cible. Il faut utiliser les informations réellement disponibles à l’origine et vérifier les dates de collecte.</p>
+</div>
+</div>
+</div>
 
 
 </section>

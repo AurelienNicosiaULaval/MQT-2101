@@ -1,122 +1,211 @@
 ---
 title: "Capsules - Module 08"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module08-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-## Capsule 1 - Distinguer tendance et saisonnalité
+## Le parcours principal
+
+Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](lectures.qmd), la [démonstration complète](demonstrations.qmd) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
+
+Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](complements.qmd), sans nouvelle production obligatoire.
+
+
+## Capsule 1 - Lire le temps et les motifs {#capsule-1}
+
+La hausse vient-elle du temps ou du calendrier? Consultez la [lecture 1](lectures.qmd#lecture-1) et la [démonstration associée](demonstrations.qmd#exploration).
 
 ::: {.panel-tabset}
-### Objectif
 
-::: {.callout-note title="Objectif de la capsule"}
-Annoter une tendance et un motif mensuel sur un graphique.
+### PDF
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-01-support.pdf" title="PDF - Capsule 1" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-01-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-01-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### HTML
+
+```{=html}
+<div class="video-embed html-slides"><iframe data-support-src="media/qmd/capsule-01-support.html" title="Support HTML - Capsule 1" loading="lazy" allow="clipboard-write" allowfullscreen></iframe></div>
+<p class="resource-fallback"><a href="media/qmd/capsule-01-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
 :::
 
-### Deck de capsule
+Production guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.html)
+Auto-vérification:
 
-### Support écrit
+- J’ai limité l’exploration à 2020 à 2024.
+- Mes axes indiquent les mois et les dollars canadiens.
+- Je distingue tendance, répétition et explication causale.
 
-La tendance décrit l'évolution de long terme du niveau. La saisonnalité décrit un motif qui revient selon une période connue. Une série peut présenter les deux simultanément.
-
-Une hausse de janvier à décembre au cours d'une seule année ne prouve pas la saisonnalité. Il faut comparer les mêmes mois sur plusieurs années.
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 1](exercices.qmd#exercice-1) dans `tendance_commerce.qmd`, après la [préparation commune](exercices.qmd#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 :::
 
-### Activité 8.1
+## Capsule 2 - Ajuster tendance et mois {#capsule-2}
 
-Pourquoi un graphique regroupant toutes les observations de janvier est-il utile en complément du graphique temporel?
-
-::: {.callout-tip collapse="true" title="Rétroaction"}
-Il permet de comparer janvier d'une année à l'autre et de voir si son niveau relatif est récurrent malgré la tendance générale.
-:::
-
-## Capsule 2 - Coder le calendrier
+Que représente un coefficient de décembre? Consultez la [lecture 2](lectures.qmd#lecture-2) et la [démonstration associée](demonstrations.qmd#calendrier).
 
 ::: {.panel-tabset}
-### Objectif
 
-::: {.callout-note title="Objectif de la capsule"}
-Créer un indice de temps et un facteur mois avec une référence explicite.
+### PDF
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-02-support.pdf" title="PDF - Capsule 2" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-02-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-02-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### HTML
+
+```{=html}
+<div class="video-embed html-slides"><iframe data-support-src="media/qmd/capsule-02-support.html" title="Support HTML - Capsule 2" loading="lazy" allow="clipboard-write" allowfullscreen></iframe></div>
+<p class="resource-fallback"><a href="media/qmd/capsule-02-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
 :::
 
-### Deck de capsule
+Production guidée 8.2, à réaliser une seule fois : Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.html)
+Auto-vérification:
 
-### Support écrit
+- L’indice augmente d’une unité par mois et le facteur n’est pas ordonné.
+- Je précise janvier comme référence et les unités des coefficients.
+- Je distingue comparaison conditionnelle et effet causal.
 
-Une régression saisonnière simple peut utiliser un indice $t=1,2,\ldots,n$ pour la tendance et un facteur pour le mois. Avec janvier comme référence, chaque coefficient mensuel représente une différence moyenne par rapport à janvier, à tendance égale.
-
-La catégorie de référence n'est pas la « meilleure » catégorie. Elle fixe seulement le point de comparaison.
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 2](exercices.qmd#exercice-2) dans `tendance_commerce.qmd`, après la [préparation commune](exercices.qmd#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 :::
 
-### Activité 8.2
+## Capsule 3 - Lire les résidus {#capsule-3}
 
-Si le coefficient de décembre vaut 80 000, formulez une interprétation correcte et prudente.
-
-::: {.callout-tip collapse="true" title="Rétroaction"}
-À indice de temps égal, les ventes prévues en décembre sont en moyenne 80 000 dollars plus élevées qu'en janvier selon ce modèle. Il s'agit d'une différence modélisée, non d'un effet causal du mois.
-:::
-
-## Capsule 3 - Ajuster le modèle
+Qu’est-ce que le modèle laisse encore dans la série? Consultez la [lecture 3](lectures.qmd#lecture-3) et la [démonstration associée](demonstrations.qmd#diagnostic).
 
 ::: {.panel-tabset}
-### Objectif
 
-::: {.callout-note title="Objectif de la capsule"}
-Ajuster `lm(ventes ~ indice_temps + mois_label)` et lire les coefficients utiles.
+### PDF
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-03-support.pdf" title="PDF - Capsule 3" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-03-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-03-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### HTML
+
+```{=html}
+<div class="video-embed html-slides"><iframe data-support-src="media/qmd/capsule-03-support.html" title="Support HTML - Capsule 3" loading="lazy" allow="clipboard-write" allowfullscreen></iframe></div>
+<p class="resource-fallback"><a href="media/qmd/capsule-03-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
 :::
 
-### Deck de capsule
+Production guidée 8.3, à réaliser une seule fois : Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.html)
+Auto-vérification:
 
-### Support écrit
+- Je distingue observation, valeur ajustée et résidu.
+- J’examine le temps et la dispersion au-delà des moyennes.
+- Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.
 
-Le modèle additif suppose que l'écart saisonnier reste approximativement constant lorsque le niveau augmente :
-
-$$
-y_t=\beta_0+\beta_1t+\gamma_{m(t)}+\varepsilon_t.
-$$
-
-Si l'amplitude saisonnière augmente avec le niveau, une transformation logarithmique ou un modèle multiplicatif peut être plus approprié.
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 3](exercices.qmd#exercice-3) dans `tendance_commerce.qmd`, après la [préparation commune](exercices.qmd#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 :::
 
-### Activité 8.3
+## Capsule 4 - Comparer sur une validation commune {#capsule-4}
 
-Quel graphique de résidus pourrait révéler qu'une saisonnalité additive est insuffisante?
-
-::: {.callout-tip collapse="true" title="Rétroaction"}
-Un graphique des résidus dans le temps ou selon les valeurs ajustées montrant une amplitude croissante ou un motif saisonnier restant indique une structure non captée.
-:::
-
-## Capsule 4 - Prévoir et communiquer l'incertitude
+Le calendrier fait-il mieux que reprendre la dernière année? Consultez la [lecture 4](lectures.qmd#lecture-4) et la [démonstration associée](demonstrations.qmd#validation).
 
 ::: {.panel-tabset}
-### Objectif
 
-::: {.callout-note title="Objectif de la capsule"}
-Produire une prévision ponctuelle et un intervalle de prédiction, puis discuter son usage budgétaire.
+### PDF
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-04-support.pdf" title="PDF - Capsule 4" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-04-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-04-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### HTML
+
+```{=html}
+<div class="video-embed html-slides"><iframe data-support-src="media/qmd/capsule-04-support.html" title="Support HTML - Capsule 4" loading="lazy" allow="clipboard-write" allowfullscreen></iframe></div>
+<p class="resource-fallback"><a href="media/qmd/capsule-04-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
 :::
 
-### Deck de capsule
+Production guidée 8.4, à réaliser une seule fois : Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.html)
+Auto-vérification:
 
-### Support écrit
+- Les quatre candidats utilisent les mêmes douze cibles et informations disponibles.
+- Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur.
+- Mon choix repose sur les erreurs de validation et reste provisoire.
 
-La prévision ponctuelle donne une valeur centrale. L'intervalle de prédiction représente une plage plausible pour une future observation selon le modèle et ses hypothèses.
-
-Un budget ne devrait pas être présenté comme certain. Une décision peut utiliser la prévision centrale, un scénario prudent et un scénario de capacité élevée.
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 4](exercices.qmd#exercice-4) dans `tendance_commerce.qmd`, après la [préparation commune](exercices.qmd#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 :::
 
-### Activité 8.4
+## Capsule 5 - Communiquer l’incertitude et la décision {#capsule-5}
 
-Expliquez pourquoi l'intervalle de prédiction est généralement plus large que l'intervalle de confiance de la moyenne.
+Que peut-on annoncer sans promettre le budget futur? Consultez la [lecture 5](lectures.qmd#lecture-5) et la [démonstration associée](demonstrations.qmd#incertitude).
 
-::: {.callout-tip collapse="true" title="Rétroaction"}
-Il tient compte à la fois de l'incertitude sur la moyenne estimée et de la variabilité d'une nouvelle observation individuelle.
+::: {.panel-tabset}
+
+### PDF
+
+```{=html}
+<div class="pdf-viewer"><iframe src="media/pdf/capsule-05-support.pdf" title="PDF - Capsule 5" loading="lazy"></iframe></div>
+<p class="resource-fallback"><a href="media/pdf/capsule-05-support.pdf" target="_blank" rel="noopener">Ouvrir le PDF</a> · <a href="media/pdf/capsule-05-support.pdf" download>Télécharger le PDF</a></p>
+```
+
+### HTML
+
+```{=html}
+<div class="video-embed html-slides"><iframe data-support-src="media/qmd/capsule-05-support.html" title="Support HTML - Capsule 5" loading="lazy" allow="clipboard-write" allowfullscreen></iframe></div>
+<p class="resource-fallback"><a href="media/qmd/capsule-05-support.html" target="_blank" rel="noopener">Ouvrir le support HTML dans un nouvel onglet</a></p>
+```
+
 :::
+
+Production guidée 8.5, à réaliser une seule fois : Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.
+
+Auto-vérification:
+
+- Je distingue moyenne conditionnelle et nouvelle observation.
+- Je lis les intervalles comme marginaux et dépendants des hypothèses.
+- Ma recommandation nomme les unités, une limite et une réévaluation future.
+
+::: {.callout-note title="Exercice d’application distinct"}
+Faites l’[exercice 5](exercices.qmd#exercice-5) dans `tendance_commerce.qmd`, après la [préparation commune](exercices.qmd#preparation). Tentez une réponse avant d’ouvrir le corrigé.
+:::
+
+## Après le parcours: consolider ou approfondir
+
+Le [cahier facultatif](complements.qmd) conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, décomposition, harmoniques, `tslm()`, stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les [exercices commerciaux accompagnés](exercices.qmd#exercice-14) préparent le module 09.
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loadVisibleSupports = () => {
+    document.querySelectorAll(".tab-pane.active iframe[data-support-src]").forEach((iframe) => {
+      if (!iframe.hasAttribute("src")) iframe.src = iframe.dataset.supportSrc;
+    });
+  };
+  document.addEventListener("shown.bs.tab", loadVisibleSupports);
+  loadVisibleSupports();
+});
+</script>
+```

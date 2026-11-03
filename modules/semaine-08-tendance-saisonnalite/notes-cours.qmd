@@ -1,34 +1,249 @@
 ---
-title: "Notes de cours - Tendance et saisonnalité"
+title: "Synthèse - Tendance et saisonnalité"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
 format:
-  html:
+  revealjs:
+    auto-stretch: false
+    css: media/module08-capsules.css
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
 ---
+```{r}
+#| label: preparation-support-m08
+#| include: false
+racines <- c("../..", ".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
+```
+## Pourquoi ça compte
 
-## Tendance
+::: {.question-line}
+Comment distinguer croissance et mois récurrents pour planifier?
+:::
+::: {.note-box}
+Le socle: une tendance linéaire, des mois, une comparaison commune et une décision prudente.
+:::
 
-Une tendance linéaire suppose un changement moyen constant par période. Elle est utile sur une plage limitée, mais extrapoler très loin peut produire des valeurs irréalistes.
+## Objectifs du module
 
-## Saisonnalité
+::: {.keypoints}
+- Lire les motifs dans le passé.
+- Ajuster et interpréter tendance et mois.
+- Diagnostiquer, comparer et communiquer.
+:::
 
-La saisonnalité est associée à une période connue : semaine, mois, trimestre ou jour de la semaine. Le facteur calendrier permet d'estimer un écart pour chaque saison relativement à une référence.
+## Le protocole
 
-## Modèle additif
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+60 mois
+:::
+::: {.label}
+apprentissage de 2020 à 2024
+:::
+:::
+::: {.metric}
+::: {.value}
+12 mois
+:::
+::: {.label}
+validation sur 2025
+:::
+:::
+::: {.metric}
+::: {.value}
+Origine
+:::
+::: {.label}
+fin décembre 2024
+:::
+:::
+::::
 
-$$
-y_t=\beta_0+\beta_1t+\gamma_{m(t)}+\varepsilon_t.
-$$
+## Une formule simple
 
-Le modèle est additif lorsque l'amplitude des effets saisonniers reste approximativement constante. Si l'amplitude augmente avec le niveau, le logarithme transforme souvent une relation multiplicative en relation additive.
+::: {.formula-box}
+$$y_t=\beta_0+\beta_1t+\gamma_{m(t)}+\varepsilon_t.$$
+:::
+::: {.keypoints}
+- Un indice temporel continu.
+- Un facteur mensuel, janvier comme référence.
+- Une pente globale et des écarts en dollars.
+:::
 
-## Prévision
+## Trois modèles, une référence
 
-Pour prévoir, les valeurs futures de l'indice temporel et du calendrier sont connues. On obtient une valeur centrale et un intervalle. L'intervalle de prédiction doit être privilégié lorsqu'on parle d'une future observation.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Tendance
+:::
+::: {.label}
+hausse sans mois
+:::
+:::
+::: {.metric}
+::: {.value}
+Saison
+:::
+::: {.label}
+mois sans hausse
+:::
+:::
+::: {.metric}
+::: {.value}
+Combiné
+:::
+::: {.label}
+hausse et mois, comparés au saisonnier naïf
+:::
+:::
+::::
 
-## Diagnostic
+## Interpréter sans causalité
 
-Les résidus doivent être examinés dans le temps, selon les valeurs ajustées et selon les mois. Un motif persistant signale qu'une structure n'a pas été captée. L'autocorrélation sera approfondie au module 09.
+::: {.keypoints}
+- Pente: dollars par mois à mois égal.
+- Décembre: différence avec janvier à indice égal.
+- Changer la référence réécrit les coefficients, sans changer les prévisions.
+:::
 
-## Décision
+## Examiner les résidus
 
-Un budget saisonnier doit s'appuyer sur une valeur centrale, une plage plausible et un mécanisme de révision. Un modèle n'élimine ni l'incertitude ni le besoin de jugement opérationnel.
+::: {.keypoints}
+- Ordre temporel et dispersion.
+- Les indicatrices imposent des sommes mensuelles nulles.
+- Cette moyenne nulle ne valide pas la saison future.
+:::
+
+## Prévoir avant de mesurer
+
+::: {.keypoints}
+- Les indices futurs continuent de 61 à 72.
+- Le calendrier est connu, les ventes ne le sont pas.
+- Les quatre candidats partagent les mêmes cibles et informations.
+:::
+
+## Lire les scores dans le contexte
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Guidé
+:::
+::: {.label}
+calendrier: MAE ≈ 9 891 $
+:::
+:::
+::: {.metric}
+::: {.value}
+Transfert
+:::
+::: {.label}
+calendrier: MAE ≈ 32 389 $
+:::
+:::
+::: {.metric}
+::: {.value}
+Validation
+:::
+::: {.label}
+choix provisoire, sans test indépendant
+:::
+:::
+::::
+
+## Communiquer les limites
+
+::: {.keypoints}
+- Confiance sur la moyenne, prédiction pour une observation.
+- Intervalles marginaux sous hypothèses.
+- Planification et suivi, sans garantie de budget ou de capacité.
+:::
+
+## À retenir
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Calendrier
+:::
+::: {.label}
+coder explicitement
+:::
+:::
+::: {.metric}
+::: {.value}
+Comparaison
+:::
+::: {.label}
+respecter l’origine
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+chiffrer et limiter la conclusion
+:::
+:::
+::::
+
+## Les deux traces
+
+::: {.lead}
+Rassemblez les activités 8.1 à 8.5 une seule fois dans tendance_ventes.qmd, puis les cinq exercices dans tendance_commerce.qmd.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Mes coefficients et scores ont leurs unités.
+- Je distingue les deux cas et leurs limites.
+- Les rapports se rendent après redémarrage de R.
+:::
+
+## Les compléments restent facultatifs
+
+::: {.keypoints}
+- Formes quadratique et exponentielle: consolidation du module 04.
+- Décomposition et harmoniques: autres représentations des saisons.
+- Stationnarité et KPSS: ouverture avancée.
+- Prix, promotions et autocorrélation: suite au module 09.
+:::
+
+## Références et crédits
+
+::: {.keypoints}
+- Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition.
+- R Core Team: lm, predict.lm et décomposition.
+- Données simulées du cours MQT-2101, Université Laval.
+- Ancien notebook Amtrak consulté: Paolo Landa (2021).
+:::
+::: {.note-box}
+Les références détaillées et les explications françaises sont dans les lectures et le guide séparé. Les anciens documents protégés ne sont pas redistribués.
+:::

@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,14 +7048,18 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#continuité-du-parcours" id="toc-continuité-du-parcours" class="nav-link active" data-scroll-target="#continuité-du-parcours">Continuité du parcours</a></li>
-  <li><a href="#résultat-attendu" id="toc-résultat-attendu" class="nav-link" data-scroll-target="#résultat-attendu">Résultat attendu</a></li>
-  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
-  <li><a href="#parcours" id="toc-parcours" class="nav-link" data-scroll-target="#parcours">Parcours</a></li>
+  <ul class="collapse">
+  <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
+  <li><a href="#avant-de-commencer" id="toc-avant-de-commencer" class="nav-link" data-scroll-target="#avant-de-commencer">Avant de commencer</a></li>
+  <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
+  <li><a href="#pour-préparer-les-évaluations-et-la-suite" id="toc-pour-préparer-les-évaluations-et-la-suite" class="nav-link" data-scroll-target="#pour-préparer-les-évaluations-et-la-suite">Pour préparer les évaluations et la suite</a></li>
+  <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
+  <li><a href="#erreurs-fréquentes" id="toc-erreurs-fréquentes" class="nav-link" data-scroll-target="#erreurs-fréquentes">Erreurs fréquentes</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
-  <li><a href="#lien-avec-lévaluation" id="toc-lien-avec-lévaluation" class="nav-link" data-scroll-target="#lien-avec-lévaluation">Lien avec l’évaluation</a></li>
+  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
   </ul>
 </nav>
     </div>
@@ -7050,67 +7085,136 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi ça compte">
+<div class="learning-hero">
+<p class="hero-kicker">
+Séance autonome
+</p>
+<h2 class="anchored">
+Prévoir avec le temps et le calendrier
+</h2>
+<p>Distinguer la hausse générale des mois récurrents, puis comparer une prévision simple et communiquer son incertitude.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Organisation
+</div>
+<div class="fact-value">
+À votre rythme
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio et Quarto
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Cas guidé
+</div>
+<div class="fact-value">
+Ventes mensuelles fictives au Québec
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Trace finale
+</div>
+<div class="fact-value">
+Deux rapports Quarto courts
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="on-passe-au-concret" class="level2">
+<h2 class="anchored" data-anchor-id="on-passe-au-concret">On passe au concret</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="La question du module">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pourquoi ça compte
+<span class="screen-reader-only">Note</span>La question du module
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une organisation peut croître tout en connaissant des mois systématiquement forts ou faibles. Séparer tendance et saisonnalité aide à établir des budgets réalistes, à planifier la capacité et à ne pas confondre effet du calendrier et performance exceptionnelle.</p>
+<p>Une direction prépare sa planification annuelle. Ses ventes augmentent, mais certains mois sont régulièrement plus forts. Comment tenir compte de ces deux structures sans présenter le budget futur comme certain?</p>
 </div>
 </div>
-<section id="continuité-du-parcours" class="level2">
-<h2 class="anchored" data-anchor-id="continuité-du-parcours">Continuité du parcours</h2>
-<p>Après les méthodes de lissage du module 07, vous cherchez maintenant une structure explicable dans la série. La même séparation apprentissage-validation et les mêmes mesures d’erreur restent nécessaires.</p>
-<p>Les composantes lues au module 06 deviennent ici des termes estimés dans une régression. Le bloc ultérieur sert à comparer les candidats : c’est une validation, après l’apprentissage. Un éventuel test final reste distinct du choix de modèle.</p>
+<p>Le module 06 a appris à lire les composantes et à respecter le temps; le module 07 a construit des niveaux lissés. Ici, la tendance et les mois deviennent des termes d’une régression. Vous apprendrez à ajuster un modèle simple, interpréter ses coefficients, examiner les résidus et le comparer à une référence sur les mêmes cibles.</p>
 </section>
-<section id="résultat-attendu" class="level2">
-<h2 class="anchored" data-anchor-id="résultat-attendu">Résultat attendu</h2>
-<p>À la fin du module, vous pourrez :</p>
-<ul>
-<li>distinguer tendance et saisonnalité;</li>
-<li>représenter une saisonnalité mensuelle;</li>
-<li>ajuster une régression avec tendance et mois;</li>
-<li>interpréter un coefficient saisonnier relativement à un mois de référence;</li>
-<li>produire des prévisions et intervalles pour une période de validation;</li>
-<li>comparer le modèle à une référence saisonnière naïve.</li>
-</ul>
+<section id="avant-de-commencer" class="level2">
+<h2 class="anchored" data-anchor-id="avant-de-commencer">Avant de commencer</h2>
+<p>Préalables: importer un CSV et rendre un document Quarto (module 02), lire une droite, un résidu et un intervalle (modules 03 et 04), définir origine, horizon et validation temporelle (module 06). Reprenez au besoin les <a href="../../modules/semaine-03-regression-lineaire/lectures.html">lectures du module 03</a> et les <a href="../../modules/semaine-06-series-chronologiques-intro/demonstrations.html#references">références temporelles du module 06</a>.</p>
+<p>Téléchargez et décompressez le <a href="telechargements/tendance-ventes.zip">projet guidé tendance-ventes</a> et le <a href="telechargements/tendance-commerce.zip">projet de transfert tendance-commerce</a>. Ouvrez leur <code>.Rproj</code>. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la <a href="../../modules/semaine-08-tendance-saisonnalite/demonstrations.html#preparation">préparation depuis une session neuve</a>, avec <code>tidyverse</code> et <code>broom</code>.</p>
+<p>Les deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à décembre 2025 et des ventes en dollars canadiens. Les 60 premiers mois servent à apprendre; les douze mois de 2025 servent à comparer à l’origine de décembre 2024. Les prédicteurs futurs sont le calendrier connu et un indice qui continue de 61 à 72. Les <a href="data/dictionnaires.md">dictionnaires</a> expliquent les autres variables.</p>
+<section id="ce-quil-faut-apprendre-ici" class="level3">
+<h3 class="anchored" data-anchor-id="ce-quil-faut-apprendre-ici">Ce qu’il faut apprendre ici</h3>
+<p>Le socle porte sur cinq gestes: lire les motifs, ajuster tendance linéaire et mois, lire les résidus, comparer les prévisions et communiquer l’incertitude. Les quatre candidats sont fixés avant les scores: tendance seule, saison seule, tendance avec mois et naïf saisonnier.</p>
+<p>Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. Décomposition détaillée, harmoniques et stationnarité sont des approfondissements; ils ne sont pas nécessaires pour terminer les deux rapports.</p>
 </section>
-<section id="données" class="level2">
-<h2 class="anchored" data-anchor-id="données">Données</h2>
-<p>Le fichier <a href="data/ventes_saisonnieres_quebec.csv"><code>ventes_saisonnieres_quebec.csv</code></a> contient 72 mois de ventes et de budgets fictifs.</p>
 </section>
-<section id="parcours" class="level2">
-<h2 class="anchored" data-anchor-id="parcours">Parcours</h2>
-<ol type="1">
-<li><a href="../../modules/semaine-08-tendance-saisonnalite/capsules.html">Capsules et activités</a></li>
-<li><a href="../../modules/semaine-08-tendance-saisonnalite/notes-cours.html">Notes de cours</a></li>
-<li><a href="../../modules/semaine-08-tendance-saisonnalite/demonstrations.html">Démonstrations R</a></li>
-<li><a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html">Exercices</a></li>
-<li><a href="../../modules/semaine-08-tendance-saisonnalite/lectures.html">Lectures ciblées</a></li>
-</ol>
+<section id="votre-parcours" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans <code>tendance_ventes.qmd</code>. Les exercices de transfert sont distincts et se conservent dans <code>tendance_commerce.qmd</code>, après une première tentative avant le corrigé.</p>
+<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/capsules.html">cinq capsules principales</a> sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La <a href="../../modules/semaine-08-tendance-saisonnalite/notes-cours.html">synthèse</a> est aussi disponible en <a href="media/pdf/notes-cours.pdf">PDF</a>. Le <a href="telechargements/module-08-pdf-2026-11-03.zip">lot du 26 octobre 2026</a> contient ces six supports.</p>
+<p>Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.</p>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1"><summary><span class="path-number">1</span><span class="path-title">Lire le temps et les motifs</span><span class="path-preview">La hausse vient-elle du temps ou du calendrier?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#exploration">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Lire le temps et les motifs.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-1">Capsule 1</a> · <a href="demonstrations.html#exploration">Démonstration</a> · <a href="lectures.html#lecture-1">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.1</p><p>Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.</p></div><p><span class="step-label">Auto-vérification</span> J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-1">exercice 1</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
+<details class="path-card" id="etape-2"><summary><span class="path-number">2</span><span class="path-title">Ajuster tendance et mois</span><span class="path-preview">Que représente un coefficient de décembre?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#calendrier">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Ajuster tendance et mois.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-2">Capsule 2</a> · <a href="demonstrations.html#calendrier">Démonstration</a> · <a href="lectures.html#lecture-2">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.2</p><p>Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.</p></div><p><span class="step-label">Auto-vérification</span> L’indice augmente d’une unité par mois et le facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-2">exercice 2</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
+<details class="path-card" id="etape-3"><summary><span class="path-number">3</span><span class="path-title">Lire les résidus</span><span class="path-preview">Qu’est-ce que le modèle laisse encore dans la série?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#diagnostic">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Lire les résidus.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-3">Capsule 3</a> · <a href="demonstrations.html#diagnostic">Démonstration</a> · <a href="lectures.html#lecture-3">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.3</p><p>Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.</p></div><p><span class="step-label">Auto-vérification</span> Je distingue observation, valeur ajustée et résidu. J’examine le temps et la dispersion au-delà des moyennes. Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-3">exercice 3</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
+<details class="path-card" id="etape-4"><summary><span class="path-number">4</span><span class="path-title">Comparer sur une validation commune</span><span class="path-preview">Le calendrier fait-il mieux que reprendre la dernière année?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#validation">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4">Ex. 4</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Comparer sur une validation commune.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-4">Capsule 4</a> · <a href="demonstrations.html#validation">Démonstration</a> · <a href="lectures.html#lecture-4">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.4</p><p>Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.</p></div><p><span class="step-label">Auto-vérification</span> Les quatre candidats utilisent les mêmes douze cibles et informations disponibles. Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur. Mon choix repose sur les erreurs de validation et reste provisoire.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-4">exercice 4</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
+<details class="path-card" id="etape-5"><summary><span class="path-number">5</span><span class="path-title">Communiquer l’incertitude et la décision</span><span class="path-preview">Que peut-on annoncer sans promettre le budget futur?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#incertitude">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5">Ex. 5</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Communiquer l’incertitude et la décision.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-5">Capsule 5</a> · <a href="demonstrations.html#incertitude">Démonstration</a> · <a href="lectures.html#lecture-5">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.5</p><p>Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.</p></div><p><span class="step-label">Auto-vérification</span> Je distingue moyenne conditionnelle et nouvelle observation. Je lis les intervalles comme marginaux et dépendants des hypothèses. Ma recommandation nomme les unités, une limite et une réévaluation future.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-5">exercice 5</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
+</div>
+</section>
+<section id="exercices-dapplication" class="level2">
+<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
+<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html">cinq exercices suivis</a> portent sur des ventes fictives dans un contexte commercial changeant. Le calendrier seul doit y être interprété avec davantage de prudence; on ne recopie pas les coefficients, les scores ni la recommandation du cas guidé.</p>
+<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html#pratique-supplementaire">huit pratiques ciblées</a>, facultatives, renforcent les cinq gestes principaux. Les exercices accompagnés 14 et 15 conservent l’analyse avec prix et promotions en préparation du module 09. Leur statut conditionnel est explicite et ils ne s’ajoutent pas à la trace principale.</p>
 </section>
 <section id="trace-finale" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Construisez un modèle de ventes avec tendance et effet du mois. Évaluez-le sur les douze derniers mois et comparez-le à la valeur observée le même mois de l’année précédente. Présentez un graphique, MAE, une interprétation saisonnière, une recommandation budgétaire et une limite.</p>
+<p><code>tendance_ventes.qmd</code> rassemble les cinq productions, une seule fois:</p>
+<ol type="1">
+<li>protocole, graphiques sur l’apprentissage et lecture des motifs;</li>
+<li>indice, facteur, trois ajustements et interprétation des coefficients;</li>
+<li>diagnostics et limites des résidus;</li>
+<li>quatre prévisions sur des cibles communes et ME, MAE, RMSE;</li>
+<li>intervalles commentés, recommandation, limite et surveillance.</li>
+</ol>
+<p><code>tendance_commerce.qmd</code> réunit les cinq exercices et la <a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html#trace-finale">conclusion de transfert</a>. Redémarrez R, puis faites Render pour chacun: aucun objet créé seulement dans la console ne doit être nécessaire.</p>
+<p>Après votre tentative, utilisez la <a href="telechargements/demonstration-tendance-ventes.zip">démonstration complète</a> et le <a href="telechargements/corrige-tendance-commerce.zip">corrigé complet du transfert</a> pour vérifier la démarche. Le <a href="telechargements/complements-tendance.zip">projet des compléments</a> est une ressource facultative distincte, sans nouveau rapport exigé.</p>
 </section>
-<section id="auto-vérification" class="level2">
-<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Mon indice de temps augmente d’une unité par mois.</label></li>
-<li><label><input type="checkbox">Le mois est traité comme une catégorie ordonnée pour l’affichage et comme facteur dans le modèle.</label></li>
-<li><label><input type="checkbox">J’identifie la catégorie de référence avant d’interpréter les coefficients.</label></li>
-<li><label><input type="checkbox">Ma période de validation vient après l’entraînement.</label></li>
-<li><label><input type="checkbox">Je communique l’incertitude de la prévision.</label></li>
-</ul>
-</section>
-<section id="lien-avec-lévaluation" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-lévaluation">Lien avec l’évaluation</h2>
-<p>Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapport 2 et de l’examen final.</p>
+<section id="pour-préparer-les-évaluations-et-la-suite" class="level2">
+<h2 class="anchored" data-anchor-id="pour-préparer-les-évaluations-et-la-suite">Pour préparer les évaluations et la suite</h2>
+<p>Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapport 2 et de l’examen final. Les rapports du module sont des entraînements. Les <a href="../../evaluations/mini-rapport-2.html">consignes d’évaluation</a> restent la référence, et le mini-rapport demande une analyse autonome.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Choisir la voie du mini-rapport 2">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7124,6 +7228,62 @@ display: none;
 <p>La proposition de données est attendue à la fin de ce module. Pour la voie temporelle, utilisez les acquis des modules 06 à 08 et préparez les variables externes du module 09. Pour la voie classification, suivez dès maintenant le <a href="../../modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe">parcours anticipé du module 10</a>, puis utilisez le point de contrôle du laboratoire 3 pour vérifier votre protocole. Les supports écrits et exemples sont déjà disponibles : cette voie ne demande pas d’attendre le 2 décembre.</p>
 </div>
 </div>
+</section>
+<section id="ressources-du-module" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
+<div class="resource-list">
+<a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Cinq supports en PDF et HTML, avec leurs productions communes au parcours.</span></span></a>
+<a class="resource-row" href="notes-cours.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Notes de cours</span><span class="resource-row-text">Synthèse du socle en diapositives HTML et PDF.</span></span></a>
+<a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Analyse guidée complète, depuis le CSV jusqu’à la recommandation.</span></span></a>
+<a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Cinq exercices suivis et pratiques ciblées, avec corrigés repliables.</span></span></a>
+<a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Explications françaises du socle et accès au cahier facultatif.</span></span></a>
+</div>
+</section>
+<section id="erreurs-fréquentes" class="level2">
+<h2 class="anchored" data-anchor-id="erreurs-fréquentes">Erreurs fréquentes</h2>
+<ul>
+<li>Recommencer l’indice temporel à 1 en validation.</li>
+<li>Confondre ordre d’affichage des mois et facteur ordonné dans le modèle.</li>
+<li>Interpréter un contraste comme un effet causal.</li>
+<li>Valider le modèle seulement avec une pente significative ou des moyennes résiduelles nulles.</li>
+<li>Introduire une vente, un prix ou une promotion futurs inconnus à l’origine.</li>
+<li>Lire les intervalles ponctuels comme une garantie pour toute l’année.</li>
+</ul>
+</section>
+<section id="auto-vérification" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<div class="checklist-box">
+<ul class="task-list">
+<li><label><input type="checkbox">Je distingue tendance et motif mensuel.</label></li>
+<li><label><input type="checkbox">Je vérifie l’indice, le facteur et la référence avant l’ajustement.</label></li>
+<li><label><input type="checkbox">Je sais lire la pente et décembre dans leurs unités.</label></li>
+<li><label><input type="checkbox">Je regarde les résidus au-delà de leur moyenne.</label></li>
+<li><label><input type="checkbox">Mes quatre candidats partagent origine, cibles et information disponible.</label></li>
+<li><label><input type="checkbox">Je distingue confiance de la moyenne et prédiction d’une observation.</label></li>
+<li><label><input type="checkbox">Mes deux recommandations utilisent leurs résultats propres et nomment une limite.</label></li>
+<li><label><input type="checkbox">Mes rapports se rendent après redémarrage de R.</label></li>
+</ul>
+</div>
+</section>
+<section id="je-suis-bloquée" class="level2">
+<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
+<div class="help-box">
+<p>Vérifiez dans l’ordre:</p>
+<ol type="1">
+<li>Le <code>.Rproj</code> est ouvert après extraction de toute l’archive, avec <code>R/</code> et <code>data/</code> présents.</li>
+<li><code>tidyverse</code> et <code>broom</code> se chargent et <code>R/fonctions-module08.R</code> existe.</li>
+<li>Les dates sont distinctes, triées et espacées d’un mois; la cible est en dollars canadiens.</li>
+<li>L’apprentissage contient 60 mois, la validation 12 mois, avec indices futurs 61 à 72.</li>
+<li>Le facteur mois est non ordonné, avec janvier comme référence.</li>
+<li>Les blocs visibles sont exécutés dans l’ordre après la préparation commune.</li>
+</ol>
+<p>Reprenez la <a href="../../modules/semaine-08-tendance-saisonnalite/lectures.html">lecture ciblée</a> ou la <a href="../../modules/semaine-08-tendance-saisonnalite/demonstrations.html#preparation">démonstration</a>. Si le blocage persiste, conservez le message d’erreur complet et le court extrait concerné pour demander de l’aide. L’<a href="../../ressources/aide-memoire-r.html">aide-mémoire R</a> rappelle les commandes usuelles.</p>
+</div>
+<p>Les lectures, calculs et corrigés permettent de travailler sans IA. Si vous utilisez le GPT du cours après une tentative, vérifiez ses critiques et respectez les <a href="../../ressources/ia.html">règles d’usage</a> et la <a href="../../ressources/declaration-ia.html">déclaration du cours</a>. Ne transmettez pas de données personnelles ou confidentielles.</p>
+</section>
+<section id="pour-aller-plus-loin" class="level2">
+<h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
+<p>Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 intègre les acquis des modules 06 à 08 sur le cas de demande hebdomadaire connu, sans le transformer en nouveau test indépendant.</p>
 
 
 </section>

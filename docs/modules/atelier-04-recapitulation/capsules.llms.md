@@ -1,27 +1,32 @@
-# Repères préparatoires - Atelier 04
+# Repères préparatoires - Laboratoire 04
 
-## Repère 1 - Choisir la question avant le modèle
+## Une seule mission
 
-Une question sur le montant des ventes appelle une réponse continue. Une question sur l’occurrence d’un niveau de service insuffisant appelle une réponse binaire. Le modèle vient après cette définition.
+Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases.
 
-## Repère 2 - Construire la preuve
+Ce texte, celui de l’accueil, du guide, des projets et de la présentation désignent la même production, réalisée une fois.
 
-Une analyse défendable relie quatre éléments :
+## Auto-vérification
 
-\\ \text{question} \longrightarrow \text{méthode} \longrightarrow \text{validation} \longrightarrow \text{décision}. \\
+Je précise la cible, l’origine, l’horizon et l’unité.
 
-Si un élément change, les autres doivent être revérifiés.
+Je compare la méthode et sa référence sur les mêmes observations.
 
-## Repère 3 - Choisir les mesures
+Je distingue la validation réutilisée d’un nouveau test indépendant.
 
-- Réponse continue : MAE, RMSE, biais et graphique des erreurs.
-- Réponse binaire : sensibilité, spécificité, précision, proportion ciblée et matrice de confusion.
+Ma recommandation cite les résultats, une limite et une règle de suivi.
 
-L’exactitude seule n’est pas suffisante pour une cible déséquilibrée.
+## Cible et information
 
-## Repère 4 - Limiter la conclusion
+Une réponse continue exige de préciser unité et horizon; une cible binaire exige aussi la classe positive et le moment où son étiquette devient connue. Les informations obtenues après l’origine ne sont pas des prédicteurs disponibles.
 
-Le jeu de données est simulé. Il permet de vérifier une démarche, mais pas de prouver qu’une action aurait le même effet dans une organisation réelle. Une recommandation doit donc proposer une prochaine vérification.
+## Comparaison
+
+Une référence doit respecter la même origine et les mêmes cibles. Le bloc de 2025 est réutilisé après les modules 09 et 10; il peut soutenir une récapitulation, mais pas être présenté comme un nouveau test indépendant.
+
+## Mesures et décision
+
+Pour les ventes : ME, MAE et RMSE en dollars. Pour le service : matrice de confusion, sensibilité, spécificité, précision et taux de ciblage. La règle de 20 % calibrée sur 2024 n’est pas une capacité garantie sur une nouvelle période. Un risque prévu ne mesure pas l’effet de l’intervention.
 
 ## Auto-diagnostic
 
@@ -33,4 +38,8 @@ Pour chaque phrase, indiquez « preuve », « décision » ou « hypothèse » :
 
 > **TIP:**
 >
-> 1.  Preuve. 2. Décision. 3. Hypothèse.
+> 1.  Preuve. 2. Décision. 3. Hypothèse. Un score peut être une preuve sur un bloc donné sans garantir la performance future.
+
+## Retrouver une aide
+
+Consultez le [guide](../../modules/atelier-04-recapitulation/guide-atelier.llms.md), la [démonstration des deux voies](../../modules/atelier-04-recapitulation/demonstrations.llms.md) et les [lectures ciblées](../../modules/atelier-04-recapitulation/lectures.llms.md).

@@ -4,3 +4,4 @@
 
 Les variables sont entièrement fictives et ne comprennent aucun renseignement personnel réel. Le fichier est généré par `scripts/10_create_second_block_data.R` et peut être redistribué avec le matériel du cours.
 
+Le transfert utilise aussi `cas_integrateur_quebec.csv`. Le [dictionnaire](dictionnaires.md) décrit les variables, l’horizon et la reproduction locale.

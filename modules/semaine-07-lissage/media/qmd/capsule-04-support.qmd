@@ -1,10 +1,12 @@
 ---
-title: "Capsule 4 - Comparer équitablement"
+title: "Capsule 4 - Choisir et surveiller une référence"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module07-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,138 +28,156 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m07-c04
+#| label: preparation-support-m07
 #| include: false
-library(tidyverse)
-library(slider)
-library(forecast)
-data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-demande <- readr::read_csv(data_path, show_col_types = FALSE)
-demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
-horizon <- 13
-train <- demande |> slice_head(n = nrow(demande) - horizon)
-test <- demande |> slice_tail(n = horizon)
-serie <- ts(train$demande, frequency = 52)
+racines <- c("../..", ".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une comparaison de méthodes doit être équitable avant d'être impressionnante.
-:::
-
 ::: {.question-line}
-Qu'est-ce qui doit rester identique entre les méthodes?
+Le plus petit score suffit-il pour décider?
 :::
-
 ::: {.note-box}
-La même origine, le même horizon, la même période de validation et les mêmes mesures sont nécessaires pour attribuer une différence à la méthode plutôt qu'au protocole.
+Une sous-prévision et une sur-prévision peuvent avoir des conséquences différentes.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Construire une période de validation commune.
-- Choisir une méthode selon l'erreur et l'usage.
-- Défendre un choix de méthode avec un protocole commun.
+- Conserver le même protocole de comparaison.
+- Calculer un coût qui distingue sous-prévision et sur-prévision.
+- Recommander une méthode et organiser son suivi.
 :::
 
-## Un gain de 1 % peut coûter trop cher
+## Fixer le protocole avant de classer les méthodes
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Même passé
+:::
+::: {.label}
+paramètres estimés avant l’origine
+:::
+:::
+::: {.metric}
+::: {.value}
+Mêmes cibles
+:::
+::: {.label}
+dates et horizons identiques
+:::
+:::
+::: {.metric}
+::: {.value}
+Même critère
+:::
+::: {.label}
+annoncé avant les résultats
+:::
+:::
+::::
+
+## Un coût fictif explicite
+
+::: {.formula-box}
+$$L(e)=2\max(e,0)+\max(-e,0).$$
+:::
+::: {.keypoints}
+- Sous-prévision : deux unités de coût par unité manquante.
+- Sur-prévision : une unité de coût par unité excédentaire.
+- Comparer le coût moyen sur les mêmes périodes.
+:::
+
+## La demande favorise ici MM4
 
 ::: {.example-box}
-Une réduction de MAE de 1 % peut ne pas justifier un outil coûteux ou fragile.
+MM4 : MAE ≈ 100 unités et RMSE ≈ 128 unités. MM4 a aussi le coût moyen le plus faible parmi les quatre candidats.
+:::
+::: {.warning-box}
+Cette prévision ne fixe pas la quantité à commander : il faut aussi connaître le stock, les délais, la capacité et le niveau de service visé.
 :::
 
-## Comparer quatre méthodes sur les mêmes semaines
-
-::: {.notes}
-Holt amorti reprend le niveau et la pente expliqués dans la capsule 2. Les quatre méthodes sont ajustées avec les seules semaines d'apprentissage.
-:::
+## Le transfert peut changer la décision
 
 ```{r}
-#| label: code-m07-c04
-#| echo: true
-#| eval: true
-previsions <- test |>
-  transmute(
-    observe = demande,
-    naive = tail(train$demande, 1),
-    moyenne_4 = mean(tail(train$demande, 4)),
-    SES = as.numeric(forecast::ses(serie, h = horizon)$mean),
-    Holt = as.numeric(forecast::holt(serie, h = horizon, damped = TRUE)$mean)
-  )
-previsions |>
-  pivot_longer(-observe, names_to = "methode", values_to = "prevision") |>
-  group_by(methode) |>
-  summarise(
-    MAE = mean(abs(observe - prevision)),
-    RMSE = sqrt(mean((observe - prevision)^2)),
-    .groups = "drop"
-  ) |>
-  arrange(MAE)
+#| label: m07-c4-table
+#| echo: false
+scores_e |>
+  select(methode, MAE, cout_moyen) |>
+  arrange(MAE) |>
+  mutate(methode = recode(methode, Naive = "Naïf", Saisonnier = "Naïf saisonnier",
+                          SES02 = "SES, α = 0,2", SES08 = "SES, α = 0,8")) |>
+  mutate(across(where(is.numeric), ~ fr(.x, 0))) |>
+  knitr::kable(col.names = c("Méthode", "MAE (kWh)", "Coût moyen fictif"))
 ```
-
-## Le protocole commun précède le classement
-
-::: {.keypoints}
-- Toutes les méthodes prédisent les mêmes semaines.
-- Le classement numérique ne suffit pas.
-- La stabilité et le coût de maintenance comptent.
+::: {.note-box}
+Le naïf saisonnier a la plus faible MAE et le plus faible coût moyen. Parmi les prévisions constantes, le SES à α = 0,2 minimise la MAE, tandis que MM3 minimise le coût.
 :::
 
-## Changer d'horizon invalide la comparaison
+## Une validation connue, un choix provisoire
 
-::: {.warning-box}
-Comparer les erreurs sur des horizons ou des semaines différents invalide le classement.
+::: {.keypoints}
+- Les périodes ont déjà été examinées au module 06.
+- Le classement peut changer à de nouvelles origines.
+- Un faible gain peut ne pas justifier le travail nécessaire au suivi du modèle.
+:::
+
+## Préparer la surveillance
+
+::: {.keypoints}
+- Enregistrer les prévisions avant les nouvelles observations.
+- Calculer ensuite les erreurs et leur coût, puis comparer les méthodes aux références.
+- Réévaluer sur des origines et horizons communs.
+:::
+::: {.note-box}
+Une prévision en kWh ne donne ni le montant d’une facture ni la puissance maximale requise.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Coût
 :::
 ::: {.label}
-Comparer d'abord à protocole constant.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Choisir ensuite la solution qui sert réellement la décision.
+relier le signe à la décision
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Transfert
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+interpréter ses propres résultats
 :::
 :::
+::: {.metric}
+::: {.value}
+Suivi
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+choix provisoire et réévaluation
 :::
+:::
+::::
 
 ## Production autonome 7.4
 
 ::: {.lead}
-Formulez une décision prudente lorsqu'une méthode améliore peu la MAE mais augmente fortement les coûts de maintenance.
+Comparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Les coefficients du coût sont annoncés avant le calcul.
+- Ma recommandation utilise les résultats de cette validation connue.
+- Je nomme les informations manquantes pour commander et une réévaluation future.
 :::

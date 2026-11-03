@@ -6837,6 +6837,48 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+
+main.content .math.display {
+display: block;
+max-width: 100%;
+overflow-x: auto;
+overflow-y: hidden;
+}
+main.content .table-responsive {
+max-width: 100%;
+overflow-x: auto;
+}
+@media (max-width: 767px) {
+main.content .table-responsive table { min-width: 760px; }
+}
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,14 +7059,18 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#continuité-du-parcours" id="toc-continuité-du-parcours" class="nav-link active" data-scroll-target="#continuité-du-parcours">Continuité du parcours</a></li>
-  <li><a href="#résultat-attendu" id="toc-résultat-attendu" class="nav-link" data-scroll-target="#résultat-attendu">Résultat attendu</a></li>
-  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
-  <li><a href="#parcours" id="toc-parcours" class="nav-link" data-scroll-target="#parcours">Parcours</a></li>
+  <ul class="collapse">
+  <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
+  <li><a href="#avant-de-commencer" id="toc-avant-de-commencer" class="nav-link" data-scroll-target="#avant-de-commencer">Avant de commencer</a></li>
+  <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
+  <li><a href="#pour-préparer-la-suite" id="toc-pour-préparer-la-suite" class="nav-link" data-scroll-target="#pour-préparer-la-suite">Pour préparer la suite</a></li>
+  <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
+  <li><a href="#erreurs-fréquentes" id="toc-erreurs-fréquentes" class="nav-link" data-scroll-target="#erreurs-fréquentes">Erreurs fréquentes</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
-  <li><a href="#lien-avec-lévaluation" id="toc-lien-avec-lévaluation" class="nav-link" data-scroll-target="#lien-avec-lévaluation">Lien avec l’évaluation</a></li>
+  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
   </ul>
 </nav>
     </div>
@@ -7050,82 +7096,213 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi ça compte">
+<div class="learning-hero">
+<p class="hero-kicker">
+Séance autonome
+</p>
+<h2 class="anchored">
+Prévoir sans suivre chaque fluctuation
+</h2>
+<p>Construire un niveau lissé, comparer des prévisions et relier leurs erreurs à une décision.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Organisation
+</div>
+<div class="fact-value">
+À votre rythme
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio et Quarto
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Cas guidé
+</div>
+<div class="fact-value">
+Demande hebdomadaire fictive au Québec
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Trace finale
+</div>
+<div class="fact-value">
+Deux rapports Quarto courts
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="on-passe-au-concret" class="level2">
+<h2 class="anchored" data-anchor-id="on-passe-au-concret">On passe au concret</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="La question du module">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pourquoi ça compte
+<span class="screen-reader-only">Note</span>La question du module
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une prévision opérationnelle doit réagir aux nouvelles observations sans sur-réagir au bruit. Les méthodes de lissage organisent ce compromis et fournissent des références difficiles à battre lorsque l’horizon est court.</p>
+<p>Une équipe d’approvisionnement doit prévoir la demande des treize prochaines semaines. Comment stabiliser sa référence sans ignorer une hausse récente? Une moyenne plus lisse n’est pas automatiquement une meilleure prévision.</p>
 </div>
 </div>
-<section id="continuité-du-parcours" class="level2">
-<h2 class="anchored" data-anchor-id="continuité-du-parcours">Continuité du parcours</h2>
-<p>Le module 06 a défini la cible, l’horizon et une période de validation chronologique. Vous utilisez maintenant ce protocole pour comparer des méthodes simples et mesurer leurs erreurs sur les mêmes semaines futures.</p>
-<p>Le bloc qui sert à comparer les candidats est une validation. Un test final, s’il est disponible, reste réservé à la méthode choisie. Les treize dernières semaines sont déjà connues depuis le transfert du module 06 : elles servent ici à apprendre la comparaison de nouvelles méthodes, sans constituer un nouveau test indépendant.</p>
+<p>À la fin du module, vous pourrez calculer une moyenne mobile arrière, mettre à jour un niveau exponentiel, distinguer lissage et prévision, puis comparer les erreurs et leur coût sur des cibles communes. La demande hebdomadaire annoncée au module 06 est reprise ici et au laboratoire 03. Le transfert porte sur la planification énergétique d’un bâtiment fictif; il demande une interprétation différente du classement.</p>
 </section>
-<section id="résultat-attendu" class="level2">
-<h2 class="anchored" data-anchor-id="résultat-attendu">Résultat attendu</h2>
-<p>À la fin du module, vous pourrez :</p>
-<ul>
-<li>calculer et interpréter une moyenne mobile;</li>
-<li>expliquer le rôle du paramètre de lissage exponentiel;</li>
-<li>produire des prévisions naïves et par lissage exponentiel simple;</li>
-<li>comparer des méthodes sur une période de validation avec MAE et RMSE;</li>
-<li>choisir une méthode selon son erreur et son utilité opérationnelle.</li>
-</ul>
-<p>Holt et sa tendance amortie sont expliqués comme prolongement du lissage simple dans la capsule 2, puis illustrés dans la comparaison de la capsule 4 et au laboratoire 3. Le rapport principal conserve les trois méthodes annoncées ci-dessous; une programmation manuelle de Holt n’est pas demandée.</p>
+<section id="avant-de-commencer" class="level2">
+<h2 class="anchored" data-anchor-id="avant-de-commencer">Avant de commencer</h2>
+<p>Prérequis présents dans les supports: importer un CSV et rendre un document Quarto (module 02), définir cible, origine et horizon, vérifier un calendrier, construire les références naïves et lire ME, MAE et RMSE (module 06). Si nécessaire, reprenez les <a href="../../modules/semaine-06-series-chronologiques-intro/demonstrations.html#references">démonstrations du module 06</a> et ses <a href="../../modules/semaine-06-series-chronologiques-intro/lectures.html#lecture-5">lectures sur les erreurs</a>. L’acquisition de ces gestes n’est pas présumée vérifiée individuellement.</p>
+<p>Téléchargez et décompressez les projets <a href="telechargements/lissage-demande.zip">lissage-demande</a> et <a href="telechargements/lissage-electricite.zip">lissage-electricite</a>. Ouvrez leur <code>.Rproj</code>; les données, dictionnaires et fonctions sont fournis. <code>tidyverse</code>, <code>slider</code> et <code>forecast</code> sont nécessaires. La <a href="../../modules/semaine-07-lissage/demonstrations.html#preparation">préparation R</a> repart d’une session neuve.</p>
+<p>Le cas guidé comprend 104 semaines simulées, du 1er janvier 2024 au 22 décembre 2025. Une ligne est une semaine, la demande se mesure en unités de produit. On apprend sur les 91 premières semaines et on compare sur les treize dernières à une seule origine. L’électricité compte 72 mois, de janvier 2020 à décembre 2025, en kWh: 60 mois pour apprendre, puis les douze mois de 2025 pour comparer. Les <a href="data/dictionnaires.md">dictionnaires</a> détaillent les variables et les limites du calendrier.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Une validation déjà connue">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Une validation déjà connue
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ces périodes ont déjà été examinées au module 06. Elles servent à apprendre la comparaison de nouvelles méthodes, sans nouveau test indépendant. Les fenêtres et candidats sont annoncés avant les scores; les paramètres estimés utilisent seulement l’apprentissage.</p>
+</div>
+</div>
+<section id="ce-qui-change-depuis-le-module-06" class="level3">
+<h3 class="anchored" data-anchor-id="ce-qui-change-depuis-le-module-06">Ce qui change depuis le module 06</h3>
+<p>Le calendrier, les références et les mesures d’erreur sont des rappels utiles. Les nouveaux gestes sont le calcul des fenêtres, la récurrence du SES, l’effet d’alpha et l’usage d’un coût asymétrique. Le parcours comprend quatre étapes principales. Holt est un complément accompagné pour préparer le laboratoire; différenciation, ETS saisonnier et autres méthodes restent facultatifs.</p>
 </section>
-<section id="données" class="level2">
-<h2 class="anchored" data-anchor-id="données">Données</h2>
-<p>Le fichier <a href="data/demande_hebdomadaire_quebec.csv"><code>demande_hebdomadaire_quebec.csv</code></a> contient 104 semaines de demande fictive, avec prix moyen et indicateur de promotion. Chaque ligne représente une semaine.</p>
 </section>
-<section id="parcours" class="level2">
-<h2 class="anchored" data-anchor-id="parcours">Parcours</h2>
-<ol type="1">
-<li><a href="../../modules/semaine-07-lissage/capsules.html">Capsules et activités</a></li>
-<li><a href="../../modules/semaine-07-lissage/notes-cours.html">Notes de cours</a></li>
-<li><a href="../../modules/semaine-07-lissage/demonstrations.html">Démonstrations R</a></li>
-<li><a href="../../modules/semaine-07-lissage/exercices.html">Exercices avec solutions cachées</a></li>
-<li><a href="../../modules/semaine-07-lissage/lectures.html">Lectures ciblées</a></li>
-</ol>
+<section id="votre-parcours" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Les productions autonomes 7.1 à 7.4 des diapositives, les activités ci-dessous et leurs rappels sur la page des capsules désignent le même travail. Réalisez chaque production une seule fois dans <code>lissage_demande.qmd</code>. Les quatre exercices de transfert sont distincts et alimentent <code>lissage_electricite.qmd</code>. Ouvrez leurs corrigés après une tentative.</p>
+<p>Les <a href="../../modules/semaine-07-lissage/capsules.html">quatre capsules principales et le complément Holt</a> sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie pour le moment. La <a href="../../modules/semaine-07-lissage/notes-cours.html">synthèse</a> est aussi disponible en <a href="media/pdf/notes-cours.pdf">PDF</a>. Le <a href="telechargements/module-07-pdf-2026-11-03.zip">lot PDF du 3 novembre 2026</a> contient ces six supports.</p>
+<p>Cliquez sur une carte pour ouvrir l’objectif, les ressources et la tâche. Revenez ici pour garder le fil.</p>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1"><summary><span class="path-number">1</span><span class="path-title">Choisir une fenêtre de lissage</span><span class="path-preview">Que peut-on savoir avant la semaine suivante?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#moyennes-mobiles">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Choisir une fenêtre de lissage.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-1">Capsule 1</a> · <a href="demonstrations.html#moyennes-mobiles">Démonstration</a> · <a href="lectures.html#lecture-1">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au même rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 7.1 - Fenêtre et disponibilité</p><p>Sur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.</p></div><p><span class="step-label">Auto-vérification</span> J’ai utilisé seulement les 91 semaines d’apprentissage. J’obtiens 1 050 unités et je précise quand la moyenne est disponible. Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.</p><p><span class="step-label">Exercice d’application distinct</span> Faites l’<a href="exercices.html#exercice-1">exercice 1</a> sur l’électricité dans <code>lissage_electricite.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-2"><summary><span class="path-number">2</span><span class="path-title">Mettre à jour un niveau</span><span class="path-preview">Quelle part de l’écart faut-il corriger?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#lissage-exponentiel">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Mettre à jour un niveau.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-2">Capsule 2</a> · <a href="demonstrations.html#lissage-exponentiel">Démonstration</a> · <a href="lectures.html#lecture-2">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au même rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 7.2 - Niveau et alpha</p><p>Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.</p></div><p><span class="step-label">Auto-vérification</span> Les deux calculs partagent le même état initial. J’obtiens 108 puis 114,4 et 132 puis 138,4. J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.</p><p><span class="step-label">Exercice d’application distinct</span> Faites l’<a href="exercices.html#exercice-2">exercice 2</a> sur l’électricité dans <code>lissage_electricite.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-3"><summary><span class="path-number">3</span><span class="path-title">Lire les erreurs de prévision</span><span class="path-preview">Quelle erreur le score moyen cache-t-il?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#erreurs">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Lire les erreurs de prévision.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-3">Capsule 3</a> · <a href="demonstrations.html#erreurs">Démonstration</a> · <a href="lectures.html#lecture-3">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au même rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 7.3 - Erreurs et unités</p><p>Émettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.</p></div><p><span class="step-label">Auto-vérification</span> Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future. Mes scores sont en unités de produit, avec erreur = observé moins prévu. Je relie le classement au graphique et je distingue validation et test indépendant.</p><p><span class="step-label">Exercice d’application distinct</span> Faites l’<a href="exercices.html#exercice-3">exercice 3</a> sur l’électricité dans <code>lissage_electricite.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+<details class="path-card" id="etape-4"><summary><span class="path-number">4</span><span class="path-title">Choisir et surveiller une référence</span><span class="path-preview">Le plus petit score suffit-il pour décider?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#decision">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4">Ex. 4</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Choisir et surveiller une référence.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-4">Capsule 4</a> · <a href="demonstrations.html#decision">Démonstration</a> · <a href="lectures.html#lecture-4">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au même rapport guidé.</p>
+<div class="ae-box"><p class="ae-title">Activité 7.4 - Coût et recommandation</p><p>Comparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.</p></div><p><span class="step-label">Auto-vérification</span> Les coefficients du coût sont annoncés avant le calcul. Ma recommandation utilise les résultats de cette validation connue. Je nomme les informations manquantes pour commander et une réévaluation future.</p><p><span class="step-label">Exercice d’application distinct</span> Faites l’<a href="exercices.html#exercice-4">exercice 4</a> sur l’électricité dans <code>lissage_electricite.qmd</code>. Tentez une réponse avant d’ouvrir le corrigé.</p></div></details>
+</div>
+</section>
+<section id="exercices-dapplication" class="level2">
+<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
+<p>Les <a href="../../modules/semaine-07-lissage/exercices.html">quatre exercices suivis</a> reprennent l’électricité du module 06 avec des fenêtres, deux réactivités et un coût pédagogique. Le changement de cible, de calendrier et de décision oblige à lire les résultats obtenus. Le classement de la demande ne peut pas être recopié.</p>
+<p>Les <a href="../../modules/semaine-07-lissage/exercices.html#pratique-supplementaire">huit pratiques supplémentaires</a>, facultatives, renforcent les fenêtres, la fuite temporelle, la récurrence, les scores et la décision. Choisissez selon vos difficultés, tentez une réponse, puis refaites la question sans regarder le corrigé. L’<a href="../../modules/semaine-07-lissage/exercices.html#exercice-13">exercice 13</a> accompagne Holt séparément.</p>
 </section>
 <section id="trace-finale" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Produisez une comparaison de trois méthodes sur les treize dernières semaines : naïve, moyenne des quatre dernières semaines et lissage exponentiel simple. Incluez le graphique des prévisions, MAE, RMSE, un choix justifié et une limite.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Piège à éviter">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>Votre rapport <code>lissage_demande.qmd</code> rassemble, une seule fois:</p>
+<ol type="1">
+<li>le protocole, les fenêtres et leur interprétation;</li>
+<li>les mises à jour manuelles, les deux lissages et le SES estimé;</li>
+<li>les quatre trajectoires, leurs erreurs et ME, MAE, RMSE;</li>
+<li>le coût annoncé, une recommandation chiffrée, une limite et une règle de surveillance.</li>
+</ol>
+<p>Le rapport distinct <code>lissage_electricite.qmd</code> réunit les quatre exercices et la <a href="../../modules/semaine-07-lissage/exercices.html#trace-finale">conclusion de transfert</a>. Redémarrez R, puis faites Render pour chacun: aucun objet créé uniquement dans la console ne doit être requis.</p>
+<p>Les projets <a href="telechargements/demonstration-lissage-demande.zip">démonstration complète de demande</a> et <a href="telechargements/corrige-lissage-electricite.zip">corrigé complet d’électricité</a> permettent de vérifier votre démarche après votre tentative.</p>
+</section>
+<section id="pour-préparer-la-suite" class="level2">
+<h2 class="anchored" data-anchor-id="pour-préparer-la-suite">Pour préparer la suite</h2>
+<p>Le module prépare la comparaison des méthodes et la lecture des erreurs au laboratoire 03, au mini-rapport 2 et à l’examen final. Les deux rapports sont des entraînements. Les <a href="../../evaluations/index.html">consignes d’évaluation</a> restent la référence pour les travaux évalués. Le mini-rapport 2 exige une analyse autonome.</p>
+<p>Au laboratoire, apportez votre trace et consultez le <a href="../../modules/semaine-07-lissage/capsules.html#holt">complément Holt</a> si nécessaire. Le module 08 ajoute la tendance et les effets saisonniers explicites; le module 09 traite les variables externes et l’autocorrélation. Aucun de ces outils n’est nécessaire pour terminer les quatre activités principales.</p>
+</section>
+<section id="ressources-du-module" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
+<div class="resource-list">
+<a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Quatre capsules principales et un complément Holt en PDF et HTML.</span></span></a>
+<a class="resource-row" href="notes-cours.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Notes de cours</span><span class="resource-row-text">Synthèse du parcours en diapositives HTML et PDF.</span></span></a>
+<a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Analyse guidée complète, graphiques, scores et interprétations.</span></span></a>
+<a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices</span><span class="resource-row-text">Quatre exercices suivis, huit pratiques et un complément corrigés.</span></span></a>
+<a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Explications françaises et passages externes ciblés.</span></span></a>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Avertissement</span>Piège à éviter
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Ne choisissez pas une méthode d’après son ajustement sur les données qui ont servi à l’estimer. Le choix doit s’appuyer sur une période qui n’a pas servi à l’ajustement.</p>
-</div>
-</div>
+</section>
+<section id="erreurs-fréquentes" class="level2">
+<h2 class="anchored" data-anchor-id="erreurs-fréquentes">Erreurs fréquentes</h2>
+<ul>
+<li>Comparer une observation à une moyenne qui la contient comme si elle avait été prévue auparavant.</li>
+<li>Confondre une fenêtre arrière et une moyenne centrée.</li>
+<li>Mettre à jour une prévision à origine fixe avec des observations futures.</li>
+<li>Donner des états initiaux différents aux deux alphas sans le dire.</li>
+<li>Croire que <code>frequency = 52</code> rend le SES saisonnier.</li>
+<li>Retenir le plus petit score sans ses unités, son coût et ses limites.</li>
+<li>Transformer une prévision en commande ou une consommation en facture.</li>
+</ul>
 </section>
 <section id="auto-vérification" class="level2">
 <h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
+<div class="checklist-box">
 <ul class="task-list">
-<li><label><input type="checkbox">Ma moyenne mobile est calculée uniquement avec les observations antérieures.</label></li>
-<li><label><input type="checkbox">Je peux expliquer l’effet d’un alpha élevé.</label></li>
-<li><label><input type="checkbox">Toutes les méthodes sont évaluées sur les mêmes semaines.</label></li>
-<li><label><input type="checkbox">Je compare au moins MAE et RMSE.</label></li>
-<li><label><input type="checkbox">Ma recommandation tient compte du coût des erreurs.</label></li>
+<li><label><input type="checkbox">Je sais quand la fenêtre et le niveau sont disponibles.</label></li>
+<li><label><input type="checkbox">Mes mises à jour manuelles concordent avec le code.</label></li>
+<li><label><input type="checkbox">Je distingue alpha imposé et estimation sur l’apprentissage.</label></li>
+<li><label><input type="checkbox">Les candidats partagent cibles, origine, horizons et information disponible.</label></li>
+<li><label><input type="checkbox">J’interprète les scores et la perte asymétrique avec leurs unités.</label></li>
+<li><label><input type="checkbox">Mes deux recommandations reposent sur leurs résultats propres.</label></li>
+<li><label><input type="checkbox">Je nomme la validation connue et une réévaluation future.</label></li>
+<li><label><input type="checkbox">Mes deux rapports se rendent après redémarrage de R.</label></li>
 </ul>
+</div>
 </section>
-<section id="lien-avec-lévaluation" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-lévaluation">Lien avec l’évaluation</h2>
-<p>Le module prépare la comparaison de méthodes exigée dans le mini-rapport 2 et l’interprétation des mesures d’erreur à l’examen final.</p>
+<section id="je-suis-bloquée" class="level2">
+<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
+<div class="help-box">
+<p>Vérifiez dans l’ordre:</p>
+<ol type="1">
+<li>Toute l’archive est décompressée et son <code>.Rproj</code> est ouvert.</li>
+<li>Les trois bibliothèques se chargent; <code>data/</code> et <code>R/fonctions-module07.R</code> sont présents.</li>
+<li>Les dates sont triées et le bon calendrier est utilisé: semaines ou mois.</li>
+<li>Le découpage est 91 + 13 pour la demande, 60 + 12 pour l’électricité.</li>
+<li>Les blocs visibles sont exécutés dans l’ordre; les corrigés 1 à 4 suivent la préparation commune.</li>
+<li>La <a href="../../modules/semaine-07-lissage/lectures.html">lecture ciblée</a> explique le geste qui bloque. Pour une commande, consultez l’<a href="../../ressources/aide-memoire-r.html">aide-mémoire R</a>.</li>
+</ol>
+<p>Si le blocage persiste, conservez le message d’erreur complet et le court morceau de code concerné pour demander de l’aide.</p>
+</div>
+<p>Vous pouvez travailler sans IA avec les lectures, la liste de vérification et les corrigés. Si vous utilisez le GPT du cours, demandez une critique de votre protocole après votre tentative, vérifiez sa réponse et respectez les <a href="../../ressources/ia.html">règles d’usage</a> et la <a href="../../ressources/declaration-ia.html">déclaration du cours</a>. Ne transmettez aucune donnée personnelle ou confidentielle.</p>
+</section>
+<section id="pour-aller-plus-loin" class="level2">
+<h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
+<p>Le <a href="../../modules/semaine-07-lissage/capsules.html#capsule-5">complément Holt</a> explique niveau, pente et amortissement avec code fourni. Il est facultatif pour les deux rapports. Les <a href="../../modules/semaine-07-lissage/lectures.html#complements">autres lectures facultatives</a> conservent différenciation, Holt-Winters, ETS et les pistes avancées de l’ancien matériel, avec leurs prérequis et limites.</p>
+<section id="cahier-facultatif-de-méthodes-conservées" class="level3">
+<h3 class="anchored" data-anchor-id="cahier-facultatif-de-méthodes-conservées">Cahier facultatif de méthodes conservées</h3>
+<p>Le <a href="../../modules/semaine-07-lissage/complements.html">cahier de lissage</a> conserve les différences et leur réintégration, Holt-Winters, ETS, BATS, TBATS et STL avec ETS, avec explications françaises et code complet. Son <a href="telechargements/complements-lissage.zip">projet autonome</a> permet de les explorer sur l’électricité mensuelle. Ce sont des ressources de consolidation ou d’ouverture; elles ne s’ajoutent pas aux quatre productions principales et ne doivent pas toutes être utilisées dans une analyse.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -4,3 +4,5 @@
 
 Le fichier est généré par `scripts/10_create_second_block_data.R`, ne représente aucune organisation réelle et peut être redistribué avec le matériel du cours.
 
+
+Le fichier mensuel `ventes_saisonnieres_quebec.csv` provient du module 08 et sert à une pratique facultative distincte. Les unités, dates et limites sont dans `dictionnaires.md`; `R/regenerer-donnees.R` reproduit les deux jeux dans une copie locale du projet.

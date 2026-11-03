@@ -1,10 +1,12 @@
 ---
-title: "Capsule 2 - Probabilité logistique"
+title: "Capsule 2 - Estimer et interpréter"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module10-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -18,131 +20,81 @@ format:
     progress: true
     hash: true
     transition: fade
-    code-copy: true
-    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
   message: false
-editor: visual
 ---
-
-```{r}
-#| label: setup-m10-c02
-#| include: false
-library(tidyverse)
-data_candidates <- c("data/fidelisation_clients_quebec.csv", "../../data/fidelisation_clients_quebec.csv", "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-clients <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-train <- clients |> group_by(depart_90j) |> slice_sample(prop = 0.80) |> ungroup()
-test <- anti_join(clients, train, by = "client_id")
-modele <- glm(depart_90j ~ anciennete_mois + utilisation_mensuelle + tickets_service_6m + satisfaction + type_contrat, family = binomial(), data = train)
-probabilite <- predict(modele, newdata = test, type = "response")
-```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une probabilité est plus utile qu'une étiquette lorsqu'il faut prioriser une intervention.
-:::
-
 ::: {.question-line}
-Comment passer d'un score à une probabilité entre zéro et un?
+Que dit une probabilité?
 :::
 
 ::: {.note-box}
-La régression logistique modélise les log-cotes, puis les traduit en probabilités. Pour communiquer, les probabilités prédites dans des scénarios sont souvent plus parlantes que les coefficients seuls.
+Une décision utile relie les probabilités à une action et à ses conséquences.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Interpréter le signe d'un coefficient logistique.
-- Distinguer probabilité prédite et classe.
-- Lire une probabilité sans la transformer en certitude.
+- Estimer et interpréter.
+- Appliquer le raisonnement au cas de fidélisation.
+- Nommer une limite de l’interprétation.
 :::
 
-## Un risque de 0,70 reste une estimation
-
-::: {.example-box}
-Une probabilité de 0,70 signifie que le modèle estime un risque élevé selon ses données et hypothèses, pas qu'un départ est certain.
-:::
-
-## La probabilité ordonne un risque, elle ne rend pas un verdict
+## Le raisonnement
 
 ::: {.keypoints}
-- Un coefficient positif augmente les log-cotes de la classe positive.
-- Une probabilité n'est pas une certitude individuelle.
-- Un seuil transforme ensuite la probabilité en action.
+- La régression logistique traduit un prédicteur linéaire en probabilité.
+- Une cote vaut p/(1-p); exp(coefficient) multiplie les cotes.
+- Une probabilité n’est ni une certitude ni un effet causal.
 :::
 
-## Produire des probabilités hors échantillon
+## Une courbe entre 0 et 1
 
-```{r}
-#| label: code-m10-c02
-#| echo: true
-#| eval: true
-modele <- glm(
-  depart_90j ~ anciennete_mois + utilisation_mensuelle +
-    tickets_service_6m + satisfaction + type_contrat,
-  family = binomial(), data = train
-)
-probabilite <- predict(modele, newdata = test, type = "response")
-summary(probabilite)
-```
-
-## Une probabilité individuelle n'est jamais certaine
-
-::: {.warning-box}
-Présenter une probabilité comme un verdict individuel confond incertitude statistique et certitude opérationnelle.
-:::
+![](../courbe-logistique.png){fig-alt="Courbe logistique : la probabilité augmente progressivement entre zéro et un" width="85%"}
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Cotes
 :::
 ::: {.label}
-Les probabilités servent à ordonner les priorités.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-La règle de décision exige un seuil explicite.
+Un rapport de cotes n’est pas un rapport de probabilités.
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Référence
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+La référence et les variables fixées comptent.
 :::
 :::
-:::
-
-::: {.notes}
-[Sources]
-- R Core Team. Documentation de stats::glm. https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
-- Tidymodels. Classification metrics. https://yardstick.tidymodels.org/
-:::
+::::
 
 ## Production autonome 10.2
 
 ::: {.lead}
-Expliquez pourquoi une probabilité prédite de 0,70 ne garantit pas un départ.
+Ajustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.
 :::
+
+Cette production se réalise une seule fois dans le rapport guidé.
 
 ### Auto-vérification
 
 ::: {.self-check}
-- J'ai défini la classe positive et la période test.
-- J'ai rapporté les deux types d'erreur, pas seulement l'exactitude.
-- Ma règle respecte la capacité et évite une interprétation individuelle certaine.
+- Je distingue une cote d’une probabilité.
+- Je nomme la référence et les variables maintenues fixes.
+- Je ne prétends pas mesurer l’effet de l’intervention.
 :::
+
+## Références et crédits
+
+Matériel MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.
+
+James, Witten, Hastie et Tibshirani (2021), *An Introduction to Statistical Learning*, 2e édition.

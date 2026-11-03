@@ -1,268 +1,63 @@
-# Guide en classe - Atelier 04
+# Guide en classe - Laboratoire 04
 
-## Préparation
+## Une seule mission
 
-``` r
-library(tidyverse)
-library(broom)
-library(lubridate)
+Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases.
 
-data_path <- if (file.exists("data/cas_integrateur_quebec.csv")) {
-  "data/cas_integrateur_quebec.csv"
-} else {
-  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
-}
+Cette mission se réalise une fois. Choisissez la voie A ou B et conservez un seul rapport; les cinq étapes ne sont pas des rapports supplémentaires.
 
-cas <- read_csv(data_path, show_col_types = FALSE) |>
-  mutate(
-    date = as.Date(date),
-    succursale = factor(succursale),
-    promotion = factor(promotion, levels = c("non", "oui")),
-    mois = factor(month(date), levels = 1:12)
-  ) |>
-  arrange(date, succursale)
+## Auto-vérification de la production
 
-date_coupure <- as.Date("2025-01-01")
-entrainement <- cas |> filter(date < date_coupure)
-test <- cas |> filter(date >= date_coupure)
-```
+Je précise la cible, l’origine, l’horizon et l’unité.
 
-## Étape 1 - Auditer la structure
+Je compare la méthode et sa référence sur les mêmes observations.
 
-``` r
-cas |>
-  summarise(
-    lignes = n(),
-    debut = min(date),
-    fin = max(date),
-    succursales = n_distinct(succursale),
-    dates = n_distinct(date),
-    valeurs_manquantes = sum(is.na(cas))
-  )
-```
+Je distingue la validation réutilisée d’un nouveau test indépendant.
 
-    # A tibble: 1 × 6
-      lignes debut      fin        succursales dates valeurs_manquantes
-       <int> <date>     <date>           <int> <int>              <int>
-    1    288 2020-01-01 2025-12-01           4    72                  0
+Ma recommandation cite les résultats, une limite et une règle de suivi.
+
+## 1. Situer la décision
+
+Définissez le destinataire, la cible, l’unité mois-succursale, l’origine et l’horizon. Pour les ventes, l’origine est la fin de 2024 et l’horizon va de janvier à décembre 2025. Pour le service, la décision intervient à la fin du mois courant et l’étiquette concerne le mois suivant.
 
 > **TIP:**
 >
-> Définissez l’unité mois-succursale et écrivez votre question selon la voie A ou B.
+> Une somme de ventes est une réponse continue; un service insuffisant est une étiquette binaire simulée. Un prédicteur n’est utile que s’il est disponible à la décision ou explicitement scénarisé.
 
-## Étape 2 - Explorer sans multiplier les graphiques
+## 2. Vérifier et explorer
 
-``` r
-cas |>
-  ggplot(aes(date, ventes, colour = succursale)) +
-  geom_line() +
-  facet_wrap(~ succursale, scales = "free_y") +
-  labs(title = "Ventes mensuelles par succursale", x = NULL, y = "Ventes", colour = NULL) +
-  theme_minimal(base_size = 11) +
-  theme(legend.position = "none")
-```
-
-![](guide-atelier_files/figure-html/unnamed-chunk-2-1.png)
-
-``` r
-cas |>
-  group_by(succursale) |>
-  summarise(
-    ventes_moyennes = mean(ventes),
-    attente_moyenne = mean(temps_attente),
-    taux_service_insuffisant_mois_suivant = mean(service_insuffisant_mois_suivant),
-    .groups = "drop"
-  )
-```
-
-    # A tibble: 4 × 4
-      succursale ventes_moyennes attente_moyenne taux_service_insuffisant_mois_sui…¹
-      <fct>                <dbl>           <dbl>                               <dbl>
-    1 Gatineau           170130.            4.30                              0.0833
-    2 Montréal           257110.            4.28                              0.125
-    3 Québec             195407.            4.35                              0.25
-    4 Sherbrooke         147373.            4.44                              0.208
-    # ℹ abbreviated name: ¹​taux_service_insuffisant_mois_suivant
+Contrôlez l’unicité mois-succursale, la continuité du calendrier, les valeurs manquantes et les unités. Conservez un graphique ou tableau pertinent sur le passé utilisé pour ajuster.
 
 > **TIP:**
 >
-> Conservez un graphique et un tableau qui répondent directement à votre question.
+> Le fichier contient 288 lignes, 72 mois et quatre succursales. Les périodes successives d’une même succursale sont liées; une ligne n’est pas un client indépendant.
 
-## Voie A - Prévoir une réponse continue
+## 3. Construire méthode et référence
 
-### Modèle et référence
+Voie A : ajustez une régression avec temps, mois et succursale, puis reportez les ventes de 2024 aux mois correspondants de 2025. Voie B : ajustez une logistique avec conditions du mois courant et calculez sur les scores de validation 2024 le seuil du 80e percentile; la référence prédit la classe majoritaire de l’apprentissage.
 
-``` r
-modele_ventes <- lm(
-  ventes ~ indice_temps + succursale + mois + promotion,
-  data = entrainement
-)
-
-reference_saisonniere <- cas |>
-  transmute(
-    date = date %m+% years(1),
-    succursale,
-    reference_saisonniere = ventes
-  )
-
-evaluation_ventes <- test |>
-  mutate(prevision_modele = predict(modele_ventes, newdata = test)) |>
-  left_join(reference_saisonniere, by = c("date", "succursale")) |>
-  pivot_longer(
-    c(prevision_modele, reference_saisonniere),
-    names_to = "methode",
-    values_to = "prevision"
-  ) |>
-  mutate(erreur = ventes - prevision)
-
-evaluation_ventes |>
-  group_by(methode) |>
-  summarise(
-    MAE = mean(abs(erreur)),
-    RMSE = sqrt(mean(erreur^2)),
-    biais = mean(erreur),
-    .groups = "drop"
-  )
-```
-
-    # A tibble: 2 × 4
-      methode                  MAE   RMSE  biais
-      <chr>                  <dbl>  <dbl>  <dbl>
-    1 prevision_modele       8949. 11942. -1566.
-    2 reference_saisonniere 23669  28501.  4928.
-
-> **WARNING:**
+> **TIP:**
 >
-> La voie A utilise seulement le temps, la succursale, le mois et une promotion planifiée. L’achalandage et les ruptures de stock du mois à prévoir ne sont pas encore observés et créeraient une fuite d’information. Si la promotion n’est pas décidée à l’origine de la prévision, elle doit être fixée selon un scénario explicite.
+> Les promotions et l’achalandage futurs ne sont pas présumés connus dans la voie A. En B, le seuil est fixé avant les résultats 2025; des étiquettes à un mois exigent d’écarter les mois de décembre 2023 et 2024 des blocs précédents.
 
-### Interprétation
+## 4. Comparer et interpréter
 
-``` r
-tidy(modele_ventes, conf.int = TRUE) |>
-  filter(term %in% c("indice_temps", "promotionoui"))
-```
+Comparez les mêmes 48 mois-succursales de 2025. En A, utilisez ME, MAE et RMSE en dollars. En B, calculez VP, FP, VN, FN, sensibilité, spécificité, précision et proportion ciblée. Comparez aussi les résultats par succursale.
 
-    # A tibble: 2 × 7
-      term         estimate std.error statistic  p.value conf.low conf.high
-      <chr>           <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
-    1 indice_temps     426.      38.5      11.0 6.37e-23     350.      502.
-    2 promotionoui   35840.    1488.       24.1 5.59e-64   32907.    38772.
-
-Les coefficients décrivent des associations conditionnelles. Ils ne démontrent pas qu’imposer une promotion ou réduire artificiellement une variable produira exactement le changement estimé.
-
-## Voie B - Détecter une réponse binaire
-
-### Modèle et seuil de capacité
-
-``` r
-modele_service <- glm(
-  service_insuffisant_mois_suivant ~ temps_attente + ruptures_stock +
-    satisfaction + taux_utilisation,
-  data = entrainement,
-  family = binomial()
-)
-
-evaluation_service <- test |>
-  mutate(prob_risque = predict(modele_service, newdata = test, type = "response"))
-
-capacite_intervention <- 0.20
-seuil <- quantile(evaluation_service$prob_risque, 1 - capacite_intervention)
-
-evaluation_service <- evaluation_service |>
-  mutate(prediction = as.integer(prob_risque >= seuil))
-```
-
-### Matrice et mesures
-
-``` r
-matrice <- evaluation_service |>
-  count(observe = service_insuffisant_mois_suivant, prediction)
-
-matrice
-```
-
-    # A tibble: 4 × 3
-      observe prediction     n
-        <dbl>      <int> <int>
-    1       0          0    36
-    2       0          1     4
-    3       1          0     2
-    4       1          1     6
-
-``` r
-evaluation_service |>
-  summarise(
-    VP = sum(prediction == 1 & service_insuffisant_mois_suivant == 1),
-    FP = sum(prediction == 1 & service_insuffisant_mois_suivant == 0),
-    VN = sum(prediction == 0 & service_insuffisant_mois_suivant == 0),
-    FN = sum(prediction == 0 & service_insuffisant_mois_suivant == 1)
-  ) |>
-  mutate(
-    sensibilite = VP / (VP + FN),
-    specificite = VN / (VN + FP),
-    precision = VP / (VP + FP),
-    proportion_ciblee = (VP + FP) / (VP + FP + VN + FN)
-  )
-```
-
-    # A tibble: 1 × 8
-         VP    FP    VN    FN sensibilite specificite precision proportion_ciblee
-      <int> <int> <int> <int>       <dbl>       <dbl>     <dbl>             <dbl>
-    1     6     4    36     2        0.75         0.9       0.6             0.208
-
-Le modèle utilise les conditions observées pendant le mois courant pour estimer le risque de service insuffisant au mois suivant. La cible est donc postérieure aux prédicteurs, ce qui correspond à une décision préventive.
-
-### Vérifier la répartition de l’intervention
-
-``` r
-evaluation_service |>
-  group_by(succursale) |>
-  summarise(
-    observations = n(),
-    proportion_ciblee = mean(prediction),
-    taux_observe = mean(service_insuffisant_mois_suivant),
-    precision = if_else(
-      sum(prediction) > 0,
-      sum(prediction == 1 & service_insuffisant_mois_suivant == 1) / sum(prediction),
-      NA_real_
-    ),
-    .groups = "drop"
-  )
-```
-
-    # A tibble: 4 × 5
-      succursale observations proportion_ciblee taux_observe precision
-      <fct>             <int>             <dbl>        <dbl>     <dbl>
-    1 Gatineau             12            0.25         0            0
-    2 Montréal             12            0.167        0.0833       0.5
-    3 Québec               12            0.0833       0.25         1
-    4 Sherbrooke           12            0.333        0.333        1
-
-> **WARNING:**
+> **TIP:**
 >
-> Une règle de ciblage peut concentrer les interventions dans une succursale. Avant de la déployer, comparez les taux de ciblage et la précision par succursale, documentez les faux positifs et vérifiez que l’intervention proposée est proportionnée au risque. Le modèle sert à prioriser une vérification, pas à sanctionner automatiquement une équipe.
+> Les données de 2025 ont déjà été examinées : elles ne constituent pas un nouveau test indépendant. Une précision peut être indéfinie si aucun cas n’est ciblé. Un seuil issu de 2024 ne garantit pas exactement 20 % de ciblage en 2025.
 
-## Étape finale - Formuler la recommandation
+## 5. Recommander et surveiller
 
-Votre recommandation doit suivre quatre phrases :
+Rédigez une recommandation appuyée sur les résultats, une limite et une condition de révision. Résumez l’autre voie en trois phrases : cible, référence et mesure adaptée. Pour la voie B, examinez la concentration du ciblage sans supposer qu’il démontre automatiquement une iniquité ou l’effet d’une intervention.
 
-1.  Nous avons analysé…
-2.  Sur la période test, le modèle…
-3.  Nous recommandons de…
-4.  Cette recommandation dépend de… et sera révisée lorsque…
-
-> **IMPORTANT:**
+> **TIP:**
 >
-> Remettez une synthèse de deux pages maximum, en plus du code repliable. Une seule voie analytique doit être développée en profondeur. L’autre doit être résumée en trois phrases pour montrer que vous comprenez la différence de cible et de mesures.
+> « Nous avons analysé… », « Sur la validation réutilisée… », « Nous recommandons… », « Cette recommandation dépend de… et sera revue lorsque… ».
 
-## Vérification finale
+## Rapport et relecture
 
-La voie choisie correspond à la décision.
+Remettez une synthèse de deux pages maximum, en plus du code repliable. Une seule voie analytique doit être développée en profondeur. L’autre doit être résumée en trois phrases pour montrer que vous comprenez la différence de cible et de mesures. Le choix de la voie fait partie de l’évaluation. Il doit correspondre à la décision formulée. Incluez une déclaration IA, si applicable.
 
-La période test est entièrement postérieure à l’entraînement.
-
-Une référence simple est présente.
-
-Les mesures conviennent au type de cible.
-
-La recommandation comporte une limite et une règle de suivi.
+Vérifiez le rendu, demandez une relecture à un autre binôme ou à l’enseignant, puis corrigez un point précis. Le [transfert facultatif](../../modules/atelier-04-recapitulation/exercices.llms.md) est distinct du rapport principal.

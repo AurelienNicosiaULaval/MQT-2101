@@ -38,11 +38,11 @@ Que change une fenêtre de 12 semaines comparativement à une fenêtre de 4 sema
 
 ## 5. MAE et RMSE
 
-Deux méthodes ont la même MAE, mais l’une produit une très grande erreur. Quelle mesure devrait être plus élevée pour cette méthode?
+Les erreurs absolues de la méthode A sont 0, 0, 0 et 20; celles de la méthode B sont 5, 5, 5 et 5. Calculez la MAE et la RMSE de chaque méthode. Quelle mesure distingue ici la grande erreur?
 
 > **TIP:**
 >
-> La RMSE, car elle pénalise davantage les grandes erreurs.
+> Les deux MAE valent 5. La RMSE de A vaut 10 et celle de B vaut 5 : la RMSE distingue ici la grande erreur, car elle utilise les carrés des écarts. Une erreur maximale plus grande ne suffit toutefois pas, à elle seule, à garantir une RMSE plus élevée.
 
 ## 6. Biais
 
@@ -54,11 +54,11 @@ Avec `erreur = observé - prévu`, un biais moyen positif indique quoi?
 
 ## 7. Variable externe
 
-Une variable explique très bien les ventes historiques, mais n’est observée qu’un mois après les ventes. Peut-elle servir directement à prévoir?
+À la fin de janvier, on veut prévoir les ventes de février. Une variable associée aux ventes de février ne sera publiée qu’à la fin de mars. Peut-on utiliser sa valeur de février comme prédicteur connu à la fin de janvier? Qu’en est-il d’une valeur plus ancienne déjà publiée?
 
 > **TIP:**
 >
-> Non, car elle n’est pas disponible au moment nécessaire. Il faudrait la prévoir séparément, la scénariser de manière défendable ou ne pas l’utiliser.
+> Non pour sa valeur de février : elle n’est pas encore disponible à l’origine. On peut envisager une prévision ou un scénario pour cette valeur, ou une valeur passée déjà publiée, à condition de vérifier sa date de disponibilité et sa pertinence.
 
 ## 8. Autocorrélation
 

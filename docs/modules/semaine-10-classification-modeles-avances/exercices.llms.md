@@ -1,138 +1,191 @@
 # Exercices - Module 10
 
+Le transfert traite d’une intervention en succursale, différente du ciblage de clients. Essayez les cinq exercices suivis avant d’ouvrir les corrigés; les exercices 6 à 8 sont des pratiques supplémentaires. Les étiquettes et coûts sont simulés.
+
 ## Préparation
 
-Les capsules classent des clients selon leur risque de départ. Le cas de transfert classe plutôt des mois de succursale selon le risque de service insuffisant le mois suivant.
-
-Jeu de données de transfert : [cas_integrateur_quebec.csv](../../donnees/#cas_integrateur_quebec).
+Les conditions du mois courant sont supposées connues à la décision. Les mois de décembre 2023 et décembre 2024 sont écartés afin que les étiquettes à horizon d’un mois soient disponibles avant la période suivante.
 
 ``` r
 library(tidyverse)
+racines <- c(".", "modules/semaine-10-classification-modeles-avances")
+racine <- racines[file.exists(file.path(racines, "data/cas_integrateur_quebec.csv"))][1]
+stopifnot(!is.na(racine))
+service <- read_csv(file.path(racine, "data/cas_integrateur_quebec.csv"), show_col_types = FALSE) |>
+  mutate(date = as.Date(date), succursale = factor(succursale),
+         cible = service_insuffisant_mois_suivant) |> arrange(date, succursale)
+stopifnot(nrow(service) == 288, !anyDuplicated(service[c("date", "succursale")]),
+          all(service$cible %in% c(0, 1)))
+apprentissage_service <- service |> filter(date <= as.Date("2023-11-01"))
+validation_service <- service |> filter(date >= as.Date("2024-01-01"), date <= as.Date("2024-11-01"))
+test_service <- service |> filter(date >= as.Date("2025-01-01"))
+```
 
-data_path <- if (file.exists("../atelier-04-recapitulation/data/cas_integrateur_quebec.csv")) {
-  "../atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
-} else {
-  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
+``` r
+mesures_seuil <- function(observe, probabilite, seuil, cout_fp = 1, cout_fn = 4) {
+  stopifnot(length(observe) == length(probabilite), all(observe %in% c(0, 1)),
+            all(is.finite(probabilite)), all(probabilite >= 0 & probabilite <= 1))
+  predit <- as.integer(probabilite >= seuil)
+  vp <- sum(predit == 1 & observe == 1); fp <- sum(predit == 1 & observe == 0)
+  vn <- sum(predit == 0 & observe == 0); fn <- sum(predit == 0 & observe == 1)
+  ratio <- function(a, b) if (b == 0) NA_real_ else a / b
+  tibble(seuil, VP = vp, FP = fp, VN = vn, FN = fn,
+         exactitude = ratio(vp + vn, length(observe)), sensibilite = ratio(vp, vp + fn),
+         specificite = ratio(vn, vn + fp), precision = ratio(vp, vp + fp),
+         proportion_ciblee = ratio(vp + fp, length(observe)), cout = cout_fp * fp + cout_fn * fn)
 }
-
-service <- read_csv(
-  data_path,
-  show_col_types = FALSE
-) |>
-  mutate(
-    date = as.Date(date),
-    succursale = factor(succursale),
-    cible = service_insuffisant_mois_suivant
-  ) |>
-  arrange(date, succursale)
-
-entrainement <- service |>
-  filter(date < as.Date("2025-01-01"))
-
-test <- service |>
-  filter(date >= as.Date("2025-01-01"))
 ```
 
 ## Exercice 1 - Définir le problème
 
-Définissez précisément :
+Définissez l’unité, la classe positive, le moment des variables, l’horizon et les deux erreurs. Pourquoi « succursale à risque » est-il trop vague?
 
-- l’unité d’observation;
-- la classe positive;
-- la date à laquelle les variables explicatives sont mesurées;
-- l’horizon de la cible;
-- le coût opérationnel d’un faux négatif;
-- le coût d’un faux positif.
+> **TIP:**
+>
+> L’unité est un mois-succursale. La classe positive est le service insuffisant simulé le mois suivant. Les conditions du mois courant sont supposées connues à la décision. Un faux négatif manque une situation positive; un faux positif déclenche une intervention inutile. L’étiquette est simulée, non une observation reconstituée du mois suivant.
 
-Expliquez pourquoi l’intitulé « succursale à risque » serait trop vague.
+## Exercice 2 - Comparer deux profils
 
-## Exercice 2 - Probabilités et coefficients
+Ajustez une régression sur l’apprentissage et comparez deux profils ne différant que par les ruptures de stock. Interprétez prudemment.
 
-Ajustez une régression logistique avec des mesures du mois courant, puis comparez deux profils qui diffèrent seulement par le nombre de ruptures de stock.
+> **TIP:**
+>
+> ``` r
+> modele_service <- glm(cible ~ taux_utilisation + ruptures_stock + temps_attente + satisfaction,
+>                       data = apprentissage_service, family = binomial())
+> stopifnot(modele_service$converged, all(is.finite(coef(modele_service))))
+> profils_service <- tibble(taux_utilisation = c(0.90, 0.90), ruptures_stock = c(0, 5),
+>                           temps_attente = c(5, 5), satisfaction = c(7, 7))
+> profils_service |> mutate(probabilite = predict(modele_service, newdata = profils_service, type = "response"))
+> ```
+>
+>     # A tibble: 2 × 5
+>       taux_utilisation ruptures_stock temps_attente satisfaction probabilite
+>                  <dbl>          <dbl>         <dbl>        <dbl>       <dbl>
+>     1              0.9              0             5            7       0.296
+>     2              0.9              5             5            7       0.335
+>
+> Ces probabilités dépendent des conditions fixées et du modèle. Elles ne sont ni des certitudes ni la preuve qu’une rupture cause un futur service insuffisant. Vérifiez aussi si les profils sont plausibles.
 
-``` r
-modele_service <- glm(
-  cible ~ taux_utilisation + ruptures_stock + temps_attente + satisfaction,
-  data = entrainement,
-  family = binomial()
-)
+## Exercice 3 - Choisir un seuil
 
-profils <- tibble(
-  taux_utilisation = c(0.90, 0.90),
-  ruptures_stock = c(0, 5),
-  temps_attente = c(5, 5),
-  satisfaction = c(7, 7)
-)
+En validation, comparez les seuils 0,25 et 0,50 avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Choisissez le coût le plus faible; en cas d’égalité retenez 0,25.
 
-profils |>
-  mutate(
-    probabilite_predite = predict(
-      modele_service,
-      newdata = profils,
-      type = "response"
-    )
-  )
-```
+> **TIP:**
+>
+> ``` r
+> validation_service <- validation_service |>
+>   mutate(probabilite = predict(modele_service, newdata = validation_service, type = "response"))
+> comparaison_service <- bind_rows(mesures_seuil(validation_service$cible, validation_service$probabilite, 0.25),
+>                                 mesures_seuil(validation_service$cible, validation_service$probabilite, 0.50))
+> comparaison_service |> select(seuil, VP, FP, VN, FN, cout)
+> ```
+>
+>     # A tibble: 2 × 6
+>       seuil    VP    FP    VN    FN  cout
+>       <dbl> <int> <int> <int> <int> <dbl>
+>     1  0.25     4     9    25     6    33
+>     2  0.5      2     3    31     8    35
+>
+> ``` r
+> comparaison_service |> select(seuil, sensibilite, specificite, precision, proportion_ciblee)
+> ```
+>
+>     # A tibble: 2 × 5
+>       seuil sensibilite specificite precision proportion_ciblee
+>       <dbl>       <dbl>       <dbl>     <dbl>             <dbl>
+>     1  0.25         0.4       0.735     0.308             0.295
+>     2  0.5          0.2       0.912     0.4               0.114
+>
+> ``` r
+> seuil_service <- comparaison_service |> arrange(cout, seuil) |> slice(1) |> pull(seuil)
+> seuil_service
+> ```
+>
+>     [1] 0.25
+>
+> Le seuil est choisi avant consultation du test. Les coûts sont des hypothèses de travail et les mesures en validation servent au choix; elles ne sont pas un test final indépendant.
 
-Interprétez la différence comme une comparaison conditionnelle au modèle, sans la présenter comme une certitude individuelle ni comme un effet causal.
+## Exercice 4 - Évaluer et vérifier la capacité
 
-## Exercice 3 - Deux seuils
+Sur 2025, appliquez le seuil choisi. Calculez aussi, comme règle alternative fixée à l’avance, le ciblage des deux probabilités les plus élevées par mois et la répartition entre succursales.
 
-Comparez les seuils 0,25 et 0,50 sur l’année 2025.
+> **TIP:**
+>
+> ``` r
+> test_service <- test_service |> mutate(probabilite = predict(modele_service, newdata = test_service, type = "response"))
+> resultat_service <- mesures_seuil(test_service$cible, test_service$probabilite, seuil_service)
+> resultat_service |> select(seuil, VP, FP, VN, FN, cout)
+> ```
+>
+>     # A tibble: 1 × 6
+>       seuil    VP    FP    VN    FN  cout
+>       <dbl> <int> <int> <int> <int> <dbl>
+>     1  0.25     6    16    24     2    24
+>
+> ``` r
+> resultat_service |> select(seuil, sensibilite, specificite, precision, proportion_ciblee)
+> ```
+>
+>     # A tibble: 1 × 5
+>       seuil sensibilite specificite precision proportion_ciblee
+>       <dbl>       <dbl>       <dbl>     <dbl>             <dbl>
+>     1  0.25        0.75         0.6     0.273             0.458
+>
+> ``` r
+> # Règle fixée à l’avance : deux interventions au plus par mois.
+> selection_service <- test_service |> group_by(date) |>
+>   arrange(desc(probabilite), succursale, .by_group = TRUE) |> slice_head(n = 2) |> ungroup()
+> selection_service |> count(succursale, name = "mois_cibles")
+> ```
+>
+>     # A tibble: 4 × 2
+>       succursale mois_cibles
+>       <fct>            <int>
+>     1 Gatineau            10
+>     2 Montréal             3
+>     3 Québec               4
+>     4 Sherbrooke           7
+>
+> ``` r
+> selection_service |> summarise(cibles = n(), positifs_detectes = sum(cible), precision = mean(cible))
+> ```
+>
+>     # A tibble: 1 × 3
+>       cibles positifs_detectes precision
+>        <int>             <dbl>     <dbl>
+>     1     24                 6      0.25
+>
+> La règle de capacité n’est pas identique à un seuil fixe. Les égalités sont départagées par le nom de succursale. La comparaison est descriptive sur ce test : une sélection supplémentaire à partir de ce même test nécessiterait une nouvelle évaluation indépendante.
 
-``` r
-mesures_seuil <- function(observe, probabilite, seuil) {
-  predit <- if_else(probabilite >= seuil, 1, 0)
+## Exercice 5 - Recommandation
 
-  vp <- sum(observe == 1 & predit == 1)
-  vn <- sum(observe == 0 & predit == 0)
-  fp <- sum(observe == 0 & predit == 1)
-  fn <- sum(observe == 1 & predit == 0)
+Rédigez une recommandation courte avec la cible, l’horizon, les erreurs, une limite de l’étiquette simulée et un suivi de la concentration du ciblage.
 
-  tibble(
-    seuil = seuil,
-    sensibilite = vp / (vp + fn),
-    specificite = vn / (vn + fp),
-    precision = vp / (vp + fp),
-    proportion_ciblee = mean(predit == 1),
-    faux_negatifs = fn,
-    faux_positifs = fp
-  )
-}
+> **TIP:**
+>
+> Rapportez les résultats effectivement calculés et les coûts supposés. Précisez que la cible est une étiquette simulée et que les lignes d’une même succursale se suivent dans le temps. Surveillez la répartition, puis vérifiez la règle sur une période ultérieure et des données réelles appropriées.
 
-evaluation <- test |>
-  mutate(
-    probabilite = predict(
-      modele_service,
-      newdata = test,
-      type = "response"
-    )
-  )
+## Exercice 6 - Cotes et probabilités
 
-bind_rows(
-  mesures_seuil(evaluation$cible, evaluation$probabilite, 0.25),
-  mesures_seuil(evaluation$cible, evaluation$probabilite, 0.50)
-)
-```
+Si une probabilité vaut 0,20 et que la cote est multipliée par 2, quelle est la nouvelle probabilité?
 
-Choisissez un seuil lorsque manquer un mois de service insuffisant coûte quatre fois plus cher qu’une intervention inutile.
+> **TIP:**
+>
+> La cote initiale vaut 0,20 / 0,80 = 0,25. Après multiplication : 0,50. La probabilité correspondante vaut 0,50 / 1,50 = 1/3, environ 0,333; elle n’est pas égale à 0,40.
 
-## Exercice 4 - Règle de capacité
+## Exercice 7 - Mesure indéfinie
 
-L’équipe peut intervenir dans deux succursales par mois. Construisez une règle qui retient les deux probabilités les plus élevées à chaque date.
+Aucun client n’est ciblé. Quelle est la précision de la règle?
 
-``` r
-ciblage_capacite <- evaluation |>
-  group_by(date) |>
-  slice_max(probabilite, n = 2, with_ties = FALSE) |>
-  ungroup() |>
-  select(date, succursale, probabilite, cible)
+> **TIP:**
+>
+> La précision VP / (VP + FP) a un dénominateur nul. Elle est indéfinie; le code retourne `NA`, pas 0. Les autres mesures ne sont calculables que si leur dénominateur est non nul.
 
-ciblage_capacite
-```
+## Exercice 8 - Fuite et disponibilité
 
-Comparez cette règle au seuil choisi dans l’exercice 3. Vérifiez si une succursale est systématiquement priorisée et proposez une surveillance de cette concentration.
+Une variable « nombre de plaintes après le départ » améliore la performance historique. Peut-on l’utiliser pour cibler avant le départ?
 
-## Exercice de synthèse
-
-Rédigez une recommandation de huit lignes maximum. Elle doit nommer la cible et l’horizon, choisir entre seuil et capacité, rapporter les deux types d’erreur, indiquer le coût prioritaire et prévoir une vérification de stabilité entre les succursales.
+> **TIP:**
+>
+> Non : elle est connue après l’événement à prédire. Sa présence crée une fuite de cible. Il faut utiliser les informations réellement disponibles à l’origine et vérifier les dates de collecte.

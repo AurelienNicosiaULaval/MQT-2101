@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,15 +7048,15 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#frontière-conceptuelle" id="toc-frontière-conceptuelle" class="nav-link active" data-scroll-target="#frontière-conceptuelle">Frontière conceptuelle</a></li>
-  <li><a href="#continuité-du-parcours" id="toc-continuité-du-parcours" class="nav-link" data-scroll-target="#continuité-du-parcours">Continuité du parcours</a></li>
+  <ul class="collapse">
+  <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
   <li><a href="#parcours-anticipe" id="toc-parcours-anticipe" class="nav-link" data-scroll-target="#parcours-anticipe">Parcours anticipé pour le mini-rapport 2</a></li>
-  <li><a href="#résultat-attendu" id="toc-résultat-attendu" class="nav-link" data-scroll-target="#résultat-attendu">Résultat attendu</a></li>
-  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
-  <li><a href="#parcours" id="toc-parcours" class="nav-link" data-scroll-target="#parcours">Parcours</a></li>
+  <li><a href="#avant-de-commencer" id="toc-avant-de-commencer" class="nav-link" data-scroll-target="#avant-de-commencer">Avant de commencer</a></li>
+  <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
+  <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
+  <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
   <li><a href="#lien-avec-lévaluation" id="toc-lien-avec-lévaluation" class="nav-link" data-scroll-target="#lien-avec-lévaluation">Lien avec l’évaluation</a></li>
   </ul>
 </nav>
@@ -7052,82 +7083,253 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi ça compte">
+<div class="learning-hero">
+<p class="hero-kicker">
+Séance autonome
+</p>
+<h2 class="anchored">
+Transformer un risque en décision
+</h2>
+<p>Estimer une probabilité de départ, choisir une règle sur une validation et évaluer cette règle sur des clients distincts.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Organisation
+</div>
+<div class="fact-value">
+À votre rythme
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio et Quarto
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Cas guidé
+</div>
+<div class="fact-value">
+Clients fictifs au Québec
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Trace finale
+</div>
+<div class="fact-value">
+Rapport guidé et transfert
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="on-passe-au-concret" class="level2">
+<h2 class="anchored" data-anchor-id="on-passe-au-concret">On passe au concret</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="La question du module">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pourquoi ça compte
+<span class="screen-reader-only">Note</span>La question du module
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Lorsque la cible est un départ, un défaut ou une réponse, la décision ne consiste pas seulement à estimer une moyenne. Il faut produire une probabilité, choisir un seuil et assumer les coûts différents des faux positifs et des faux négatifs.</p>
+<p>Une organisation ne peut contacter qu’une partie de sa clientèle. Comment utiliser un risque de départ prévu, choisir qui cibler et reconnaître les erreurs sans supposer que le contact empêchera le départ?</p>
 </div>
 </div>
-<section id="frontière-conceptuelle" class="level2">
-<h2 class="anchored" data-anchor-id="frontière-conceptuelle">Frontière conceptuelle</h2>
-<p>Le module 04 étudiait des relations non linéaires pour une réponse continue. Ce module traite une réponse binaire et une décision de classification. La régression logistique modélise une probabilité; le seuil transforme ensuite cette probabilité en action.</p>
-</section>
-<section id="continuité-du-parcours" class="level2">
-<h2 class="anchored" data-anchor-id="continuité-du-parcours">Continuité du parcours</h2>
-<p>Vous conservez les principes de question claire, de séparation entraînement-test, de diagnostic et de limite. La différence est la cible : au lieu de prévoir une valeur continue, vous estimez la probabilité d’un événement puis justifiez une règle de décision.</p>
+<p>Le module 04 étudiait une réponse continue; ici, la cible vaut 0 ou 1. La régression logistique estime une probabilité et une règle distincte la transforme en action. Les fichiers sont fictifs : ils ne prouvent pas qu’une intervention serait efficace.</p>
 </section>
 <section id="parcours-anticipe" class="level2">
 <h2 class="anchored" data-anchor-id="parcours-anticipe">Parcours anticipé pour le mini-rapport 2</h2>
-<p>Si vous choisissez la voie classification, commencez ce parcours dès le module 08, avant la proposition des données. Les prérequis mobilisés sont la régression des modules 03 et 04, R/Quarto et la validation hors échantillon. La cible binaire et le lien logistique sont expliqués dans ce module.</p>
-<ol type="1">
-<li>Lisez les <a href="../../modules/semaine-10-classification-modeles-avances/capsules.html">quatre capsules et réalisez leurs activités</a> : cible binaire, probabilités, matrice de confusion et seuil.</li>
-<li>Recalculez la <a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html">démonstration R</a> : modèle, calibration descriptive, mesures à deux seuils et coût.</li>
-<li>Faites les <a href="../../modules/semaine-10-classification-modeles-avances/exercices.html">exercices de transfert</a>, puis formulez votre cible, votre séparation des données et votre règle de décision pour le point de contrôle du laboratoire 3.</li>
-</ol>
-<p>La séance d’autoapprentissage du 2 décembre sert alors à consolider ces acquis avant le final. Les <a href="../../evaluations/mini-rapport-2.html">consignes du mini-rapport 2</a> fixent la remise; les exemples du module sont un entraînement et ne remplacent pas l’analyse autonome du rapport.</p>
+<p>Si vous choisissez la voie classification, commencez dès le module 08, avant la proposition des données. Les prérequis sont les modules 03 et 04, R/Quarto et la validation hors échantillon. Pour préparer le choix des données et le point de contrôle de l’atelier 03, commencez par la capsule 1 et sa production : définissez une cible binaire, sa date, les prédicteurs disponibles et les partitions. Lisez ensuite les repères de la capsule 3 et les lectures 2 à 4 pour situer la probabilité, les types d’erreur, le seuil et la validation. L’activité 10.3 utilise le modèle ajusté à l’activité 10.2 : réalisez ces deux productions dans l’ordre lorsque vous poursuivrez le parcours. Poursuivez les autres capsules, productions et exercices pour terminer l’analyse et le mini-rapport; la séance du 2 décembre consolide ces acquis. Les <a href="../../evaluations/mini-rapport-2.html">consignes du mini-rapport 2</a> fixent les modalités; ces exemples sont un entraînement et ne remplacent pas votre analyse autonome.</p>
 </section>
-<section id="résultat-attendu" class="level2">
-<h2 class="anchored" data-anchor-id="résultat-attendu">Résultat attendu</h2>
-<p>À la fin du module, vous pourrez :</p>
-<ul>
-<li>définir une cible binaire et la classe positive;</li>
-<li>ajuster une régression logistique;</li>
-<li>interpréter le signe d’un coefficient et une probabilité prédite;</li>
-<li>construire une matrice de confusion;</li>
-<li>calculer exactitude, sensibilité, spécificité et précision;</li>
-<li>choisir un seuil selon le coût des erreurs;</li>
-<li>distinguer performance statistique et utilité décisionnelle.</li>
-</ul>
+<section id="avant-de-commencer" class="level2">
+<h2 class="anchored" data-anchor-id="avant-de-commencer">Avant de commencer</h2>
+<p>Revoir une variable réponse, une régression et un résidu (module 03), la comparaison hors échantillon (module 04) et l’importation dans R (module 02). La <a href="../../modules/semaine-10-classification-modeles-avances/lectures.html">lecture française</a> explique les cotes, les mesures et la calibration. Installez <code>tidyverse</code>, puis téléchargez et ouvrez dans RStudio le <a href="telechargements/classification-clients.zip">projet guidé</a> et le <a href="telechargements/classification-service.zip">projet de transfert</a>. Les deux données et leurs unités figurent dans le <a href="data/dictionnaires.md">dictionnaire</a>.</p>
+<p>Dans le cas guidé, le partage stratifié est de l’ordre de 60 % pour l’apprentissage, 20 % pour la validation et 20 % pour le test. Les deux seuils et les coûts fictifs sont fixés avant la comparaison; la validation choisit la règle et le test évalue la règle retenue. Le partage aléatoire est pédagogique : le fichier ne contient pas les dates permettant une validation temporelle réelle.</p>
 </section>
-<section id="données" class="level2">
-<h2 class="anchored" data-anchor-id="données">Données</h2>
-<p>Le fichier <a href="data/fidelisation_clients_quebec.csv"><code>fidelisation_clients_quebec.csv</code></a> décrit 650 clients fictifs et leur départ éventuel dans les 90 jours.</p>
-</section>
-<section id="parcours" class="level2">
-<h2 class="anchored" data-anchor-id="parcours">Parcours</h2>
-<ol type="1">
-<li><a href="../../modules/semaine-10-classification-modeles-avances/capsules.html">Capsules et activités</a></li>
-<li><a href="../../modules/semaine-10-classification-modeles-avances/notes-cours.html">Notes de cours</a></li>
-<li><a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html">Démonstrations R</a></li>
-<li><a href="../../modules/semaine-10-classification-modeles-avances/exercices.html">Exercices</a></li>
-<li><a href="../../modules/semaine-10-classification-modeles-avances/lectures.html">Lectures ciblées</a></li>
-</ol>
+<section id="votre-parcours" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
+<p>Les activités 10.1 à 10.5 dans l’accueil, les capsules et les diapositives sont les mêmes productions. Réalisez chacune une seule fois dans <code>classification_clients.qmd</code>. Les exercices portent sur une décision distincte et se réalisent séparément dans <code>classification_service.qmd</code>.</p>
+<p>Les cinq capsules correspondent aux décisions de définir la cible, estimer, lire les erreurs, choisir la règle et évaluer l’action. La calibration et la capacité restent ensemble au moment de communiquer la décision, afin de conserver un parcours cohérent.</p>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1">
+<summary>
+<span class="path-number">1</span><span class="path-title">Définir la cible et les partitions</span><span class="path-preview">Activité 10.1</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Ressource</span> <a href="capsules.html#capsule-1">Capsule 1</a> · <a href="lectures.html#lecture-1">Lecture française</a>
+</p>
+<div class="ae-box">
+<p class="ae-title">
+Activité 10.1
+</p>
+<p>
+Définissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.
+</p>
+</div>
+<p>
+<span class="step-label">Auto-vérification</span> Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.
+</p>
+<p>
+<span class="step-label">Transfert distinct</span> Faites l’exercice 1 avant d’ouvrir son corrigé.
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-2">
+<summary>
+<span class="path-number">2</span><span class="path-title">Estimer et interpréter</span><span class="path-preview">Activité 10.2</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Ressource</span> <a href="capsules.html#capsule-2">Capsule 2</a> · <a href="lectures.html#lecture-2">Lecture française</a>
+</p>
+<div class="ae-box">
+<p class="ae-title">
+Activité 10.2
+</p>
+<p>
+Ajustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.
+</p>
+</div>
+<p>
+<span class="step-label">Auto-vérification</span> Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.
+</p>
+<p>
+<span class="step-label">Transfert distinct</span> Faites l’exercice 2 avant d’ouvrir son corrigé.
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-3">
+<summary>
+<span class="path-number">3</span><span class="path-title">Lire une matrice de confusion</span><span class="path-preview">Activité 10.3</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Ressource</span> <a href="capsules.html#capsule-3">Capsule 3</a> · <a href="lectures.html#lecture-3">Lecture française</a>
+</p>
+<div class="ae-box">
+<p class="ae-title">
+Activité 10.3
+</p>
+<p>
+Sur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.
+</p>
+</div>
+<p>
+<span class="step-label">Auto-vérification</span> Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Les dénominateurs et les éventuelles mesures indéfinies sont explicites.
+</p>
+<p>
+<span class="step-label">Transfert distinct</span> Faites l’exercice 3 avant d’ouvrir son corrigé.
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-4">
+<summary>
+<span class="path-number">4</span><span class="path-title">Choisir une règle avant le test</span><span class="path-preview">Activité 10.4</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4">Ex. 4</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Ressource</span> <a href="capsules.html#capsule-4">Capsule 4</a> · <a href="lectures.html#lecture-4">Lecture française</a>
+</p>
+<div class="ae-box">
+<p class="ae-title">
+Activité 10.4
+</p>
+<p>
+Sur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.
+</p>
+</div>
+<p>
+<span class="step-label">Auto-vérification</span> Je fixe les coûts et les seuils avant la comparaison. Le test ne sert pas au choix. Je présente le coût comme une hypothèse pédagogique.
+</p>
+<p>
+<span class="step-label">Transfert distinct</span> Faites l’exercice 4 avant d’ouvrir son corrigé.
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-5">
+<summary>
+<span class="path-number">5</span><span class="path-title">Évaluer et recommander</span><span class="path-preview">Activité 10.5</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5">Ex. 5</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Ressource</span> <a href="capsules.html#capsule-5">Capsule 5</a> · <a href="lectures.html#lecture-5">Lecture française</a>
+</p>
+<div class="ae-box">
+<p class="ae-title">
+Activité 10.5
+</p>
+<p>
+Appliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.
+</p>
+</div>
+<p>
+<span class="step-label">Auto-vérification</span> Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.
+</p>
+<p>
+<span class="step-label">Transfert distinct</span> Faites l’exercice 5 avant d’ouvrir son corrigé.
+</p>
+</div>
+</details>
+</div>
 </section>
 <section id="trace-finale" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Construisez une analyse de fidélisation comprenant : définition de la classe positive, séparation entraînement-test, régression logistique, calibration descriptive des probabilités, matrices de confusion à deux seuils, mesures de performance, coût des erreurs et recommandation de ciblage.</p>
+<p>Dans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois.</p>
+</section>
+<section id="ressources-du-module" class="level2">
+<h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
+<ul>
+<li><a href="../../modules/semaine-10-classification-modeles-avances/capsules.html">Capsules</a>, <a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html">démonstrations R</a>, <a href="../../modules/semaine-10-classification-modeles-avances/exercices.html">exercices et corrigés</a> et <a href="../../modules/semaine-10-classification-modeles-avances/lectures.html">lectures</a>.</li>
+<li>Notes de synthèse <a href="notes-cours.html">HTML</a> et <a href="media/pdf/notes-cours.pdf">PDF</a>.</li>
+<li><a href="telechargements/demonstration-classification.zip">Démonstration complète</a>, <a href="telechargements/corrige-service.zip">corrigé du transfert</a> et <a href="telechargements/complements-classification.zip">cahier facultatif</a>.</li>
+<li><a href="../../modules/semaine-10-classification-modeles-avances/complements.html">Compléments facultatifs en ligne</a> : cotes, vraisemblance, ROC, arbre et réseaux de neurones.</li>
+</ul>
 </section>
 <section id="auto-vérification" class="level2">
 <h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">La classe positive correspond à l’événement d’intérêt.</label></li>
-<li><label><input type="checkbox">Le test n’a pas servi à ajuster le modèle ou le seuil.</label></li>
-<li><label><input type="checkbox">Je distingue probabilité et classe prédite.</label></li>
-<li><label><input type="checkbox">Je ne rapporte pas seulement l’exactitude.</label></li>
-<li><label><input type="checkbox">Le seuil est justifié par une capacité ou un coût.</label></li>
-<li><label><input type="checkbox">Je nomme une limite éthique ou opérationnelle.</label></li>
+<li><label><input type="checkbox">Je définis la classe positive, l’origine et l’horizon.</label></li>
+<li><label><input type="checkbox">Je distingue cote, probabilité et décision.</label></li>
+<li><label><input type="checkbox">Je calcule les erreurs et les mesures avec les bons dénominateurs.</label></li>
+<li><label><input type="checkbox">Je choisis la règle en validation puis je l’évalue sur le test.</label></li>
+<li><label><input type="checkbox">Je nomme les coûts supposés, la capacité et les limites de calibration.</label></li>
+<li><label><input type="checkbox">Je distingue un risque prédit de l’effet d’une intervention.</label></li>
 </ul>
+</section>
+<section id="je-suis-bloquée" class="level2">
+<h2 class="anchored" data-anchor-id="je-suis-bloquée">Je suis bloqué·e</h2>
+<p>Commencez par la <a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html#preparation">préparation complète</a>, puis ajoutez les activités une par une. Vérifiez le dossier du projet, la classe positive et les noms de variables. Faites une première tentative avant les corrigés, puis utilisez les canaux habituels du cours pour demander de l’aide.</p>
 </section>
 <section id="lien-avec-lévaluation" class="level2">
 <h2 class="anchored" data-anchor-id="lien-avec-lévaluation">Lien avec l’évaluation</h2>
-<p>Le module prépare la classification et l’interprétation décisionnelle de l’examen final. Il offre aussi une option classification pour le mini-rapport 2.</p>
+<p>Le module prépare la classification et l’interprétation décisionnelle du final, ainsi que la voie classification du mini-rapport 2. Les activités sont formatives.</p>
 
 
 </section>

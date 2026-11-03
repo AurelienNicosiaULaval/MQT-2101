@@ -1,10 +1,12 @@
 ---
-title: "Capsule 3 - Ajuster un modèle tendance-saisonnalité"
+title: "Capsule 3 - Lire les résidus"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module08-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,118 +28,147 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m08-c03
+#| label: preparation-support-m08
 #| include: false
-library(tidyverse)
-data_candidates <- c("data/ventes_saisonnieres_quebec.csv", "../../data/ventes_saisonnieres_quebec.csv", "modules/semaine-08-tendance-saisonnalite/data/ventes_saisonnieres_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
-ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
-train <- ventes |> slice_head(n = 60)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ indice_temps + mois_label, data = train)
+racines <- c("../..", ".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-Un modèle simple peut rendre un budget plus défendable.
-:::
-
 ::: {.question-line}
-Quelle structure le modèle additif suppose-t-il?
+Qu’est-ce que le modèle laisse encore dans la série?
 :::
-
 ::: {.note-box}
-Une régression avec indice de temps et facteur mois suppose que les écarts saisonniers restent approximativement constants quand le niveau change.
+Un modèle peut capturer les moyennes mensuelles et laisser une structure importante dans ses écarts.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Ajuster un modèle avec tendance et mois.
-- Diagnostiquer une structure saisonnière restante.
-- Vérifier si la saisonnalité restante est structurée.
+- Distinguer observation, ajustement et résidu.
+- Lire le temps et la dispersion.
+- Nommer une limite qui reste à vérifier.
 :::
 
-## Le modèle additif impose une forme précise
+## Le signe du résidu
 
-::: {.keypoints}
-- Le modèle est additif.
-- Les résidus doivent être inspectés.
-- Une amplitude croissante suggère une autre structure.
+::: {.formula-box}
+$$r_t=y_t-\widehat y_t.$$
 :::
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+r > 0
+:::
+::: {.label}
+ajustement trop bas
+:::
+:::
+::: {.metric}
+::: {.value}
+r < 0
+:::
+::: {.label}
+ajustement trop haut
+:::
+:::
+::: {.metric}
+::: {.value}
+Apprentissage
+:::
+::: {.label}
+données ayant servi à ajuster
+:::
+:::
+::::
 
-## Ajuster tendance et mois ensemble
+## Examiner l’ordre temporel
 
 ```{r}
-#| label: code-m08-c03
-#| echo: true
-#| eval: true
-modele <- lm(ventes ~ indice_temps + mois_label, data = train)
-broom::tidy(modele)
+#| label: m08-c3-temps
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot(diagnostic, aes(date, residu / 1000)) +
+  geom_hline(yintercept = 0, colour = "grey60") + geom_line() +
+  labs(x = NULL, y = "Résidu (milliers de $ CA)")
 ```
 
-## Quand l'amplitude croît avec le niveau
+## Examiner la dispersion
 
-::: {.example-box}
-Si l'amplitude saisonnière croît avec les ventes, une transformation logarithmique peut être plus appropriée.
+```{r}
+#| label: m08-c3-dispersion
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot(diagnostic, aes(ajuste / 1000, residu / 1000)) +
+  geom_hline(yintercept = 0, colour = "grey60") + geom_point() +
+  labs(x = "Valeur ajustée (milliers de $ CA)", y = "Résidu (milliers de $ CA)")
+```
+
+## Ce que les indicatrices imposent
+
+::: {.note-box}
+Avec les indicatrices mensuelles, les sommes de résidus par mois sont nulles sur l’apprentissage, à l’arrondi près.
+:::
+::: {.warning-box}
+Constater cette propriété ne prouve pas que la saisonnalité future est stable.
 :::
 
-## Plus de coefficients ne garantit rien
+## Ce qui reste à regarder
 
-::: {.warning-box}
-Choisir le modèle uniquement parce qu'il produit davantage de coefficients ne garantit ni une meilleure prévision ni une meilleure interprétation.
+::: {.keypoints}
+- Courbure et dispersion qui changent.
+- Événement inhabituel ou séquences de même signe.
+- Information commerciale manquante.
+- Dépendance temporelle: approfondissement au module 09.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Résidu
 :::
 ::: {.label}
-Le modèle doit représenter un motif utile.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Les résidus révèlent ce qui reste à expliquer.
+écart après ajustement
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Graphiques
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+temps et dispersion
 :::
 :::
+::: {.metric}
+::: {.value}
+Limite
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+une moyenne nulle ne suffit pas
 :::
+:::
+::::
 
 ## Production autonome 8.3
 
 ::: {.lead}
-Nommez un graphique de résidus qui pourrait signaler qu'un modèle additif est insuffisant.
+Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Je distingue observation, valeur ajustée et résidu.
+- J’examine le temps et la dispersion au-delà des moyennes.
+- Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.
 :::

@@ -1,10 +1,12 @@
 ---
-title: "Capsule 1 - Définir une cible binaire"
+title: "Capsule 1 - Définir la cible et les partitions"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module10-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -18,126 +20,108 @@ format:
     progress: true
     hash: true
     transition: fade
-    code-copy: true
-    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
   message: false
-editor: visual
 ---
-
-```{r}
-#| label: setup-m10-c01
-#| include: false
-library(tidyverse)
-data_candidates <- c("data/fidelisation_clients_quebec.csv", "../../data/fidelisation_clients_quebec.csv", "modules/semaine-10-classification-modeles-avances/data/fidelisation_clients_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-clients <- readr::read_csv(data_path, show_col_types = FALSE)
-set.seed(2101)
-train <- clients |> group_by(depart_90j) |> slice_sample(prop = 0.80) |> ungroup()
-test <- anti_join(clients, train, by = "client_id")
-modele <- glm(depart_90j ~ anciennete_mois + utilisation_mensuelle + tickets_service_6m + satisfaction + type_contrat, family = binomial(), data = train)
-probabilite <- predict(modele, newdata = test, type = "response")
-```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une classification utile commence par un événement mesurable.
-:::
-
 ::: {.question-line}
-Que signifie exactement « client à risque »?
+Qui risque de partir et à quel moment?
 :::
 
 ::: {.note-box}
-Une cible binaire doit définir l'événement, l'horizon, la classe positive et la période à laquelle les prédicteurs sont disponibles.
+Une décision utile relie les probabilités à une action et à ses conséquences.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Définir une classe positive vérifiable.
-- Éviter une fuite de cible.
-- Mesurer la fréquence de la classe positive.
+- Définir la cible et les partitions.
+- Appliquer le raisonnement au cas de fidélisation.
+- Nommer une limite de l’interprétation.
 :::
 
-## La cible doit précéder l'intervention
+## Le raisonnement
 
 ::: {.keypoints}
-- La classe positive est l'événement à détecter.
-- L'horizon rend la cible mesurable.
-- Les prédicteurs doivent précéder l'événement.
+- Un client : une ligne; départ dans les 90 jours : classe positive.
+- Les prédicteurs doivent être connus avant ce départ.
+- Apprentissage pour ajuster, validation pour choisir, test pour évaluer.
 :::
 
-## 198 départs observables sur 650 clients
+## Trois ensembles aux rôles distincts
 
-::: {.example-box}
-« Départ dans les 90 jours » est une cible vérifiable. « Client à risque » est une intuition trop vague pour entraîner un modèle.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+60 %
 :::
-
-## Compter la classe positive
-
-```{r}
-#| label: code-m10-c01
-#| echo: true
-#| eval: true
-clients |> count(depart_90j)
-prop.table(table(clients$depart_90j))
-```
-
-## Une information postérieure au départ triche
-
-::: {.warning-box}
-Utiliser une information créée après le départ dans les prédicteurs donne une performance irréaliste et une intervention impossible à temps.
+::: {.label}
+Apprentissage : ajuster
 :::
+:::
+::: {.metric}
+::: {.value}
+20 %
+:::
+::: {.label}
+Validation : choisir
+:::
+:::
+::: {.metric}
+::: {.value}
+20 %
+:::
+::: {.label}
+Test : évaluer
+:::
+:::
+::::
+
+Les proportions sont approximatives et stratifiées par classe.
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Cible
 :::
 ::: {.label}
-Une cible doit être définie avant le modèle.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-La chronologie protège aussi la classification.
+La cible et l’horizon précèdent le modèle.
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Disponibilité
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+Une information future crée une fuite.
 :::
 :::
-:::
-
-::: {.notes}
-[Sources]
-- R Core Team. Documentation de stats::glm. https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
-- Tidymodels. Classification metrics. https://yardstick.tidymodels.org/
-:::
+::::
 
 ## Production autonome 10.1
 
 ::: {.lead}
-Expliquez pourquoi « client à risque » est une cible insuffisante.
+Définissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.
 :::
+
+Cette production se réalise une seule fois dans le rapport guidé.
 
 ### Auto-vérification
 
 ::: {.self-check}
-- J'ai défini la classe positive et la période test.
-- J'ai rapporté les deux types d'erreur, pas seulement l'exactitude.
-- Ma règle respecte la capacité et évite une interprétation individuelle certaine.
+- Je définis un départ observable dans les 90 jours.
+- Je vérifie les identifiants et les trois partitions.
+- Je réserve le test à la règle choisie.
 :::
+
+## Références et crédits
+
+Matériel MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.
+
+James, Witten, Hastie et Tibshirani (2021), *An Introduction to Statistical Learning*, 2e édition.

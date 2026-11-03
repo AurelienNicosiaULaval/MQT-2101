@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Atelier 03 - Prévoir la demande – MQT-2101 : Analyse et modélisation des données</title>
+<title>Laboratoire 03 - Prévoir la demande – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,12 +7048,14 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#résultat-attendu" id="toc-résultat-attendu" class="nav-link active" data-scroll-target="#résultat-attendu">Résultat attendu</a></li>
-  <li><a href="#préparation-avant-la-séance" id="toc-préparation-avant-la-séance" class="nav-link" data-scroll-target="#préparation-avant-la-séance">Préparation avant la séance</a></li>
-  <li><a href="#déroulement" id="toc-déroulement" class="nav-link" data-scroll-target="#déroulement">Déroulement</a></li>
-  <li><a href="#lien-avec-le-mini-rapport-2" id="toc-lien-avec-le-mini-rapport-2" class="nav-link" data-scroll-target="#lien-avec-le-mini-rapport-2">Lien avec le mini-rapport 2</a></li>
-  <li><a href="#critères-de-réussite" id="toc-critères-de-réussite" class="nav-link" data-scroll-target="#critères-de-réussite">Critères de réussite</a></li>
+  <ul class="collapse">
+  <li><a href="#la-mission" id="toc-la-mission" class="nav-link active" data-scroll-target="#la-mission">La mission</a></li>
+  <li><a href="#avant-la-séance" id="toc-avant-la-séance" class="nav-link" data-scroll-target="#avant-la-séance">Avant la séance</a></li>
+  <li><a href="#votre-parcours-en-classe" id="toc-votre-parcours-en-classe" class="nav-link" data-scroll-target="#votre-parcours-en-classe">Votre parcours en classe</a></li>
+  <li><a href="#ce-qui-est-attendu" id="toc-ce-qui-est-attendu" class="nav-link" data-scroll-target="#ce-qui-est-attendu">Ce qui est attendu</a></li>
+  <li><a href="#point-de-contrôle-du-mini-rapport-2" id="toc-point-de-contrôle-du-mini-rapport-2" class="nav-link" data-scroll-target="#point-de-contrôle-du-mini-rapport-2">Point de contrôle du mini-rapport 2</a></li>
+  <li><a href="#ressources" id="toc-ressources" class="nav-link" data-scroll-target="#ressources">Ressources</a></li>
+  <li><a href="#auto-vérification-et-aide" id="toc-auto-vérification-et-aide" class="nav-link" data-scroll-target="#auto-vérification-et-aide">Auto-vérification et aide</a></li>
   </ul>
 </nav>
     </div>
@@ -7031,7 +7064,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Atelier 03 - Prévoir la demande</h1>
+<h1 class="title">Laboratoire 03 - Prévoir la demande</h1>
 </div>
 
 
@@ -7048,58 +7081,140 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Mission">
+<div class="learning-hero">
+<p class="hero-kicker">
+Troisième laboratoire en classe
+</p>
+<h2 class="anchored">
+Quelle prévision utiliser pour préparer l’approvisionnement?
+</h2>
+<p>Vous reprenez la demande hebdomadaire des modules 06 et 07 et ajoutez une tendance linéaire vue au module 08. Vous comparez les résultats puis expliquez une décision à une équipe fictive.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Séance
+</div>
+<div class="fact-value">
+En classe, avec rétroaction
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio et Quarto
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Données
+</div>
+<div class="fact-value">
+Demande hebdomadaire simulée
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Trace
+</div>
+<div class="fact-value">
+Un rapport de laboratoire
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="la-mission" class="level2">
+<h2 class="anchored" data-anchor-id="la-mission">La mission</h2>
+<p>Une équipe d’approvisionnement fictive doit prévoir la demande des treize prochaines semaines. Quelle méthode peut-elle utiliser, avec quelles réserves et quel suivi?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Production commune du laboratoire">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Mission
+<span class="screen-reader-only">Note</span>Production commune du laboratoire
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une équipe d’approvisionnement doit prévoir la demande des treize prochaines semaines. Vous devez comparer des références simples, choisir une méthode et traduire les erreurs en risque de stock.</p>
+<p>Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.</p>
 </div>
 </div>
-<section id="résultat-attendu" class="level2">
-<h2 class="anchored" data-anchor-id="résultat-attendu">Résultat attendu</h2>
-<p>À la fin de l’atelier, votre fichier Quarto contiendra :</p>
+<p>Cette production se construit une seule fois dans <code>rapport-labo-03.qmd</code>. Les étapes ci-dessous, le <a href="../../modules/atelier-03-series-chronologiques/guide-atelier.html">guide</a>, les <a href="../../modules/atelier-03-series-chronologiques/capsules.html">repères</a> et la <a href="../../modules/atelier-03-series-chronologiques/presentation.html">présentation de lancement</a> désignent le même rapport. Le <a href="../../modules/atelier-03-series-chronologiques/exercices.html">transfert mensuel</a> est une pratique facultative distincte.</p>
+</section>
+<section id="avant-la-séance" class="level2">
+<h2 class="anchored" data-anchor-id="avant-la-séance">Avant la séance</h2>
+<p>Le <a href="../../calendrier.html">calendrier du cours</a> prévoit la séance le mercredi 18 novembre 2026, de 9 h à 11 h 50, au pavillon Palasis-Prince, local 3213.</p>
 <ul>
-<li>la cible, l’origine et l’horizon;</li>
-<li>un audit de la série;</li>
-<li>un graphique annoté;</li>
-<li>une période de validation chronologique;</li>
-<li>au moins trois méthodes comparées;</li>
-<li>MAE, RMSE et biais;</li>
-<li>une recommandation de stock et une règle de surveillance.</li>
+<li>Revoyez origine, horizon et validation au <a href="../../modules/semaine-06-series-chronologiques-intro/index.html">module 06</a>, les références et le SES au <a href="../../modules/semaine-07-lissage/index.html">module 07</a>, puis l’indice et la tendance au <a href="../../modules/semaine-08-tendance-saisonnalite/index.html">module 08</a>.</li>
+<li>Téléchargez et décompressez le <a href="telechargements/laboratoire-03.zip">projet de départ</a>. Ouvrez <code>laboratoire-03.Rproj</code>, puis <code>rapport-labo-03.qmd</code>; lancez Render avant de commencer.</li>
+<li>Installez <code>tidyverse</code> et <code>forecast</code> une seule fois si nécessaire. Le <a href="data/dictionnaires.md">dictionnaire</a> décrit les fichiers fournis.</li>
+<li>Apportez vos traces précédentes et une question sur votre mini-rapport 2. Si le premier rendu bloque, conservez le message d’erreur pour recevoir de l’aide.</li>
 </ul>
+<p>Reprenez vos quatre prévisions du module 07 si leur origine et leurs cibles concordent; ajoutez ensuite la tendance. Il n’est pas nécessaire de tout réécrire pour commencer.</p>
+<p>Le cas est simulé. Les 91 premières semaines servent à l’apprentissage; les 13 dernières, déjà examinées aux modules 06 et 07, servent à comparer. Cette réutilisation ne crée pas un test final indépendant.</p>
 </section>
-<section id="préparation-avant-la-séance" class="level2">
-<h2 class="anchored" data-anchor-id="préparation-avant-la-séance">Préparation avant la séance</h2>
-<ol type="1">
-<li>Téléchargez <a href="data/demande_hebdomadaire_quebec.csv"><code>demande_hebdomadaire_quebec.csv</code></a>.</li>
-<li>Relisez les <a href="../../modules/atelier-03-series-chronologiques/capsules.html">repères préparatoires</a>.</li>
-<li>Ouvrez un nouveau fichier Quarto et vérifiez qu’il se rend en HTML.</li>
-<li>Apportez votre trace des modules 06 à 08.</li>
-</ol>
+<section id="votre-parcours-en-classe" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours-en-classe">Votre parcours en classe</h2>
+<p>Travaillez en binôme si possible, ou seul. Chaque personne doit pouvoir expliquer la démarche. Le <a href="../../modules/atelier-03-series-chronologiques/guide-atelier.html">guide de la mission</a> donne les consignes et les indices à ouvrir après une tentative; l’enseignant vous accompagne. Les cartes servent à retrouver une étape, sans ajouter de production.</p>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1"><summary><span class="path-number">1</span><span class="path-title">Auditer et situer</span><span class="path-preview">Que sait-on à la fin de la semaine du 22 septembre?</span><span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#audit">Aide R</a><a class="summary-resource-link exercise-link" href="guide-atelier.html#audit">Guide</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Action dans le même rapport</span> Énoncez la cible, l’unité, le calendrier, l’origine et les 13 semaines de validation. Vérifiez dates distinctes, régularité et valeurs manquantes.</p><p><span class="step-label">Après une tentative</span> <a href="guide-atelier.html#audit">Indice du guide</a> · <a href="demonstrations.html#audit">Exemple R</a></p></div></details>
+<details class="path-card" id="etape-2"><summary><span class="path-number">2</span><span class="path-title">Explorer le passé</span><span class="path-preview">Que suggèrent les données d’apprentissage?</span><span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#exploration">Aide R</a><a class="summary-resource-link exercise-link" href="guide-atelier.html#exploration">Guide</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Action dans le même rapport</span> Tracez la demande d’apprentissage, décrivez une tendance ou un motif possible et distinguez les promotions observées des informations futures.</p><p><span class="step-label">Après une tentative</span> <a href="guide-atelier.html#exploration">Indice du guide</a> · <a href="demonstrations.html#exploration">Exemple R</a></p></div></details>
+<details class="path-card" id="etape-3"><summary><span class="path-number">3</span><span class="path-title">Construire les prévisions</span><span class="path-preview">Qu’apporte une droite aux références déjà connues?</span><span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#previsions">Aide R</a><a class="summary-resource-link exercise-link" href="guide-atelier.html#previsions">Guide</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Action dans le même rapport</span> Émettez à la même origine les cinq prévisions : naïve, moyenne des quatre dernières semaines, SES, naïve saisonnière et tendance linéaire.</p><p><span class="step-label">Après une tentative</span> <a href="guide-atelier.html#previsions">Indice du guide</a> · <a href="demonstrations.html#previsions">Exemple R</a></p></div></details>
+<details class="path-card" id="etape-4"><summary><span class="path-number">4</span><span class="path-title">Comparer et lire l’incertitude</span><span class="path-preview">Que racontent les erreurs et les intervalles?</span><span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#comparaison">Aide R</a><a class="summary-resource-link exercise-link" href="guide-atelier.html#comparaison">Guide</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Action dans le même rapport</span> Comparez ME, MAE et RMSE, tracez les erreurs ou les prévisions et interprétez les intervalles à 80 % et 95 % du SES.</p><p><span class="step-label">Après une tentative</span> <a href="guide-atelier.html#comparaison">Indice du guide</a> · <a href="demonstrations.html#comparaison">Exemple R</a></p></div></details>
+<details class="path-card" id="etape-5"><summary><span class="path-number">5</span><span class="path-title">Décider et surveiller</span><span class="path-preview">Que change le coût des écarts?</span><span class="path-resource"><a class="summary-resource-link demo-link" href="demonstrations.html#decision">Aide R</a><a class="summary-resource-link exercise-link" href="guide-atelier.html#decision">Guide</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary><div class="step-detail"><p><span class="step-label">Action dans le même rapport</span> Calculez les coûts fictifs, justifiez une méthode et rédigez une recommandation avec une limite et une prochaine vérification.</p><p><span class="step-label">Après une tentative</span> <a href="guide-atelier.html#decision">Indice du guide</a> · <a href="demonstrations.html#decision">Exemple R</a></p></div></details>
+</div>
+<p>Après l’exploration, présentez votre protocole et vos premiers constats pour obtenir une rétroaction. Avant le rendu final, demandez une relecture à un autre binôme ou à l’enseignant et corrigez un point précis.</p>
 </section>
-<section id="déroulement" class="level2">
-<h2 class="anchored" data-anchor-id="déroulement">Déroulement</h2>
-<p>Suivez le <a href="../../modules/atelier-03-series-chronologiques/guide-atelier.html">guide en classe</a>, puis utilisez les <a href="../../modules/atelier-03-series-chronologiques/demonstrations.html">démonstrations</a> uniquement pour débloquer une étape. Les <a href="../../modules/atelier-03-series-chronologiques/exercices.html">exercices</a> servent à consolider et à vérifier la trace finale.</p>
+<section id="ce-qui-est-attendu" class="level2">
+<h2 class="anchored" data-anchor-id="ce-qui-est-attendu">Ce qui est attendu</h2>
+<p>Le rapport comprend la question et les contrôles, un graphique du passé, cinq prévisions communes, les mesures et coûts, une interprétation des intervalles du SES, puis une recommandation avec limite et suivi. Le SES illustre une incertitude : ses intervalles appartiennent au SES, même si vous retenez une autre méthode. Les résultats du laboratoire sont une pratique formative distincte du mini-rapport.</p>
+<p>Les prévisions sont comparées sur les mêmes cibles et dans les mêmes unités. La tendance est ajoutée aux quatre méthodes du module 07. Holt est un <a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#holt">complément accompagné</a>, facultatif pour le rapport; les modèles saisonniers riches et tests avancés ne sont pas exigés ici.</p>
 </section>
-<section id="lien-avec-le-mini-rapport-2" class="level2">
-<h2 class="anchored" data-anchor-id="lien-avec-le-mini-rapport-2">Lien avec le mini-rapport 2</h2>
-<p>Cet atelier est le point de contrôle pédagogique du <a href="../../evaluations/mini-rapport-2.html">mini-rapport 2</a>. Apportez une question, une cible et une première idée de jeu de données si vous souhaitez vérifier que votre projet respecte la logique de prévision et de validation temporelle.</p>
+<section id="point-de-contrôle-du-mini-rapport-2" class="level2">
+<h2 class="anchored" data-anchor-id="point-de-contrôle-du-mini-rapport-2">Point de contrôle du mini-rapport 2</h2>
+<p>Le calendrier prévoit un point de contrôle pendant le laboratoire. Apportez votre proposition de données et votre protocole. Pour la voie temporelle, identifiez cible, origine, horizon, références et validation. Pour la voie classification, consultez le <a href="../../modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe">parcours anticipé du module 10</a> et préparez cible, séparation, probabilités et choix de seuils. Les <a href="../../evaluations/mini-rapport-2.html">consignes du mini-rapport</a> restent la référence. Les résultats de ce laboratoire ne remplacent pas une analyse autonome.</p>
 </section>
-<section id="critères-de-réussite" class="level2">
-<h2 class="anchored" data-anchor-id="critères-de-réussite">Critères de réussite</h2>
+<section id="ressources" class="level2">
+<h2 class="anchored" data-anchor-id="ressources">Ressources</h2>
+<div class="resource-list">
+<a class="resource-row" href="guide-atelier.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Guide de la mission</span><span class="resource-row-text">Consignes, indices et grille de rétroaction.</span></span></a>
+<a class="resource-row" href="presentation.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Présentation de lancement</span><span class="resource-row-text">Support HTML et PDF pour la séance en classe.</span></span></a>
+<a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Aide R et exemple complet</span><span class="resource-row-text">Un geste à la fois, après votre première tentative.</span></span></a>
+<a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Transfert et pratiques</span><span class="resource-row-text">Ventes mensuelles, coûts et corrigés repliables, facultatifs.</span></span></a>
+<a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures et repères</span><span class="resource-row-text">Explications en français et rappels ciblés.</span></span></a>
+</div>
+<p>Le support de lancement est aussi offert en <a href="media/pdf/presentation.pdf">PDF</a>. Aucun enregistrement vidéo ni PDF annoté n’est annoncé.</p>
+</section>
+<section id="auto-vérification-et-aide" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification-et-aide">Auto-vérification et aide</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Aucune information future n’entre dans l’entraînement.</label></li>
-<li><label><input type="checkbox">Les méthodes utilisent la même période de validation.</label></li>
-<li><label><input type="checkbox">Une référence naïve est incluse.</label></li>
-<li><label><input type="checkbox">La méthode retenue est justifiée par les données et la décision.</label></li>
-<li><label><input type="checkbox">La recommandation reconnaît l’incertitude et le coût des erreurs.</label></li>
+<li><label><input type="checkbox">J’ai précisé l’origine, les dates et les unités.</label></li>
+<li><label><input type="checkbox">Je compare les cinq méthodes sur les mêmes cibles.</label></li>
+<li><label><input type="checkbox">Je distingue l’intervalle du SES et la méthode retenue.</label></li>
+<li><label><input type="checkbox">Ma recommandation cite des résultats, une limite et un suivi.</label></li>
 </ul>
+<p>Si un blocage survient, vérifiez que tout le projet a été extrait, que <code>data/</code> est présent, puis reprenez l’<a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#preparation">aide R</a>. Montrez votre tentative et le message d’erreur complet.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="IA autorisée pour la rétroaction">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

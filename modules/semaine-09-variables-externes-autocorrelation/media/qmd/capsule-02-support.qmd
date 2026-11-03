@@ -1,10 +1,12 @@
 ---
-title: "Capsule 2 - Régression conditionnelle"
+title: "Capsule 2 - Ajuster et interpréter"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module09-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -18,131 +20,87 @@ format:
     progress: true
     hash: true
     transition: fade
-    code-copy: true
-    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
   message: false
-editor: visual
 ---
-
-```{r}
-#| label: setup-m09-c02
-#| include: false
-library(tidyverse)
-library(forecast)
-data_candidates <- c("data/ventes_promotions_quebec.csv", "../../data/ventes_promotions_quebec.csv", "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
-ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
-train <- ventes |> slice_head(n = 60)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label, data = train)
-```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Une prévision avec promotion ou prix est toujours liée aux hypothèses retenues.
-:::
-
 ::: {.question-line}
-Que permet réellement un coefficient de promotion?
+Que signifie le coefficient de promotion?
 :::
 
 ::: {.note-box}
-Le coefficient d'une variable externe décrit une association conditionnelle aux autres variables du modèle. Il ne prouve pas à lui seul un effet causal.
+La qualité d’une prévision dépend du modèle et de l’information disponible.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Ajuster une régression temporelle avec prédicteurs externes.
-- Employer un langage conditionnel et non causal.
-- Formuler une interprétation conditionnelle et non causale.
+- Ajuster et interpréter.
+- Relier le résultat au cas guidé.
+- Nommer une limite de l’interprétation.
 :::
 
-## Promotion oui n'est pas une expérience aléatoire
-
-::: {.example-box}
-Comparer « promotion oui » et « promotion non » dans un modèle observationnel ne reproduit pas une expérimentation aléatoire.
-:::
-
-## Le coefficient dépend du scénario et du modèle
+## Le raisonnement
 
 ::: {.keypoints}
-- Le modèle combine tendance, calendrier et prédicteurs.
-- Les coefficients dépendent des autres variables incluses.
-- Les prédictions sont conditionnelles au scénario.
+- Ventes = tendance + mois + promotion + prix + indice + résidu.
+- Comparer oui à non, en dollars, à autres variables fixées.
+- La régression mesure une association conditionnelle.
 :::
 
-## Ajuster une régression conditionnelle
+## Une association dans le cas guidé
 
-```{r}
-#| label: code-m09-c02
-#| echo: true
-#| eval: true
-modele <- lm(
-  ventes ~ tendance + promotion + prix_moyen + mois_label,
-  data = train
-)
-broom::tidy(modele) |>
-  filter(term %in% c("promotionoui", "prix_moyen"))
-```
-
-## Association estimée n'est pas effet causal
+::: {.example-box}
+À prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».
+:::
 
 ::: {.warning-box}
-Transformer une association estimée en promesse d'effet causal peut produire une recommandation injustifiée.
+Ce résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’effet causal d’une promotion.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Promotion
 :::
 ::: {.label}
-Les coefficients sont conditionnels au modèle.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Une question causale exige un autre plan d'étude.
+Les décisions de promotion ne sont pas nécessairement aléatoires.
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Association
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+Association ne signifie pas effet causal établi.
 :::
 :::
-:::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
-:::
+::::
 
 ## Production autonome 9.2
 
 ::: {.lead}
-Expliquez pourquoi deux prévisions sous des niveaux de promotion différents ne prouvent pas automatiquement un effet causal.
+Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.
 :::
+
+Cette production se réalise une seule fois dans le rapport guidé.
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Je nomme la catégorie de référence et les unités.
+- Je distingue association conditionnelle et causalité.
+- Les douze mois de validation ne servent pas à ajuster le modèle.
 :::
+
+## Références et crédits
+
+Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.
+
+Hyndman et Athanasopoulos (2021), *Forecasting: Principles and Practice*, 3e édition.

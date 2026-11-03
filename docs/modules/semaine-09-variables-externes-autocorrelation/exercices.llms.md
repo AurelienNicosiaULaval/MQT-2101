@@ -1,115 +1,114 @@
 # Exercices - Module 09
 
+Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Les trois derniers exercices sont des pratiques supplémentaires.
+
 ## Préparation
-
-Les capsules utilisent une seule série de ventes et des scénarios de prix. Le cas de transfert porte sur plusieurs succursales et demande de détecter des variables qui ne seraient connues qu’après le mois à prévoir.
-
-Jeu de données de transfert : [cas_integrateur_quebec.csv](../../donnees/#cas_integrateur_quebec).
 
 ``` r
 library(tidyverse)
-library(broom)
-
-data_path <- if (file.exists("../atelier-04-recapitulation/data/cas_integrateur_quebec.csv")) {
-  "../atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
-} else {
-  "modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv"
-}
-
-service <- read_csv(
-  data_path,
-  show_col_types = FALSE
-) |>
-  mutate(
-    date = as.Date(date),
-    succursale = factor(succursale),
-    promotion = factor(promotion)
-  ) |>
+racines <- c(".", "modules/semaine-09-variables-externes-autocorrelation")
+racine <- racines[file.exists(file.path(racines, "data/cas_integrateur_quebec.csv"))][1]
+stopifnot(!is.na(racine))
+service <- read_csv(file.path(racine, "data/cas_integrateur_quebec.csv"), show_col_types = FALSE) |>
+  mutate(date = as.Date(date), succursale = factor(succursale),
+         promotion = factor(promotion, levels = c("non", "oui"))) |>
   arrange(succursale, date) |>
   group_by(succursale) |>
   mutate(ventes_retard_1 = lag(ventes)) |>
   ungroup()
+stopifnot(nrow(service) == 288, !anyDuplicated(service[c("succursale", "date")]))
+entrainement_service <- service |> filter(date < as.Date("2025-01-01"))
 ```
 
-## Exercice 1 - Audit de disponibilité
+## Exercice 1 - Auditer la disponibilité
 
-Une équipe propose de prévoir les ventes du mois suivant avec `promotion`, `capacite`, `achalandage`, `ruptures_stock`, `temps_attente`, `satisfaction` et `ventes_retard_1`.
+Une équipe souhaite prévoir les ventes du mois suivant avec promotion, capacité, achalandage, ruptures, temps d’attente, satisfaction et ventes du mois courant. Classez-les selon leur disponibilité à l’origine. Proposez une solution pour une variable indisponible.
 
-Construisez un tableau indiquant pour chaque variable :
+> **TIP:**
+>
+> Une promotion approuvée et une capacité annoncée peuvent être connues, sous réserve du calendrier réel. Les ventes du mois courant ne sont utilisables que si elles sont effectivement disponibles à l’origine. L’achalandage, les ruptures, l’attente et la satisfaction du mois cible sont observés après coup : leur utilisation telle quelle créerait une fuite. On peut prévoir ou scénariser une variable, puis nommer l’incertitude, ou la retirer.
 
-- le moment où elle devient réellement connue;
-- si elle est planifiée, observée, retardée ou prévue séparément;
-- si son utilisation créerait une fuite d’information;
-- la solution de remplacement possible.
+## Exercice 2 - Diagnostiquer par succursale
 
-L’équipe doit notamment repérer que les mesures opérationnelles du mois à prévoir ne sont pas disponibles au début de ce mois.
+Ajustez un modèle simple sur 2020 à 2024, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale. Pourquoi ne pas joindre la fin d’une succursale au début de la suivante?
 
-## Exercice 2 - Résidus et autocorrélation
+> **TIP:**
+>
+> ``` r
+> modele_base <- lm(ventes ~ indice_temps + promotion + succursale, data = entrainement_service)
+> diagnostic <- entrainement_service |>
+>   mutate(residu = residuals(modele_base)) |>
+>   arrange(succursale, date) |>
+>   group_by(succursale) |>
+>   summarise(autocorrelation_rang_1 = cor(residu, lag(residu), use = "complete.obs"), .groups = "drop")
+> diagnostic
+> ```
+>
+>     # A tibble: 4 × 2
+>       succursale autocorrelation_rang_1
+>       <fct>                       <dbl>
+>     1 Gatineau                 -0.00914
+>     2 Montréal                  0.0853
+>     3 Québec                    0.119
+>     4 Sherbrooke               -0.185
+>
+> Les retards sont calculés après tri dans chaque groupe. Une moyenne de résidus proche de zéro ne suffit pas : des signes semblables peuvent se suivre. Les frontières entre succursales ne sont pas des mois consécutifs d’une même série.
 
-Ajustez un modèle de base sur les observations antérieures à 2025, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale.
+## Exercice 3 - Comparer des scénarios
 
-``` r
-entrainement <- service |>
-  filter(date < as.Date("2025-01-01"))
+Depuis la fin de 2025, construisez deux scénarios pour janvier 2026 à Québec : capacité stable ou augmentée de 5 %, promotion non et dernières ventes connues. Utilisez le même modèle et interprétez la différence sans conclure à un effet causal.
 
-modele_base <- lm(
-  ventes ~ indice_temps + promotion + succursale,
-  data = entrainement
-)
+> **TIP:**
+>
+> ``` r
+> # Un mois à partir de fin 2025 : le dernier mois et son chiffre de ventes sont disponibles.
+> modele_scenario <- lm(ventes ~ indice_temps + promotion + capacite + ventes_retard_1,
+>                       data = service |> filter(!is.na(ventes_retard_1)))
+> profil <- service |> filter(succursale == "Québec") |> slice_max(date, n = 1, with_ties = FALSE) |>
+>   transmute(indice_temps = indice_temps + 1, promotion = factor("non", levels = levels(service$promotion)),
+>             capacite, ventes_retard_1 = ventes)
+> scenarios <- bind_rows(profil |> mutate(scenario = "Capacité inchangée"),
+>                        profil |> mutate(capacite = capacite * 1.05, scenario = "Capacité augmentée de 5 %")) |>
+>   mutate(prevision = as.numeric(predict(modele_scenario, newdata = pick(everything()))))
+> scenarios
+> ```
+>
+>     # A tibble: 2 × 6
+>       indice_temps promotion capacite ventes_retard_1 scenario             prevision
+>              <dbl> <fct>        <dbl>           <dbl> <chr>                    <dbl>
+>     1           73 non           2400          230891 Capacité inchangée     196781.
+>     2           73 non           2520          230891 Capacité augmentée …   205502.
+>
+> La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. La formule de capacité est une hypothèse, pas un plan vérifié.
 
-diagnostic <- augment(modele_base, data = entrainement) |>
-  arrange(succursale, date) |>
-  group_by(succursale) |>
-  summarise(
-    autocorrelation_rang_1 = cor(.resid, lag(.resid), use = "complete.obs"),
-    .groups = "drop"
-  )
+## Exercice 4 - Formuler une recommandation
 
-diagnostic
-```
+Rédigez une recommandation distinguant fuite d’information, diagnostic par succursale et scénario. Nommez un risque d’extrapolation.
 
-Expliquez pourquoi une moyenne résiduelle proche de zéro ne suffit pas si les erreurs positives ou négatives se suivent dans le temps.
+> **TIP:**
+>
+> Retirer les variables du mois cible connues après coup, ou utiliser une prévision distincte explicitement incertaine. Examiner les résidus dans chaque succursale et au fil du temps. Présenter la hausse de capacité comme un scénario conditionnel et vérifier si la valeur envisagée se situe dans la plage des données et convient à Québec.
 
-## Exercice 3 - Scénarios
+## Exercice 5 - Retard et horizon
 
-Créez un modèle de scénario qui n’utilise que la tendance, une promotion planifiée, la capacité annoncée et les ventes du mois courant. Comparez ensuite un scénario de capacité inchangée à un scénario de hausse de capacité de 5 %.
+À la fin de décembre, les ventes de décembre sont connues. Peut-on les utiliser pour prévoir janvier et février?
 
-``` r
-modele_scenario <- lm(
-  ventes ~ indice_temps + promotion + capacite + ventes_retard_1,
-  data = entrainement
-)
+> **TIP:**
+>
+> Pour janvier, oui si la mesure de décembre est disponible à l’origine. Pour février, le retard d’un mois serait la vente de janvier, encore inconnue à la fin de décembre; il faut la prévoir, utiliser un autre retard disponible ou mettre à jour la prévision après janvier.
 
-profil_reference <- service |>
-  filter(succursale == "Québec") |>
-  slice_max(date, n = 1, with_ties = FALSE) |>
-  transmute(
-    indice_temps = indice_temps + 1,
-    promotion = factor("non", levels = levels(service$promotion)),
-    capacite,
-    ventes_retard_1 = ventes
-  )
+## Exercice 6 - Interpréter une p-valeur
 
-scenarios <- bind_rows(
-  profil_reference |>
-    mutate(scenario = "Capacité inchangée"),
-  profil_reference |>
-    mutate(
-      capacite = capacite * 1.05,
-      scenario = "Capacité augmentée de 5 %"
-    )
-)
+Le test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résidus sont indépendants?
 
-scenarios <- scenarios |>
-  mutate(
-    prevision = predict(modele_scenario, newdata = scenarios)
-  )
+> **TIP:**
+>
+> Non. Le test ne fournit pas assez d’évidence contre l’absence d’autocorrélations examinées, mais une p-valeur élevée ne démontre ni l’indépendance ni l’absence de structure. Examiner aussi le graphique et la taille de l’échantillon.
 
-scenarios
-```
+## Exercice 7 - Événement spécial
 
-Expliquez pourquoi la différence entre les deux prévisions est une implication conditionnelle du modèle, et non une estimation certaine de l’effet de la nouvelle capacité.
+Une panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois?
 
-## Exercice de synthèse
-
-Rédigez une recommandation qui distingue trois décisions : retirer les variables indisponibles, surveiller l’autocorrélation par succursale et présenter les changements de capacité comme des scénarios. Ajoutez une limite d’extrapolation.
+> **TIP:**
+>
+> Vérifier d’abord si la donnée est erronée et documenter la cause. Selon la question, comparer une analyse avec et sans ce mois ou ajouter un indicateur d’événement; ne pas le supprimer automatiquement. Une prévision future requiert aussi un scénario sur la présence de l’événement.

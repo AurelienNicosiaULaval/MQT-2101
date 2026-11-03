@@ -1,19 +1,158 @@
 ---
 title: "Lectures - Module 07"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/module07-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-## Lectures obligatoires
+## Comment utiliser ces lectures
 
-- Hyndman et Athanasopoulos, [Chapitre 8 - Exponential smoothing](https://otexts.com/fpp3/expsmooth.html), sections 8.1 et 8.2 pour l'intuition du lissage;
-- [Section 5.8 - Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html), pour MAE, RMSE et MAPE.
+Les explications françaises ci-dessous suffisent au parcours principal. Après chaque capsule, améliorez la réponse déjà commencée dans `lissage_demande.qmd`, puis faites l’exercice associé dans `lissage_electricite.qmd`. Il n’y a pas de troisième rapport à produire. Les démonstrations fournissent le code complet et les exercices les corrigés à ouvrir après une tentative.
 
-Question de lecture : pourquoi aucune mesure d'erreur n'est-elle universellement meilleure?
+## Lectures intégrées au parcours {#lectures-parcours}
 
-## Lecture facultative
+::: {.table-responsive}
+| Moment | Statut et passage à lire | Ce qu’il faut en retenir | Vérification personnelle |
+| --- | --- | --- | --- |
+| Avant de commencer | Obligatoire: [préparation R](demonstrations.qmd#preparation) et [dictionnaires](data/dictionnaires.md) | Deux séries simulées, deux calendriers, deux unités, des validations déjà connues. | Nommer les périodes et les fichiers de vos deux rapports. |
+| Après la capsule 1 | Obligatoire: [moyennes mobiles](#lecture-1), puis [démonstration 1](demonstrations.qmd#moyennes-mobiles) | Fenêtre, retard, moyenne arrière et moyenne centrée. | Dire quand y_t devient disponible et ce que MM4 peut prévoir. |
+| Après la capsule 2 | Obligatoire: [niveau exponentiel](#lecture-2), puis [démonstration 2](demonstrations.qmd#lissage-exponentiel) | Récurrence, initialisation, poids et prévisions constantes. | Calculer deux mises à jour et distinguer alpha imposé et estimé. |
+| Après la capsule 3 | Obligatoire: [erreurs et pertes](#lecture-3), puis [exercice 3](exercices.qmd#exercice-3) | Signe, unités, grandes erreurs et coût asymétrique. | Expliquer pourquoi MAE et coût peuvent préférer des méthodes différentes. |
+| Après la capsule 4 | Obligatoire: [comparer et recommander](#lecture-4), puis [exercice 4](exercices.qmd#exercice-4) | Candidats fixes, saisonnalité, choix provisoire et surveillance. | Justifier deux décisions différentes selon le cas. |
+| Après le parcours | Facultatif: [Holt accompagné](#holt), [différenciation et méthodes saisonnières](#complements) | Prolongements et conditions qui ne sont pas exigés dans la trace principale. | Expliquer ce qu’ajoute chaque méthode avant d’en interpréter le résultat. |
+:::
 
-- [Section 8.2 - Methods with trend](https://otexts.com/fpp3/holt.html), pour approfondir le prolongement accompagné de Holt présenté dans la capsule 2 et utilisé au laboratoire 3.
+## 1. Lisser, puis prévoir {#lecture-1}
 
-Les ressources sont accessibles gratuitement sur le site officiel de l'ouvrage.
+Une observation peut fluctuer pour plusieurs raisons: activité habituelle, événement exceptionnel, erreur de mesure ou variation irrégulière. La moyenne mobile permet de voir un niveau local. Elle ne détermine pas à elle seule la raison d’une fluctuation et ne supprime pas nécessairement tout motif saisonnier.
+
+La moyenne arrière de largeur k au temps t est
+
+$$m_t = \frac{1}{k}\sum_{j=0}^{k-1} y_{t-j}.$$
+
+Elle contient l’observation courante y_t. Après sa réception, on peut l’utiliser comme prévision de la prochaine période. On ne peut pas la présenter comme une prévision de y_t émise avant de le connaître. Dans une série complète, les k − 1 premières fenêtres sont incomplètes. Le paramètre `.complete = TRUE` les laisse manquantes.
+
+Une fenêtre courte accorde un poids plus grand à chaque observation récente. Elle réagit aux changements, mais conserve davantage de fluctuations. Une fenêtre longue répartit le poids sur plus d’observations et réagit plus lentement. Dans une série croissante, les valeurs anciennes peuvent maintenir la moyenne sous le niveau courant. Ce retard est un risque à examiner; il ne rend pas toute comparaison empirique inutile.
+
+Pour notre règle de prévision MM4, on calcule la dernière moyenne sur l’apprentissage, puis on la répète pendant les treize horizons:
+
+$$\widehat y_{T+h\mid T}=m_T,\qquad h=1,\ldots,13.$$
+
+Il n’y a aucune mise à jour avec les demandes de validation. Une règle qui remplace les observations futures par ses propres prévisions dans une fenêtre récursive serait différente. Nous ne l’utilisons pas ici. Avec k = 1, cette règle constante donne le naïf; avec k = T, elle donne la moyenne de tout l’apprentissage.
+
+Une moyenne centrée inclut des observations situées après t. Elle sert à l’exploration rétrospective de la tendance et demeure indisponible aux dernières dates. Pour un nombre pair de périodes saisonnières, un centrage approprié exige des poids spécifiques, par exemple une moyenne 2 × 12. Une simple moyenne arrière de douze mois n’est pas une prévision qui reproduit les différences entre les douze mois.
+
+Lecture externe facultative: Hyndman et Athanasopoulos (2021), [FPP3, section 3.3, «Moving averages»](https://otexts.com/fpp3/decomposition.html#sec-moving-averages), jusqu’à «Moving averages of moving averages». Le livre présente des moyennes centrées; notre prévision MM4 utilise une fenêtre arrière. Relevez les dates que la fenêtre rend disponibles avant de transposer le code.
+
+## 2. Mettre à jour le niveau avec le SES {#lecture-2}
+
+Le lissage exponentiel simple, abrégé SES, met à jour un niveau après chaque nouvelle observation:
+
+$$\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1},\qquad 0<\alpha<1.$$
+
+La même relation s’écrit $\ell_t=\ell_{t-1}+\alpha(y_t-\ell_{t-1})$. Le nouveau niveau corrige une fraction alpha de l’écart entre observation et niveau précédent. Pour une initialisation $\ell_1=y_1$, le développement exact à la date T vaut
+
+$$\ell_T=(1-\alpha)^{T-1}y_1+
+\sum_{j=0}^{T-2}\alpha(1-\alpha)^j y_{T-j}.$$
+
+Le premier terme conserve le poids de l’initialisation. Oublier ce terme dans un historique fini donne une somme de poids incomplète. Les autres poids diminuent avec l’ancienneté: la dernière observation reçoit alpha, la précédente alpha(1 − alpha), et ainsi de suite.
+
+Avec alpha = 0,8, une observation nouvelle déplace davantage le niveau qu’avec alpha = 0,2. Ce déplacement peut être utile pour un changement durable et excessif pour un choc temporaire. Une valeur faible ne garantit pas une meilleure stabilité des erreurs futures, et une valeur élevée ne prouve pas l’existence d’une tendance. L’état initial et le paramètre doivent être précisés ensemble.
+
+Dans notre illustration, la fonction fournie `niveau_ses()` utilise exactement la première observation comme niveau initial. Les deux valeurs imposées d’alpha partagent donc la même initialisation. Dans la comparaison guidée principale, `forecast::ses(..., initial = "optimal")` estime alpha et le niveau initial sur l’apprentissage. Ce sont deux protocoles explicites, avec des objectifs différents. La documentation [SES et Holt de l’équipe forecast](https://pkg.robjhyndman.com/forecast/reference/ses.html), consultée le 26 octobre 2026, décrit `initial` et `alpha`; `alpha = NULL` demande son estimation. Les calculs livrés utilisent forecast 8.24.0; le site documentaire peut afficher une version plus récente.
+
+À origine fixe, toutes les prévisions SES valent le dernier niveau $\ell_T$. La méthode n’extrapole aucune pente et n’ajoute pas de saisonnalité. La fréquence déclarée dans `ts()` décrit la série, mais n’ajoute pas ces composantes au SES. Les intervalles de prédiction du module 06 restent utiles pour exprimer l’incertitude; nous ne les revalidons pas en comparant seulement des prévisions ponctuelles.
+
+Pour consolider: Hyndman et Athanasopoulos (2021), [FPP3, section 8.1](https://otexts.com/fpp3/exponential-smoothing.html#sec-ses), parties «Weighted average form», «Component form», «Flat forecasts» et «Optimisation». Les exemples de l’ouvrage utilisent fable; le cours emploie forecast. Vérifiez les fonctions et leurs options avant de transposer un exemple.
+
+## 3. Lire les erreurs et choisir une perte {#lecture-3}
+
+On conserve la convention du module 06: $e_h=y_{T+h}-\widehat y_{T+h\mid T}$. Une erreur positive est une sous-prévision. Sur H cibles communes,
+
+$$
+\begin{aligned}
+\mathrm{ME}&=\frac1H\sum_{h=1}^H e_h,\\
+\mathrm{MAE}&=\frac1H\sum_{h=1}^H |e_h|,\\
+\mathrm{RMSE}&=\sqrt{\frac1H\sum_{h=1}^H e_h^2}.
+\end{aligned}
+$$
+
+Ces trois scores ont l’unité de la cible. ME décrit un écart moyen signé; on parle parfois de biais empirique. Des écarts positifs et négatifs peuvent se compenser. MAE mesure l’ampleur absolue moyenne. RMSE donne davantage de poids aux grandes erreurs par la mise au carré. Examiner leur trajectoire permet de repérer les périodes masquées par ces résumés.
+
+Le rappel MAPE reste celui du module 06: la division par une cible nulle est indéfinie et les petites cibles peuvent dominer le score. Retirer les zéros changerait la comparaison. La MASE rapporte la MAE à une échelle calculée sur l’apprentissage; une valeur inférieure à 1 ne prouve pas qu’on bat la référence sur les cibles de validation. Ces notions sont des rappels, sans nouvelle production obligatoire.
+
+Un coût asymétrique peut représenter des conséquences différentes selon le signe:
+
+$$L(e)=c_{\rm sous}\max(e,0)+c_{\rm sur}\max(-e,0).$$
+
+On compare la moyenne de L(e) sur les mêmes cibles. Si les deux coefficients valent 1, cette perte se réduit à l’erreur absolue. Dans le transfert, on fixe 2 pour la sous-prévision et 1 pour la sur-prévision. Le coût obtenu est en unités fictives par mois, sans conversion en facture. Des coefficients choisis après lecture du classement ne constitueraient pas le même protocole annoncé.
+
+Le coût ne se confond pas avec une quantité à commander ou une puissance à installer. Une décision de stock exige d’autres informations, notamment le stock disponible et le délai. La planification énergétique exige les contraintes physiques et, pour un budget, les tarifs. Une prévision ponctuelle ne garantit pas le niveau de service.
+
+Lecture externe facultative: Hyndman et Athanasopoulos (2021), [FPP3, section 5.8](https://otexts.com/fpp3/toolbox.html#sec-accuracy), de «Forecast errors» à «Scaled errors». Repérez le dénominateur des pourcentages et celui de la MASE. Le mot «test» de l’ouvrage n’annule pas le rôle de sélection joué par notre validation connue.
+
+## 4. Comparer et recommander {#lecture-4}
+
+Pour attribuer un écart de score à une méthode, gardez la même cible, les mêmes dates, l’origine, les horizons, l’information disponible et le critère. Une prévision remise à jour chaque semaine a accès à des observations que la prévision émise treize semaines avant ne possède pas. Les scores de ces deux scénarios ne sont pas interchangeables.
+
+Les fenêtres et les candidats sont fixés avant les scores. Les paramètres estimés utilisent l’apprentissage. La validation sert ensuite au choix. Puisque les périodes ont déjà été examinées au module 06, les résultats servent ici à apprendre et comparer, sans test indépendant. Ne qualifiez pas le classement de preuve de supériorité future et ne recherchez pas une fenêtre gagnante sur ce bloc pour la présenter ensuite comme confirmée sur le même bloc.
+
+Le naïf saisonnier est conservé comme point de comparaison. Sur la demande, MM4 obtient la plus petite MAE des candidats retenus. Sur l’électricité, la référence saisonnière l’emporte nettement. Une méthode constante peut donc être une bonne référence dans une situation et manquer une structure essentielle dans l’autre. Ni le nom d’une méthode ni sa complexité ne déterminent son rang.
+
+Une recommandation défendable donne les nombres, leurs unités, le coût annoncé, une limite et la façon de réévaluer. Une amélioration de 1 % n’a pas de valeur opérationnelle universelle. Il faut la comparer aux conséquences des erreurs, à la disponibilité des données et à la maintenance. Si aucune donnée nouvelle n’a été observée, on ne dispose pas d’un nouveau résultat de surveillance.
+
+## Holt : complément accompagné {#holt}
+
+Facultatif pour les rapports du module; préparation utile au laboratoire 03, où le code est fourni. Prérequis: niveau lissé, origine, horizon et lecture d’une pente. Holt ajoute une pente locale $b_t$ au niveau. Sans amortissement,
+
+$$\widehat y_{T+h\mid T}=\ell_T+h b_T.$$
+
+Avec $0<\phi<1$, la contribution de la pente devient $\sum_{j=1}^h\phi^j b_T$. Si la pente est positive, la prévision continue à augmenter, mais ses accroissements diminuent. Elle ne devient pas nécessairement constante dès le deuxième horizon. À long horizon, la somme converge vers $\phi/(1-\phi)$. Une pente négative donne le raisonnement symétrique.
+
+La [démonstration facultative](demonstrations.qmd#holt) et l’[exercice 13](exercices.qmd#exercice-13) montrent l’appel à `holt(..., damped = TRUE)`. Les récurrences de Holt ne sont pas demandées à la main. Le modèle ne contient aucune saisonnalité; l’amortissement ne garantit ni un gain d’erreur ni une protection contre une rupture.
+
+Lecture: Hyndman et Athanasopoulos (2021), [FPP3, section 8.2](https://otexts.com/fpp3/exponential-smoothing.html#sec-holt), «Holt’s linear trend method» et «Damped trend methods». Arrêtez-vous avant les méthodes saisonnières si vous préparez seulement le laboratoire.
+
+## Autres compléments conservés {#complements}
+
+Ces pistes de l’ancien matériel sont facultatives. Elles ne sont pas requises pour les deux rapports ni pour comprendre le code SES.
+
+::: {.table-responsive}
+
+| Piste et prérequis | Explication en français et limite | Passage externe ciblé |
+| --- | --- | --- |
+| Différenciation; connaître les retards et les unités | La différence simple est y_t − y_(t−1); la différence saisonnière est y_t − y_(t−m). Leur composition peut atténuer une tendance et un motif saisonnier, sans garantie universelle. Prévoir une différence ne donne pas directement le niveau original: il faut réintégrer les valeurs passées. Différencier ne signifie pas simplement déplacer une colonne. | FPP3, [chapitre ARIMA](https://otexts.com/fpp3/arima.html), section «Stationarity and differencing», jusqu’à «Seasonal differencing». |
+| Holt-Winters; connaître niveau, pente et saisonnalité | Une composante saisonnière est mise à jour avec le niveau et la pente. Une saisonnalité additive s’exprime en quantité; une multiplicative en facteur et demande des valeurs appropriées, notamment positives. Une prévision multiplicative doit multiplier tout le niveau avec tendance par le facteur saisonnier. | FPP3, [section 8.3](https://otexts.com/fpp3/exponential-smoothing.html#sec-holt-winters), méthodes additive et multiplicative. |
+| ETS; lire une structure et un critère d’information | Les trois lettres désignent erreur, tendance, saisonnalité. A, M, N et Z signifient additif, multiplicatif, absent et choix automatique. Certaines combinaisons sont inadmissibles ou désactivées. `ets()` choisit par défaut selon AICc parmi ses modèles autorisés; cela ne minimise pas directement notre MAE de validation. | Équipe forecast, [documentation ets](https://pkg.robjhyndman.com/forecast/reference/ets.html), arguments `model`, `ic`, `restrict` et `allow.multiplicative.trend`. |
+| BATS, TBATS et STL avec ETS; connaître transformations, erreurs dépendantes et plusieurs saisons | Ces outils peuvent représenter des structures plus riches. Ils demandent des diagnostics et suffisamment d’historique. Leur ajout automatique n’est pas justifié par deux années hebdomadaires et ne dispense pas d’une validation commune. Aucun calcul de ces modèles n’est exigé ici. | Équipe forecast, [BATS](https://pkg.robjhyndman.com/forecast/reference/bats.html), [TBATS](https://pkg.robjhyndman.com/forecast/reference/tbats.html), [STL et prévision](https://pkg.robjhyndman.com/forecast/reference/stlm.html). |
+
+:::
+
+Les anciens exercices sur Amtrak, le chômage américain et la consommation minute d’un ménage français ont servi à repérer ces notions. Le parcours utilise désormais les deux cas fictifs québécois documentés. Il ne reprend ni les anciennes consignes de remise ni leurs échéances. L’agrégation de mesures minute en mois nécessite de définir les unités avant de fixer un horizon mensuel.
+
+## Pratiquer après les lectures
+
+Pour une première consolidation, faites les [exercices 6, 7, 8 et 11](exercices.qmd#pratique-supplementaire): fuite, récurrence, grande erreur et coût. Ils vont du diagnostic simple à la comparaison de critères; chaque correction est sur la même page. Faites ensuite l’exercice 12 pour rédiger une décision prudente.
+
+Dans FPP3, les [exercices du chapitre 8](https://otexts.com/fpp3/exponential-smoothing.html#sec-expsmooth-exercises) peuvent prolonger le travail après Holt, avec l’écosystème fable et des prérequis supplémentaires. Ils ne sont pas nécessaires ici. Aucune correction publique de ces exercices n’a été vérifiée; les pratiques françaises du module fournissent les corrections disponibles. Aucun numéro d’exercice externe n’est imposé sans correspondance vérifiée.
+
+## Références et documentation
+
+Hyndman, R. J., et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e édition, OTexts. Les liens et passages ci-dessus ont été vérifiés le 26 octobre 2026. Les anciennes URL par notion redirigent actuellement vers les chapitres; les liens retenus pointent vers leurs ancres.
+
+Équipe slider, [documentation de slide](https://slider.r-lib.org/reference/slide.html), consultée le 26 octobre 2026: `.before`, `.after` et `.complete`. Le cours emploie `.after = 0`, sa valeur par défaut, pour une fenêtre arrière. Les données doivent déjà être dans le bon ordre et leur calendrier doit être vérifié: une fenêtre de lignes n’assure pas, à elle seule, une fenêtre de semaines régulières.
+
+
+## Cahier facultatif avec calculs complets
+
+Les méthodes supplémentaires citées ci-dessus disposent maintenant d’un [cahier expliqué et exécutable](complements.qmd): différences, réintégration, Holt-Winters, lecture des codes ETS, BATS, TBATS et STL avec ETS. Le [projet téléchargeable](telechargements/complements-lissage.zip) fournit ses calculs. Le socle attendu reste les quatre activités du parcours; conserver une notion ne signifie pas qu’il faut en faire une compétence obligatoire.

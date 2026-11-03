@@ -1,10 +1,12 @@
 ---
-title: "Capsule 1 - Moyennes mobiles"
+title: "Capsule 1 - Choisir une fenêtre de lissage"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module07-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,123 +28,184 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m07-c01
+#| label: preparation-support-m07
 #| include: false
-library(tidyverse)
-library(slider)
-library(forecast)
-data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-demande <- readr::read_csv(data_path, show_col_types = FALSE)
-demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
-horizon <- 13
-train <- demande |> slice_head(n = nrow(demande) - horizon)
-test <- demande |> slice_tail(n = horizon)
-serie <- ts(train$demande, frequency = 52)
+racines <- c("../..", ".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-Lisser aide à décider sans réagir à chaque fluctuation.
-:::
-
 ::: {.question-line}
-Comment réduire le bruit sans regarder vers le futur?
+Que peut-on savoir avant la semaine suivante?
 :::
-
 ::: {.note-box}
-Une moyenne mobile arrière utilise uniquement des observations déjà disponibles. La taille de sa fenêtre règle le compromis entre réactivité et stabilité.
+Une équipe veut stabiliser sa prévision de référence sans manquer un changement durable de la demande.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
 - Calculer une moyenne mobile arrière.
-- Expliquer l'effet d'une fenêtre courte ou longue.
-- Comparer la réactivité de plusieurs fenêtres.
+- Expliquer le compromis entre lissage et réactivité.
+- Distinguer une moyenne descriptive d’une prévision disponible au moment de décider.
 :::
 
-## La fenêtre règle le compromis réactivité-stabilité
+## Le cas guidé
 
-::: {.keypoints}
-- Une fenêtre courte réagit vite.
-- Une fenêtre longue lisse davantage.
-- Pour prévoir, la fenêtre doit être arrière.
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+104
+:::
+::: {.label}
+semaines de demande simulée
+:::
+:::
+::: {.metric}
+::: {.value}
+91 + 13
+:::
+::: {.label}
+apprentissage puis validation
+:::
+:::
+::: {.metric}
+::: {.value}
+Unités
+:::
+::: {.label}
+demande d’un produit
+:::
+:::
+::::
+
+## Les mêmes cibles qu’au module 06
+
+::: {.note-box}
+Origine : fin de la semaine du 22 septembre 2025. Prévoir les treize semaines du 29 septembre au 22 décembre, sans nouvelle observation.
+:::
+::: {.warning-box}
+La validation est déjà connue. Elle ne constitue pas un nouveau test indépendant.
 :::
 
-## Quatre semaines donnent 1 050 unités
+## Une fenêtre de quatre observations
 
+::: {.formula-box}
+$$m_t=\frac{y_t+y_{t-1}+y_{t-2}+y_{t-3}}{4}.$$
+:::
 ::: {.example-box}
-Les quatre dernières demandes 980, 1 020, 1 080 et 1 120 donnent une moyenne mobile de 1 050 unités.
+La moyenne de 980, 1 020, 1 080 et 1 120 est de 1 050 unités. Chaque observation reçoit le même poids.
 :::
 
-## Calculer une moyenne mobile arrière
+## Le compromis de la fenêtre
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Courte
+:::
+::: {.label}
+réaction plus rapide
+:::
+:::
+::: {.metric}
+::: {.value}
+Longue
+:::
+::: {.label}
+davantage de lissage
+:::
+:::
+::: {.metric}
+::: {.value}
+Retard
+:::
+::: {.label}
+les valeurs anciennes comptent
+:::
+:::
+::::
+
+## Comparer les fenêtres sur le passé
 
 ```{r}
-#| label: code-m07-c01
-#| echo: true
-#| eval: true
-demande |>
-  mutate(mm4 = slider::slide_dbl(
-    demande, mean, .before = 3, .complete = TRUE
-  )) |>
-  select(semaine, demande, mm4) |>
-  slice_tail(n = 6)
+#| label: m07-c1-figure
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+lissage |>
+  select(semaine, demande, mm4, mm13) |>
+  pivot_longer(-semaine, names_to = "serie", values_to = "unites") |>
+  ggplot(aes(semaine, unites, colour = serie)) +
+  geom_line(na.rm = TRUE) +
+  labs(x = NULL, y = "Demande (unités par semaine)", colour = NULL) +
+  scale_colour_discrete(
+    breaks = c("demande", "mm4", "mm13"),
+    labels = c("Demande observée", "Moyenne sur 4 semaines", "Moyenne sur 13 semaines")
+  )
 ```
 
-## Une fenêtre centrée utilise demain
+## Quand la moyenne est-elle disponible?
 
-::: {.warning-box}
-Une moyenne mobile centrée peut être utile pour décrire, mais elle utilise des valeurs futures et ne convient pas à une prévision en temps réel.
+::: {.keypoints}
+- La moyenne arrière au temps $t$ contient l’observation $y_t$.
+- Elle peut servir à prévoir la période suivante une fois $y_t$ connue.
+- Une moyenne centrée emploie aussi des observations postérieures à $t$.
+:::
+
+## Émettre treize prévisions ensemble
+
+::: {.formula-box}
+$$\widehat y_{T+h\mid T}=m_T,\qquad h=1,\ldots,13.$$
+:::
+::: {.note-box}
+À l’origine $T$, notre règle répète la dernière moyenne observée pour chacun des treize horizons $h$. Aucune demande future n’entre dans le calcul.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Fenêtre
 :::
 ::: {.label}
-La fenêtre détermine la réactivité.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Une moyenne mobile ne modélise pas automatiquement la tendance ou la saisonnalité.
+poids égaux sur les k dernières observations
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Disponibilité
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+après la dernière observation incluse
 :::
 :::
+::: {.metric}
+::: {.value}
+Prévision
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+même moyenne aux treize horizons
 :::
+:::
+::::
 
 ## Production autonome 7.1
 
 ::: {.lead}
-Calculez la moyenne mobile des quatre dernières demandes et nommez ce qu'elle ignore.
+Sur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- J’ai utilisé seulement les 91 semaines d’apprentissage.
+- J’obtiens 1 050 unités et je précise quand la moyenne est disponible.
+- Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.
 :::

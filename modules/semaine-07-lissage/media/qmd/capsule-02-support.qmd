@@ -1,10 +1,12 @@
 ---
-title: "Capsule 2 - Lissage exponentiel simple"
+title: "Capsule 2 - Mettre à jour un niveau"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module07-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,152 +28,162 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m07-c02
+#| label: preparation-support-m07
 #| include: false
-library(tidyverse)
-library(slider)
-library(forecast)
-data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-demande <- readr::read_csv(data_path, show_col_types = FALSE)
-demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
-horizon <- 13
-train <- demande |> slice_head(n = nrow(demande) - horizon)
-test <- demande |> slice_tail(n = horizon)
-serie <- ts(train$demande, frequency = 52)
+racines <- c("../..", ".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-Les observations récentes peuvent compter davantage sans effacer tout l'historique.
-:::
-
 ::: {.question-line}
-Quel rôle joue le paramètre alpha?
+Quelle part de l’écart faut-il corriger?
 :::
-
 ::: {.note-box}
-Le lissage exponentiel met à jour un niveau estimé en pondérant la dernière observation et le niveau précédent.
+Une observation récente peut signaler une évolution durable ou une fluctuation temporaire.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Expliquer le rôle de alpha.
-- Choisir le lissage simple seulement lorsque sa structure est plausible.
-- Distinguer estimation du paramètre et évaluation du modèle.
+- Mettre à jour le niveau d’un lissage exponentiel simple (SES) avec alpha.
+- Comparer deux valeurs d’alpha à partir du même niveau initial.
+- Distinguer estimation, tendance et prévision.
 :::
 
-## Une hausse récente révèle l'effet d'alpha
+## Corriger une fraction de l’écart
+
+::: {.formula-box}
+$$\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1},\qquad 0<\alpha<1.$$
+:::
+::: {.note-box}
+Le niveau $\ell_t$ corrige une fraction $\alpha$ de l’écart entre la nouvelle observation et le niveau précédent.
+
+On peut aussi écrire $\ell_t=\ell_{t-1}+\alpha(y_t-\ell_{t-1})$.
+:::
+
+## Deux réactions à la même hausse
 
 ::: {.example-box}
-Avec une demande en hausse, alpha = 0,8 se rapproche beaucoup plus vite de la dernière observation que alpha = 0,2.
+Niveau initial : 100. Deux nouvelles observations : 140, puis 140.
 :::
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+α = 0,2
+:::
+::: {.label}
+108 puis 114,4
+:::
+:::
+::: {.metric}
+::: {.value}
+α = 0,8
+:::
+::: {.label}
+132 puis 138,4
+:::
+:::
+::: {.metric}
+::: {.value}
+Même départ
+:::
+::: {.label}
+on isole l’effet d’alpha
+:::
+:::
+::::
 
-## Alpha est estimé avant d'être évalué
+## Les poids diminuent avec l’ancienneté
 
+::: {.formula-box}
+$$\alpha,\quad\alpha(1-\alpha),\quad\alpha(1-\alpha)^2,\quad\ldots$$
+:::
 ::: {.keypoints}
-- Un alpha élevé réagit plus vite.
-- Un alpha faible produit un niveau plus stable.
-- Le lissage simple n'est pas adapté à une forte tendance non modélisée.
+- Un alpha élevé réagit davantage à la dernière observation.
+- Un alpha faible conserve plus de mémoire.
+- Le niveau initial conserve aussi un poids lorsque l’historique est limité.
 :::
 
-## Ajuster le lissage sur l'entraînement
+## Comparer les niveaux sur l’apprentissage
 
 ```{r}
-#| label: code-m07-c02
-#| echo: true
-#| eval: true
-fit <- forecast::ses(serie, h = horizon)
-autoplot(fit) +
-  labs(x = "Semaine", y = "Demande (unités)") +
-  theme_minimal(base_size = 14)
+#| label: m07-c2-figure
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+niveaux |>
+  select(semaine, demande, alpha_02, alpha_08) |>
+  pivot_longer(-semaine, names_to = "serie", values_to = "unites") |>
+  ggplot(aes(semaine, unites, colour = serie)) +
+  geom_line() +
+  labs(x = NULL, y = "Demande (unités par semaine)", colour = NULL) +
+  scale_colour_discrete(
+    breaks = c("demande", "alpha_02", "alpha_08"),
+    labels = c("Demande observée", "Lissage, α = 0,2", "Lissage, α = 0,8")
+  )
 ```
 
-## Estimer les paramètres, puis comparer les méthodes
-
-::: {.warning-box}
-Alpha est estimé sur l'apprentissage. Les méthodes candidates sont comparées sur la validation. Un test final distinct ne sert pas à retoucher le choix.
-:::
-
-## Prolongement : Holt ajoute une pente
-
-::: {.formula-box}
-$$
-\widehat y_{t+h\mid t}=\ell_t+h b_t
-$$
-:::
+## Imposer ou estimer alpha
 
 ::: {.keypoints}
-- $\ell_t$ : niveau estimé; $b_t$ : pente estimée.
-- Deux états mis à jour avec les observations passées.
-- Aucune saisonnalité explicite.
+- Les valeurs 0,2 et 0,8 sont imposées pour comprendre le mécanisme.
+- Pour le SES principal, alpha et le niveau initial sont estimés sur l’apprentissage.
+- Alpha est estimé ici à environ 0,371, sans utiliser la validation.
 :::
 
-## Amortir la tendance à mesure que l'horizon augmente
+## Un niveau révisable, des prévisions constantes
 
 ::: {.formula-box}
-$$
-\widehat y_{t+h\mid t}=\ell_t+(\phi+\cdots+\phi^h)b_t,\quad 0<\phi<1
-$$
+$$\widehat y_{T+h\mid T}=\ell_T.$$
 :::
-
-::: {.note-box}
-`holt(serie, h = horizon, damped = TRUE)` estime les paramètres sur l'apprentissage. Le code est fourni; le calcul manuel des récurrences n'est pas demandé.
-:::
-
-::: {.notes}
-La pente prolonge une évolution récente; l'amortissement réduit sa contribution quand l'horizon augmente. Il ne garantit pas une meilleure prévision et ne remplace pas une composante saisonnière. Ce prolongement prépare la comparaison de la capsule 4 et le laboratoire 3.
-Source : Hyndman et Athanasopoulos (2021), section 8.2, https://otexts.com/fpp3/holt.html.
+::: {.warning-box}
+À origine fixe, le SES prévoit le même niveau à tous les horizons. Il ne modélise ni tendance ni saisonnalité, même si la série R a une fréquence de 52.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Alpha
 :::
 ::: {.label}
-Le niveau lissé est une prévision révisable.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-La méthode doit être comparée à une référence.
+fraction de l’écart corrigée
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Initialisation
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+à préciser pour comparer
 :::
 :::
+::: {.metric}
+::: {.value}
+SES
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+un niveau, sans tendance ni saisonnalité
 :::
+:::
+::::
 
 ## Production autonome 7.2
 
 ::: {.lead}
-Comparez qualitativement les effets de alpha = 0,2 et alpha = 0,8 pour une demande récente en hausse.
+Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Les deux calculs partagent le même état initial.
+- J’obtiens 108 puis 114,4 et 132 puis 138,4.
+- J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.
 :::

@@ -1,10 +1,12 @@
 ---
-title: "Capsule 3 - Mesurer les erreurs"
+title: "Capsule 3 - Lire les erreurs de prévision"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module07-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -26,123 +28,200 @@ execute:
   message: false
 editor: visual
 ---
-
 ```{r}
-#| label: setup-m07-c03
+#| label: preparation-support-m07
 #| include: false
-library(tidyverse)
-library(slider)
-library(forecast)
-data_candidates <- c("data/demande_hebdomadaire_quebec.csv", "../../data/demande_hebdomadaire_quebec.csv", "modules/semaine-07-lissage/data/demande_hebdomadaire_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-demande <- readr::read_csv(data_path, show_col_types = FALSE)
-demande <- demande |> mutate(semaine = as.Date(semaine)) |> arrange(semaine)
-horizon <- 13
-train <- demande |> slice_head(n = nrow(demande) - horizon)
-test <- demande |> slice_tail(n = horizon)
-serie <- ts(train$demande, frequency = 52)
+racines <- c("../..", ".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
 ```
-
 ## Pourquoi ça compte
 
-::: {.kicker}
-La meilleure erreur dépend des conséquences opérationnelles.
-:::
-
 ::: {.question-line}
-Que mesure MAE, RMSE et MAPE?
+Quelle erreur le score moyen cache-t-il?
 :::
-
 ::: {.note-box}
-Les mesures résument des erreurs différentes. Il faut conserver leur unité, leur sensibilité et leur limite avant de les utiliser pour choisir une méthode.
+Une erreur moyenne proche de zéro peut cacher de grandes sous-prévisions et sur-prévisions qui se compensent.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Calculer et interpréter MAE et RMSE.
-- Identifier la limite du MAPE près de zéro.
-- Relier chaque mesure d'erreur à une conséquence opérationnelle.
+- Comparer les méthodes sur les mêmes treize observations cibles.
+- Interpréter le signe et les unités des erreurs.
+- Compléter les scores par le graphique des erreurs.
 :::
 
-## Deux erreurs moyennes peuvent cacher des risques différents
+## Quatre candidats, une seule origine
 
 ::: {.keypoints}
-- La MAE reste dans l'unité de la cible.
-- La RMSE pénalise les grandes erreurs.
-- Le MAPE est instable près de zéro.
+- Naïf : dernière demande observée.
+- MM4 : dernière moyenne de quatre semaines.
+- SES : niveau estimé sur l’apprentissage.
+- Naïf saisonnier : demande observée 52 semaines avant la cible.
 :::
 
-## Calculer MAE et RMSE dans leurs unités
+## Une convention de signe
+
+::: {.formula-box}
+$$e_h=y_{T+h}-\widehat y_{T+h\mid T}.$$
+:::
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+e > 0
+:::
+::: {.label}
+sous-prévision
+:::
+:::
+::: {.metric}
+::: {.value}
+e < 0
+:::
+::: {.label}
+sur-prévision
+:::
+:::
+::: {.metric}
+::: {.value}
+ME
+:::
+::: {.label}
+erreur moyenne (signée)
+:::
+:::
+::::
+
+## MAE et RMSE
+
+::: {.keypoints}
+- MAE : erreur absolue moyenne.
+- RMSE : racine de l’erreur quadratique moyenne.
+:::
+
+::: {.formula-box}
+$$\mathrm{MAE}=\frac1H\sum_{h=1}^{H}|e_h|,\qquad \mathrm{RMSE}=\sqrt{\frac{e_1^2+\cdots+e_H^2}{H}}.$$
+:::
+::: {.note-box}
+On compare $H=13$ horizons. Les deux mesures gardent l’unité de la cible. La RMSE donne davantage de poids aux grandes erreurs.
+:::
+
+## Même MAE, mais une erreur concentrée
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+10, 10, 10, 10
+:::
+::: {.label}
+MAE = 10; RMSE = 10
+:::
+:::
+::: {.metric}
+::: {.value}
+0, 0, 0, 40
+:::
+::: {.label}
+MAE = 10; RMSE = 20
+:::
+:::
+::: {.metric}
+::: {.value}
+Unités
+:::
+::: {.label}
+unités de produit
+:::
+:::
+::::
+
+## Les scores calculés sur la demande
 
 ```{r}
-#| label: code-m07-c03
-#| echo: true
-#| eval: true
-prevision <- as.numeric(forecast::ses(serie, h = horizon)$mean)
-erreur <- test$demande - prevision
-tibble(
-  mesure = c("MAE", "RMSE"),
-  valeur = c(mean(abs(erreur)), sqrt(mean(erreur^2)))
-)
+#| label: m07-c3-table
+#| echo: false
+scores |>
+  select(methode, ME, MAE, RMSE) |>
+  mutate(methode = recode(methode, Naive = "Naïf", Saisonnier = "Naïf saisonnier")) |>
+  mutate(across(where(is.numeric), ~ fr(.x))) |>
+  knitr::kable(col.names = c("Méthode", "ME", "MAE", "RMSE"))
 ```
-
-## Même MAE, mais pas le même risque
-
-::: {.example-box}
-Deux méthodes peuvent avoir la même MAE. Celle qui fait une erreur extrême aura généralement une RMSE plus élevée.
+::: {.note-box}
+Scores en unités de produit. MM4 a la plus petite MAE sur cette validation connue.
 :::
 
-## La plus petite erreur n'est pas toujours la moins coûteuse
+## Le graphique complète les moyennes
 
-::: {.warning-box}
-Choisir la plus petite mesure sans relier l'erreur au coût des ruptures ou des surplus donne une décision incomplète.
+```{r}
+#| label: m07-c3-figure
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot(erreurs, aes(semaine, erreur, colour = methode)) +
+  geom_hline(yintercept = 0, colour = "grey55") +
+  geom_line() + geom_point() +
+  labs(x = NULL, y = "Observé − prévu (unités)", colour = NULL) +
+  scale_colour_discrete(
+    breaks = c("Naive", "MM4", "SES", "Saisonnier"),
+    labels = c("Naïf", "MM4", "SES", "Naïf saisonnier")
+  ) +
+  scale_x_date(date_breaks = "1 month", labels = function(dates) {
+    c("janv.", "févr.", "mars", "avr.", "mai", "juin",
+      "juil.", "août", "sept.", "oct.", "nov.", "déc.")[as.integer(format(dates, "%m"))]
+  })
+```
+
+## Trois rappels utiles
+
+::: {.keypoints}
+- Le MAPE mesure une erreur en pourcentage; il est indéfini si une cible vaut zéro.
+- La MASE rapporte la MAE à une erreur de référence calculée sur l’apprentissage.
+- Un bon ajustement au passé ne garantit pas de bonnes prévisions.
 :::
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Signe
 :::
 ::: {.label}
-L'erreur doit être lue avec son unité.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Une grande erreur peut compter plus qu'une petite amélioration moyenne.
+observé moins prévu
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Unité
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+celle de la cible
 :::
 :::
+::: {.metric}
+::: {.value}
+Graphique
 :::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
+::: {.label}
+localiser les erreurs
 :::
+:::
+::::
 
 ## Production autonome 7.3
 
 ::: {.lead}
-Indiquez quelle mesure distinguera davantage deux méthodes ayant la même MAE mais des erreurs extrêmes différentes.
+Émettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.
 :::
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future.
+- Mes scores sont en unités de produit, avec erreur = observé moins prévu.
+- Je relie le classement au graphique et je distingue validation et test indépendant.
 :::

@@ -1,0 +1,202 @@
+---
+title: "Capsule 5 - Communiquer l’incertitude et la décision"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: ../module08-capsules.css
+    theme:
+      - default
+      - ../../../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
+---
+```{r}
+#| label: preparation-support-m08
+#| include: false
+racines <- c("../..", ".", "modules/semaine-08-tendance-saisonnalite")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
+```
+## Pourquoi ça compte
+
+::: {.question-line}
+Que peut-on annoncer sans promettre le budget futur?
+:::
+::: {.note-box}
+La prévision centrale et sa plage sous hypothèses nourrissent la décision, sans supprimer le risque.
+:::
+
+## Objectifs de la capsule
+
+::: {.keypoints}
+- Distinguer confiance et prédiction.
+- Lire les intervalles ponctuels.
+- Formuler une recommandation avec suivi.
+:::
+
+## Deux intervalles différents
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Confiance
+:::
+::: {.label}
+moyenne conditionnelle
+:::
+:::
+::: {.metric}
+::: {.value}
+Prédiction
+:::
+::: {.label}
+nouvelle observation
+:::
+:::
+::: {.metric}
+::: {.value}
+Même niveau
+:::
+::: {.label}
+la prédiction ajoute sa variabilité
+:::
+:::
+::::
+
+## Janvier 2025 dans le cas guidé
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+457 130 $
+:::
+::: {.label}
+prévision centrale
+:::
+:::
+::: {.metric}
+::: {.value}
+435 673 à 478 587 $
+:::
+::: {.label}
+intervalle de prédiction à 95 %
+:::
+:::
+::: {.metric}
+::: {.value}
+447 165 à 467 095 $
+:::
+::: {.label}
+intervalle de confiance à 95 %
+:::
+:::
+::::
+
+## Le ruban sur les douze mois
+
+```{r}
+#| label: m08-c5-ruban
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.3
+#| out-width: "90%"
+ggplot(previsions_intervalle, aes(date)) +
+  geom_ribbon(aes(ymin = lwr / 1000, ymax = upr / 1000), fill = "#BFDDE5", alpha = 0.6) +
+  geom_line(aes(y = fit / 1000), colour = "#0B4F6C") +
+  geom_point(aes(y = observe / 1000)) +
+  labs(x = NULL, y = "Ventes (milliers de $ CA)")
+```
+
+## Un niveau nominal, sous des hypothèses
+
+::: {.keypoints}
+- Forme pertinente et variance constante.
+- Erreurs indépendantes; normalité pour les intervalles classiques exacts.
+- Une rupture ou une dépendance restante peut modifier la couverture.
+:::
+
+## Douze intervalles ne font pas une garantie annuelle
+
+::: {.warning-box}
+Les intervalles sont marginaux. Douze observations couvertes ne prouvent pas la calibration future, et additionner les bornes ne produit pas automatiquement un intervalle annuel à 95 %.
+:::
+
+## Le transfert demande une autre prudence
+
+::: {.keypoints}
+- Le calendrier seul laisse les événements commerciaux de côté.
+- Les erreurs du transfert sont plus élevées.
+- Le plan de promotion doit être connu ou scénarisé avant son utilisation.
+:::
+
+## Une recommandation utile
+
+::: {.keypoints}
+- Deux scores et leurs unités.
+- Une interprétation du calendrier.
+- Une plage conditionnelle et une limite.
+- Une règle de surveillance aux nouvelles origines.
+:::
+
+## À retenir
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Valeur centrale
+:::
+::: {.label}
+une aide à la planification
+:::
+:::
+::: {.metric}
+::: {.value}
+Intervalle
+:::
+::: {.label}
+une plage sous hypothèses
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+limite et surveillance explicites
+:::
+:::
+::::
+
+## Production autonome 8.5
+
+::: {.lead}
+Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Je distingue moyenne conditionnelle et nouvelle observation.
+- Je lis les intervalles comme marginaux et dépendants des hypothèses.
+- Ma recommandation nomme les unités, une limite et une réévaluation future.
+:::

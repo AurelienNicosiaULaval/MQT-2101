@@ -1,50 +1,184 @@
 ---
-title: "Démonstrations R - Atelier 03"
+title: "Aide R et exemple complet - Laboratoire 03"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    css: media/laboratoire03-pages.css
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-Cette page regroupe les gestes techniques de l'atelier. Le [guide en classe](guide-atelier.qmd) demeure le parcours principal.
+## Utiliser cette page
 
-## Fonctions utiles
+Suivez d’abord le [guide de la mission](guide-atelier.qmd). Les blocs visibles ci-dessous forment un exemple complet et cumulatif dans une session R neuve. Le [projet de départ](telechargements/laboratoire-03.zip) contient votre rapport à compléter; le [projet de l’exemple](telechargements/exemple-laboratoire-03.zip) contient le code complet pour vérifier après une tentative.
+
+## Préparation {#preparation}
+
+Ouvrez le `.Rproj` du dossier extrait. Installez une fois `tidyverse` et `forecast` si nécessaire. Les données et leurs unités sont décrites dans le [dictionnaire](data/dictionnaires.md).
 
 ```{r}
+#| include: false
+racines <- c(".", "modules/atelier-03-series-chronologiques")
+racine <- racines[file.exists(file.path(racines, "data/demande_hebdomadaire_quebec.csv"))][1]
+stopifnot(!is.na(racine))
+knitr::opts_knit$set(root.dir = normalizePath(racine))
+```
+```{r}
+#| label: preparation-labo03
 library(tidyverse)
-
-mesures_prevision <- function(observe, prevision) {
-  erreur <- observe - prevision
-  tibble(
-    MAE = mean(abs(erreur)),
-    RMSE = sqrt(mean(erreur^2)),
-    biais = mean(erreur)
-  )
-}
+library(forecast)
+demande <- read_csv("data/demande_hebdomadaire_quebec.csv", show_col_types = FALSE) |>
+  mutate(semaine = as.Date(semaine)) |> arrange(semaine) |>
+  mutate(indice = row_number())
+stopifnot(nrow(demande) == 104L, !anyNA(demande[c("semaine", "demande")]),
+          !anyDuplicated(demande$semaine),
+          all(as.numeric(diff(demande$semaine)) == 7))
+horizon <- 13L
+apprentissage <- demande |> slice_head(n = 91)
+validation <- demande |> slice_tail(n = horizon)
+# La date identifie le lundi. Une semaine complète est connue le dimanche suivant.
+origine <- max(apprentissage$semaine) + 6
+futur <- tibble(semaine = seq.Date(max(apprentissage$semaine) + 7,
+                                   by = "week", length.out = horizon),
+                indice = 91L + seq_len(horizon))
+serie <- ts(apprentissage$demande, frequency = 52)
+stopifnot(all(futur$semaine == validation$semaine))
 ```
 
-## Vérifier la continuité hebdomadaire
+## 1. Auditer et situer {#audit}
 
 ```{r}
-verifier_frequence <- function(dates) {
-  ecarts <- diff(sort(unique(dates)))
-  tibble(
-    ecart_min_jours = min(as.numeric(ecarts)),
-    ecart_max_jours = max(as.numeric(ecarts)),
-    frequence_reguliere = all(as.numeric(ecarts) == 7)
-  )
-}
+#| label: audit-labo03
+demande |> summarise(lignes = n(), dates_distinctes = n_distinct(semaine),
+  premiere_semaine = min(semaine), derniere_semaine = max(semaine),
+  manquants = sum(is.na(demande)))
+tibble(derniere_semaine_apprentissage = max(apprentissage$semaine),
+       origine_fin_de_semaine = origine,
+       premiere_semaine_validation = min(validation$semaine), horizon)
 ```
+La dernière date d’apprentissage, le 22 septembre 2025, désigne le lundi de la semaine. La demande est connue à la fin du dimanche 28 septembre; la première semaine prévue commence le 29 septembre. Treize semaines sont comparées. La validation est déjà connue du cours et ne constitue pas un test final indépendant.
 
-## Graphique générique de comparaison
+## 2. Explorer le passé {#exploration}
 
 ```{r}
-graphique_previsions <- function(data_longue) {
-  ggplot(data_longue, aes(semaine)) +
-    geom_line(aes(y = observe), colour = "black", linewidth = 1) +
-    geom_line(aes(y = prevision, colour = methode), linewidth = 0.8) +
-    labs(x = NULL, y = "Demande", colour = "Méthode") +
-    theme_minimal(base_size = 12)
-}
+#| label: exploration-labo03
+#| fig-width: 9
+#| fig-height: 4.2
+ggplot(apprentissage, aes(semaine, demande)) +
+  geom_line(colour = "#0B4F6C") + geom_point(aes(shape = promotion), size = 1.5) +
+  labs(x = NULL, y = "Demande hebdomadaire (unités de produit)",
+       shape = "Promotion observée") + theme_minimal(base_size = 12)
+```
+Le graphique décrit l’apprentissage seulement. Une hausse possible et des fluctuations récurrentes ne prouvent pas la cause de chaque écart. Les promotions marquées sont celles déjà observées; aucune promotion future n’entre dans ces prévisions.
+
+## 3. Émettre les prévisions {#previsions}
+
+```{r}
+#| label: previsions-labo03
+# Tous les paramètres et les valeurs de référence viennent de l’apprentissage.
+modele_ses <- ses(serie, h = horizon, initial = "optimal", level = c(80, 95))
+modele_tendance <- lm(demande ~ indice, data = apprentissage)
+previsions <- futur |>
+  mutate(Naive = tail(apprentissage$demande, 1),
+         MM4 = mean(tail(apprentissage$demande, 4)),
+         SES = as.numeric(modele_ses$mean),
+         Saisonnier = as.numeric(snaive(serie, h = horizon)$mean),
+         Tendance = as.numeric(predict(modele_tendance, newdata = futur)))
+previsions |> slice_head(n = 3)
+coef(modele_tendance)
+```
+Le coefficient de l’indice est d’environ 2,09 unités par semaine selon la droite ajustée. Il résume une pente moyenne sur l’apprentissage, sans effet causal. La méthode saisonnière naïve reprend le retard 52; le SES et la droite ne comportent pas de saison explicite. La droite ajoute un candidat à ceux du module 07 : leur ancien classement portait sur une liste plus courte.
+
+## 4. Comparer et lire l’incertitude {#comparaison}
+
+```{r}
+#| label: comparaison-labo03
+#| fig-width: 9
+#| fig-height: 4.2
+# Les observations de validation ne sont jointes qu’après la prévision.
+evaluation <- previsions |>
+  left_join(validation |> select(semaine, observe = demande), by = "semaine") |>
+  pivot_longer(c(Naive, MM4, SES, Saisonnier, Tendance),
+               names_to = "methode", values_to = "prevision") |>
+  mutate(erreur = observe - prevision)
+scores <- evaluation |> group_by(methode) |>
+  summarise(ME = mean(erreur), MAE = mean(abs(erreur)),
+            RMSE = sqrt(mean(erreur^2)), .groups = "drop") |> arrange(MAE)
+scores
+ggplot(evaluation, aes(semaine)) +
+  geom_line(aes(y = observe), colour = "black", linewidth = 1) +
+  geom_line(aes(y = prevision, colour = methode)) +
+  labs(x = NULL, y = "Demande hebdomadaire (unités de produit)", colour = "Méthode") +
+  theme_minimal(base_size = 12)
+```
+Sur ces treize semaines connues, la tendance linéaire a une MAE d’environ 93 unités et une RMSE d’environ 107 unités; MM4 a une MAE d’environ 100. Ces chiffres décrivent cette comparaison utilisée pour choisir, et ne garantissent pas le classement futur. La ME est signée, en unités, selon observation moins prévision.
+
+```{r}
+#| label: intervalles-labo03
+intervalles_ses <- tibble(semaine = futur$semaine,
+  prevision = as.numeric(modele_ses$mean),
+  inf80 = as.numeric(modele_ses$lower[, "80%"]),
+  sup80 = as.numeric(modele_ses$upper[, "80%"]),
+  inf95 = as.numeric(modele_ses$lower[, "95%"]),
+  sup95 = as.numeric(modele_ses$upper[, "95%"]))
+intervalles_ses |> slice_head(n = 3)
+```
+Pour la première semaine prévue, le SES donne environ 1 290 unités; ses intervalles sont environ 1 170 à 1 410 à 80 % et 1 106 à 1 473 à 95 %. Ils concernent ce modèle SES, sous ses hypothèses. Ils ne sont pas les intervalles de la droite si vous retenez la tendance. Treize intervalles marginaux ne garantissent pas une couverture simultanée de tout l’horizon.
+
+## 5. Décider et surveiller {#decision}
+
+```{r}
+#| label: couts-labo03
+couts <- evaluation |>
+  mutate(cout = 18 * pmax(erreur, 0) + 5 * pmax(-erreur, 0)) |>
+  group_by(methode) |>
+  summarise(cout_total = sum(cout), .groups = "drop") |> arrange(cout_total)
+couts
+```
+Avec 18 $ par unité sous-prévue et 5 $ par unité sur-prévue, le coût fictif total est d’environ 9 320 $ pour la tendance, contre environ 21 944 $ pour MM4. Dans ce cas, le classement par coût et par MAE conserve la tendance en tête; un renversement n’est pas garanti. Ces valeurs ne sont pas des coûts observés ni une preuve d’une politique de stock optimale.
+
+Exemple de note : « Sur les treize semaines déjà connues, la tendance obtient une MAE d’environ 93 unités et une RMSE d’environ 107, avec un coût fictif d’environ 9 320 $. Je la retiens provisoirement parmi les cinq candidats. Les intervalles présentés ici sont ceux du SES et ne quantifient pas l’incertitude de cette droite. Les promotions futures et les délais ne sont pas modélisés. À chaque nouvelle origine, je suivrai les erreurs et réexaminerai la méthode si elles changent durablement. »
+
+## Holt accompagné, si le temps le permet {#holt}
+
+Le [complément Holt du module 07](../semaine-07-lissage/capsules.qmd#holt) explique niveau, pente et amortissement. Ce sixième candidat est un prolongement facultatif pour explorer une pente locale. Sur le même apprentissage et les mêmes cibles :
+
+```{r}
+#| label: holt-labo03
+modele_holt <- holt(serie, h = horizon, damped = TRUE,
+                    initial = "optimal", level = c(80, 95))
+holt_validation <- tibble(semaine = futur$semaine,
+  observe = validation$demande, prevision = as.numeric(modele_holt$mean)) |>
+  mutate(erreur = observe - prevision)
+holt_validation |> summarise(ME = mean(erreur), MAE = mean(abs(erreur)),
+  RMSE = sqrt(mean(erreur^2)),
+  cout_total = sum(18 * pmax(erreur, 0) + 5 * pmax(-erreur, 0)))
+tibble(semaine = futur$semaine, prevision = as.numeric(modele_holt$mean),
+       inf80 = as.numeric(modele_holt$lower[, "80%"]),
+       sup80 = as.numeric(modele_holt$upper[, "80%"]),
+       inf95 = as.numeric(modele_holt$lower[, "95%"]),
+       sup95 = as.numeric(modele_holt$upper[, "95%"])) |> slice_head(n = 3)
+```
+Holt amorti obtient ici une MAE d’environ 152 unités et un coût fictif d’environ 35 578 $. Ses intervalles appartiennent à Holt. Une méthode plus élaborée n’assure pas une meilleure prévision; ces résultats concernent seulement les treize semaines de validation déjà connues.
+
+## Un écart maximal, si utile {#erreur-max}
+
+La plus grande erreur absolue peut aider à repérer une semaine à examiner. Ce repère est facultatif et ne résume pas à lui seul la qualité globale.
+
+```{r}
+#| label: erreur-max-labo03
+evaluation |> group_by(methode) |>
+  summarise(erreur_max = max(abs(erreur)), .groups = "drop") |>
+  arrange(erreur_max)
 ```
 
-Ces fonctions réduisent les répétitions, mais ne remplacent pas la vérification des colonnes, unités et périodes.
+## Pour revenir à votre mission
+
+La [grille de relecture](guide-atelier.qmd#rapport-attendu) vous aide à vérifier votre rapport. Les [exercices de transfert](exercices.qmd) utilisent des ventes mensuelles et un objectif budgétaire, dans un autre contexte. Les [lectures](lectures.qmd) précisent les sources et les compléments.

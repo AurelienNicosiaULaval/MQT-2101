@@ -1,21 +1,51 @@
 ---
 title: "Lectures - Module 10"
+lang: fr
 format:
   html:
     embed-resources: true
+    toc-depth: 2
+    code-copy: true
+    code-overflow: wrap
+    css: media/module10-pages.css
+execute:
+  warning: false
+  message: false
 ---
+Lisez ces repères en parallèle avec les démonstrations et les exercices. Les pages expliquent le socle sans supposer qu’une vidéo est disponible.
 
-## Lecture obligatoire
+## Cible, unité et séparation {#lecture-1}
 
-James, Witten, Hastie et Tibshirani, *An Introduction to Statistical Learning with Applications in R*, 2e édition, [chapitre 4 - Classification](https://www.statlearning.com/), sections sur la régression logistique et les mesures de classification.
+Un résultat binaire décrit un événement observable avec une classe positive définie. La décision précède la réalisation de la cible : chaque prédicteur doit être disponible à cette origine. Séparer l’apprentissage, qui estime les coefficients, la validation, qui choisit une règle, et le test, qui l’évalue après fixation. Pour des données temporelles ou des personnes répétées, un partage aléatoire peut être inadapté.
 
-Question de lecture : pourquoi une probabilité estimée et une classe prédite répondent-elles à deux questions différentes?
+Exemple : une ligne représente une cliente et la cible indique si elle part dans les 90 jours suivant la date de décision. Les caractéristiques utilisées doivent être connues à cette date. L’apprentissage sert à estimer le modèle; la validation sert à choisir une règle; le test distinct sert à évaluer la règle fixée. Si un seul bloc hors apprentissage sert au choix, il constitue une validation et son score n’est pas un test final indépendant.
 
-## Ressources pratiques
+## Logistique, cotes et probabilités {#lecture-2}
 
-- [Documentation officielle de `yardstick`](https://yardstick.tidymodels.org/), pour les définitions et fonctions de mesures;
-- page générale [Lectures et ressources](../../ressources/lectures.qmd), pour la référence complète et l'accès gratuit au manuel.
+Pour une probabilité p, la cote vaut p/(1-p). La régression logistique pose log(p/(1-p)) = β0 + β1x1 + … et transforme ce prédicteur en probabilité comprise entre 0 et 1. Pour une unité supplémentaire de x, à autres variables fixées, les cotes sont multipliées par exp(β1). Ce rapport n’est pas un rapport de probabilités. Les coefficients et profils sont des associations conditionnelles, pas des effets causaux établis.
 
-## Pour aller plus loin
+Par exemple, une probabilité de 0,20 correspond à une cote de 0,20/0,80 = 0,25. Si les cotes doublent, elles valent 0,50 et la probabilité devient 0,50/(1 + 0,50), soit environ 0,33. La probabilité n’a donc pas doublé. Dans une régression, cette comparaison suppose une variation d’une unité du prédicteur concerné et les autres prédicteurs maintenus fixes; elle ne démontre pas une relation causale.
 
-Les arbres et forêts aléatoires sont mentionnés comme ouvertures. Ils ne sont pas exigés dans ce module : la priorité est de maîtriser la cible, la validation, les probabilités, les seuils et les coûts d'erreur.
+## Matrice et mesures {#lecture-3}
+
+Les vrais positifs VP sont les événements ciblés; les faux négatifs FN sont les événements manqués. Les faux positifs FP sont des non-événements ciblés et les vrais négatifs VN les non-événements écartés. Sensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP), exactitude = (VP+VN)/N. Une mesure est indéfinie si son dénominateur vaut zéro. L’exactitude seule peut masquer les événements manqués.
+
+Avec 30 événements réels et 70 non-événements, supposons VP = 24, FN = 6, FP = 28 et VN = 42. La sensibilité vaut 24/30 = 80 % : elle porte sur les événements réels. La précision vaut 24/52 ≈ 46 % : elle porte sur les 52 personnes ciblées. La spécificité vaut 42/70 = 60 %. Ces questions ont des dénominateurs différents; toujours commencer par identifier la classe positive.
+
+## Seuil, coût et capacité {#lecture-4}
+
+Le seuil transforme une probabilité en classe. Abaisser le seuil ne diminue pas le nombre de personnes ciblées ni le nombre de vrais positifs pour des scores fixés; la précision peut augmenter ou diminuer. Les coûts fictifs ou la capacité guident la règle. Le choix parmi des seuils se fait sur la validation; le test reste réservé à l’évaluation de la règle fixée.
+
+Supposons qu’un contact manqué coûte quatre unités et un contact inutile une unité. Sur la validation, comparez les coûts des règles envisagées, puis fixez celle qui convient au contexte. Une capacité limitée peut plutôt conduire à classer les risques et à cibler un nombre maximal de personnes. La proportion réellement ciblée à un seuil fixe peut changer d’un groupe à l’autre; un seuil fixe ne garantit donc pas une capacité fixe.
+
+## Calibration et action {#lecture-5}
+
+Une calibration descriptive compare, par groupes de risques prédits, la probabilité moyenne à la fréquence observée. Les groupes peuvent être petits et les résultats incertains. Le score de Brier résume l’erreur quadratique des probabilités mais ne mesure pas uniquement la calibration. Un modèle prédit un risque de départ; il n’estime pas nécessairement l’effet d’un contact ni les bénéfices causals de l’intervention.
+
+Si, parmi des personnes dont le risque prédit moyen est de 20 %, environ 20 % vivent l’événement, le groupe est descriptivement cohérent avec cette prévision. Il faut aussi regarder les autres groupes et leurs effectifs : un seul partage ou de petits groupes ne suffisent pas à prouver la calibration future. Un risque prédit élevé ne démontre pas qu’un contact va empêcher le départ.
+
+## Lectures ciblées et documentation
+
+James, Witten, Hastie et Tibshirani (2021), *An Introduction to Statistical Learning with Applications in R*, 2e édition, [chapitre 4 sur la classification](https://www.statlearning.com/). Lire la régression logistique, la prédiction et les mesures d’évaluation; le chapitre 5 complète la validation. La documentation R de [`glm`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html) présente la famille binomiale. Les définitions de [sensibilité](https://yardstick.tidymodels.org/reference/sens.html) et de [précision](https://yardstick.tidymodels.org/reference/precision.html) précisent le rôle de la classe positive.
+
+Pour approfondir les cotes, la vraisemblance, la déviance, la courbe ROC, un arbre et les réseaux de neurones, ouvrez le [complément facultatif](complements.qmd). Ces outils ne sont pas tous requis pour terminer les rapports.

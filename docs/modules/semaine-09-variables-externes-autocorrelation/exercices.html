@@ -6872,6 +6872,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7052,12 +7083,15 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
-  <li><a href="#exercice-1---audit-de-disponibilité" id="toc-exercice-1---audit-de-disponibilité" class="nav-link" data-scroll-target="#exercice-1---audit-de-disponibilité">Exercice 1 - Audit de disponibilité</a></li>
-  <li><a href="#exercice-2---résidus-et-autocorrélation" id="toc-exercice-2---résidus-et-autocorrélation" class="nav-link" data-scroll-target="#exercice-2---résidus-et-autocorrélation">Exercice 2 - Résidus et autocorrélation</a></li>
-  <li><a href="#exercice-3---scénarios" id="toc-exercice-3---scénarios" class="nav-link" data-scroll-target="#exercice-3---scénarios">Exercice 3 - Scénarios</a></li>
-  <li><a href="#exercice-de-synthèse" id="toc-exercice-de-synthèse" class="nav-link" data-scroll-target="#exercice-de-synthèse">Exercice de synthèse</a></li>
+  <ul class="collapse">
+  <li><a href="#preparation" id="toc-preparation" class="nav-link active" data-scroll-target="#preparation">Préparation</a></li>
+  <li><a href="#exercice-1" id="toc-exercice-1" class="nav-link" data-scroll-target="#exercice-1">Exercice 1 - Auditer la disponibilité</a></li>
+  <li><a href="#exercice-2" id="toc-exercice-2" class="nav-link" data-scroll-target="#exercice-2">Exercice 2 - Diagnostiquer par succursale</a></li>
+  <li><a href="#exercice-3" id="toc-exercice-3" class="nav-link" data-scroll-target="#exercice-3">Exercice 3 - Comparer des scénarios</a></li>
+  <li><a href="#exercice-4" id="toc-exercice-4" class="nav-link" data-scroll-target="#exercice-4">Exercice 4 - Formuler une recommandation</a></li>
+  <li><a href="#exercice-5" id="toc-exercice-5" class="nav-link" data-scroll-target="#exercice-5">Exercice 5 - Retard et horizon</a></li>
+  <li><a href="#exercice-6" id="toc-exercice-6" class="nav-link" data-scroll-target="#exercice-6">Exercice 6 - Interpréter une p-valeur</a></li>
+  <li><a href="#exercice-7" id="toc-exercice-7" class="nav-link" data-scroll-target="#exercice-7">Exercice 7 - Événement spécial</a></li>
   </ul>
 </nav>
     </div>
@@ -7083,112 +7117,201 @@ display: none;
 </header>
 
 
-<section id="préparation" class="level2">
-<h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
-<p>Les capsules utilisent une seule série de ventes et des scénarios de prix. Le cas de transfert porte sur plusieurs succursales et demande de détecter des variables qui ne seraient connues qu’après le mois à prévoir.</p>
-<p>Jeu de données de transfert : <a class="data-link" href="../../donnees/#cas_integrateur_quebec">cas_integrateur_quebec.csv</a>.</p>
+<p>Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Les trois derniers exercices sont des pratiques supplémentaires.</p>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Préparation</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;../atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span>)) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;../atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modules/atelier-04-recapitulation/data/cas_integrateur_quebec.csv&quot;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>service <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  data_path,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">as.Date</span>(date),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">promotion =</span> <span class="fu">factor</span>(promotion)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(succursale, date) <span class="sc">|&gt;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ventes_retard_1 =</span> <span class="fu">lag</span>(ventes)) <span class="sc">|&gt;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>racines <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;.&quot;</span>, <span class="st">&quot;modules/semaine-09-variables-externes-autocorrelation&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>racine <span class="ot">&lt;-</span> racines[<span class="fu">file.exists</span>(<span class="fu">file.path</span>(racines, <span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span>))][<span class="dv">1</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">is.na</span>(racine))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>service <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(racine, <span class="st">&quot;data/cas_integrateur_quebec.csv&quot;</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date), <span class="at">succursale =</span> <span class="fu">factor</span>(succursale),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">promotion =</span> <span class="fu">factor</span>(promotion, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(succursale, date) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ventes_retard_1 =</span> <span class="fu">lag</span>(ventes)) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(service) <span class="sc">==</span> <span class="dv">288</span>, <span class="sc">!</span><span class="fu">anyDuplicated</span>(service[<span class="fu">c</span>(<span class="st">&quot;succursale&quot;</span>, <span class="st">&quot;date&quot;</span>)]))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>entrainement_service <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span> <span class="fu">filter</span>(date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="exercice-1---audit-de-disponibilité" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-1---audit-de-disponibilité">Exercice 1 - Audit de disponibilité</h2>
-<p>Une équipe propose de prévoir les ventes du mois suivant avec <code>promotion</code>, <code>capacite</code>, <code>achalandage</code>, <code>ruptures_stock</code>, <code>temps_attente</code>, <code>satisfaction</code> et <code>ventes_retard_1</code>.</p>
-<p>Construisez un tableau indiquant pour chaque variable :</p>
-<ul>
-<li>le moment où elle devient réellement connue;</li>
-<li>si elle est planifiée, observée, retardée ou prévue séparément;</li>
-<li>si son utilisation créerait une fuite d’information;</li>
-<li>la solution de remplacement possible.</li>
-</ul>
-<p>L’équipe doit notamment repérer que les mesures opérationnelles du mois à prévoir ne sont pas disponibles au début de ce mois.</p>
+<section id="exercice-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-1">Exercice 1 - Auditer la disponibilité</h2>
+<p>Une équipe souhaite prévoir les ventes du mois suivant avec promotion, capacité, achalandage, ruptures, temps d’attente, satisfaction et ventes du mois courant. Classez-les selon leur disponibilité à l’origine. Proposez une solution pour une variable indisponible.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 1">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Une promotion approuvée et une capacité annoncée peuvent être connues, sous réserve du calendrier réel. Les ventes du mois courant ne sont utilisables que si elles sont effectivement disponibles à l’origine. L’achalandage, les ruptures, l’attente et la satisfaction du mois cible sont observés après coup : leur utilisation telle quelle créerait une fuite. On peut prévoir ou scénariser une variable, puis nommer l’incertitude, ou la retirer.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="exercice-2---résidus-et-autocorrélation" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-2---résidus-et-autocorrélation">Exercice 2 - Résidus et autocorrélation</h2>
-<p>Ajustez un modèle de base sur les observations antérieures à 2025, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale.</p>
+<section id="exercice-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-2">Exercice 2 - Diagnostiquer par succursale</h2>
+<p>Ajustez un modèle simple sur 2020 à 2024, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale. Pourquoi ne pas joindre la fin d’une succursale au début de la suivante?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>entrainement <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2025-01-01&quot;</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>modele_base <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ventes <span class="sc">~</span> indice_temps <span class="sc">+</span> promotion <span class="sc">+</span> succursale,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> entrainement</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>diagnostic <span class="ot">&lt;-</span> <span class="fu">augment</span>(modele_base, <span class="at">data =</span> entrainement) <span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(succursale, date) <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">autocorrelation_rang_1 =</span> <span class="fu">cor</span>(.resid, <span class="fu">lag</span>(.resid), <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>diagnostic</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>modele_base <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> indice_temps <span class="sc">+</span> promotion <span class="sc">+</span> succursale, <span class="at">data =</span> entrainement_service)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>diagnostic <span class="ot">&lt;-</span> entrainement_service <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">residu =</span> <span class="fu">residuals</span>(modele_base)) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(succursale, date) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(succursale) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">autocorrelation_rang_1 =</span> <span class="fu">cor</span>(residu, <span class="fu">lag</span>(residu), <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>diagnostic</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  succursale autocorrelation_rang_1
+  &lt;fct&gt;                       &lt;dbl&gt;
+1 Gatineau                 -0.00914
+2 Montréal                  0.0853
+3 Québec                    0.119
+4 Sherbrooke               -0.185  </code></pre>
 </div>
-<p>Expliquez pourquoi une moyenne résiduelle proche de zéro ne suffit pas si les erreurs positives ou négatives se suivent dans le temps.</p>
+</div>
+<p>Les retards sont calculés après tri dans chaque groupe. Une moyenne de résidus proche de zéro ne suffit pas : des signes semblables peuvent se suivre. Les frontières entre succursales ne sont pas des mois consécutifs d’une même série.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="exercice-3---scénarios" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-3---scénarios">Exercice 3 - Scénarios</h2>
-<p>Créez un modèle de scénario qui n’utilise que la tendance, une promotion planifiée, la capacité annoncée et les ventes du mois courant. Comparez ensuite un scénario de capacité inchangée à un scénario de hausse de capacité de 5 %.</p>
+<section id="exercice-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-3">Exercice 3 - Comparer des scénarios</h2>
+<p>Depuis la fin de 2025, construisez deux scénarios pour janvier 2026 à Québec : capacité stable ou augmentée de 5 %, promotion non et dernières ventes connues. Utilisez le même modèle et interprétez la différence sans conclure à un effet causal.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 3">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>modele_scenario <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  ventes <span class="sc">~</span> indice_temps <span class="sc">+</span> promotion <span class="sc">+</span> capacite <span class="sc">+</span> ventes_retard_1,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> entrainement</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>profil_reference <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(succursale <span class="sc">==</span> <span class="st">&quot;Québec&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(date, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">indice_temps =</span> indice_temps <span class="sc">+</span> <span class="dv">1</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">promotion =</span> <span class="fu">factor</span>(<span class="st">&quot;non&quot;</span>, <span class="at">levels =</span> <span class="fu">levels</span>(service<span class="sc">$</span>promotion)),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    capacite,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">ventes_retard_1 =</span> ventes</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  profil_reference <span class="sc">|&gt;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">scenario =</span> <span class="st">&quot;Capacité inchangée&quot;</span>),</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  profil_reference <span class="sc">|&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">capacite =</span> capacite <span class="sc">*</span> <span class="fl">1.05</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">scenario =</span> <span class="st">&quot;Capacité augmentée de 5 %&quot;</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> scenarios <span class="sc">|&gt;</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">prevision =</span> <span class="fu">predict</span>(modele_scenario, <span class="at">newdata =</span> scenarios)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>scenarios</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Un mois à partir de fin 2025 : le dernier mois et son chiffre de ventes sont disponibles.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>modele_scenario <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> indice_temps <span class="sc">+</span> promotion <span class="sc">+</span> capacite <span class="sc">+</span> ventes_retard_1,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> service <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ventes_retard_1)))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>profil <span class="ot">&lt;-</span> service <span class="sc">|&gt;</span> <span class="fu">filter</span>(succursale <span class="sc">==</span> <span class="st">&quot;Québec&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">slice_max</span>(date, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">indice_temps =</span> indice_temps <span class="sc">+</span> <span class="dv">1</span>, <span class="at">promotion =</span> <span class="fu">factor</span>(<span class="st">&quot;non&quot;</span>, <span class="at">levels =</span> <span class="fu">levels</span>(service<span class="sc">$</span>promotion)),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            capacite, <span class="at">ventes_retard_1 =</span> ventes)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(profil <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">scenario =</span> <span class="st">&quot;Capacité inchangée&quot;</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                       profil <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">capacite =</span> capacite <span class="sc">*</span> <span class="fl">1.05</span>, <span class="at">scenario =</span> <span class="st">&quot;Capacité augmentée de 5 %&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prevision =</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(modele_scenario, <span class="at">newdata =</span> <span class="fu">pick</span>(<span class="fu">everything</span>()))))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>scenarios</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  indice_temps promotion capacite ventes_retard_1 scenario             prevision
+         &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;
+1           73 non           2400          230891 Capacité inchangée     196781.
+2           73 non           2520          230891 Capacité augmentée …   205502.</code></pre>
 </div>
-<p>Expliquez pourquoi la différence entre les deux prévisions est une implication conditionnelle du modèle, et non une estimation certaine de l’effet de la nouvelle capacité.</p>
+</div>
+<p>La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. La formule de capacité est une hypothèse, pas un plan vérifié.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="exercice-de-synthèse" class="level2">
-<h2 class="anchored" data-anchor-id="exercice-de-synthèse">Exercice de synthèse</h2>
-<p>Rédigez une recommandation qui distingue trois décisions : retirer les variables indisponibles, surveiller l’autocorrélation par succursale et présenter les changements de capacité comme des scénarios. Ajoutez une limite d’extrapolation.</p>
+<section id="exercice-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-4">Exercice 4 - Formuler une recommandation</h2>
+<p>Rédigez une recommandation distinguant fuite d’information, diagnostic par succursale et scénario. Nommez un risque d’extrapolation.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 4">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Retirer les variables du mois cible connues après coup, ou utiliser une prévision distincte explicitement incertaine. Examiner les résidus dans chaque succursale et au fil du temps. Présenter la hausse de capacité comme un scénario conditionnel et vérifier si la valeur envisagée se situe dans la plage des données et convient à Québec.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-5">Exercice 5 - Retard et horizon</h2>
+<p>À la fin de décembre, les ventes de décembre sont connues. Peut-on les utiliser pour prévoir janvier et février?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 5">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour janvier, oui si la mesure de décembre est disponible à l’origine. Pour février, le retard d’un mois serait la vente de janvier, encore inconnue à la fin de décembre; il faut la prévoir, utiliser un autre retard disponible ou mettre à jour la prévision après janvier.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-6">Exercice 6 - Interpréter une p-valeur</h2>
+<p>Le test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résidus sont indépendants?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 6">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 6
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Non. Le test ne fournit pas assez d’évidence contre l’absence d’autocorrélations examinées, mais une p-valeur élevée ne démontre ni l’indépendance ni l’absence de structure. Examiner aussi le graphique et la taille de l’échantillon.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-7" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-7">Exercice 7 - Événement spécial</h2>
+<p>Une panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 7">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 7
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Vérifier d’abord si la donnée est erronée et documenter la cause. Selon la question, comparer une analyse avec et sans ce mois ou ajouter un indicateur d’événement; ne pas le supprimer automatiquement. Une prévision future requiert aussi un scénario sur la présence de l’événement.</p>
+</div>
+</div>
+</div>
 
 
 </section>

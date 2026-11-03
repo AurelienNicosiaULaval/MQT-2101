@@ -1,30 +1,87 @@
 ---
-title: "Notes de cours - Résultats binaires et classification"
+title: "Synthèse - Résultats binaires et classification"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
 format:
-  html:
+  revealjs:
+    auto-stretch: false
+    css: media/module10-capsules.css
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
     embed-resources: true
+execute:
+  warning: false
+  message: false
 ---
 
-## Cible binaire
+## Une décision à partir d’un risque
 
-La cible doit définir un événement observable et une fenêtre. La classe positive est l'événement à détecter. La prévalence est la proportion de cas positifs et influence fortement l'interprétation des mesures.
+::: {.question-line}
+Que savons-nous avant d’agir et quelles erreurs pouvons-nous accepter?
+:::
 
-## Régression logistique
+## Cible, unité et séparation
 
-La régression logistique transforme une combinaison linéaire en probabilité. Les coefficients se lisent sur l'échelle des log-cotes; leur exponentielle est un rapport de cotes. Une probabilité prédite est souvent plus intelligible dans un profil concret.
+::: {.keypoints}
+- Un résultat binaire décrit un événement observable avec une classe positive définie.
+- La décision précède la réalisation de la cible : chaque prédicteur doit être disponible à cette origine.
+- Séparer l’apprentissage, qui estime les coefficients, la validation, qui choisit une règle, et le test, qui l’évalue après fixation.
+:::
 
-## Validation
+## Logistique, cotes et probabilités
 
-La séparation entraînement-test doit être établie avant l'ajustement. Le test ne sert ni à sélectionner les variables ni à choisir plusieurs seuils jusqu'à obtenir un résultat souhaité.
+::: {.keypoints}
+- Pour une probabilité p, la cote vaut p/(1-p).
+- La régression logistique pose la formule logistique et transforme ce prédicteur en probabilité comprise entre 0 et 1.
+- Pour une unité supplémentaire de x, à autres variables fixées, les cotes sont multipliées par exp(β1).
+:::
 
-## Seuil et matrice de confusion
+## Matrice et mesures
 
-Le seuil convertit la probabilité en action. Sa variation déplace le compromis entre faux positifs et faux négatifs. L'exactitude doit être complétée par sensibilité, spécificité, précision et proportion ciblée.
+::: {.keypoints}
+- Les vrais positifs VP sont les événements ciblés; les faux négatifs FN sont les événements manqués.
+- Les faux positifs FP sont des non-événements ciblés et les vrais négatifs VN les non-événements écartés.
+- Sensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP), exactitude = (VP+VN)/N.
+:::
 
-## Calibration
+## Seuil, coût et capacité
 
-Un modèle calibré associe une probabilité moyenne de 0,30 à une fréquence observée proche de 30 % dans des groupes comparables. Un modèle peut bien classer les risques tout en produisant des probabilités mal calibrées.
+::: {.keypoints}
+- Le seuil transforme une probabilité en classe.
+- Abaisser le seuil ne diminue pas le nombre de personnes ciblées ni le nombre de vrais positifs pour des scores fixés; la précision peut augmenter ou diminuer.
+- Les coûts fictifs ou la capacité guident la règle.
+:::
 
-## Décision responsable
+## Calibration et action
 
-La performance globale ne suffit pas. Il faut examiner la population concernée, les conséquences de l'intervention, la stabilité temporelle, la protection des renseignements et la possibilité de recours ou de vérification humaine.
+::: {.keypoints}
+- Une calibration descriptive compare, par groupes de risques prédits, la probabilité moyenne à la fréquence observée.
+- Les groupes peuvent être petits et les résultats incertains.
+- Le score de Brier résume l’erreur quadratique des probabilités mais ne mesure pas uniquement la calibration.
+:::
+
+## À retenir
+
+::: {.keypoints}
+- Une probabilité ne suffit pas à fixer une action.
+- Le seuil se choisit en validation et s’évalue sur un test distinct.
+- Le risque prédit n’est pas l’effet causal d’un contact.
+:::
+
+## Références et crédits
+
+James, Witten, Hastie et Tibshirani (2021), *An Introduction to Statistical Learning*, 2e édition.
+
+Données fictives du cours MQT-2101, Université Laval.

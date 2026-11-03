@@ -1,112 +1,93 @@
 # Capsules - Module 10
 
-## Capsule 1 - Définir une cible binaire
+Les supports PDF et HTML sont disponibles; aucune vidéo ni version annotée n’est annoncée avant sa mise à disposition. Chaque production est celle de l’accueil et de la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.
 
-## Objectif
+## Capsule 1 - Définir la cible et les partitions
 
-> **NOTE:**
->
-> Définir l’événement, la fenêtre d’observation, la classe positive et l’unité d’analyse.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+## HTML
 
-## Support écrit
-
-Une cible binaire prend deux valeurs, par exemple départ dans les 90 jours ou absence de départ. La classe positive est l’événement que l’on veut détecter; elle doit être choisie explicitement.
-
-La définition doit être mesurable et disponible après la période utilisée pour construire les prédicteurs. Utiliser une information créée après le départ constituerait une fuite de cible.
+[Ouvrir les diapositives](media/qmd/capsule-01-support.llms.md)
 
 ### Activité 10.1
 
-Pourquoi « client à risque » est-il une cible insuffisante?
+Définissez l’unité, la classe positive, l’horizon et le moment des prédicteurs. Séparez les clients en apprentissage, validation et test; vérifiez les effectifs et l’absence de clients communs.
 
-> **TIP:**
->
-> Le terme ne précise ni événement observable, ni horizon, ni règle d’encodage. « Départ dans les 90 jours » est vérifiable et temporellement défini.
+Auto-vérification : Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.
 
-## Capsule 2 - Probabilité logistique
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-1).
 
-## Objectif
+## Capsule 2 - Estimer et interpréter
 
-> **NOTE:**
->
-> Passer du prédicteur linéaire à une probabilité entre 0 et 1.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+## HTML
 
-## Support écrit
-
-La régression logistique modélise les log-cotes :
-
-\\ \log\left(\frac{p}{1-p}\right)=\beta_0+\beta_1x_1+\cdots+\beta_kx_k. \\
-
-Un coefficient positif augmente les log-cotes de la classe positive, toutes les autres variables du modèle étant maintenues constantes. Pour communiquer, il est souvent préférable de montrer des probabilités prédites dans des scénarios concrets.
+[Ouvrir les diapositives](media/qmd/capsule-02-support.llms.md)
 
 ### Activité 10.2
 
-Une probabilité prédite de 0,70 signifie-t-elle que la personne partira nécessairement?
+Ajustez une régression logistique sur l’apprentissage. Interprétez un rapport de cotes et deux probabilités prédites sans les présenter comme une certitude ou un effet causal.
 
-> **TIP:**
->
-> Non. La probabilité quantifie une incertitude selon le modèle. Elle ne détermine pas avec certitude le résultat individuel.
+Auto-vérification : Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.
 
-## Capsule 3 - Matrice de confusion
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-2).
 
-## Objectif
+## Capsule 3 - Lire une matrice de confusion
 
-> **NOTE:**
->
-> Construire la matrice et interpréter sensibilité, spécificité et précision.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+## HTML
 
-## Support écrit
-
-Après choix d’un seuil, quatre résultats sont possibles : vrai positif, faux positif, vrai négatif et faux négatif.
-
-- Sensibilité : proportion des départs réellement détectés.
-- Spécificité : proportion des non-départs correctement écartés.
-- Précision : proportion des clients ciblés qui partent réellement.
-- Exactitude : proportion totale de classifications correctes.
-
-Avec une classe rare, prédire toujours la classe majoritaire peut donner une exactitude élevée et être inutile.
+[Ouvrir les diapositives](media/qmd/capsule-03-support.llms.md)
 
 ### Activité 10.3
 
-Pour une campagne de rétention, quelle erreur correspond à un client qui part mais n’est pas ciblé?
+Sur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez sensibilité, spécificité, précision et proportion ciblée; expliquez les deux types d’erreur.
 
-> **TIP:**
->
-> C’est un faux négatif. Son coût peut être une perte de revenu et d’occasion d’intervention.
+Auto-vérification : Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Les dénominateurs et les éventuelles mesures indéfinies sont explicites.
 
-## Capsule 4 - Choisir un seuil décisionnel
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-3).
 
-## Objectif
+## Capsule 4 - Choisir une règle avant le test
 
-> **NOTE:**
->
-> Comparer deux seuils et relier le choix à la capacité de contact et au coût des erreurs.
+## PDF
 
-## Deck de capsule
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+## HTML
 
-## Support écrit
-
-Le seuil 0,5 n’est pas une loi. Le diminuer augmente généralement la sensibilité et le nombre de clients ciblés, mais peut réduire la précision.
-
-Le seuil doit dépendre du coût d’un contact, de la valeur d’un client conservé, de la capacité de l’équipe et des risques d’une intervention inutile. Il doit être validé sur des données qui n’ont pas servi à ajuster le modèle.
+[Ouvrir les diapositives](media/qmd/capsule-04-support.llms.md)
 
 ### Activité 10.4
 
-L’équipe peut contacter seulement 15 % des clients. Quelle stratégie est préférable à un seuil fixé arbitrairement à 0,5?
+Sur la validation seulement, comparez les deux seuils avec un coût fictif de 4 unités par faux négatif et 1 par faux positif. Retenez le seuil au plus faible coût, avec 0,30 en cas d’égalité.
 
-> **TIP:**
->
-> Classer les probabilités et cibler les 15 % les plus élevées, puis évaluer la performance et la valeur attendue de cette règle sur des données test.
+Auto-vérification : Je fixe les coûts et les seuils avant la comparaison. Le test ne sert pas au choix. Je présente le coût comme une hypothèse pédagogique.
+
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-4).
+
+## Capsule 5 - Évaluer et recommander
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+
+## HTML
+
+[Ouvrir les diapositives](media/qmd/capsule-05-support.llms.md)
+
+### Activité 10.5
+
+Appliquez au test le seuil retenu, décrivez la calibration par groupes et examinez la règle alternative préétablie des 15 % de risques les plus élevés. Formulez une recommandation avec deux limites.
+
+Auto-vérification : Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.
+
+La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-5).

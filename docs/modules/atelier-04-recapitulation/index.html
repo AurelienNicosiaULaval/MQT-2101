@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cours MQT-2101 de l’Université Laval : analyse et modélisation des données avec R, Quarto, régression, prévision et classification.">
 
-<title>Atelier 04 - Analyse intégratrice et décision – MQT-2101 : Analyse et modélisation des données</title>
+<title>Laboratoire 04 - Analyse intégratrice et décision – MQT-2101 : Analyse et modélisation des données</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,13 +7048,14 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#deux-voies-possibles" id="toc-deux-voies-possibles" class="nav-link active" data-scroll-target="#deux-voies-possibles">Deux voies possibles</a></li>
-  <li><a href="#résultat-attendu" id="toc-résultat-attendu" class="nav-link" data-scroll-target="#résultat-attendu">Résultat attendu</a></li>
-  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
-  <li><a href="#parcours" id="toc-parcours" class="nav-link" data-scroll-target="#parcours">Parcours</a></li>
-  <li><a href="#continuité-vers-la-fin-du-cours" id="toc-continuité-vers-la-fin-du-cours" class="nav-link" data-scroll-target="#continuité-vers-la-fin-du-cours">Continuité vers la fin du cours</a></li>
-  <li><a href="#critères-de-réussite" id="toc-critères-de-réussite" class="nav-link" data-scroll-target="#critères-de-réussite">Critères de réussite</a></li>
+  <ul class="collapse">
+  <li><a href="#la-mission" id="toc-la-mission" class="nav-link active" data-scroll-target="#la-mission">La mission</a></li>
+  <li><a href="#deux-voies-possibles" id="toc-deux-voies-possibles" class="nav-link" data-scroll-target="#deux-voies-possibles">Deux voies possibles</a></li>
+  <li><a href="#avant-la-séance" id="toc-avant-la-séance" class="nav-link" data-scroll-target="#avant-la-séance">Avant la séance</a></li>
+  <li><a href="#votre-parcours-en-classe" id="toc-votre-parcours-en-classe" class="nav-link" data-scroll-target="#votre-parcours-en-classe">Votre parcours en classe</a></li>
+  <li><a href="#ce-qui-est-attendu" id="toc-ce-qui-est-attendu" class="nav-link" data-scroll-target="#ce-qui-est-attendu">Ce qui est attendu</a></li>
+  <li><a href="#ressources" id="toc-ressources" class="nav-link" data-scroll-target="#ressources">Ressources</a></li>
+  <li><a href="#auto-vérification-et-aide" id="toc-auto-vérification-et-aide" class="nav-link" data-scroll-target="#auto-vérification-et-aide">Auto-vérification et aide</a></li>
   </ul>
 </nav>
     </div>
@@ -7032,7 +7064,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Atelier 04 - Analyse intégratrice et décision</h1>
+<h1 class="title">Laboratoire 04 - Analyse intégratrice et décision</h1>
 </div>
 
 
@@ -7049,69 +7081,195 @@ display: none;
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Mission">
+<div class="learning-hero">
+<p class="hero-kicker">
+Laboratoire en classe
+</p>
+<h2 class="anchored">
+Relier une preuve à une décision
+</h2>
+<p>Choisir une cible, comparer une méthode à une référence et expliquer ce que les données permettent de recommander.</p>
+<div class="quick-facts">
+<div class="fact-card">
+<div class="fact-icon fact-clock" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Séance
+</div>
+<div class="fact-value">
+9 décembre, 9 h à 11 h 50
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-tools" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Outils
+</div>
+<div class="fact-value">
+R, RStudio et Quarto
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-data" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Cas
+</div>
+<div class="fact-value">
+Quatre succursales fictives
+</div>
+</div>
+</div>
+<div class="fact-card">
+<div class="fact-icon fact-report" aria-hidden="true">
+
+</div>
+<div>
+<div class="fact-label">
+Trace
+</div>
+<div class="fact-value">
+Une synthèse, une voie principale
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="la-mission" class="level2">
+<h2 class="anchored" data-anchor-id="la-mission">La mission</h2>
+<p>Une direction fictive souhaite soit préparer les ventes à venir, soit repérer un risque de service insuffisant. Quelle décision peut-on soutenir avec les données et quelles limites faut-il communiquer?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Production commune du laboratoire">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Mission
+<span class="screen-reader-only">Note</span>Production commune du laboratoire
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une direction vous demande une recommandation analytique sur la performance de quatre succursales. Vous devez choisir une cible, construire une preuve hors échantillon et communiquer une décision avec ses limites.</p>
+<p>Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases.</p>
 </div>
 </div>
+<p>Cette production se réalise une seule fois dans un rapport. Les cartes, le guide, les repères et la présentation renvoient au même travail. Les exercices de fidélisation constituent un transfert facultatif distinct.</p>
+</section>
 <section id="deux-voies-possibles" class="level2">
 <h2 class="anchored" data-anchor-id="deux-voies-possibles">Deux voies possibles</h2>
 <ul>
-<li>Voie A, réponse continue : prévoir les ventes avec des prédicteurs connus au moment de la prévision et une référence saisonnière naïve.</li>
-<li>Voie B, réponse binaire : utiliser les conditions du mois courant pour détecter un risque de service insuffisant au mois suivant et définir une règle d’intervention proportionnée.</li>
+<li>Voie A : prévoir les ventes mensuelles en dollars par succursale avec le calendrier et une référence saisonnière naïve.</li>
+<li>Voie B : détecter un risque de service insuffisant le mois suivant à partir des conditions du mois courant et d’une règle de ciblage.</li>
 </ul>
-<p>Le choix de la voie fait partie de l’évaluation. Il doit correspondre à la décision formulée.</p>
+<p>Le choix de la voie fait partie de l’évaluation. Il doit correspondre à la décision formulée. Les modalités de remise et de rétroaction pour cette production sont à confirmer auprès de l’enseignant; le plan de cours présente les évaluations pondérées.</p>
 </section>
-<section id="résultat-attendu" class="level2">
-<h2 class="anchored" data-anchor-id="résultat-attendu">Résultat attendu</h2>
-<p>Votre synthèse Quarto doit contenir :</p>
+<section id="avant-la-séance" class="level2">
+<h2 class="anchored" data-anchor-id="avant-la-séance">Avant la séance</h2>
+<p>Le <a href="../../calendrier.html">calendrier</a> prévoit le mercredi 9 décembre 2026, de 9 h à 11 h 50, au pavillon Palasis-Prince, local 3213. Revoyez origine et mesures temporelles aux modules <a href="../../modules/semaine-06-series-chronologiques-intro/index.html">06</a> à <a href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">09</a>, puis probabilités et confusion au <a href="../../modules/semaine-10-classification-modeles-avances/index.html">module 10</a>. Le mini-rapport 2 a été remis avant ce laboratoire : la séance prépare la synthèse et le final.</p>
+<p>Téléchargez le projet de départ correspondant à votre voie : <a href="telechargements/labo04-ventes.zip">voie A, ventes</a> ou <a href="telechargements/labo04-service.zip">voie B, service</a>. Décompressez-le entièrement, ouvrez le <code>.Rproj</code> puis le <code>.qmd</code>, et rendez une première fois. Installez <code>tidyverse</code> et <code>lubridate</code> au besoin. Le <a href="data/dictionnaires.md">dictionnaire</a> décrit les données fictives et les hypothèses.</p>
+<p>Les données de 2025 ont déjà été utilisées aux modules 09 et 10 : les résultats du laboratoire sont une validation réutilisée, pas un nouveau test indépendant. La voie A utilise seulement le calendrier connu; la voie B fixe un seuil à partir des scores de 2024 avant d’examiner ceux de 2025. Les valeurs et étiquettes de l’autre voie demeurent accessibles pour les trois phrases demandées.</p>
+</section>
+<section id="votre-parcours-en-classe" class="level2">
+<h2 class="anchored" data-anchor-id="votre-parcours-en-classe">Votre parcours en classe</h2>
+<p>Les étapes construisent la même synthèse. Après une tentative, ouvrez l’indice ou consultez l’exemple R; prévoyez une relecture avant de terminer.</p>
+<div class="path-grid interactive-path">
+<details class="path-card" id="etape-1">
+<summary>
+<span class="path-number">1</span><span class="path-title">Situer la décision</span><span class="path-preview">Étape 1 du même rapport</span><span class="path-resource"><a class="summary-resource-link exercise-link" href="guide-atelier.html#audit">Guide</a><a class="summary-resource-link demo-link" href="demonstrations.html">Aide R</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Action</span> Choisissez la cible, l’unité, l’origine et l’horizon de votre voie.
+</p>
+<p>
+<span class="step-label">Après une tentative</span> <a href="guide-atelier.html#audit">Indice du guide</a> · <a href="demonstrations.html">Démonstration complète</a>
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-2">
+<summary>
+<span class="path-number">2</span><span class="path-title">Vérifier les données</span><span class="path-preview">Étape 2 du même rapport</span><span class="path-resource"><a class="summary-resource-link exercise-link" href="guide-atelier.html#exploration">Guide</a><a class="summary-resource-link demo-link" href="demonstrations.html">Aide R</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Action</span> Contrôlez les dates, les clés, les valeurs manquantes et explorez la période d’apprentissage.
+</p>
+<p>
+<span class="step-label">Après une tentative</span> <a href="guide-atelier.html#exploration">Indice du guide</a> · <a href="demonstrations.html">Démonstration complète</a>
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-3">
+<summary>
+<span class="path-number">3</span><span class="path-title">Construire une référence</span><span class="path-preview">Étape 3 du même rapport</span><span class="path-resource"><a class="summary-resource-link exercise-link" href="guide-atelier.html#modeles">Guide</a><a class="summary-resource-link demo-link" href="demonstrations.html">Aide R</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Action</span> Ajustez votre méthode et construisez la référence propre à votre cible.
+</p>
+<p>
+<span class="step-label">Après une tentative</span> <a href="guide-atelier.html#modeles">Indice du guide</a> · <a href="demonstrations.html">Démonstration complète</a>
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-4">
+<summary>
+<span class="path-number">4</span><span class="path-title">Comparer et interpréter</span><span class="path-preview">Étape 4 du même rapport</span><span class="path-resource"><a class="summary-resource-link exercise-link" href="guide-atelier.html#comparaison">Guide</a><a class="summary-resource-link demo-link" href="demonstrations.html">Aide R</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Action</span> Calculez les mesures adaptées sur les mêmes observations de validation réutilisée.
+</p>
+<p>
+<span class="step-label">Après une tentative</span> <a href="guide-atelier.html#comparaison">Indice du guide</a> · <a href="demonstrations.html">Démonstration complète</a>
+</p>
+</div>
+</details>
+<details class="path-card" id="etape-5">
+<summary>
+<span class="path-number">5</span><span class="path-title">Recommander et surveiller</span><span class="path-preview">Étape 5 du même rapport</span><span class="path-resource"><a class="summary-resource-link exercise-link" href="guide-atelier.html#decision">Guide</a><a class="summary-resource-link demo-link" href="demonstrations.html">Aide R</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+</summary>
+<div class="step-detail">
+<p>
+<span class="step-label">Action</span> Expliquez une décision, une limite, une règle de suivi et l’autre voie en trois phrases.
+</p>
+<p>
+<span class="step-label">Après une tentative</span> <a href="guide-atelier.html#decision">Indice du guide</a> · <a href="demonstrations.html">Démonstration complète</a>
+</p>
+</div>
+</details>
+</div>
+</section>
+<section id="ce-qui-est-attendu" class="level2">
+<h2 class="anchored" data-anchor-id="ce-qui-est-attendu">Ce qui est attendu</h2>
+<p>Remettez une synthèse de deux pages maximum, en plus du code repliable. Une seule voie analytique doit être développée en profondeur. L’autre doit être résumée en trois phrases pour montrer que vous comprenez la différence de cible et de mesures. Incluez une déclaration IA, si applicable, selon la politique du cours.</p>
+<p>La référence saisonnière A utilise 2024 pour prévoir 2025; les promotions futures ne sont pas présumées connues. Le seuil B basé sur le 80e percentile des risques de 2024 est une règle illustrative : il ne garantit pas que 20 % des occasions seront ciblées en 2025 et ne constitue pas une capacité stricte.</p>
+</section>
+<section id="ressources" class="level2">
+<h2 class="anchored" data-anchor-id="ressources">Ressources</h2>
 <ul>
-<li>question, cible, unité d’observation et décision;</li>
-<li>provenance et limites du jeu simulé;</li>
-<li>exploration concise;</li>
-<li>méthode principale et référence simple;</li>
-<li>séparation chronologique;</li>
-<li>mesures sur la période test;</li>
-<li>recommandation, risque d’erreur, vérification de la répartition des interventions et condition de révision;</li>
-<li>déclaration IA, si applicable.</li>
+<li><a href="../../modules/atelier-04-recapitulation/guide-atelier.html">Guide en classe</a>, <a href="../../modules/atelier-04-recapitulation/capsules.html">repères préparatoires</a> et <a href="presentation.html">présentation de lancement</a>, aussi en <a href="media/pdf/presentation.pdf">PDF</a>.</li>
+<li><a href="../../modules/atelier-04-recapitulation/demonstrations.html">Démonstrations R des deux voies</a>, <a href="../../modules/atelier-04-recapitulation/exercices.html">exercices de transfert</a> et <a href="../../modules/atelier-04-recapitulation/lectures.html">lectures</a>.</li>
+<li>Exemples complets <a href="telechargements/exemple-ventes.zip">voie A</a> et <a href="telechargements/exemple-service.zip">voie B</a>; <a href="telechargements/transfert-fidelisation.zip">transfert de départ</a> et <a href="telechargements/corrige-fidelisation.zip">corrigé</a>.</li>
 </ul>
+<p>Aucune vidéo ni version annotée n’est annoncée pour cette séance.</p>
 </section>
-<section id="données" class="level2">
-<h2 class="anchored" data-anchor-id="données">Données</h2>
-<p>Le fichier <a href="data/cas_integrateur_quebec.csv"><code>cas_integrateur_quebec.csv</code></a> contient 72 mois pour quatre succursales fictives. Chaque ligne représente un mois-succursale.</p>
-</section>
-<section id="parcours" class="level2">
-<h2 class="anchored" data-anchor-id="parcours">Parcours</h2>
-<ol type="1">
-<li>Lire les <a href="../../modules/atelier-04-recapitulation/capsules.html">repères préparatoires</a>.</li>
-<li>Suivre le <a href="../../modules/atelier-04-recapitulation/guide-atelier.html">guide en classe</a>.</li>
-<li>Utiliser les <a href="../../modules/atelier-04-recapitulation/demonstrations.html">démonstrations</a> au besoin.</li>
-<li>Terminer avec les <a href="../../modules/atelier-04-recapitulation/exercices.html">exercices de consolidation</a>.</li>
-<li>Consulter les <a href="../../modules/atelier-04-recapitulation/lectures.html">lectures de synthèse</a>.</li>
-</ol>
-</section>
-<section id="continuité-vers-la-fin-du-cours" class="level2">
-<h2 class="anchored" data-anchor-id="continuité-vers-la-fin-du-cours">Continuité vers la fin du cours</h2>
-<p>Cet atelier réunit les réflexes mobilisés dans les deux voies du <a href="../../evaluations/mini-rapport-2.html">mini-rapport 2</a> : validation hors échantillon, comparaison à une référence simple, décision explicite et limite. Il sert aussi de préparation intégratrice pour l’<a href="../../evaluations/examen-final.html">examen final</a>.</p>
-</section>
-<section id="critères-de-réussite" class="level2">
-<h2 class="anchored" data-anchor-id="critères-de-réussite">Critères de réussite</h2>
+<section id="auto-vérification-et-aide" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification-et-aide">Auto-vérification et aide</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">La méthode répond à la question choisie.</label></li>
-<li><label><input type="checkbox">La validation respecte le temps.</label></li>
-<li><label><input type="checkbox">La référence simple utilise seulement l’entraînement.</label></li>
-<li><label><input type="checkbox">Les mesures correspondent à une réponse continue ou binaire.</label></li>
-<li><label><input type="checkbox">La recommandation ne dépasse pas la preuve disponible.</label></li>
-<li><label><input type="checkbox">Une limite et une règle de suivi sont explicites.</label></li>
+<li><label><input type="checkbox">Je précise la cible, l’origine, l’horizon et l’unité.</label></li>
+<li><label><input type="checkbox">Je compare la méthode et sa référence sur les mêmes observations.</label></li>
+<li><label><input type="checkbox">Je distingue la validation réutilisée d’un nouveau test indépendant.</label></li>
+<li><label><input type="checkbox">Ma recommandation cite les résultats, une limite et une règle de suivi.</label></li>
 </ul>
+<p>Si le projet ne se rend pas, vérifiez que toute l’archive a été extraite et que <code>data/</code> est présent, puis reprenez la <a href="../../modules/atelier-04-recapitulation/demonstrations.html#preparation">préparation</a>. Montrez votre tentative et le message complet.</p>
 
 
 </section>
@@ -7596,7 +7754,7 @@ display: none;
 <p>MQT-2101 - Université Laval</p>
 </div>
     <div class="nav-footer-center">
-
+       
     </div>
     <div class="nav-footer-right">
 <p>Site Quarto du cours</p>

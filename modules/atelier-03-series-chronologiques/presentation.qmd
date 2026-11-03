@@ -1,0 +1,282 @@
+---
+title: "Laboratoire 03 - Prévoir la demande"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l’administration - Université Laval"
+lang: fr
+format:
+  revealjs:
+    auto-stretch: false
+    css: media/laboratoire03-slides.css
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+racines <- c(".", "modules/atelier-03-series-chronologiques")
+racine <- racines[file.exists(file.path(racines, "data/demande_hebdomadaire_quebec.csv"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+demande <- read_csv("data/demande_hebdomadaire_quebec.csv", show_col_types = FALSE) |>
+  mutate(semaine = as.Date(semaine)) |> arrange(semaine)
+apprentissage <- demande |> slice_head(n = 91)
+```
+## Pourquoi ça compte
+
+::: {.question-line}
+Quelle prévision peut aider une équipe d’approvisionnement à se préparer?
+:::
+
+::: {.note-box}
+Nous comparons des méthodes sur les mêmes treize semaines et rendons les limites visibles.
+:::
+
+## Objectifs du laboratoire
+
+::: {.keypoints}
+- Définir cible, origine, horizon et validation.
+- Comparer lissage, références et tendance linéaire.
+- Interpréter l’incertitude et un coût asymétrique.
+- Défendre une recommandation avec une limite et un suivi.
+:::
+
+## Une demande fictive
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Une semaine
+:::
+::: {.label}
+une ligne, demande en unités
+:::
+:::
+::: {.metric}
+::: {.value}
+91 semaines
+:::
+::: {.label}
+apprentissage
+:::
+:::
+::: {.metric}
+::: {.value}
+13 semaines
+:::
+::: {.label}
+validation déjà connue
+:::
+:::
+::::
+
+## Quand la demande est-elle connue?
+
+::: {.question-line}
+Le lundi est le début de la semaine, pas le moment où son total est déjà connu.
+:::
+
+::: {.note-box}
+Dernière semaine d’apprentissage : lundi 22 septembre au dimanche 28 septembre 2025. Première semaine prévue : lundi 29 septembre.
+:::
+
+## Examiner le passé
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.6
+ggplot(apprentissage, aes(semaine, demande)) +
+  geom_line(colour = "#0B4F6C") +
+  labs(x = NULL, y = "Demande hebdomadaire (unités)") +
+  theme_minimal(base_size = 20)
+```
+
+## Cinq prévisions à la même origine
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Quatre références
+:::
+::: {.label}
+naïve, MM4, SES, naïve saisonnière
+:::
+:::
+::: {.metric}
+::: {.value}
+Tendance
+:::
+::: {.label}
+une droite sur l’indice des semaines
+:::
+:::
+::: {.metric}
+::: {.value}
+Même origine
+:::
+::: {.label}
+les mêmes treize semaines prévues
+:::
+:::
+::::
+
+::: {.warning-box}
+La liste change depuis le module 07 : comparez les résultats sans supposer le même classement.
+:::
+
+## Comparer et interpréter
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+ME
+:::
+::: {.label}
+signe moyen de l’erreur
+:::
+:::
+::: {.metric}
+::: {.value}
+MAE
+:::
+::: {.label}
+amplitude moyenne
+:::
+:::
+::: {.metric}
+::: {.value}
+RMSE
+:::
+::: {.label}
+poids accru aux grands écarts
+:::
+:::
+::::
+
+::: {.note-box}
+Erreur = observation − prévision. Les mesures sont en unités de produit.
+:::
+
+## Quelle incertitude?
+
+::: {.keypoints}
+- Lire les intervalles à 80 % et 95 % du SES.
+- Nommer la méthode et les hypothèses de la plage.
+- Ne pas appliquer automatiquement ces intervalles à une autre méthode.
+:::
+
+## Un scénario de coût
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+18 $ / unité
+:::
+::: {.label}
+sous-prévision fictive
+:::
+:::
+::: {.metric}
+::: {.value}
+5 $ / unité
+:::
+::: {.label}
+sur-prévision fictive
+:::
+:::
+::: {.metric}
+::: {.value}
+Suivi
+:::
+::: {.label}
+réexaminer aux prochaines origines
+:::
+:::
+::::
+
+::: {.warning-box}
+Le scénario ne suffit pas à calculer une commande ou un stock optimal.
+:::
+
+## À retenir
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Temps
+:::
+::: {.label}
+prévoir avant de comparer
+:::
+:::
+::: {.metric}
+::: {.value}
+Preuve
+:::
+::: {.label}
+mêmes cibles et unités
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+coût fictif, limite et suivi
+:::
+:::
+::::
+
+## Production du laboratoire
+
+::: {.lead}
+Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- J’ai précisé l’origine, les dates et les unités.
+- Je compare les cinq méthodes sur les mêmes cibles.
+- Je distingue l’intervalle du SES et la méthode retenue.
+- Ma recommandation cite des résultats, une limite et un suivi.
+:::
+
+## Rétroaction et suite
+
+::: {.keypoints}
+- Présenter sa question et son protocole après une première tentative.
+- Faire relire le rapport et corriger un point précis.
+- Apporter son projet autonome au point de contrôle du mini-rapport 2.
+- Redémarrer R et rendre le rapport avec ses données.
+:::
+
+## Références et crédits
+
+::: {.keypoints}
+- Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition.
+- Équipe forecast, documentation de SES et Holt.
+- Données entièrement simulées du cours MQT-2101, Université Laval.
+:::
+
+::: {.note-box}
+Les références détaillées et les notes d’animation sont dans le guide séparé. Les anciens fichiers de tiers ne sont pas redistribués.
+:::

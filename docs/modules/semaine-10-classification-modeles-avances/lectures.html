@@ -6837,6 +6837,37 @@ display: none;
 }
 }
 </style>
+<style type="text/css">
+main.content :not(pre) > code {
+white-space: normal;
+overflow-wrap: anywhere;
+}
+
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+padding-top: 3rem;
+}
+main.content .math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+main.content .table-responsive { max-width: 100%; overflow-x: auto; }
+@media (max-width: 767px) { main.content .table-responsive table { min-width: 760px; } }
+
+@media (max-width: 767px) {
+main.content .pdf-viewer iframe { display: none; }
+main.content .pdf-viewer::before {
+content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+display: block;
+padding: 1rem;
+}
+}
+@media (max-width: 767px) {
+main.content .html-slides { aspect-ratio: auto; }
+main.content .html-slides iframe { display: none; }
+main.content .html-slides::before {
+content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+display: block;
+padding: 1rem;
+}
+}
+</style>
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -7017,10 +7048,13 @@ display: none;
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
 
-  <ul>
-  <li><a href="#lecture-obligatoire" id="toc-lecture-obligatoire" class="nav-link active" data-scroll-target="#lecture-obligatoire">Lecture obligatoire</a></li>
-  <li><a href="#ressources-pratiques" id="toc-ressources-pratiques" class="nav-link" data-scroll-target="#ressources-pratiques">Ressources pratiques</a></li>
-  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
+  <ul class="collapse">
+  <li><a href="#lecture-1" id="toc-lecture-1" class="nav-link active" data-scroll-target="#lecture-1">Cible, unité et séparation</a></li>
+  <li><a href="#lecture-2" id="toc-lecture-2" class="nav-link" data-scroll-target="#lecture-2">Logistique, cotes et probabilités</a></li>
+  <li><a href="#lecture-3" id="toc-lecture-3" class="nav-link" data-scroll-target="#lecture-3">Matrice et mesures</a></li>
+  <li><a href="#lecture-4" id="toc-lecture-4" class="nav-link" data-scroll-target="#lecture-4">Seuil, coût et capacité</a></li>
+  <li><a href="#lecture-5" id="toc-lecture-5" class="nav-link" data-scroll-target="#lecture-5">Calibration et action</a></li>
+  <li><a href="#lectures-ciblées-et-documentation" id="toc-lectures-ciblées-et-documentation" class="nav-link" data-scroll-target="#lectures-ciblées-et-documentation">Lectures ciblées et documentation</a></li>
   </ul>
 </nav>
     </div>
@@ -7046,21 +7080,36 @@ display: none;
 </header>
 
 
-<section id="lecture-obligatoire" class="level2">
-<h2 class="anchored" data-anchor-id="lecture-obligatoire">Lecture obligatoire</h2>
-<p>James, Witten, Hastie et Tibshirani, <em>An Introduction to Statistical Learning with Applications in R</em>, 2e édition, <a href="https://www.statlearning.com/">chapitre 4 - Classification</a>, sections sur la régression logistique et les mesures de classification.</p>
-<p>Question de lecture : pourquoi une probabilité estimée et une classe prédite répondent-elles à deux questions différentes?</p>
+<p>Lisez ces repères en parallèle avec les démonstrations et les exercices. Les pages expliquent le socle sans supposer qu’une vidéo est disponible.</p>
+<section id="lecture-1" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-1">Cible, unité et séparation</h2>
+<p>Un résultat binaire décrit un événement observable avec une classe positive définie. La décision précède la réalisation de la cible : chaque prédicteur doit être disponible à cette origine. Séparer l’apprentissage, qui estime les coefficients, la validation, qui choisit une règle, et le test, qui l’évalue après fixation. Pour des données temporelles ou des personnes répétées, un partage aléatoire peut être inadapté.</p>
+<p>Exemple : une ligne représente une cliente et la cible indique si elle part dans les 90 jours suivant la date de décision. Les caractéristiques utilisées doivent être connues à cette date. L’apprentissage sert à estimer le modèle; la validation sert à choisir une règle; le test distinct sert à évaluer la règle fixée. Si un seul bloc hors apprentissage sert au choix, il constitue une validation et son score n’est pas un test final indépendant.</p>
 </section>
-<section id="ressources-pratiques" class="level2">
-<h2 class="anchored" data-anchor-id="ressources-pratiques">Ressources pratiques</h2>
-<ul>
-<li><a href="https://yardstick.tidymodels.org/">Documentation officielle de <code>yardstick</code></a>, pour les définitions et fonctions de mesures;</li>
-<li>page générale <a href="../../ressources/lectures.html">Lectures et ressources</a>, pour la référence complète et l’accès gratuit au manuel.</li>
-</ul>
+<section id="lecture-2" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-2">Logistique, cotes et probabilités</h2>
+<p>Pour une probabilité p, la cote vaut p/(1-p). La régression logistique pose log(p/(1-p)) = β0 + β1x1 + … et transforme ce prédicteur en probabilité comprise entre 0 et 1. Pour une unité supplémentaire de x, à autres variables fixées, les cotes sont multipliées par exp(β1). Ce rapport n’est pas un rapport de probabilités. Les coefficients et profils sont des associations conditionnelles, pas des effets causaux établis.</p>
+<p>Par exemple, une probabilité de 0,20 correspond à une cote de 0,20/0,80 = 0,25. Si les cotes doublent, elles valent 0,50 et la probabilité devient 0,50/(1 + 0,50), soit environ 0,33. La probabilité n’a donc pas doublé. Dans une régression, cette comparaison suppose une variation d’une unité du prédicteur concerné et les autres prédicteurs maintenus fixes; elle ne démontre pas une relation causale.</p>
 </section>
-<section id="pour-aller-plus-loin" class="level2">
-<h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
-<p>Les arbres et forêts aléatoires sont mentionnés comme ouvertures. Ils ne sont pas exigés dans ce module : la priorité est de maîtriser la cible, la validation, les probabilités, les seuils et les coûts d’erreur.</p>
+<section id="lecture-3" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-3">Matrice et mesures</h2>
+<p>Les vrais positifs VP sont les événements ciblés; les faux négatifs FN sont les événements manqués. Les faux positifs FP sont des non-événements ciblés et les vrais négatifs VN les non-événements écartés. Sensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP), exactitude = (VP+VN)/N. Une mesure est indéfinie si son dénominateur vaut zéro. L’exactitude seule peut masquer les événements manqués.</p>
+<p>Avec 30 événements réels et 70 non-événements, supposons VP = 24, FN = 6, FP = 28 et VN = 42. La sensibilité vaut 24/30 = 80 % : elle porte sur les événements réels. La précision vaut 24/52 ≈ 46 % : elle porte sur les 52 personnes ciblées. La spécificité vaut 42/70 = 60 %. Ces questions ont des dénominateurs différents; toujours commencer par identifier la classe positive.</p>
+</section>
+<section id="lecture-4" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-4">Seuil, coût et capacité</h2>
+<p>Le seuil transforme une probabilité en classe. Abaisser le seuil ne diminue pas le nombre de personnes ciblées ni le nombre de vrais positifs pour des scores fixés; la précision peut augmenter ou diminuer. Les coûts fictifs ou la capacité guident la règle. Le choix parmi des seuils se fait sur la validation; le test reste réservé à l’évaluation de la règle fixée.</p>
+<p>Supposons qu’un contact manqué coûte quatre unités et un contact inutile une unité. Sur la validation, comparez les coûts des règles envisagées, puis fixez celle qui convient au contexte. Une capacité limitée peut plutôt conduire à classer les risques et à cibler un nombre maximal de personnes. La proportion réellement ciblée à un seuil fixe peut changer d’un groupe à l’autre; un seuil fixe ne garantit donc pas une capacité fixe.</p>
+</section>
+<section id="lecture-5" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-5">Calibration et action</h2>
+<p>Une calibration descriptive compare, par groupes de risques prédits, la probabilité moyenne à la fréquence observée. Les groupes peuvent être petits et les résultats incertains. Le score de Brier résume l’erreur quadratique des probabilités mais ne mesure pas uniquement la calibration. Un modèle prédit un risque de départ; il n’estime pas nécessairement l’effet d’un contact ni les bénéfices causals de l’intervention.</p>
+<p>Si, parmi des personnes dont le risque prédit moyen est de 20 %, environ 20 % vivent l’événement, le groupe est descriptivement cohérent avec cette prévision. Il faut aussi regarder les autres groupes et leurs effectifs : un seul partage ou de petits groupes ne suffisent pas à prouver la calibration future. Un risque prédit élevé ne démontre pas qu’un contact va empêcher le départ.</p>
+</section>
+<section id="lectures-ciblées-et-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="lectures-ciblées-et-documentation">Lectures ciblées et documentation</h2>
+<p>James, Witten, Hastie et Tibshirani (2021), <em>An Introduction to Statistical Learning with Applications in R</em>, 2e édition, <a href="https://www.statlearning.com/">chapitre 4 sur la classification</a>. Lire la régression logistique, la prédiction et les mesures d’évaluation; le chapitre 5 complète la validation. La documentation R de <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html"><code>glm</code></a> présente la famille binomiale. Les définitions de <a href="https://yardstick.tidymodels.org/reference/sens.html">sensibilité</a> et de <a href="https://yardstick.tidymodels.org/reference/precision.html">précision</a> précisent le rôle de la classe positive.</p>
+<p>Pour approfondir les cotes, la vraisemblance, la déviance, la courbe ROC, un arbre et les réseaux de neurones, ouvrez le <a href="../../modules/semaine-10-classification-modeles-avances/complements.html">complément facultatif</a>. Ces outils ne sont pas tous requis pour terminer les rapports.</p>
 
 
 </section>

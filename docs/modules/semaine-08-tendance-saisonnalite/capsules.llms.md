@@ -1,107 +1,131 @@
 # Capsules - Module 08
 
-## Capsule 1 - Distinguer tendance et saisonnalité
+## Le parcours principal
 
-## Objectif
+Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md), la [démonstration complète](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
 
-> **NOTE:**
->
-> Annoter une tendance et un motif mensuel sur un graphique.
+Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
 
-## Deck de capsule
+## Capsule 1 - Lire le temps et les motifs
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+La hausse vient-elle du temps ou du calendrier? Consultez la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
 
-## Support écrit
+## PDF
 
-La tendance décrit l’évolution de long terme du niveau. La saisonnalité décrit un motif qui revient selon une période connue. Une série peut présenter les deux simultanément.
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
 
-Une hausse de janvier à décembre au cours d’une seule année ne prouve pas la saisonnalité. Il faut comparer les mêmes mois sur plusieurs années.
+## HTML
 
-### Activité 8.1
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
 
-Pourquoi un graphique regroupant toutes les observations de janvier est-il utile en complément du graphique temporel?
+Production guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.
 
-> **TIP:**
->
-> Il permet de comparer janvier d’une année à l’autre et de voir si son niveau relatif est récurrent malgré la tendance générale.
+Auto-vérification:
 
-## Capsule 2 - Coder le calendrier
-
-## Objectif
+- J’ai limité l’exploration à 2020 à 2024.
+- Mes axes indiquent les mois et les dollars canadiens.
+- Je distingue tendance, répétition et explication causale.
 
 > **NOTE:**
 >
-> Créer un indice de temps et un facteur mois avec une référence explicite.
+> Faites l’[exercice 1](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-1) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+## Capsule 2 - Ajuster tendance et mois
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+Que représente un coefficient de décembre? Consultez la [lecture 2](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-2) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#calendrier).
 
-## Support écrit
+## PDF
 
-Une régression saisonnière simple peut utiliser un indice \\t=1,2,\ldots,n\\ pour la tendance et un facteur pour le mois. Avec janvier comme référence, chaque coefficient mensuel représente une différence moyenne par rapport à janvier, à tendance égale.
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
 
-La catégorie de référence n’est pas la « meilleure » catégorie. Elle fixe seulement le point de comparaison.
+## HTML
 
-### Activité 8.2
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
 
-Si le coefficient de décembre vaut 80 000, formulez une interprétation correcte et prudente.
+Production guidée 8.2, à réaliser une seule fois : Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.
 
-> **TIP:**
->
-> À indice de temps égal, les ventes prévues en décembre sont en moyenne 80 000 dollars plus élevées qu’en janvier selon ce modèle. Il s’agit d’une différence modélisée, non d’un effet causal du mois.
+Auto-vérification:
 
-## Capsule 3 - Ajuster le modèle
-
-## Objectif
+- L’indice augmente d’une unité par mois et le facteur n’est pas ordonné.
+- Je précise janvier comme référence et les unités des coefficients.
+- Je distingue comparaison conditionnelle et effet causal.
 
 > **NOTE:**
 >
-> Ajuster `lm(ventes ~ indice_temps + mois_label)` et lire les coefficients utiles.
+> Faites l’[exercice 2](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-2) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+## Capsule 3 - Lire les résidus
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+Qu’est-ce que le modèle laisse encore dans la série? Consultez la [lecture 3](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-3) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#diagnostic).
 
-## Support écrit
+## PDF
 
-Le modèle additif suppose que l’écart saisonnier reste approximativement constant lorsque le niveau augmente :
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
 
-\\ y_t=\beta_0+\beta_1t+\gamma\_{m(t)}+\varepsilon_t. \\
+## HTML
 
-Si l’amplitude saisonnière augmente avec le niveau, une transformation logarithmique ou un modèle multiplicatif peut être plus approprié.
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
 
-### Activité 8.3
+Production guidée 8.3, à réaliser une seule fois : Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.
 
-Quel graphique de résidus pourrait révéler qu’une saisonnalité additive est insuffisante?
+Auto-vérification:
 
-> **TIP:**
->
-> Un graphique des résidus dans le temps ou selon les valeurs ajustées montrant une amplitude croissante ou un motif saisonnier restant indique une structure non captée.
-
-## Capsule 4 - Prévoir et communiquer l’incertitude
-
-## Objectif
+- Je distingue observation, valeur ajustée et résidu.
+- J’examine le temps et la dispersion au-delà des moyennes.
+- Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.
 
 > **NOTE:**
 >
-> Produire une prévision ponctuelle et un intervalle de prédiction, puis discuter son usage budgétaire.
+> Faites l’[exercice 3](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-3) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+## Capsule 4 - Comparer sur une validation commune
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+Le calendrier fait-il mieux que reprendre la dernière année? Consultez la [lecture 4](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-4) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#validation).
 
-## Support écrit
+## PDF
 
-La prévision ponctuelle donne une valeur centrale. L’intervalle de prédiction représente une plage plausible pour une future observation selon le modèle et ses hypothèses.
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
 
-Un budget ne devrait pas être présenté comme certain. Une décision peut utiliser la prévision centrale, un scénario prudent et un scénario de capacité élevée.
+## HTML
 
-### Activité 8.4
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
 
-Expliquez pourquoi l’intervalle de prédiction est généralement plus large que l’intervalle de confiance de la moyenne.
+Production guidée 8.4, à réaliser une seule fois : Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévisions des trois modèles et du naïf saisonnier à l’origine de fin 2024. Calculez ME, MAE et RMSE en dollars, tracez les trajectoires et justifiez un choix provisoire.
 
-> **TIP:**
+Auto-vérification:
+
+- Les quatre candidats utilisent les mêmes douze cibles et informations disponibles.
+- Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur.
+- Mon choix repose sur les erreurs de validation et reste provisoire.
+
+> **NOTE:**
 >
-> Il tient compte à la fois de l’incertitude sur la moyenne estimée et de la variabilité d’une nouvelle observation individuelle.
+> Faites l’[exercice 4](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-4) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
+
+## Capsule 5 - Communiquer l’incertitude et la décision
+
+Que peut-on annoncer sans promettre le budget futur? Consultez la [lecture 5](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-5) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#incertitude).
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf) · [Télécharger le PDF](media/pdf/capsule-05-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
+
+Production guidée 8.5, à réaliser une seule fois : Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.
+
+Auto-vérification:
+
+- Je distingue moyenne conditionnelle et nouvelle observation.
+- Je lis les intervalles comme marginaux et dépendants des hypothèses.
+- Ma recommandation nomme les unités, une limite et une réévaluation future.
+
+> **NOTE:**
+>
+> Faites l’[exercice 5](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-5) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
+
+## Après le parcours: consolider ou approfondir
+
+Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, décomposition, harmoniques, `tslm()`, stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les [exercices commerciaux accompagnés](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-14) préparent le module 09.

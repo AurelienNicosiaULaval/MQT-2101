@@ -1,10 +1,12 @@
 ---
-title: "Capsule 3 - Autocorrélation des résidus"
+title: "Capsule 3 - Diagnostiquer dans le temps"
 subtitle: "MQT-2101 - Analyse et modélisation des données"
 institute: "Faculté des sciences de l'administration - Université Laval"
 lang: fr
 format:
   revealjs:
+    auto-stretch: false
+    css: ../module09-capsules.css
     theme:
       - default
       - ../../../../assets/ulaval-reveal.scss
@@ -18,127 +20,82 @@ format:
     progress: true
     hash: true
     transition: fade
-    code-copy: true
-    code-overflow: wrap
     embed-resources: true
 execute:
   warning: false
   message: false
-editor: visual
 ---
-
-```{r}
-#| label: setup-m09-c03
-#| include: false
-library(tidyverse)
-library(forecast)
-data_candidates <- c("data/ventes_promotions_quebec.csv", "../../data/ventes_promotions_quebec.csv", "modules/semaine-09-variables-externes-autocorrelation/data/ventes_promotions_quebec.csv")
-data_path <- data_candidates[file.exists(data_candidates)][1]
-ventes <- readr::read_csv(data_path, show_col_types = FALSE)
-ventes <- ventes |> mutate(date = as.Date(date)) |> arrange(date)
-mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
-ventes <- ventes |> mutate(mois_label = factor(mois_label, levels = mois_fr))
-train <- ventes |> slice_head(n = 60)
-test <- ventes |> slice_tail(n = 12)
-modele <- lm(ventes ~ tendance + promotion + prix_moyen + mois_label, data = train)
-```
 
 ## Pourquoi ça compte
 
-::: {.kicker}
-Des résidus organisés dans le temps indiquent une information encore inutilisée.
-:::
-
 ::: {.question-line}
-Que signifie un résidu positif suivi souvent d'un autre résidu positif?
+Les erreurs se suivent-elles?
 :::
 
 ::: {.note-box}
-Après modélisation, les résidus devraient ressembler à du bruit. Une dépendance temporelle restante peut rendre les prévisions successivement trop basses ou trop hautes.
+La qualité d’une prévision dépend du modèle et de l’information disponible.
 :::
 
 ## Objectifs de la capsule
 
 ::: {.keypoints}
-- Lire une fonction d'autocorrélation.
-- Interpréter prudemment un test de Ljung-Box.
-- Relier un diagnostic de résidus à un risque concret.
+- Diagnostiquer dans le temps.
+- Relier le résultat au cas guidé.
+- Nommer une limite de l’interprétation.
 :::
 
-## Les résidus successifs ne devraient pas se répondre
+## Le raisonnement
 
 ::: {.keypoints}
-- Un pic au retard 1 concerne des voisins temporels.
-- Le test de Ljung-Box examine plusieurs retards.
-- Une valeur p ne mesure pas à elle seule le coût opérationnel.
+- Résidu : observation moins valeur ajustée.
+- Le retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle.
+- Regarder les résidus dans le temps et leur ACF.
+- Le test de Ljung-Box est un complément facultatif.
 :::
 
-## Inspecter l'ACF et le test de Ljung-Box
+## ACF des résidus sur 2020 à 2024
 
-```{r}
-#| label: code-m09-c03
-#| echo: true
-#| eval: true
-acf(residuals(modele))
-Box.test(residuals(modele), lag = 12, type = "Ljung-Box")
-```
-
-## Plusieurs sous-prévisions de suite
-
-::: {.example-box}
-Des résidus positifs consécutifs peuvent signaler plusieurs sous-prévisions successives et un risque accru de rupture.
-:::
-
-## Une valeur p ne remplace pas le graphique
-
-::: {.warning-box}
-Se limiter à une valeur p sans regarder le graphique des résidus empêche de comprendre le motif et son importance pratique.
-:::
+![](../acf-residus.png){fig-alt="Autocorrélations des résidus de la régression aux retards de 0 à 12 mois" width="85%"}
 
 ## À retenir
 
-::: {.metric-grid}
+:::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-1
+Incertitude
 :::
 ::: {.label}
-Inspecter le temps avant de conclure.
-:::
-:::
-::: {.metric}
-::: {.value}
-2
-:::
-::: {.label}
-Un diagnostic statistique doit conduire à une question de décision.
+Une ACF peu marquée ne prouve pas l’indépendance.
 :::
 :::
 ::: {.metric}
 ::: {.value}
-3
+Résidus
 :::
 ::: {.label}
-La décision reste liée aux données disponibles.
+Une ACF des ventes brutes n’est pas celle des résidus.
 :::
 :::
-:::
-
-::: {.notes}
-[Sources]
-- Hyndman, R. J. et Athanasopoulos, G. (2021). Forecasting: Principles and Practice, 3e éd. https://otexts.com/fpp3/
-:::
+::::
 
 ## Production autonome 9.3
 
 ::: {.lead}
-Décrivez le risque pratique associé à une succession de résidus positifs.
+Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.
 :::
+
+Cette production se réalise une seule fois dans le rapport guidé.
 
 ### Auto-vérification
 
 ::: {.self-check}
-- Toutes les méthodes utilisent la même période de validation.
-- J'ai interprété l'erreur dans son unité.
-- J'ai relié le résultat à une décision et à une limite.
+- Je garde l’ordre des mois et distingue résidus et erreurs de prévision.
+- Je décris les retards et les motifs visibles.
+- Une ACF peu marquée ne prouve pas l’indépendance.
 :::
+
+## Références et crédits
+
+Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.
+
+Hyndman et Athanasopoulos (2021), *Forecasting: Principles and Practice*, 3e édition.

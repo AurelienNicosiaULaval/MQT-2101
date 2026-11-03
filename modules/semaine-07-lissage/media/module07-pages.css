@@ -1,0 +1,45 @@
+/* Les commandes et noms de fichiers restent lisibles sur petit écran. */
+main.content :not(pre) > code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Réserver la première ligne au bouton de copie, comme dans le module 4. */
+body main.content .code-copy-outer-scaffold pre.sourceCode {
+  padding-top: 3rem;
+}
+
+/* Contenir les tableaux et formules dans la page sur petit écran. */
+main.content .math.display {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+main.content .table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+}
+@media (max-width: 767px) {
+  main.content .table-responsive table { min-width: 760px; }
+}
+
+/* Le lecteur PDF intégré varie selon le téléphone. Garder un accès direct compact. */
+@media (max-width: 767px) {
+  main.content .pdf-viewer iframe { display: none; }
+  main.content .pdf-viewer::before {
+    content: "Sur petit écran, ouvrez ou téléchargez le PDF avec les liens ci-dessous.";
+    display: block;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  main.content .html-slides { aspect-ratio: auto; }
+  main.content .html-slides iframe { display: none; }
+  main.content .html-slides::before {
+    content: "Sur petit écran, ouvrez le support HTML dans un nouvel onglet pour le consulter.";
+    display: block;
+    padding: 1rem;
+  }
+}

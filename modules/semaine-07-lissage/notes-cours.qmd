@@ -1,48 +1,248 @@
 ---
-title: "Notes de cours - Lissage et erreurs de prévision"
+title: "Synthèse - Lissage et évaluation des prévisions"
+subtitle: "MQT-2101 - Analyse et modélisation des données"
+institute: "Faculté des sciences de l'administration - Université Laval"
+lang: fr
 format:
-  html:
+  revealjs:
+    auto-stretch: false
+    css: media/module07-capsules.css
+    theme:
+      - default
+      - ../../assets/ulaval-reveal.scss
+    width: 1600
+    height: 900
+    margin: 0.06
+    center: false
+    logo: ../../assets/logos/ulaval/UL-FSA-C-d.png
+    slide-number: c/t
+    controls: true
+    progress: true
+    hash: true
+    transition: fade
+    code-copy: true
+    code-overflow: wrap
     embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: visual
 ---
+```{r}
+#| label: preparation-support-m07
+#| include: false
+racines <- c("../..", ".", "modules/semaine-07-lissage")
+racine <- racines[file.exists(file.path(racines, "R/analyse-supports.R"))][1]
+stopifnot(!is.na(racine))
+setwd(normalizePath(racine))
+source("R/analyse-supports.R")
+```
+## Pourquoi ça compte
 
-## Moyennes mobiles
+::: {.question-line}
+Comment stabiliser une prévision sans masquer ses limites?
+:::
+::: {.note-box}
+Nous étudions la demande hebdomadaire, puis appliquons les méthodes à la planification énergétique. Les deux séries sont simulées.
+:::
 
-Une moyenne mobile arrière est un outil descriptif et une référence de prévision. Sa fenêtre détermine le compromis entre réactivité et stabilité. Une moyenne centrée utilise des observations futures et ne peut donc pas servir telle quelle à une prévision en temps réel.
+## Objectifs du module
 
-## Lissage exponentiel
+::: {.keypoints}
+- Calculer des moyennes mobiles et mettre à jour un niveau lissé.
+- Émettre les prévisions avant de connaître les observations cibles.
+- Comparer les erreurs et leur coût pour justifier une décision.
+:::
 
-Le lissage exponentiel simple estime un niveau qui est mis à jour après chaque observation. Les poids des observations passées diminuent exponentiellement. La méthode ne modélise pas explicitement une tendance ou une saisonnalité.
+## Le parcours principal
 
-## Prolongement : niveau et pente avec Holt
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+1 et 2
+:::
+::: {.label}
+fenêtre puis niveau exponentiel
+:::
+:::
+::: {.metric}
+::: {.value}
+3
+:::
+::: {.label}
+prévisions et erreurs
+:::
+:::
+::: {.metric}
+::: {.value}
+4
+:::
+::: {.label}
+coût, choix et surveillance
+:::
+:::
+::::
 
-Holt étend le lissage simple en estimant un niveau $\ell_t$ et une pente $b_t$. Sa prévision non amortie est $\widehat y_{t+h\mid t}=\ell_t+h b_t$. Avec $0<\phi<1$, la pente est amortie :
+## Une moyenne doit être disponible
 
-$$
-\widehat y_{t+h\mid t}=\ell_t+\left(\sum_{j=1}^{h}\phi^j\right)b_t.
-$$
+::: {.formula-box}
+$$m_t=\frac1k\sum_{j=0}^{k-1}y_{t-j}.$$
+:::
+::: {.keypoints}
+- La moyenne arrière utilise les dernières observations connues.
+- La moyenne centrée utilise aussi des observations futures.
+- La règle MM4 du module répète $m_T$ aux treize horizons, à la même origine.
+:::
 
-Le code `holt(..., damped = TRUE)` ajuste ce prolongement sur l'apprentissage. Il ne représente pas la saisonnalité. Les supports fournissent son utilisation pour la comparaison et le laboratoire; le rapport principal demande toujours naïf, moyenne des quatre dernières semaines et lissage simple.
+## Le niveau exponentiel
 
-Source : Hyndman et Athanasopoulos (2021), [section 8.2](https://otexts.com/fpp3/holt.html).
+::: {.formula-box}
+$$\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}.$$
+:::
+::: {.keypoints}
+- Alpha règle la part de l’écart corrigée à chaque nouvelle observation.
+- Pour comparer deux valeurs d’alpha, on fixe le même niveau initial.
+- Le lissage exponentiel simple (SES) prévoit le même niveau à tous les horizons.
+:::
 
-## Erreurs
+## Le protocole reste commun
 
-Pour $e_t=y_t-\widehat y_t$ :
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+91 + 13
+:::
+::: {.label}
+semaines de demande
+:::
+:::
+::: {.metric}
+::: {.value}
+60 + 12
+:::
+::: {.label}
+mois d’électricité
+:::
+:::
+::: {.metric}
+::: {.value}
+Validation
+:::
+::: {.label}
+périodes déjà connues
+:::
+:::
+::::
 
-$$
-\operatorname{MAE}=\frac{1}{n}\sum |e_t|,
-\qquad
-\operatorname{RMSE}=\sqrt{\frac{1}{n}\sum e_t^2}.
-$$
+## Mesurer sans perdre le sens
 
-Le biais moyen $\overline e$ indique une tendance générale à sous-prévoir ou sur-prévoir. Une mesure moyenne doit être accompagnée d'un graphique pour repérer les périodes problématiques.
+::: {.formula-box}
+$$e=y-\widehat y,\quad \mathrm{MAE}=\mathrm{moyenne}(|e|),\quad \mathrm{RMSE}=\sqrt{\mathrm{moyenne}(e^2)}.$$
+:::
+::: {.keypoints}
+- L’erreur moyenne (ME) peut être proche de zéro parce que les signes se compensent.
+- La MAE et la RMSE mesurent l’ampleur des erreurs dans l’unité de la cible.
+- Le graphique montre quand les erreurs se produisent.
+:::
 
-## Choisir une méthode
+## Le coût complète le score
 
-Le choix combine : performance hors échantillon, stabilité, coût des erreurs, interprétabilité, disponibilité des données et maintenance. Une différence minime entre deux MAE ne justifie pas automatiquement une méthode beaucoup plus complexe.
+::: {.formula-box}
+$$L(e)=2\max(e,0)+\max(-e,0).$$
+:::
+::: {.note-box}
+Dans ce scénario fictif, chaque unité sous-prévue coûte 2 et chaque unité sur-prévue coûte 1. Le coût moyen aide à choisir une méthode; il ne fixe pas la quantité à commander.
+:::
 
-Le bloc utilisé pour comparer les candidats est une validation, après l'apprentissage. Ses scores ont participé au choix : ils ne remplacent pas un test final indépendant de ce choix. La reprise des treize semaines du module 06 est un entraînement pédagogique sur un cas connu.
+## Deux cas, deux interprétations
 
-## Surveillance
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Demande
+:::
+::: {.label}
+MM4 : MAE ≈ 100 unités
+:::
+:::
+::: {.metric}
+::: {.value}
+Électricité
+:::
+::: {.label}
+naïf saisonnier : MAE ≈ 6 662 kWh
+:::
+:::
+::: {.metric}
+::: {.value}
+Méthodes constantes
+:::
+::: {.label}
+le coût et la MAE peuvent donner des classements différents
+:::
+:::
+::::
 
-Après déploiement, les erreurs doivent être recalculées dès que les observations réelles deviennent disponibles. Un modèle satisfaisant aujourd'hui peut se dégrader après un changement de marché ou de processus.
+## À retenir
+
+:::: {.metric-grid}
+::: {.metric}
+::: {.value}
+Disponibilité
+:::
+::: {.label}
+le passé seulement à l’origine
+:::
+:::
+::: {.metric}
+::: {.value}
+Structure
+:::
+::: {.label}
+un niveau seul ne représente pas la saisonnalité
+:::
+:::
+::: {.metric}
+::: {.value}
+Décision
+:::
+::: {.label}
+chiffrée, limitée et réévaluable
+:::
+:::
+::::
+
+## Vos deux traces
+
+::: {.lead}
+Rassemblez les activités 7.1 à 7.4 une seule fois dans `lissage_demande.qmd`, puis les quatre exercices dans `lissage_electricite.qmd`.
+:::
+
+### Auto-vérification
+
+::: {.self-check}
+- Mes consignes et mon protocole concordent.
+- Je justifie les deux décisions avec leurs unités et leurs limites.
+- Je peux produire les deux rapports HTML après avoir redémarré R.
+:::
+
+## Pour le laboratoire et les modules suivants
+
+::: {.keypoints}
+- Holt accompagné: niveau, pente et amortissement.
+- Module 08: tendance et saisonnalité explicites.
+- Laboratoire 03: comparer et interpréter le risque de stock.
+- Module 09: variables externes et autocorrélation.
+:::
+
+## Références et crédits
+
+::: {.keypoints}
+- Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition.
+- Équipes forecast et slider: documentation des fonctions R.
+- Données simulées du cours MQT-2101, Université Laval.
+- Ancien matériel consulté: séance 07 et script attribué à Paolo Landa (2021).
+:::
+::: {.note-box}
+Références détaillées et lectures ciblées sur la page Lectures. Les archives anciennes privées ne sont pas redistribuées.
+:::

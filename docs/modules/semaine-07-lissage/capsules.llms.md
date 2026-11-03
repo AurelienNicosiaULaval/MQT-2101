@@ -1,129 +1,125 @@
 # Capsules - Module 07
 
-## Capsule 1 - Moyennes mobiles
-
 ## Objectif
+
+Les quatre capsules principales construisent une seule analyse guidée de demande fictive. Les productions 7.1 à 7.4 sont identiques aux activités de l’accueil et aux fins de capsule: réalisez chacune une seule fois dans `lissage_demande.qmd`. Le [projet de départ](telechargements/lissage-demande.zip), les [lectures françaises](../../modules/semaine-07-lissage/lectures.llms.md) et les [démonstrations complètes](../../modules/semaine-07-lissage/demonstrations.llms.md) permettent de travailler sans vidéo.
+
+Les supports disponibles sont PDF et HTML. Aucune vidéo ni annotation n’a été produite ici. L’onglet HTML permet de copier le code; les explications détaillées sont dans les lectures. Le [lot PDF du 3 novembre 2026](telechargements/module-07-pdf-2026-11-03.zip) regroupe les quatre capsules, le complément Holt et la synthèse.
+
+## Capsule 1 - Choisir une fenêtre de lissage
+
+Que peut-on savoir avant la semaine suivante? Consultez la [lecture 1](../../modules/semaine-07-lissage/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#moyennes-mobiles).
+
+## PDF
+
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
+
+## HTML
+
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
+
+Production guidée 7.1, à réaliser une seule fois : Sur les 91 semaines d’apprentissage, tracez MM4 et MM13. Calculez la moyenne de 980, 1 020, 1 080 et 1 120 unités. Expliquez le retard d’une fenêtre longue et distinguez niveau observé et prévision à origine fixe.
+
+Auto-vérification:
+
+- J’ai utilisé seulement les 91 semaines d’apprentissage.
+- J’obtiens 1 050 unités et je précise quand la moyenne est disponible.
+- Je distingue fenêtre arrière, fenêtre centrée et prévision émise avant la cible.
 
 > **NOTE:**
 >
-> Montrer une moyenne mobile arrière de quatre semaines et expliquer l’effet de la fenêtre.
+> Faites l’[exercice 1](../../modules/semaine-07-lissage/exercices.llms.md#exercice-1) sur l’électricité dans `lissage_electricite.qmd`, après la [préparation commune](../../modules/semaine-07-lissage/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+## Capsule 2 - Mettre à jour un niveau
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-01-support.llms.md)
+Quelle part de l’écart faut-il corriger? Consultez la [lecture 2](../../modules/semaine-07-lissage/lectures.llms.md#lecture-2) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#lissage-exponentiel).
 
-## Support écrit
+## PDF
 
-Une moyenne mobile remplace une observation par la moyenne de plusieurs observations voisines. Pour prévoir, la fenêtre doit être arrière : seules les valeurs déjà observées sont utilisées.
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
 
-Une fenêtre courte réagit rapidement mais conserve beaucoup de variabilité. Une fenêtre longue lisse davantage mais réagit plus lentement aux changements de niveau.
+## HTML
 
-Pour une fenêtre de taille \\k\\ :
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
 
-\\ m_t=\frac{1}{k}\sum\_{j=0}^{k-1}y\_{t-j}. \\
+Production guidée 7.2, à réaliser une seule fois : Avec un niveau initial de 100 et deux observations de 140, calculez les mises à jour pour alpha = 0,2 et 0,8. Tracez ces deux lissages sur l’apprentissage, puis estimez le SES principal. Distinguez alpha imposé, alpha estimé et tendance.
 
-### Activité 7.1
+Auto-vérification:
 
-Les quatre dernières demandes sont 980, 1 020, 1 080 et 1 120 unités. Calculez la moyenne mobile et expliquez ce qu’elle ignore.
-
-> **TIP:**
->
-> La moyenne est 1 050. Elle donne le même poids aux quatre semaines, ignore les observations plus anciennes et ne représente explicitement ni tendance ni saisonnalité.
-
-## Capsule 2 - Lissage exponentiel simple
-
-## Objectif
+- Les deux calculs partagent le même état initial.
+- J’obtiens 108 puis 114,4 et 132 puis 138,4.
+- J’estime le SES sur l’apprentissage et je sais que ses prévisions sont constantes.
 
 > **NOTE:**
 >
-> Construire récursivement le niveau lissé et comparer deux valeurs de alpha.
+> Faites l’[exercice 2](../../modules/semaine-07-lissage/exercices.llms.md#exercice-2) sur l’électricité dans `lissage_electricite.qmd`, après la [préparation commune](../../modules/semaine-07-lissage/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+### Pour le laboratoire : prolongement Holt
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-02-support.llms.md)
+Holt ajoute une pente au niveau, et son amortissement limite la contribution de cette pente à long horizon. Le [complément accompagné ci-dessous](#capsule-5), la [lecture](../../modules/semaine-07-lissage/lectures.llms.md#holt) et le [code fourni](../../modules/semaine-07-lissage/demonstrations.llms.md#holt) préparent l’appel utilisé au laboratoire 03. Il ne s’ajoute pas aux candidats du rapport principal.
 
-## Support écrit
+## Capsule 3 - Lire les erreurs de prévision
 
-Le lissage exponentiel simple met à jour un niveau estimé :
+Quelle erreur le score moyen cache-t-il? Consultez la [lecture 3](../../modules/semaine-07-lissage/lectures.llms.md#lecture-3) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#erreurs).
 
-\\ \ell_t=\alpha y_t+(1-\alpha)\ell\_{t-1}, \qquad 0\<\alpha\<1. \\
+## PDF
 
-Un alpha élevé donne plus de poids à la dernière observation et réagit rapidement. Un alpha faible produit une série plus stable. Cette méthode convient surtout lorsqu’il n’y a pas de tendance ou de saisonnalité forte non modélisée.
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
 
-#### Prolongement accompagné : Holt
+## HTML
 
-Holt ajoute une pente \\b_t\\ au niveau \\\ell_t\\. Sans amortissement, la prévision à l’horizon \\h\\ est \\\widehat y\_{t+h\mid t}=\ell_t+h b_t\\. Les deux états sont mis à jour à chaque observation.
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
 
-Avec une tendance amortie, \\0\<\phi\<1\\, la prévision devient :
+Production guidée 7.3, à réaliser une seule fois : Émettez les treize prévisions naïves, MM4, SES et saisonnières à la même origine. Calculez ME, MAE et RMSE, puis tracez les prévisions et leurs erreurs. Interprétez le signe de ME et la sensibilité de RMSE aux grandes erreurs.
 
-\\ \widehat y\_{t+h\mid t}=\ell_t+(\phi+\phi^2+\cdots+\phi^h)b_t. \\
+Auto-vérification:
 
-L’effet de la pente diminue avec l’horizon. `forecast::holt(serie, h = horizon, damped = TRUE)` estime les paramètres sur l’apprentissage. La méthode ne modélise pas la saisonnalité : elle doit être comparée aux références et ne garantit pas une amélioration. Ce prolongement sert à comprendre les exemples fournis; le calcul des récurrences à la main n’est pas demandé.
-
-Source : Hyndman et Athanasopoulos (2021), [section 8.2](https://otexts.com/fpp3/holt.html); documentation de [`forecast::holt`](https://pkg.robjhyndman.com/forecast/reference/ses.html).
-
-### Activité 7.2
-
-Pour une demande récente en hausse rapide, comparez qualitativement les effets de \\\alpha=0{,}2\\ et \\\alpha=0{,}8\\.
-
-> **TIP:**
->
-> Avec 0,8, le niveau lissé se rapproche rapidement de la dernière demande. Avec 0,2, l’historique conserve plus d’influence et l’ajustement est plus lent.
-
-## Capsule 3 - Mesurer les erreurs
-
-## Objectif
+- Les quatre méthodes utilisent les mêmes treize cibles, sans mise à jour future.
+- Mes scores sont en unités de produit, avec erreur = observé moins prévu.
+- Je relie le classement au graphique et je distingue validation et test indépendant.
 
 > **NOTE:**
 >
-> Calculer une erreur, MAE et RMSE, puis discuter le MAPE près de zéro.
+> Faites l’[exercice 3](../../modules/semaine-07-lissage/exercices.llms.md#exercice-3) sur l’électricité dans `lissage_electricite.qmd`, après la [préparation commune](../../modules/semaine-07-lissage/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+## Capsule 4 - Choisir et surveiller une référence
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-03-support.llms.md)
+Le plus petit score suffit-il pour décider? Consultez la [lecture 4](../../modules/semaine-07-lissage/lectures.llms.md#lecture-4) et la [démonstration associée](../../modules/semaine-07-lissage/demonstrations.llms.md#decision).
 
-## Support écrit
+## PDF
 
-L’erreur est \\e_t=y_t-\widehat y_t\\. Une erreur positive signifie que la prévision a sous-estimé la valeur observée.
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
 
-- MAE : erreur absolue moyenne, dans l’unité de la cible.
-- RMSE : racine de l’erreur quadratique moyenne, plus sensible aux grandes erreurs.
-- MAPE : erreur absolue en pourcentage, difficile à utiliser lorsque les observations sont nulles ou très faibles.
+## HTML
 
-La meilleure mesure dépend du coût réel. Une rupture de stock peut rendre les sous-prévisions plus coûteuses que les sur-prévisions.
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
 
-### Activité 7.3
+Production guidée 7.4, à réaliser une seule fois : Comparez le coût moyen avec une sous-prévision coûtant 2 et une sur-prévision coûtant 1. Recommandez une référence pour la demande avec deux résultats chiffrés, une limite et une règle de surveillance. Expliquez pourquoi ce choix ne fixe pas une quantité à commander.
 
-Deux méthodes ont la même MAE, mais la seconde produit une erreur extrême. Quelle mesure les distinguera davantage?
+Auto-vérification:
 
-> **TIP:**
->
-> La RMSE pénalise davantage les grandes erreurs parce qu’elles sont mises au carré.
-
-## Capsule 4 - Comparer équitablement
-
-## Objectif
+- Les coefficients du coût sont annoncés avant le calcul.
+- Ma recommandation utilise les résultats de cette validation connue.
+- Je nomme les informations manquantes pour commander et une réévaluation future.
 
 > **NOTE:**
 >
-> Construire une période de validation commune et relier les mesures au choix de méthode.
+> Faites l’[exercice 4](../../modules/semaine-07-lissage/exercices.llms.md#exercice-4) sur l’électricité dans `lissage_electricite.qmd`, après la [préparation commune](../../modules/semaine-07-lissage/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
-## Deck de capsule
+## Capsule 5 - Holt accompagné (facultatif)
 
-[Ouvrir le support visuel RevealJS](media/qmd/capsule-04-support.llms.md)
+Prérequis: niveau lissé, origine, horizon et pente. Ce complément n’est pas nécessaire aux quatre activités principales. Le code est fourni pour préparer le laboratoire; le calcul manuel des récurrences n’est pas demandé.
 
-## Support écrit
+## PDF
 
-Toutes les méthodes doivent être évaluées sur les mêmes observations futures. Une comparaison juste conserve la même origine, le même horizon, la même période de validation et les mêmes mesures.
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf) · [Télécharger le PDF](media/pdf/capsule-05-support.pdf)
 
-Les paramètres sont estimés sur l’apprentissage. Les candidats sont annoncés avant la comparaison; le bloc de validation sert au choix de méthode. Un éventuel test final reste distinct et n’est pas utilisé pour retoucher ce choix.
+## HTML
 
-Le classement numérique ne suffit pas. Il faut aussi examiner : stabilité, interprétabilité, effort de maintenance, délai de calcul et conséquences des erreurs.
+[Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
 
-### Activité 7.4
+Pratique facultative 7.5: comparez la prévision de Holt amorti à MM4 sur la demande avec le [code complet](../../modules/semaine-07-lissage/demonstrations.llms.md#holt). Expliquez ce qu’ajoute la pente et pourquoi elle n’assure pas une meilleure MAE. Pour un autre cas, tentez l’[exercice 13](../../modules/semaine-07-lissage/exercices.llms.md#exercice-13). Ces ajouts ne sont pas requis dans les deux traces principales.
 
-Une méthode réduit la MAE de 1 %, mais exige des variables externes coûteuses et une maintenance hebdomadaire. Formulez une décision prudente.
+## Autres méthodes conservées: cahier facultatif
 
-> **TIP:**
->
-> L’amélioration doit être comparée au coût opérationnel et à sa stabilité. Une méthode plus simple peut être préférable si l’écart est faible ou incertain.
+Le [cahier de méthodes](../../modules/semaine-07-lissage/complements.llms.md) donne les explications françaises et le code complet des différences, de Holt-Winters, d’ETS et des méthodes avancées. Il complète les lectures sans nouvelle capsule, sans nouvelle vidéo et sans production obligatoire. Choisissez un prolongement selon votre besoin; le parcours principal reste celui des activités 7.1 à 7.4.

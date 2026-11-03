@@ -1,15 +1,3 @@
-# Médias - Atelier 04
+# Médias du laboratoire 04
 
-Ce dossier sert à préparer les médias publics du module.
-
-## Sous-dossiers
-
-- `videos/` : vidéos courtes intégrées dans les capsules.
-- `pdf/` : supports PDF générés à partir des contenus Quarto.
-
-## Règles
-
-- ne pas publier de documents privés ou protégés sans validation;
-- privilégier des vidéos courtes;
-- garder le même numéro de capsule entre vidéo, support;
-- documenter toute source ancienne utilisée.
+La présentation de lancement est fournie en HTML et PDF. Les explications et exemples complets figurent dans les lectures et démonstrations; les références détaillées et notes d’animation sont dans le guide enseignant. Aucune vidéo ni version PDF annotée n’est annoncée.

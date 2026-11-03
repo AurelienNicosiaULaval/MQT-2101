@@ -37,8 +37,10 @@ cat("Supports :", length(files), "\n")
 cat("Diapositives :", nrow(slides), "\n")
 cat("Diapositives vides ou quasi vides :", nrow(blank_like), "\n")
 
-if (length(files) != 48) {
-  stop("Le nombre de supports rendus devrait être 48 : 46 capsules principales et deux compléments facultatifs; le module 05 est une révision sans capsules.")
+sources <- Sys.glob("modules/semaine-*/media/qmd/capsule-??-support.qmd")
+expected <- sort(file.path("docs", sub("[.]qmd$", ".html", sources)))
+if (!identical(sort(files), expected)) {
+  stop("Les supports rendus doivent correspondre exactement aux sources actuelles.")
 }
 
 if (nrow(blank_like) > 0) {
