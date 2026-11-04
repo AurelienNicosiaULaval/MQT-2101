@@ -33,17 +33,21 @@ preparer <- function(nom, rapport, texte, complet = FALSE, facultatif = FALSE) {
                          file.path(dossier, "R"))))
   qmd <- file.path(dossier, paste0(rapport, ".qmd"))
   writeLines(texte, qmd, useBytes = TRUE)
+  if (nom == "tendance-ventes") {
+    stopifnot(file.copy(file.path(module, "decomposition-guidee.qmd"),
+                        file.path(dossier, "decomposition-guidee.qmd")))
+  }
   if (complet) knitr::purl(qmd, output = sub("qmd$", "R", qmd), quiet = TRUE)
   writeLines(c("Version: 1.0", "RestoreWorkspace: No", "SaveWorkspace: No",
                "AlwaysSaveHistory: No"), file.path(dossier, paste0(nom, ".Rproj")))
   writeLines(c(paste0("# ", nom), "", "Version locale du 26 octobre 2026.",
     "1. Décompressez toute l’archive et ouvrez le .Rproj.",
-    "2. Installez une fois tidyverse et broom si nécessaire. R, RStudio et Quarto sont requis.",
+    "2. Installez une fois tidyverse, broom et forecast si nécessaire. R, RStudio et Quarto sont requis.",
     if (facultatif) "3. Les parties utilisant forecast et tseries les chargent explicitement; installez-les une fois si nécessaire." else
       "3. Le socle comprend cinq activités guidées ou cinq exercices suivis, pas les méthodes avancées.",
     "4. Ouvrez le .qmd, redémarrez R, puis faites Render. Les projets de départ se rendent avant d’être complétés.",
     if (complet) "5. Les blocs visibles s’exécutent dans l’ordre. Le script .R reprend les calculs." else
-      "5. Ajoutez vos calculs et interprétations à chaque étape, une seule fois.",
+      "5. Ajoutez vos calculs et interprétations à chaque étape, une seule fois. Pour la décomposition, utilisez decomposition-guidee.qmd dans le projet guidé.",
     "6. Conservez data/ et R/. Aucun objet créé seulement dans la console n’est requis.",
     "", "Deux séries québécoises entièrement simulées. Chaque fichier décrit 72 mois, janvier 2020 à décembre 2025.",
     "Les calculs apprennent sur 60 mois, puis comparent 12 mois. La validation sert au choix, sans test final indépendant.",

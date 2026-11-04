@@ -34,7 +34,7 @@ Le module 06 a appris à lire les composantes et à respecter le temps; le modul
 
 Préalables: importer un CSV et rendre un document Quarto (module 02), lire une droite, un résidu et un intervalle (modules 03 et 04), définir origine, horizon et validation temporelle (module 06). Reprenez au besoin les [lectures du module 03](../../modules/semaine-03-regression-lineaire/lectures.llms.md) et les [références temporelles du module 06](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md#references).
 
-Téléchargez et décompressez le [projet guidé tendance-ventes](telechargements/tendance-ventes.zip) et le [projet de transfert tendance-commerce](telechargements/tendance-commerce.zip). Ouvrez leur `.Rproj`. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la [préparation depuis une session neuve](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#preparation), avec `tidyverse` et `broom`.
+Téléchargez et décompressez le [projet guidé tendance-ventes](telechargements/tendance-ventes.zip) et le [projet de transfert tendance-commerce](telechargements/tendance-commerce.zip). Ouvrez leur `.Rproj`. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la [préparation depuis une session neuve](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#preparation), avec `tidyverse` et `broom`. La page accompagnée utilise aussi `forecast`.
 
 Les deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à décembre 2025 et des ventes en dollars canadiens. Les 60 premiers mois servent à apprendre; les douze mois de 2025 servent à comparer à l’origine de décembre 2024. Les prédicteurs futurs sont le calendrier connu et un indice qui continue de 61 à 72. Les [dictionnaires](data/dictionnaires.md) expliquent les autres variables.
 
@@ -42,13 +42,13 @@ Les deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à d�
 
 Le socle porte sur cinq gestes: lire les motifs, ajuster tendance linéaire et mois, lire les résidus, comparer les prévisions et communiquer l’incertitude. Les quatre candidats sont fixés avant les scores: tendance seule, saison seule, tendance avec mois et naïf saisonnier.
 
-Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. Décomposition détaillée, harmoniques et stationnarité sont des approfondissements; ils ne sont pas nécessaires pour terminer les deux rapports.
+Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. La lecture d’une décomposition et d’un écart saisonnier accompagne l’activité 8.1. La même [activité guidée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md) présente Holt-Winters et ETS avec code et résultats; leur ajustement autonome n’est pas exigé. Harmoniques et stationnarité restent facultatives.
 
 ## Votre parcours
 
 Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les exercices de transfert sont distincts et se conservent dans `tendance_commerce.qmd`, après une première tentative avant le corrigé.
 
-Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-08-pdf-2026-11-03-harmonise.zip) contient ces six supports.
+Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 4 novembre 2026](telechargements/module-08-pdf-2026-11-04.zip) contient ces six supports.
 
 Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.
 
@@ -56,15 +56,15 @@ Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production.
 
 Objectif Repérer tendance et saisonnalité.
 
-Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Démonstration](demonstrations.llms.md#exploration) · [Lecture française](lectures.llms.md#lecture-1)
+Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Démonstration](demonstrations.llms.md#exploration) · [Lecture française](lectures.llms.md#lecture-1) · [Décomposition guidée](decomposition-guidee.llms.md)
 
 Action Ajouter cette étape au rapport guidé.
 
 Activité 8.1
 
-Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.
+Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause. À partir de la décomposition fournie, interprétez un écart saisonnier mensuel et une limite.
 
-Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.
+Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale. J’interprète un écart saisonnier et une limite de la décomposition.
 
 Transfert distinct Faites l’[exercice 1](exercices.llms.md#exercice-1) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 
@@ -142,7 +142,7 @@ Les [huit pratiques ciblées](../../modules/semaine-08-tendance-saisonnalite/exe
 
 `tendance_ventes.qmd` rassemble les cinq productions, une seule fois:
 
-1.  protocole, graphiques sur l’apprentissage et lecture des motifs;
+1.  protocole, graphiques sur l’apprentissage, lecture des motifs et interprétation d’un écart saisonnier;
 2.  indice, facteur, trois ajustements et interprétation des coefficients;
 3.  diagnostics et limites des résidus;
 4.  quatre prévisions sur des cibles communes et ME, MAE, RMSE;
@@ -175,7 +175,7 @@ Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapp
 
 ## Auto-vérification
 
-Je distingue tendance et motif mensuel.
+Je distingue tendance et motif mensuel et je sais lire un écart saisonnier.
 
 Je vérifie l’indice, le facteur et la référence avant l’ajustement.
 
@@ -208,4 +208,4 @@ Les lectures, calculs et corrigés permettent de travailler sans IA. Si vous uti
 
 ## Pour aller plus loin
 
-Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 intègre les acquis des modules 06 à 08 sur le cas de demande hebdomadaire connu, sans le transformer en nouveau test indépendant.
+Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 reprend brièvement la comparaison hebdomadaire connue, puis applique les acquis des modules 06 à 08 à une nouvelle série mensuelle de livraisons. Les blocs utilisés pour choisir ne sont pas des tests finals indépendants.

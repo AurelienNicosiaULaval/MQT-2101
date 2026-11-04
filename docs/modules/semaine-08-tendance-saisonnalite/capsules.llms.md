@@ -4,11 +4,11 @@
 
 Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md), la [démonstration complète](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
 
-Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-03-harmonise.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
+Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-04.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
 
 ## Capsule 1 - Repérer tendance et saisonnalité
 
-La hausse vient-elle du temps ou du calendrier? Consultez la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
+La hausse vient-elle du temps ou du calendrier? Consultez l’[activité guidée sur la décomposition](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md), la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
 
 ## PDF
 
@@ -18,13 +18,14 @@ La hausse vient-elle du temps ou du calendrier? Consultez la [lecture 1](../../m
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
 
-Production guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.
+Production guidée 8.1, à réaliser une seule fois : Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause. À partir de la décomposition fournie, interprétez un écart saisonnier mensuel et une limite.
 
 Auto-vérification:
 
 - J’ai limité l’exploration à 2020 à 2024.
 - Mes axes indiquent les mois et les dollars canadiens.
 - Je distingue tendance, répétition et explication causale.
+- J’interprète un écart saisonnier et une limite de la décomposition.
 
 > **NOTE:**
 >
@@ -128,4 +129,4 @@ Auto-vérification:
 
 ## Après le parcours: consolider ou approfondir
 
-Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, décomposition, harmoniques, `tslm()`, stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les [exercices commerciaux accompagnés](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-14) préparent le module 09.
+Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, approfondissement de la décomposition, harmoniques, `tslm()`, stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les [exercices commerciaux accompagnés](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-14) préparent le module 09.

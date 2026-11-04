@@ -2,7 +2,7 @@
 
 ## Une seule mission
 
-Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases.
+Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases. Critiquez aussi les résultats fictifs nouveaux associés à votre voie.
 
 Ce texte, celui de l’accueil, du guide, des projets et de la présentation désignent la même production, réalisée une fois.
 
@@ -16,6 +16,8 @@ Je distingue la validation réutilisée d’un nouveau test indépendant.
 
 Ma recommandation cite les résultats, une limite et une règle de suivi.
 
+Je justifie ma critique des résultats nouveaux de ma voie.
+
 ## Cible et information
 
 Une réponse continue exige de préciser unité et horizon; une cible binaire exige aussi la classe positive et le moment où son étiquette devient connue. Les informations obtenues après l’origine ne sont pas des prédicteurs disponibles.
@@ -27,6 +29,10 @@ Une référence doit respecter la même origine et les mêmes cibles. Le bloc de
 ## Mesures et décision
 
 Pour les ventes : ME, MAE et RMSE en dollars. Pour le service : matrice de confusion, sensibilité, spécificité, précision et taux de ciblage. La règle de 20 % calibrée sur 2024 n’est pas une capacité garantie sur une nouvelle période. Un risque prévu ne mesure pas l’effet de l’intervention.
+
+## Un résultat nouveau à critiquer
+
+Le [guide](../../modules/atelier-04-recapitulation/guide-atelier.llms.md#resultats-nouveaux) propose deux situations fictives distinctes des modules précédents. Choisissez celle de votre voie et justifiez votre réponse dans le même rapport.
 
 ## Auto-diagnostic
 

@@ -6,7 +6,6 @@ format:
     embed-resources: true
     toc-depth: 2
     code-copy: true
-    code-fold: false
     code-overflow: wrap
     css: media/laboratoire03-pages.css
 execute:
@@ -15,53 +14,31 @@ execute:
   message: false
 ---
 
-## Des repères pour une mission unique
+## Une seule mission
 
-Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
-
-## Auto-vérification de la production
+Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez le naïf saisonnier et le modèle avec tendance et mois sur les mêmes douze mois, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
 
 - J’ai précisé l’origine, les dates et les unités.
-- Je compare les cinq méthodes sur les mêmes cibles.
-- Je distingue l’intervalle du SES et la méthode retenue.
+- Je compare les deux méthodes sur les mêmes douze cibles.
+- Je nomme la méthode de l’intervalle et ses hypothèses.
 - Ma recommandation cite des résultats, une limite et un suivi.
 
-Ces repères et le [guide](guide-atelier.qmd) accompagnent le même `rapport-labo-03.qmd`. Ils ne créent pas une nouvelle production. La page est écrite; aucune vidéo n’est disponible.
+## Du module 07 à la nouvelle situation
 
-## Formuler la mission
+Le module 07 comparait quatre prévisions sur la demande hebdomadaire. L'ajout d'un candidat ou un coût fictif des écarts peut modifier une recommandation de stock; reprenez la [comparaison accompagnée](demonstration-hebdomadaire.qmd#decision) sans refaire les calculs. La mission utilise une nouvelle série mensuelle fictive. Ses 60 premiers mois servent à l'apprentissage; les douze suivants servent à comparer et non à confirmer indépendamment le choix.
 
-Complétez : « À la fin de __________, prévoir __________ pour les __________ prochaines semaines afin de __________. » La phrase nomme l’origine, la cible, l’horizon, les unités et la décision.
+## Repères utiles
 
-Ici, le lundi indique le début de la semaine. La demande totale de la semaine commençant le 22 septembre est connue le dimanche 28 septembre. Les treize cibles suivantes commencent le 29 septembre. Le cas et cette validation ont déjà été examinés aux modules 06 et 07.
-
-## Préserver le futur
-
-Les cinq méthodes sont annoncées avant la comparaison. Les paramètres et la dernière fenêtre sont calculés sur l’apprentissage. Les dates et indices futurs sont connus; les demandes, prix et promotions futurs ne sont pas fournis aux méthodes. Une moyenne qui utilise une semaine située après l’origine ne répond pas à la même question.
-
-Le bloc utilisé pour choisir est une validation, sans nouveau test final indépendant. Une performance devra être réexaminée à d’autres origines.
-
-## Cinq repères de prévision
-
-Naïve : dernière demande; MM4 : moyenne des quatre dernières semaines; SES : niveau lissé estimé sur le passé; naïve saisonnière : semaine correspondante à retard 52; tendance : droite sur un indice continu. Les quatre premières sont reprises du module 07, la dernière mobilise la régression du module 08. L’ancienne comparaison du module 07 avait moins de candidats : un classement peut changer quand la liste change.
-
-Holt amorti ajoute une pente et reste accompagné dans l’[aide R](demonstrations.qmd#holt), sans être exigé pour ce rapport. La fréquence 52 ne rend pas le SES saisonnier.
-
-## Erreurs, incertitude et coûts
-
-Avec `erreur = observé - prévu`, ME positive signifie sous-prévision moyenne; MAE résume l’amplitude et RMSE donne plus de poids aux grands écarts. Ces mesures sont en unités de produit. Les intervalles à 80 % et 95 % illustrent ici le SES : ils ne sont pas automatiquement ceux d’une autre méthode retenue. Les intervalles sont conditionnels aux hypothèses et marginaux pour chaque semaine.
-
-Le scénario conserve 18 $ par unité sous-prévue et 5 $ par unité sur-prévue. Ce sont des coûts fictifs; une recommandation précise aussi les informations opérationnelles manquantes.
+Le naïf saisonnier reprend les mois correspondants de l'année précédente. Le modèle combiné ajoute une tendance et des écarts mensuels; son indice doit continuer en 2025. La ME, la MAE et la RMSE s'expriment en nombre de livraisons. Un intervalle de prédiction est associé à une méthode et dépend de ses hypothèses. Les coûts de 2 $ et 1 $ par livraison d'écart sont fictifs.
 
 ## Auto-diagnostic
 
-1. Quelle mesure pénalise davantage une grande erreur isolée?
-2. Que signifie une ME positive si l’erreur est `observé - prévu`?
-3. Pourquoi le classement des méthodes peut-il changer à une autre période?
+1. Pourquoi une validation utilisée pour choisir n'est-elle pas un test final indépendant?
+2. Quelle mesure donne davantage de poids aux grandes erreurs?
+3. Un intervalle mensuel à 95 % garantit-il l'ensemble des douze mois?
 
 ::: {.callout-tip collapse="true" title="Réponses"}
-1. La RMSE. 2. Une sous-prévision moyenne. 3. Les structures et les chocs de la série changent; une seule période de validation fournit une preuve limitée.
+1. Le choix a utilisé les mêmes résultats. 2. La RMSE. 3. Non, chaque intervalle est marginal et dépend des hypothèses du modèle.
 :::
 
-## Retrouver une aide
-
-Le [guide de la mission](guide-atelier.qmd), l’[exemple R](demonstrations.qmd), les [lectures](lectures.qmd) et les [exercices facultatifs](exercices.qmd) complètent ces rappels. L’objectif est d’utiliser les acquis dans le rapport, pas d’ajouter une lecture intégrale pendant la séance.
+Retrouvez les [étapes de la mission](guide-atelier.qmd), la [démonstration](demonstrations.qmd) et les [lectures](lectures.qmd). La [comparaison hebdomadaire antérieure](demonstration-hebdomadaire.qmd) reste disponible pour révision.

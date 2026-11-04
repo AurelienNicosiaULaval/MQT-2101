@@ -28,7 +28,7 @@ Une direction fictive souhaite soit préparer les ventes à venir, soit repérer
 
 > **NOTE:**
 >
-> Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases.
+> Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases. Critiquez aussi les résultats fictifs nouveaux associés à votre voie.
 
 Cette production se réalise une seule fois dans un rapport. Les cartes, le guide, les repères et la présentation renvoient au même travail. Les exercices de fidélisation constituent un transfert facultatif distinct.
 
@@ -87,6 +87,10 @@ Remettez une synthèse de deux pages maximum, en plus du code repliable. Une seu
 
 La référence saisonnière A utilise 2024 pour prévoir 2025; les promotions futures ne sont pas présumées connues. Le seuil B basé sur le 80e percentile des risques de 2024 est une règle illustrative : il ne garantit pas que 20 % des occasions seront ciblées en 2025 et ne constitue pas une capacité stricte.
 
+## Une courte critique sur des résultats nouveaux
+
+Avant de terminer le même rapport, traitez la situation de votre voie dans le [guide](../../modules/atelier-04-recapitulation/guide-atelier.llms.md#resultats-nouveaux). Les chiffres sont fictifs et distincts de ceux des modules 09 et 10.
+
 ## Ressources
 
 - [Guide en classe](../../modules/atelier-04-recapitulation/guide-atelier.llms.md), [repères préparatoires](../../modules/atelier-04-recapitulation/capsules.llms.md) et [présentation de lancement](presentation.llms.md), aussi en [PDF](media/pdf/presentation.pdf).
@@ -104,5 +108,7 @@ Je compare la méthode et sa référence sur les mêmes observations.
 Je distingue la validation réutilisée d’un nouveau test indépendant.
 
 Ma recommandation cite les résultats, une limite et une règle de suivi.
+
+Je justifie ma critique des résultats nouveaux de ma voie.
 
 Si le projet ne se rend pas, vérifiez que toute l’archive a été extraite et que `data/` est présent, puis reprenez la [préparation](../../modules/atelier-04-recapitulation/demonstrations.llms.md#preparation). Montrez votre tentative et le message complet.

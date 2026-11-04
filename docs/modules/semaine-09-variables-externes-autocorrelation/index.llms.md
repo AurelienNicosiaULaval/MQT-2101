@@ -52,7 +52,7 @@ Auto-vérification Je précise l’origine. Je distingue une valeur prévue d’
 
 Transfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.
 
-2Ajuster et interpréterActivité 9.2[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
+2Ajuster et interpréterActivité 9.2[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 2](capsules.llms.md#capsule-2) · [Lecture française](lectures.llms.md#lecture-2)
 
@@ -62,9 +62,9 @@ Ajustez la régression des ventes sur la tendance, le mois, la promotion, le pri
 
 Auto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.
 
-Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
+Transfert distinct Après l’activité 9.3, l’exercice 2 combine l’ajustement et le diagnostic par succursale.
 
-3Diagnostiquer dans le tempsActivité 9.3[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
+3Diagnostiquer dans le tempsActivité 9.3[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 3](capsules.llms.md#capsule-3) · [Lecture française](lectures.llms.md#lecture-3)
 
@@ -74,9 +74,9 @@ Tracez les résidus de la régression en fonction du temps et leur autocorrélat
 
 Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.
 
-Transfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.
+Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
 
-4Comparer deux modèlesActivité 9.4[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-4)Ouvrir l’étapeRéduire
+4Comparer deux modèlesActivité 9.4[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 4](capsules.llms.md#capsule-4) · [Lecture française](lectures.llms.md#lecture-4)
 
@@ -86,9 +86,9 @@ Activité 9.4
 
 Auto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
 
-Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
+Transfert distinct La comparaison AR(1) est accompagnée dans cette activité. Le transfert des scénarios suit à l’étape 5.
 
-5Communiquer un scénarioActivité 9.5[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-4)Ouvrir l’étapeRéduire
+5Communiquer un scénarioActivité 9.5[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 5](capsules.llms.md#capsule-5) · [Lecture française](lectures.llms.md#lecture-5)
 
@@ -98,7 +98,7 @@ Pour janvier 2025, comparez les prévisions de la régression ordinaire sous pro
 
 Auto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.
 
-Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
+Transfert distinct Faites l’exercice 3, puis l’exercice 4 pour rassembler votre recommandation; ouvrez les corrigés après votre tentative.
 
 ## Trace finale
 

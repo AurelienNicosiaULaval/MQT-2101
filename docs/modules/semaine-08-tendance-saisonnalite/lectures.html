@@ -1538,7 +1538,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1550,16 +1550,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1604,7 +1604,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1666,7 +1666,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1680,7 +1680,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -4098,7 +4098,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 )) {"Symbol"in self&&"iterator"in Symbol&&"function"==typeof Array.prototype[Symbol.iterator]?CreateMethodProperty(Array.prototype,"values",Array.prototype[Symbol.iterator]):CreateMethodProperty(Array.prototype,"values",function r(){var r=ToObject(this);return new ArrayIterator(r,"value")});}if (!("Symbol"in self&&"iterator"in self.Symbol&&!!Array.prototype[self.Symbol.iterator]
 )) {CreateMethodProperty(Array.prototype,Symbol.iterator,Array.prototype.values);}var StringIterator=function(){var t=function(e){if(!(this instanceof t))return new t(e);e=String(e),Iterator.call(this,e),Object.defineProperty(this,"__length__",{value:e.length,configurable:!1,enumerable:!1,writable:!1})};return Object.setPrototypeOf&&Object.setPrototypeOf(t,Iterator),t.prototype=Object.create(Iterator.prototype,{constructor:{value:t,configurable:!0,enumerable:!1,writable:!0},_next:{value:function(){if(this.__list__)return this.__nextIndex__<this.__length__?this.__nextIndex__++:void this._unBind()},configurable:!0,enumerable:!1,writable:!0},_resolve:{value:function(t){var e,r=this.__list__[t];return this.__nextIndex__===this.__length__?r:(e=r.charCodeAt(0),e>=55296&&e<=56319?r+this.__list__[this.__nextIndex__++]:r)},configurable:!0,enumerable:!1,writable:!0},toString:{value:function(){return"[object String Iterator]"},configurable:!0,enumerable:!1,writable:!0}}),t}();if (!("Symbol"in self&&"iterator"in self.Symbol&&!!String.prototype[self.Symbol.iterator]
 )) {CreateMethodProperty(String.prototype,Symbol.iterator,function(){var r=RequireObjectCoercible(this),t=ToString(r);return new StringIterator(t)});}})('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});</script>
-
+  
   <script>
     (function () {
       var script = document.createElement("script");
@@ -7031,147 +7031,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7186,7 +7186,7 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#le-socle-du-module" id="toc-le-socle-du-module" class="nav-link active" data-scroll-target="#le-socle-du-module">Le socle du module</a></li>
   <li><a href="#lectures-parcours" id="toc-lectures-parcours" class="nav-link" data-scroll-target="#lectures-parcours">Lectures intégrées au parcours</a></li>
@@ -7212,11 +7212,11 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7224,7 +7224,7 @@ padding: 1rem;
 
 <section id="le-socle-du-module" class="level2">
 <h2 class="anchored" data-anchor-id="le-socle-du-module">Le socle du module</h2>
-<p>Les explications françaises ci-dessous, les démonstrations et les corrigés suffisent aux cinq activités principales. Le but est de savoir construire et critiquer une prévision avec tendance linéaire et effets des mois. Les anciennes techniques plus nombreuses restent dans un <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a>, sans devenir des compétences supplémentaires à démontrer dans les deux rapports.</p>
+<p>Les explications françaises ci-dessous, l’activité guidée, les démonstrations et les corrigés accompagnent les cinq activités principales. Le but est de savoir construire et critiquer une prévision avec tendance linéaire et effets des mois. Les anciennes techniques plus nombreuses restent dans un <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a>, sans devenir des compétences supplémentaires à démontrer dans les deux rapports.</p>
 <p>Les lectures améliorent les réponses déjà commencées dans <code>tendance_ventes.qmd</code> et <code>tendance_commerce.qmd</code>. Elles ne créent pas un troisième rapport. Les passages des ouvrages en anglais sont des compléments ciblés.</p>
 </section>
 <section id="lectures-parcours" class="level2">
@@ -7279,7 +7279,7 @@ padding: 1rem;
 <tr class="odd">
 <td>Après le parcours</td>
 <td>Facultatif: <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier des compléments</a></td>
-<td>Formes de tendance, décomposition, harmoniques, stationnarité.</td>
+<td>Formes de tendance, harmoniques et stationnarité.</td>
 <td>Identifier le prérequis et ce que chaque outil ajoute.</td>
 </tr>
 </tbody>
@@ -7291,7 +7291,7 @@ padding: 1rem;
 <p>Une tendance décrit une évolution du niveau à long terme. La saisonnalité revient selon une période connue: douze mois dans nos deux séries. Un cycle peut avoir une durée variable, alors que le calendrier fixe la période saisonnière. Une seule hausse de janvier à décembre ne suffit pas à démontrer une répétition annuelle.</p>
 <p>Le graphique temporel conserve l’ordre des observations. Les profils mensuels comparent les mêmes mois entre années et montrent si une hausse générale se superpose à une saison. Une boîte par mois mélange aussi plusieurs niveaux de tendance; son centre n’est donc pas automatiquement un effet du mois ajusté pour la croissance.</p>
 <p>Dans les deux cas du cours, les données sont simulées. Un motif graphique ne prouve pas une cause dans une organisation réelle. Un mois élevé peut combiner calendrier, activité commerciale et événement inhabituel. Le parcours explore seulement l’apprentissage avant de calculer les scores futurs.</p>
-<p>Lecture facultative: Hyndman et Athanasopoulos (2021), <a href="https://otexts.com/fpp3/decomposition.html#sec-decomposition">FPP3, composantes d’une série</a>. Pour la décomposition additive ou multiplicative et ses calculs, consultez le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html#decomposition">complément expliqué</a>; elle n’est pas nécessaire à la trace principale.</p>
+<p>Lecture facultative: Hyndman et Athanasopoulos (2021), <a href="https://otexts.com/fpp3/decomposition.html#sec-decomposition">FPP3, composantes d’une série</a>. Pour la décomposition additive, ses indices et ses limites, suivez l’<a href="../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.html">activité guidée</a>. Elle complète l’activité 8.1 dans le même rapport. La fin de cette page présente aussi Holt-Winters et ETS avec des résultats calculés; elle demande une compréhension accompagnée, pas un ajustement autonome.</p>
 </section>
 <section id="lecture-2" class="level2">
 <h2 class="anchored" data-anchor-id="lecture-2">2. Ajouter tendance et mois dans la régression</h2>
@@ -7330,7 +7330,7 @@ padding: 1rem;
 </section>
 <section id="complements" class="level2">
 <h2 class="anchored" data-anchor-id="complements">Consolider ou approfondir sans alourdir la trace</h2>
-<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html#pratique-supplementaire">huit pratiques 6 à 13</a> renforcent les cinq étapes, avec corrigés. Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> conserve les autres outils de l’ancienne séance: formes de tendance, transformation log et Box-Cox, décomposition, harmoniques, <code>tslm</code>, stationnarité et différences. Chaque partie précise son niveau et ses limites. Aucun de ces outils n’est nécessaire pour terminer les rapports principaux.</p>
+<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html#pratique-supplementaire">huit pratiques 6 à 13</a> renforcent les cinq étapes, avec corrigés. Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> conserve les autres outils de l’ancienne séance: formes de tendance, transformation log et Box-Cox, décomposition approfondie, harmoniques, <code>tslm</code>, stationnarité et différences. La lecture d’un écart saisonnier est maintenant travaillée dans l’activité 8.1; les approfondissements demeurent facultatifs.</p>
 <p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/exercices.html#exercice-14">exercices 14 et 15</a> conservent la régression commerciale déjà présente dans la version précédente du module. Ils préparent la distinction du module 09 entre variables futures connues, prévues ou scénarisées et comparaison conditionnelle au contexte observé.</p>
 <p>Les <a href="https://otexts.com/fpp3/regression.html#sec-regression-exercises">exercices officiels du chapitre 7 de FPP3</a> sont un prolongement en anglais avec fable. Aucun numéro n’est imposé sans correspondance vérifiée avec nos outils. Aucune correction publique de ces exercices n’a été vérifiée; les pratiques françaises du module fournissent les corrections disponibles.</p>
 </section>
@@ -7427,7 +7427,7 @@ padding: 1rem;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7447,11 +7447,11 @@ padding: 1rem;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7528,7 +7528,7 @@ padding: 1rem;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7603,7 +7603,7 @@ padding: 1rem;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7631,7 +7631,7 @@ padding: 1rem;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7655,7 +7655,7 @@ padding: 1rem;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7695,7 +7695,7 @@ padding: 1rem;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7821,7 +7821,7 @@ padding: 1rem;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

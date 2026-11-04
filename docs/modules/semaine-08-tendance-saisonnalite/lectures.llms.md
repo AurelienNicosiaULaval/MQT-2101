@@ -2,7 +2,7 @@
 
 ## Le socle du module
 
-Les explications françaises ci-dessous, les démonstrations et les corrigés suffisent aux cinq activités principales. Le but est de savoir construire et critiquer une prévision avec tendance linéaire et effets des mois. Les anciennes techniques plus nombreuses restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans devenir des compétences supplémentaires à démontrer dans les deux rapports.
+Les explications françaises ci-dessous, l’activité guidée, les démonstrations et les corrigés accompagnent les cinq activités principales. Le but est de savoir construire et critiquer une prévision avec tendance linéaire et effets des mois. Les anciennes techniques plus nombreuses restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans devenir des compétences supplémentaires à démontrer dans les deux rapports.
 
 Les lectures améliorent les réponses déjà commencées dans `tendance_ventes.qmd` et `tendance_commerce.qmd`. Elles ne créent pas un troisième rapport. Les passages des ouvrages en anglais sont des compléments ciblés.
 
@@ -16,7 +16,7 @@ Les lectures améliorent les réponses déjà commencées dans `tendance_ventes.
 | Après la capsule 3 | Obligatoire: [diagnostics](#lecture-3) | Résidus dans le temps, dispersion, moyenne mensuelle imposée. | Expliquer pourquoi une moyenne résiduelle nulle ne suffit pas. |
 | Après la capsule 4 | Obligatoire: [validation commune](#lecture-4) | Quatre candidats, même origine, mêmes informations et dollars. | Distinguer erreur de prévision et résidu d’ajustement. |
 | Après la capsule 5 | Obligatoire: [incertitude et décision](#lecture-5) | Moyenne, observation future, intervalles marginaux et suivi. | Nommer une limite d’un ruban à 95 %. |
-| Après le parcours | Facultatif: [cahier des compléments](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) | Formes de tendance, décomposition, harmoniques, stationnarité. | Identifier le prérequis et ce que chaque outil ajoute. |
+| Après le parcours | Facultatif: [cahier des compléments](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) | Formes de tendance, harmoniques et stationnarité. | Identifier le prérequis et ce que chaque outil ajoute. |
 
 ## 1. Lire les motifs sur l’apprentissage
 
@@ -26,7 +26,7 @@ Le graphique temporel conserve l’ordre des observations. Les profils mensuels 
 
 Dans les deux cas du cours, les données sont simulées. Un motif graphique ne prouve pas une cause dans une organisation réelle. Un mois élevé peut combiner calendrier, activité commerciale et événement inhabituel. Le parcours explore seulement l’apprentissage avant de calculer les scores futurs.
 
-Lecture facultative: Hyndman et Athanasopoulos (2021), [FPP3, composantes d’une série](https://otexts.com/fpp3/decomposition.html#sec-decomposition). Pour la décomposition additive ou multiplicative et ses calculs, consultez le [complément expliqué](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md#decomposition); elle n’est pas nécessaire à la trace principale.
+Lecture facultative: Hyndman et Athanasopoulos (2021), [FPP3, composantes d’une série](https://otexts.com/fpp3/decomposition.html#sec-decomposition). Pour la décomposition additive, ses indices et ses limites, suivez l’[activité guidée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md). Elle complète l’activité 8.1 dans le même rapport. La fin de cette page présente aussi Holt-Winters et ETS avec des résultats calculés; elle demande une compréhension accompagnée, pas un ajustement autonome.
 
 ## 2. Ajouter tendance et mois dans la régression
 
@@ -84,7 +84,7 @@ Lecture facultative: FPP3, [prévision par régression](https://otexts.com/fpp3/
 
 ## Consolider ou approfondir sans alourdir la trace
 
-Les [huit pratiques 6 à 13](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#pratique-supplementaire) renforcent les cinq étapes, avec corrigés. Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres outils de l’ancienne séance: formes de tendance, transformation log et Box-Cox, décomposition, harmoniques, `tslm`, stationnarité et différences. Chaque partie précise son niveau et ses limites. Aucun de ces outils n’est nécessaire pour terminer les rapports principaux.
+Les [huit pratiques 6 à 13](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#pratique-supplementaire) renforcent les cinq étapes, avec corrigés. Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres outils de l’ancienne séance: formes de tendance, transformation log et Box-Cox, décomposition approfondie, harmoniques, `tslm`, stationnarité et différences. La lecture d’un écart saisonnier est maintenant travaillée dans l’activité 8.1; les approfondissements demeurent facultatifs.
 
 Les [exercices 14 et 15](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-14) conservent la régression commerciale déjà présente dans la version précédente du module. Ils préparent la distinction du module 09 entre variables futures connues, prévues ou scénarisées et comparaison conditionnelle au contexte observé.
 

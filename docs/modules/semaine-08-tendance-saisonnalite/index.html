@@ -1538,7 +1538,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1550,16 +1550,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1604,7 +1604,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1666,7 +1666,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1680,7 +1680,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6892,147 +6892,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7047,7 +7047,7 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
   <li><a href="#avant-de-commencer" id="toc-avant-de-commencer" class="nav-link" data-scroll-target="#avant-de-commencer">Avant de commencer</a></li>
@@ -7075,11 +7075,11 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7168,22 +7168,22 @@ Deux rapports Quarto courts
 <section id="avant-de-commencer" class="level2">
 <h2 class="anchored" data-anchor-id="avant-de-commencer">Avant de commencer</h2>
 <p>Préalables: importer un CSV et rendre un document Quarto (module 02), lire une droite, un résidu et un intervalle (modules 03 et 04), définir origine, horizon et validation temporelle (module 06). Reprenez au besoin les <a href="../../modules/semaine-03-regression-lineaire/lectures.html">lectures du module 03</a> et les <a href="../../modules/semaine-06-series-chronologiques-intro/demonstrations.html#references">références temporelles du module 06</a>.</p>
-<p>Téléchargez et décompressez le <a href="telechargements/tendance-ventes.zip">projet guidé tendance-ventes</a> et le <a href="telechargements/tendance-commerce.zip">projet de transfert tendance-commerce</a>. Ouvrez leur <code>.Rproj</code>. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la <a href="../../modules/semaine-08-tendance-saisonnalite/demonstrations.html#preparation">préparation depuis une session neuve</a>, avec <code>tidyverse</code> et <code>broom</code>.</p>
+<p>Téléchargez et décompressez le <a href="telechargements/tendance-ventes.zip">projet guidé tendance-ventes</a> et le <a href="telechargements/tendance-commerce.zip">projet de transfert tendance-commerce</a>. Ouvrez leur <code>.Rproj</code>. Les deux CSV, dictionnaires et fonctions sont fournis. Les démonstrations reprennent la <a href="../../modules/semaine-08-tendance-saisonnalite/demonstrations.html#preparation">préparation depuis une session neuve</a>, avec <code>tidyverse</code> et <code>broom</code>. La page accompagnée utilise aussi <code>forecast</code>.</p>
 <p>Les deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à décembre 2025 et des ventes en dollars canadiens. Les 60 premiers mois servent à apprendre; les douze mois de 2025 servent à comparer à l’origine de décembre 2024. Les prédicteurs futurs sont le calendrier connu et un indice qui continue de 61 à 72. Les <a href="data/dictionnaires.md">dictionnaires</a> expliquent les autres variables.</p>
 <section id="ce-quil-faut-apprendre-ici" class="level3">
 <h3 class="anchored" data-anchor-id="ce-quil-faut-apprendre-ici">Ce qu’il faut apprendre ici</h3>
 <p>Le socle porte sur cinq gestes: lire les motifs, ajuster tendance linéaire et mois, lire les résidus, comparer les prévisions et communiquer l’incertitude. Les quatre candidats sont fixés avant les scores: tendance seule, saison seule, tendance avec mois et naïf saisonnier.</p>
-<p>Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. Décomposition détaillée, harmoniques et stationnarité sont des approfondissements; ils ne sont pas nécessaires pour terminer les deux rapports.</p>
+<p>Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. La lecture d’une décomposition et d’un écart saisonnier accompagne l’activité 8.1. La même <a href="../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.html">activité guidée</a> présente Holt-Winters et ETS avec code et résultats; leur ajustement autonome n’est pas exigé. Harmoniques et stationnarité restent facultatives.</p>
 </section>
 </section>
 <section id="votre-parcours" class="level2">
 <h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
 <p>Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans <code>tendance_ventes.qmd</code>. Les exercices de transfert sont distincts et se conservent dans <code>tendance_commerce.qmd</code>, après une première tentative avant le corrigé.</p>
-<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/capsules.html">cinq capsules principales</a> sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La <a href="../../modules/semaine-08-tendance-saisonnalite/notes-cours.html">synthèse</a> est aussi disponible en <a href="media/pdf/notes-cours.pdf">PDF</a>. Le <a href="telechargements/module-08-pdf-2026-11-03-harmonise.zip">lot PDF harmonisé du 3 novembre 2026</a> contient ces six supports.</p>
+<p>Les <a href="../../modules/semaine-08-tendance-saisonnalite/capsules.html">cinq capsules principales</a> sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La <a href="../../modules/semaine-08-tendance-saisonnalite/notes-cours.html">synthèse</a> est aussi disponible en <a href="media/pdf/notes-cours.pdf">PDF</a>. Le <a href="telechargements/module-08-pdf-2026-11-04.zip">lot PDF du 4 novembre 2026</a> contient ces six supports.</p>
 <p>Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.</p>
 <div class="path-grid interactive-path">
 <details class="path-card" id="etape-1"><summary><span class="path-number">1</span><span class="path-title">Repérer tendance et saisonnalité</span><span class="path-preview">La hausse vient-elle du temps ou du calendrier?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#exploration">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
-<div class="step-detail"><p><span class="step-label">Objectif</span> Repérer tendance et saisonnalité.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-1">Capsule 1</a> · <a href="demonstrations.html#exploration">Démonstration</a> · <a href="lectures.html#lecture-1">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.1</p><p>Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause.</p></div><p><span class="step-label">Auto-vérification</span> J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-1">exercice 1</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
+<div class="step-detail"><p><span class="step-label">Objectif</span> Repérer tendance et saisonnalité.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-1">Capsule 1</a> · <a href="demonstrations.html#exploration">Démonstration</a> · <a href="lectures.html#lecture-1">Lecture française</a> · <a href="decomposition-guidee.html">Décomposition guidée</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.1</p><p>Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause. À partir de la décomposition fournie, interprétez un écart saisonnier mensuel et une limite.</p></div><p><span class="step-label">Auto-vérification</span> J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale. J’interprète un écart saisonnier et une limite de la décomposition.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-1">exercice 1</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
 <details class="path-card" id="etape-2"><summary><span class="path-number">2</span><span class="path-title">Ajuster tendance et mois</span><span class="path-preview">Que représente un coefficient de décembre?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#calendrier">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
 <div class="step-detail"><p><span class="step-label">Objectif</span> Ajuster tendance et mois.</p><p><span class="step-label">Ressource</span> <a href="capsules.html#capsule-2">Capsule 2</a> · <a href="demonstrations.html#calendrier">Démonstration</a> · <a href="lectures.html#lecture-2">Lecture française</a></p><p><span class="step-label">Action</span> Ajouter cette étape au rapport guidé.</p><div class="ae-box"><p class="ae-title">Activité 8.2</p><p>Vérifiez l’indice continu et le facteur mois avec janvier comme référence. Ajustez tendance seule, saison seule et tendance avec mois. Interprétez la pente et le contraste décembre-janvier du modèle combiné, puis nommez une hypothèse de sa forme.</p></div><p><span class="step-label">Auto-vérification</span> Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.</p><p><span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-2">exercice 2</a> dans <code>tendance_commerce.qmd</code>, avant d’ouvrir son corrigé.</p></div></details>
 <details class="path-card" id="etape-3"><summary><span class="path-number">3</span><span class="path-title">Lire les résidus</span><span class="path-preview">Qu’est-ce que le modèle laisse encore dans la série?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#diagnostic">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span></summary>
@@ -7203,7 +7203,7 @@ Deux rapports Quarto courts
 <h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
 <p><code>tendance_ventes.qmd</code> rassemble les cinq productions, une seule fois:</p>
 <ol type="1">
-<li>protocole, graphiques sur l’apprentissage et lecture des motifs;</li>
+<li>protocole, graphiques sur l’apprentissage, lecture des motifs et interprétation d’un écart saisonnier;</li>
 <li>indice, facteur, trois ajustements et interprétation des coefficients;</li>
 <li>diagnostics et limites des résidus;</li>
 <li>quatre prévisions sur des cibles communes et ME, MAE, RMSE;</li>
@@ -7254,7 +7254,7 @@ Deux rapports Quarto courts
 <h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
 <div class="checklist-box">
 <ul class="task-list">
-<li><label><input type="checkbox">Je distingue tendance et motif mensuel.</label></li>
+<li><label><input type="checkbox">Je distingue tendance et motif mensuel et je sais lire un écart saisonnier.</label></li>
 <li><label><input type="checkbox">Je vérifie l’indice, le facteur et la référence avant l’ajustement.</label></li>
 <li><label><input type="checkbox">Je sais lire la pente et décembre dans leurs unités.</label></li>
 <li><label><input type="checkbox">Je regarde les résidus au-delà de leur moyenne.</label></li>
@@ -7283,7 +7283,7 @@ Deux rapports Quarto courts
 </section>
 <section id="pour-aller-plus-loin" class="level2">
 <h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
-<p>Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 intègre les acquis des modules 06 à 08 sur le cas de demande hebdomadaire connu, sans le transformer en nouveau test indépendant.</p>
+<p>Le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier facultatif</a> garde les méthodes anciennes comme ressources, sans alourdir le socle. Les formes de tendance consolident le module 04; les harmoniques et la stationnarité sont des ouvertures. Le module 09 traite les prédicteurs commerciaux futurs et l’autocorrélation. Le laboratoire 03 reprend brièvement la comparaison hebdomadaire connue, puis applique les acquis des modules 06 à 08 à une nouvelle série mensuelle de livraisons. Les blocs utilisés pour choisir ne sont pas des tests finals indépendants.</p>
 
 
 </section>
@@ -7372,7 +7372,7 @@ Deux rapports Quarto courts
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7392,11 +7392,11 @@ Deux rapports Quarto courts
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7473,7 +7473,7 @@ Deux rapports Quarto courts
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7548,7 +7548,7 @@ Deux rapports Quarto courts
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7576,7 +7576,7 @@ Deux rapports Quarto courts
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7600,7 +7600,7 @@ Deux rapports Quarto courts
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7640,7 +7640,7 @@ Deux rapports Quarto courts
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7766,7 +7766,7 @@ Deux rapports Quarto courts
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

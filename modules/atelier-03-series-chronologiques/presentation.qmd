@@ -28,120 +28,92 @@ execute:
   message: false
 ---
 
-```{r}
-#| include: false
-library(tidyverse)
-racines <- c(".", "modules/atelier-03-series-chronologiques")
-racine <- racines[file.exists(file.path(racines, "data/demande_hebdomadaire_quebec.csv"))][1]
-stopifnot(!is.na(racine))
-setwd(normalizePath(racine))
-demande <- read_csv("data/demande_hebdomadaire_quebec.csv", show_col_types = FALSE) |>
-  mutate(semaine = as.Date(semaine)) |> arrange(semaine)
-apprentissage <- demande |> slice_head(n = 91)
-```
 ## Pourquoi ça compte
 
 ::: {.question-line}
-Quelle prévision peut aider une équipe d’approvisionnement à se préparer?
+Comment préparer les livraisons des prochains mois?
 :::
 
 ::: {.note-box}
-L’équipe compare les méthodes sur les mêmes treize semaines avant de recommander une prévision de référence.
+Comparer des prévisions à la même origine et expliquer les réserves à la direction.
 :::
 
 ## Objectifs du laboratoire
 
 ::: {.keypoints}
 - Définir cible, origine, horizon et validation.
-- Comparer lissage, références et tendance linéaire.
-- Interpréter l’incertitude et un coût asymétrique.
-- Défendre une recommandation avec une limite et un suivi.
+- Comparer une référence saisonnière et une régression avec tendance et mois.
+- Interpréter les erreurs, l’incertitude et un coût fictif.
+- Formuler une recommandation avec limite et suivi.
 :::
 
-## Une demande fictive
+## Une nouvelle situation
 
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Une semaine
+Un mois
 :::
 ::: {.label}
-une ligne, demande en unités
+une ligne, livraisons fictives
 :::
 :::
 ::: {.metric}
 ::: {.value}
-91 semaines
+60 mois
 :::
 ::: {.label}
-apprentissage
+apprentissage de 2020 à 2024
 :::
 :::
 ::: {.metric}
 ::: {.value}
-13 semaines
+12 mois
 :::
 ::: {.label}
-validation déjà connue
+validation pour comparer
 :::
 :::
 ::::
 
-## Quand la demande est-elle connue?
+## Du module 07 à la mission
 
 ::: {.question-line}
-Le lundi est le début de la semaine, pas le moment où son total est déjà connu.
+Pourquoi un classement peut-il changer quand on ajoute une méthode?
 :::
 
 ::: {.note-box}
-Dernière semaine d’apprentissage : lundi 22 septembre au dimanche 28 septembre 2025. Première semaine prévue : lundi 29 septembre.
+Reprenez les résultats hebdomadaires sans refaire les quatre prévisions, puis travaillez sur le nouveau cas mensuel.
 :::
 
-## Examiner le passé
-
-```{r}
-#| echo: false
-#| fig-width: 10
-#| fig-height: 4.6
-ggplot(apprentissage, aes(semaine, demande)) +
-  geom_line(colour = "#0B4F6C") +
-  scale_y_continuous(labels = scales::label_number(big.mark = " ", decimal.mark = ",")) +
-  labs(x = "Début de la semaine", y = "Demande hebdomadaire (unités)") +
-  theme_minimal(base_size = 20)
-```
-
-## Cinq méthodes à la même origine
+## Deux prévisions à la même origine
 
 :::: {.metric-grid}
 ::: {.metric}
 ::: {.value}
-Module 07
+Référence
 :::
 ::: {.label}
-naïf, moyenne mobile sur 4 semaines, SES, naïf saisonnier
+naïf saisonnier : reprendre les mois de 2024
 :::
 :::
 ::: {.metric}
 ::: {.value}
-Tendance
+Régression
 :::
 ::: {.label}
-une droite sur l’indice des semaines
+tendance et indicatrices de mois
 :::
 :::
 ::: {.metric}
 ::: {.value}
-Même origine
+Futur
 :::
 ::: {.label}
-les mêmes treize semaines prévues
+indices 61 à 72, mois connus
 :::
 :::
 ::::
-
-::: {.warning-box}
-La liste change depuis le module 07 : comparez les résultats sans supposer le même classement.
-:::
 
 ## Comparer et interpréter
 
@@ -173,52 +145,15 @@ racine de l’erreur quadratique moyenne
 ::::
 
 ::: {.note-box}
-Erreur = observation − prévision. Les mesures sont en unités de produit.
+Erreur = observation − prévision. Les mesures sont en livraisons.
 :::
 
-::: {.note-box}
-Le lissage exponentiel simple est désigné par le sigle SES. La RMSE accorde plus de poids aux grandes erreurs.
-:::
-
-## Quelle incertitude?
+## Incertitude et coût
 
 ::: {.keypoints}
-- Lire les intervalles à 80 % et 95 % du SES.
-- Nommer la méthode et les hypothèses de la plage.
-- Ne pas appliquer automatiquement ces intervalles à une autre méthode.
-:::
-
-## Un scénario de coût
-
-:::: {.metric-grid}
-::: {.metric}
-::: {.value}
-18 $ / unité
-:::
-::: {.label}
-sous-prévision fictive
-:::
-:::
-::: {.metric}
-::: {.value}
-5 $ / unité
-:::
-::: {.label}
-sur-prévision fictive
-:::
-:::
-::: {.metric}
-::: {.value}
-Suivi
-:::
-::: {.label}
-réexaminer aux prochaines origines
-:::
-:::
-::::
-
-::: {.warning-box}
-Le scénario ne suffit pas à calculer une commande ou un stock optimal.
+- Interprétez un intervalle de prédiction de la régression et ses hypothèses.
+- Comparez les coûts fictifs : 2 $ par livraison sous-prévue, 1 $ par livraison sur-prévue.
+- Réexaminez la méthode à de nouvelles origines.
 :::
 
 ## À retenir
@@ -253,7 +188,7 @@ coût fictif, limite et suivi
 ## Production du laboratoire
 
 ::: {.lead}
-Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
+Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez le naïf saisonnier et le modèle avec tendance et mois sur les mêmes douze mois, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
 :::
 
 Cette production se réalise une seule fois dans `rapport-labo-03.qmd`.
@@ -262,15 +197,15 @@ Cette production se réalise une seule fois dans `rapport-labo-03.qmd`.
 
 ::: {.self-check}
 - J’ai précisé l’origine, les dates et les unités.
-- Je compare les cinq méthodes sur les mêmes cibles.
-- Je distingue l’intervalle du SES et la méthode retenue.
+- Je compare les deux méthodes sur les mêmes douze cibles.
+- Je nomme la méthode de l’intervalle et ses hypothèses.
 - Ma recommandation cite des résultats, une limite et un suivi.
 :::
 
 ## Rétroaction et suite
 
 ::: {.keypoints}
-- Présentez votre question et votre protocole après une première tentative.
+- Présentez votre protocole après une première tentative.
 - Faites relire le rapport et corrigez un point précis.
 - Apportez votre projet autonome au point de contrôle du mini-rapport 2.
 - Redémarrez R et rendez le rapport avec ses données.
@@ -280,10 +215,5 @@ Cette production se réalise une seule fois dans `rapport-labo-03.qmd`.
 
 ::: {.keypoints}
 - Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition.
-- Équipe forecast, documentation de SES et Holt.
-- Données entièrement simulées du cours MQT-2101, Université Laval.
-:::
-
-::: {.note-box}
-Les références détaillées et les notes d’animation sont dans le guide séparé. Les anciens fichiers de tiers ne sont pas redistribués.
+- Données de livraisons entièrement simulées pour le cours MQT-2101, Université Laval.
 :::

@@ -2,9 +2,9 @@
 
 Troisième laboratoire en classe
 
-## Quelle prévision utiliser pour préparer l’approvisionnement?
+## Quelle prévision utiliser pour préparer les livraisons?
 
-Vous reprenez la demande hebdomadaire des modules 06 et 07 et ajoutez une tendance linéaire vue au module 08. Vous comparez les résultats puis expliquez une décision à une équipe fictive.
+Vous reprenez brièvement les résultats du module 07, puis transposez les acquis à une nouvelle série mensuelle de livraisons fictives.
 
 Séance
 
@@ -16,7 +16,7 @@ R, RStudio et Quarto
 
 Données
 
-Demande hebdomadaire simulée
+Livraisons mensuelles simulées
 
 Trace
 
@@ -24,11 +24,11 @@ Un rapport de laboratoire
 
 ## La mission
 
-Une équipe d’approvisionnement fictive doit prévoir la demande des treize prochaines semaines. Quelle méthode peut-elle utiliser, avec quelles réserves et quel suivi?
+Une coopérative fictive prépare ses ressources pour les douze prochains mois. Quelle prévision peut-elle utiliser, avec quelles réserves et quel suivi?
 
 > **NOTE:**
 >
-> Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
+> Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez le naïf saisonnier et le modèle avec tendance et mois sur les mêmes douze mois, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.
 
 Cette production se construit une seule fois dans `rapport-labo-03.qmd`. Les étapes ci-dessous, le [guide](../../modules/atelier-03-series-chronologiques/guide-atelier.llms.md), les [repères](../../modules/atelier-03-series-chronologiques/capsules.llms.md) et la [présentation de lancement](../../modules/atelier-03-series-chronologiques/presentation.llms.md) désignent le même rapport. Le [transfert mensuel](../../modules/atelier-03-series-chronologiques/exercices.llms.md) est une pratique facultative distincte.
 
@@ -38,44 +38,44 @@ Le [calendrier du cours](../../calendrier.llms.md) prévoit la séance le mercre
 
 - Revoyez origine, horizon et validation au [module 06](../../modules/semaine-06-series-chronologiques-intro/index.llms.md), les références et le SES au [module 07](../../modules/semaine-07-lissage/index.llms.md), puis l’indice et la tendance au [module 08](../../modules/semaine-08-tendance-saisonnalite/index.llms.md).
 - Téléchargez et décompressez le [projet de départ](telechargements/laboratoire-03.zip). Ouvrez `laboratoire-03.Rproj`, puis `rapport-labo-03.qmd`; lancez Render avant de commencer.
-- Installez `tidyverse` et `forecast` une seule fois si nécessaire. Le [dictionnaire](data/dictionnaires.md) décrit les fichiers fournis.
+- Installez `tidyverse` si nécessaire; `forecast` sert à la comparaison hebdomadaire facultative. Le [dictionnaire](data/dictionnaires.md) décrit les fichiers fournis.
 - Apportez vos traces précédentes et une question sur votre mini-rapport 2. Si le premier rendu bloque, conservez le message d’erreur pour recevoir de l’aide.
 
-Reprenez vos quatre prévisions du module 07 si leur origine et leurs cibles concordent; ajoutez ensuite la tendance. Il n’est pas nécessaire de tout réécrire pour commencer.
+Reprenez brièvement vos résultats du module 07 et la [comparaison hebdomadaire accompagnée](../../modules/atelier-03-series-chronologiques/demonstration-hebdomadaire.llms.md#decision) : pourquoi l’ajout d’une tendance ou le coût fictif des écarts peut-il modifier une recommandation de stock? Il n’est pas nécessaire de refaire les quatre prévisions.
 
-Le cas est simulé. Les 91 premières semaines servent à l’apprentissage; les 13 dernières, déjà examinées aux modules 06 et 07, servent à comparer. Cette réutilisation ne crée pas un test final indépendant.
+Le nouveau cas est simulé. Les 60 mois de 2020 à 2024 servent à l’apprentissage; les douze mois de 2025 servent à comparer depuis la fin de décembre 2024. Ce bloc utilisé pour choisir n’est pas un test final indépendant.
 
 ## Votre parcours en classe
 
 Travaillez en binôme si possible, ou seul. Chaque personne doit pouvoir expliquer la démarche. Le [guide de la mission](../../modules/atelier-03-series-chronologiques/guide-atelier.llms.md) donne les consignes et les indices à ouvrir après une tentative; l’enseignant vous accompagne. Les cartes servent à retrouver une étape, sans ajouter de production.
 
-1Auditer et situerQue sait-on à la fin de la semaine du 22 septembre?[Aide R](demonstrations.llms.md#audit)[Guide](guide-atelier.llms.md#audit)Ouvrir l’étapeRéduire
+1Auditer et situerQue sait-on à la fin de décembre 2024?[Aide R](demonstrations.llms.md#audit)[Guide](guide-atelier.llms.md#audit)Ouvrir l’étapeRéduire
 
-Action dans le même rapport Énoncez la cible, l’unité, le calendrier, l’origine et les 13 semaines de validation. Vérifiez dates distinctes, régularité et valeurs manquantes.
+Action dans le même rapport Énoncez la cible, l’unité, l’origine et les douze mois de validation. Vérifiez dates, régularité et valeurs manquantes.
 
 Après une tentative [Indice du guide](guide-atelier.llms.md#audit) · [Exemple R](demonstrations.llms.md#audit)
 
-2Explorer le passéQue suggèrent les données d’apprentissage?[Aide R](demonstrations.llms.md#exploration)[Guide](guide-atelier.llms.md#exploration)Ouvrir l’étapeRéduire
+2Explorer le passéQue suggèrent les motifs mensuels?[Aide R](demonstrations.llms.md#exploration)[Guide](guide-atelier.llms.md#exploration)Ouvrir l’étapeRéduire
 
-Action dans le même rapport Tracez la demande d’apprentissage, décrivez une tendance ou un motif possible et distinguez les promotions observées des informations futures.
+Action dans le même rapport Tracez les 60 mois d’apprentissage et comparez les profils mensuels par année. Décrivez la tendance, la saison et une limite.
 
 Après une tentative [Indice du guide](guide-atelier.llms.md#exploration) · [Exemple R](demonstrations.llms.md#exploration)
 
-3Construire les prévisionsQu’apporte une droite aux références déjà connues?[Aide R](demonstrations.llms.md#previsions)[Guide](guide-atelier.llms.md#previsions)Ouvrir l’étapeRéduire
+3Construire les prévisionsQue change le modèle avec tendance et mois?[Aide R](demonstrations.llms.md#previsions)[Guide](guide-atelier.llms.md#previsions)Ouvrir l’étapeRéduire
 
-Action dans le même rapport Émettez à la même origine les cinq prévisions : naïve, moyenne des quatre dernières semaines, SES, naïve saisonnière et tendance linéaire.
+Action dans le même rapport Construisez le calendrier futur et comparez le naïf saisonnier à une régression avec tendance et mois, à la même origine. Interprétez la pente et le mois de référence.
 
 Après une tentative [Indice du guide](guide-atelier.llms.md#previsions) · [Exemple R](demonstrations.llms.md#previsions)
 
-4Comparer et lire l’incertitudeQue racontent les erreurs et les intervalles?[Aide R](demonstrations.llms.md#comparaison)[Guide](guide-atelier.llms.md#comparaison)Ouvrir l’étapeRéduire
+4Comparer et lire l’incertitudeQue disent les erreurs et l’intervalle?[Aide R](demonstrations.llms.md#comparaison)[Guide](guide-atelier.llms.md#comparaison)Ouvrir l’étapeRéduire
 
-Action dans le même rapport Comparez ME, MAE et RMSE, tracez les erreurs ou les prévisions et interprétez les intervalles à 80 % et 95 % du SES.
+Action dans le même rapport Calculez ME, MAE et RMSE sur les mêmes douze mois et interprétez un intervalle de prédiction du modèle combiné.
 
 Après une tentative [Indice du guide](guide-atelier.llms.md#comparaison) · [Exemple R](demonstrations.llms.md#comparaison)
 
 5Décider et surveillerQue change le coût des écarts?[Aide R](demonstrations.llms.md#decision)[Guide](guide-atelier.llms.md#decision)Ouvrir l’étapeRéduire
 
-Action dans le même rapport Calculez les coûts fictifs, justifiez une méthode et rédigez une recommandation avec une limite et une prochaine vérification.
+Action dans le même rapport Comparez les coûts fictifs et formulez une recommandation avec une limite et une prochaine vérification.
 
 Après une tentative [Indice du guide](guide-atelier.llms.md#decision) · [Exemple R](demonstrations.llms.md#decision)
 
@@ -83,9 +83,9 @@ Après l’exploration, présentez votre protocole et vos premiers constats pour
 
 ## Ce qui est attendu
 
-Le rapport comprend la question et les contrôles, un graphique du passé, cinq prévisions communes, les mesures et coûts, une interprétation des intervalles du SES, puis une recommandation avec limite et suivi. Le SES illustre une incertitude : ses intervalles appartiennent au SES, même si vous retenez une autre méthode. Les résultats du laboratoire sont une pratique formative distincte du mini-rapport.
+Le rapport comprend la question et les contrôles, les graphiques du passé, les deux prévisions communes, les mesures et coûts, l’intervalle du modèle combiné, puis une recommandation avec limite et suivi. Les résultats du laboratoire sont une pratique formative distincte du mini-rapport.
 
-Les prévisions sont comparées sur les mêmes cibles et dans les mêmes unités. La tendance est ajoutée aux quatre méthodes du module 07. Holt est un [complément accompagné](../../modules/atelier-03-series-chronologiques/demonstrations.llms.md#holt), facultatif pour le rapport; les modèles saisonniers riches et tests avancés ne sont pas exigés ici.
+Les deux prévisions sont comparées sur les mêmes cibles. Les autres méthodes peuvent être explorées dans les compléments, sans devenir des exigences de la mission.
 
 ## Point de contrôle du mini-rapport 2
 
@@ -101,9 +101,9 @@ Le support de lancement est aussi offert en [PDF](media/pdf/presentation.pdf). A
 
 J’ai précisé l’origine, les dates et les unités.
 
-Je compare les cinq méthodes sur les mêmes cibles.
+Je compare les deux méthodes sur les mêmes douze cibles.
 
-Je distingue l’intervalle du SES et la méthode retenue.
+Je nomme la méthode de l’intervalle et ses hypothèses.
 
 Ma recommandation cite des résultats, une limite et un suivi.
 

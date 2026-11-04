@@ -14,7 +14,7 @@ execute:
 ---
 ## Une seule mission
 
-Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases.
+Dans un seul rapport Quarto, définissez la décision et la cible, vérifiez les données, développez une voie avec une référence et des mesures adaptées, puis formulez une recommandation avec une limite et un suivi. Résumez l’autre voie en trois phrases. Critiquez aussi les résultats fictifs nouveaux associés à votre voie.
 
 Cette mission se réalise une fois. Choisissez la voie A ou B et conservez un seul rapport; les cinq étapes ne sont pas des rapports supplémentaires.
 
@@ -24,6 +24,7 @@ Cette mission se réalise une fois. Choisissez la voie A ou B et conservez un se
 - [ ] Je compare la méthode et sa référence sur les mêmes observations.
 - [ ] Je distingue la validation réutilisée d’un nouveau test indépendant.
 - [ ] Ma recommandation cite les résultats, une limite et une règle de suivi.
+- [ ] Je justifie ma critique des résultats nouveaux de ma voie.
 
 ## 1. Situer la décision {#audit}
 
@@ -63,6 +64,26 @@ Rédigez une recommandation appuyée sur les résultats, une limite et une condi
 
 ::: {.callout-tip collapse="true" title="Indice : quatre phrases"}
 « Nous avons analysé… », « Sur la validation réutilisée… », « Nous recommandons… », « Cette recommandation dépend de… et sera revue lorsque… ».
+:::
+
+## Résultats nouveaux à critiquer {#resultats-nouveaux}
+
+Les deux situations ci-dessous sont construites pour l’entraînement; elles sont distinctes des résultats des modules et du cas principal. Traitez celle de votre voie dans le même rapport, puis ouvrez la piste de vérification.
+
+### Voie A : comparer des erreurs
+
+Pour quatre mois fictifs, les erreurs absolues d’une méthode A sont 20, 20, 20 et 20 livraisons; celles d’une méthode B sont 0, 0, 0 et 80 livraisons. Comparez les MAE et les RMSE. Quelles informations supplémentaires demanderiez-vous avant de choisir une méthode?
+
+::: {.callout-tip collapse="true" title="Piste de vérification, voie A"}
+Les deux MAE valent 20 livraisons. Les RMSE valent 20 pour A et 40 pour B. L’égalité des MAE ne décrit donc pas la même répartition des écarts. Quatre mois ne suffisent pas pour conclure à une supériorité future; on demanderait notamment la fréquence et le coût des grands écarts, ainsi que des résultats sur d’autres périodes.
+:::
+
+### Voie B : vérifier une capacité
+
+Sur 100 dossiers fictifs, une règle donne VP = 16, FN = 4, FP = 14 et VN = 66. Calculez sa sensibilité, sa précision et le nombre de dossiers ciblés. Que peut-on conclure si la capacité est limitée à 20 contacts?
+
+::: {.callout-tip collapse="true" title="Piste de vérification, voie B"}
+La sensibilité vaut 16/20 = 80 % et la précision vaut 16/30, soit environ 53,3 %. La règle cible 30 dossiers et dépasse la capacité de 20. Il faut définir et évaluer une règle compatible avec cette capacité; on ne connaît pas les résultats des 20 dossiers qui seraient retenus.
 :::
 
 ## Rapport et relecture {#rapport-attendu}

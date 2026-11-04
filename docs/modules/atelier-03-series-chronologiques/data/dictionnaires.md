@@ -33,3 +33,13 @@ Le budget est comparé rétrospectivement aux ventes comme objectif; on ne suppo
 ## Régénération
 
 Les deux fichiers proviennent de scripts/10_create_second_block_data.R, graine 210110. Le script R/regenerer-donnees.R reprend les tirages intermédiaires et réécrit les deux CSV dans data/ du projet courant. Il est vérifié sur une copie hors du dépôt et ne modifie pas les modules du cours.
+
+
+## Livraisons mensuelles fictives
+
+| Variable | Description |
+| --- | --- |
+| `date` | Premier jour du mois, de janvier 2020 à décembre 2025 |
+| `livraisons` | Nombre simulé de livraisons durant ce mois |
+
+Une ligne par mois, sans donnée manquante. Les observations consécutives forment une série temporelle. Simulation reproductible : `R/generer-livraisons.R`, graine 210103. L’organisation est fictive.

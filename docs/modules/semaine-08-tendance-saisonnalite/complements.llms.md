@@ -4,7 +4,7 @@
 
 Les cinq activités principales visent une comparaison simple avec tendance linéaire et mois. Ce cahier conserve les autres méthodes de l’ancienne séance, avec explications et calculs complets. Il sert de référence et de prolongement: il n’ajoute aucune compétence obligatoire aux deux rapports.
 
-Les formes quadratique et exponentielle consolident les transformations déjà vues au module 04. La décomposition et les harmoniques demandent une lecture plus poussée des saisons. La stationnarité et KPSS constituent une ouverture avancée, sans prérequis à terminer le module ni test exigé dans la trace principale.
+Les formes quadratique et exponentielle consolident les transformations déjà vues au module 04. L’activité 8.1 comprend une première lecture de décomposition dans la page guidée. Ce cahier approfondit la décomposition et les harmoniques. La stationnarité et KPSS constituent une ouverture avancée, sans prérequis à terminer le module ni test exigé dans la trace principale.
 
 Le [projet facultatif téléchargeable](telechargements/complements-tendance.zip) contient ce cahier, les CSV, dictionnaires et fonctions. Les blocs se suivent depuis une session neuve; il n’est pas nécessaire de les copier dans vos rapports principaux.
 
@@ -32,12 +32,12 @@ apprentissage |> select(date, indice_temps, mois) |> slice(c(1, 2, 12, 13, 60))
 ```
 
     # A tibble: 5 × 3
-      date       indice_temps mois
-      <date>            <int> <fct>
-    1 2020-01-01            1 janvier
-    2 2020-02-01            2 février
+      date       indice_temps mois    
+      <date>            <int> <fct>   
+    1 2020-01-01            1 janvier 
+    2 2020-02-01            2 février 
     3 2020-12-01           12 décembre
-    4 2021-01-01           13 janvier
+    4 2021-01-01           13 janvier 
     5 2024-12-01           60 décembre
 
 ``` r
@@ -144,12 +144,12 @@ indices_saisonniers |> arrange(desc(facteur))
     # A tibble: 12 × 3
        mois      ecart_dollars facteur
        <fct>             <dbl>   <dbl>
-     1 décembre         24384.   1.07
-     2 mai              18726.   1.05
-     3 novembre          7343.   1.02
-     4 mars              7475.   1.02
-     5 juin              6629.   1.02
-     6 avril             1910.   1.00
+     1 décembre         24384.   1.07 
+     2 mai              18726.   1.05 
+     3 novembre          7343.   1.02 
+     4 mars              7475.   1.02 
+     5 juin              6629.   1.02 
+     6 avril             1910.   1.00 
      7 janvier          -5826.   0.986
      8 octobre          -6579.   0.982
      9 février          -8114.   0.977
@@ -272,8 +272,8 @@ tibble(hypothese = c("Niveau stationnaire", "Stationnaire autour d’une tendanc
       hypothese                              statistique p_table
       <chr>                                        <dbl>   <dbl>
     1 Niveau stationnaire                         1.58      0.01
-    2 Stationnaire autour d’une tendance          0.0371    0.1
-    3 Différence simple: niveau stationnaire      0.0505    0.1
+    2 Stationnaire autour d’une tendance          0.0371    0.1 
+    3 Différence simple: niveau stationnaire      0.0505    0.1 
 
 ``` r
 par(mfrow = c(2, 2))

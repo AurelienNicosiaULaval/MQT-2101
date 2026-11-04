@@ -28,7 +28,7 @@ serie <- ts(apprentissage$ventes, frequency = 12, start = c(2020, 1))
 
 ## Exercice 1 - Lire une série dans son contexte
 
-Tracez les ventes d’apprentissage dans le temps et les profils mensuels par année. Indiquez les promotions sur le graphique temporel. Distinguez hausse générale, récurrence et événements possibles. Que manque-t-il avant d’attribuer une fluctuation à une cause?
+Tracez les ventes d’apprentissage dans le temps et les profils mensuels par année. Indiquez les promotions sur le graphique temporel. Distinguez hausse générale, récurrence et événements possibles. Que manque-t-il avant d’attribuer une fluctuation à une cause? Décomposez la série d’apprentissage de façon additive, interprétez un écart saisonnier en dollars et nommez une limite de cette description.
 
 > **TIP:**
 >
@@ -51,6 +51,31 @@ Tracez les ventes d’apprentissage dans le temps et les profils mensuels par an
 >
 > ![](exercices_files/figure-html/solution-08-1-2.png)
 >
+> ``` r
+> # Décomposition descriptive estimée sur l’apprentissage seulement.
+> decomposition_commerce <- decompose(serie, type = "additive")
+> tibble(mois = 1:12,
+>        ecart_saisonnier_dollars = as.numeric(decomposition_commerce$figure))
+> ```
+>
+>     # A tibble: 12 × 2
+>         mois ecart_saisonnier_dollars
+>        <int>                    <dbl>
+>      1     1                   10863.
+>      2     2                  -10710.
+>      3     3                   -9124.
+>      4     4                   -2264.
+>      5     5                  -17965.
+>      6     6                  -18035.
+>      7     7                    2561.
+>      8     8                   11895.
+>      9     9                  -23506.
+>     10    10                    5308.
+>     11    11                   29355.
+>     12    12                   21622.
+>
+> L’écart estimé d’un mois est exprimé en dollars par rapport à la tendance estimée dans cette décomposition. Il n’est pas une preuve d’effet causal du calendrier ou d’une promotion. La tendance centrée ne peut pas être estimée aux extrémités sans observations supplémentaires, et la décomposition ne produit pas à elle seule une prévision.
+>
 > La série progresse et présente des fluctuations commerciales. Les profils mensuels comparent les années, mais les promotions ne surviennent pas nécessairement aux mêmes dates. Une association graphique ne suffit pas à démontrer un effet causal. Le modèle principal de calendrier ne prétend pas isoler celui du prix ou des promotions.
 
 ## Exercice 2 - Un calendrier, trois structures
@@ -65,12 +90,12 @@ Vérifiez l’indice de temps et le facteur mois, avec janvier comme référence
 > ```
 >
 >     # A tibble: 5 × 3
->       date       indice_temps mois
->       <date>            <int> <fct>
->     1 2020-01-01            1 janvier
->     2 2020-02-01            2 février
+>       date       indice_temps mois    
+>       <date>            <int> <fct>   
+>     1 2020-01-01            1 janvier 
+>     2 2020-02-01            2 février 
 >     3 2020-12-01           12 décembre
->     4 2021-01-01           13 janvier
+>     4 2021-01-01           13 janvier 
 >     5 2024-12-01           60 décembre
 >
 > ``` r

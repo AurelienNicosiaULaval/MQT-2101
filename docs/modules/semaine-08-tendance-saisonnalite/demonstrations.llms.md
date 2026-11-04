@@ -59,12 +59,12 @@ apprentissage |> select(date, indice_temps, mois) |> slice(c(1, 2, 12, 13, 60))
 ```
 
     # A tibble: 5 × 3
-      date       indice_temps mois
-      <date>            <int> <fct>
-    1 2020-01-01            1 janvier
-    2 2020-02-01            2 février
+      date       indice_temps mois    
+      <date>            <int> <fct>   
+    1 2020-01-01            1 janvier 
+    2 2020-02-01            2 février 
     3 2020-12-01           12 décembre
-    4 2021-01-01           13 janvier
+    4 2021-01-01           13 janvier 
     5 2024-12-01           60 décembre
 
 ``` r
@@ -223,4 +223,4 @@ Le budget cible est un objectif fictif, pas un prédicteur utilisé pour retrouv
 
 ## Pour consolider ou approfondir
 
-Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les tendances quadratique et exponentielle, le retour à l’échelle des dollars, la décomposition, les harmoniques, le pont vers `tslm()` et les tests de stationnarité des anciens scripts. Ces calculs ne sont pas requis pour les deux rapports principaux. Les [exercices commerciaux accompagnés](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-14) préparent le module 09.
+Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les tendances quadratique et exponentielle, le retour à l’échelle des dollars, l’approfondissement de la décomposition, les harmoniques, le pont vers `tslm()` et les tests de stationnarité des anciens scripts. Ces approfondissements ne sont pas requis pour les deux rapports principaux. La [décomposition accompagnée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md) sert à lire un écart saisonnier dans l’activité 8.1. Les [exercices commerciaux accompagnés](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-14) préparent le module 09.

@@ -1538,7 +1538,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1550,16 +1550,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1604,7 +1604,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1666,7 +1666,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1680,7 +1680,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6892,147 +6892,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7047,12 +7047,11 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
-  <li><a href="#avant-et-pendant-la-séance" id="toc-avant-et-pendant-la-séance" class="nav-link active" data-scroll-target="#avant-et-pendant-la-séance">Avant et pendant la séance</a></li>
-  <li><a href="#lire-une-comparaison-temporelle" id="toc-lire-une-comparaison-temporelle" class="nav-link" data-scroll-target="#lire-une-comparaison-temporelle">Lire une comparaison temporelle</a></li>
-  <li><a href="#lire-lincertitude-et-le-coût" id="toc-lire-lincertitude-et-le-coût" class="nav-link" data-scroll-target="#lire-lincertitude-et-le-coût">Lire l’incertitude et le coût</a></li>
-  <li><a href="#compléments-et-ancien-matériel" id="toc-compléments-et-ancien-matériel" class="nav-link" data-scroll-target="#compléments-et-ancien-matériel">Compléments et ancien matériel</a></li>
+  <li><a href="#préparer-la-séance" id="toc-préparer-la-séance" class="nav-link active" data-scroll-target="#préparer-la-séance">Préparer la séance</a></li>
+  <li><a href="#comparer-à-une-origine-commune" id="toc-comparer-à-une-origine-commune" class="nav-link" data-scroll-target="#comparer-à-une-origine-commune">Comparer à une origine commune</a></li>
+  <li><a href="#lire-une-prévision-son-intervalle-et-le-coût" id="toc-lire-une-prévision-son-intervalle-et-le-coût" class="nav-link" data-scroll-target="#lire-une-prévision-son-intervalle-et-le-coût">Lire une prévision, son intervalle et le coût</a></li>
   <li><a href="#sources-ciblées" id="toc-sources-ciblées" class="nav-link" data-scroll-target="#sources-ciblées">Sources ciblées</a></li>
   </ul>
 </nav>
@@ -7069,76 +7068,32 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
 
 
-<section id="avant-et-pendant-la-séance" class="level2">
-<h2 class="anchored" data-anchor-id="avant-et-pendant-la-séance">Avant et pendant la séance</h2>
-<p>Ces explications et les <a href="../../modules/atelier-03-series-chronologiques/capsules.html">repères</a> suffisent pour suivre le <a href="../../modules/atelier-03-series-chronologiques/guide-atelier.html">guide</a>. Les passages externes sont facultatifs et ciblés; il n’est pas nécessaire de lire les chapitres entiers avant la séance.</p>
-<div class="table-responsive" tabindex="0" role="region" aria-label="Lectures du laboratoire">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Question</th>
-<th>Lecture française et vérification</th>
-<th>Complément facultatif</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Quand la semaine est-elle connue?</td>
-<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#audit">Démonstration : audit</a>. Une date de début n’est pas la fin de la période.</td>
-<td><a href="../../modules/semaine-06-series-chronologiques-intro/lectures.html">Module 06 : origine et horizon</a>.</td>
-</tr>
-<tr class="even">
-<td>Quels candidats sont disponibles?</td>
-<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#previsions">Démonstration : prévisions</a>. La même origine et les mêmes cibles s’appliquent à tous.</td>
-<td><a href="../../modules/semaine-07-lissage/lectures.html">Module 07 : lissage</a> et <a href="../../modules/semaine-08-tendance-saisonnalite/lectures.html#lecture-2">module 08 : tendance</a>.</td>
-</tr>
-<tr class="odd">
-<td>Comment lire les résultats?</td>
-<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#comparaison">Comparaison</a>. ME, MAE, RMSE et intervalle sont associés à des méthodes et unités précises.</td>
-<td>Hyndman et Athanasopoulos (2021), <a href="https://otexts.com/fpp3/toolbox.html#sec-accuracy">exactitude des prévisions</a>.</td>
-</tr>
-<tr class="even">
-<td>Comment traduire un risque?</td>
-<td><a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#decision">Décision</a>. Le coût est un scénario fixé à l’avance, pas une facture observée.</td>
-<td><a href="../../modules/semaine-07-lissage/lectures.html">Module 07 : coût asymétrique</a>.</td>
-</tr>
-</tbody>
-</table>
-</div>
+<section id="préparer-la-séance" class="level2">
+<h2 class="anchored" data-anchor-id="préparer-la-séance">Préparer la séance</h2>
+<p>Reprenez l’origine et l’horizon au module 06, les résultats de lissage du module 07 et la <a href="../../modules/semaine-08-tendance-saisonnalite/lectures.html#lecture-2">tendance avec mois du module 08</a>. Le <a href="../../modules/atelier-03-series-chronologiques/guide-atelier.html">guide</a> et la <a href="../../modules/atelier-03-series-chronologiques/demonstrations.html">démonstration</a> accompagnent la mission.</p>
 </section>
-<section id="lire-une-comparaison-temporelle" class="level2">
-<h2 class="anchored" data-anchor-id="lire-une-comparaison-temporelle">Lire une comparaison temporelle</h2>
-<p>Le résidu est calculé sur les observations utilisées pour ajuster un modèle; l’erreur de prévision compare une observation future à une valeur émise auparavant. Des erreurs de même signe peuvent signaler une difficulté, mais treize semaines ne suffisent pas à prouver sa cause.</p>
-<p>Choisir la plus petite MAE sur les mêmes semaines utilisées pour l’afficher peut donner une appréciation optimiste. Cette validation est déjà connue des modules 06 et 07. Avant une utilisation réelle, il faudrait comparer à d’autres origines et documenter ce qui était connu à chacune. Une seule ME peut masquer des erreurs positives et négatives qui se compensent.</p>
+<section id="comparer-à-une-origine-commune" class="level2">
+<h2 class="anchored" data-anchor-id="comparer-à-une-origine-commune">Comparer à une origine commune</h2>
+<p>Les 60 mois d’apprentissage sont connus à la fin de décembre 2024. Les douze observations suivantes servent à comparer les méthodes et à choisir; elles ne constituent pas un test final indépendant. Le naïf saisonnier reprend 2024 et le modèle de régression utilise un indice continu et le mois connu d’avance. Des retards fondés sur les observations de 2025 répondraient à un autre protocole.</p>
 </section>
-<section id="lire-lincertitude-et-le-coût" class="level2">
-<h2 class="anchored" data-anchor-id="lire-lincertitude-et-le-coût">Lire l’incertitude et le coût</h2>
-<p>Un intervalle de prévision décrit une plage pour une observation future sous les hypothèses de la méthode nommée. Le rapport illustre le SES; les intervalles ne deviennent pas automatiquement ceux d’une autre méthode. Les intervalles marginaux de treize semaines ne garantissent pas une couverture simultanée de 95 % sur tout l’horizon.</p>
-<p>Les 18 $ et 5 $ sont des coefficients fictifs par unité d’écart. Le coût calculé est la somme dans ce scénario, sans données réelles de commandes, stock ou délais. Une comparaison de prévisions aide une décision, mais ne détermine pas seule la quantité à commander.</p>
-</section>
-<section id="compléments-et-ancien-matériel" class="level2">
-<h2 class="anchored" data-anchor-id="compléments-et-ancien-matériel">Compléments et ancien matériel</h2>
-<p>Le <a href="../../modules/semaine-07-lissage/complements.html">cahier du module 07</a> conserve les différences, la réintégration, Holt-Winters, ETS, BATS, TBATS et STL avec ETS; le <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">cahier du module 08</a> conserve les tendances plus souples, la décomposition, les harmoniques et la stationnarité. Ces prolongements demandent leurs prérequis et ne s’ajoutent pas à la mission.</p>
-<p>Les anciens exercices sur la température et les taux de change utilisaient des séries quotidiennes. La fréquence et les dates manquantes doivent être vérifiées dans chaque jeu : enlever des dates sans examiner le calendrier ne rend pas les observations régulièrement espacées. Les archives anciennes et leurs données de tiers ne sont pas redistribuées ici.</p>
+<section id="lire-une-prévision-son-intervalle-et-le-coût" class="level2">
+<h2 class="anchored" data-anchor-id="lire-une-prévision-son-intervalle-et-le-coût">Lire une prévision, son intervalle et le coût</h2>
+<p>Une ME positive, avec observé moins prévu, indique une sous-prévision moyenne. La MAE et la RMSE expriment l’amplitude des erreurs en livraisons. Les intervalles du modèle combiné sont marginaux et dépendent de ses hypothèses. Le scénario de 2 $ et 1 $ par livraison d’écart est fictif : il invite à discuter de la décision sans constituer un tarif mesuré.</p>
+<p>Les anciens exemples de température et de taux de change rappellent que fréquence, dates manquantes et calendrier doivent être vérifiés avant la modélisation. La <a href="../../modules/atelier-03-series-chronologiques/demonstration-hebdomadaire.html">comparaison hebdomadaire antérieure</a> demeure disponible. Les <a href="../../modules/atelier-03-series-chronologiques/exercices.html">exercices mensuels</a> reprennent une validation déjà examinée au module 08 et sont facultatifs.</p>
 </section>
 <section id="sources-ciblées" class="level2">
 <h2 class="anchored" data-anchor-id="sources-ciblées">Sources ciblées</h2>
-<ul>
-<li>Hyndman, R. J., et Athanasopoulos, G. (2021), Forecasting: Principles and Practice, 3e édition : <a href="https://otexts.com/fpp3/toolbox.html#sec-accuracy">méthodes simples et exactitude</a>, <a href="https://otexts.com/fpp3/regression.html#sec-useful-predictors">prédicteurs temporels</a> et <a href="https://otexts.com/fpp3/exponential-smoothing.html#sec-ses">lissage exponentiel</a>.</li>
-<li>Équipe forecast, documentation de <a href="https://pkg.robjhyndman.com/forecast/reference/ses.html"><code>ses()</code> et <code>holt()</code></a>, consultée le 27 octobre 2026. Les versions réellement exécutées sont dans le bilan interne; la documentation en ligne peut être plus récente.</li>
-<li>Les données sont simulées pour le cours à partir de <code>scripts/10_create_second_block_data.R</code>, graine 210110. Le <a href="data/dictionnaires.md">dictionnaire</a> précise variables, unités et reproduction.</li>
-</ul>
-<p>Les <a href="../../evaluations/mini-rapport-2.html">consignes du mini-rapport 2</a> définissent l’évaluation et les deux voies. Le laboratoire est une pratique distincte et son exemple ne remplace pas l’analyse autonome demandée.</p>
+<p>Hyndman et Athanasopoulos (2021), <em>Forecasting: Principles and Practice</em>, 3e éd. : <a href="https://otexts.com/fpp3/toolbox.html#sec-accuracy">exactitude des prévisions</a> et <a href="https://otexts.com/fpp3/regression.html#sec-useful-predictors">prédicteurs temporels</a>. Le <a href="data/dictionnaires.md">dictionnaire</a> présente les données simulées et leur reproduction.</p>
 
 
 </section>
@@ -7227,7 +7182,7 @@ padding: 1rem;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7247,11 +7202,11 @@ padding: 1rem;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7328,7 +7283,7 @@ padding: 1rem;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7403,7 +7358,7 @@ padding: 1rem;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7431,7 +7386,7 @@ padding: 1rem;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7455,7 +7410,7 @@ padding: 1rem;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7495,7 +7450,7 @@ padding: 1rem;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7621,7 +7576,7 @@ padding: 1rem;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

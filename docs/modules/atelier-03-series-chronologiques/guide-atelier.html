@@ -1538,7 +1538,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1550,16 +1550,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1604,7 +1604,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1666,7 +1666,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1680,7 +1680,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6892,147 +6892,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7047,17 +7047,17 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#une-seule-mission" id="toc-une-seule-mission" class="nav-link active" data-scroll-target="#une-seule-mission">Une seule mission</a></li>
-  <li><a href="#auto-vérification-de-la-production" id="toc-auto-vérification-de-la-production" class="nav-link" data-scroll-target="#auto-vérification-de-la-production">Auto-vérification de la production</a></li>
+  <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
   <li><a href="#audit" id="toc-audit" class="nav-link" data-scroll-target="#audit">1. Auditer et situer</a></li>
   <li><a href="#exploration" id="toc-exploration" class="nav-link" data-scroll-target="#exploration">2. Explorer le passé</a></li>
-  <li><a href="#previsions" id="toc-previsions" class="nav-link" data-scroll-target="#previsions">3. Émettre cinq prévisions</a></li>
+  <li><a href="#previsions" id="toc-previsions" class="nav-link" data-scroll-target="#previsions">3. Construire les prévisions</a></li>
   <li><a href="#comparaison" id="toc-comparaison" class="nav-link" data-scroll-target="#comparaison">4. Comparer et lire l’incertitude</a></li>
   <li><a href="#decision" id="toc-decision" class="nav-link" data-scroll-target="#decision">5. Décider et surveiller</a></li>
   <li><a href="#rapport-attendu" id="toc-rapport-attendu" class="nav-link" data-scroll-target="#rapport-attendu">Rapport et relecture</a></li>
-  <li><a href="#point-de-contrôle-et-compléments" id="toc-point-de-contrôle-et-compléments" class="nav-link" data-scroll-target="#point-de-contrôle-et-compléments">Point de contrôle et compléments</a></li>
+  <li><a href="#point-de-contrôle-du-mini-rapport-2" id="toc-point-de-contrôle-du-mini-rapport-2" class="nav-link" data-scroll-target="#point-de-contrôle-du-mini-rapport-2">Point de contrôle du mini-rapport 2</a></li>
   </ul>
 </nav>
     </div>
@@ -7073,11 +7073,11 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7085,219 +7085,127 @@ padding: 1rem;
 
 <section id="une-seule-mission" class="level2">
 <h2 class="anchored" data-anchor-id="une-seule-mission">Une seule mission</h2>
-<p>Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez les cinq prévisions sur les mêmes treize semaines, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.</p>
-<p>Utilisez le <a href="telechargements/laboratoire-03.zip">projet de départ</a>, avec un seul rapport <code>rapport-labo-03.qmd</code>. Les étapes, repères et diapositives reprennent ce même travail. Tentez chaque étape avant d’ouvrir les indices. Un <a href="../../modules/atelier-03-series-chronologiques/demonstrations.html">exemple complet</a> et son <a href="telechargements/exemple-laboratoire-03.zip">projet exécutable</a> restent disponibles pour débloquer ou vérifier.</p>
+<p>Dans un seul rapport Quarto, vérifiez la série et le calendrier, comparez le naïf saisonnier et le modèle avec tendance et mois sur les mêmes douze mois, puis recommandez une méthode avec deux mesures, le coût simulé, un intervalle identifié, une limite et une règle de surveillance.</p>
+<p>Utilisez le <a href="telechargements/laboratoire-03.zip">projet de départ</a>. Les cartes, repères et présentation décrivent la même production dans <code>rapport-labo-03.qmd</code>. Essayez chaque étape avant d’ouvrir les indices ou la <a href="../../modules/atelier-03-series-chronologiques/demonstrations.html">démonstration complète</a>.</p>
 </section>
-<section id="auto-vérification-de-la-production" class="level2">
-<h2 class="anchored" data-anchor-id="auto-vérification-de-la-production">Auto-vérification de la production</h2>
+<section id="auto-vérification" class="level2">
+<h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
 <ul>
 <li>J’ai précisé l’origine, les dates et les unités.</li>
-<li>Je compare les cinq méthodes sur les mêmes cibles.</li>
-<li>Je distingue l’intervalle du SES et la méthode retenue.</li>
+<li>Je compare les deux méthodes sur les mêmes douze cibles.</li>
+<li>Je nomme la méthode de l’intervalle et ses hypothèses.</li>
 <li>Ma recommandation cite des résultats, une limite et un suivi.</li>
 </ul>
-<p>Les données sont fictives; la demande est en unités de produit par semaine. Une ligne commence un lundi et la demande de toute la semaine n’est connue que le dimanche suivant. Apprentissage : 91 semaines, dernière commençant le 22 septembre 2025. Origine : fin du 28 septembre. Validation : 13 semaines commençant le 29 septembre et se terminant le 28 décembre. Ces données et cette validation sont déjà connues des modules 06 et 07; aucun nouveau test final indépendant n’est créé.</p>
+<p>Les 72 mois sont simulés. Les 60 mois de 2020 à 2024 servent à l’apprentissage; la fin de décembre 2024 est l’origine et les douze mois de 2025 servent à comparer. Le bloc utilisé pour choisir n’est pas un test final indépendant.</p>
+<p>Avant la mission, reprenez brièvement vos résultats du module 07 et la <a href="../../modules/atelier-03-series-chronologiques/demonstration-hebdomadaire.html#decision">comparaison hebdomadaire accompagnée</a> : pourquoi l’ajout d’une tendance ou un coût fictif des écarts peut-il modifier une recommandation de stock? Il n’est pas nécessaire de refaire les quatre prévisions.</p>
 </section>
 <section id="audit" class="level2">
 <h2 class="anchored" data-anchor-id="audit">1. Auditer et situer</h2>
-<p>Énoncez la cible, l’unité, le calendrier, l’origine et les 13 semaines de validation. Vérifiez dates distinctes, régularité et valeurs manquantes.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Indice : calendrier et contrôles">
+<p>Énoncez la cible, l’unité, l’origine et les douze mois de validation. Vérifiez dates, régularité et valeurs manquantes.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Indice après une tentative">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Indice : calendrier et contrôles
+<span class="screen-reader-only">Astuce</span>Indice après une tentative
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Comptez les lignes, dates distinctes, manquants et écarts entre dates triées. Une différence de sept jours et l’absence de doublon vérifient le calendrier ici. Précisez ce que représente le lundi, la fin de la dernière semaine d’apprentissage et la date de la première cible.</p>
+<p>Triez les dates et comptez les valeurs manquantes et les doublons. Un indice entier d’année et de mois permet de vérifier que deux mois consécutifs diffèrent de 1.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="exploration" class="level2">
 <h2 class="anchored" data-anchor-id="exploration">2. Explorer le passé</h2>
-<p>Tracez la demande d’apprentissage, décrivez une tendance ou un motif possible et distinguez les promotions observées des informations futures.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Indice : lecture du graphique">
+<p>Tracez les 60 mois d’apprentissage et comparez les profils mensuels par année. Décrivez la tendance, la saison et une limite.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Indice après une tentative">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Indice : lecture du graphique
+<span class="screen-reader-only">Astuce</span>Indice après une tentative
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Tracez les 91 semaines d’apprentissage avec leurs unités. Les promotions connues sur cet historique peuvent être indiquées, sans attribuer automatiquement un effet causal. Le prix et les promotions de validation ne sont pas des prédicteurs disponibles à l’origine.</p>
+<p>Tracez la série d’apprentissage et les profils par mois pour chaque année. Un motif récurrent et une tendance ne démontrent pas une cause.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Premier point de rétroaction">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Premier point de rétroaction
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Montrez la cible, l’origine, le calendrier et le graphique d’apprentissage. Expliquez ce que vous savez déjà sur les cinq candidats et ce qu’une tendance linéaire ajoute. Corrigez une ambiguïté avant la comparaison.</p>
 </div>
 </div>
 </section>
 <section id="previsions" class="level2">
-<h2 class="anchored" data-anchor-id="previsions">3. Émettre cinq prévisions</h2>
-<p>Émettez à la même origine les cinq prévisions : naïve, moyenne des quatre dernières semaines, SES, naïve saisonnière et tendance linéaire.</p>
-<div class="table-responsive" tabindex="0" role="region" aria-label="Méthodes de prévision">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Méthode</th>
-<th>Règle ou apport</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Naïve</td>
-<td>Répéter la dernière demande connue</td>
-</tr>
-<tr class="even">
-<td>MM4</td>
-<td>Répéter la moyenne des quatre dernières semaines connues</td>
-</tr>
-<tr class="odd">
-<td>SES</td>
-<td>Estimer le niveau et son initialisation sur l’apprentissage</td>
-</tr>
-<tr class="even">
-<td>Naïve saisonnière</td>
-<td>Répéter les semaines correspondantes à retard 52</td>
-</tr>
-<tr class="odd">
-<td>Tendance linéaire</td>
-<td>Ajuster une droite à l’indice 1 à 91, puis prévoir les indices 92 à 104</td>
-</tr>
-</tbody>
-</table>
+<h2 class="anchored" data-anchor-id="previsions">3. Construire les prévisions</h2>
+<p>Construisez le calendrier futur et comparez le naïf saisonnier à une régression avec tendance et mois, à la même origine. Interprétez la pente et le mois de référence.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Indice après une tentative">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Indice : origine fixe et tendance">
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Indice après une tentative
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le naïf saisonnier reprend les valeurs de 2024. L’indice de la régression continue de 60 à 61, puis jusqu’à 72; utilisez les mêmes niveaux de facteur dans le futur.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="comparaison" class="level2">
+<h2 class="anchored" data-anchor-id="comparaison">4. Comparer et lire l’incertitude</h2>
+<p>Calculez ME, MAE et RMSE sur les mêmes douze mois et interprétez un intervalle de prédiction du modèle combiné.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Indice après une tentative">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Indice : origine fixe et tendance
+<span class="screen-reader-only">Astuce</span>Indice après une tentative
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Construisez un calendrier futur avec <code>seq.Date()</code> et un indice continu. <code>mean(tail(..., 4))</code> est répété aux treize horizons. <code>ses()</code> estime le paramètre et l’état initial sur la série d’apprentissage; <code>snaive()</code> utilise la fréquence 52 comme retard. <code>lm(demande ~ indice)</code> et <code>predict(..., newdata = futur)</code> fournissent la tendance. La fréquence 52 ne rend pas le SES saisonnier.</p>
+<p>Joignez les observations après avoir construit les prévisions. Calculez ME, MAE et RMSE en livraisons. L’intervalle de prédiction du modèle combiné dépend de ses hypothèses et ne garantit pas simultanément toute l’année.</p>
 </div>
 </div>
 </div>
-<p>Vous pouvez reprendre les quatre prévisions déjà produites au module 07 en vérifiant leur origine et leurs cibles. Ajoutez la tendance au même tableau.</p>
-<p>La tendance seule n’est pas un modèle saisonnier. Le module 08 montre aussi des indicatrices mensuelles; ici, 91 semaines offrent moins de deux cycles de 52 semaines. Il n’est pas demandé d’estimer 52 effets hebdomadaires pour accomplir la mission.</p>
 </section>
-<section id="comparaison" class="level2">
-<h2 class="anchored" data-anchor-id="comparaison">4. Comparer et lire l’incertitude</h2>
-<p>Comparez ME, MAE et RMSE, tracez les erreurs ou les prévisions et interprétez les intervalles à 80 % et 95 % du SES.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Indice : erreur et intervalles">
+<section id="decision" class="level2">
+<h2 class="anchored" data-anchor-id="decision">5. Décider et surveiller</h2>
+<p>Comparez les coûts fictifs et formulez une recommandation avec une limite et une prochaine vérification.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Indice après une tentative">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Indice : erreur et intervalles
+<span class="screen-reader-only">Astuce</span>Indice après une tentative
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Joignez les observations seulement après avoir construit les prévisions. Avec <code>erreur = observe - prevision</code>, la ME positive indique une sous-prévision moyenne. La MAE vaut <code>mean(abs(erreur))</code>; la RMSE vaut <code>sqrt(mean(erreur^2))</code>. Les trois sont en unités de produit. Comparez aussi les trajectoires, pas seulement leur rang.</p>
-<p>Les colonnes <code>lower</code> et <code>upper</code> de <code>ses(..., level = c(80, 95))</code> donnent deux intervalles de prédiction pour le SES, conditionnels aux hypothèses de son modèle. L’intervalle à 95 % est plus large que celui à 80 % pour le même horizon. Ce ne sont pas automatiquement les intervalles d’une autre méthode.</p>
+<p>Avec erreur = observé − prévu, calculez <code>2 * pmax(erreur, 0) + pmax(-erreur, 0)</code> : ce sont des coûts fictifs en dollars. Une prévision ne suffit pas pour choisir une flotte optimale.</p>
 </div>
 </div>
 </div>
-<p>La validation sert à comparer et à choisir parmi les cinq candidats. Elle ne prouve pas la performance future et ne devient pas indépendante parce qu’on ajoute une méthode. L’ajout de la tendance modifie la liste des candidats utilisée au module 07; il peut donc modifier le classement.</p>
-</section>
-<section id="decision" class="level2">
-<h2 class="anchored" data-anchor-id="decision">5. Décider et surveiller</h2>
-<p>Calculez les coûts fictifs, justifiez une méthode et rédigez une recommandation avec une limite et une prochaine vérification.</p>
-<p>Le scénario pédagogique initial attribue un coût fictif de 18 $ par unité sous-prévue et de 5 $ par unité sur-prévue. Ces valeurs ne sont pas des tarifs mesurés. Calculez le coût sur les mêmes treize semaines pour les cinq méthodes.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Indice : coût et décision">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Indice : coût et décision
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Pour <code>erreur = observe - prevision</code>, le coût hebdomadaire fictif est <code>18 * pmax(erreur, 0) + 5 * pmax(-erreur, 0)</code>. Additionnez les treize valeurs par méthode. Distinguez la méthode que vous retenez, les intervalles du SES, les limites du scénario et les informations de stock manquantes.</p>
-</div>
-</div>
-</div>
-<p>Une prévision et un coût illustratif ne déterminent pas à eux seuls une commande ou un stock optimal. Il faudrait notamment connaître stock initial, délais, capacité, disponibilité et coûts réels. Proposez une surveillance aux prochaines origines et une action si les erreurs changent.</p>
 </section>
 <section id="rapport-attendu" class="level2">
 <h2 class="anchored" data-anchor-id="rapport-attendu">Rapport et relecture</h2>
-<p>Dans <code>rapport-labo-03.qmd</code>, rassemblez la question et le protocole, les contrôles et le graphique, les cinq prévisions, les mesures et les coûts, l’intervalle identifié, la recommandation et un court bilan de rétroaction. Gardez les résultats lisibles et le code nécessaire à leur reproduction.</p>
-<div class="table-responsive" tabindex="0" role="region" aria-label="Grille de relecture">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Critère</th>
-<th>Pour vérifier</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Calendrier</td>
-<td>Cible, unités, origine, horizon et distinction début/fin de semaine</td>
-</tr>
-<tr class="even">
-<td>Comparaison</td>
-<td>Cinq prévisions sur les mêmes cibles, sans information future</td>
-</tr>
-<tr class="odd">
-<td>Interprétation</td>
-<td>ME, MAE, RMSE et coût expliqués dans leurs unités</td>
-</tr>
-<tr class="even">
-<td>Incertitude et décision</td>
-<td>Méthode de l’intervalle nommée, hypothèses, limite et suivi</td>
-</tr>
-<tr class="odd">
-<td>Reproductibilité</td>
-<td>Le rapport se rend en session neuve, avec les fichiers fournis</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Avant le rendu final, une autre personne indique un point réussi et une amélioration précise. Corrigez ou justifiez votre choix et notez l’aide utilisée. Redémarrez R, faites Render et vérifiez le HTML. Conservez le dossier complet.</p>
+<p>Gardez la question et le protocole, les contrôles, le graphique, les deux prévisions et leurs mesures, l’intervalle, les coûts, la recommandation et un court bilan de rétroaction. Demandez une relecture, corrigez ou justifiez un point, puis redémarrez R et rendez le rapport.</p>
 </section>
-<section id="point-de-contrôle-et-compléments" class="level2">
-<h2 class="anchored" data-anchor-id="point-de-contrôle-et-compléments">Point de contrôle et compléments</h2>
-<p>Le point de contrôle porte sur votre projet autonome de <a href="../../evaluations/mini-rapport-2.html">mini-rapport 2</a>. Pour la voie temporelle, apportez cible, origine, horizon et validation; pour la voie classification, reprenez le <a href="../../modules/semaine-10-classification-modeles-avances/index.html#parcours-anticipe">parcours anticipé</a>. Les consignes de l’évaluation restent la référence.</p>
-<p>Si vous avez terminé, examinez <a href="../../modules/atelier-03-series-chronologiques/demonstrations.html#holt">Holt et ses intervalles</a>, puis les <a href="../../modules/atelier-03-series-chronologiques/exercices.html">exercices mensuels</a>. Le <a href="../../modules/semaine-07-lissage/complements.html">cahier du module 07</a> conserve ETS, Holt-Winters, BATS, TBATS et STL avec ETS; celui du <a href="../../modules/semaine-08-tendance-saisonnalite/complements.html">module 08</a> conserve les autres formes et décompositions. Ces compléments sont facultatifs.</p>
+<section id="point-de-contrôle-du-mini-rapport-2" class="level2">
+<h2 class="anchored" data-anchor-id="point-de-contrôle-du-mini-rapport-2">Point de contrôle du mini-rapport 2</h2>
+<p>Pour la voie temporelle, préparez cible, origine, horizon, référence et validation. Pour la voie classification, préparez événement, date de décision, variables disponibles, séparation et règle de choix du seuil. Les <a href="../../evaluations/mini-rapport-2.html">consignes du mini-rapport</a> restent la référence. Les résultats de ce laboratoire ne remplacent pas une analyse autonome.</p>
 
 
 </section>
@@ -7386,7 +7294,7 @@ padding: 1rem;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7406,11 +7314,11 @@ padding: 1rem;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7487,7 +7395,7 @@ padding: 1rem;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7562,7 +7470,7 @@ padding: 1rem;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7590,7 +7498,7 @@ padding: 1rem;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7614,7 +7522,7 @@ padding: 1rem;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7654,7 +7562,7 @@ padding: 1rem;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7780,7 +7688,7 @@ padding: 1rem;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

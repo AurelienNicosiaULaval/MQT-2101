@@ -32,11 +32,15 @@ Le résidu est l’observation moins la valeur ajustée. Un retard 1 rapproche l
 
 Commencez par tracer les résidus dans l’ordre des mois. Plusieurs résidus positifs consécutifs peuvent indiquer que le modèle sous-estime successivement les observations; l’ACF donne ensuite un résumé par retard. Une barre à un retard indique une association estimée entre résidus séparés par ce nombre de mois, avec une incertitude d’échantillonnage. L’absence de barre marquée ne prouve pas l’indépendance et une barre marquée ne désigne pas à elle seule la cause du motif.
 
+Sur un graphique d’ACF mensuelle, une barre positive au retard 1 indique que les résidus séparés d’un mois tendent à varier dans le même sens; une barre négative suggère une alternance. Au retard 12, la comparaison concerne des mois séparés d’une année. Les pointillés sont des repères approximatifs, pas une frontière qui prouverait l’indépendance : l’ajustement du modèle et la lecture de plusieurs retards invitent à la prudence. Comparez toujours l’ACF au graphique des résidus dans le temps.
+
 Pour approfondir, le test de Ljung-Box regroupe plusieurs retards dans une même vérification. Une petite valeur p fournit un indice contre l’hypothèse testée; une grande valeur p ne démontre pas son exactitude. Le test est facultatif ici : le socle est la lecture du graphique des résidus et de leur ACF.
 
 ## Régression avec erreurs AR {#lecture-4}
 
 Écrire $y_t = x_t \beta + \eta_t$ puis $\eta_t = \phi \eta_{t-1} + \varepsilon_t$ signifie que la partie non expliquée par les prédicteurs a une mémoire d’un mois. Les innovations ε ne sont pas la même chose que les erreurs de régression η. Le modèle est estimé sur les 60 premiers mois. Les candidats sont comparés sur les mêmes 12 mois et les mêmes prédicteurs. Les paramètres estimés et les diagnostics restent incertains.
+
+Une erreur AR(1) et une vente retardée utilisée comme prédicteur ne sont pas la même opération. Dans le premier cas, la dépendance est décrite dans la partie non expliquée par la régression; dans le second, on ajoute explicitement une vente passée à la formule. Pour chaque horizon, il faut vérifier que la vente retardée nécessaire est disponible à l’origine ou préciser comment elle sera prévue.
 
 Cette structure est une option plus technique, présentée avec du code complet dans la démonstration. Pour l’activité, il suffit de lire et comparer les résultats fournis : on ne demande pas de construire le modèle AR(1) de mémoire. Une MAE plus faible sur les mêmes douze mois décrit une meilleure performance sur ce bloc pour ce critère; elle ne garantit pas la performance sur une autre période. Ici les valeurs externes de 2025 sont connues après coup : la comparaison est conditionnelle à ces valeurs.
 

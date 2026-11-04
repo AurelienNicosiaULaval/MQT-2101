@@ -38,7 +38,7 @@ Ajustez la régression des ventes sur la tendance, le mois, la promotion, le pri
 
 Auto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.
 
-La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2).
+La production se réalise une seule fois. Après la capsule 3, faites l’[exercice 2](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2), qui combine l’ajustement et le diagnostic par succursale.
 
 ## Capsule 3 - Diagnostiquer dans le temps
 
@@ -56,7 +56,7 @@ Tracez les résidus de la régression en fonction du temps et leur autocorrélat
 
 Auto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.
 
-La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3).
+La production se réalise une seule fois. Poursuivez avec le [diagnostic par succursale](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2).
 
 ## Capsule 4 - Comparer deux modèles
 
@@ -74,7 +74,7 @@ La production se réalise une seule fois. Poursuivez avec le [transfert](../../m
 
 Auto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
 
-La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).
+La production se réalise une seule fois. La comparaison avec erreurs AR(1) est accompagnée; la pratique des scénarios suit à la capsule 5.
 
 ## Capsule 5 - Communiquer un scénario
 
@@ -92,4 +92,4 @@ Pour janvier 2025, comparez les prévisions de la régression ordinaire sous pro
 
 Auto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.
 
-La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).
+La production se réalise une seule fois. Poursuivez avec le [scénario de transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3), puis la [recommandation](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).
