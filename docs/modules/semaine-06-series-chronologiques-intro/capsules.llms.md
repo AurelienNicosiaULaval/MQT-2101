@@ -4,9 +4,13 @@
 
 Les six capsules principales couvrent le cadre de la prévision, la définition de la décision, le calendrier, les références, les erreurs et l’incertitude. Les six vidéos sont disponibles ci-dessous. Chaque capsule principale propose quatre onglets : Vidéo, PDF, PDF annoté et HTML. Les explications détaillées sont regroupées dans les [lectures du cours](../../modules/semaine-06-series-chronologiques-intro/lectures.llms.md#lectures-parcours).
 
-Pour récupérer tous les supports sur une tablette, téléchargez le [dossier PDF du 13 octobre 2026](telechargements/module-06-pdf-2026-10-13.zip). L’archive contient quinze PDF : les six supports principaux, leurs six versions annotées, les deux compléments facultatifs et les notes de cours. Après décompression, le dossier porte la date de cette version.
+Pour récupérer tous les supports sur une tablette, téléchargez le [dossier PDF du 4 novembre 2026](telechargements/module-06-pdf-2026-11-04.zip). L’archive contient quinze PDF : les six supports principaux, leurs six versions annotées, les deux compléments facultatifs et les notes de cours. Le nom de l’archive indique la date de cette version.
 
-Travaillez dans le projet guidé `prevision-electricite`. Les [démonstrations R](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md) montrent la séquence complète. Retrouvez les [activités dans le parcours guidé](../../modules/semaine-06-series-chronologiques-intro/index.llms.md#votre-parcours). Les productions 6.1 à 6.6 alimentent un seul rapport; les activités du parcours reprennent ces productions, sans travail à refaire. Les exercices utilisent un cas distinct sur la demande hebdomadaire.
+Travaillez dans le projet guidé `prevision-electricite`. Les [démonstrations R](../../modules/semaine-06-series-chronologiques-intro/demonstrations.llms.md) montrent la séquence complète. Retrouvez les [activités dans le parcours guidé](../../modules/semaine-06-series-chronologiques-intro/index.llms.md#votre-parcours). Les productions 6.1 à 6.6 alimentent un seul rapport; les activités du parcours reprennent ces productions, sans travail à refaire. Les exercices utilisent un cas distinct sur la demande hebdomadaire. Les [corrigés des productions de fin de capsule](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corriges-capsules) répondent, eux, aux questions sur l’électricité; chaque production ci-dessous y renvoie directement.
+
+Pour la capsule 1, rédigez une demande de prévision en quelques phrases : aucun calcul ni code R n’est attendu à cette étape. Les calculs commencent ensuite avec les graphiques et les méthodes fournies. Les compléments 7 et 8 restent facultatifs.
+
+Les vidéos et les PDF annotés conservent leur version enregistrée. Les consignes précisées ci-dessous et dans les supports HTML et PDF non annotés sont celles à suivre.
 
 ## Capsule 1 - Définir une prévision utile
 
@@ -28,7 +32,9 @@ Une équipe planifie le suivi énergétique d’un bâtiment universitaire ficti
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-01-support.llms.md)
 
-Production guidée, à réaliser une seule fois : Formulez la prévision mensuelle de consommation d’électricité nécessaire pour préparer le suivi énergétique du premier trimestre 2025 à la fin de décembre 2024. Nommez le bâtiment concerné et une personne à consulter.
+Production guidée, à réaliser une seule fois : Rédigez la demande de prévision, sans calcul : cible en kWh pour le bâtiment fictif, origine fin décembre 2024, mois de janvier à mars 2025 et horizons associés. Précisez l’usage et le rôle d’une personne à consulter.
+
+[Corrigé de la production 6.1 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-1), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -54,7 +60,9 @@ Une consommation plus élevée en hiver peut coexister avec une hausse durable. 
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-02-support.llms.md)
 
-Production guidée, à réaliser une seule fois : Tracez la consommation de 2020 à 2024, puis les profils par mois et année. Décrivez deux motifs. Expliquez la différence entre +20 000 kWh et +10 % et ajoutez une limite.
+Production guidée, à réaliser une seule fois : Tracez la consommation de 2020 à 2024 et les profils mensuels par année. Décrivez deux motifs et une limite. Sur des niveaux fictifs de 200 000 et 400 000 kWh, comparez une hausse de 20 000 kWh à une hausse de 10 %.
+
+[Corrigé de la production 6.2 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-2), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -80,7 +88,9 @@ Une panne de collecte et une fermeture n’ont pas le même sens. Un nettoyage a
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-03-support.llms.md)
 
-Production guidée, à réaliser une seule fois : Auditez les dates et les valeurs manquantes sur l’apprentissage. Proposez un traitement documenté pour un mois absent, une erreur de saisie confirmée et un événement réel.
+Production guidée, à réaliser une seule fois : Vérifiez les dates, les mois absents et les consommations manquantes sur 2020 à 2024. Le fichier est complet. Pour trois situations hypothétiques (mois absent, erreur de saisie confirmée, événement réel), proposez un traitement et sa justification.
+
+[Corrigé de la production 6.3 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-3), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -106,7 +116,9 @@ Un modèle peut très bien reproduire le passé et prévoir moins bien que la de
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-04-support.llms.md)
 
-Production guidée, à réaliser une seule fois : Produisez les douze prévisions naïves et saisonnières à la fin de 2024. Superposez-les à la consommation de 2025. Expliquez pourquoi une colonne lag(consommation_kwh) sur tout le fichier répond à un autre scénario.
+Production guidée, à réaliser une seule fois : Produisez les douze prévisions naïves et saisonnières émises fin décembre 2024 pour 2025. Superposez-les aux observations de 2025. Expliquez pourquoi un décalage d’un mois sur tout le fichier ne représente pas cette origine fixe.
+
+[Corrigé de la production 6.4 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-4), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -132,7 +144,9 @@ Les sur-prévisions et les sous-prévisions peuvent s’annuler. Leur ampleur et
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-05-support.llms.md)
 
-Production guidée, à réaliser une seule fois : Calculez ME, MAE, RMSE, MAPE et MASE des trois candidats. Interprétez les unités et le signe de ME. Comparez directement leurs MAE puis lisez le graphique et l’histogramme des erreurs.
+Production guidée, à réaliser une seule fois : Comparez le naïf, le naïf saisonnier et la tendance quadratique sur les douze mois de 2025 : ME, MAE, RMSE, MAPE et MASE (m = 12). Interprétez les unités, le signe de ME, le classement par MAE et les deux graphiques d’erreurs saisonnières.
+
+[Corrigé de la production 6.5 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-5), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -158,7 +172,9 @@ Une prévision ponctuelle ne décrit pas l’incertitude autour des besoins mens
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-06-support.llms.md)
 
-Production guidée, à réaliser une seule fois : Produisez le cône ETS(A,A,N) à l’origine de décembre 2024. Comparez les intervalles à 80 % et 95 % pour h = 1 et h = 12. Expliquez son usage et une limite.
+Production guidée, à réaliser une seule fois : Avec le code fourni, ajustez ETS(A,A,N) sur 2020 à 2024 et produisez son cône pour 2025. Comparez les intervalles à 80 % et 95 % pour janvier (h = 1) et décembre (h = 12). Donnez un usage et une limite.
+
+[Corrigé de la production 6.6 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-6), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -180,7 +196,9 @@ Une comparaison sur une seule origine peut dépendre de la période retenue. Les
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-07-support.llms.md)
 
-Pratique facultative, à réaliser une seule fois : Comparez les références à h = 1 et h = 6 mois. Vérifiez le nombre d’origines, le classement et les dernières dates possibles. Distinguez ces scores de ceux à origine fixe.
+Pratique facultative, à réaliser une seule fois : À partir de décembre 2024, comparez le naïf et le saisonnier aux horizons h = 1 et h = 6 mois, en avançant les origines. Donnez les nombres d’origines, leurs dernières dates et les MAE par horizon. Distinguez ce protocole de l’origine fixe.
+
+[Corrigé de la production 6.7 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-7), à consulter après votre tentative.
 
 > **NOTE:**
 >
@@ -198,7 +216,9 @@ Le prochain bloc présente plusieurs méthodes. Leurs exigences et leur entretie
 
 [Ouvrir le support HTML dans un nouvel onglet](media/qmd/capsule-08-support.llms.md)
 
-Pratique facultative, à réaliser une seule fois : Proposez deux familles à comparer pour la consommation d’électricité. Calculez la moyenne à poids égaux des deux références et sa MAE sur 2025. Justifiez sa disponibilité et précisez comment réévaluer ce choix.
+Pratique facultative, à réaliser une seule fois : Proposez deux familles de méthodes à comparer pour la consommation. À origine fixe fin 2024, calculez la moyenne à poids égaux des prévisions naïves et saisonnières et sa MAE sur 2025. Comparez les trois MAE, précisez les informations nécessaires et le suivi.
+
+[Corrigé de la production 6.8 sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corrige-capsule-8), à consulter après votre tentative.
 
 > **NOTE:**
 >

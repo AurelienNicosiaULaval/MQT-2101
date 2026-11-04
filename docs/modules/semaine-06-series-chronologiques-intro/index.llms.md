@@ -53,7 +53,7 @@ Pour les cônes ETS de ce module, utilisez le code fourni et concentrez-vous sur
 
 ## Votre parcours
 
-Suivez les six étapes du parcours principal. Les productions autonomes des capsules et les activités 6.1 à 6.6 ci-dessous sont les mêmes tâches : faites-les une seule fois dans `prevision_electricite.qmd`. Les exercices utilisent un autre jeu de données et se font dans `prevision_demande.qmd` après chaque étape. Ouvrez leurs corrigés après une tentative.
+Suivez les six étapes du parcours principal. Les productions autonomes des capsules et les activités 6.1 à 6.6 ci-dessous sont les mêmes tâches : faites-les une seule fois dans `prevision_electricite.qmd`. Les exercices utilisent un autre jeu de données et se font dans `prevision_demande.qmd` après chaque étape. Ouvrez leurs corrigés après une tentative. Les [corrigés des productions guidées sur l’électricité](../../modules/semaine-06-series-chronologiques-intro/exercices.llms.md#corriges-capsules) sont aussi disponibles : la première activité demande de définir la tâche, sans calcul; les suivantes utilisent le code des démonstrations.
 
 Les [six capsules principales](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md) proposent les onglets Vidéo, PDF, PDF annoté et HTML. Les [capsules supplémentaires 7 et 8](../../modules/semaine-06-series-chronologiques-intro/capsules.llms.md#pour-approfondir-après-le-parcours-principal), facultatives, sont disponibles en PDF et HTML.
 
@@ -61,7 +61,7 @@ Les [six capsules principales](../../modules/semaine-06-series-chronologiques-in
 >
 > Le support global de notes de cours est disponible en [HTML](../../modules/semaine-06-series-chronologiques-intro/notes-cours.llms.md) et en [PDF](media/pdf/notes-cours.pdf). Il sert de synthèse du module; les supports détaillés sont associés aux capsules.
 >
-> Pour récupérer tous les supports sur une tablette, téléchargez le [dossier des PDF du 13 octobre 2026](telechargements/module-06-pdf-2026-10-13.zip), puis décompressez l’archive. Elle contient les neuf supports du module et les six versions annotées.
+> Pour récupérer tous les supports sur une tablette, téléchargez le [dossier des PDF du 4 novembre 2026](telechargements/module-06-pdf-2026-11-04.zip), puis décompressez l’archive. Elle contient les neuf supports du module et les six versions annotées.
 
 Revenez toujours à cette page pour garder le fil. Cliquez sur une carte pour ouvrir l’étape complète : objectif, ressource, action et activité associée.
 
@@ -75,7 +75,7 @@ Action Formuler la décision, la cible et l’horizon avant de choisir une méth
 
 Activité 6.1 - Cible et horizon
 
-Formulez la prévision mensuelle de consommation d’électricité nécessaire pour préparer le suivi énergétique du premier trimestre 2025 à la fin de décembre 2024. Nommez le bâtiment concerné et une personne à consulter.
+Rédigez la demande de prévision, sans calcul : cible en kWh pour le bâtiment fictif, origine fin décembre 2024, mois de janvier à mars 2025 et horizons associés. Précisez l’usage et le rôle d’une personne à consulter. [Corrigé de la production 6.1](exercices.llms.md#corrige-capsule-1).
 
 Exercice d’application Après cette activité, faites l’exercice 1 sur la demande hebdomadaire dans `prevision_demande.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 
@@ -89,7 +89,7 @@ Action Produire les graphiques temporels sur l’apprentissage et décrire les m
 
 Activité 6.2 - Lecture des composantes
 
-Tracez la consommation de 2020 à 2024, puis les profils par mois et année. Décrivez deux motifs. Expliquez la différence entre +20 000 kWh et +10 % et ajoutez une limite.
+Tracez la consommation de 2020 à 2024 et les profils mensuels par année. Décrivez deux motifs et une limite. Sur des niveaux fictifs de 200 000 et 400 000 kWh, comparez une hausse de 20 000 kWh à une hausse de 10 %. [Corrigé de la production 6.2](exercices.llms.md#corrige-capsule-2).
 
 Exercice d’application Après cette activité, faites l’exercice 2 sur la demande hebdomadaire dans `prevision_demande.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 
@@ -103,7 +103,7 @@ Action Vérifier dates, périodes absentes et anomalies avant de préparer la s�
 
 Activité 6.3 - Audit du calendrier
 
-Auditez les dates et les valeurs manquantes sur l’apprentissage. Proposez un traitement documenté pour un mois absent, une erreur de saisie confirmée et un événement réel.
+Vérifiez les dates, les mois absents et les consommations manquantes sur 2020 à 2024. Le fichier est complet. Pour trois situations hypothétiques (mois absent, erreur de saisie confirmée, événement réel), proposez un traitement et sa justification. [Corrigé de la production 6.3](exercices.llms.md#corrige-capsule-3).
 
 Exercice d’application Après cette activité, faites l’exercice 3 sur la demande hebdomadaire dans `prevision_demande.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 
@@ -117,7 +117,7 @@ Action Construire les références avec les données de 2020 à 2024, puis les c
 
 Activité 6.4 - Références à origine fixe
 
-Produisez les douze prévisions naïves et saisonnières à la fin de 2024. Superposez-les à la consommation de 2025. Expliquez pourquoi une colonne lag(consommation_kwh) sur tout le fichier répond à un autre scénario.
+Produisez les douze prévisions naïves et saisonnières émises fin décembre 2024 pour 2025. Superposez-les aux observations de 2025. Expliquez pourquoi un décalage d’un mois sur tout le fichier ne représente pas cette origine fixe. [Corrigé de la production 6.4](exercices.llms.md#corrige-capsule-4).
 
 Exercice d’application Après cette activité, faites l’exercice 4 sur la demande hebdomadaire dans `prevision_demande.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 
@@ -131,7 +131,7 @@ Action Calculer les mesures d’erreur et examiner les écarts que leur résumé
 
 Activité 6.5 - Mesures et lecture des erreurs
 
-Calculez ME, MAE, RMSE, MAPE et MASE des trois candidats. Interprétez les unités et le signe de ME. Comparez directement leurs MAE puis lisez le graphique et l’histogramme des erreurs.
+Comparez le naïf, le naïf saisonnier et la tendance quadratique sur les douze mois de 2025 : ME, MAE, RMSE, MAPE et MASE (m = 12). Interprétez les unités, le signe de ME, le classement par MAE et les deux graphiques d’erreurs saisonnières. [Corrigé de la production 6.5](exercices.llms.md#corrige-capsule-5).
 
 Exercice d’application Après cette activité, faites l’exercice 5 sur la demande hebdomadaire dans `prevision_demande.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 
@@ -145,7 +145,7 @@ Action Lire le cône de prédiction fourni et expliquer ce qu’il apporte à la
 
 Activité 6.6 - Prévision et incertitude
 
-Produisez le cône ETS(A,A,N) à l’origine de décembre 2024. Comparez les intervalles à 80 % et 95 % pour h = 1 et h = 12. Expliquez son usage et une limite.
+Avec le code fourni, ajustez ETS(A,A,N) sur 2020 à 2024 et produisez son cône pour 2025. Comparez les intervalles à 80 % et 95 % pour janvier (h = 1) et décembre (h = 12). Donnez un usage et une limite. [Corrigé de la production 6.6](exercices.llms.md#corrige-capsule-6).
 
 Exercice d’application Après cette activité, faites l’exercice 6 sur la demande hebdomadaire dans `prevision_demande.qmd`. Tentez une réponse avant d’ouvrir le corrigé.
 

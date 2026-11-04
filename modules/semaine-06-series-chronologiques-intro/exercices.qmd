@@ -19,6 +19,8 @@ execute:
 
 Appliquer le protocole des six capsules à un cas distinct de demande hebdomadaire. Les six premiers exercices construisent un seul rapport de transfert; les compléments 7 et 8 et les huit exercices supplémentaires sont facultatifs. Faites une première tentative avant de consulter le corrigé.
 
+Les [corrigés des productions de fin de capsule](#corriges-capsules) portent sur le cas guidé d’électricité. Ils sont distincts des corrigés de transfert ci-dessous et chaque capsule y renvoie.
+
 ## Préparation
 
 Jeu de données de transfert : [demande_hebdomadaire_quebec.csv](../atelier-03-series-chronologiques/data/demande_hebdomadaire_quebec.csv).
@@ -220,6 +222,324 @@ Une famille de lissage peut utiliser l’historique; une régression avec prix e
 
 Rassemblez les six premières réponses dans `prevision_demande.qmd`. Conservez les graphes et le protocole fixe. Terminez par une conclusion qui justifie la référence retenue à partir des mesures, nomme une limite et précise quand réévaluer les erreurs. Si vous faites les exercices complémentaires, ajoutez leurs résultats dans une section facultative distincte. Le [projet des corrigés complets](telechargements/corrige-demande.zip) se recalcule dans une session neuve après votre tentative.
 
+## Corrigés des productions de fin de capsule {#corriges-capsules}
+
+Ces corrigés portent sur la consommation mensuelle d’électricité, dans `prevision_electricite.qmd`. Ils répondent aux productions 6.1 à 6.6 du parcours et aux deux pratiques facultatives 6.7 et 6.8. Les exercices 1 à 8 ci-dessus concernent le cas distinct de demande hebdomadaire. Vous n’avez pas à refaire une production déjà réalisée dans le parcours.
+
+Tentez la production, utilisez ses critères d’auto-vérification, puis ouvrez le corrigé correspondant. La démonstration explique l’analyse complète; les réponses ci-dessous précisent ce qui est attendu pour chaque consigne. Les réponses rédigées sont des exemples : d’autres formulations justifiées sont acceptables.
+
+Le [projet des corrigés sur l’électricité](telechargements/corrige-electricite.zip) contient ce parcours corrigé, le CSV et les fonctions R nécessaires.
+
+### Production 6.1 - Définir la demande, sans calcul {#corrige-capsule-1}
+
+Cette première production demande quelques phrases : aucun code, graphique ou résultat numérique de prévision n’est requis. Pour chaque mois visé, indiquez la quantité à prévoir, son unité et le délai depuis l’origine commune. Précisez ensuite un usage et une fonction à consulter.
+
+::: {.callout-tip collapse="true" title="Corrigé de la production 6.1 : cible, horizons et usage"}
+Exemple de réponse : « À la fin de décembre 2024, nous voulons prévoir la consommation totale d’électricité du bâtiment universitaire fictif pour chacun des mois de janvier, février et mars 2025, en kWh. L’unité d’observation est un mois pour ce bâtiment et les horizons sont respectivement de 1, 2 et 3 mois. Ces prévisions serviraient de repères pour comparer les consommations observées chaque mois et examiner les écarts. Nous pourrions consulter la responsable du bâtiment pour connaître les travaux et les changements d’occupation susceptibles d’aider à les interpréter. »
+
+| Mois visé | Origine commune | Horizon |
+| --- | --- | --- |
+| Janvier 2025 | Fin décembre 2024 | 1 mois |
+| Février 2025 | Fin décembre 2024 | 2 mois |
+| Mars 2025 | Fin décembre 2024 | 3 mois |
+
+La fréquence est mensuelle et le périmètre est un seul bâtiment fictif. Il n’y a pas de nom de bâtiment à découvrir ni de personne réelle à contacter. Une fonction pertinente et l’information qu’elle apporterait suffisent. Le responsable des compteurs serait aussi un choix acceptable pour vérifier la qualité des mesures.
+
+Les trois prévisions mensuelles sont distinctes du total du trimestre. Les valeurs à prévoir seront calculées après l’introduction des méthodes; il ne faut pas inventer de nombres ici. Une prévision en kWh ne donne pas directement une facture en dollars ni une pointe de puissance en kW.
+:::
+
+### Préparation du code des corrigés {#preparation-corriges-capsules}
+
+Pour les productions suivantes, ouvrez le projet guidé ou le projet des corrigés sur l’électricité. Exécutez d’abord ce bloc, puis les blocs des corrigés dans l’ordre. La production 6.5 reprend les prévisions de 6.4; 6.8 les reprend également. Les calculs du transfert sur la demande hebdomadaire ne sont pas nécessaires.
+
+```{r}
+#| label: preparation-corriges-electricite-06
+library(tidyverse)
+library(forecast)
+
+# Dans le projet téléchargé, les dossiers R/ et data/ sont à côté du document.
+chemins_fonctions_capsules <- c(
+  "R/analyse-module06.R",
+  "modules/semaine-06-series-chronologiques-intro/R/analyse-module06.R"
+)
+chemin_fonctions_capsules <- chemins_fonctions_capsules[
+  file.exists(chemins_fonctions_capsules)
+][1]
+stopifnot(!is.na(chemin_fonctions_capsules))
+source(chemin_fonctions_capsules)
+
+chemins_csv_capsules <- c(
+  "data/consommation_electrique_batiment_quebec.csv",
+  "modules/semaine-06-series-chronologiques-intro/data/consommation_electrique_batiment_quebec.csv"
+)
+chemin_csv_capsules <- chemins_csv_capsules[file.exists(chemins_csv_capsules)][1]
+stopifnot(!is.na(chemin_csv_capsules))
+electricite_capsules <- read_csv(chemin_csv_capsules, show_col_types = FALSE) |>
+  mutate(date = as.Date(date)) |>
+  arrange(date)
+apprentissage_capsules <- electricite_capsules |>
+  filter(date < as.Date("2025-01-01"))
+validation_capsules <- electricite_capsules |>
+  filter(date >= as.Date("2025-01-01"))
+```
+
+### Production 6.2 - Décrire les graphiques {#corrige-capsule-2}
+
+Tracez les deux graphiques sur 2020 à 2024, décrivez deux motifs et une limite, puis comparez une hausse de 20 000 kWh à une hausse de 10 % sur les deux niveaux fictifs fournis.
+
+::: {.callout-tip collapse="true" title="Corrigé de la production 6.2 : graphiques et variations"}
+```{r}
+#| label: corrige-capsule-06-2
+#| fig-width: 8
+#| fig-height: 4.5
+ggplot(apprentissage_capsules, aes(date, consommation_kwh / 1000)) +
+  geom_line(colour = "#0B4F6C") +
+  geom_point() +
+  labs(x = NULL, y = "Consommation mensuelle (MWh)") +
+  theme_minimal()
+
+ggplot(apprentissage_capsules,
+       aes(mois, consommation_kwh / 1000, group = annee,
+           colour = factor(annee))) +
+  geom_line() +
+  geom_point() +
+  scale_x_continuous(breaks = 1:12) +
+  labs(x = "Mois", y = "Consommation mensuelle (MWh)", colour = "Année") +
+  theme_minimal()
+
+tibble(niveau_kwh = c(200000, 400000)) |>
+  mutate(
+    apres_hausse_fixe_kwh = niveau_kwh + 20000,
+    hausse_fixe_pourcent = 100 * 20000 / niveau_kwh,
+    apres_hausse_10_pourcent_kwh = niveau_kwh * 1.10,
+    hausse_10_pourcent_kwh = niveau_kwh * 0.10
+  ) |>
+  knitr::kable(digits = 0)
+```
+
+On observe un motif annuel avec des consommations généralement plus élevées en hiver et plus faibles en été. Le niveau tend aussi à augmenter entre le début et la fin de l’apprentissage, avec des fluctuations : chaque année n’est pas nécessairement supérieure à la précédente.
+
+Une hausse fixe de 20 000 kWh conduit à 220 000 puis 420 000 kWh, soit +10 % et +5 %. Une hausse de 10 % conduit à 220 000 puis 440 000 kWh, soit +20 000 puis +40 000 kWh. Le premier cas illustre une variation additive; le second, une variation proportionnelle. Ces niveaux sont des exemples de calcul, pas des observations supplémentaires du fichier.
+
+Les graphiques décrivent des motifs; ils n’établissent pas leur cause et ne suffisent pas à choisir une méthode de prévision. Les données sont simulées et 2025 reste réservé à la validation.
+:::
+
+### Production 6.3 - Auditer et distinguer les situations {#corrige-capsule-3}
+
+Vérifiez le fichier d’apprentissage, puis raisonnez séparément sur les trois situations hypothétiques. Il n’est pas demandé de trouver une anomalie qui aurait été cachée dans le fichier fourni.
+
+::: {.callout-tip collapse="true" title="Corrigé de la production 6.3 : calendrier et traitements"}
+```{r}
+#| label: corrige-capsule-06-3
+apprentissage_capsules |>
+  summarise(
+    debut = min(date), fin = max(date), mois_presents = n(),
+    dates_dupliquees = sum(duplicated(date)),
+    dates_manquantes = sum(is.na(date)),
+    consommations_manquantes = sum(is.na(consommation_kwh))
+  )
+
+grille_capsules <- tibble(
+  date = seq.Date(as.Date("2020-01-01"), as.Date("2024-12-01"), by = "month")
+)
+grille_capsules |> anti_join(apprentissage_capsules, by = "date")
+```
+
+Le résultat attendu est de 60 mois, de janvier 2020 à décembre 2024, sans doublon, date manquante, mois absent ou consommation manquante. La dernière commande renvoie zéro ligne. Des mois consécutifs n’ont pas tous le même nombre de jours.
+
+| Situation hypothétique | Traitement justifié possible |
+| --- | --- |
+| Mois absent | Rétablir la ligne du calendrier avec `NA`, rechercher la mesure originale et documenter l’absence. Si elle reste inconnue, choisir une méthode compatible ou une imputation justifiée, en examinant sa sensibilité. |
+| Erreur de saisie confirmée | Vérifier la source et corriger la valeur si la bonne mesure est disponible. Conserver une trace de la correction. Si la mesure correcte demeure inconnue, la traiter comme manquante. |
+| Événement réel | Conserver l’observation et documenter l’événement. Examiner s’il peut se reproduire et justifier tout traitement éventuel par rapport au futur visé. |
+
+Un mois absent ne vaut pas zéro. Retirer une ligne puis appeler `ts()` comprimerait le calendrier. Dans l’évaluation à origine fixe de décembre 2024, on ne consulte aucune observation de 2025 pour estimer un traitement. Aucune imputation n’est nécessaire dans le fichier fourni.
+:::
+
+### Production 6.4 - Construire les références {#corrige-capsule-4}
+
+Produisez les deux références depuis la même origine et comparez-les aux douze observations de 2025. À ce stade, les valeurs de validation sont utilisées pour la comparaison, après émission des prévisions.
+
+::: {.callout-tip collapse="true" title="Corrigé de la production 6.4 : douze prévisions à origine fixe"}
+```{r}
+#| label: corrige-capsule-06-4
+#| fig-width: 8
+#| fig-height: 4.5
+previsions_capsules <- validation_capsules |>
+  mutate(
+    h = row_number(),
+    naive = rep(tail(apprentissage_capsules$consommation_kwh, 1), n()),
+    saisonniere = tail(apprentissage_capsules$consommation_kwh, 12)
+  )
+previsions_capsules |>
+  select(date, h, naive, saisonniere, consommation_kwh) |>
+  knitr::kable()
+
+previsions_capsules |>
+  pivot_longer(c(naive, saisonniere),
+               names_to = "methode", values_to = "prevision") |>
+  ggplot(aes(date, prevision / 1000, colour = methode)) +
+  geom_line() +
+  geom_line(data = validation_capsules,
+            aes(date, consommation_kwh / 1000),
+            inherit.aes = FALSE, colour = "black") +
+  labs(x = NULL, y = "Consommation (MWh)", colour = "Référence",
+       subtitle = "Noir : observations de 2025; origine fin décembre 2024") +
+  theme_minimal()
+```
+
+Le naïf répète 200 112 kWh, la valeur de décembre 2024, pour chacun des douze mois. Le saisonnier utilise janvier 2024 pour janvier 2025, février 2024 pour février 2025, et ainsi de suite. Toutes ces valeurs étaient disponibles à l’origine.
+
+Un décalage `lag(consommation_kwh, 1)` calculé sur tout le fichier utiliserait janvier 2025 pour prévoir février 2025, puis février pour mars. Ces observations sont inconnues en décembre 2024. Cela correspondrait à des prévisions successives à un mois, avec actualisation de l’origine, plutôt qu’à douze prévisions émises ensemble.
+:::
+
+### Production 6.5 - Comparer les erreurs {#corrige-capsule-5}
+
+Les trois candidats sont le naïf, le naïf saisonnier et la tendance quadratique illustrée dans la démonstration. Tracez les erreurs saisonnières dans le temps et leur histogramme. Utilisez la convention erreur = observé − prévu et la même échelle MASE saisonnière pour tous les candidats.
+
+::: {.callout-tip collapse="true" title="Corrigé de la production 6.5 : scores, unités et interprétation"}
+```{r}
+#| label: corrige-capsule-06-5
+#| fig-width: 8
+#| fig-height: 4.5
+serie_capsules <- ts(apprentissage_capsules$consommation_kwh,
+                     start = c(2020, 1), frequency = 12)
+tendance_capsules <- tslm(serie_capsules ~ trend + I(trend^2))
+previsions_capsules <- previsions_capsules |>
+  mutate(tendance = as.numeric(forecast(tendance_capsules, h = 12)$mean))
+evaluation_capsules <- previsions_capsules |>
+  pivot_longer(c(naive, saisonniere, tendance),
+               names_to = "methode", values_to = "prevision") |>
+  mutate(erreur = consommation_kwh - prevision)
+scores_capsules <- evaluation_capsules |>
+  group_by(methode) |>
+  group_modify(~ mesures_erreur(
+    .x$consommation_kwh, .x$prevision,
+    apprentissage_capsules$consommation_kwh, periode = 12
+  )) |>
+  ungroup()
+scores_capsules |>
+  knitr::kable(digits = 2,
+    col.names = c("Méthode", "ME (kWh)", "MAE (kWh)", "RMSE (kWh)",
+                  "MAPE (%)", "MASE"),
+    format.args = list(decimal.mark = ",", big.mark = " "))
+
+erreurs_saisonnieres_capsules <- evaluation_capsules |>
+  filter(methode == "saisonniere")
+ggplot(erreurs_saisonnieres_capsules, aes(date, erreur / 1000)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  geom_line() + geom_point() +
+  labs(x = NULL, y = "Erreur de prévision (MWh)") + theme_minimal()
+ggplot(erreurs_saisonnieres_capsules, aes(erreur / 1000)) +
+  geom_histogram(bins = 6, fill = "#D9EEF2", colour = "#0B4F6C") +
+  labs(x = "Erreur de prévision (MWh)", y = "Nombre de mois") + theme_minimal()
+```
+
+Sur ces douze mois, les MAE sont d’environ 43 810 kWh pour le naïf, 6 662 kWh pour le saisonnier et 31 574 kWh pour la tendance quadratique. La référence saisonnière obtient donc ici la plus petite MAE. Ce résultat concerne les candidats et la période comparés; il ne garantit pas le même classement à l’avenir.
+
+ME, MAE et RMSE sont en kWh, MAPE en pourcentage et MASE sans unité. La ME saisonnière, environ +3 052 kWh, indique une sous-prévision moyenne avec la convention retenue; la ME négative du naïf indique une sur-prévision moyenne. Les signes peuvent se compenser, d’où l’intérêt de la MAE et de la RMSE.
+
+La MASE utilise l’écart absolu moyen entre les mêmes mois d’années consécutives sur 2020 à 2024. Une MASE d’environ 1,02 pour le saisonnier ne contredit pas sa première place sur la validation : le dénominateur décrit l’apprentissage, pas la MAE d’un concurrent sur 2025. Le MAPE est défini ici puisque les consommations observées sont positives; en présence d’un zéro, il faudrait signaler son indéfinition.
+
+Le graphique montre des erreurs des deux signes et le plus grand écart positif en décembre 2025 (+18 280 kWh). L’histogramme décrit seulement douze erreurs. Il ne démontre ni normalité ni indépendance; ces erreurs de validation sont distinctes des résidus d’apprentissage.
+:::
+
+### Production 6.6 - Lire le cône d’incertitude {#corrige-capsule-6}
+
+Utilisez le code fourni pour illustrer ETS(A,A,N). L’estimation des paramètres de lissage ne fait pas partie de ce qui est demandé ici.
+
+::: {.callout-tip collapse="true" title="Corrigé de la production 6.6 : niveaux, horizons et limites"}
+```{r}
+#| label: corrige-capsule-06-6
+#| fig-width: 8
+#| fig-height: 4.5
+modele_intervalle_capsules <- ets(serie_capsules, model = "AAN")
+cone_capsules <- forecast(modele_intervalle_capsules,
+                          h = 12, level = c(80, 95))
+autoplot(cone_capsules) +
+  labs(x = "Année", y = "Consommation (kWh)",
+       title = "ETS(A,A,N), origine fin décembre 2024") + theme_minimal()
+tibble(
+  mois = c("Janvier 2025", "Décembre 2025"), h = c(1, 12),
+  point_kwh = as.numeric(cone_capsules$mean[c(1, 12)]),
+  bas_80 = cone_capsules$lower[c(1, 12), "80%"],
+  haut_80 = cone_capsules$upper[c(1, 12), "80%"],
+  bas_95 = cone_capsules$lower[c(1, 12), "95%"],
+  haut_95 = cone_capsules$upper[c(1, 12), "95%"]
+) |>
+  knitr::kable(digits = 0,
+    format.args = list(decimal.mark = ",", big.mark = " "))
+```
+
+Toutes les valeurs du tableau sont en kWh. Pour janvier, le point vaut environ 213 142 kWh, l’intervalle à 80 % [189 581; 236 703] et celui à 95 % [177 109; 249 175]. Pour décembre, le point vaut environ 258 546 kWh, l’intervalle à 80 % [11 210; 505 883] et celui à 95 % [−119 722; 636 815]. Les derniers chiffres peuvent varier légèrement selon la version de `forecast`.
+
+À horizon fixé, l’intervalle à 95 % est ici plus large que celui à 80 %. Les intervalles de décembre sont aussi plus larges que ceux de janvier. Ils permettent de discuter l’ampleur de l’incertitude, au lieu de communiquer uniquement un point.
+
+La borne négative de décembre est physiquement inadmissible pour cette consommation. ETS(A,A,N) ne représente pas explicitement la saisonnalité : ce cône est une illustration à critiquer, pas une recommandation opérationnelle. Il faudrait réexaminer le modèle et sa calibration. Tronquer silencieusement la borne à zéro ne démontrerait pas la couverture de l’intervalle modifié.
+
+Le niveau de 95 % est nominal et dépend des hypothèses; il ne garantit ni cette observation future ni toute la trajectoire de douze mois simultanément.
+:::
+
+### Pratique facultative 6.7 - Avancer les origines {#corrige-capsule-7}
+
+Comparez séparément les horizons 1 et 6 mois, en utilisant seulement le passé déjà connu à chaque origine. Cette pratique ne s’ajoute au rapport que si vous faites le complément A.
+
+::: {.callout-tip collapse="true" title="Corrigé facultatif 6.7 : nombres d’origines et scores"}
+```{r}
+#| label: corrige-capsule-06-7
+mobile_capsules <- validation_mobile(
+  electricite_capsules$consommation_kwh,
+  debut_validation = 61, horizons = c(1L, 6L), periode = 12
+) |>
+  mutate(
+    mois_origine = electricite_capsules$date[origine],
+    mois_cible = electricite_capsules$date[cible]
+  )
+mobile_capsules |>
+  group_by(h, methode) |>
+  summarise(
+    origines = n(),
+    premier_mois_origine = min(mois_origine),
+    dernier_mois_origine = max(mois_origine),
+    derniere_cible = max(mois_cible),
+    MAE_kwh = mean(abs(erreur)), .groups = "drop"
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+Les dates du tableau désignent des mois; la prévision est émise à la fin du mois d’origine. À h = 1, les douze origines vont de fin décembre 2024 à fin novembre 2025. À h = 6, les sept origines vont de fin décembre 2024 à fin juin 2025. La dernière cible est décembre 2025 dans les deux cas.
+
+Les MAE sont d’environ 19 989 et 6 662 kWh à un mois pour le naïf et le saisonnier, puis 63 994 et 8 236 kWh à six mois. Le saisonnier obtient ici la plus petite MAE aux deux horizons. L’horizon, les cibles et l’information actualisée doivent accompagner ces scores.
+
+À origine fixe, les douze prévisions utilisent seulement l’historique arrêté en décembre 2024. À origines mobiles, de nouvelles observations deviennent disponibles entre deux émissions. Les MAE ne décrivent donc pas le même protocole; les horizons 1 et 6 n’utilisent pas non plus exactement les mêmes cibles.
+:::
+
+### Pratique facultative 6.8 - Combiner et prévoir le suivi {#corrige-capsule-8}
+
+Proposez des familles à comparer sans devoir les ajuster ici. Évaluez ensuite la combinaison annoncée des deux références. Cette pratique appartient au complément B.
+
+::: {.callout-tip collapse="true" title="Corrigé facultatif 6.8 : combinaison et méthode de suivi"}
+```{r}
+#| label: corrige-capsule-06-8
+combinaison_capsules <- previsions_capsules |>
+  mutate(combinee = (naive + saisonniere) / 2)
+combinaison_capsules |>
+  pivot_longer(c(naive, saisonniere, combinee),
+               names_to = "methode", values_to = "prevision") |>
+  group_by(methode) |>
+  summarise(MAE_kwh = mean(abs(consommation_kwh - prevision)),
+            .groups = "drop") |>
+  knitr::kable(digits = 2)
+```
+
+La combinaison a une MAE d’environ 22 588 kWh. Elle fait mieux que le naïf seul (environ 43 810), mais moins bien que le saisonnier seul (environ 6 662). La moyenne à poids égaux n’améliore donc pas systématiquement la meilleure référence. Ses deux composantes sont disponibles dès fin décembre 2024 et ses poids sont fixés avant l’examen des scores.
+
+Deux familles possibles seraient un lissage avec saisonnalité et une régression avec tendance et indicatrices mensuelles. L’historique et le calendrier futur sont disponibles à l’origine. Ajouter une température ou une occupation future demanderait une valeur connue à l’avance, une prévision ou un scénario explicite. Proposer une famille ne démontre pas qu’elle ferait mieux : il faudrait la comparer sur le même protocole.
+
+Un suivi possible consiste à enregistrer les prévisions émises, ajouter chaque consommation reçue, examiner l’erreur avec les personnes responsables du bâtiment et réévaluer les candidats à de nouvelles origines. Réutiliser 2025 pour choisir de nouveaux candidats ne fournirait pas une nouvelle évaluation indépendante. Les règles d’action devraient aussi tenir compte du coût des écarts et des informations opérationnelles disponibles.
+:::
+
+
 ## Pratique supplémentaire {#pratique-supplementaire}
 
 Ces huit exercices sont facultatifs, indépendants des deux rapports suivis et des compléments A et B. Ils consolident les six capsules principales. Tous les scénarios et nombres ci-dessous sont fictifs et fournis pour l’enseignement; aucun fichier supplémentaire n’est nécessaire. Faites le calcul ou l’interprétation avant d’ouvrir la solution, puis refaites la question sans regarder la réponse.
@@ -359,4 +679,4 @@ Exemple de note : « Le R² fourni décrit seulement l’ajustement observé et 
 
 ## Sources
 
-Hyndman et Athanasopoulos (2021), [Forecasting: Principles and Practice](https://otexts.com/fpp3/), chapitre 5. Les données ont été générées par `scripts/10_create_second_block_data.R` pour l’enseignement.
+Hyndman et Athanasopoulos (2021), [Forecasting: Principles and Practice](https://otexts.com/fpp3/), chapitres 1, 3, 5 et 8. Pour les productions guidées : [définir la tâche](https://otexts.com/fpp3/intro.html#sec-basic-steps), [mesurer les erreurs](https://otexts.com/fpp3/toolbox.html#sec-accuracy) et [lire les intervalles](https://otexts.com/fpp3/toolbox.html#sec-prediction-intervals). Les données ont été générées par `scripts/10_create_second_block_data.R` pour l’enseignement.

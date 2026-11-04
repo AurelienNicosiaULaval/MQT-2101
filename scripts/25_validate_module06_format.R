@@ -76,7 +76,9 @@ for (path in pdfs) {
   require_condition(file.exists(public), paste("PDF public absent :", path))
   if (file.exists(public)) require_condition(identical(unname(tools::md5sum(path)), unname(tools::md5sum(public))), paste("PDF public désynchronisé :", path))
 }
-archive <- file.path(module, "telechargements/module-06-pdf-2026-10-13.zip")
+lot <- regmatches(capsules, regexpr("telechargements/module-06-pdf-[0-9]{4}-[0-9]{2}-[0-9]{2}[.]zip", capsules))
+require_condition(length(lot) == 1L && nzchar(lot), "Le lot PDF actif doit être indiqué dans les capsules")
+archive <- file.path(module, lot)
 require_condition(file.exists(archive), "L'archive PDF datée est absente")
 if (file.exists(archive)) {
   extraction <- tempfile("controle-pdf-module06-")

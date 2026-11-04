@@ -2,6 +2,12 @@
 
 Les supports suivent la charte des quatre premiers modules. Le parcours principal comprend six capsules. Les six vidéos enregistrées sont intégrées à la page des capsules, avec leurs liens YouTube vérifiés le 13 octobre 2026.
 
+## Consignes précisées le 4 novembre 2026
+
+Les sources, les supports HTML et les PDF non annotés précisent les productions de fin de capsule. La page des capsules renvoie aux huit corrigés repliés sur le cas d’électricité, dont deux facultatifs, et à leur projet téléchargeable. Le lot courant est `module-06-pdf-2026-11-04.zip`.
+
+Les six vidéos et les six PDF annotés conservent leur version enregistrée d’octobre 2026. Ils ne reprennent donc pas mot pour mot les consignes précisées. Cette différence est signalée sur la page des capsules; les annotations originales sont conservées.
+
 ## Organisation
 
 - `qmd/capsule-01-support.qmd` à `capsule-06-support.qmd` : sources des six capsules, avec notes de narration, synthèse, production autonome et auto-vérification.
