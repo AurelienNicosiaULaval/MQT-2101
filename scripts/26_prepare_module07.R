@@ -53,7 +53,7 @@ preparer <- function(nom, texte, complet = FALSE) {
   }
   writeLines(c("Version: 1.0", "RestoreWorkspace: No", "SaveWorkspace: No",
                "AlwaysSaveHistory: No"), file.path(dossier, paste0(nom, ".Rproj")))
-  writeLines(c(paste0("# ", nom), "", "Version locale du 3 novembre 2026.",
+  writeLines(c(paste0("# ", nom), "", "Projet préparé à partir des sources du module 07.",
     "1. Décompressez toute l’archive et ouvrez le .Rproj.",
     "2. Installez une fois tidyverse, slider et forecast si nécessaire. R, RStudio et Quarto sont requis.",
     "3. Ouvrez le .qmd, redémarrez R, puis faites Render. Le projet de départ se rend avant d’être complété.",
@@ -91,10 +91,9 @@ depart_demande <- paste0(entete("Demande : mon analyse de lissage"),
          "\n\nAjoutez votre code, vos résultats et votre interprétation. Réalisez cette activité une seule fois.\n\n", collapse = ""),
   "## Pour terminer\n\nRelisez les quatre réponses, nommez une limite et redémarrez R avant Render. Holt reste facultatif.\n")
 # Les énoncés sont extraits de la page des exercices avant la solution.
-texte_exercices <- lire(file.path(module, "exercices.qmd"))
 enonces <- vapply(1:4, function(i) {
   motif <- paste0("(?s)## Exercice ", i, " - .*?\\n:::: \\{\\.callout-tip")
-  s <- regmatches(texte_exercices, regexpr(motif, texte_exercices, perl = TRUE))
+  s <- regmatches(corrige, regexpr(motif, corrige, perl = TRUE))
   sub("\\n:::: \\{\\.callout-tip$", "", s)
 }, character(1))
 depart_electricite <- paste0(entete("Électricité : mon analyse de lissage"),

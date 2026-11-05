@@ -2,15 +2,15 @@
 
 ## Un transfert vers la planification énergétique
 
-Le cas guidé prévoit des unités de produit sur treize semaines. Ici, l’équipe responsable d’un bâtiment universitaire fictif prépare les douze consommations mensuelles de 2025 à la fin de décembre 2024. La cible est une énergie en kWh, et la saisonnalité est marquée. Un budget financier demanderait des données tarifaires supplémentaires.
+Une équipe doit planifier la consommation d’électricité d’un bâtiment universitaire fictif. À la fin de décembre 2024, elle veut une prévision pour chacun des douze mois de 2025. Les méthodes qui prolongent un niveau constant ont-elles assez de souplesse pour suivre un cycle annuel? Vous recommanderez une méthode à partir des écarts observés et d’un scénario de coût fictif. La cible est l’énergie totale consommée chaque mois, en kWh.
 
-Les quatre exercices suivis alimentent un seul rapport, `lissage_electricite.qmd`. Faites l’exercice 1 après la capsule 1, le 2 après la capsule 2, le 3 après la capsule 3, puis le 4 après la capsule 4. Faites une tentative avant d’ouvrir chaque corrigé. Le code des corrigés 1 à 4 s’exécute dans cet ordre, après la préparation commune.
+Les exercices 1 à 4 alimentent le rapport `lissage_electricite.qmd`. Faites chaque exercice après la capsule du même numéro. Essayez d’abord de produire les résultats demandés et d’écrire votre propre interprétation. Ouvrez ensuite le corrigé pour comparer votre démarche. Les blocs R des quatre corrigés s’exécutent dans l’ordre, après la préparation commune.
 
-Décompressez le [projet de transfert](telechargements/lissage-electricite.zip). Le [projet des corrigés complets](telechargements/corrige-lissage-electricite.zip) contient aussi les pratiques supplémentaires. Les [huit pratiques ciblées](#pratique-supplementaire) sont facultatives; elles ne créent pas un troisième rapport.
+Travaillez dans le [projet de transfert](telechargements/lissage-electricite.zip). Le [projet des corrigés complets](telechargements/corrige-lissage-electricite.zip) contient aussi les [huit exercices supplémentaires](#pratique-supplementaire), à faire selon vos besoins.
 
 ## Préparation
 
-Les données d’électricité sont les mêmes qu’au module 06, recopiées dans le projet pour éviter une dépendance à son dossier. Les [dictionnaires](data/dictionnaires.md) précisent les unités. Installez une fois `tidyverse`, `slider` et `forecast` si nécessaire. Ouvrez le `.Rproj`, puis exécutez les blocs visibles depuis une session neuve. Les fonctions sont fournies dans `R/fonctions-module07.R`.
+Décompressez le projet et ouvrez le `.Rproj` dans RStudio. Si les bibliothèques vous manquent, lancez `install.packages(c("tidyverse", "slider", "forecast"))` une fois dans la console. Redémarrez ensuite R et exécutez la préparation ci-dessous. Le projet contient le même fichier de consommation qu’au module 06, les [dictionnaires](data/dictionnaires.md) et les fonctions dans `R/fonctions-module07.R`.
 
 ``` r
 library(tidyverse)
@@ -34,22 +34,26 @@ serie_e <- ts(apprentissage_e$consommation_kwh, frequency = 12,
               start = c(2020, 1))
 ```
 
-Apprentissage: janvier 2020 à décembre 2024, 60 mois. Validation: les douze mois de 2025. Les cinq candidats sont fixés avant les scores: naïf, MM3, SES avec alpha = 0,2, SES avec alpha = 0,8 et naïf saisonnier. Les deux SES ont exactement la même initialisation, égale à la première consommation. Les valeurs d’alpha sont imposées pour comprendre leur effet, sans recherche sur 2025.
+Les 60 mois de janvier 2020 à décembre 2024 servent à calculer les niveaux et les prévisions. Les douze mois de 2025 servent à comparer les méthodes après coup. Ils ont déjà été examinés au module 06 et forment une validation connue.
 
-Ces mois ont déjà servi au module 06. On étudie de nouvelles méthodes sur une validation connue, sans nouveau test indépendant.
+On fixe cinq candidats avant de calculer les scores. Le naïf et le naïf saisonnier servent de références. La moyenne mobile de trois mois (MM3) et les deux lissages exponentiels (SES02 pour \\\alpha=0{,}2\\ et SES08 pour \\\alpha=0{,}8\\) permettent d’étudier différents niveaux de réactivité. Les deux lissages partent de la première consommation de la série.
 
 ## Exercice 1 - Fenêtres et unités
 
-Sur l’apprentissage, tracez les moyennes mobiles arrière de 3 et 12 mois. Un écart absolu de plus de 20 000 kWh est ici le repère descriptif fixé pour comparer leurs messages. Trouvez le premier mois où les deux fenêtres existent et dépassent ce repère. Expliquez la réactivité, le retard et la différence entre kWh et MWh. Une moyenne arrière de 12 mois constitue-t-elle une prévision saisonnière?
+1.  Sur les 60 mois d’apprentissage, superposez la consommation observée et les moyennes mobiles arrière de 3 et 12 mois. Si vous tracez en MWh, divisez les kWh par 1 000 et indiquez l’unité sur l’axe.
+2.  Trouvez le premier mois où les deux moyennes sont disponibles et où leur écart absolu dépasse 20 000 kWh. Donnez le mois, les deux moyennes et l’écart. Ce seuil sert à repérer un exemple dans la série.
+3.  À partir du graphique, indiquez quelle fenêtre suit le plus vite les hausses et les baisses. Si vous répétiez la dernière moyenne de 12 mois pour toute l’année 2025, la prévision pourrait-elle reproduire les variations entre les mois?
 
 > **TIP:**
+>
+> Une moyenne arrière de trois mois devient disponible au troisième mois. Pour la fenêtre de douze mois, il faut attendre le douzième. Calculez l’écart seulement aux dates où les deux moyennes existent.
 >
 > ``` r
 > electricite_lissee <- apprentissage_e |>
 >   mutate(mm3 = slide_dbl(consommation_kwh, mean, .before = 2, .complete = TRUE),
 >          mm12 = slide_dbl(consommation_kwh, mean, .before = 11, .complete = TRUE))
 > electricite_lissee |>
->   select(date, consommation_kwh, mm3, mm12) |>
+>   select(date, Observé = consommation_kwh, MM3 = mm3, MM12 = mm12) |>
 >   pivot_longer(-date, names_to = "serie", values_to = "kwh") |>
 >   ggplot(aes(date, kwh / 1000, colour = serie)) +
 >   geom_line(na.rm = TRUE) +
@@ -57,7 +61,7 @@ Sur l’apprentissage, tracez les moyennes mobiles arrière de 3 et 12 mois. Un 
 >   theme_minimal(base_size = 12)
 > ```
 >
-> ![](exercices_files/figure-html/solution-fenetres-m07-1.png)
+> ![La moyenne mobile de trois mois suit une partie des variations saisonnières. La moyenne mobile de douze mois atténue le cycle annuel.](exercices_files/figure-html/solution-fenetres-m07-1.png)
 >
 > ``` r
 > electricite_lissee |>
@@ -73,11 +77,13 @@ Sur l’apprentissage, tracez les moyennes mobiles arrière de 3 et 12 mois. Un 
 >       <date>       <dbl>   <dbl>     <dbl>
 >     1 2020-12-01 173168. 146385.    26783.
 >
-> La fenêtre courte suit plus vite les hausses hivernales et les baisses. La fenêtre de douze mois atténue le motif annuel, mais introduit un retard et ne prévoit pas douze valeurs saisonnières différentes. Le tableau localise le premier dépassement du repère descriptif; ce n’est pas un test statistique ni un seuil opérationnel validé. Les deux et onze premières moyennes sont manquantes par construction. Un MWh vaut 1 000 kWh; les scores seront calculés en kWh.
+> Le premier dépassement survient en décembre 2020. MM3 vaut environ 173 168 kWh et MM12, 146 385 kWh. L’écart est de 26 783 kWh, soit environ 26,8 MWh. Sur le graphique, MM3 suit davantage la remontée de fin d’année. MM12 l’atténue, car elle conserve aussi les mois de plus faible consommation. Si l’on répète la dernière MM12, on obtient la même valeur chaque mois de 2025.
 
 ## Exercice 2 - Deux réactivités, une même origine
 
-Calculez les niveaux avec alpha = 0,2 et 0,8 sur l’apprentissage, avec le même état initial. Avant de regarder les scores, indiquez lequel suit davantage la dernière observation. Émettez les douze prévisions de chacun des cinq candidats à l’origine de décembre 2024. Expliquez pourquoi quatre trajectoires sont constantes et une varie avec le mois.
+1.  Calculez les deux niveaux lissés sur l’apprentissage avec `niveau_ses()`. Comparez leurs valeurs de décembre 2024 à la consommation de ce même mois. Quel niveau en est le plus proche?
+2.  Construisez un tableau de douze lignes, une par mois de 2025, avec une colonne par méthode. Préparez les cinq prévisions de chaque mois à partir de l’information connue à la fin de décembre 2024.
+3.  Expliquez d’où viennent les prévisions de janvier et de février pour MM3 et le naïf saisonnier. Pourquoi quatre méthodes produisent-elles une prévision constante alors que le naïf saisonnier varie d’un mois à l’autre?
 
 > **TIP:**
 >
@@ -98,26 +104,44 @@ Calculez les niveaux avec alpha = 0,2 et 0,8 sur l’apprentissage, avec le mêm
 >
 > ``` r
 > previsions_e <- tibble(
->   date = validation_e$date,
->   observe = validation_e$consommation_kwh,
+>   date = seq(max(apprentissage_e$date), by = "month",
+>              length.out = horizon_e + 1L)[-1L],
 >   Naive = rep(tail(apprentissage_e$consommation_kwh, 1), horizon_e),
 >   MM3 = rep(mean(tail(apprentissage_e$consommation_kwh, 3)), horizon_e),
 >   SES02 = rep(tail(niveaux_e$alpha_02, 1), horizon_e),
 >   SES08 = rep(tail(niveaux_e$alpha_08, 1), horizon_e),
 >   Saisonnier = as.numeric(snaive(serie_e, h = horizon_e)$mean)
 > )
+> knitr::kable(head(previsions_e, 2), digits = 0,
+>              col.names = c("Mois", "Naïf", "MM3", "SES02", "SES08", "Naïf saisonnier"),
+>              format.args = list(big.mark = "\u00a0"),
+>              caption = "Prévisions pour janvier et février 2025, en kWh")
 > ```
 >
-> Alpha = 0,8 se rapproche davantage de décembre, qui est un mois de forte consommation. Cela ne garantit pas une bonne prévision de l’été suivant. Naïf, MM3 et les deux SES répètent un niveau fixe. Le naïf saisonnier reprend les douze mois de 2024. Fixer `frequency = 12` n’ajoute pas automatiquement une saisonnalité au SES.
+> | Mois       |    Naïf |     MM3 |   SES02 |   SES08 | Naïf saisonnier |
+> |:-----------|--------:|--------:|--------:|--------:|----------------:|
+> | 2025-01-01 | 200 112 | 181 663 | 162 009 | 196 117 |         215 188 |
+> | 2025-02-01 | 200 112 | 181 663 | 162 009 | 196 117 |         192 262 |
+>
+> Prévisions pour janvier et février 2025, en kWh {.caption-top .table .table-sm .table-striped .small}
+>
+> En décembre 2024, la consommation observée est de 200 112 kWh. Avec \\\alpha=0{,}8\\, le dernier niveau vaut environ 196 117 kWh. Il est plus près de décembre que le niveau avec \\\alpha=0{,}2\\, qui vaut environ 162 009 kWh. Cette proximité décrit la réactivité du lissage à la dernière observation.
+>
+> MM3 répète la moyenne d’octobre à décembre 2024 en janvier et en février 2025, puis aux dix autres horizons. Le naïf répète la valeur de décembre et les deux SES répètent leur dernier niveau. Le naïf saisonnier reprend la consommation de janvier 2024 pour janvier 2025, celle de février 2024 pour février 2025, et ainsi de suite. La fréquence 12 indique à `snaive()` la longueur du cycle à répéter.
 
 ## Exercice 3 - Scores et coût asymétrique
 
-Calculez ME, MAE et RMSE sur les mêmes douze mois, puis tracez observations et prévisions. Ajoutez un coût pédagogique: deux unités de coût par kWh sous-prévu et une par kWh sur-prévu. Ce coût fictif n’est pas un tarif d’électricité. Comparez le classement par MAE à celui par coût moyen, d’abord pour tous les candidats, puis pour les méthodes constantes seulement.
+1.  Associez chaque prévision à la consommation observée le même mois en 2025. Tracez les observations et les cinq séries de prévisions sur un même graphique. À quels mois les prévisions constantes ont-elles de la difficulté à suivre la consommation?
+2.  Calculez ME, MAE et RMSE pour chaque méthode, en kWh. Utilisez la convention `erreur = observé - prévu`. Quelle méthode a la plus petite MAE?
+3.  Calculez le coût moyen par mois si chaque kWh sous-prévu coûte deux unités fictives et chaque kWh sur-prévu en coûte une. Comparez le classement par MAE au classement par coût. Refaites la comparaison parmi les quatre méthodes constantes. Quelle méthode arrive en tête pour chacun des deux critères dans ce groupe?
 
 > **TIP:**
 >
 > ``` r
+> stopifnot(nrow(previsions_e) == nrow(validation_e),
+>           all(previsions_e$date == validation_e$date))
 > erreurs_e <- previsions_e |>
+>   mutate(observe = validation_e$consommation_kwh) |>
 >   pivot_longer(Naive:Saisonnier, names_to = "methode", values_to = "prevision") |>
 >   mutate(erreur = observe - prevision)
 > scores_e <- erreurs_e |>
@@ -125,77 +149,95 @@ Calculez ME, MAE et RMSE sur les mêmes douze mois, puis tracez observations et 
 >   group_modify(~ mesures_erreurs(.x$observe, .x$prevision,
 >                                 cout_sous = 2, cout_sur = 1)) |>
 >   ungroup()
-> scores_e |> select(methode, ME, MAE, RMSE, cout_moyen) |> arrange(MAE)
+> classement_e <- scores_e |>
+>   mutate(rang_cout = min_rank(cout_moyen)) |>
+>   arrange(MAE) |>
+>   select(methode, ME, MAE, RMSE, cout_moyen, rang_cout)
+> knitr::kable(classement_e,
+>              digits = 0, format.args = list(big.mark = "\u00a0"),
+>              col.names = c("Méthode", "ME (kWh)", "MAE (kWh)", "RMSE (kWh)",
+>                            "Coût moyen", "Rang selon le coût"),
+>              caption = "Méthodes classées par MAE sur les douze mois de 2025")
 > ```
 >
->     # A tibble: 5 × 5
->       methode         ME    MAE   RMSE cout_moyen
->       <chr>        <dbl>  <dbl>  <dbl>      <dbl>
->     1 Saisonnier   3052.  6662.  7987.     11520.
->     2 SES02        1224. 31102. 35679.     47265.
->     3 MM3        -18430  33971. 40139.     41741.
->     4 SES08      -32883. 41147. 48505.     45278.
->     5 Naive      -36879. 43810. 51298.     47276.
+> | Méthode    | ME (kWh) | MAE (kWh) | RMSE (kWh) | Coût moyen | Rang selon le coût |
+> |:-----------|---------:|----------:|-----------:|-----------:|-------------------:|
+> | Saisonnier |    3 052 |     6 662 |      7 987 |     11 520 |                  1 |
+> | SES02      |    1 224 |    31 102 |     35 679 |     47 265 |                  4 |
+> | MM3        |  -18 430 |    33 971 |     40 139 |     41 741 |                  2 |
+> | SES08      |  -32 883 |    41 147 |     48 505 |     45 278 |                  3 |
+> | Naive      |  -36 879 |    43 810 |     51 298 |     47 276 |                  5 |
+>
+> Méthodes classées par MAE sur les douze mois de 2025 {.caption-top .table .table-sm .table-striped .small}
 >
 > ``` r
 > ggplot() +
->   geom_line(data = validation_e, aes(date, consommation_kwh / 1000),
+>   geom_line(data = validation_e, aes(date, consommation_kwh / 1000, colour = "Observé"),
 >             linewidth = 1) +
 >   geom_line(data = erreurs_e, aes(date, prevision / 1000, colour = methode)) +
->   labs(x = NULL, y = "Énergie mensuelle (MWh)", colour = "Méthode") +
->   theme_minimal(base_size = 12)
+>   labs(x = NULL, y = "Énergie mensuelle (MWh)", colour = NULL) +
+>   scale_colour_manual(values = c("Observé" = "#202124", MM3 = "#0072B2",
+>                                  Naive = "#D55E00", SES02 = "#009E73",
+>                                  SES08 = "#A34788", Saisonnier = "#80631D"),
+>                       breaks = c("Observé", "Saisonnier", "Naive", "MM3", "SES02", "SES08"),
+>                       labels = c("Observé", "Naïf saisonnier", "Naïf", "MM3", "SES02", "SES08")) +
+>   guides(colour = guide_legend(nrow = 2)) +
+>   theme_minimal(base_size = 15) +
+>   theme(legend.position = "bottom")
 > ```
 >
-> ![](exercices_files/figure-html/solution-scores-m07-1.png)
+> ![Les prévisions constantes ratent une grande partie des variations mensuelles. Le naïf saisonnier suit mieux la hausse hivernale et le creux estival.](exercices_files/figure-html/solution-graphique-m07-1.png)
 >
-> Le naïf saisonnier a une MAE d’environ 6 662 kWh et une RMSE d’environ 7 987 kWh. Les prévisions constantes ont des MAE beaucoup plus élevées: environ 31 102 kWh pour SES02, 33 971 pour MM3, 41 147 pour SES08 et 43 810 pour le naïf.
+> Les quatre méthodes constantes sous-estiment la consommation en janvier et en décembre et la surestiment de mai à septembre. La référence saisonnière suit les variations du calendrier et arrive en tête pour la MAE (6 662 kWh), la RMSE (7 987 kWh) et le coût moyen (11 520 unités fictives par mois).
 >
-> Dans le groupe constant, SES02 minimise la MAE, mais MM3 minimise ce coût asymétrique: environ 41 741 unités de coût par mois, contre 47 265 pour SES02. La ME de SES02, proche de +1 224 kWh, n’efface pas ses erreurs mensuelles de signes contraires. La référence saisonnière reste la meilleure des cinq pour les deux critères. On ne retire pas ce résultat parce qu’il est défavorable au lissage simple.
+> Pour voir comment le signe agit sur le coût, prenez les deux premiers mois du naïf saisonnier. En janvier, son erreur est \\223\\421-215\\188=+8\\233\\ kWh et son coût vaut \\2\times 8\\233=16\\466\\. En février, son erreur est \\184\\638-192\\262=-7\\624\\ kWh et son coût vaut \\7\\624\\. Le tableau donne la moyenne des douze coûts.
+>
+> ``` r
+> scores_constantes_e <- scores_e |> filter(methode != "Saisonnier")
+> scores_constantes_e |> arrange(MAE) |> select(methode, MAE)
+> ```
+>
+>     # A tibble: 4 × 2
+>       methode    MAE
+>       <chr>    <dbl>
+>     1 SES02   31102.
+>     2 MM3     33971.
+>     3 SES08   41147.
+>     4 Naive   43810.
+>
+> ``` r
+> scores_constantes_e |> arrange(cout_moyen) |> select(methode, cout_moyen)
+> ```
+>
+>     # A tibble: 4 × 2
+>       methode cout_moyen
+>       <chr>        <dbl>
+>     1 MM3         41741.
+>     2 SES08       45278.
+>     3 SES02       47265.
+>     4 Naive       47276.
+>
+> Parmi les méthodes constantes, SES02 a la plus petite MAE (31 102 kWh, contre 33 971 pour MM3). MM3 arrive en tête pour le coût (41 741 unités fictives par mois, contre 47 265 pour SES02). Son niveau plus élevé réduit les sous-prévisions, qui coûtent davantage dans ce scénario. La ME de SES02 est près de zéro parce que ses sous-prévisions et ses sur-prévisions se compensent en partie. La MAE conserve l’ampleur de ces écarts.
 
 ## Exercice 4 - Recommandation et surveillance
 
-Rédigez une note à l’équipe énergétique: méthode retenue, MAE et RMSE avec unités, coût moyen dans le scénario, comparaison aux prévisions constantes, limite et surveillance mensuelle. Expliquez pourquoi cette décision diffère de celle du cas de demande. Ne transformez pas la prévision d’énergie en budget ni en garantie de capacité.
+Rédigez une courte note à l’équipe énergétique à partir de vos tableaux de l’exercice 3.
+
+1.  Recommandez une méthode en citant sa MAE, sa RMSE et son coût moyen, avec leurs unités.
+2.  Expliquez pourquoi cette méthode se démarque des prévisions constantes. Comparez votre choix à celui du [cas guidé](../../modules/semaine-07-lissage/demonstrations.llms.md#decision).
+3.  Précisez ce que la validation de 2025 permet de conclure et proposez un suivi à la réception des prochains relevés. Indiquez quelle information supplémentaire serait nécessaire pour estimer une facture ou juger si la capacité du bâtiment suffit.
 
 > **TIP:**
 >
-> ``` r
-> scores_e |>
->   select(methode, MAE, cout_moyen, sous_previsions) |>
->   arrange(cout_moyen)
-> ```
+> Exemple de note à l’équipe énergétique.
 >
->     # A tibble: 5 × 4
->       methode       MAE cout_moyen sous_previsions
->       <chr>       <dbl>      <dbl>           <int>
->     1 Saisonnier  6662.     11520.               7
->     2 MM3        33971.     41741.               5
->     3 SES08      41147.     45278.               2
->     4 SES02      31102.     47265.               6
->     5 Naive      43810.     47276.               2
->
-> ``` r
-> # Comparer les méthodes constantes, même si la référence saisonnière les bat.
-> scores_e |>
->   filter(methode != "Saisonnier") |>
->   select(methode, MAE, cout_moyen) |>
->   arrange(cout_moyen)
-> ```
->
->     # A tibble: 4 × 3
->       methode    MAE cout_moyen
->       <chr>    <dbl>      <dbl>
->     1 MM3     33971.     41741.
->     2 SES08   41147.     45278.
->     3 SES02   31102.     47265.
->     4 Naive   43810.     47276.
->
-> Exemple acceptable: « Sur les douze mois de validation, le naïf saisonnier est la référence retenue: MAE d’environ 6 662 kWh, RMSE de 7 987 kWh et coût moyen de 11 520 unités fictives par mois. Le lissage constant ne suit pas le motif hivernal et estival. Parmi ces méthodes constantes, MM3 a un coût plus faible que SES02 malgré sa MAE plus élevée. La demande hebdomadaire favorisait MM4 sur ses propres cibles; son classement ne se transfère pas à l’électricité. »
->
-> La période est déjà connue et ne prouve pas une performance future. À chaque nouvelle observation, enregistrer l’erreur et son coût, examiner le cumul et les mois d’écart inhabituel, puis comparer à de nouvelles origines avec un horizon identique. Un seuil d’alerte réel doit être convenu avec l’équipe; aucun seuil de coût acceptable n’est fourni. La prévision ne suffit pas à dimensionner une installation ni à calculer une facture.
+> > Je recommande le naïf saisonnier comme référence. Sur les douze mois de 2025, sa MAE est d’environ 6 662 kWh, sa RMSE de 7 987 kWh et son coût moyen de 11 520 unités fictives par mois. Il suit mieux les hausses hivernales et les creux d’été qu’un niveau constant. Dans le cas hebdomadaire, MM4 a donné le meilleur résultat sur ses treize cibles. Ici, la répétition d’un profil mensuel donne de meilleurs résultats parce que le cycle annuel est marqué.
+> >
+> > Cette comparaison porte sur une période déjà examinée. À chaque nouveau relevé, je noterais le signe et l’ampleur de l’erreur pour repérer les mois où la référence se dégrade. Je comparerais ensuite les méthodes sur de nouvelles périodes de douze mois, avec les mêmes cibles pour chacune. Pour estimer une facture, il faudrait les tarifs applicables. Pour vérifier la capacité, il faudrait notamment connaître la puissance de pointe en kW et la capacité de l’installation.
 
 ## Trace finale
 
-Réunissez les quatre réponses dans `lissage_electricite.qmd`: calendrier, fenêtres, niveaux, cinq prévisions, graphique, scores et note de décision. Les graphiques peuvent utiliser les MWh, mais leurs axes doivent le dire et les scores restent en kWh. Redémarrez R, puis faites Render. Les activités du parcours guidé restent dans `lissage_demande.qmd`.
+Dans `lissage_electricite.qmd`, gardez le calendrier, le graphique des fenêtres, la comparaison des deux niveaux SES, le tableau des cinq méthodes, le graphique de validation, les scores et votre note de décision. Indiquez l’unité de consommation sur les graphiques et dans les tableaux. Redémarrez R, puis faites Render pour vérifier que tout se recalcule. Les activités du parcours guidé restent dans `lissage_demande.qmd`.
 
 ## Pratique supplémentaire
 
@@ -289,7 +331,7 @@ Deux entrepôts fictifs de Québec distribuent la même pièce. Leurs demandes h
 >
 > Erreur fréquente : choisir MM2 parce qu’elle est la plus proche de la dernière valeur. Cette proximité décrit sa réactivité; elle ne mesure pas encore son erreur de prévision.
 
-## Exercice 6 - Un excellent score obtenu trop tard
+## Exercice 6 - Quand le calcul est-il possible?
 
 Niveau : application et lecture critique.
 
@@ -305,7 +347,7 @@ Les demandes des semaines 5, 6 et 7, révélées ensuite pour l’évaluation, v
 
 Dans B, le calcul est refait avant chaque semaine à prévoir, après réception des demandes précédentes.
 
-1.  Calculez les trois séries de valeurs pour les semaines 5 à 7, puis leurs MAE, avec \\e=y-\widehat y\\.
+1.  Calculez les trois séries de valeurs pour les semaines 5 à 7, puis leurs écarts absolus moyens par rapport aux demandes observées.
 2.  Quel calcul contient la cible qu’il prétend prévoir? Pourquoi peut-il néanmoins servir à décrire une série après observation?
 3.  B et C sont-ils tous deux réalisables? Répondent-ils à la même décision prise à la fin de la semaine 4?
 4.  Remplacer A par une moyenne centrée \\(y\_{t-1}+y_t+y\_{t+1})/3\\ résoudrait-il le problème de disponibilité?
@@ -360,7 +402,7 @@ Dans B, le calcul est refait avant chaque semaine à prévoir, après réception
 >
 > Erreur fréquente : classer les trois lignes par MAE sans examiner leurs dates de disponibilité.
 
-## Exercice 7 - Deux réactions différentes, un même niveau final
+## Exercice 7 - Comment le niveau réagit-il à un pic?
 
 Niveau : consolidation, puis interprétation.
 
@@ -370,7 +412,7 @@ Un atelier fictif consomme habituellement 120 unités d’un produit par semaine
 
 1.  Calculez \\\ell_1\\ et \\\ell_2\\ pour les deux valeurs d’\\\alpha\\, en conservant le même niveau initial.
 2.  À l’origine 2, donnez les trois prévisions du SES pour les semaines 3, 4 et 5.
-3.  Les deux niveaux finaux sont identiques. Les deux lissages ont-ils réagi de la même façon à la hausse temporaire? Appuyez votre réponse sur les valeurs intermédiaires.
+3.  Comparez les deux niveaux finaux, puis les deux niveaux après la première semaine. Que vous apprend cette comparaison sur la réaction au pic?
 4.  Pourquoi une initialisation différente compliquerait-elle cette comparaison? Ces deux observations suffisent-elles à choisir un \\\alpha\\ pour les prochaines semaines?
 
 > **TIP:**
@@ -765,18 +807,18 @@ Après la [lecture sur Holt](../../modules/semaine-07-lissage/lectures.llms.md#h
 >   select(methode, MAE, RMSE, cout_moyen)
 > knitr::kable(comparaison_holt_13, digits = 1,
 >              col.names = c("Méthode", "MAE (kWh)", "RMSE (kWh)", "Coût moyen"),
->              format.args = list(decimal.mark = ",", big.mark = " "),
+>              format.args = list(decimal.mark = ",", big.mark = "\u00a0"),
 >              caption = "Erreurs en kWh et coût pédagogique moyen par mois")
 > ```
 >
 > | Méthode         | MAE (kWh) | RMSE (kWh) | Coût moyen |
 > |:----------------|----------:|-----------:|-----------:|
-> | Holt amorti     |  87 355,1 |   96 691,6 |   88 023,1 |
-> | Naïf saisonnier |   6 662,3 |    7 987,1 |   11 519,8 |
+> | Holt amorti     |  87 355,1 |   96 691,6 |   88 023,1 |
+> | Naïf saisonnier |   6 662,3 |    7 987,1 |   11 519,8 |
 >
 > Erreurs en kWh et coût pédagogique moyen par mois {.caption-top .table .table-sm .table-striped .small}
 >
-> Holt ajoute un niveau et une pente amortie, sans composante saisonnière. Le tableau permet de juger les deux méthodes sur les mêmes cibles : la présence d’une pente ne garantit pas de gain et ne remplace pas le motif annuel. La référence saisonnière conserve ici la plus petite MAE. L’amortissement réduit la contribution de la pente aux horizons lointains; il ne crée pas de saisonnalité.
+> Holt amorti obtient une MAE d’environ 87 355 kWh et un coût moyen de 88 023 unités fictives par mois. Le naïf saisonnier obtient respectivement 6 662 kWh et 11 520 unités de coût par mois. Holt estime une pente dont l’effet diminue à mesure que l’horizon s’éloigne. Une pente amortie ne représente pas le cycle annuel de la consommation.
 >
 > Cet exercice reste facultatif et distinct du rapport principal. Il prolonge l’étude du lissage; Holt n’est pas un prérequis obligatoire du laboratoire 03.
 

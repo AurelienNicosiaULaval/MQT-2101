@@ -2,7 +2,7 @@
 
 ## Question et fichiers
 
-Comment stabiliser une prévision de demande sans ignorer une hausse récente? Le parcours guidé reprend les 104 semaines fictives du module 06. Les prix et promotions décrivent le contexte; ils ne sont pas utilisés comme prédicteurs. Leur effet causal ne peut pas être déduit de ces calculs.
+Comment stabiliser une prévision de demande tout en restant sensible aux changements récents? Une équipe d’approvisionnement doit prévoir la demande des treize prochaines semaines. Chaque ligne du fichier représente une semaine fictive et la demande est mesurée en unités de produit. On reprend les 104 semaines du module 06. Le prix et les promotions décrivent le contexte. Les prévisions de cette démonstration utilisent uniquement la demande passée.
 
 Décompressez le [projet de départ](telechargements/lissage-demande.zip) pour votre travail ou la [démonstration complète](telechargements/demonstration-lissage-demande.zip) pour reprendre tous les calculs. Ouvrez le `.Rproj`. Les [dictionnaires](data/dictionnaires.md) et [fonctions R](R/fonctions-module07.R) sont fournis.
 
@@ -30,16 +30,27 @@ validation <- demande |> slice_tail(n = horizon)
 serie <- ts(apprentissage$demande, frequency = 52)
 ```
 
-L’apprentissage contient 91 semaines, du 1er janvier 2024 au 22 septembre 2025. L’origine est la fin de cette dernière semaine, avant celle du 29 septembre. La validation va du 29 septembre au 22 décembre 2025, soit treize cibles à horizons 1 à 13. Aucune de leurs observations n’entre dans les prévisions. Ces cibles sont déjà connues depuis le module 06: elles ne forment pas un test indépendant.
+La colonne `semaine` donne le lundi qui ouvre chaque semaine. La dernière des 91 semaines d’apprentissage commence le 22 septembre 2025. L’équipe émet les treize prévisions à la fin de cette semaine, avant d’observer la demande de la semaine du 29 septembre.
+
+| Données | Semaines commençant du… au… | Rôle |
+|----|----|----|
+| Apprentissage | 1er janvier 2024 au 22 septembre 2025 | Calculer les niveaux et ajuster le SES. |
+| Validation | 29 septembre au 22 décembre 2025 | Comparer les prévisions aux treize demandes observées ensuite. |
+
+La semaine du 29 septembre est la cible à l’horizon 1. Celle du 22 décembre est la cible à l’horizon 13. Comme le module 06 a déjà examiné ces cibles, la comparaison reste une validation sur une période connue.
 
 ## 1. Choisir une fenêtre
+
+Une moyenne mobile arrière de quatre semaines (MM4) donne le même poids à la semaine courante et aux trois précédentes. Par exemple, quatre demandes de 980, 1 020, 1 080 et 1 120 unités donnent une moyenne de \\(980+1\\020+1\\080+1\\120)/4=1\\050\\ unités. On connaît cette moyenne à la fin de la quatrième semaine.
+
+Dans `slide_dbl()`, `.before = 3` ajoute trois observations avant la courante, ce qui donne une fenêtre de quatre. Pour MM13, on en ajoute douze. L’option `.complete = TRUE` attend que la fenêtre soit complète avant de calculer la moyenne.
 
 ``` r
 lissage <- apprentissage |>
   mutate(mm4 = slide_dbl(demande, mean, .before = 3, .complete = TRUE),
          mm13 = slide_dbl(demande, mean, .before = 12, .complete = TRUE))
 lissage |>
-  select(semaine, demande, mm4, mm13) |>
+  select(semaine, Observé = demande, MM4 = mm4, MM13 = mm13) |>
   pivot_longer(-semaine, names_to = "serie", values_to = "unites") |>
   ggplot(aes(semaine, unites, colour = serie)) +
   geom_line(linewidth = 0.7, na.rm = TRUE) +
@@ -47,7 +58,7 @@ lissage |>
   theme_minimal(base_size = 12)
 ```
 
-![](demonstrations_files/figure-html/moyennes-mobiles-m07-1.png)
+![Les deux moyennes arrière atténuent les fluctuations de la demande. MM13 réagit plus lentement que MM4 aux variations récentes.](demonstrations_files/figure-html/moyennes-mobiles-m07-1.png)
 
 ``` r
 tail(lissage |> select(semaine, demande, mm4, mm13), 4)
@@ -67,11 +78,17 @@ mean(c(980, 1020, 1080, 1120))
 
     [1] 1050
 
-La moyenne de l’exemple vaut 1 050 unités. MM4 donne le même poids à quatre observations; MM13 répartit le poids sur treize. Les trois et douze premières valeurs manquantes sont normales: la fenêtre complète n’existe pas encore. `na.rm = TRUE` concerne seulement leur tracé; aucun score n’écarte de cible.
+Regardez les dernières semaines du graphique et du tableau. Quand la demande passe de 1 330 à 1 211 unités, les deux moyennes baissent moins que l’observation. MM13 reste plus éloignée de la dernière demande, car sa fenêtre conserve des semaines plus anciennes. Les trois premières valeurs de MM4 et les douze premières de MM13 sont `NA` puisque la fenêtre est encore incomplète. L’option `na.rm = TRUE` évite un avertissement au tracé.
 
-À la date t, la moyenne arrière contient y_t. Elle décrit le niveau connu après observation de cette semaine. Elle peut prévoir t + 1, mais n’est pas une prévision émise avant y_t. Pour une origine fixe T, nous répétons ici m_T pour tous les horizons. Réinjecter des prévisions dans la fenêtre définirait une autre règle, qui n’est pas celle comparée.
+La moyenne arrière \\m_t\\ contient \\y_t\\ et devient disponible après cette observation. Elle peut donc servir à prévoir \\y\_{t+1}\\. Une moyenne centrée sur \\t\\ utilise aussi des observations postérieures à \\t\\ et sert à décrire la série rétrospectivement. Dans notre comparaison, on répète la dernière MM4 connue à l’origine pour les treize horizons. MM13 sert ici à illustrer l’effet de la largeur de la fenêtre.
 
 ## 2. Mettre à jour un niveau
+
+Le lissage exponentiel simple (SES) corrige le niveau précédent d’une fraction \\\alpha\\ de l’écart avec la nouvelle observation.
+
+\\ \ell_t=\ell\_{t-1}+\alpha(y_t-\ell\_{t-1}). \\
+
+Si le niveau vaut 100 et que la demande passe à 140, l’écart vaut 40. Avec \\\alpha=0{,}2\\, la correction vaut 8 et le niveau passe à 108. Avec \\\alpha=0{,}8\\, la correction vaut 32 et le niveau passe à 132. Si la demande reste à 140 la semaine suivante, refaites le calcul à partir de chaque nouveau niveau.
 
 ``` r
 exemple <- tibble(observe = c(100, 100, 140, 140),
@@ -93,15 +110,19 @@ niveaux <- apprentissage |>
   mutate(alpha_02 = niveau_ses(demande, 0.2),
          alpha_08 = niveau_ses(demande, 0.8))
 niveaux |>
-  select(semaine, demande, alpha_02, alpha_08) |>
+  select(semaine, Observé = demande, `Alpha = 0,2` = alpha_02,
+         `Alpha = 0,8` = alpha_08) |>
   pivot_longer(-semaine, names_to = "serie", values_to = "unites") |>
   ggplot(aes(semaine, unites, colour = serie)) +
   geom_line(linewidth = 0.7) +
   labs(x = NULL, y = "Demande (unités par semaine)", colour = "Série") +
-  theme_minimal(base_size = 12)
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
 ```
 
-![](demonstrations_files/figure-html/alpha-m07-1.png)
+![Le niveau avec alpha égal à 0,8 reste plus près des observations que le niveau avec alpha égal à 0,2.](demonstrations_files/figure-html/alpha-m07-1.png)
+
+À la seconde observation de 140, les niveaux atteignent 114,4 et 138,4 unités. Le graphique prolonge la comparaison sur les données d’apprentissage. Les deux courbes partent de la première demande observée. Une valeur élevée d’\\\alpha\\ donne plus de poids à la dernière observation, qu’il s’agisse d’une variation durable ou d’un pic isolé.
 
 ``` r
 modele_ses <- ses(serie, h = horizon, initial = "optimal")
@@ -111,26 +132,41 @@ modele_ses$model$par["alpha"]
         alpha
     0.3711818
 
-Avec le même niveau initial de 100, les deux dernières valeurs lissées de l’exemple sont 108 puis 114,4 pour alpha = 0,2, contre 132 puis 138,4 pour alpha = 0,8. Le paramètre élevé réagit davantage; il amplifie aussi la réaction à une observation inhabituelle.
-
-Le SES principal estime alpha et l’état initial sur les 91 semaines seulement, avec `initial = "optimal"`. L’alpha obtenu est d’environ 0,371. Il n’est pas censé égaler une des valeurs imposées pour l’illustration. Les prévisions SES à origine fixe restent constantes: un niveau révisable ne constitue pas une tendance prévue.
+Pour la comparaison principale, `ses()` estime \\\alpha\\ et le niveau initial à partir des 91 semaines d’apprentissage. Ici, l’estimation d’\\\alpha\\ vaut environ 0,371. Les deux valeurs imposées servaient à illustrer la réactivité. À l’origine choisie, le SES répète son dernier niveau aux treize horizons. Il n’extrapole ni pente ni motif saisonnier.
 
 ## 3. Émettre et évaluer les prévisions
 
-Les trois candidats historiques restent naïf, MM4 et SES. Le naïf saisonnier du module 06 est ajouté comme référence de contrôle. Il reprend les valeurs de 52 semaines auparavant. Ce cycle de 364 jours est une approximation du calendrier annuel.
+On compare quatre méthodes à la même origine. Le naïf répète la dernière demande observée, MM4 la moyenne des quatre dernières semaines et SES le dernier niveau estimé. Le naïf saisonnier reprend, pour chaque cible, la demande observée 52 semaines auparavant. Ce cycle de 364 jours approxime le calendrier annuel.
 
 ``` r
-# Règles fixées avant de consulter les scores : origine unique, h = 1 à 13.
-# MM4 : répéter la dernière moyenne observée, sans mise à jour future.
+# Dater les cibles à partir du calendrier, puis prévoir avec l’apprentissage.
+semaines_cibles <- seq(max(apprentissage$semaine), by = "week",
+                      length.out = horizon + 1L)[-1L]
 previsions <- tibble(
-  semaine = validation$semaine,
-  observe = validation$demande,
+  semaine = semaines_cibles,
+  h = seq_len(horizon),
   Naive = rep(tail(apprentissage$demande, 1), horizon),
-  MM4 = rep(mean(tail(apprentissage$demande, 4)), horizon),
+  MM4 = rep(tail(lissage$mm4, 1), horizon),
   SES = as.numeric(modele_ses$mean),
   Saisonnier = as.numeric(snaive(serie, h = horizon)$mean)
 )
+head(previsions, 3)
+```
+
+    # A tibble: 3 × 6
+      semaine        h Naive   MM4   SES Saisonnier
+      <date>     <int> <dbl> <dbl> <dbl>      <dbl>
+    1 2025-09-29     1  1211 1313. 1290.       1121
+    2 2025-10-06     2  1211 1313. 1290.       1246
+    3 2025-10-13     3  1211 1313. 1290.       1154
+
+Chaque ligne contient les quatre prévisions émises pour une même semaine. Les trois premières lignes suffisent pour voir quelles méthodes donnent une prévision constante. Pour mesurer l’erreur, on associe ensuite chaque prévision à l’observation de la même semaine. Une erreur positive indique une sous-prévision. La ME conserve le signe, la MAE mesure l’écart absolu moyen et la RMSE donne plus de poids aux grandes erreurs.
+
+``` r
+stopifnot(nrow(previsions) == nrow(validation),
+          all(previsions$semaine == validation$semaine))
 erreurs <- previsions |>
+  mutate(observe = validation$demande) |>
   pivot_longer(Naive:Saisonnier, names_to = "methode", values_to = "prevision") |>
   mutate(erreur = observe - prevision)
 scores <- erreurs |>
@@ -138,44 +174,55 @@ scores <- erreurs |>
   group_modify(~ mesures_erreurs(.x$observe, .x$prevision)) |>
   ungroup() |>
   arrange(MAE)
-scores |> select(methode, ME, MAE, RMSE)
+knitr::kable(scores |> select(methode, ME, MAE, RMSE), digits = 1,
+             col.names = c("Méthode", "ME", "MAE", "RMSE"),
+             format.args = list(decimal.mark = ","),
+             caption = "Erreurs sur les treize semaines, en unités de produit")
 ```
 
-    # A tibble: 4 × 4
-      methode       ME   MAE  RMSE
-      <chr>      <dbl> <dbl> <dbl>
-    1 MM4         82.6  100.  128.
-    2 SES        106.   114.  144.
-    3 Saisonnier 143.   179.  194.
-    4 Naive      185.   185.  209.
+| Méthode    |    ME |   MAE |  RMSE |
+|:-----------|------:|------:|------:|
+| MM4        |  82,6 | 100,1 | 128,1 |
+| SES        | 106,1 | 113,9 | 144,4 |
+| Saisonnier | 142,9 | 178,6 | 193,6 |
+| Naive      | 184,8 | 184,8 | 209,2 |
+
+Erreurs sur les treize semaines, en unités de produit {.caption-top .table .table-sm .table-striped .small}
 
 ``` r
-# Chaque observation est tracée une seule fois.
 ggplot() +
-  geom_line(data = validation, aes(semaine, demande), linewidth = 1) +
+  geom_line(data = validation, aes(semaine, demande, colour = "Observé"),
+            linewidth = 1) +
   geom_line(data = erreurs, aes(semaine, prevision, colour = methode),
             linewidth = 0.7) +
   labs(x = NULL, y = "Demande (unités par semaine)", colour = "Méthode") +
-  theme_minimal(base_size = 12)
+  scale_colour_manual(values = c("Observé" = "#202124", MM4 = "#0072B2",
+                                  Naive = "#D55E00", SES = "#009E73",
+                                  Saisonnier = "#A34788")) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
 ```
 
-![](demonstrations_files/figure-html/graphiques-m07-1.png)
+![La demande observée augmente vers la fin de la validation et dépasse alors les quatre prévisions.](demonstrations_files/figure-html/graphiques-m07-1.png)
 
 ``` r
 ggplot(erreurs, aes(semaine, erreur, colour = methode)) +
   geom_hline(yintercept = 0, colour = "grey55") +
   geom_line() + geom_point() +
   labs(x = NULL, y = "Observé − prévu (unités)", colour = "Méthode") +
-  theme_minimal(base_size = 12)
+  scale_colour_manual(values = c(MM4 = "#0072B2", Naive = "#D55E00",
+                                  SES = "#009E73", Saisonnier = "#A34788")) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
 ```
 
-![](demonstrations_files/figure-html/graphiques-m07-2.png)
+![Pour MM4, les erreurs changent de signe en début de validation puis restent positives et augmentent vers la fin.](demonstrations_files/figure-html/graphique-erreurs-m07-1.png)
 
-MM4 a ici une MAE d’environ 100,1 unités, contre 113,9 pour SES, 178,6 pour le naïf saisonnier et 184,8 pour le naïf. La RMSE de MM4 est d’environ 128,1 unités. Sa ME positive (environ 82,6 unités) signale une sous-prévision moyenne. La meilleure MAE de cette période ne prouve pas que le lissage constant capture la tendance ou les promotions.
-
-Les scores restent en unités de produit. La ME peut cacher des compensations; le graphique des erreurs montre leur localisation. Les rappels MAPE et MASE sont dans les [lectures](../../modules/semaine-07-lissage/lectures.llms.md#lecture-3). On ne sélectionne aucune fenêtre supplémentaire après consultation des scores.
+MM4 a la plus petite MAE sur ces semaines, soit 100,1 unités, et une RMSE de 128,1 unités. Sa ME de +82,6 unités indique une sous-prévision moyenne. Le graphique situe ces écarts dans le temps. Par exemple, la prévision MM4 est trop élevée pour la semaine du 27 octobre, puis reste sous les observations à partir du 3 novembre. Les [lectures sur les erreurs](../../modules/semaine-07-lissage/lectures.llms.md#lecture-3) reprennent les formules et les limites des mesures.
 
 ## 4. Relier le classement à la décision
+
+Supposons qu’une unité sous-prévue coûte deux unités de coût fictives et qu’une unité sur-prévue en coûte une. Une erreur de +10 coûte alors 20, tandis qu’une erreur de −10 coûte 10. On applique la règle à chacune des treize semaines, puis on calcule le coût moyen de chaque méthode.
 
 ``` r
 # Sensibilité hypothétique : une unité sous-prévue coûte 2, une sur-prévue 1.
@@ -185,24 +232,32 @@ scores_cout <- erreurs |>
                                 cout_sous = 2, cout_sur = 1)) |>
   ungroup() |>
   arrange(cout_moyen)
-scores_cout |> select(methode, MAE, cout_moyen, sous_previsions)
+knitr::kable(scores_cout |> select(methode, MAE, cout_moyen, sous_previsions),
+             digits = 1, format.args = list(decimal.mark = ","),
+             col.names = c("Méthode", "MAE (unités)", "Coût moyen", "Semaines sous-prévues"),
+             caption = "Coût pédagogique moyen par semaine")
 ```
 
-    # A tibble: 4 × 4
-      methode      MAE cout_moyen sous_previsions
-      <chr>      <dbl>      <dbl>           <int>
-    1 MM4         100.       191.              10
-    2 SES         114.       224.              11
-    3 Saisonnier  179.       339.              11
-    4 Naive       185.       370.              13
+| Méthode    | MAE (unités) | Coût moyen | Semaines sous-prévues |
+|:-----------|-------------:|-----------:|----------------------:|
+| MM4        |        100,1 |      191,4 |                    10 |
+| SES        |        113,9 |      223,9 |                    11 |
+| Saisonnier |        178,6 |      339,4 |                    11 |
+| Naive      |        184,8 |      369,7 |                    13 |
 
-MM4 conserve ici la plus petite perte dans ce scénario fictif. On peut la retenir provisoirement comme prévision de référence de demande. Ce calcul ne fixe pas une quantité de commande: stocks disponibles, délais, capacité, niveau de service et incertitude manquent. Une perte linéaire asymétrique ne transforme pas le SES en prévision optimisée pour ce coût.
+Coût pédagogique moyen par semaine {.caption-top .table .table-sm .table-striped .small}
 
-Réévaluez aux prochaines origines lorsque les observations arrivent, en conservant le même horizon et les mêmes règles pour tous les candidats. Un déplacement de l’origine est une nouvelle expérience; il ne doit pas être mélangé aux treize prévisions émises ensemble.
+Sur cette validation, on peut retenir provisoirement MM4 comme référence. Elle a la plus petite MAE et le plus faible coût moyen dans ce scénario, soit 191,4 unités de coût par semaine. Elle sous-prévoit tout de même la demande pendant 10 des 13 semaines. Pour passer de la prévision à une quantité à commander, l’équipe aurait besoin du stock disponible, des délais et du niveau de service visé.
+
+Pour le suivi, consignez les erreurs et leurs coûts à mesure que les observations arrivent. À une nouvelle origine, comparez de nouveau les quatre méthodes sur les mêmes treize horizons et gardez leurs scores séparés de cette première comparaison.
+
+## Trace finale
+
+Dans `lissage_demande.qmd`, réunissez les productions 7.1 à 7.4, chacune une seule fois. Gardez les périodes d’apprentissage et de validation, les graphiques de lissage, les deux calculs de mise à jour, les prévisions et leurs erreurs, puis la recommandation. Redémarrez R et rendez le rapport pour vérifier que tous les résultats se recalculent. Le transfert sur l’électricité se fait dans un rapport distinct.
 
 ## Complément accompagné : Holt
 
-Facultatif pour les deux rapports. Pour le laboratoire 03, savoir lire le niveau, la pente et l’amortissement; le code est fourni et les récurrences manuelles ne sont pas demandées.
+Ce complément est facultatif pour les deux rapports. Si vous le faites, utilisez le code fourni et concentrez-vous sur le rôle du niveau, de la pente et de l’amortissement.
 
 ``` r
 # Facultatif : comparer une tendance amortie, sans composante saisonnière.
@@ -224,4 +279,8 @@ comparaison_holt |> arrange(MAE)
     4 Saisonnier  143.   179.  194.
     5 Naive       185.   185.  209.
 
-Holt amorti a ici une MAE d’environ 152,2 unités. Ajouter une pente n’améliore donc pas automatiquement le score. La méthode ne modélise pas la saisonnalité. Les [lectures facultatives](../../modules/semaine-07-lissage/lectures.llms.md#complements) conservent les autres pistes de l’ancien matériel.
+Holt amorti a une MAE de 152,2 unités sur ces cibles, contre 100,1 pour MM4. Il prolonge une pente dont l’effet diminue avec l’horizon. La pente ne suffit pas à améliorer la MAE dans ce cas. Holt et les modèles qui ajoutent une composante saisonnière sont présentés dans les [lectures facultatives](../../modules/semaine-07-lissage/lectures.llms.md#complements).
+
+## Sources et provenance
+
+La série hebdomadaire est simulée pour le cours. Sa provenance et ses variables sont décrites dans les [dictionnaires](data/dictionnaires.md). Pour les méthodes de référence et les mesures, voir Hyndman et Athanasopoulos (2021), [*Forecasting: Principles and Practice*, chapitre 5](https://otexts.com/fpp3/toolbox.html). Pour le SES et Holt, voir le [chapitre 8 du même ouvrage](https://otexts.com/fpp3/exponential-smoothing.html) et la [documentation des fonctions `ses()` et `holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.html).
