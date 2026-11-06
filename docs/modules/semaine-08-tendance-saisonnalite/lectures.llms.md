@@ -11,10 +11,11 @@ Les lectures améliorent les réponses déjà commencées dans `tendance_ventes.
 | Moment | Statut et passage à lire | Ce qu’il faut en retenir | Vérification personnelle |
 |----|----|----|----|
 | Avant le parcours | Obligatoire: [préparation R](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#preparation) et [dictionnaires](data/dictionnaires.md) | Dates, dollars canadiens, origine, 60 mois puis 12 mois. | Construire le calendrier futur sans lire les ventes futures. |
-| Après la capsule 1 | Obligatoire: [lire les motifs](#lecture-1) | Tendance, répétition, profils par mois et années. | Donner deux observations et une limite du graphique. |
+| Après la capsule 1 | Obligatoire : [lire les motifs](#lecture-1) et [lire la décomposition](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#lire-les-composantes) | Tendance, répétition, écart saisonnier en dollars. | Donner un écart signé et une limite de la décomposition. |
 | Après la capsule 2 | Obligatoire: [tendance et mois](#lecture-2) | Indice, facteur, référence, pente et contraste mensuel. | Interpréter décembre conditionnellement au modèle. |
 | Après la capsule 3 | Obligatoire: [diagnostics](#lecture-3) | Résidus dans le temps, dispersion, moyenne mensuelle imposée. | Expliquer pourquoi une moyenne résiduelle nulle ne suffit pas. |
 | Après la capsule 4 | Obligatoire: [validation commune](#lecture-4) | Quatre candidats, même origine, mêmes informations et dollars. | Distinguer erreur de prévision et résidu d’ajustement. |
+| Après la comparaison de la capsule 4 | [Lecture accompagnée de Holt-Winters et ETS](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#holt-winters-ets) | Niveau, tendance et saisonnalité dans une prévision. | Lire le classement par MAE sur la même période. |
 | Après la capsule 5 | Obligatoire: [incertitude et décision](#lecture-5) | Moyenne, observation future, intervalles marginaux et suivi. | Nommer une limite d’un ruban à 95 %. |
 | Après le parcours | Facultatif: [cahier des compléments](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) | Formes de tendance, harmoniques et stationnarité. | Identifier le prérequis et ce que chaque outil ajoute. |
 
@@ -26,7 +27,7 @@ Le graphique temporel conserve l’ordre des observations. Les profils mensuels 
 
 Dans les deux cas du cours, les données sont simulées. Un motif graphique ne prouve pas une cause dans une organisation réelle. Un mois élevé peut combiner calendrier, activité commerciale et événement inhabituel. Le parcours explore seulement l’apprentissage avant de calculer les scores futurs.
 
-Lecture facultative: Hyndman et Athanasopoulos (2021), [FPP3, composantes d’une série](https://otexts.com/fpp3/decomposition.html#sec-decomposition). Pour la décomposition additive, ses indices et ses limites, suivez l’[activité guidée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md). Elle complète l’activité 8.1 dans le même rapport. La fin de cette page présente aussi Holt-Winters et ETS avec des résultats calculés; elle demande une compréhension accompagnée, pas un ajustement autonome.
+Lecture facultative: Hyndman et Athanasopoulos (2021), [FPP3, composantes d’une série](https://otexts.com/fpp3/decomposition.html#sec-decomposition). Pour la décomposition additive, ses indices et ses limites, suivez l’[activité guidée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md). Elle complète l’activité 8.1 dans le même rapport. Revenez à l’exemple de Holt-Winters et ETS après la capsule 4 pour interpréter ses résultats.
 
 ## 2. Ajouter tendance et mois dans la régression
 

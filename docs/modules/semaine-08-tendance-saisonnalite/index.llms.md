@@ -42,13 +42,13 @@ Les deux séries sont entièrement simulées, avec 72 mois de janvier 2020 à d�
 
 Le socle porte sur cinq gestes: lire les motifs, ajuster tendance linéaire et mois, lire les résidus, comparer les prévisions et communiquer l’incertitude. Les quatre candidats sont fixés avant les scores: tendance seule, saison seule, tendance avec mois et naïf saisonnier.
 
-Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. La lecture d’une décomposition et d’un écart saisonnier accompagne l’activité 8.1. La même [activité guidée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md) présente Holt-Winters et ETS avec code et résultats; leur ajustement autonome n’est pas exigé. Harmoniques et stationnarité restent facultatives.
+Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md) conserve les autres notions de l’ancienne séance, avec explications et code complet. Tendances quadratique et exponentielle consolident les transformations déjà vues. La lecture d’une décomposition et d’un écart saisonnier accompagne l’activité 8.1. Après la comparaison des quatre candidats, la [démonstration accompagnée sur Holt-Winters et ETS](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#holt-winters-ets) montre comment lire leurs prévisions. Le code est fourni et cette lecture ne s’ajoute pas au rapport. Harmoniques et stationnarité restent facultatives.
 
 ## Votre parcours
 
-Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les exercices de transfert sont distincts et se conservent dans `tendance_commerce.qmd`, après une première tentative avant le corrigé.
+Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans `tendance_ventes.qmd`. Après chaque tentative, vérifiez votre réponse dans la [démonstration](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md). Les exercices de transfert sont distincts et se conservent dans `tendance_commerce.qmd`, après une première tentative avant le corrigé.
 
-Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 4 novembre 2026](telechargements/module-08-pdf-2026-11-04.zip) contient ces six supports.
+Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 6 novembre 2026](telechargements/module-08-pdf-2026-11-06.zip) contient ces six supports.
 
 Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.
 
@@ -56,7 +56,7 @@ Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production.
 
 Objectif Repérer tendance et saisonnalité.
 
-Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Démonstration](demonstrations.llms.md#exploration) · [Lecture française](lectures.llms.md#lecture-1) · [Décomposition guidée](decomposition-guidee.llms.md)
+Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Démonstration](demonstrations.llms.md#exploration) · [Lecture française](lectures.llms.md#lecture-1) · [Décomposition guidée](decomposition-guidee.llms.md#lire-les-composantes)
 
 Action Ajouter cette étape au rapport guidé.
 
@@ -65,6 +65,8 @@ Activité 8.1
 Sur les 60 mois d’apprentissage, tracez les ventes dans le temps et les profils mensuels par année. Nommez les unités, décrivez une hausse et un motif récurrent, puis expliquez ce que ces graphiques ne permettent pas d’attribuer à une cause. À partir de la décomposition fournie, interprétez un écart saisonnier mensuel et une limite.
 
 Auto-vérification J’ai limité l’exploration à 2020 à 2024. Mes axes indiquent les mois et les dollars canadiens. Je distingue tendance, répétition et explication causale. J’interprète un écart saisonnier et une limite de la décomposition.
+
+Après la tentative [Corrigé de l’activité 8.1](demonstrations.llms.md#corrige-8-1)
 
 Transfert distinct Faites l’[exercice 1](exercices.llms.md#exercice-1) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 
@@ -82,6 +84,8 @@ Vérifiez l’indice continu et le facteur mois avec janvier comme référence. 
 
 Auto-vérification Mon indice augmente d’une unité par mois et mon facteur n’est pas ordonné. Je précise janvier comme référence et les unités des coefficients. Je distingue comparaison conditionnelle et effet causal.
 
+Après la tentative [Corrigé de l’activité 8.2](demonstrations.llms.md#corrige-8-2)
+
 Transfert distinct Faites l’[exercice 2](exercices.llms.md#exercice-2) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 
 3Lire les résidusQu’est-ce que le modèle laisse encore dans la série?[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md#diagnostic)[Ex. 3](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
@@ -97,6 +101,8 @@ Activité 8.3
 Examinez les résidus du modèle combiné dans le temps et selon les valeurs ajustées. Comparez les résidus moyens par mois des trois modèles. Expliquez pourquoi une moyenne mensuelle presque nulle ne suffit pas à valider la saisonnalité future.
 
 Auto-vérification Je distingue observation, valeur ajustée et résidu. J’examine le temps et la dispersion au-delà des moyennes. Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.
+
+Après la tentative [Corrigé de l’activité 8.3](demonstrations.llms.md#corrige-8-3)
 
 Transfert distinct Faites l’[exercice 3](exercices.llms.md#exercice-3) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 
@@ -114,6 +120,8 @@ Construisez le calendrier de 2025 avec les indices 61 à 72. Émettez les prévi
 
 Auto-vérification Les quatre candidats utilisent les mêmes douze cibles et informations disponibles. Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur. Mon choix repose sur les erreurs de validation et reste provisoire.
 
+Après la tentative [Corrigé de l’activité 8.4](demonstrations.llms.md#corrige-8-4)
+
 Transfert distinct Faites l’[exercice 4](exercices.llms.md#exercice-4) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 
 5Communiquer l’incertitude et la décisionQue peut-on annoncer sans promettre le budget futur?[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md#incertitude)[Ex. 5](exercices.llms.md#exercice-5)Ouvrir l’étapeRéduire
@@ -129,6 +137,8 @@ Activité 8.5
 Produisez les intervalles de prédiction du modèle combiné et comparez-les aux intervalles de confiance de la moyenne pour janvier 2025. Rédigez une recommandation avec deux scores, une interprétation du calendrier, une limite et une règle de surveillance.
 
 Auto-vérification Je distingue moyenne conditionnelle et nouvelle observation. Je lis les intervalles comme marginaux et dépendants des hypothèses. Ma recommandation nomme les unités, une limite et une réévaluation future.
+
+Après la tentative [Corrigé de l’activité 8.5](demonstrations.llms.md#corrige-8-5)
 
 Transfert distinct Faites l’[exercice 5](exercices.llms.md#exercice-5) dans `tendance_commerce.qmd`, avant d’ouvrir son corrigé.
 
@@ -158,7 +168,7 @@ Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapp
 
 > **NOTE:**
 >
-> La proposition de données est attendue à la fin de ce module. Pour la voie temporelle, utilisez les acquis des modules 06 à 08 et préparez les variables externes du module 09. Pour la voie classification, suivez dès maintenant le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe), puis utilisez le point de contrôle du laboratoire 3 pour vérifier votre protocole. Les supports écrits et exemples sont déjà disponibles : cette voie ne demande pas d’attendre le 2 décembre.
+> Consultez l’[échéancier du mini-rapport 2](../../evaluations/mini-rapport-2.llms.md#échéancier-pédagogique) pour la proposition de données. Pour la voie temporelle, utilisez les acquis des modules 06 à 08. Le module 09 vous aidera si vous utilisez des variables externes. Pour la voie classification, suivez dès maintenant le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe). Le laboratoire 03 permet de faire vérifier le protocole des deux voies.
 
 ## Ressources du module
 
@@ -197,7 +207,7 @@ Vérifiez dans l’ordre:
 
 1.  Le `.Rproj` est ouvert après extraction de toute l’archive, avec `R/` et `data/` présents.
 2.  `tidyverse` et `broom` se chargent et `R/fonctions-module08.R` existe.
-3.  Les dates sont distinctes, triées et espacées d’un mois; la cible est en dollars canadiens.
+3.  Les dates sont distinctes, triées et espacées d’un mois; la cible est en dollars canadiens. Dans la console, vérifiez le dossier courant avec `getwd()` et le CSV avec `file.exists("data/ventes_saisonnieres_quebec.csv")`.
 4.  L’apprentissage contient 60 mois, la validation 12 mois, avec indices futurs 61 à 72.
 5.  Le facteur mois est non ordonné, avec janvier comme référence.
 6.  Les blocs visibles sont exécutés dans l’ordre après la préparation commune.

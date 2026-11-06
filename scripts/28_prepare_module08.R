@@ -11,7 +11,7 @@ portable <- function(fichier, titre) {
   s <- gsub("(?s)```\\{r\\}\\n#\\| include: false\\n.*?```\\n", "", s, perl = TRUE)
   # Les liens de données et les ancres internes restent locaux. Les autres
   # pages et téléchargements peuvent précéder leur version publique.
-  s <- gsub('\\[([^]\\n]+)\\]\\((telechargements/[^)]+|(lectures|demonstrations|exercices|capsules|notes-cours|index|complements)\\.qmd[^)]*)\\)',
+  s <- gsub('\\[([^]\\n]+)\\]\\((telechargements/[^)]+|(lectures|demonstrations|exercices|capsules|notes-cours|index|complements|decomposition-guidee)\\.qmd[^)]*)\\)',
             '\\1', s, perl = TRUE)
   paste0(entete(titre), s, "\n")
 }
@@ -33,21 +33,22 @@ preparer <- function(nom, rapport, texte, complet = FALSE, facultatif = FALSE) {
                          file.path(dossier, "R"))))
   qmd <- file.path(dossier, paste0(rapport, ".qmd"))
   writeLines(texte, qmd, useBytes = TRUE)
-  if (nom == "tendance-ventes") {
+  if (nom %in% c("tendance-ventes", "demonstration-tendance-ventes")) {
     stopifnot(file.copy(file.path(module, "decomposition-guidee.qmd"),
                         file.path(dossier, "decomposition-guidee.qmd")))
   }
   if (complet) knitr::purl(qmd, output = sub("qmd$", "R", qmd), quiet = TRUE)
   writeLines(c("Version: 1.0", "RestoreWorkspace: No", "SaveWorkspace: No",
                "AlwaysSaveHistory: No"), file.path(dossier, paste0(nom, ".Rproj")))
-  writeLines(c(paste0("# ", nom), "", "Version locale du 26 octobre 2026.",
+  writeLines(c(paste0("# ", nom), "", "Module 08, automne 2026.",
     "1. Décompressez toute l’archive et ouvrez le .Rproj.",
-    "2. Installez une fois tidyverse, broom et forecast si nécessaire. R, RStudio et Quarto sont requis.",
-    if (facultatif) "3. Les parties utilisant forecast et tseries les chargent explicitement; installez-les une fois si nécessaire." else
-      "3. Le socle comprend cinq activités guidées ou cinq exercices suivis, pas les méthodes avancées.",
+    "2. Installez tidyverse et broom si nécessaire. R, RStudio et Quarto sont requis.",
+    if (facultatif) "3. Installez aussi forecast et tseries au besoin." else if (nom %in% c("tendance-ventes", "demonstration-tendance-ventes"))
+      "3. Pour lire la décomposition, ouvrez decomposition-guidee.qmd, installez forecast au besoin et cliquez sur Render." else
+      "3. Les cinq exercices suivis se font avec le fichier de ventes commerciales.",
     "4. Ouvrez le .qmd, redémarrez R, puis faites Render. Les projets de départ se rendent avant d’être complétés.",
     if (complet) "5. Les blocs visibles s’exécutent dans l’ordre. Le script .R reprend les calculs." else
-      "5. Ajoutez vos calculs et interprétations à chaque étape, une seule fois. Pour la décomposition, utilisez decomposition-guidee.qmd dans le projet guidé.",
+      "5. Ajoutez vos calculs et interprétations à chaque étape, une seule fois.",
     "6. Conservez data/ et R/. Aucun objet créé seulement dans la console n’est requis.",
     "", "Deux séries québécoises entièrement simulées. Chaque fichier décrit 72 mois, janvier 2020 à décembre 2025.",
     "Les calculs apprennent sur 60 mois, puis comparent 12 mois. La validation sert au choix, sans test final indépendant.",
@@ -77,7 +78,8 @@ consignes <- vapply(1:5, function(i) {
 stopifnot(all(nzchar(consignes)))
 depart <- paste0(entete("Ventes : mon analyse de tendance et saisonnalité"),
   "## Préparation\n\n", bloc(demo, "preparation-m08"), "\n\n",
-  "Données simulées. Protocole 60 + 12 mois, mêmes quatre candidats et une seule origine.\n\n",
+  "Données simulées. Ajustez sur les 60 mois de 2020 à 2024. Comparez les prévisions des quatre candidats sur 2025, à l’origine de fin 2024.\n\n",
+  "Pour la lecture de la décomposition à l’activité 8.1, ouvrez le fichier `decomposition-guidee.qmd` de ce projet et cliquez sur Render. Notez un écart et une limite dans ce rapport.\n\n",
   paste0("## Activité 8.", 1:5, "\n\n", consignes,
          "\n\nAjoutez votre code, vos résultats et votre interprétation. Cette activité se réalise une seule fois.\n\n", collapse = ""))
 source_ex <- lire(file.path(module, "exercices.qmd"))

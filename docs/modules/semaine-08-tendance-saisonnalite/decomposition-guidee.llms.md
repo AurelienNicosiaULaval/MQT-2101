@@ -1,10 +1,10 @@
 # Module 08 : lire la décomposition et une prévision saisonnière
 
-Cette activité accompagne la lecture des motifs de l’activité 8.1. Elle utilise les ventes mensuelles fictives du cas guidé. Elle prépare la discussion de la tendance et de la saisonnalité; ses réponses peuvent compléter la même section du rapport. Les calculs utilisent uniquement les 60 mois d’apprentissage jusqu’à la comparaison de prévisions.
+Pour l’activité 8.1, lisez les composantes et reportez un écart saisonnier et une limite dans la section 8.1 de `tendance_ventes.qmd`. Après la capsule 4, revenez à l’exemple accompagné de Holt-Winters et ETS pour lire leurs prévisions et leurs scores.
 
 ## Préparation
 
-Installez au besoin les packages `tidyverse` et `forecast`, puis exécutez tous les blocs dans l’ordre.
+Dans le projet guidé, ouvrez le fichier `decomposition-guidee.qmd` et cliquez sur Render pour obtenir les tableaux. Installez au besoin les packages `tidyverse` et `forecast`. Les blocs s’exécutent dans l’ordre.
 
 ``` r
 library(tidyverse)
@@ -48,27 +48,28 @@ ggplot(graphique_composantes, aes(date, valeur)) +
 ![](decomposition-guidee_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
-indices <- tibble(mois = 1:12, ecart_saisonnier = as.numeric(composantes$figure))
+indices <- tibble(mois = 1:12,
+                  ecart_saisonnier_dollars = round(as.numeric(composantes$figure)))
 indices
 ```
 
     # A tibble: 12 × 2
-        mois ecart_saisonnier
-       <int>            <dbl>
-     1     1           -5826.
-     2     2           -8114.
-     3     3            7475.
-     4     4            1910.
-     5     5           18726.
-     6     6            6629.
-     7     7          -17783.
-     8     8          -12419.
-     9     9          -15746.
-    10    10           -6579.
-    11    11            7343.
-    12    12           24384.
+        mois ecart_saisonnier_dollars
+       <int>                    <dbl>
+     1     1                    -5826
+     2     2                    -8114
+     3     3                     7475
+     4     4                     1910
+     5     5                    18726
+     6     6                     6629
+     7     7                   -17783
+     8     8                   -12419
+     9     9                   -15746
+    10    10                    -6579
+    11    11                     7343
+    12    12                    24384
 
-Pour un mois, un écart saisonnier estimé positif indique une valeur au-dessus de la tendance estimée dans cette décomposition. Il ne démontre pas que le mois cause cet écart. La tendance est obtenue par une moyenne centrée : elle manque aux extrémités et utilise des observations de part et d’autre des dates intérieures. Elle ne représente donc pas ce qui aurait été connu en temps réel à chaque date.
+Pour un mois, un écart saisonnier estimé positif indique que la composante saisonnière ajoute des dollars à la tendance dans cette décomposition. Le reste peut encore placer la vente observée au-dessus ou au-dessous de la tendance. Il ne démontre pas que le mois cause cet écart. La tendance est obtenue par une moyenne centrée : elle manque aux extrémités et utilise des observations de part et d’autre des dates intérieures. Elle ne représente donc pas ce qui aurait été connu en temps réel à chaque date.
 
 1.  Nommez un mois où l’écart saisonnier estimé est positif et un mois où il est négatif. Donnez leurs valeurs en dollars.
 2.  Décrivez la tendance et une variation du reste. Pourquoi les valeurs manquantes aux extrémités ne sont-elles pas nécessairement des données absentes?
@@ -76,9 +77,13 @@ Pour un mois, un écart saisonnier estimé positif indique une valeur au-dessus 
 
 > **TIP:**
 >
-> Utilisez le tableau affiché, avec ses signes et ses unités. La moyenne centrée ne peut pas être calculée aux bords avec la fenêtre complète. Les ventes de 2025 ne sont pas connues à l’origine de fin 2024. La décomposition décrit le passé et ne suffit pas à elle seule pour produire une prévision.
+> - En décembre, la composante saisonnière ajoute environ 24 400 \$ à la tendance estimée. En juillet, elle lui retranche environ 17 800 \$.
+> - Le niveau général monte. Le reste fluctue de part et d’autre de zéro. Les observations existent aux extrémités, mais la fenêtre de la moyenne centrée dépasse les dates disponibles.
+> - À la fin de 2024, les ventes de 2025 sont encore inconnues. Les utiliser pour calculer les composantes introduirait de l’information indisponible à l’origine.
 
 ## Comprendre Holt-Winters et ETS avec un exemple fourni
+
+Lisez cet exemple après la comparaison de l’activité 8.4. Les quatre candidats de votre rapport restent les trois régressions et le naïf saisonnier.
 
 Le lissage de Holt-Winters prolonge le lissage exponentiel en combinant un niveau, une tendance et une saisonnalité. Une saison additive ajoute des écarts dans l’unité des ventes; une saison multiplicative utilise des facteurs et exige des valeurs positives. L’approche ETS représente une famille de modèles dont on précise ou sélectionne les composantes d’erreur, de tendance et de saisonnalité. L’exemple ci-dessous estime un Holt-Winters additif et laisse `ets()` choisir une structure parmi les modèles qu’il considère. Il n’est pas demandé de calculer les récurrences à la main ni de mémoriser le catalogue des modèles.
 
@@ -146,13 +151,17 @@ ggplot(comparaison, aes(date, prevision, colour = methode)) +
 
 ![](decomposition-guidee_files/figure-html/unnamed-chunk-4-1.png)
 
-Lisez la structure affichée par `modele_ets` et le tableau. Ici, `ets()` retient la structure additive ETS(A,A,A), apparentée à celle utilisée par le Holt-Winters additif. Dans cette version de `forecast`, `hw()` estime celle-ci en minimisant l’erreur quadratique à un pas, tandis que `ets()` utilise par défaut la vraisemblance pour l’estimation. Les deux ajustements peuvent donc différer, même lorsque leur structure est semblable. Une MAE plus faible signifie ici une erreur absolue moyenne plus faible sur ces douze mois. Elle ne garantit pas le même classement à une autre origine. L’ETS automatique sélectionne sa structure à partir de l’apprentissage, selon le critère utilisé par `ets()`; le tableau de validation répond à une autre question. Les intervalles de chaque méthode reposent sur ses hypothèses et n’incluent pas nécessairement tous les changements futurs.
+Lisez la structure affichée par `modele_ets` et le tableau. Ici, `ets()` retient la structure additive ETS(A,A,A), apparentée à celle utilisée par le Holt-Winters additif. Dans cette version de `forecast`, `hw()` estime celle-ci en minimisant l’erreur quadratique à un pas, tandis que `ets()` utilise par défaut la vraisemblance pour l’estimation. Les deux ajustements peuvent donc différer, même lorsque leur structure est semblable. Une MAE plus faible signifie ici une erreur absolue moyenne plus faible sur ces douze mois. Elle ne garantit pas le même classement à une autre origine. L’ETS automatique sélectionne ici sa structure par AICc sur les données d’apprentissage. Le tableau de validation mesure les erreurs sur 2025. Les intervalles de chaque méthode reposent sur ses hypothèses et n’incluent pas nécessairement tous les changements futurs.
 
-1.  Quelle composante le naïf saisonnier reprend-il pour chaque mois de 2025?
+1.  Quelle vente observée le naïf saisonnier reprend-il pour prévoir janvier 2025? Et décembre 2025?
 2.  Quels résultats distinguent les trois prévisions sur ce bloc? Indiquez la mesure et les unités.
 3.  Donnez une raison pour laquelle le modèle retenu sur ce bloc doit être vérifié sur d’autres périodes ou à de nouvelles origines.
 
-Les prévisions et le choix effectués sur 2025 ne constituent pas un test final indépendant. Les chiffres ne prouvent pas qu’une méthode est toujours supérieure.
+> **TIP:**
+>
+> - Le naïf saisonnier reprend les ventes observées en janvier 2024 pour janvier 2025 et celles de décembre 2024 pour décembre 2025.
+> - Dans ce calcul, la MAE est d’environ 29 067 \$ CA pour le naïf saisonnier, 9 387 \$ CA pour Holt-Winters et 9 947 \$ CA pour ETS. La RMSE donne ici le même ordre.
+> - Les douze mois appartiennent à une même année et les trois trajectoires partent de la même origine. Un autre bloc peut présenter des variations différentes. Si on choisit sur 2025, il faut d’autres observations pour évaluer la méthode retenue indépendamment.
 
 ## Pour aller plus loin
 

@@ -50,7 +50,7 @@ Une direction doit distinguer tendance générale et variations saisonnières po
 
 ::: {.keypoints}
 - Définir l’unité et la période.
-- Lire une tendance et un motif saisonnier.
+- Lire une tendance, un motif saisonnier et un écart à la tendance.
 - Explorer le passé avant de comparer.
 :::
 
@@ -148,10 +148,34 @@ ggplot(apprentissage, aes(mois, ventes / 1000,
 - Une seule année ne démontre pas la répétition.
 :::
 
+## Mesurer un écart à la tendance
+
+```{r}
+#| label: m08-c1-decomposition
+#| echo: false
+#| fig-width: 11
+#| fig-height: 3.4
+#| out-width: "84%"
+composantes <- decompose(serie, type = "additive")
+ecarts <- tibble(mois = factor(mois_fr, levels = mois_fr),
+                 ecart = as.numeric(composantes$figure) / 1000)
+ggplot(ecarts, aes(mois, ecart)) +
+  geom_hline(yintercept = 0, colour = "grey60") +
+  geom_col(fill = "#0B4F6C") +
+  labs(x = NULL, y = "Écart saisonnier (milliers de $ CA)") +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1))
+```
+
+::: {.note-box}
+En décembre, la composante saisonnière ajoute environ 24 400 $ à la tendance estimée.
+:::
+
 ## Décrire sans inventer une cause
 
 ::: {.warning-box}
-Des ventes élevées pendant un mois ne prouvent pas un effet causal du calendrier. Un événement commercial ou un changement d’activité peut intervenir.
+Des ventes élevées pendant un mois peuvent aussi refléter un événement commercial ou un changement d’activité.
+
+La tendance centrée se calcule à partir des mois voisins. Aux extrémités, la fenêtre est incomplète.
 :::
 
 ## À retenir
@@ -170,7 +194,7 @@ conserver l’ordre
 Saison
 :::
 ::: {.label}
-chercher une répétition
+lire un écart à la tendance
 :::
 :::
 ::: {.metric}

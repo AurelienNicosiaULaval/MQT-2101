@@ -49,7 +49,11 @@ ggplot(apprentissage, aes(mois, ventes / 1000, group = factor(annee), colour = f
 
 ![](demonstrations_files/figure-html/exploration-m08-2.png)
 
-Les profils comparent les mêmes mois entre années et montrent aussi l’augmentation du niveau. Une hausse dans une seule année ne suffirait pas à établir la récurrence saisonnière. Les mois de la fin d’année peuvent être élevés sans qu’un graphique établisse une cause. L’exploration principale reste limitée à l’apprentissage.
+Les profils comparent les mêmes mois entre années et montrent aussi l’augmentation du niveau. Une hausse dans une seule année ne suffirait pas à établir la récurrence saisonnière. Les mois de la fin d’année peuvent être élevés sans qu’un graphique établisse une cause. L’exploration principale reste limitée à l’apprentissage. Lisez ensuite la [décomposition guidée](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#lire-les-composantes) pour interpréter un écart en dollars.
+
+> **TIP:**
+>
+> Le niveau des profils monte au fil des années et décembre ressort régulièrement parmi les mois élevés. Dans la décomposition de l’apprentissage, décembre ajoute environ 24 400 \$ à la tendance estimée. La moyenne centrée n’a pas de fenêtre complète aux extrémités. Une répétition en décembre ne permet pas d’attribuer la hausse à une promotion ou au calendrier lui-même.
 
 ## 2. Ajuster tendance et mois
 
@@ -98,6 +102,10 @@ Le modèle combiné estime ici environ 2 884 \$ de hausse par mois à mois égal
 
 La tendance seule laisse de côté la saison. La saison seule répète un profil mensuel mais ne représente pas la hausse entre années. Le facteur mois est non ordonné, avec janvier comme référence et les contrastes de traitement explicitement fixés. L’affichage suit l’ordre du calendrier; il ne demande pas de contrastes polynomiaux.
 
+> **TIP:**
+>
+> Janvier 2020 et janvier 2021 ont le même mois de référence et des indices 1 et 13. La pente d’environ 2 884 \$ par mois représente environ 34 600 \$ entre deux janviers successifs. Le contraste de décembre ajoute environ 32 705 \$ par rapport à janvier à indice égal. Le modèle suppose le même écart décembre-janvier à toutes les années.
+
 ## 3. Examiner les résidus
 
 ``` r
@@ -137,6 +145,10 @@ residus_mensuels |>
 
 Dans le modèle avec les indicatrices mensuelles, les équations des moindres carrés imposent des sommes résiduelles nulles par mois, à l’arrondi numérique près. Cette propriété ne valide pas la stabilité future des effets saisonniers. Le temps et la dispersion des résidus peuvent encore révéler une structure manquante. L’autocorrélation sera approfondie au module 09; on peut déjà signaler cette limite sans appliquer un nouveau test.
 
+> **TIP:**
+>
+> Les résidus du modèle combiné vont d’environ −18 700 \$ à +21 200 \$. Le graphique temporel permet de chercher des suites d’écarts de même signe. Le graphique selon les valeurs ajustées permet de chercher une dispersion qui change avec le niveau. Dans les modèles qui contiennent le mois, les résidus de chaque mois se compensent par construction sur l’apprentissage. Pour juger les prévisions, il faut passer à 2025.
+
 ## 4. Comparer les prévisions
 
 ``` r
@@ -170,6 +182,10 @@ ggplot() +
 ![](demonstrations_files/figure-html/validation-m08-1.png)
 
 Le modèle combiné a ici la plus faible MAE des quatre candidats: environ 9 891 \$, avec une RMSE d’environ 11 280 \$. Le naïf saisonnier a une MAE d’environ 29 067 \$. La saison seule manque la croissance et sous-prévoit fortement la dernière année. Ce classement décrit ces douze mois utilisés pour choisir, sans établir une supériorité future.
+
+> **TIP:**
+>
+> Pour janvier 2025, utilisez l’indice 61 et reprenez la vente de janvier 2024 comme référence saisonnière. Avec les douze mêmes cibles, le modèle calendrier a une MAE d’environ 9 891 \$ CA, contre 29 067 \$ CA pour le naïf saisonnier. La saison seule sous-prévoit la dernière année. Le modèle calendrier est le choix provisoire selon la MAE de ce bloc.
 
 ## 5. Prévoir et communiquer l’incertitude
 
@@ -220,6 +236,12 @@ Pour janvier 2025, le modèle calendrier prévoit environ 457 130 \$. L’interv
 Les douze observations se trouvent ici dans leurs intervalles ponctuels à 95 %. Ce petit nombre ne démontre pas leur calibration future. Douze intervalles marginaux ne donnent pas une garantie simultanée de 95 % pour l’année. Les intervalles classiques supposent notamment forme correcte, erreurs indépendantes de variance constante et normalité pour les calculs exacts.
 
 Le budget cible est un objectif fictif, pas un prédicteur utilisé pour retrouver les ventes. La prévision et une plage sous hypothèses nourrissent la discussion budgétaire sans fixer le risque acceptable. Pour une vraie période suivante, on réajuste la méthode choisie avec le passé disponible à la nouvelle origine. Les nouvelles prévisions ne sont évaluables qu’après l’arrivée des observations.
+
+> **TIP:**
+>
+> En janvier 2025, l’intervalle de confiance de la moyenne va d’environ 447 165 \$ à 467 095 \$. L’intervalle de prédiction d’une vente va d’environ 435 673 \$ à 478 587 \$.
+>
+> Exemple de recommandation. Retenir le calendrier pour la planification provisoire. Sur 2025, sa MAE est d’environ 9 891 \$ CA et sa RMSE de 11 280 \$ CA. Il représente des mois récurrents comme décembre, sous l’hypothèse d’écarts saisonniers constants. À chaque nouveau mois, consigner l’erreur. Si les écarts persistent dans le même sens, revoir l’hypothèse de tendance et réévaluer le modèle à de nouvelles origines.
 
 ## Pour consolider ou approfondir
 

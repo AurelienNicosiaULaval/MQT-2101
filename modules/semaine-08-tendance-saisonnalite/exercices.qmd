@@ -214,15 +214,15 @@ Réunissez ces cinq réponses dans `tendance_commerce.qmd`: protocole, graphique
 
 ## Pratique supplémentaire {#pratique-supplementaire}
 
-Huit questions indépendantes. Tentez une réponse avant le corrigé. Elles ne demandent pas les méthodes avancées du cahier facultatif.
+Ces huit questions facultatives sont indépendantes. Pour chacune, appuyez votre réponse sur un calcul, une hypothèse du modèle ou une information disponible à l’origine, selon la situation. Ouvrez ensuite le corrigé.
 
 ## Exercice 6 - Continuer l’indice {#exercice-6}
 
-L’apprentissage va de t = 1 à 60. Une personne code 2025 avec t = 1 à 12. Que faut-il corriger?
+Une analyste prépare les prévisions de janvier à décembre 2025 avec une pente de 2 000 $ par mois. Elle utilise les indices 1 à 12, comme au début de l’apprentissage. Quel indice faut-il utiliser pour janvier? De combien son erreur abaisse-t-elle la prévision de janvier si les coefficients et le mois restent les mêmes?
 
 :::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 6"}
 
-Les indices continuent de 61 à 72. Recommencer à 1 efface cinq années de tendance. Les mois reviennent à janvier: catégorie mensuelle et temps écoulé sont deux variables distinctes.
+Les indices continuent de 61 à 72. En janvier, l’indice erroné retranche 60 mois au terme de tendance, soit 60 fois 2 000 $ CA, pour un total de 120 000 $ CA. L’indicatrice du mois garde la même valeur, car janvier reste janvier même si l’indice continue.
 ::::
 
 ## Exercice 7 - Compter les coefficients {#exercice-7}
@@ -245,11 +245,17 @@ Selon le modèle, les ventes moyennes augmentent de 2 000 $ par mois à mois ég
 
 ## Exercice 9 - Prévoir à une seule origine {#exercice-9}
 
-Pour prévoir les douze mois de 2025 fin 2024, peut-on employer lag(ventes, 1) calculé sur tout le fichier comme naïf pour chaque mois?
+Une équipe produit en décembre 2024 une prévision pour chaque mois de 2025. Son script utilise `lag(ventes, 1)` sur le fichier complet. Pour janvier et février 2025, quelles ventes le script utilise-t-il? Pour ces deux mois, quelles ventes utiliseraient le naïf à origine fixe et le naïf saisonnier?
 
 :::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 9"}
 
-Après janvier, ce code incorpore des ventes de 2025 inconnues à l’origine. Il correspond à des origines mises à jour. Le naïf à origine fixe répéterait décembre 2024; le naïf saisonnier reprend les douze mois de 2024.
+| Méthode | Prévision de janvier 2025 | Prévision de février 2025 |
+| --- | --- | --- |
+| `lag(ventes, 1)` sur le fichier complet | Décembre 2024 | Janvier 2025 |
+| Naïf à origine fixe | Décembre 2024 | Décembre 2024 |
+| Naïf saisonnier à origine fixe | Janvier 2024 | Février 2024 |
+
+Fin décembre, l’équipe peut utiliser les ventes de 2024. La vente de janvier 2025 ne devient disponible qu’après l’origine retenue.
 ::::
 
 ## Exercice 10 - Changer la référence {#exercice-10}
@@ -263,11 +269,11 @@ Avec les mêmes observations et le même modèle, les valeurs ajustées et les p
 
 ## Exercice 11 - Une pente significative suffit-elle? {#exercice-11}
 
-Une pente a une valeur p très faible, mais les résidus dessinent une vague annuelle. Quelle conclusion est défendable?
+Un analyste recommande la tendance seule parce que sa pente a une valeur p très faible. Les résidus se succèdent au-dessus de zéro à la fin de chaque année et au-dessous de zéro en été. Quel terme proposeriez-vous d’ajouter? Quelle comparaison pourriez-vous faire pour vérifier s’il améliore les prévisions?
 
 :::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 11"}
 
-Le modèle contient une variation temporelle, mais laisse une structure saisonnière. La significativité de la pente ne démontre ni l’adéquation du modèle ni une bonne prévision. Comparer les modèles candidats à information et périodes communes, puis examiner les erreurs.
+Un facteur mois permet d’ajouter des écarts saisonniers à la tendance. Ajustez les deux modèles sur les mêmes mois d’apprentissage. À une origine commune, prévoyez les mêmes mois de validation avec les deux modèles et comparez leurs MAE, puis vérifiez si les mois systématiquement sous-prévus sont mieux représentés. La valeur p de la pente renseigne sur le coefficient sous les hypothèses du modèle.
 ::::
 
 ## Exercice 12 - Confiance ou prédiction {#exercice-12}
@@ -281,11 +287,11 @@ La prédiction ajoute la variabilité d’une nouvelle observation à l’incert
 
 ## Exercice 13 - Douze intervalles {#exercice-13}
 
-Douze observations sont dans leurs intervalles ponctuels à 95 %. Est-ce une garantie à 95 % pour toute l’année? Peut-on additionner les bornes pour le total annuel?
+La direction veut une plage à 95 % pour ses ventes annuelles. Elle propose d’additionner les bornes basses des douze intervalles mensuels et de faire de même pour les bornes hautes. Pourquoi les douze intervalles ne répondent-ils pas directement à sa question? Quelle dépendance faudrait-il examiner?
 
 :::: {.callout-tip collapse="true" title="Solution détaillée de l’exercice 13"}
 
-Non. Une couverture observée sur douze cibles ne prouve pas la calibration future. Les intervalles sont marginaux. Une bande simultanée ou un intervalle de total nécessite un calcul qui tient compte de la dépendance; la somme des bornes ne conserve pas automatiquement le niveau voulu.
+Les intervalles mensuels visent chacun une vente. Pour l’année, la cible est la somme des ventes. Son incertitude dépend entre autres de la façon dont les erreurs s’additionnent. Par exemple, des sous-prévisions qui persistent plusieurs mois produisent une erreur annuelle plus forte que des erreurs de même taille qui se compensent. L’intervalle pour le total doit tenir compte de cette dépendance pour viser 95 %.
 ::::
 
 ## Exercice 14 - Prix, promotion et saison (complément accompagné) {#exercice-14}

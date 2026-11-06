@@ -7055,7 +7055,7 @@ display: none;
   <ul>
   <li><a href="#préparation" id="toc-préparation" class="nav-link active" data-scroll-target="#préparation">Préparation</a></li>
   <li><a href="#lire-les-composantes" id="toc-lire-les-composantes" class="nav-link" data-scroll-target="#lire-les-composantes">Lire les composantes</a></li>
-  <li><a href="#comprendre-holt-winters-et-ets-avec-un-exemple-fourni" id="toc-comprendre-holt-winters-et-ets-avec-un-exemple-fourni" class="nav-link" data-scroll-target="#comprendre-holt-winters-et-ets-avec-un-exemple-fourni">Comprendre Holt-Winters et ETS avec un exemple fourni</a></li>
+  <li><a href="#holt-winters-ets" id="toc-holt-winters-ets" class="nav-link" data-scroll-target="#holt-winters-ets">Comprendre Holt-Winters et ETS avec un exemple fourni</a></li>
   <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
   </ul>
 </nav>
@@ -7082,10 +7082,10 @@ display: none;
 </header>
 
 
-<p>Cette activité accompagne la lecture des motifs de l’activité 8.1. Elle utilise les ventes mensuelles fictives du cas guidé. Elle prépare la discussion de la tendance et de la saisonnalité; ses réponses peuvent compléter la même section du rapport. Les calculs utilisent uniquement les 60 mois d’apprentissage jusqu’à la comparaison de prévisions.</p>
+<p>Pour l’activité 8.1, lisez les composantes et reportez un écart saisonnier et une limite dans la section 8.1 de <code>tendance_ventes.qmd</code>. Après la capsule 4, revenez à l’exemple accompagné de Holt-Winters et ETS pour lire leurs prévisions et leurs scores.</p>
 <section id="préparation" class="level2">
 <h2 class="anchored" data-anchor-id="préparation">Préparation</h2>
-<p>Installez au besoin les packages <code>tidyverse</code> et <code>forecast</code>, puis exécutez tous les blocs dans l’ordre.</p>
+<p>Dans le projet guidé, ouvrez le fichier <code>decomposition-guidee.qmd</code> et cliquez sur Render pour obtenir les tableaux. Installez au besoin les packages <code>tidyverse</code> et <code>forecast</code>. Les blocs s’exécutent dans l’ordre.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
@@ -7129,51 +7129,57 @@ display: none;
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mois =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">ecart_saisonnier =</span> <span class="fu">as.numeric</span>(composantes<span class="sc">$</span>figure))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>indices</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mois =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ecart_saisonnier_dollars =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(composantes<span class="sc">$</span>figure)))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>indices</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
-    mois ecart_saisonnier
-   &lt;int&gt;            &lt;dbl&gt;
- 1     1           -5826.
- 2     2           -8114.
- 3     3            7475.
- 4     4            1910.
- 5     5           18726.
- 6     6            6629.
- 7     7          -17783.
- 8     8          -12419.
- 9     9          -15746.
-10    10           -6579.
-11    11            7343.
-12    12           24384.</code></pre>
+    mois ecart_saisonnier_dollars
+   &lt;int&gt;                    &lt;dbl&gt;
+ 1     1                    -5826
+ 2     2                    -8114
+ 3     3                     7475
+ 4     4                     1910
+ 5     5                    18726
+ 6     6                     6629
+ 7     7                   -17783
+ 8     8                   -12419
+ 9     9                   -15746
+10    10                    -6579
+11    11                     7343
+12    12                    24384</code></pre>
 </div>
 </div>
-<p>Pour un mois, un écart saisonnier estimé positif indique une valeur au-dessus de la tendance estimée dans cette décomposition. Il ne démontre pas que le mois cause cet écart. La tendance est obtenue par une moyenne centrée : elle manque aux extrémités et utilise des observations de part et d’autre des dates intérieures. Elle ne représente donc pas ce qui aurait été connu en temps réel à chaque date.</p>
+<p>Pour un mois, un écart saisonnier estimé positif indique que la composante saisonnière ajoute des dollars à la tendance dans cette décomposition. Le reste peut encore placer la vente observée au-dessus ou au-dessous de la tendance. Il ne démontre pas que le mois cause cet écart. La tendance est obtenue par une moyenne centrée : elle manque aux extrémités et utilise des observations de part et d’autre des dates intérieures. Elle ne représente donc pas ce qui aurait été connu en temps réel à chaque date.</p>
 <ol type="1">
 <li>Nommez un mois où l’écart saisonnier estimé est positif et un mois où il est négatif. Donnez leurs valeurs en dollars.</li>
 <li>Décrivez la tendance et une variation du reste. Pourquoi les valeurs manquantes aux extrémités ne sont-elles pas nécessairement des données absentes?</li>
 <li>Pourquoi ne faut-il pas utiliser 2025 pour estimer ces composantes si l’on veut comparer des prévisions émises à la fin de 2024?</li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Pistes de vérification">
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponses pour vérifier votre lecture">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Astuce</span>Pistes de vérification
+<span class="screen-reader-only">Astuce</span>Réponses pour vérifier votre lecture
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Utilisez le tableau affiché, avec ses signes et ses unités. La moyenne centrée ne peut pas être calculée aux bords avec la fenêtre complète. Les ventes de 2025 ne sont pas connues à l’origine de fin 2024. La décomposition décrit le passé et ne suffit pas à elle seule pour produire une prévision.</p>
+<ul>
+<li>En décembre, la composante saisonnière ajoute environ 24 400 $ à la tendance estimée. En juillet, elle lui retranche environ 17 800 $.</li>
+<li>Le niveau général monte. Le reste fluctue de part et d’autre de zéro. Les observations existent aux extrémités, mais la fenêtre de la moyenne centrée dépasse les dates disponibles.</li>
+<li>À la fin de 2024, les ventes de 2025 sont encore inconnues. Les utiliser pour calculer les composantes introduirait de l’information indisponible à l’origine.</li>
+</ul>
 </div>
 </div>
 </div>
 </section>
-<section id="comprendre-holt-winters-et-ets-avec-un-exemple-fourni" class="level2">
-<h2 class="anchored" data-anchor-id="comprendre-holt-winters-et-ets-avec-un-exemple-fourni">Comprendre Holt-Winters et ETS avec un exemple fourni</h2>
+<section id="holt-winters-ets" class="level2">
+<h2 class="anchored" data-anchor-id="holt-winters-ets">Comprendre Holt-Winters et ETS avec un exemple fourni</h2>
+<p>Lisez cet exemple après la comparaison de l’activité 8.4. Les quatre candidats de votre rapport restent les trois régressions et le naïf saisonnier.</p>
 <p>Le lissage de Holt-Winters prolonge le lissage exponentiel en combinant un niveau, une tendance et une saisonnalité. Une saison additive ajoute des écarts dans l’unité des ventes; une saison multiplicative utilise des facteurs et exige des valeurs positives. L’approche ETS représente une famille de modèles dont on précise ou sélectionne les composantes d’erreur, de tendance et de saisonnalité. L’exemple ci-dessous estime un Holt-Winters additif et laisse <code>ets()</code> choisir une structure parmi les modèles qu’il considère. Il n’est pas demandé de calculer les récurrences à la main ni de mémoriser le catalogue des modèles.</p>
 <p>Les trois candidats et l’horizon sont fixés avant d’examiner les erreurs : naïf saisonnier, Holt-Winters additif et ETS sélectionné sur l’apprentissage. Les douze valeurs de validation sont jointes après la prévision.</p>
 <div class="cell">
@@ -7238,13 +7244,32 @@ ets(y = serie, model = &quot;ZZZ&quot;)
 </div>
 </div>
 </div>
-<p>Lisez la structure affichée par <code>modele_ets</code> et le tableau. Ici, <code>ets()</code> retient la structure additive ETS(A,A,A), apparentée à celle utilisée par le Holt-Winters additif. Dans cette version de <code>forecast</code>, <code>hw()</code> estime celle-ci en minimisant l’erreur quadratique à un pas, tandis que <code>ets()</code> utilise par défaut la vraisemblance pour l’estimation. Les deux ajustements peuvent donc différer, même lorsque leur structure est semblable. Une MAE plus faible signifie ici une erreur absolue moyenne plus faible sur ces douze mois. Elle ne garantit pas le même classement à une autre origine. L’ETS automatique sélectionne sa structure à partir de l’apprentissage, selon le critère utilisé par <code>ets()</code>; le tableau de validation répond à une autre question. Les intervalles de chaque méthode reposent sur ses hypothèses et n’incluent pas nécessairement tous les changements futurs.</p>
+<p>Lisez la structure affichée par <code>modele_ets</code> et le tableau. Ici, <code>ets()</code> retient la structure additive ETS(A,A,A), apparentée à celle utilisée par le Holt-Winters additif. Dans cette version de <code>forecast</code>, <code>hw()</code> estime celle-ci en minimisant l’erreur quadratique à un pas, tandis que <code>ets()</code> utilise par défaut la vraisemblance pour l’estimation. Les deux ajustements peuvent donc différer, même lorsque leur structure est semblable. Une MAE plus faible signifie ici une erreur absolue moyenne plus faible sur ces douze mois. Elle ne garantit pas le même classement à une autre origine. L’ETS automatique sélectionne ici sa structure par AICc sur les données d’apprentissage. Le tableau de validation mesure les erreurs sur 2025. Les intervalles de chaque méthode reposent sur ses hypothèses et n’incluent pas nécessairement tous les changements futurs.</p>
 <ol type="1">
-<li>Quelle composante le naïf saisonnier reprend-il pour chaque mois de 2025?</li>
+<li>Quelle vente observée le naïf saisonnier reprend-il pour prévoir janvier 2025? Et décembre 2025?</li>
 <li>Quels résultats distinguent les trois prévisions sur ce bloc? Indiquez la mesure et les unités.</li>
 <li>Donnez une raison pour laquelle le modèle retenu sur ce bloc doit être vérifié sur d’autres périodes ou à de nouvelles origines.</li>
 </ol>
-<p>Les prévisions et le choix effectués sur 2025 ne constituent pas un test final indépendant. Les chiffres ne prouvent pas qu’une méthode est toujours supérieure.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Réponses pour vérifier la comparaison">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Réponses pour vérifier la comparaison
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Le naïf saisonnier reprend les ventes observées en janvier 2024 pour janvier 2025 et celles de décembre 2024 pour décembre 2025.</li>
+<li>Dans ce calcul, la MAE est d’environ 29 067 $ CA pour le naïf saisonnier, 9 387 $ CA pour Holt-Winters et 9 947 $ CA pour ETS. La RMSE donne ici le même ordre.</li>
+<li>Les douze mois appartiennent à une même année et les trois trajectoires partent de la même origine. Un autre bloc peut présenter des variations différentes. Si on choisit sur 2025, il faut d’autres observations pour évaluer la méthode retenue indépendamment.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="pour-aller-plus-loin" class="level2">
 <h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>

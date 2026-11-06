@@ -4,11 +4,11 @@
 
 Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md), la [démonstration complète](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
 
-Seuls les supports PDF et HTML sont disponibles ici. Aucune vidéo ni annotation n’est annoncée. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-04.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
+Les supports PDF et HTML sont disponibles. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-06.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
 
 ## Capsule 1 - Repérer tendance et saisonnalité
 
-La hausse vient-elle du temps ou du calendrier? Consultez l’[activité guidée sur la décomposition](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md), la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
+La hausse vient-elle du temps ou du calendrier? Consultez l’[lecture guidée de la décomposition](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#lire-les-composantes), la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
 
 ## PDF
 
@@ -26,6 +26,8 @@ Auto-vérification:
 - Mes axes indiquent les mois et les dollars canadiens.
 - Je distingue tendance, répétition et explication causale.
 - J’interprète un écart saisonnier et une limite de la décomposition.
+
+Après votre tentative, ouvrez le [corrigé de l’activité 8.1](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#corrige-8-1).
 
 > **NOTE:**
 >
@@ -51,6 +53,8 @@ Auto-vérification:
 - Je précise janvier comme référence et les unités des coefficients.
 - Je distingue comparaison conditionnelle et effet causal.
 
+Après votre tentative, ouvrez le [corrigé de l’activité 8.2](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#corrige-8-2).
+
 > **NOTE:**
 >
 > Faites l’[exercice 2](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-2) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
@@ -75,13 +79,15 @@ Auto-vérification:
 - J’examine le temps et la dispersion au-delà des moyennes.
 - Je sais que les indicatrices imposent des sommes résiduelles mensuelles nulles.
 
+Après votre tentative, ouvrez le [corrigé de l’activité 8.3](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#corrige-8-3).
+
 > **NOTE:**
 >
 > Faites l’[exercice 3](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#exercice-3) dans `tendance_commerce.qmd`, après la [préparation commune](../../modules/semaine-08-tendance-saisonnalite/exercices.llms.md#preparation). Tentez une réponse avant d’ouvrir le corrigé.
 
 ## Capsule 4 - Comparer sur une validation commune
 
-Le calendrier fait-il mieux que reprendre la dernière année? Consultez la [lecture 4](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-4) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#validation).
+Le calendrier fait-il mieux que reprendre la dernière année? Consultez la [lecture 4](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-4) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#validation). Lisez ensuite l’[exemple accompagné de Holt-Winters et ETS](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#holt-winters-ets) pour voir comment d’autres méthodes intègrent la saison.
 
 ## PDF
 
@@ -98,6 +104,8 @@ Auto-vérification:
 - Les quatre candidats utilisent les mêmes douze cibles et informations disponibles.
 - Je n’ai utilisé ni ventes futures ni budget cible comme prédicteur.
 - Mon choix repose sur les erreurs de validation et reste provisoire.
+
+Après votre tentative, ouvrez le [corrigé de l’activité 8.4](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#corrige-8-4).
 
 > **NOTE:**
 >
@@ -122,6 +130,8 @@ Auto-vérification:
 - Je distingue moyenne conditionnelle et nouvelle observation.
 - Je lis les intervalles comme marginaux et dépendants des hypothèses.
 - Ma recommandation nomme les unités, une limite et une réévaluation future.
+
+Après votre tentative, ouvrez le [corrigé de l’activité 8.5](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#corrige-8-5).
 
 > **NOTE:**
 >

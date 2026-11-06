@@ -7449,11 +7449,11 @@ padding: 1rem;
 </section>
 <section id="pratique-supplementaire" class="level2">
 <h2 class="anchored" data-anchor-id="pratique-supplementaire">Pratique supplémentaire</h2>
-<p>Huit questions indépendantes. Tentez une réponse avant le corrigé. Elles ne demandent pas les méthodes avancées du cahier facultatif.</p>
+<p>Ces huit questions facultatives sont indépendantes. Pour chacune, appuyez votre réponse sur un calcul, une hypothèse du modèle ou une information disponible à l’origine, selon la situation. Ouvrez ensuite le corrigé.</p>
 </section>
 <section id="exercice-6" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-6">Exercice 6 - Continuer l’indice</h2>
-<p>L’apprentissage va de t = 1 à 60. Une personne code 2025 avec t = 1 à 12. Que faut-il corriger?</p>
+<p>Une analyste prépare les prévisions de janvier à décembre 2025 avec une pente de 2 000 $ par mois. Elle utilise les indices 1 à 12, comme au début de l’apprentissage. Quel indice faut-il utiliser pour janvier? De combien son erreur abaisse-t-elle la prévision de janvier si les coefficients et le mois restent les mêmes?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l’exercice 6">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7466,7 +7466,7 @@ padding: 1rem;
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Les indices continuent de 61 à 72. Recommencer à 1 efface cinq années de tendance. Les mois reviennent à janvier: catégorie mensuelle et temps écoulé sont deux variables distinctes.</p>
+<p>Les indices continuent de 61 à 72. En janvier, l’indice erroné retranche 60 mois au terme de tendance, soit 60 fois 2 000 $ CA, pour un total de 120 000 $ CA. L’indicatrice du mois garde la même valeur, car janvier reste janvier même si l’indice continue.</p>
 </div>
 </div>
 </div>
@@ -7513,7 +7513,7 @@ padding: 1rem;
 </section>
 <section id="exercice-9" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-9">Exercice 9 - Prévoir à une seule origine</h2>
-<p>Pour prévoir les douze mois de 2025 fin 2024, peut-on employer lag(ventes, 1) calculé sur tout le fichier comme naïf pour chaque mois?</p>
+<p>Une équipe produit en décembre 2024 une prévision pour chaque mois de 2025. Son script utilise <code>lag(ventes, 1)</code> sur le fichier complet. Pour janvier et février 2025, quelles ventes le script utilise-t-il? Pour ces deux mois, quelles ventes utiliseraient le naïf à origine fixe et le naïf saisonnier?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l’exercice 9">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7526,7 +7526,38 @@ padding: 1rem;
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Après janvier, ce code incorpore des ventes de 2025 inconnues à l’origine. Il correspond à des origines mises à jour. Le naïf à origine fixe répéterait décembre 2024; le naïf saisonnier reprend les douze mois de 2024.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Méthode</th>
+<th>Prévision de janvier 2025</th>
+<th>Prévision de février 2025</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lag(ventes, 1)</code> sur le fichier complet</td>
+<td>Décembre 2024</td>
+<td>Janvier 2025</td>
+</tr>
+<tr class="even">
+<td>Naïf à origine fixe</td>
+<td>Décembre 2024</td>
+<td>Décembre 2024</td>
+</tr>
+<tr class="odd">
+<td>Naïf saisonnier à origine fixe</td>
+<td>Janvier 2024</td>
+<td>Février 2024</td>
+</tr>
+</tbody>
+</table>
+<p>Fin décembre, l’équipe peut utiliser les ventes de 2024. La vente de janvier 2025 ne devient disponible qu’après l’origine retenue.</p>
 </div>
 </div>
 </div>
@@ -7553,7 +7584,7 @@ padding: 1rem;
 </section>
 <section id="exercice-11" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-11">Exercice 11 - Une pente significative suffit-elle?</h2>
-<p>Une pente a une valeur p très faible, mais les résidus dessinent une vague annuelle. Quelle conclusion est défendable?</p>
+<p>Un analyste recommande la tendance seule parce que sa pente a une valeur p très faible. Les résidus se succèdent au-dessus de zéro à la fin de chaque année et au-dessous de zéro en été. Quel terme proposeriez-vous d’ajouter? Quelle comparaison pourriez-vous faire pour vérifier s’il améliore les prévisions?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l’exercice 11">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7566,7 +7597,7 @@ padding: 1rem;
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Le modèle contient une variation temporelle, mais laisse une structure saisonnière. La significativité de la pente ne démontre ni l’adéquation du modèle ni une bonne prévision. Comparer les modèles candidats à information et périodes communes, puis examiner les erreurs.</p>
+<p>Un facteur mois permet d’ajouter des écarts saisonniers à la tendance. Ajustez les deux modèles sur les mêmes mois d’apprentissage. À une origine commune, prévoyez les mêmes mois de validation avec les deux modèles et comparez leurs MAE, puis vérifiez si les mois systématiquement sous-prévus sont mieux représentés. La valeur p de la pente renseigne sur le coefficient sous les hypothèses du modèle.</p>
 </div>
 </div>
 </div>
@@ -7593,7 +7624,7 @@ padding: 1rem;
 </section>
 <section id="exercice-13" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-13">Exercice 13 - Douze intervalles</h2>
-<p>Douze observations sont dans leurs intervalles ponctuels à 95 %. Est-ce une garantie à 95 % pour toute l’année? Peut-on additionner les bornes pour le total annuel?</p>
+<p>La direction veut une plage à 95 % pour ses ventes annuelles. Elle propose d’additionner les bornes basses des douze intervalles mensuels et de faire de même pour les bornes hautes. Pourquoi les douze intervalles ne répondent-ils pas directement à sa question? Quelle dépendance faudrait-il examiner?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solution détaillée de l’exercice 13">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7606,7 +7637,7 @@ padding: 1rem;
 </div>
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Non. Une couverture observée sur douze cibles ne prouve pas la calibration future. Les intervalles sont marginaux. Une bande simultanée ou un intervalle de total nécessite un calcul qui tient compte de la dépendance; la somme des bornes ne conserve pas automatiquement le niveau voulu.</p>
+<p>Les intervalles mensuels visent chacun une vente. Pour l’année, la cible est la somme des ventes. Son incertitude dépend entre autres de la façon dont les erreurs s’additionnent. Par exemple, des sous-prévisions qui persistent plusieurs mois produisent une erreur annuelle plus forte que des erreurs de même taille qui se compensent. L’intervalle pour le total doit tenir compte de cette dépendance pour viser 95 %.</p>
 </div>
 </div>
 </div>
