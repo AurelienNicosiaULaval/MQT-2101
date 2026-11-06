@@ -89,7 +89,7 @@ Les deux prévisions sont comparées sur les mêmes cibles. Les autres méthodes
 
 ## Point de contrôle du mini-rapport 2
 
-Le calendrier prévoit un point de contrôle pendant le laboratoire. Apportez votre proposition de données et votre protocole. Pour la voie temporelle, identifiez cible, origine, horizon, références et validation. Pour la voie classification, consultez le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) et préparez cible, séparation, probabilités et choix de seuils. Les [consignes du mini-rapport](../../evaluations/mini-rapport-2.llms.md) restent la référence. Les résultats de ce laboratoire ne remplacent pas une analyse autonome.
+Apportez votre proposition de données et votre protocole, même si vous attendez encore l’approbation du jeu. Pour la voie temporelle, précisez la cible, l’origine, l’horizon, la référence et les dates à réserver. Pour la voie classification, consultez le [parcours anticipé du module 10](../../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) et précisez la classe positive, l’horizon, les variables disponibles à la date de décision, les partitions et le critère de choix du seuil. Le protocole suffit pour la rétroaction. Consultez les [consignes du mini-rapport](../../evaluations/mini-rapport-2.llms.md) pour la suite de votre analyse.
 
 ## Ressources
 

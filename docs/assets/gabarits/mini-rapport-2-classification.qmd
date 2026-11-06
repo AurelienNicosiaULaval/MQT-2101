@@ -1,0 +1,46 @@
+---
+title: "Mini-rapport 2 - Classification binaire"
+lang: fr
+format:
+  html:
+    embed-resources: true
+---
+
+## Équipe et contributions
+
+Identifiez les membres de l'équipe et résumez la contribution de chaque personne en une phrase.
+
+## Question et décision
+
+Définissez l'événement, la classe positive, la date de décision et l'horizon. Quelle action dépend du risque prédit?
+
+## Données et exploration
+
+Documentez la source, le droit de réutilisation et l'unité d'observation. Décrivez les effectifs par classe, les valeurs manquantes et la qualité des données. Justifiez la disponibilité des prédicteurs à la date de décision.
+
+Pour des données en CSV, adaptez le chemin ci-dessous, retirez l'option `eval: false`, puis rendez le document pour vérifier l'importation. Pour un autre format, remplacez le bloc par votre code d'importation.
+
+```{r}
+#| eval: false
+library(readr)
+
+donnees <- read_csv("data/votre_fichier.csv", show_col_types = FALSE)
+```
+
+## Méthodes et protocole
+
+Décrivez les partitions et leurs effectifs. Justifiez la séparation selon la structure des données. Présentez la régression logistique, son rôle et la référence de comparaison. Si la logistique est votre seul modèle ajusté, définissez une règle simple de référence adaptée à la décision. Fixez le critère de choix du seuil à partir des coûts ou de la capacité.
+
+## Résultats hors échantillon
+
+Comparez au moins deux seuils sur la validation. Présentez les matrices de confusion, la sensibilité, la spécificité, la précision et la proportion ciblée. Justifiez le seuil retenu. Si un test distinct était disponible, présentez séparément la performance de la règle retenue et celle de la référence.
+
+Indiquez sur quelles données vous examinez la calibration. Présentez la probabilité moyenne, la fréquence observée de l'événement et l'effectif par groupe de risque. Discutez de ce que les effectifs permettent de conclure.
+
+## Recommandation et limites
+
+Reliez la règle de décision aux coûts ou à la capacité. Expliquez une limite éthique ou opérationnelle et indiquez une vérification à faire avant d'utiliser la règle.
+
+## Déclaration d'usage de l'IA
+
+Compléter la déclaration si l'IA a influencé le livrable. Sinon, écrire explicitement qu'aucun usage d'IA n'a influencé le code, l'analyse, l'interprétation, la documentation ou le texte.

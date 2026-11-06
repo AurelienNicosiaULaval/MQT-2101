@@ -8,13 +8,13 @@ Pondération : 15 % de la note finale.
 
 ## Échéancier pédagogique
 
-- Proposition et validation du jeu de données : au plus tard à la fin du module 08.
-- Point de contrôle sur la validation : pendant l’atelier 03.
-- Remise : consulter le [calendrier du cours](../calendrier.llms.md).
+- Envoyez la proposition de données par courriel dès que possible, au plus tard le dimanche 15 novembre 2026 à 23 h 59.
+- Présentez votre protocole le mercredi 18 novembre au [laboratoire 03](../modules/atelier-03-series-chronologiques/index.llms.md#point-de-contrôle-du-mini-rapport-2).
+- Remettez le rapport dans Brio le dimanche 13 décembre 2026 à 23 h 59 au plus tard. Consultez le [calendrier du cours](../calendrier.llms.md).
 
-Pour la voie classification, suivez dès le module 08 le [parcours anticipé du module 10](../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe). Ses supports écrits, démonstrations et activités préparent le choix des données et le point de contrôle; le 2 décembre consolide ce contenu. Pour la voie temporelle, le point de contrôle mobilise les modules 06 à 08, puis le module 09 complète les variables externes.
+Au laboratoire, apportez votre proposition, même si l’approbation est en cours, et votre plan de validation. Pour la voie A, précisez la cible, l’origine, l’horizon, la référence et les dates à réserver. Pour la voie B, précisez la classe positive, l’horizon, les variables disponibles à la date de décision, les partitions et le critère de choix du seuil. Un modèle ajusté peut aider à la discussion, mais le protocole suffit pour ce point de contrôle.
 
-Le dépôt se fait dans Brio. Vérifiez l’archive avant de la déposer.
+Pour la voie A, appuyez-vous sur les modules 06 à 08 et sur le laboratoire 03. Le module 09 aide les équipes qui utilisent des variables externes. Pour la voie B, commencez par le [parcours anticipé du module 10](../modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) dès le module 08.
 
 ## Modalité
 
@@ -24,44 +24,55 @@ Le dépôt se fait dans Brio. Vérifiez l’archive avant de la déposer.
 - Choisir une seule voie et la développer complètement.
 - IA permise avec déclaration selon la [politique du cours](../ressources/ia.llms.md).
 
+## Choisir et proposer les données
+
+Vous pouvez proposer un nouveau jeu de données ou reprendre celui de votre mini-rapport 1 si la question prédictive et la démarche sont nouvelles. Ces jeux exigent une approbation pour le mini-rapport 2 avant d’ajuster un modèle, même si le jeu avait déjà été approuvé pour le premier rapport. Les jeux identifiés comme simulés dans la [section Données](../donnees/index.llms.md) sont déjà admissibles. Vous pouvez les utiliser pour une analyse originale, avec une question et une validation qui vous obligent à interpréter vos propres résultats. Les démonstrations et les corrigés servent à vous entraîner.
+
+Chaque équipe envoie une proposition, y compris si le jeu est déjà admissible. Suivez la [procédure de validation des données](../evaluations/validation-donnees.llms.md#mini-rapport-2). Indiquez la voie, la décision, la cible, l’horizon et les prédicteurs envisagés. Pour une série, vérifiez que l’historique suffit pour l’ajustement et la période réservée à l’évaluation. En classification, indiquez combien d’observations appartiennent à chaque classe et vérifiez que la séparation prévue permet de calculer et d’interpréter les mesures demandées.
+
+## Validation hors échantillon
+
+Définissez vos partitions et votre critère de comparaison avant d’examiner les scores. Ajustez les modèles et estimez les paramètres de préparation des données sur l’apprentissage seulement. Utilisez la validation pour comparer les méthodes ou les seuils. Si vous pouvez réserver un test distinct, appliquez-y la méthode ou la règle retenue une fois les choix fixés. Avec un seul bloc hors apprentissage, présentez le score comme un résultat de validation qui a servi au choix. Expliquez la portée de ce score.
+
+Les prédicteurs doivent pouvoir être calculés avec l’information disponible à l’origine de la prévision ou à la date de décision. En classification, le résultat observé pendant l’horizon sert à construire la cible. Il doit rester hors des prédicteurs.
+
 ## Voie A - Prévision temporelle
 
 Le rapport doit inclure :
 
-- cible, origine, fréquence et horizon;
-- audit de la continuité temporelle;
-- graphique de tendance, saisonnalité et valeurs inhabituelles;
-- séparation chronologique apprentissage-validation;
-- référence naïve ou saisonnière naïve;
-- au moins une méthode principale;
-- MAE et RMSE, plus une mesure ou un coût adapté;
-- prévision conditionnelle et incertitude;
-- recommandation et règle de surveillance.
+- la cible et son unité, l’origine, la fréquence et l’horizon;
+- un contrôle de la continuité temporelle et un graphique pour examiner la tendance, la saisonnalité et les valeurs inhabituelles;
+- une séparation chronologique entre l’apprentissage et la validation;
+- une comparaison d’une référence naïve ou naïve saisonnière et d’au moins une méthode principale, sur les mêmes dates cibles, à origine et horizon identiques pour les deux méthodes;
+- la MAE et la RMSE, ainsi qu’une mesure ou un coût adapté à la décision;
+- une prévision, une présentation de son incertitude, par exemple un intervalle de prédiction commenté, et les conditions dont dépend son interprétation;
+- une recommandation et une règle de surveillance.
 
-Le bloc utilisé pour comparer et choisir les modèles est une validation. Si vous disposez d’un test final distinct, réservez-le à la méthode retenue. Avec un seul bloc hors apprentissage, précisez que le score a participé au choix et ne constitue pas une estimation finale indépendante. Pour les variables externes, distinguez les valeurs connues, prévues ou scénarisées à l’origine d’une comparaison conditionnelle aux valeurs observées ensuite.
+Si vous utilisez des variables externes, indiquez celles dont les valeurs sont connues, prévues ou fixées par scénario à l’origine. Si vous faites aussi une comparaison avec les valeurs observées plus tard, présentez ses scores séparément. L’utilisation de variables externes est facultative.
 
 ## Voie B - Classification binaire
 
 Le rapport doit inclure :
 
-- définition de l’événement, de la classe positive et de l’horizon;
-- séparation entraînement-test;
-- régression logistique comme référence ou méthode principale;
-- probabilités prédites et vérification descriptive de calibration;
-- matrices de confusion à au moins deux seuils;
-- sensibilité, spécificité, précision et proportion ciblée;
-- choix de seuil selon les coûts ou la capacité;
-- recommandation et limite éthique ou opérationnelle.
+- la définition de l’événement, de la classe positive, de la date de décision et de l’horizon;
+- une séparation entre apprentissage et validation, adaptée à la structure des données. Gardez ensemble les observations d’une même entité lorsque la cible est de prédire pour de nouvelles entités. Respectez l’ordre temporel lorsque l’objectif est de prédire pour une période ultérieure;
+- une régression logistique comme modèle de référence ou modèle principal. Si la logistique est le seul modèle ajusté, comparez la règle de décision à une référence simple adaptée au contexte, par exemple ne cibler personne;
+- des probabilités prédites hors échantillon et une lecture descriptive de la calibration. Comparez la probabilité moyenne et la fréquence observée par groupe de risque, avec les effectifs;
+- au moins deux seuils comparés en validation sur les mêmes observations. Présentez les matrices de confusion, la sensibilité, la spécificité, la précision et la proportion ciblée;
+- un seuil retenu selon les coûts ou la capacité, une recommandation et une limite éthique ou opérationnelle.
 
-Dans la séparation entraînement-test demandée, le bloc utilisé pour comparer et choisir les seuils joue le rôle d’une validation. Si les données permettent de réserver un test final distinct, utilisez-le pour évaluer la règle déjà choisie. Avec un seul bloc hors entraînement utilisé pour le choix, indiquez que son score ne constitue pas une estimation finale indépendante. Cette précision ne change pas les livrables ni la grille.
+Sur un test distinct, s’il est disponible, évaluez la règle retenue et sa référence sur les mêmes observations.
 
 ## Livrables
 
-Remettre une archive contenant : source `.qmd`, HTML autonome, données autorisées ou script d’importation, `README.md`, déclaration IA ou mention de non-usage influent, et déclaration de contribution.
+Remettez dans Brio une archive ZIP contenant les éléments suivants.
 
-## Validation des données
+1.  Le fichier source `.qmd` et le fichier HTML autonome.
+2.  Les données autorisées ou un script qui permet de les importer de façon reproductible.
+3.  Un court `README.md` qui indique les bibliothèques requises et comment rendre le rapport.
+4.  La déclaration IA ou la mention de non-usage influent, et une déclaration de contribution pour chaque membre.
 
-Suivez la [procédure de validation](../evaluations/validation-donnees.llms.md). Les données futures ou la cible ne doivent jamais fuiter dans la préparation des prédicteurs.
+Avant le dépôt, extrayez le ZIP dans un autre dossier, redémarrez R et rendez le `.qmd` à partir des seuls fichiers remis. Vérifiez les chemins relatifs, la lisibilité des figures et tableaux et l’ouverture du HTML. Une seule personne dépose l’archive pour l’équipe et vérifie que le fichier remis apparaît dans Brio.
 
 ## Grille
 
@@ -69,4 +80,4 @@ La [grille commune des mini-rapports](../evaluations/grille-mini-rapports.llms.m
 
 ## Gabarit
 
-Utilisez le [gabarit du mini-rapport 2](../ressources/gabarit-mini-rapport-2.llms.md).
+Téléchargez le [gabarit de votre voie](../ressources/gabarit-mini-rapport-2.llms.md). Les deux versions sont fournies au format `.qmd`.

@@ -18,7 +18,7 @@
 ## Attentes selon le mini-rapport
 
 - Mini-rapport 1 : comparez un modèle de référence à une variante pertinente, justifiez le modèle retenu et interprétez un diagnostic des résidus. Une validation sur des données séparées n’est pas obligatoire. Les mesures calculées sur les données d’ajustement doivent être présentées comme telles.
-- Mini-rapport 2 : une preuve hors échantillon est exigée, selon les modalités de la piste choisie. Les données de validation doivent être séparées de celles utilisées pour ajuster le modèle, sans fuite d’information.
+- Mini-rapport 2 : une preuve hors échantillon est exigée. En prévision, comparez la méthode et sa référence sur les mêmes dates cibles, avec le même protocole. En classification, comparez les seuils sur la validation et situez la règle de décision par rapport à une référence. Un test final distinct permet d’évaluer la méthode ou la règle déjà choisie, si les données le permettent. Les [consignes du mini-rapport 2](../evaluations/mini-rapport-2.llms.md#validation-hors-échantillon) précisent le protocole.
 
 Le critère « Modélisation et validation » vaut 20 points dans les deux rapports. La note sur 100 est ensuite convertie en une contribution de 15 % à la note finale pour chaque rapport.
 

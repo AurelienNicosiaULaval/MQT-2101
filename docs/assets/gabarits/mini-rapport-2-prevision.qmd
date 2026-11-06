@@ -1,0 +1,44 @@
+---
+title: "Mini-rapport 2 - Prévision temporelle"
+lang: fr
+format:
+  html:
+    embed-resources: true
+---
+
+## Équipe et contributions
+
+Identifiez les membres de l'équipe et résumez la contribution de chaque personne en une phrase.
+
+## Question et décision
+
+Précisez la cible et son unité, l'origine de la prévision, la fréquence des observations et l'horizon. Quelle décision ces prévisions doivent-elles éclairer?
+
+## Données et exploration
+
+Documentez la source, le droit de réutilisation, l'unité d'observation et la période couverte. Vérifiez le calendrier, les dates manquantes, les doublons et les valeurs manquantes. Décrivez le traitement retenu. Avec un graphique de l'apprentissage, examinez la tendance, la saisonnalité et les valeurs inhabituelles.
+
+Pour des données en CSV, adaptez le chemin ci-dessous, retirez l'option `eval: false`, puis rendez le document pour vérifier l'importation. Pour un autre format, remplacez le bloc par votre code d'importation.
+
+```{r}
+#| eval: false
+library(readr)
+
+donnees <- read_csv("data/votre_fichier.csv", show_col_types = FALSE)
+```
+
+## Méthodes et protocole
+
+Indiquez les périodes d'apprentissage et de validation. Justifiez la référence naïve ou naïve saisonnière et la méthode principale. Précisez le critère de choix et comparez les méthodes aux mêmes dates cibles, avec la même origine et le même horizon. Si vous utilisez des variables externes, expliquez comment leurs valeurs sont obtenues à l'origine.
+
+## Résultats hors échantillon
+
+Présentez la MAE, la RMSE et une mesure ou un coût adapté. Interprétez les écarts en fonction de la décision. Indiquez quelles données ont servi au choix. Si un test distinct était disponible, présentez séparément le résultat de la méthode retenue.
+
+## Prévision, incertitude et recommandation
+
+Présentez la prévision et son incertitude, par exemple à l'aide d'un intervalle de prédiction commenté. Précisez les hypothèses et une limite importante. Recommandez une action et indiquez quoi surveiller pour la revoir.
+
+## Déclaration d'usage de l'IA
+
+Compléter la déclaration si l'IA a influencé le livrable. Sinon, écrire explicitement qu'aucun usage d'IA n'a influencé le code, l'analyse, l'interprétation, la documentation ou le texte.

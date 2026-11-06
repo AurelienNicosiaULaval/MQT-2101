@@ -35,10 +35,12 @@ Les liens ouvrent la page de travail correspondante. Les locaux, le matériel pe
 | Du 26 au 30 octobre | Relâche | Aucune activité prévue | Semaine de lecture |
 | Mercredi 4 novembre | Autoapprentissage | [Module 07 - Lissage et erreurs](modules/semaine-07-lissage/index.llms.md) |  |
 | Mercredi 11 novembre | Autoapprentissage | [Module 08 - Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) | Pour la voie classification du mini-rapport 2 : [parcours anticipé du module 10](modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) |
+| Dimanche 15 novembre à 23 h 59 | Échéance | [Mini-rapport 2](evaluations/mini-rapport-2.llms.md#choisir-et-proposer-les-données) | Envoyer la proposition de données par courriel |
 | Mercredi 18 novembre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 03 - Prévoir la demande](modules/atelier-03-series-chronologiques/index.llms.md) | Point de contrôle du [mini-rapport 2](evaluations/mini-rapport-2.llms.md) |
 | Mercredi 25 novembre | Autoapprentissage | [Module 09 - Variables externes et autocorrélation](modules/semaine-09-variables-externes-autocorrelation/index.llms.md) |  |
-| Mercredi 2 décembre | Autoapprentissage | [Module 10 - Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) | [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md); remise du mini-rapport 2 à 23 h 59 |
+| Mercredi 2 décembre | Autoapprentissage | [Module 10 - Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) | [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md) |
 | Mercredi 9 décembre, 9 h à 11 h 50 | Laboratoire | [Laboratoire 04 - Intégration](modules/atelier-04-recapitulation/index.llms.md) | Révision finale, Palasis-Prince 3213 |
+| Dimanche 13 décembre à 23 h 59 | Remise | [Mini-rapport 2](evaluations/mini-rapport-2.llms.md) | Déposer l'archive ZIP dans Brio |
 | Lundi 14 décembre, 18 h 30 à 21 h 20 | Examen en personne | [Examen final](evaluations/examen-final.llms.md) | Local et paramètres restants à confirmer |
 
 Bloc 1
@@ -98,7 +100,7 @@ Bloc 3
 11. 11
     11 novembre Autoapprentissage
 
-    [Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) [Classification : préparation anticipée pour la voie B](modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe)
+    [Tendance et saisonnalité](modules/semaine-08-tendance-saisonnalite/index.llms.md) [Classification : préparation anticipée pour la voie B](modules/semaine-10-classification-modeles-avances/index.llms.md#parcours-anticipe) [Proposition de données le 15 novembre à 23 h 59](evaluations/mini-rapport-2.llms.md#choisir-et-proposer-les-données)
 12. 12
     18 novembre Atelier en classe
 
@@ -115,11 +117,11 @@ Bloc 4
 14. 14
     2 décembre Autoapprentissage
 
-    [Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md) [Remise mini-rapport 2](evaluations/mini-rapport-2.llms.md)
+    [Classification](modules/semaine-10-classification-modeles-avances/index.llms.md) [Questionnaire formatif](evaluations/questionnaire-series-chronologiques.llms.md)
 15. 15
     9 décembre Atelier en classe
 
-    [Atelier 04 - Intégration](modules/atelier-04-recapitulation/index.llms.md)
+    [Atelier 04 - Intégration](modules/atelier-04-recapitulation/index.llms.md) [Remise du mini-rapport 2 le 13 décembre à 23 h 59](evaluations/mini-rapport-2.llms.md)
 
 Évaluations individuelles
 

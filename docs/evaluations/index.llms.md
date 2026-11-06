@@ -48,7 +48,7 @@ Non permise
 
 ### Mini-rapport 2
 
-Analyse reproductible portant sur la prévision, les séries chronologiques ou une ouverture vers la classification.
+Analyse reproductible en prévision temporelle ou en classification binaire, avec validation hors échantillon.
 
 Échéancier
 [Consulter le calendrier](../calendrier.llms.md)
@@ -98,7 +98,7 @@ La trace finale doit montrer une démarche compréhensible, reproductible et dé
 
     ### Valider les données
 
-    Faire approuver le jeu de données avant de construire l'analyse.
+    Proposer le jeu et obtenir son approbation avant la modélisation lorsque la consigne l'exige.
 
 3.  03
 

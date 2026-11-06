@@ -8,6 +8,14 @@ Le [mini-rapport 1](../evaluations/mini-rapport-1.llms.md) exige un jeu de donn�
 
 Pour les autres travaux, consultez d’abord leur consigne particulière. Les jeux simulés dans la section [Données](../donnees/index.llms.md) peuvent être utilisés sans approbation supplémentaire lorsqu’une consigne ne les exclut pas.
 
+## Mini-rapport 2
+
+Envoyez la proposition de l’équipe par courriel au plus tard le dimanche 15 novembre 2026 à 23 h 59. Cette date correspond à l’envoi de la proposition. Si le jeu exige une approbation, attendez le retour de la personne enseignante avant d’ajuster un modèle. Apportez votre proposition et votre protocole au laboratoire 03, même si vous attendez encore une réponse.
+
+Un jeu identifié comme simulé dans la section Données est admissible pour une analyse originale. Un autre jeu, y compris celui du mini-rapport 1, exige une approbation pour ce travail. Une reprise du jeu du mini-rapport 1 doit répondre à une nouvelle question prédictive avec une démarche propre au mini-rapport 2.
+
+Dans votre courriel, indiquez les membres de l’équipe et les [renseignements ci-dessous](#proposition-dun-autre-jeu). Ajoutez la voie retenue et votre plan de validation. En prévision, précisez l’origine, la fréquence, l’horizon et les périodes à réserver. En classification, précisez la date de décision, la classe positive, l’horizon et les effectifs par classe. Dans les deux voies, expliquez quand les prédicteurs deviennent disponibles.
+
 ## Proposition d’un autre jeu
 
 Avant la date indiquée dans la consigne, transmettez par courriel à la personne enseignante :
@@ -29,10 +37,12 @@ Sont refusés :
 
 - données nominatives ou confidentielles;
 - fichiers obtenus sans droit clair d’utilisation;
-- données dont la cible est construite avec de l’information future;
+- prédicteurs qui utilisent la cible ou une information indisponible au moment de prédire;
 - jeux trop petits ou trop agrégés pour la question;
 - projet qui se limite à reproduire une analyse ou une solution déjà publiée;
 - données impossibles à remettre ou importer de façon reproductible.
+
+Pour une analyse prédictive, le résultat observé après la date de décision sert à construire la cible. Par exemple, on peut observer si une personne a quitté le service dans les 90 jours suivants. Seules les informations disponibles au moment de la décision peuvent servir à prédire ce départ.
 
 ## IA et confidentialité
 
