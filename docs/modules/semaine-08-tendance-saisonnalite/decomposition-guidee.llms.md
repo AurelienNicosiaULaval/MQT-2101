@@ -1,34 +1,57 @@
 # Module 08 : lire la décomposition et une prévision saisonnière
 
-Pour l’activité 8.1, lisez les composantes et reportez un écart saisonnier et une limite dans la section 8.1 de `tendance_ventes.qmd`. Après la capsule 4, revenez à l’exemple accompagné de Holt-Winters et ETS pour lire leurs prévisions et leurs scores.
+Cette page accompagne deux moments du parcours. Pour l’activité 8.1, lisez les composantes et reportez un écart saisonnier et une limite dans `tendance_ventes.qmd`. Après la capsule 4, revenez à l’exemple de Holt-Winters et ETS pour interpréter les prévisions et leurs scores.
+
+Nous suivons les mêmes ventes mensuelles fictives que dans la démonstration principale. La décomposition décrit les 60 mois d’apprentissage. La comparaison de prévisions utilise ensuite les douze mois de validation.
 
 ## Préparation
 
-Dans le projet guidé, ouvrez le fichier `decomposition-guidee.qmd` et cliquez sur Render pour obtenir les tableaux. Installez au besoin les packages `tidyverse` et `forecast`. Les blocs s’exécutent dans l’ordre.
+Dans le projet guidé ou la démonstration complète, ouvrez `decomposition-guidee.qmd`. Au besoin, installez une fois les packages avec `install.packages(c("tidyverse", "forecast"))` dans la console. Redémarrez R, puis exécutez les blocs dans l’ordre ou cliquez sur Render.
 
 ``` r
 library(tidyverse)
 library(forecast)
-ventes <- read_csv('data/ventes_saisonnieres_quebec.csv', show_col_types = FALSE) |>
+ventes <- read_csv("data/ventes_saisonnieres_quebec.csv", show_col_types = FALSE) |>
   mutate(date = as.Date(date)) |>
   arrange(date)
 stopifnot(nrow(ventes) == 72L, !anyDuplicated(ventes$date),
-          identical(ventes$date[1], as.Date('2020-01-01')),
-          identical(ventes$date[72], as.Date('2025-12-01')),
-          all(diff(12L * as.integer(format(ventes$date, '%Y')) +
-                     as.integer(format(ventes$date, '%m'))) == 1L),
+          identical(ventes$date[1], as.Date("2020-01-01")),
+          identical(ventes$date[72], as.Date("2025-12-01")),
+          all(diff(12L * as.integer(format(ventes$date, "%Y")) +
+                     as.integer(format(ventes$date, "%m"))) == 1L),
           !anyNA(ventes$ventes), all(ventes$ventes > 0))
 apprentissage <- ventes |> slice_head(n = 60)
 validation <- ventes |> slice_tail(n = 12)
 serie <- ts(apprentissage$ventes, start = c(2020, 1), frequency = 12)
 ```
 
+`mutate()` convertit les dates et `arrange()` place les mois dans l’ordre. Les conditions de `stopifnot()` vérifient les bornes, la continuité des mois et la présence de ventes positives. Si l’une d’elles échoue, R arrête le calcul pour permettre de vérifier les données.
+
+`slice_head(n = 60)` réserve 2020 à 2024 pour apprendre. `slice_tail(n = 12)` conserve 2025 pour la comparaison. Dans `ts()`, `start = c(2020, 1)` indique janvier 2020 et `frequency = 12` indique douze observations par année. L’objet `serie` contient uniquement les ventes d’apprentissage.
+
 ## Lire les composantes
 
-Dans une décomposition additive, la série s’écrit comme la somme d’une tendance, d’une composante saisonnière et d’un reste. Les composantes sont exprimées dans les unités de la série, ici des dollars par mois. Dans une décomposition multiplicative, elles sont combinées par multiplication; la composante saisonnière devient un facteur.
+### Décrire les ventes comme une somme
+
+Dans une décomposition additive, la série s’écrit
+
+\\y_t = T_t + S_t + R_t.\\
+
+\\T_t\\ représente la tendance estimée, \\S_t\\ la composante saisonnière et \\R_t\\ le reste. Les trois sont exprimés dans les unités des ventes, ici des dollars canadiens. Un écart saisonnier de +20 000 \$ ajoute ce montant à la tendance du mois, avant de tenir compte du reste.
+
+La fonction `decompose()` estime d’abord la tendance avec une moyenne centrée. Elle retire cette tendance, estime un profil saisonnier annuel et calcule le reste. La forme additive suppose que le même profil saisonnier en dollars se répète d’une année à l’autre. Une forme multiplicative représenterait plutôt la saison par des facteurs qui multiplient la tendance.
 
 ``` r
-composantes <- decompose(serie, type = 'additive')
+composantes <- decompose(serie, type = "additive")
+```
+
+L’objet `composantes` contient plusieurs éléments. `x` conserve la série d’origine, `trend` contient la tendance, `seasonal` répète le profil saisonnier sur les 60 mois et `random` contient le reste. `figure` contient les douze valeurs du profil, de janvier à décembre. Le nom `random` employé par R ne prouve pas que le reste est indépendant ou sans structure.
+
+### Lire les quatre panneaux
+
+Pour tracer ces éléments, nous les réunissons dans un tableau. `pivot_longer()` place les composantes dans une colonne commune, puis `facet_grid()` crée un panneau par composante.
+
+``` r
 graphique_composantes <- tibble(
   date = apprentissage$date,
   `Série observée` = as.numeric(composantes$x),
@@ -36,40 +59,56 @@ graphique_composantes <- tibble(
   Saison = as.numeric(composantes$seasonal),
   Reste = as.numeric(composantes$random)
 ) |>
-  pivot_longer(-date, names_to = 'composante', values_to = 'valeur') |>
+  pivot_longer(-date, names_to = "composante", values_to = "valeur") |>
   mutate(composante = factor(composante,
-                            levels = c('Série observée', 'Tendance', 'Saison', 'Reste')))
+                            levels = c("Série observée", "Tendance", "Saison", "Reste")))
 ggplot(graphique_composantes, aes(date, valeur)) +
-  geom_line(colour = '#0B4F6C', na.rm = TRUE) +
-  facet_grid(composante ~ ., scales = 'free_y') +
-  labs(x = 'Mois', y = 'Ventes et composantes ($ CA)') + theme_minimal()
+  geom_line(colour = "#0B4F6C", na.rm = TRUE) +
+  facet_grid(composante ~ ., scales = "free_y") +
+  labs(x = "Mois", y = "Ventes et composantes ($ CA)") + theme_minimal()
 ```
 
-![](decomposition-guidee_files/figure-html/unnamed-chunk-3-1.png)
+![](decomposition-guidee_files/figure-html/graphique-decomposition-m08-1.png)
+
+Lisez les panneaux de haut en bas. Le premier montre les ventes, le deuxième leur évolution générale, le troisième le profil annuel répété et le dernier ce qui reste après retrait de la tendance et de la saison. `scales = "free_y"` donne une échelle verticale adaptée à chaque panneau. Il faut donc lire les graduations avant de comparer la taille des variations entre panneaux.
+
+La tendance progresse et la saison se répète à l’identique dans la décomposition. Cette répétition est une propriété de la méthode choisie. Le reste permet d’examiner les variations que ces deux composantes laissent de côté.
+
+### Interpréter un écart mensuel en dollars
+
+Affichons le profil de douze mois. Nous nommons les mois pour pouvoir lire directement les signes et les montants.
 
 ``` r
-indices <- tibble(mois = 1:12,
-                  ecart_saisonnier_dollars = round(as.numeric(composantes$figure)))
-indices
+mois_fr <- c("janvier", "février", "mars", "avril", "mai", "juin",
+             "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+indices <- tibble(mois = mois_fr,
+                  ecart_saisonnier_dollars = as.numeric(composantes$figure))
+indices |>
+  knitr::kable(digits = 0,
+               col.names = c("Mois", "Écart saisonnier ($ CA)"),
+               format.args = list(big.mark = " ", decimal.mark = ","))
 ```
 
-    # A tibble: 12 × 2
-        mois ecart_saisonnier_dollars
-       <int>                    <dbl>
-     1     1                    -5826
-     2     2                    -8114
-     3     3                     7475
-     4     4                     1910
-     5     5                    18726
-     6     6                     6629
-     7     7                   -17783
-     8     8                   -12419
-     9     9                   -15746
-    10    10                    -6579
-    11    11                     7343
-    12    12                    24384
+| Mois      | Écart saisonnier (\$ CA) |
+|:----------|-------------------------:|
+| janvier   |                   -5 826 |
+| février   |                   -8 114 |
+| mars      |                    7 475 |
+| avril     |                    1 910 |
+| mai       |                   18 726 |
+| juin      |                    6 629 |
+| juillet   |                  -17 783 |
+| août      |                  -12 419 |
+| septembre |                  -15 746 |
+| octobre   |                   -6 579 |
+| novembre  |                    7 343 |
+| décembre  |                   24 384 |
 
-Pour un mois, un écart saisonnier estimé positif indique que la composante saisonnière ajoute des dollars à la tendance dans cette décomposition. Le reste peut encore placer la vente observée au-dessus ou au-dessous de la tendance. Il ne démontre pas que le mois cause cet écart. La tendance est obtenue par une moyenne centrée : elle manque aux extrémités et utilise des observations de part et d’autre des dates intérieures. Elle ne représente donc pas ce qui aurait été connu en temps réel à chaque date.
+En décembre, la composante saisonnière ajoute environ 24 400 \$ à la tendance estimée. En juillet, elle lui retranche environ 17 800 \$. Ces montants sont des écarts à la tendance. Pour retrouver une vente observée, il faut aussi ajouter le reste du mois. Un écart saisonnier positif ne garantit donc pas à lui seul que la vente observée dépasse sa tendance.
+
+La tendance manque aux extrémités parce que la moyenne centrée utilise des observations de part et d’autre de chaque date. Les premiers et derniers mois n’ont pas tous les voisins nécessaires. Les ventes sont présentes, mais cette tendance ne peut pas y être calculée avec la fenêtre complète. Pour les dates intérieures, la tendance utilise aussi des mois ultérieurs à la date décrite. Elle résume le passé avec l’information disponible à la fin de 2024.
+
+Pour vérifier votre lecture avant d’ouvrir les réponses, répondez aux trois questions suivantes.
 
 1.  Nommez un mois où l’écart saisonnier estimé est positif et un mois où il est négatif. Donnez leurs valeurs en dollars.
 2.  Décrivez la tendance et une variation du reste. Pourquoi les valeurs manquantes aux extrémités ne sont-elles pas nécessairement des données absentes?
@@ -83,40 +122,58 @@ Pour un mois, un écart saisonnier estimé positif indique que la composante sai
 
 ## Comprendre Holt-Winters et ETS avec un exemple fourni
 
-Lisez cet exemple après la comparaison de l’activité 8.4. Les quatre candidats de votre rapport restent les trois régressions et le naïf saisonnier.
+### Distinguer les trois méthodes comparées
 
-Le lissage de Holt-Winters prolonge le lissage exponentiel en combinant un niveau, une tendance et une saisonnalité. Une saison additive ajoute des écarts dans l’unité des ventes; une saison multiplicative utilise des facteurs et exige des valeurs positives. L’approche ETS représente une famille de modèles dont on précise ou sélectionne les composantes d’erreur, de tendance et de saisonnalité. L’exemple ci-dessous estime un Holt-Winters additif et laisse `ets()` choisir une structure parmi les modèles qu’il considère. Il n’est pas demandé de calculer les récurrences à la main ni de mémoriser le catalogue des modèles.
+Après la capsule 4, lisez cet exemple pour voir comment des méthodes de lissage intègrent la saisonnalité. Les quatre candidats du rapport principal sont les trois régressions et le naïf saisonnier. Ici, vous interprétez un autre exemple fourni, avec le même apprentissage, la même origine et les mêmes douze cibles.
 
-Les trois candidats et l’horizon sont fixés avant d’examiner les erreurs : naïf saisonnier, Holt-Winters additif et ETS sélectionné sur l’apprentissage. Les douze valeurs de validation sont jointes après la prévision.
+| Méthode | Ce qu’elle représente | Fonction utilisée |
+|----|----|----|
+| Naïf saisonnier | La dernière valeur observée pour le mois correspondant. | `snaive()` |
+| Holt-Winters additif | Un niveau, une tendance et une saisonnalité en dollars, actualisés par lissage. | `hw()` |
+| ETS | Une famille de modèles distinguant erreur, tendance et saisonnalité. | `ets()` puis `forecast()` |
+
+Pour Holt-Winters, le code fixe une saison additive. Pour ETS, `model = "ZZZ"` demande un choix automatique des trois composantes parmi les structures admissibles. Les lettres du modèle finalement affiché correspondent, dans l’ordre, à l’erreur, à la tendance et à la saisonnalité. A signifie additif, M multiplicatif et N absence de tendance ou de saison.
+
+### Produire les prévisions avant de calculer les erreurs
+
+L’argument `h = 12` demande douze mois à partir de la fin de l’apprentissage. Les trois méthodes reçoivent `serie`, qui s’arrête en décembre 2024. L’élément `mean` de chaque résultat contient ses douze prévisions centrales.
 
 ``` r
 reference <- snaive(serie, h = 12)
-holt_winters <- hw(serie, seasonal = 'additive', h = 12)
-modele_ets <- ets(serie, model = 'ZZZ')
+holt_winters <- hw(serie, seasonal = "additive", h = 12)
+modele_ets <- ets(serie, model = "ZZZ")
 prevision_ets <- forecast(modele_ets, h = 12)
 modele_ets
 ```
 
-    ETS(A,A,A) 
+    ETS(A,A,A)
 
     Call:
     ets(y = serie, model = "ZZZ")
 
       Smoothing parameters:
-        alpha = 0.0829 
-        beta  = 0.0051 
-        gamma = 1e-04 
+        alpha = 0.0829
+        beta  = 0.0051
+        gamma = 1e-04
 
       Initial states:
-        l = 286827.7167 
-        b = 3210.8142 
+        l = 286827.7167
+        b = 3210.8142
         s = 24384.43 7342.497 -6578.983 -15746.51 -12419.05 -17783.21
                6629.252 18726.32 3305.001 7475.11 -7891.439 -7443.426
 
       sigma:  10625.49
 
-         AIC     AICc      BIC 
-    1373.573 1388.144 1409.177 
+         AIC     AICc      BIC
+    1373.573 1388.144 1409.177
+
+Dans le calcul vérifié avec `forecast` 8.24.0, la structure retenue est ETS(A,A,A), avec erreur, tendance et saisonnalité additives. La sortie affiche aussi les paramètres de lissage. Pour suivre l’exemple, repérez d’abord le nom de la structure, puis passez aux prévisions et à leurs erreurs.
+
+La structure est apparentée à celle de Holt-Winters additif. Dans cette version du package, `hw()` estime ses paramètres en minimisant l’erreur quadratique à un pas et `ets()` utilise par défaut la vraisemblance. Les résultats peuvent donc différer. Le choix automatique de la structure ETS utilise ici l’AICc calculé sur l’apprentissage, avant toute lecture des ventes de 2025.
+
+### Comparer les erreurs sur les mêmes mois
+
+Nous réunissons les trois prévisions et les ventes observées de 2025. `pivot_longer()` crée une ligne par méthode et par mois. Chaque méthode est ainsi comparée aux douze mêmes observations.
 
 ``` r
 comparaison <- tibble(
@@ -125,33 +182,40 @@ comparaison <- tibble(
   `Naïf saisonnier` = as.numeric(reference$mean),
   `Holt-Winters additif` = as.numeric(holt_winters$mean),
   ETS = as.numeric(prevision_ets$mean)
-) |> pivot_longer(-c(date, observe), names_to = 'methode', values_to = 'prevision')
+) |> pivot_longer(-c(date, observe), names_to = "methode", values_to = "prevision")
 
 scores <- comparaison |>
   group_by(methode) |>
   summarise(MAE = mean(abs(observe - prevision)),
-            RMSE = sqrt(mean((observe - prevision)^2)), .groups = 'drop')
-scores
+            RMSE = sqrt(mean((observe - prevision)^2)), .groups = "drop") |>
+  arrange(MAE)
+scores |>
+  knitr::kable(digits = 0,
+               col.names = c("Méthode", "MAE ($ CA)", "RMSE ($ CA)"),
+               format.args = list(big.mark = " ", decimal.mark = ","))
 ```
 
-    # A tibble: 3 × 3
-      methode                 MAE   RMSE
-      <chr>                 <dbl>  <dbl>
-    1 ETS                   9947. 11252.
-    2 Holt-Winters additif  9387. 10699.
-    3 Naïf saisonnier      29067. 30170.
+| Méthode              | MAE (\$ CA) | RMSE (\$ CA) |
+|:---------------------|------------:|-------------:|
+| Holt-Winters additif |       9 387 |       10 699 |
+| ETS                  |       9 947 |       11 252 |
+| Naïf saisonnier      |      29 067 |       30 170 |
+
+Dans ce bloc, la MAE de Holt-Winters est d’environ 9 387 \$ CA, celle d’ETS de 9 947 \$ CA et celle du naïf saisonnier de 29 067 \$ CA. Holt-Winters a donc ici la plus petite erreur absolue moyenne des trois méthodes. L’AICc sert au choix interne d’ETS sur l’apprentissage, tandis que la MAE de ce tableau mesure les erreurs observées ensuite sur 2025.
+
+Pour comprendre ce que le classement résume, superposez maintenant les trajectoires. La courbe noire donne les ventes observées et les courbes colorées les prévisions.
 
 ``` r
 ggplot(comparaison, aes(date, prevision, colour = methode)) +
-  geom_line() + geom_line(aes(y = observe), colour = 'black', linewidth = 0.8) +
-  labs(x = 'Mois de validation', y = 'Ventes mensuelles ($ CA)',
-       colour = 'Prévision', caption = 'Noir : ventes observées') +
+  geom_line() + geom_line(aes(y = observe), colour = "black", linewidth = 0.8) +
+  labs(x = "Mois de validation", y = "Ventes mensuelles ($ CA)",
+       colour = "Prévision") +
   theme_minimal()
 ```
 
-![](decomposition-guidee_files/figure-html/unnamed-chunk-4-1.png)
+![](decomposition-guidee_files/figure-html/trajectoires-saisonnieres-m08-1.png)
 
-Lisez la structure affichée par `modele_ets` et le tableau. Ici, `ets()` retient la structure additive ETS(A,A,A), apparentée à celle utilisée par le Holt-Winters additif. Dans cette version de `forecast`, `hw()` estime celle-ci en minimisant l’erreur quadratique à un pas, tandis que `ets()` utilise par défaut la vraisemblance pour l’estimation. Les deux ajustements peuvent donc différer, même lorsque leur structure est semblable. Une MAE plus faible signifie ici une erreur absolue moyenne plus faible sur ces douze mois. Elle ne garantit pas le même classement à une autre origine. L’ETS automatique sélectionne ici sa structure par AICc sur les données d’apprentissage. Le tableau de validation mesure les erreurs sur 2025. Les intervalles de chaque méthode reposent sur ses hypothèses et n’incluent pas nécessairement tous les changements futurs.
+Le naïf saisonnier reprend les ventes de 2024. Il ne prolonge pas la hausse entre années. Les deux autres méthodes combinent tendance et saison. Leurs erreurs sur cette année restent à interpréter avec prudence, car le classement peut changer à une autre origine. Leurs intervalles éventuels dépendent également des hypothèses de chaque modèle.
 
 1.  Quelle vente observée le naïf saisonnier reprend-il pour prévoir janvier 2025? Et décembre 2025?
 2.  Quels résultats distinguent les trois prévisions sur ce bloc? Indiquez la mesure et les unités.
@@ -165,4 +229,4 @@ Lisez la structure affichée par `modele_ets` et le tableau. Ici, `ets()` retien
 
 ## Pour aller plus loin
 
-Hyndman et Athanasopoulos (2021), [décomposition des séries](https://otexts.com/fpp3/decomposition.html) et [lissage exponentiel](https://otexts.com/fpp3/exponential-smoothing.html); équipe `forecast`, documentation de [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.html) et de [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.html).
+Hyndman et Athanasopoulos (2021), [décomposition des séries](https://otexts.com/fpp3/decomposition.html) et [lissage exponentiel](https://otexts.com/fpp3/exponential-smoothing.html). Les fonctions sont décrites dans les documentations de [decompose](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/decompose.html), de [hw](https://pkg.robjhyndman.com/forecast/reference/ses.html) et de [ets](https://pkg.robjhyndman.com/forecast/reference/ets.html), consultées le 10 novembre 2026. Les versions de R et des packages employés sont consignées lors de la vérification des projets.

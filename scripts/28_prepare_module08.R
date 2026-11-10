@@ -34,8 +34,8 @@ preparer <- function(nom, rapport, texte, complet = FALSE, facultatif = FALSE) {
   qmd <- file.path(dossier, paste0(rapport, ".qmd"))
   writeLines(texte, qmd, useBytes = TRUE)
   if (nom %in% c("tendance-ventes", "demonstration-tendance-ventes")) {
-    stopifnot(file.copy(file.path(module, "decomposition-guidee.qmd"),
-                        file.path(dossier, "decomposition-guidee.qmd")))
+    writeLines(portable("decomposition-guidee.qmd", "Lire la décomposition et une prévision saisonnière"),
+               file.path(dossier, "decomposition-guidee.qmd"), useBytes = TRUE)
   }
   if (complet) knitr::purl(qmd, output = sub("qmd$", "R", qmd), quiet = TRUE)
   writeLines(c("Version: 1.0", "RestoreWorkspace: No", "SaveWorkspace: No",
