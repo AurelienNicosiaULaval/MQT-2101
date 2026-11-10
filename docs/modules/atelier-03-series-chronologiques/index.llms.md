@@ -41,6 +41,15 @@ Le [calendrier du cours](../../calendrier.llms.md) prévoit la séance le mercre
 - Installez `tidyverse` si nécessaire; `forecast` sert à la comparaison hebdomadaire facultative. Le [dictionnaire](data/dictionnaires.md) décrit les fichiers fournis.
 - Apportez vos traces précédentes et une question sur votre mini-rapport 2. Si le premier rendu bloque, conservez le message d’erreur pour recevoir de l’aide.
 
+> **TIP:**
+>
+> Pour revoir les modules 06 à 08, consultez les deux fiches :
+>
+> - [Séries temporelles : les notions (PDF, 2 pages)](media/pdf/synthese-series-notions.pdf).
+> - [Séries temporelles avec R : code et résultats (PDF, 2 pages)](media/pdf/synthese-series-r-resultats.pdf).
+>
+> La fiche R reprend les ventes simulées du module 08, avec le code coloré, les tableaux et les graphiques.
+
 Reprenez brièvement vos résultats du module 07 et la [comparaison hebdomadaire accompagnée](../../modules/atelier-03-series-chronologiques/demonstration-hebdomadaire.llms.md#decision) : pourquoi l’ajout d’une tendance ou le coût fictif des écarts peut-il modifier une recommandation de stock? Il n’est pas nécessaire de refaire les quatre prévisions.
 
 Le nouveau cas est simulé. Les 60 mois de 2020 à 2024 servent à l’apprentissage; les douze mois de 2025 servent à comparer depuis la fin de décembre 2024. Ce bloc utilisé pour choisir n’est pas un test final indépendant.
