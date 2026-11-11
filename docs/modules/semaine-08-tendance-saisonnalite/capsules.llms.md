@@ -4,15 +4,23 @@
 
 Les cinq capsules construisent une analyse de ventes fictives. Leurs productions autonomes 8.1 à 8.5 sont identiques aux activités de l’accueil: réalisez chacune une seule fois dans `tendance_ventes.qmd`. Les [lectures françaises](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md), la [démonstration complète](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md) et le [projet guidé](telechargements/tendance-ventes.zip) permettent de travailler sans vidéo.
 
-Les supports PDF et HTML sont disponibles. Le [lot PDF daté](telechargements/module-08-pdf-2026-11-06.zip) contient les cinq capsules et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
+Les cinq vidéos et leurs supports PDF, PDF annotés et HTML sont disponibles ci-dessous. Le [lot PDF du 11 novembre 2026](telechargements/module-08-pdf-2026-11-11.zip) regroupe les cinq supports, leurs versions annotées et la synthèse. Les méthodes avancées restent dans un [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complements.llms.md), sans nouvelle production obligatoire.
 
 ## Capsule 1 - Repérer tendance et saisonnalité
 
 La hausse vient-elle du temps ou du calendrier? Consultez l’[lecture guidée de la décomposition](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#lire-les-composantes), la [lecture 1](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-1) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#exploration).
 
+## Vidéo
+
+[Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=uEyUadz4vns)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-01-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-01-support-annote.pdf)
 
 ## HTML
 
@@ -37,9 +45,17 @@ Après votre tentative, ouvrez le [corrigé de l’activité 8.1](../../modules/
 
 Que représente un coefficient de décembre? Consultez la [lecture 2](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-2) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#calendrier).
 
+## Vidéo
+
+[Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=Nj05-dRO5nY)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-02-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-02-support-annote.pdf)
 
 ## HTML
 
@@ -63,9 +79,17 @@ Après votre tentative, ouvrez le [corrigé de l’activité 8.2](../../modules/
 
 Qu’est-ce que le modèle laisse encore dans la série? Consultez la [lecture 3](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-3) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#diagnostic).
 
+## Vidéo
+
+[Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=O5O_gBteeTI)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-03-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-03-support-annote.pdf)
 
 ## HTML
 
@@ -89,9 +113,17 @@ Après votre tentative, ouvrez le [corrigé de l’activité 8.3](../../modules/
 
 Le calendrier fait-il mieux que reprendre la dernière année? Consultez la [lecture 4](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-4) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#validation). Lisez ensuite l’[exemple accompagné de Holt-Winters et ETS](../../modules/semaine-08-tendance-saisonnalite/decomposition-guidee.llms.md#holt-winters-ets) pour voir comment d’autres méthodes intègrent la saison.
 
+## Vidéo
+
+[Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=HuDi5y5y9Xk)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
 
 ## HTML
 
@@ -115,9 +147,17 @@ Après votre tentative, ouvrez le [corrigé de l’activité 8.4](../../modules/
 
 Que peut-on annoncer sans promettre le budget futur? Consultez la [lecture 5](../../modules/semaine-08-tendance-saisonnalite/lectures.llms.md#lecture-5) et la [démonstration associée](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md#incertitude).
 
+## Vidéo
+
+[Ouvrir la capsule 5 sur YouTube](https://www.youtube.com/watch?v=S1gAq0Yw2CA)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-05-support.pdf) · [Télécharger le PDF](media/pdf/capsule-05-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-05-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-05-support-annote.pdf)
 
 ## HTML
 

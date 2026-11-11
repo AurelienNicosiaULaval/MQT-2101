@@ -48,7 +48,7 @@ Le [cahier facultatif](../../modules/semaine-08-tendance-saisonnalite/complement
 
 Les activités 8.1 à 8.5 de l’accueil, les productions autonomes des diapositives et leurs rappels sur la page des capsules désignent le même travail. Réalisez chacune une seule fois dans `tendance_ventes.qmd`. Après chaque tentative, vérifiez votre réponse dans la [démonstration](../../modules/semaine-08-tendance-saisonnalite/demonstrations.llms.md). Les exercices de transfert sont distincts et se conservent dans `tendance_commerce.qmd`, après une première tentative avant le corrigé.
 
-Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en PDF et HTML. Aucune vidéo ni version annotée n’est fournie ici. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 6 novembre 2026](telechargements/module-08-pdf-2026-11-06.zip) contient ces six supports.
+Les [cinq capsules principales](../../modules/semaine-08-tendance-saisonnalite/capsules.llms.md) sont disponibles en vidéo, avec leurs supports PDF, PDF annotés et HTML. La [synthèse](../../modules/semaine-08-tendance-saisonnalite/notes-cours.llms.md) est aussi disponible en [PDF](media/pdf/notes-cours.pdf). Le [lot PDF du 11 novembre 2026](telechargements/module-08-pdf-2026-11-11.zip) regroupe les cinq supports, leurs versions annotées et la synthèse.
 
 Cliquez sur une carte pour ouvrir l’objectif, les ressources et la production. Revenez ici pour garder le fil.
 
@@ -172,7 +172,7 @@ Ce module prépare la partie tendance, saisonnalité et incertitude du mini-rapp
 
 ## Ressources du module
 
-[CapsulesCinq supports en PDF et HTML, avec leurs productions communes au parcours.](capsules.llms.md) [Notes de coursSynthèse du socle en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse guidée complète, depuis le CSV jusqu’à la recommandation.](demonstrations.llms.md) [ExercicesCinq exercices suivis et pratiques ciblées, avec corrigés repliables.](exercices.llms.md) [LecturesExplications françaises du socle et accès au cahier facultatif.](lectures.llms.md)
+[CapsulesCinq vidéos et leurs supports PDF, PDF annotés et HTML, avec leurs productions communes au parcours.](capsules.llms.md) [Notes de coursSynthèse du socle en diapositives HTML et PDF.](notes-cours.llms.md) [Démonstrations RAnalyse guidée complète, depuis le CSV jusqu’à la recommandation.](demonstrations.llms.md) [ExercicesCinq exercices suivis et pratiques ciblées, avec corrigés repliables.](exercices.llms.md) [LecturesExplications françaises du socle et accès au cahier facultatif.](lectures.llms.md)
 
 ## Erreurs fréquentes
 
