@@ -48,33 +48,20 @@ Ajouter une dépendance temporelle ne garantit pas une meilleure prévision. La 
 
 ## Qu’est-ce qui change entre les deux modèles ?
 
-:::: {.concept-grid}
-::: {.concept-card}
-::: {.tag}
-La régression
-:::
-::: {.text}
-Dans les deux cas, les ventes dépendent de la tendance, du mois, de la promotion, du prix et de l’indice.
-:::
-:::
-::: {.concept-card}
-::: {.tag}
-La partie inexpliquée
-:::
-::: {.text}
-Avec des erreurs AR(1), une partie de l’écart du mois précédent persiste. Les coefficients de la régression et cette persistance sont estimés ensemble.
-:::
-:::
-::::
-
-## Donner un sens à la persistance
-
 ::: {.example-box}
-Le coefficient AR(1) estimé vaut 0,465. Imaginons que le dernier écart du processus d’erreur soit de +10 000 $. Sa contribution prévue un mois plus tard vaut environ +4 652 $.
+Ventes du mois : y<sub>t</sub> = m<sub>t</sub> + η<sub>t</sub><br>Erreurs AR(1) : η<sub>t</sub> = φ η<sub>t−1</sub> + ε<sub>t</sub>
 :::
 
 ::: {.note-box}
-À deux mois, il en reste environ 2 164 $, puis 1 006 $ à trois mois. Ces montants illustrent la propagation de l’écart initial, en supposant les innovations futures de moyenne nulle.
+Les deux candidats utilisent les mêmes prédicteurs dans m<sub>t</sub>. Le second estime aussi la persistance φ. L’innovation ε<sub>t</sub> est la part nouvelle du mois, après la correction apportée par le mois précédent.
+:::
+
+## Donner un sens à la persistance
+
+![](../memoire-ar1.png){width="85%" fig-alt="Pour un écart initial hypothétique de 10 000 $, la contribution attendue descend à 4 652 $, 2 164 $ et 1 006 $ après un, deux et trois mois."}
+
+::: {.note-box}
+À chaque horizon h, la contribution vaut 10 000 × φ<sup>h</sup>, avec φ ≈ 0,465. Le graphique isole cette contribution à la prévision des ventes.
 :::
 
 ## Fixer les règles avant de comparer
@@ -103,24 +90,13 @@ En janvier, les écarts absolus sont d’environ 6 051 $ et 8 405 $. En juillet,
 
 ## Passer des erreurs mensuelles au score
 
-:::: {.concept-grid}
-::: {.concept-card}
-::: {.tag}
-MAE
+::: {.example-box}
+MAE = moyenne des |erreurs|<br>RMSE = racine de la moyenne des erreurs²
 :::
-::: {.text}
-Prendre la valeur absolue de chaque erreur, additionner les douze valeurs et diviser par douze. Chaque dollar d’erreur pèse autant.
+
+::: {.note-box}
+Avec deux erreurs de +3 000 $ et −4 000 $, la MAE vaut 3 500 $. La RMSE vaut √[(3 000² + 4 000²)/2] ≈ 3 536 $. Pour le classement du cours, refaites le calcul sur les douze erreurs de chaque modèle.
 :::
-:::
-::: {.concept-card}
-::: {.tag}
-RMSE
-:::
-::: {.text}
-Élever chaque erreur au carré, faire la moyenne, puis prendre la racine. Les grands écarts pèsent davantage. Le résultat se lit en dollars.
-:::
-:::
-::::
 
 ## Comparaison des douze mois de 2025
 

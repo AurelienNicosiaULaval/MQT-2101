@@ -1,0 +1,25 @@
+name: Mettre en forme et vérifier le parcours complet du module 09
+on:
+  push:
+    branches: ['verification/edition-module09-20261118']
+permissions:
+  contents: write
+jobs:
+  module09:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: /tmp/mqt-python
+      MQT_PLAYWRIGHT_MODULE: /tmp/lecteur/node_modules/playwright
+    steps:
+      - uses: actions/checkout@v4
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.9.38'
+      - name: Préparer R, Chrome et Poppler
+        run: |
+          npm install --prefix /tmp/lecteur playwright@1.56.1
+          command -v pdftoppm || (sudo apt-get -qq update && sudo apt-get install -y poppler-utils)
+          python3 -c 'from PIL import Image' || python3 -m pip install pillow --target=/tmp/mqt-python
+      - name: Générer les pages, les diaporamas et les téléchargements
+        run: python3 scripts/verification-publication/parcours-final-module09.py
