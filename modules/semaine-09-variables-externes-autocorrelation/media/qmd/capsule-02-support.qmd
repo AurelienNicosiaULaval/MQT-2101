@@ -46,22 +46,104 @@ Une direction veut comprendre l’association entre une promotion et les ventes,
 - Distinguer association conditionnelle et effet causal.
 :::
 
-## Lire le coefficient dans son contexte
+## Commencer par les moyennes observées
 
-::: {.keypoints}
-- Le modèle explique les ventes par la tendance, le mois, la promotion, le prix et l’indice de confiance.
-- Comparer promotion « oui » à « non », en dollars, en maintenant les autres variables fixes.
-- La régression mesure une association conditionnelle.
+| Mois de 2020 à 2024 | Nombre | Ventes moyennes | Prix moyen |
+|---|---|---|---|
+| Sans promotion | 42 | 420 892 $ | 59,81 $ |
+| Avec promotion | 18 | 503 764 $ | 55,87 $ |
+
+::: {.note-box}
+L’écart brut est de 82 872 $. Les mois comparés diffèrent aussi par leur prix. Que compare-t-on d’autre sans le vouloir ?
 :::
 
-## Une association dans le cas guidé
+## Pourquoi le calendrier entre dans le modèle
+
+:::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Tendance
+:::
+::: {.text}
+Le compteur de mois distingue le début et la fin des cinq années. Les ventes peuvent évoluer au fil du temps.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Mois de l’année
+:::
+::: {.text}
+Les indicatrices mensuelles permettent à janvier et à décembre d’avoir des niveaux différents, à tendance identique.
+:::
+:::
+::::
+
+## Ajuster sur les mois disponibles
+
+```r
+modele_lm <- lm(
+  ventes ~ tendance + promotion + prix_moyen +
+    indice_confiance + mois,
+  data = entrainement
+)
+coef(modele_lm)["promotionoui"]
+```
+
+::: {.note-box}
+Dans le projet guidé, l’entraînement s’arrête en décembre 2024. Le facteur promotion prend « non » comme référence.
+:::
+
+## Lire trois lignes du même ajustement
+
+| Terme | Variation considérée | Écart de ventes ajustées |
+|---|---|---|
+| promotionoui | Passer de non à oui | +47 566 $ |
+| prix_moyen | Augmenter de 1 $ par unité | −4 895 $ |
+| indice_confiance | Augmenter de 1 point | +2 687 $ |
+
+::: {.note-box}
+Lire chaque ligne en gardant fixes les autres termes du modèle. Les trois coefficients n’ont pas la même unité.
+:::
+
+## Faire apparaître le coefficient par soustraction
 
 ::: {.example-box}
-À prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».
+Écrivons B pour les ventes ajustées du profil sans promotion. Le même profil avec promotion donne B + 47 566 $.
 :::
 
-::: {.warning-box}
-Ce résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’effet causal d’une promotion.
+::: {.note-box}
+En soustrayant les deux valeurs, les termes de mois, de tendance, de prix et d’indice s’annulent. La comparaison brute de deux groupes ne les maintenait pas fixes.
+:::
+
+## Si le prix baisse en même temps
+
+:::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Hypothèse de calcul
+:::
+::: {.text}
+Envisager à la fois une promotion et un prix inférieur de 1 $. Garder le mois, la tendance et l’indice identiques.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Calcul sous le modèle
+:::
+::: {.text}
+La promotion ajoute 47 566 $ aux ventes ajustées. La baisse de prix ajoute 4 895 $ selon le modèle. Ensemble, l’écart prévu est d’environ 52 461 $.
+:::
+:::
+::::
+
+## Que répondre au responsable des promotions ?
+
+::: {.example-box}
+« Chaque promotion nous a rapporté 47 566 $. » Quelle partie de cette phrase dépasse ce que les données permettent de conclure ?
+:::
+
+::: {.note-box}
+Le modèle compare des profils. Une campagne peut avoir été programmée pour un mois où la demande s’annonçait différente. Le coefficient seul ne permet pas d’isoler un gain causé par la campagne.
 :::
 
 ## À retenir
