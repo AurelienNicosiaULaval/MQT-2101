@@ -16,10 +16,10 @@ names=[f"capsule-0{i}-support" for i in range(1,6)]
 for f,n in zip(names+["notes-cours"],[13,13,14,14,14,34]):
  path=module/"media/pdf"/(f+".pdf")
  assert int(re.search(r"Pages:\s+(\d+)",subprocess.check_output(["pdfinfo",str(path)],text=True))[1])==n
-lot=module/"telechargements/module-09-supports.zip"
+lot=module/"telechargements/module-09-pdf-2026-11-18-final.zip"
 with ZipFile(lot,"w",ZIP_DEFLATED) as z:
  for p in sorted((module/"media/pdf").glob("*.pdf")):z.write(p,p.name)
-aliases=["module-09-supports.zip","module-09-pdf-2026-11-18.zip","module-09-pdf-2026-11-18-tournage.zip"]
+aliases=["module-09-pdf-2026-11-18-final.zip","module-09-pdf-2026-11-18.zip","module-09-pdf-2026-11-18-tournage.zip"]
 for b in [module,dest]:
  for n in aliases:
   destination=b/"telechargements"/n
