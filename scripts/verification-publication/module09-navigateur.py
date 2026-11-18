@@ -72,4 +72,17 @@ with webdriver.Chrome(options=options, service=Service(shutil.which("chromedrive
         sizes=driver.execute_script("return [window.innerWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth]")
         print(f"{page} : {sizes}",flush=True)
         assert sizes[2]<=392 and sizes[1]<=392,(page,sizes)
+    get("capsules")
+    for index, group in enumerate(driver.find_elements(By.CSS_SELECTOR, "main .panel-tabset")):
+        pdf, html = group.find_elements(By.CSS_SELECTOR, "[role=tab]")
+        click(html)
+        frame = group.find_element(By.CSS_SELECTOR, "iframe[data-support-src]")
+        wait.until(lambda d: frame.get_dom_attribute("src"))
+        driver.switch_to.frame(frame)
+        wait.until(lambda d: d.execute_script("return !!window.Reveal && Reveal.isReady()"))
+        assert len(driver.find_elements(By.CSS_SELECTOR, ".slides > section")) == [13,13,14,14,14][index]
+        driver.switch_to.default_content()
+        click(pdf)
+        assert pdf.get_attribute("aria-selected") == "true"
+    print("Les dix onglets des capsules fonctionnent aussi à 390 pixels.")
     print("Cartes, onglets, diaporamas intégrés, corrigés, copie de code et affichage à 390 pixels vérifiés.")
