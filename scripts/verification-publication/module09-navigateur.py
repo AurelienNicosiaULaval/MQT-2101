@@ -76,13 +76,22 @@ with webdriver.Chrome(options=options, service=Service(shutil.which("chromedrive
     for index, group in enumerate(driver.find_elements(By.CSS_SELECTOR, "main .panel-tabset")):
         pdf, html = group.find_elements(By.CSS_SELECTOR, "[role=tab]")
         click(html)
-        frame = group.find_element(By.CSS_SELECTOR, "iframe[data-support-src]")
-        wait.until(lambda d: frame.get_dom_attribute("src"))
-        driver.switch_to.frame(frame)
+        assert html.get_attribute("aria-selected") == "true"
+        link = group.find_element(By.LINK_TEXT, "Ouvrir les diapositives")
+        assert link.is_displayed()
+        original = driver.current_window_handle
+        before = set(driver.window_handles)
+        click(link)
+        wait.until(lambda d: len(set(d.window_handles) - before) == 1)
+        driver.switch_to.window((set(driver.window_handles) - before).pop())
         wait.until(lambda d: d.execute_script("return !!window.Reveal && Reveal.isReady()"))
         assert len(driver.find_elements(By.CSS_SELECTOR, ".slides > section")) == [13,13,14,14,14][index]
-        driver.switch_to.default_content()
+        driver.close()
+        driver.switch_to.window(original)
         click(pdf)
         assert pdf.get_attribute("aria-selected") == "true"
+        pdf_link = group.find_element(By.LINK_TEXT, "Ouvrir le PDF")
+        assert pdf_link.is_displayed()
+        assert pdf_link.get_attribute("href").endswith(f"capsule-0{index+1}-support.pdf")
     print("Les dix onglets des capsules fonctionnent aussi à 390 pixels.")
     print("Cartes, onglets, diaporamas intégrés, corrigés, copie de code et affichage à 390 pixels vérifiés.")
