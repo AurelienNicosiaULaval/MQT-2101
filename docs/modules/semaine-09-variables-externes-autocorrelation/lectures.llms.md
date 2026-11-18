@@ -2,6 +2,16 @@
 
 Ces explications font partie du socle. Les liens vers l’ouvrage ouvrent des lectures ciblées et ne remplacent pas les démonstrations en R.
 
+## Choisir sa lecture
+
+| Après la capsule | Passage à lire | Question à reprendre dans le projet |
+|----|----|----|
+| [1. Auditer les variables](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-1) | [Disponibilité et fuite](#lecture-1) | [Que savait-on fin décembre 2024 ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#disponibilite) |
+| [2. Interpréter la régression](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-2) | [Régression avec contexte](#lecture-2) | [À quoi compare-t-on les ventes sous promotion ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#regression) |
+| [3. Lire les résidus](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-3) | [Résidus et autocorrélation](#lecture-3) | [Que suggèrent les retards 1 et 12 ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#diagnostic) |
+| [4. Comparer les modèles](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-4) | [Régression avec erreurs AR](#lecture-4) | [Quel modèle obtient les erreurs les plus faibles en 2025 ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#comparaison) |
+| [5. Communiquer la décision](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-5) | [Scénarios et décision](#lecture-5) | [Le prix de 60 \$ a-t-il été observé dans les deux groupes ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#scenario) |
+
 ## Disponibilité et fuite
 
 Une prévision doit reposer sur l’information disponible à son origine. Le calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques. L’indice économique peut nécessiter sa propre prévision. Une valeur du futur observée après coup est utile pour une analyse rétrospective, mais elle ne prouve pas la performance d’une prévision réalisable.
@@ -26,7 +36,7 @@ Pour approfondir, le test de Ljung-Box regroupe plusieurs retards dans une même
 
 ## Régression avec erreurs AR
 
-Écrire \\y_t = x_t \beta + \eta_t\\ puis \\\eta_t = \phi \eta\_{t-1} + \varepsilon_t\\ signifie que la partie non expliquée par les prédicteurs a une mémoire d’un mois. Les innovations ε ne sont pas la même chose que les erreurs de régression η. Le modèle est estimé sur les 60 premiers mois. Les candidats sont comparés sur les mêmes 12 mois et les mêmes prédicteurs. Les paramètres estimés et les diagnostics restent incertains.
+Écrire $`y_t = x_t \beta + \eta_t`$ puis $`\eta_t = \phi \eta_{t-1} + \varepsilon_t`$ signifie que la partie non expliquée par les prédicteurs dépend directement de sa valeur au mois précédent. Par récurrence, une innovation peut encore influer sur les mois suivants. Les innovations ε ne sont pas la même chose que les erreurs de régression η. Le modèle est estimé sur les 60 premiers mois. Les candidats sont comparés sur les mêmes 12 mois et les mêmes prédicteurs. Les paramètres estimés et les diagnostics restent incertains.
 
 Une erreur AR(1) et une vente retardée utilisée comme prédicteur ne sont pas la même opération. Dans le premier cas, la dépendance est décrite dans la partie non expliquée par la régression; dans le second, on ajoute explicitement une vente passée à la formule. Pour chaque horizon, il faut vérifier que la vente retardée nécessaire est disponible à l’origine ou préciser comment elle sera prévue.
 
@@ -37,6 +47,8 @@ Cette structure est une option plus technique, présentée avec du code complet 
 Une prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis. Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs. Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire. Une différence prédite ne garantit pas l’effet d’une intervention.
 
 Pour lire les intervalles, demandez-vous ce qui est supposé connu. Un intervalle calculé avec un prix et une promotion fixés décrit l’incertitude sous ces valeurs; il n’ajoute pas automatiquement l’incertitude sur un prix ou une promotion encore inconnus. Utilisez l’exercice de scénario pour comparer deux hypothèses à valeurs restantes identiques, puis formulez une limite opérationnelle.
+
+Dans le cas guidé, 60 \$ se situe dans la plage des prix observés sans promotion. En promotion, le prix maximal de l’entraînement est de 57,86 \$. Le scénario avec promotion exige donc aussi une extrapolation.
 
 ## Lectures ciblées et documentation
 

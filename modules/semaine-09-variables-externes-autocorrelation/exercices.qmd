@@ -12,7 +12,9 @@ execute:
   warning: false
   message: false
 ---
-Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Les trois derniers exercices sont des pratiques supplémentaires.
+## Objectif
+
+Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Après la préparation, les deux corrigés avec code peuvent être exécutés séparément. Les trois derniers exercices sont des pratiques supplémentaires.
 
 ## Préparation {#preparation}
 
@@ -80,7 +82,7 @@ scenarios <- bind_rows(profil |> mutate(scenario = "Capacité inchangée"),
   mutate(prevision = as.numeric(predict(modele_scenario, newdata = pick(everything()))))
 scenarios
 ```
-La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. La formule de capacité est une hypothèse, pas un plan vérifié.
+La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. À Québec, les 72 mois ont une capacité de 2 400 unités. Le modèle commun prévoit environ 196 781 $ à cette capacité et 205 502 $ à 2 520 unités. L’écart prédit d’environ 8 721 $ dépend de l’hypothèse que l’association entre succursales se transpose à un changement de capacité à Québec.
 
 ::::
 
@@ -94,7 +96,11 @@ Retirer les variables du mois cible connues après coup, ou utiliser une prévis
 
 ::::
 
-## Exercice 5 - Retard et horizon {#exercice-5}
+## Pratique supplémentaire {#pratique-supplementaire}
+
+Les exercices 5 à 7 permettent d’approfondir la disponibilité des retards, le diagnostic et le traitement d’un événement futur.
+
+### Exercice 5 - Retard et horizon {#exercice-5}
 
 À la fin de décembre, les ventes de décembre sont connues. Peut-on les utiliser pour prévoir janvier et février?
 
@@ -104,7 +110,7 @@ Pour janvier, oui si la mesure de décembre est disponible à l’origine. Pour 
 
 ::::
 
-## Exercice 6 - Interpréter une p-valeur {#exercice-6}
+### Exercice 6 - Interpréter une p-valeur {#exercice-6}
 
 Le test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résidus sont indépendants?
 
@@ -114,7 +120,7 @@ Non. Le test ne fournit pas assez d’évidence contre l’absence d’autocorr�
 
 ::::
 
-## Exercice 7 - Événement spécial {#exercice-7}
+### Exercice 7 - Événement spécial {#exercice-7}
 
 Une panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois?
 
@@ -123,3 +129,9 @@ Une panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois?
 Vérifier d’abord si la donnée est erronée et documenter la cause. Selon la question, comparer une analyse avec et sans ce mois ou ajouter un indicateur d’événement; ne pas le supprimer automatiquement. Une prévision future requiert aussi un scénario sur la présence de l’événement.
 
 ::::
+
+## Auto-vérification
+
+- [ ] J’ai calculé les retards et examiné les résidus en respectant l’ordre des mois dans chaque succursale.
+- [ ] Ma recommandation situe la décision à Québec et nomme la cible et le mois visé.
+- [ ] Je distingue l’hypothèse d’achalandage du changement de capacité et j’explique pourquoi les ventes prévues ne mesurent pas l’effet causal d’un agrandissement.

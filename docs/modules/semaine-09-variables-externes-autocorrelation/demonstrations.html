@@ -1573,7 +1573,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1585,16 +1585,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1639,7 +1639,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1701,7 +1701,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1715,7 +1715,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6927,147 +6927,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7082,7 +7082,7 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#preparation" id="toc-preparation" class="nav-link active" data-scroll-target="#preparation">Préparation</a></li>
   <li><a href="#disponibilite" id="toc-disponibilite" class="nav-link" data-scroll-target="#disponibilite">1. Disponibilité</a></li>
@@ -7106,11 +7106,11 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7147,8 +7147,8 @@ padding: 1rem;
   date       ventes promotion prix_moyen indice_confiance
   &lt;date&gt;      &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;
 1 2020-01-01 309720 non             59.7             99.6
-2 2020-02-01 329533 non             58.3            101.
-3 2020-03-01 332527 non             58.4            101.
+2 2020-02-01 329533 non             58.3            101. 
+3 2020-03-01 332527 non             58.4            101. 
 4 2020-04-01 325184 non             59.2            100. </code></pre>
 </div>
 </div>
@@ -7171,7 +7171,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
 </section>
 <section id="diagnostic" class="level2">
 <h2 class="anchored" data-anchor-id="diagnostic">3. Autocorrélation des résidus</h2>
-<p>Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. Elle est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.</p>
+<p>Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. La valeur p est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>residus_lm <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modele_lm)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(entrainement<span class="sc">$</span>date, residus_lm, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Mois&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Résidu (dollars)&quot;</span>)</span>
@@ -7200,6 +7200,7 @@ data:  residus_lm
 X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 </div>
 </div>
+<p>Au retard 1, l’ACF des résidus vaut environ 0,41. Au retard 12, elle vaut environ −0,30. Ces deux barres dépassent en valeur absolue le repère approximatif de 0,25. La première suggère que des écarts de même signe tendent à se suivre. Une seule barre au retard 12 ne suffit pas à identifier un mécanisme saisonnier.</p>
 </section>
 <section id="comparaison" class="level2">
 <h2 class="anchored" data-anchor-id="comparaison">4. Comparaison accompagnée avec erreurs AR(1)</h2>
@@ -7228,6 +7229,7 @@ X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 2 regression  1474. 5088. 6272.</code></pre>
 </div>
 </div>
+<p>Sur les douze mois de 2025, la régression ordinaire donne une MAE de 5 088 $ et une RMSE de 6 272 $. Avec les erreurs AR(1), on obtient 5 380 $ et 6 417 $. Les deux critères favorisent ici la régression ordinaire malgré l’autocorrélation observée à l’entraînement.</p>
 <p>Pour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>innovations <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modele_ar1)</span>
@@ -7279,6 +7281,20 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
 2       61 1     oui               60              100   546185.</code></pre>
 </div>
 </div>
+<p>Vérifiez si le prix du scénario a déjà été observé dans chaque groupe de promotion.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>entrainement <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(promotion) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prix_min =</span> <span class="fu">min</span>(prix_moyen), <span class="at">prix_max =</span> <span class="fu">max</span>(prix_moyen), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  promotion prix_min prix_max
+  &lt;fct&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 non           57.5     62.7
+2 oui           53.2     57.9</code></pre>
+</div>
+</div>
+<p>À 60 $ et avec un indice de 100, le modèle prévoit 498 619 $ sans promotion et 546 185 $ avec promotion. Le prix de 60 $ appartient à la plage observée sans promotion (57,47 à 62,72 $). En promotion, les prix observés vont de 53,17 à 57,86 $. Le scénario avec promotion extrapole donc la relation ajustée au-delà des prix observés dans ce groupe.</p>
 </section>
 <section id="pour-conclure" class="level2">
 <h2 class="anchored" data-anchor-id="pour-conclure">Pour conclure</h2>
@@ -7371,7 +7387,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7391,11 +7407,11 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7472,7 +7488,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7547,7 +7563,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7575,7 +7591,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7599,7 +7615,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7639,7 +7655,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7765,7 +7781,7 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

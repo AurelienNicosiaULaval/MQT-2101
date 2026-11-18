@@ -1,6 +1,8 @@
 # Exercices - Module 09
 
-Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Les trois derniers exercices sont des pratiques supplémentaires.
+## Objectif
+
+Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Après la préparation, les deux corrigés avec code peuvent être exécutés séparément. Les trois derniers exercices sont des pratiques supplémentaires.
 
 ## Préparation
 
@@ -48,9 +50,9 @@ Ajustez un modèle simple sur 2020 à 2024, puis calculez l’autocorrélation d
 >       succursale autocorrelation_rang_1
 >       <fct>                       <dbl>
 >     1 Gatineau                 -0.00914
->     2 Montréal                  0.0853
->     3 Québec                    0.119
->     4 Sherbrooke               -0.185
+>     2 Montréal                  0.0853 
+>     3 Québec                    0.119  
+>     4 Sherbrooke               -0.185  
 >
 > Les retards sont calculés après tri dans chaque groupe. Une moyenne de résidus proche de zéro ne suffit pas : des signes semblables peuvent se suivre. Les frontières entre succursales ne sont pas des mois consécutifs d’une même série.
 
@@ -79,7 +81,7 @@ Depuis la fin de 2025, construisez deux scénarios pour janvier 2026 à Québec 
 >     1           73 non           2400          230891 Capacité inchangée     196781.
 >     2           73 non           2520          230891 Capacité augmentée …   205502.
 >
-> La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. La formule de capacité est une hypothèse, pas un plan vérifié.
+> La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. À Québec, les 72 mois ont une capacité de 2 400 unités. Le modèle commun prévoit environ 196 781 \$ à cette capacité et 205 502 \$ à 2 520 unités. L’écart prédit d’environ 8 721 \$ dépend de l’hypothèse que l’association entre succursales se transpose à un changement de capacité à Québec.
 
 ## Exercice 4 - Formuler une recommandation
 
@@ -89,7 +91,11 @@ Rédigez une recommandation distinguant fuite d’information, diagnostic par su
 >
 > Retirer les variables du mois cible connues après coup, ou utiliser une prévision distincte explicitement incertaine. Examiner les résidus dans chaque succursale et au fil du temps. Présenter la hausse de capacité comme un scénario conditionnel et vérifier si la valeur envisagée se situe dans la plage des données et convient à Québec.
 
-## Exercice 5 - Retard et horizon
+## Pratique supplémentaire
+
+Les exercices 5 à 7 permettent d’approfondir la disponibilité des retards, le diagnostic et le traitement d’un événement futur.
+
+### Exercice 5 - Retard et horizon
 
 À la fin de décembre, les ventes de décembre sont connues. Peut-on les utiliser pour prévoir janvier et février?
 
@@ -97,7 +103,7 @@ Rédigez une recommandation distinguant fuite d’information, diagnostic par su
 >
 > Pour janvier, oui si la mesure de décembre est disponible à l’origine. Pour février, le retard d’un mois serait la vente de janvier, encore inconnue à la fin de décembre; il faut la prévoir, utiliser un autre retard disponible ou mettre à jour la prévision après janvier.
 
-## Exercice 6 - Interpréter une p-valeur
+### Exercice 6 - Interpréter une p-valeur
 
 Le test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résidus sont indépendants?
 
@@ -105,10 +111,18 @@ Le test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résid
 >
 > Non. Le test ne fournit pas assez d’évidence contre l’absence d’autocorrélations examinées, mais une p-valeur élevée ne démontre ni l’indépendance ni l’absence de structure. Examiner aussi le graphique et la taille de l’échantillon.
 
-## Exercice 7 - Événement spécial
+### Exercice 7 - Événement spécial
 
 Une panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois?
 
 > **TIP:**
 >
 > Vérifier d’abord si la donnée est erronée et documenter la cause. Selon la question, comparer une analyse avec et sans ce mois ou ajouter un indicateur d’événement; ne pas le supprimer automatiquement. Une prévision future requiert aussi un scénario sur la présence de l’événement.
+
+## Auto-vérification
+
+J’ai calculé les retards et examiné les résidus en respectant l’ordre des mois dans chaque succursale.
+
+Ma recommandation situe la décision à Québec et nomme la cible et le mois visé.
+
+Je distingue l’hypothèse d’achalandage du changement de capacité et j’explique pourquoi les ventes prévues ne mesurent pas l’effet causal d’un agrandissement.

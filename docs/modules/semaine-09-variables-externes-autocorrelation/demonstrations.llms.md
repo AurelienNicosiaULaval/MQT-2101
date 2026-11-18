@@ -35,9 +35,9 @@ ventes |> select(date, ventes, promotion, prix_moyen, indice_confiance) |> slice
       date       ventes promotion prix_moyen indice_confiance
       <date>      <dbl> <fct>          <dbl>            <dbl>
     1 2020-01-01 309720 non             59.7             99.6
-    2 2020-02-01 329533 non             58.3            101.
-    3 2020-03-01 332527 non             58.4            101.
-    4 2020-04-01 325184 non             59.2            100.
+    2 2020-02-01 329533 non             58.3            101. 
+    3 2020-03-01 332527 non             58.4            101. 
+    4 2020-04-01 325184 non             59.2            100. 
 
 ## 2. Régression conditionnelle
 
@@ -57,7 +57,7 @@ coef(summary(modele_lm))[c("tendance", "promotionoui", "prix_moyen", "indice_con
 
 ## 3. Autocorrélation des résidus
 
-Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. Elle est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.
+Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. La valeur p est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.
 
 ``` r
 residus_lm <- residuals(modele_lm)
@@ -82,6 +82,8 @@ Box.test(residus_lm, lag = 12, type = "Ljung-Box", fitdf = 0)
 
     data:  residus_lm
     X-squared = 22.853, df = 12, p-value = 0.029
+
+Au retard 1, l’ACF des résidus vaut environ 0,41. Au retard 12, elle vaut environ −0,30. Ces deux barres dépassent en valeur absolue le repère approximatif de 0,25. La première suggère que des écarts de même signe tendent à se suivre. Une seule barre au retard 12 ne suffit pas à identifier un mécanisme saisonnier.
 
 ## 4. Comparaison accompagnée avec erreurs AR(1)
 
@@ -110,6 +112,8 @@ scores
       <chr>       <dbl> <dbl> <dbl>
     1 erreurs_ar1 1408. 5380. 6417.
     2 regression  1474. 5088. 6272.
+
+Sur les douze mois de 2025, la régression ordinaire donne une MAE de 5 088 \$ et une RMSE de 6 272 \$. Avec les erreurs AR(1), on obtient 5 380 \$ et 6 417 \$. Les deux critères favorisent ici la régression ordinaire malgré l’autocorrélation observée à l’entraînement.
 
 Pour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation.
 
@@ -157,6 +161,22 @@ scenario
          <dbl> <fct> <fct>          <dbl>            <dbl>     <dbl>
     1       61 1     non               60              100   498619.
     2       61 1     oui               60              100   546185.
+
+Vérifiez si le prix du scénario a déjà été observé dans chaque groupe de promotion.
+
+``` r
+entrainement |>
+  group_by(promotion) |>
+  summarise(prix_min = min(prix_moyen), prix_max = max(prix_moyen), .groups = "drop")
+```
+
+    # A tibble: 2 × 3
+      promotion prix_min prix_max
+      <fct>        <dbl>    <dbl>
+    1 non           57.5     62.7
+    2 oui           53.2     57.9
+
+À 60 \$ et avec un indice de 100, le modèle prévoit 498 619 \$ sans promotion et 546 185 \$ avec promotion. Le prix de 60 \$ appartient à la plage observée sans promotion (57,47 à 62,72 \$). En promotion, les prix observés vont de 53,17 à 57,86 \$. Le scénario avec promotion extrapole donc la relation ajustée au-delà des prix observés dans ce groupe.
 
 ## Pour conclure
 

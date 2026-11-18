@@ -1573,7 +1573,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1585,16 +1585,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1639,7 +1639,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1701,7 +1701,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1715,7 +1715,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6927,147 +6927,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7082,7 +7082,7 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#retards-et-fonction-dautocorrélation" id="toc-retards-et-fonction-dautocorrélation" class="nav-link active" data-scroll-target="#retards-et-fonction-dautocorrélation">Retards et fonction d’autocorrélation</a></li>
   <li><a href="#prévoir-des-résidus-en-deux-étapes" id="toc-prévoir-des-résidus-en-deux-étapes" class="nav-link" data-scroll-target="#prévoir-des-résidus-en-deux-étapes">Prévoir des résidus en deux étapes</a></li>
@@ -7104,11 +7104,11 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7208,7 +7208,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> entrainement)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modele_interaction)[<span class="fu">c</span>(<span class="st">&quot;promotionoui&quot;</span>, <span class="st">&quot;prix_moyen&quot;</span>, <span class="st">&quot;promotionoui:prix_moyen&quot;</span>)]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           promotionoui              prix_moyen promotionoui:prix_moyen
+<pre><code>           promotionoui              prix_moyen promotionoui:prix_moyen 
             51549.16539             -4863.66638               -69.09116 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span> promotion <span class="sc">*</span> prix_moyen, <span class="at">data =</span> entrainement) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
@@ -7336,7 +7336,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7356,11 +7356,11 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7437,7 +7437,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7512,7 +7512,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7540,7 +7540,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7564,7 +7564,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7604,7 +7604,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7730,7 +7730,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

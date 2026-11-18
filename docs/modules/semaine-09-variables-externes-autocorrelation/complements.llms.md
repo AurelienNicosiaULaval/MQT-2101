@@ -98,8 +98,8 @@ modele_interaction <- lm(ventes ~ tendance + mois + promotion * prix_moyen + ind
 coef(modele_interaction)[c("promotionoui", "prix_moyen", "promotionoui:prix_moyen")]
 ```
 
-               promotionoui              prix_moyen promotionoui:prix_moyen
-                51549.16539             -4863.66638               -69.09116
+               promotionoui              prix_moyen promotionoui:prix_moyen 
+                51549.16539             -4863.66638               -69.09116 
 
 ``` r
 model.matrix(~ promotion * prix_moyen, data = entrainement) |> head()

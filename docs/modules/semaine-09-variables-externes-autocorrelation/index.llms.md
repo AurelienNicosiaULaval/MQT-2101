@@ -40,7 +40,7 @@ Téléchargez le [projet guidé](telechargements/variables-ventes.zip) et le [pr
 
 Les cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.
 
-1Auditer les variablesActivité 9.1[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
+1Auditer les variablesQue sait-on fin 2024?[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md#disponibilite)[Exercice](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Lecture française](lectures.llms.md#lecture-1)
 
@@ -52,7 +52,7 @@ Auto-vérification Je précise l’origine. Je distingue une valeur prévue d’
 
 Transfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.
 
-2Ajuster et interpréterActivité 9.2[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md)Ouvrir l’étapeRéduire
+2Ajuster et interpréterQue représente le coefficient?[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md#regression)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 2](capsules.llms.md#capsule-2) · [Lecture française](lectures.llms.md#lecture-2)
 
@@ -64,7 +64,7 @@ Auto-vérification Je nomme la catégorie de référence et les unités. Je dist
 
 Transfert distinct Après l’activité 9.3, l’exercice 2 combine l’ajustement et le diagnostic par succursale.
 
-3Diagnostiquer dans le tempsActivité 9.3[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
+3Diagnostiquer dans le tempsLes écarts se suivent-ils?[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md#diagnostic)[Exercice](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 3](capsules.llms.md#capsule-3) · [Lecture française](lectures.llms.md#lecture-3)
 
@@ -76,7 +76,7 @@ Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs 
 
 Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
 
-4Comparer deux modèlesActivité 9.4[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md)Ouvrir l’étapeRéduire
+4Comparer deux modèlesQuel modèle prévoit le mieux?[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md#comparaison)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 4](capsules.llms.md#capsule-4) · [Lecture française](lectures.llms.md#lecture-4)
 
@@ -88,7 +88,7 @@ Auto-vérification Je compare les deux modèles sur les mêmes observations et p
 
 Transfert distinct La comparaison AR(1) est accompagnée dans cette activité. Le transfert des scénarios suit à l’étape 5.
 
-5Communiquer un scénarioActivité 9.5[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md)[Exercice](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
+5Communiquer un scénarioÀ quelles hypothèses tient la prévision?[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md#scenario)[Exercice](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
 
 Ressource [Capsule 5](capsules.llms.md#capsule-5) · [Lecture française](lectures.llms.md#lecture-5)
 
@@ -100,15 +100,24 @@ Auto-vérification Je donne la cible, l’horizon et les valeurs du scénario. J
 
 Transfert distinct Faites l’exercice 3, puis l’exercice 4 pour rassembler votre recommandation; ouvrez les corrigés après votre tentative.
 
+## Exercices d’application
+
+Dans le [projet de transfert](telechargements/variables-succursales.zip), la direction de la succursale de Québec envisage d’augmenter sa capacité de 5 %. Faites les [exercices 1 à 4](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-1) aux étapes indiquées, puis ouvrez les corrigés. Les [exercices 5 à 7](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#pratique-supplementaire) offrent une pratique supplémentaire.
+
 ## Trace finale
 
-Le rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité.
+Le rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité. Redémarrez R, puis rendez chacun des deux documents Quarto à partir de son propre projet.
+
+## Lien avec l’évaluation
+
+Ce module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Pour la voie prévision du [mini-rapport 2](../../evaluations/mini-rapport-2.llms.md), l’emploi de variables externes est facultatif. Si vous en utilisez, précisez lesquelles étaient connues, prévues ou fixées par scénario à l’origine.
 
 ## Ressources du module
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-09-pdf-2026-11-03-harmonise.zip).
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF du 18 novembre 2026](telechargements/module-09-pdf-2026-11-18.zip).
 
-- [Capsules et productions](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md), [démonstrations R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md), [lectures françaises](../../modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md) et [exercices avec corrigés](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md).
+[CapsulesCinq supports PDF et HTML et leurs productions guidées.](capsules.llms.md) [Notes de coursSynthèse des cinq étapes en diapositives.](notes-cours.llms.md) [Démonstrations RReproduire la régression, les diagnostics et les scénarios de ventes.](demonstrations.llms.md) [Exercices et corrigésÉtudier la capacité des succursales et vérifier ses réponses après une tentative.](exercices.llms.md) [LecturesReprendre une notion en français et consulter les passages ciblés du manuel.](lectures.llms.md)
+
 - [Notes de synthèse HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).
 - [Démonstration complète](telechargements/demonstration-variables.zip) et [corrigé de transfert](telechargements/corrige-succursales.zip).
 - [Compléments facultatifs](../../modules/semaine-09-variables-externes-autocorrelation/complements.llms.md) : retards, événements, modèle en deux étapes et repères ARIMA; [télécharger le cahier](telechargements/complements-variables.zip).
@@ -127,8 +136,4 @@ Je nomme les hypothèses et les limites du scénario.
 
 ## Je suis bloqué·e
 
-Commencez par la [préparation complète](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation), puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Comparez vos tentatives aux corrigés repliables, puis demandez de l’aide dans les canaux habituels du cours.
-
-## Lien avec l’évaluation
-
-Ce module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Les activités sont des entraînements.
+Commencez par la [préparation complète](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation), puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Si vos scores diffèrent, vérifiez que les [deux modèles utilisent les mêmes douze mois et les mêmes prédicteurs](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#comparaison). Si votre scénario de capacité vous surprend, reprenez le [corrigé de l’exercice 3](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3). Pour demander de l’aide dans les canaux habituels du cours, indiquez le projet, le bloc de code et le message obtenu.

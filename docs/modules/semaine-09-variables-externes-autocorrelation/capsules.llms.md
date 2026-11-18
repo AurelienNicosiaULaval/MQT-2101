@@ -1,18 +1,20 @@
 # Capsules - Module 09
 
-Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.
+## Objectif
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-09-pdf-2026-11-03-harmonise.zip).
+À la fin du parcours, vous pourrez comparer deux prévisions de ventes et expliquer à la direction quelles hypothèses rendent leur utilisation possible. Ouvrez le [projet guidé](telechargements/variables-ventes.zip) et suivez la [préparation en R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation). Consignez chaque production une seule fois dans `variables_ventes.qmd`. Vous retrouverez la même consigne sur l’accueil et à la fin du diaporama.
+
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF du 18 novembre 2026](telechargements/module-09-pdf-2026-11-18.zip).
 
 ## Capsule 1 - Auditer les variables
 
 ## PDF
 
-[Ouvrir le PDF](media/pdf/capsule-01-support.pdf)
+[Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
 
 ## HTML
 
-[Ouvrir les diapositives](media/qmd/capsule-01-support.llms.md)
+[Ouvrir les diapositives](media/qmd/capsule-01-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-01-support.llms.md)
 
 ### Activité 9.1
 
@@ -20,17 +22,25 @@ Classez la promotion, le prix, l’indice de confiance et les ventes futures sel
 
 Auto-vérification : Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.
 
-La production se réalise une seule fois. Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-1).
+> **TIP:**
+>
+> À la fin de décembre 2024, le calendrier de janvier est connu. Classez la promotion et le prix comme connus seulement si un plan daté les confirme. Sinon, indiquez les valeurs retenues comme hypothèses. Pour l’indice de confiance, il faut une prévision disponible à cette date ou une valeur posée par scénario. Les ventes de janvier sont la cible. Le fichier donne les valeurs réalisées en 2025, sans établir qu’elles étaient connues au départ.
+>
+> [Reprendre cette étape dans la démonstration R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#disponibilite).
+
+> **NOTE:**
+>
+> Poursuivez avec le [transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-1).
 
 ## Capsule 2 - Ajuster et interpréter
 
 ## PDF
 
-[Ouvrir le PDF](media/pdf/capsule-02-support.pdf)
+[Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
 
 ## HTML
 
-[Ouvrir les diapositives](media/qmd/capsule-02-support.llms.md)
+[Ouvrir les diapositives](media/qmd/capsule-02-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-02-support.llms.md)
 
 ### Activité 9.2
 
@@ -38,17 +48,25 @@ Ajustez la régression des ventes sur la tendance, le mois, la promotion, le pri
 
 Auto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.
 
-La production se réalise une seule fois. Après la capsule 3, faites l’[exercice 2](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2), qui combine l’ajustement et le diagnostic par succursale.
+> **TIP:**
+>
+> Sur les 60 mois de 2020 à 2024, le coefficient de `promotionoui` vaut environ 47 566 \$. Pour un même mois, une même tendance, un même prix et un même indice, le modèle associe la promotion à des ventes ajustées supérieures de 47 566 \$ à celles de la catégorie de référence « non ». Les décisions de promotion peuvent dépendre d’autres facteurs. Ce coefficient ne suffit donc pas pour attribuer cet écart à la promotion.
+>
+> [Reprendre cette étape dans la démonstration R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#regression).
+
+> **NOTE:**
+>
+> Après la capsule 3, faites l’[exercice 2](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2), qui combine l’ajustement et le diagnostic par succursale.
 
 ## Capsule 3 - Diagnostiquer dans le temps
 
 ## PDF
 
-[Ouvrir le PDF](media/pdf/capsule-03-support.pdf)
+[Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
 
 ## HTML
 
-[Ouvrir les diapositives](media/qmd/capsule-03-support.llms.md)
+[Ouvrir les diapositives](media/qmd/capsule-03-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-03-support.llms.md)
 
 ### Activité 9.3
 
@@ -56,17 +74,25 @@ Tracez les résidus de la régression en fonction du temps et leur autocorrélat
 
 Auto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.
 
-La production se réalise une seule fois. Poursuivez avec le [diagnostic par succursale](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2).
+> **TIP:**
+>
+> Sur les 60 mois d’entraînement, des écarts de même signe tendent à se suivre. L’ACF des résidus vaut environ 0,41 au retard 1 et −0,30 au retard 12, au-delà des repères approximatifs de ±0,25. La première valeur suggère une persistance d’un mois à l’autre. La seconde invite à examiner les mois séparés d’un an. Une seule barre ne permet pas d’identifier une cause saisonnière et ces graphiques ne démontrent pas l’indépendance.
+>
+> [Reprendre cette étape dans la démonstration R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#diagnostic).
+
+> **NOTE:**
+>
+> Poursuivez avec le [diagnostic par succursale](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2).
 
 ## Capsule 4 - Comparer deux modèles
 
 ## PDF
 
-[Ouvrir le PDF](media/pdf/capsule-04-support.pdf)
+[Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
 
 ## HTML
 
-[Ouvrir les diapositives](media/qmd/capsule-04-support.llms.md)
+[Ouvrir les diapositives](media/qmd/capsule-04-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-04-support.llms.md)
 
 ### Activité 9.4
 
@@ -74,17 +100,23 @@ La production se réalise une seule fois. Poursuivez avec le [diagnostic par suc
 
 Auto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.
 
-La production se réalise une seule fois. La comparaison avec erreurs AR(1) est accompagnée; la pratique des scénarios suit à la capsule 5.
+> **TIP:**
+>
+> Sur les mêmes douze mois de 2025, la régression ordinaire obtient une MAE de 5 088 \$ et une RMSE de 6 272 \$. Avec les erreurs AR(1), elles atteignent respectivement 5 380 \$ et 6 417 \$. Les deux critères favorisent donc la régression ordinaire pour cette période. Les deux modèles utilisent les prédicteurs effectivement observés en 2025. Pour évaluer la décision telle qu’elle se présentait fin 2024, il faudrait les prévisions ou les scénarios de prédicteurs disponibles à cette date.
+>
+> [Reprendre cette étape dans la démonstration R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#comparaison).
+
+Le transfert reprend à la capsule 5 avec la décision de capacité de la succursale de Québec.
 
 ## Capsule 5 - Communiquer un scénario
 
 ## PDF
 
-[Ouvrir le PDF](media/pdf/capsule-05-support.pdf)
+[Ouvrir le PDF](media/pdf/capsule-05-support.pdf) · [Télécharger le PDF](media/pdf/capsule-05-support.pdf)
 
 ## HTML
 
-[Ouvrir les diapositives](media/qmd/capsule-05-support.llms.md)
+[Ouvrir les diapositives](media/qmd/capsule-05-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-05-support.llms.md)
 
 ### Activité 9.5
 
@@ -92,4 +124,16 @@ Pour janvier 2025, comparez les prévisions de la régression ordinaire sous pro
 
 Auto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.
 
-La production se réalise une seule fois. Poursuivez avec le [scénario de transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3), puis la [recommandation](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).
+> **TIP:**
+>
+> Pour janvier 2025, avec un prix de 60 \$ et un indice de 100, la régression ordinaire prévoit 498 619 \$ sans promotion et 546 185 \$ avec promotion. L’écart de 47 566 \$ décrit les deux scénarios du modèle. À 60 \$, le scénario avec promotion sort de la plage observée à l’entraînement, de 53,17 \$ à 57,86 \$. Le scénario sans promotion reste dans sa plage, de 57,47 \$ à 62,72 \$. La comparaison ne permet pas d’attribuer un gain à la promotion et laisse ouverte l’incertitude sur le prix et l’indice futurs.
+>
+> [Reprendre cette étape dans la démonstration R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#scenario).
+
+> **NOTE:**
+>
+> Poursuivez avec le [scénario de transfert](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3), puis la [recommandation](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4).
+
+## Après les capsules
+
+Redémarrez R et rendez votre rapport guidé dans son projet. Relisez la [synthèse](notes-cours.llms.md), puis vérifiez que votre [recommandation pour la succursale de Québec](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-4) précise son horizon et la limite des données sur la capacité.

@@ -56,7 +56,7 @@ coef(summary(modele_lm))[c("tendance", "promotionoui", "prix_moyen", "indice_con
 
 ## 3. Autocorrélation des résidus {#diagnostic}
 
-Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. Elle est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.
+Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. La valeur p est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.
 
 ```{r}
 residus_lm <- residuals(modele_lm)
@@ -65,6 +65,8 @@ abline(h = 0, lty = 2)
 acf(residus_lm, lag.max = 12, main = "ACF des résidus")
 Box.test(residus_lm, lag = 12, type = "Ljung-Box", fitdf = 0)
 ```
+
+Au retard 1, l’ACF des résidus vaut environ 0,41. Au retard 12, elle vaut environ −0,30. Ces deux barres dépassent en valeur absolue le repère approximatif de 0,25. La première suggère que des écarts de même signe tendent à se suivre. Une seule barre au retard 12 ne suffit pas à identifier un mécanisme saisonnier.
 
 ## 4. Comparaison accompagnée avec erreurs AR(1) {#comparaison}
 
@@ -88,6 +90,8 @@ scores <- comparaison |>
 scores
 ```
 
+
+Sur les douze mois de 2025, la régression ordinaire donne une MAE de 5 088 $ et une RMSE de 6 272 $. Avec les erreurs AR(1), on obtient 5 380 $ et 6 417 $. Les deux critères favorisent ici la régression ordinaire malgré l’autocorrélation observée à l’entraînement.
 
 Pour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation.
 
@@ -116,6 +120,16 @@ scenario <- tibble(tendance = 61, mois = factor(1, levels = 1:12),
 scenario <- scenario |> mutate(prevision = as.numeric(predict(modele_lm, newdata = scenario)))
 scenario
 ```
+
+Vérifiez si le prix du scénario a déjà été observé dans chaque groupe de promotion.
+
+```{r}
+entrainement |>
+  group_by(promotion) |>
+  summarise(prix_min = min(prix_moyen), prix_max = max(prix_moyen), .groups = "drop")
+```
+
+À 60 $ et avec un indice de 100, le modèle prévoit 498 619 $ sans promotion et 546 185 $ avec promotion. Le prix de 60 $ appartient à la plage observée sans promotion (57,47 à 62,72 $). En promotion, les prix observés vont de 53,17 à 57,86 $. Le scénario avec promotion extrapole donc la relation ajustée au-delà des prix observés dans ce groupe.
 
 ## Pour conclure
 

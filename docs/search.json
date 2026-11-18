@@ -847,193 +847,291 @@
     "text": "Réseau autorégressif pour une série continue\nLa présentation et un exercice anciens utilisaient forecast::nnetar pour une série numérique. Cette ouverture est distincte de la classification : la sortie ci-dessous prévoit des ventes continues. Un réseau NNAR utilise des retards comme entrées et peut inclure des prédicteurs externes avec xreg; leurs valeurs futures devraient alors être fournies. La normalisation par défaut de nnetar soustrait les moyennes et divise par les écarts-types des entrées, plutôt que de toujours ramener les valeurs à un intervalle fixe. Installer forecast au besoin.\n\nlibrary(forecast)\nventes_mensuelles &lt;- read_csv(file.path(racine, \"data/cas_integrateur_quebec.csv\"), show_col_types = FALSE) |&gt;\n  mutate(date = as.Date(date)) |&gt; group_by(date) |&gt;\n  summarise(ventes = sum(ventes), .groups = \"drop\") |&gt; arrange(date)\nventes_ts &lt;- ts(ventes_mensuelles$ventes, start = c(2020, 1), frequency = 12)\nserie_train &lt;- window(ventes_ts, end = c(2023, 12))\nserie_validation &lt;- window(ventes_ts, start = c(2024, 1), end = c(2024, 12))\nset.seed(210110)\nreseau_ts &lt;- nnetar(serie_train, p = 2, P = 1, size = 2, repeats = 3,\n                    scale.inputs = TRUE, maxit = 2000)\nvapply(reseau_ts$model, function(x) x$convergence, integer(1))\n\n[1] 0 0 0\n\nprevision_ts &lt;- forecast(reseau_ts, h = 12)$mean\nreference_ts &lt;- snaive(serie_train, h = 12)$mean\ntibble(methode = c(\"NNAR\", \"Naïf saisonnier\"),\n       MAE = c(mean(abs(serie_validation - prevision_ts)), mean(abs(serie_validation - reference_ts))),\n       RMSE = c(sqrt(mean((serie_validation - prevision_ts)^2)), sqrt(mean((serie_validation - reference_ts)^2))))\n\n# A tibble: 2 × 3\n  methode            MAE   RMSE\n  &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;\n1 NNAR            37136. 44236.\n2 Naïf saisonnier 55387. 65907.\n\n\nLes trois initialisations donnent des modèles dont les prévisions sont moyennées. Le vecteur affiché indique leur convergence : 0 est un arrêt normal, 1 signale que la limite d’itérations a été atteinte. Une prévision à plusieurs pas utilise récursivement des valeurs prévues quand les retards futurs sont inconnus. Cette comparaison sur douze mois et des données simulées ne démontre pas la supériorité générale des réseaux; les observations de 2025 ne sont pas utilisées ici.\nLes forêts aléatoires combinent plusieurs arbres; elles demandent d’autres choix et vérifications. Elles ne sont pas requises dans le socle. La discrétisation systématique des variables continues n’est pas nécessaire et peut perdre de l’information; toute transformation apprise doit être estimée sans le test."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#disponibilité-et-fuite",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#disponibilité-et-fuite",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Disponibilité et fuite",
-    "text": "Disponibilité et fuite\n\n\nUne prévision doit reposer sur l’information disponible à son origine.\nLe calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques.\nL’indice économique peut nécessiter sa propre prévision."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-contexte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-contexte",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Régression avec contexte",
-    "text": "Régression avec contexte\n\n\nLa régression combine tendance, mois, promotion, prix et indice.\nLe coefficient de promotion compare « oui » à « non », en dollars, avec les autres variables maintenues fixes.\nUne association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#résidus-et-autocorrélation",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#résidus-et-autocorrélation",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Résidus et autocorrélation",
-    "text": "Résidus et autocorrélation\n\n\nLe résidu est l’observation moins la valeur ajustée.\nUn retard de 1 compare les résidus de deux mois consécutifs; un retard de 12 compare des mois séparés d’une année.\nDes résidus durablement positifs signalent des valeurs ajustées trop basses sur cette période."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#scénarios-et-décision",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#scénarios-et-décision",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Scénarios et décision",
-    "text": "Scénarios et décision\n\n\nUne prévision sous scénario est conditionnelle au prix, à la promotion et à l’indice de confiance fournis.\nLes intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs.\nPour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#à-retenir",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#à-retenir",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\nInformation\n\n\ndisponible à l’origine, prévue ou scénarisée\n\n\n\n\nValidation\n\n\ncomparer sans confondre avec un test indépendant\n\n\n\n\nDécision\n\n\nhypothèses explicites et portée limitée"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#références-et-crédits",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#références-et-crédits",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Références et crédits",
-    "text": "Références et crédits\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition.\nDonnées fictives du cours MQT-2101, Université Laval."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nLa mémoire des erreurs améliore-t-elle la prévision?\n\n\nAjouter une dépendance temporelle ne garantit pas une meilleure prévision. La comparaison doit rester commune."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nComparer les deux modèles sur les mêmes mois.\nInterpréter la MAE et la RMSE en dollars.\nNommer les limites de la comparaison conditionnelle."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparaison-des-douze-mois-de-2025",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparaison-des-douze-mois-de-2025",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Comparaison des douze mois de 2025",
-    "text": "Comparaison des douze mois de 2025\n\nLa ligne noire représente les ventes observées."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#à-retenir",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#à-retenir",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\nComparaison\n\n\nmêmes mois et mêmes prédicteurs pour les deux modèles\n\n\n\n\nInformation\n\n\nvaleurs externes observées en 2025 : résultats conditionnels\n\n\n\n\nValidation\n\n\ndouze mois déjà examinés, sans nouveau test indépendant"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#production-autonome-9.4",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#production-autonome-9.4",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Production autonome 9.4",
-    "text": "Production autonome 9.4\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe compare les deux modèles sur les mêmes observations et prédicteurs.\nJ’exprime les scores en dollars.\nJe présente cette comparaison comme conditionnelle aux valeurs réalisées."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#références-et-crédits",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#références-et-crédits",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Références et crédits",
-    "text": "Références et crédits\nMatériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQue signifie le coefficient de promotion?\n\n\nUne direction veut comprendre l’association entre une promotion et les ventes, sans lui attribuer automatiquement une cause."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nAjuster la régression sur les mois d’apprentissage.\nInterpréter le coefficient de promotion en dollars.\nDistinguer association conditionnelle et effet causal."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#une-association-dans-le-cas-guidé",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#une-association-dans-le-cas-guidé",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Une association dans le cas guidé",
-    "text": "Une association dans le cas guidé\n\nÀ prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ».\n\n\nCe résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’effet causal d’une promotion."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#à-retenir",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#à-retenir",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\nRéférence\n\n\npromotion « oui » comparée à « non »\n\n\n\n\nUnité\n\n\ndifférence de ventes en dollars par mois\n\n\n\n\nPortée\n\n\nune association conditionnelle, sans effet causal établi"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#production-autonome-9.2",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#production-autonome-9.2",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Production autonome 9.2",
-    "text": "Production autonome 9.2\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe nomme la catégorie de référence et les unités.\nJe distingue association conditionnelle et causalité.\nJe n’utilise pas les douze mois de validation pour ajuster le modèle."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#références-et-crédits",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#références-et-crédits",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Références et crédits",
-    "text": "Références et crédits\nMatériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html",
-    "title": "Exercices - Module 09",
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html",
+    "title": "Module 09 - Variables externes et autocorrélation",
     "section": "",
-    "text": "Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Les trois derniers exercices sont des pratiques supplémentaires."
+    "text": "Séance autonome Prévoir avec une information disponible Une promotion ou un prix peuvent aider à expliquer les ventes. Encore faut-il connaître ou scénariser ces valeurs au moment de prévoir. Organisation À votre rythme Outils R, RStudio et Quarto Cas guidé Ventes mensuelles fictives Trace finale Rapport guidé et transfert"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "On passe au concret",
+    "text": "On passe au concret Note La question du module Une direction veut prévoir ses ventes avant l’année suivante. Comment utiliser une promotion et un prix prévus sans prétendre connaître l’indice économique futur, et que faire si les erreurs se suivent? Le module 08 a introduit tendance et calendrier; son transfert utilisait déjà ces données commerciales. Le module 09 ajoute les variables externes et le diagnostic temporel. Les 12 mois de 2025 ont déjà été examinés : ils ne sont pas un test indépendant. Les scores utilisant les valeurs externes réalisées en 2025 sont conditionnels à ces valeurs."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Avant de commencer",
+    "text": "Avant de commencer Revoir la régression et ses résidus (module 03), l’origine et les mesures d’erreur (module 06), puis la tendance et les mois (module 08). Les données fictives et les unités sont décrites dans le dictionnaire . Installez tidyverse et forecast , ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto. Téléchargez le projet guidé et le projet de transfert . Les cinq productions 9.1 à 9.5 sont les mêmes dans cet accueil, les capsules et les diapositives : faites chacune une seule fois dans variables_ventes.qmd . Le transfert se réalise séparément dans variables_succursales.qmd ."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Votre parcours",
+    "text": "Votre parcours Les cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire. 1 Auditer les variables Que sait-on fin 2024? Capsule 1 Démo Exercice Ouvrir l’étape Réduire Ressource Capsule 1 · Lecture française Activité 9.1 Classez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible. Auto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs. Transfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé. 2 Ajuster et interpréter Que représente le coefficient? Capsule 2 Démo Ouvrir l’étape Réduire Ressource Capsule 2 · Lecture française Activité 9.2 Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal. Auto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle. Transfert distinct Après l’activité 9.3, l’exercice 2 combine l’ajustement et le diagnostic par succursale. 3 Diagnostiquer dans le temps Les écarts se suivent-ils? Capsule 3 Démo Exercice Ouvrir l’étape Réduire Ressource Capsule 3 · Lecture française Activité 9.3 Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus. Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance. Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé. 4 Comparer deux modèles Quel modèle prévoit le mieux? Capsule 4 Démo Ouvrir l’étape Réduire Ressource Capsule 4 · Lecture française Activité 9.4 À partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées. Auto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées. Transfert distinct La comparaison AR(1) est accompagnée dans cette activité. Le transfert des scénarios suit à l’étape 5. 5 Communiquer un scénario À quelles hypothèses tient la prévision? Capsule 5 Démo Exercice Ouvrir l’étape Réduire Ressource Capsule 5 · Lecture française Activité 9.5 Pour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs. Auto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé. Transfert distinct Faites l’exercice 3, puis l’exercice 4 pour rassembler votre recommandation; ouvrez les corrigés après votre tentative."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#exercices-dapplication",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#exercices-dapplication",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Exercices d’application",
+    "text": "Exercices d’application Dans le projet de transfert , la direction de la succursale de Québec envisage d’augmenter sa capacité de 5 %. Faites les exercices 1 à 4 aux étapes indiquées, puis ouvrez les corrigés. Les exercices 5 à 7 offrent une pratique supplémentaire."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Trace finale",
+    "text": "Trace finale Le rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité. Redémarrez R, puis rendez chacun des deux documents Quarto à partir de son propre projet."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Lien avec l’évaluation",
+    "text": "Lien avec l’évaluation Ce module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Pour la voie prévision du mini-rapport 2 , l’emploi de variables externes est facultatif. Si vous en utilisez, précisez lesquelles étaient connues, prévues ou fixées par scénario à l’origine."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Ressources du module",
+    "text": "Ressources du module Les cinq capsules et la synthèse sont regroupées dans le lot PDF du 18 novembre 2026 . Capsules Cinq supports PDF et HTML et leurs productions guidées. Notes de cours Synthèse des cinq étapes en diapositives. Démonstrations R Reproduire la régression, les diagnostics et les scénarios de ventes. Exercices et corrigés Étudier la capacité des succursales et vérifier ses réponses après une tentative. Lectures Reprendre une notion en français et consulter les passages ciblés du manuel. Notes de synthèse HTML et PDF . Démonstration complète et corrigé de transfert . Compléments facultatifs : retards, événements, modèle en deux étapes et repères ARIMA; télécharger le cahier ."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Auto-vérification",
+    "text": "Auto-vérification Je situe l’origine et la disponibilité de chaque prédicteur. J’explique une association sans prétendre à la causalité. Je lis les résidus et l’ACF dans leur ordre temporel. Je compare les modèles sur les mêmes cibles et indique les valeurs externes utilisées. Je nomme les hypothèses et les limites du scénario."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
+    "title": "Module 09 - Variables externes et autocorrélation",
+    "section": "Je suis bloqué·e",
+    "text": "Je suis bloqué·e Commencez par la préparation complète , puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Si vos scores diffèrent, vérifiez que les deux modèles utilisent les mêmes douze mois et les mêmes prédicteurs . Si votre scénario de capacité vous surprend, reprenez le corrigé de l’exercice 3 . Pour demander de l’aide dans les canaux habituels du cours, indiquez le projet, le bloc de code et le message obtenu."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#objectif",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#objectif",
+    "title": "Capsules - Module 09",
+    "section": "Objectif",
+    "text": "Objectif À la fin du parcours, vous pourrez comparer deux prévisions de ventes et expliquer à la direction quelles hypothèses rendent leur utilisation possible. Ouvrez le projet guidé et suivez la préparation en R . Consignez chaque production une seule fois dans variables_ventes.qmd . Vous retrouverez la même consigne sur l’accueil et à la fin du diaporama. Les cinq capsules et la synthèse sont regroupées dans le lot PDF du 18 novembre 2026 ."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 1 - Auditer les variables",
+    "text": "Capsule 1 - Auditer les variables PDF HTML Ouvrir le PDF · Télécharger le PDF Ouvrir les diapositives · Télécharger les diapositives Activité 9.1 Classez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible. Auto-vérification : Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs. Astuce Corrigé de la production 9.1 À la fin de décembre 2024, le calendrier de janvier est connu. Classez la promotion et le prix comme connus seulement si un plan daté les confirme. Sinon, indiquez les valeurs retenues comme hypothèses. Pour l’indice de confiance, il faut une prévision disponible à cette date ou une valeur posée par scénario. Les ventes de janvier sont la cible. Le fichier donne les valeurs réalisées en 2025, sans établir qu’elles étaient connues au départ. Reprendre cette étape dans la démonstration R . Note Exercice d’application distinct Poursuivez avec le transfert ."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 2 - Ajuster et interpréter",
+    "text": "Capsule 2 - Ajuster et interpréter PDF HTML Ouvrir le PDF · Télécharger le PDF Ouvrir les diapositives · Télécharger les diapositives Activité 9.2 Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal. Auto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle. Astuce Corrigé de la production 9.2 Sur les 60 mois de 2020 à 2024, le coefficient de promotionoui vaut environ 47 566 $. Pour un même mois, une même tendance, un même prix et un même indice, le modèle associe la promotion à des ventes ajustées supérieures de 47 566 $ à celles de la catégorie de référence « non ». Les décisions de promotion peuvent dépendre d’autres facteurs. Ce coefficient ne suffit donc pas pour attribuer cet écart à la promotion. Reprendre cette étape dans la démonstration R . Note Exercice d’application distinct Après la capsule 3, faites l’ exercice 2 , qui combine l’ajustement et le diagnostic par succursale."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 3 - Diagnostiquer dans le temps",
+    "text": "Capsule 3 - Diagnostiquer dans le temps PDF HTML Ouvrir le PDF · Télécharger le PDF Ouvrir les diapositives · Télécharger les diapositives Activité 9.3 Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus. Auto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance. Astuce Corrigé de la production 9.3 Sur les 60 mois d’entraînement, des écarts de même signe tendent à se suivre. L’ACF des résidus vaut environ 0,41 au retard 1 et −0,30 au retard 12, au-delà des repères approximatifs de ±0,25. La première valeur suggère une persistance d’un mois à l’autre. La seconde invite à examiner les mois séparés d’un an. Une seule barre ne permet pas d’identifier une cause saisonnière et ces graphiques ne démontrent pas l’indépendance. Reprendre cette étape dans la démonstration R . Note Exercice d’application distinct Poursuivez avec le diagnostic par succursale ."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 4 - Comparer deux modèles",
+    "text": "Capsule 4 - Comparer deux modèles PDF HTML Ouvrir le PDF · Télécharger le PDF Ouvrir les diapositives · Télécharger les diapositives Activité 9.4 À partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées. Auto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées. Astuce Corrigé de la production 9.4 Sur les mêmes douze mois de 2025, la régression ordinaire obtient une MAE de 5 088 $ et une RMSE de 6 272 $. Avec les erreurs AR(1), elles atteignent respectivement 5 380 $ et 6 417 $. Les deux critères favorisent donc la régression ordinaire pour cette période. Les deux modèles utilisent les prédicteurs effectivement observés en 2025. Pour évaluer la décision telle qu’elle se présentait fin 2024, il faudrait les prévisions ou les scénarios de prédicteurs disponibles à cette date. Reprendre cette étape dans la démonstration R . Le transfert reprend à la capsule 5 avec la décision de capacité de la succursale de Québec."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
+    "title": "Capsules - Module 09",
+    "section": "Capsule 5 - Communiquer un scénario",
+    "text": "Capsule 5 - Communiquer un scénario PDF HTML Ouvrir le PDF · Télécharger le PDF Ouvrir les diapositives · Télécharger les diapositives Activité 9.5 Pour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs. Auto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé. Astuce Corrigé de la production 9.5 Pour janvier 2025, avec un prix de 60 $ et un indice de 100, la régression ordinaire prévoit 498 619 $ sans promotion et 546 185 $ avec promotion. L’écart de 47 566 $ décrit les deux scénarios du modèle. À 60 $, le scénario avec promotion sort de la plage observée à l’entraînement, de 53,17 $ à 57,86 $. Le scénario sans promotion reste dans sa plage, de 57,47 $ à 62,72 $. La comparaison ne permet pas d’attribuer un gain à la promotion et laisse ouverte l’incertitude sur le prix et l’indice futurs. Reprendre cette étape dans la démonstration R . Note Exercice d’application distinct Poursuivez avec le scénario de transfert , puis la recommandation ."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#après-les-capsules",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#après-les-capsules",
+    "title": "Capsules - Module 09",
+    "section": "Après les capsules",
+    "text": "Après les capsules Redémarrez R et rendez votre rapport guidé dans son projet. Relisez la synthèse , puis vérifiez que votre recommandation pour la succursale de Québec précise son horizon et la limite des données sur la capacité."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html",
+    "title": "Démonstrations R - Module 09",
+    "section": "",
+    "text": "Le cas reprend les ventes commerciales du transfert du module 08. Les données sont fictives. Les 60 premiers mois servent à ajuster les modèles; les 12 mois de 2025 servent à les comparer. Ils ont déjà été consultés au module 08 : ce bloc ne constitue pas un test final indépendant."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#preparation",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#preparation",
+    "title": "Démonstrations R - Module 09",
+    "section": "Préparation",
+    "text": "Préparation Installez tidyverse et forecast au besoin, ouvrez le projet et exécutez les blocs dans l’ordre. Le code est complet dans une session neuve. library (tidyverse) library (forecast) racines <- c ( \".\" , \"modules/semaine-09-variables-externes-autocorrelation\" ) racine <- racines[ file.exists ( file.path (racines, \"data/ventes_promotions_quebec.csv\" ))][ 1 ] stopifnot ( ! is.na (racine)) ventes <- read_csv ( file.path (racine, \"data/ventes_promotions_quebec.csv\" ), show_col_types = FALSE ) |> mutate ( date = as.Date (date), promotion = factor (promotion, levels = c ( \"non\" , \"oui\" )), mois = factor (mois, levels = 1 : 12 )) |> arrange (date) stopifnot ( nrow (ventes) == 72 , ! anyDuplicated (ventes $ date), all ( ! is.na (ventes)), all (ventes $ date == seq.Date ( as.Date ( \"2020-01-01\" ), by = \"month\" , length.out = 72 ))) entrainement <- ventes |> slice_head ( n = 60 ) validation <- ventes |> slice_tail ( n = 12 )"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#disponibilite",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#disponibilite",
+    "title": "Démonstrations R - Module 09",
+    "section": "1. Disponibilité",
+    "text": "1. Disponibilité Les valeurs de 2025 dans le fichier sont observées après coup. Une promotion pourrait être connue si elle était déjà approuvée; un prix peut être planifié ou scénarisé; l’indice peut être prévu séparément. Aucune de ces disponibilités n’est attestée par le fichier fictif. Les ventes futures sont la cible. ventes |> select (date, ventes, promotion, prix_moyen, indice_confiance) |> slice_head ( n = 4 ) # A tibble: 4 × 5 date ventes promotion prix_moyen indice_confiance <date> <dbl> <fct> <dbl> <dbl> 1 2020-01-01 309720 non 59.7 99.6 2 2020-02-01 329533 non 58.3 101. 3 2020-03-01 332527 non 58.4 101. 4 2020-04-01 325184 non 59.2 100."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#regression",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#regression",
+    "title": "Démonstrations R - Module 09",
+    "section": "2. Régression conditionnelle",
+    "text": "2. Régression conditionnelle La catégorie de référence est non . La pente de promotion compare deux valeurs ajustées, avec les autres variables maintenues fixes. Les données observationnelles ne garantissent pas une interprétation causale. modele_lm <- lm (ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois, data = entrainement) coef ( summary (modele_lm))[ c ( \"tendance\" , \"promotionoui\" , \"prix_moyen\" , \"indice_confiance\" ), ] Estimate Std. Error t value Pr(>|t|) tendance 3087.438 280.4525 11.008774 3.175226e-14 promotionoui 47566.125 7396.7293 6.430697 7.845218e-08 prix_moyen -4895.027 1628.3779 -3.006075 4.360178e-03 indice_confiance 2687.160 1269.8958 2.116048 4.003496e-02"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#diagnostic",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#diagnostic",
+    "title": "Démonstrations R - Module 09",
+    "section": "3. Autocorrélation des résidus",
+    "text": "3. Autocorrélation des résidus Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. La valeur p est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus. residus_lm <- residuals (modele_lm) plot (entrainement $ date, residus_lm, type = \"l\" , xlab = \"Mois\" , ylab = \"Résidu (dollars)\" ) abline ( h = 0 , lty = 2 ) acf (residus_lm, lag.max = 12 , main = \"ACF des résidus\" ) Box.test (residus_lm, lag = 12 , type = \"Ljung-Box\" , fitdf = 0 ) Box-Ljung test data: residus_lm X-squared = 22.853, df = 12, p-value = 0.029 Au retard 1, l’ACF des résidus vaut environ 0,41. Au retard 12, elle vaut environ −0,30. Ces deux barres dépassent en valeur absolue le repère approximatif de 0,25. La première suggère que des écarts de même signe tendent à se suivre. Une seule barre au retard 12 ne suffit pas à identifier un mécanisme saisonnier."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#comparaison",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#comparaison",
+    "title": "Démonstrations R - Module 09",
+    "section": "4. Comparaison accompagnée avec erreurs AR(1)",
+    "text": "4. Comparaison accompagnée avec erreurs AR(1) Pour l’activité 9.4, vous pouvez exécuter le code complet ci-dessous et vous concentrer sur la comparaison et ses limites. L’ajustement AR(1) est présenté comme un approfondissement accompagné : sa construction de mémoire n’est pas exigée. Les candidats possèdent les mêmes prédicteurs. La régression avec erreurs AR(1) modélise la dépendance de la partie non expliquée par ces prédicteurs. Les valeurs externes réalisées en 2025 sont utilisées dans les deux modèles : la comparaison est rétrospective et conditionnelle, pas une preuve de performance opérationnelle à l’origine de fin 2024. Les intervalles AR(1) conditionnent eux aussi sur les prédicteurs fournis. formule_x <- ~ tendance + promotion + prix_moyen + indice_confiance + mois x_train <- model.matrix (formule_x, data = entrainement)[, - 1 , drop = FALSE ] x_validation <- model.matrix (formule_x, data = validation)[, - 1 , drop = FALSE ] stopifnot ( identical ( colnames (x_train), colnames (x_validation))) modele_ar1 <- Arima (entrainement $ ventes, xreg = x_train, order = c ( 1 , 0 , 0 ), include.mean = TRUE ) prevision_ar1 <- forecast (modele_ar1, xreg = x_validation, h = nrow (validation), level = c ( 80 , 95 )) comparaison <- validation |> transmute (date, observe = ventes, regression = as.numeric ( predict (modele_lm, newdata = validation)), erreurs_ar1 = as.numeric (prevision_ar1 $ mean)) |> pivot_longer ( c (regression, erreurs_ar1), names_to = \"methode\" , values_to = \"prevision\" ) |> mutate ( erreur = observe - prevision) scores <- comparaison |> group_by (methode) |> summarise ( ME = mean (erreur), MAE = mean ( abs (erreur)), RMSE = sqrt ( mean (erreur ^ 2 )), .groups = \"drop\" ) scores # A tibble: 2 × 4 methode ME MAE RMSE <chr> <dbl> <dbl> <dbl> 1 erreurs_ar1 1408. 5380. 6417. 2 regression 1474. 5088. 6272. Sur les douze mois de 2025, la régression ordinaire donne une MAE de 5 088 $ et une RMSE de 6 272 $. Avec les erreurs AR(1), on obtient 5 380 $ et 6 417 $. Les deux critères favorisent ici la régression ordinaire malgré l’autocorrélation observée à l’entraînement. Pour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation. innovations <- residuals (modele_ar1) acf (innovations, lag.max = 12 , main = \"ACF des innovations du modèle AR(1)\" ) Box.test (innovations, lag = 12 , type = \"Ljung-Box\" , fitdf = 1 ) Box-Ljung test data: innovations X-squared = 6.1972, df = 11, p-value = 0.8599 La ligne noire représente les ventes observées; les deux lignes colorées représentent les prévisions. comparaison |> ggplot ( aes (date, observe)) + geom_line ( colour = \"black\" ) + geom_line ( aes ( y = prevision, colour = methode)) + labs ( x = \"Mois de 2025\" , y = \"Ventes (dollars)\" , colour = \"Modèle\" ) + theme_minimal ()"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#scenario",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#scenario",
+    "title": "Démonstrations R - Module 09",
+    "section": "5. Scénario",
+    "text": "5. Scénario Pour janvier 2025, on suppose un prix de 60 $ par unité et un indice de 100 points avec ou sans promotion. Les valeurs sont hypothétiques. La différence entre les prévisions est une association du modèle; elle n’établit pas l’effet d’une intervention. Elle ne tient pas compte de l’incertitude sur les valeurs futures des prédicteurs. scenario <- tibble ( tendance = 61 , mois = factor ( 1 , levels = 1 : 12 ), promotion = factor ( c ( \"non\" , \"oui\" ), levels = c ( \"non\" , \"oui\" )), prix_moyen = 60 , indice_confiance = 100 ) scenario <- scenario |> mutate ( prevision = as.numeric ( predict (modele_lm, newdata = scenario))) scenario # A tibble: 2 × 6 tendance mois promotion prix_moyen indice_confiance prevision <dbl> <fct> <fct> <dbl> <dbl> <dbl> 1 61 1 non 60 100 498619. 2 61 1 oui 60 100 546185. Vérifiez si le prix du scénario a déjà été observé dans chaque groupe de promotion. entrainement |> group_by (promotion) |> summarise ( prix_min = min (prix_moyen), prix_max = max (prix_moyen), .groups = \"drop\" ) # A tibble: 2 × 3 promotion prix_min prix_max <fct> <dbl> <dbl> 1 non 57.5 62.7 2 oui 53.2 57.9 À 60 $ et avec un indice de 100, le modèle prévoit 498 619 $ sans promotion et 546 185 $ avec promotion. Le prix de 60 $ appartient à la plage observée sans promotion (57,47 à 62,72 $). En promotion, les prix observés vont de 53,17 à 57,86 $. Le scénario avec promotion extrapole donc la relation ajustée au-delà des prix observés dans ce groupe."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#pour-conclure",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#pour-conclure",
+    "title": "Démonstrations R - Module 09",
+    "section": "Pour conclure",
+    "text": "Pour conclure Comparez les scores calculés sans présumer quel modèle gagne. Un meilleur résultat sur ce bloc ne garantit pas une amélioration future; testez un scénario disponible à l’origine et une période ultérieure quand elles existeront."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#objectif",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#objectif",
+    "title": "Exercices - Module 09",
+    "section": "Objectif",
+    "text": "Objectif Le transfert concerne quatre succursales fictives. Il demande une décision opérationnelle sur la capacité et le contrôle de fuites, différente du scénario promotion/prix du cas guidé. Ouvrez le projet de transfert, essayez chaque exercice, puis ouvrez son corrigé. Après la préparation, les deux corrigés avec code peuvent être exécutés séparément. Les trois derniers exercices sont des pratiques supplémentaires."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#preparation",
     "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#preparation",
     "title": "Exercices - Module 09",
     "section": "Préparation",
-    "text": "Préparation\n\nlibrary(tidyverse)\nracines &lt;- c(\".\", \"modules/semaine-09-variables-externes-autocorrelation\")\nracine &lt;- racines[file.exists(file.path(racines, \"data/cas_integrateur_quebec.csv\"))][1]\nstopifnot(!is.na(racine))\nservice &lt;- read_csv(file.path(racine, \"data/cas_integrateur_quebec.csv\"), show_col_types = FALSE) |&gt;\n  mutate(date = as.Date(date), succursale = factor(succursale),\n         promotion = factor(promotion, levels = c(\"non\", \"oui\"))) |&gt;\n  arrange(succursale, date) |&gt;\n  group_by(succursale) |&gt;\n  mutate(ventes_retard_1 = lag(ventes)) |&gt;\n  ungroup()\nstopifnot(nrow(service) == 288, !anyDuplicated(service[c(\"succursale\", \"date\")]))\nentrainement_service &lt;- service |&gt; filter(date &lt; as.Date(\"2025-01-01\"))"
+    "text": "Préparation library (tidyverse) racines <- c ( \".\" , \"modules/semaine-09-variables-externes-autocorrelation\" ) racine <- racines[ file.exists ( file.path (racines, \"data/cas_integrateur_quebec.csv\" ))][ 1 ] stopifnot ( ! is.na (racine)) service <- read_csv ( file.path (racine, \"data/cas_integrateur_quebec.csv\" ), show_col_types = FALSE ) |> mutate ( date = as.Date (date), succursale = factor (succursale), promotion = factor (promotion, levels = c ( \"non\" , \"oui\" ))) |> arrange (succursale, date) |> group_by (succursale) |> mutate ( ventes_retard_1 = lag (ventes)) |> ungroup () stopifnot ( nrow (service) == 288 , ! anyDuplicated (service[ c ( \"succursale\" , \"date\" )])) entrainement_service <- service |> filter (date < as.Date ( \"2025-01-01\" ))"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-1",
     "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-1",
     "title": "Exercices - Module 09",
     "section": "Exercice 1 - Auditer la disponibilité",
-    "text": "Exercice 1 - Auditer la disponibilité\nUne équipe souhaite prévoir les ventes du mois suivant avec promotion, capacité, achalandage, ruptures, temps d’attente, satisfaction et ventes du mois courant. Classez-les selon leur disponibilité à l’origine. Proposez une solution pour une variable indisponible.\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 1\n\n\n\n\n\nUne promotion approuvée et une capacité annoncée peuvent être connues, sous réserve du calendrier réel. Les ventes du mois courant ne sont utilisables que si elles sont effectivement disponibles à l’origine. L’achalandage, les ruptures, l’attente et la satisfaction du mois cible sont observés après coup : leur utilisation telle quelle créerait une fuite. On peut prévoir ou scénariser une variable, puis nommer l’incertitude, ou la retirer."
+    "text": "Exercice 1 - Auditer la disponibilité Une équipe souhaite prévoir les ventes du mois suivant avec promotion, capacité, achalandage, ruptures, temps d’attente, satisfaction et ventes du mois courant. Classez-les selon leur disponibilité à l’origine. Proposez une solution pour une variable indisponible. Astuce Corrigé de l’exercice 1 Une promotion approuvée et une capacité annoncée peuvent être connues, sous réserve du calendrier réel. Les ventes du mois courant ne sont utilisables que si elles sont effectivement disponibles à l’origine. L’achalandage, les ruptures, l’attente et la satisfaction du mois cible sont observés après coup : leur utilisation telle quelle créerait une fuite. On peut prévoir ou scénariser une variable, puis nommer l’incertitude, ou la retirer."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-2",
     "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-2",
     "title": "Exercices - Module 09",
     "section": "Exercice 2 - Diagnostiquer par succursale",
-    "text": "Exercice 2 - Diagnostiquer par succursale\nAjustez un modèle simple sur 2020 à 2024, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale. Pourquoi ne pas joindre la fin d’une succursale au début de la suivante?\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 2\n\n\n\n\n\n\nmodele_base &lt;- lm(ventes ~ indice_temps + promotion + succursale, data = entrainement_service)\ndiagnostic &lt;- entrainement_service |&gt;\n  mutate(residu = residuals(modele_base)) |&gt;\n  arrange(succursale, date) |&gt;\n  group_by(succursale) |&gt;\n  summarise(autocorrelation_rang_1 = cor(residu, lag(residu), use = \"complete.obs\"), .groups = \"drop\")\ndiagnostic\n\n# A tibble: 4 × 2\n  succursale autocorrelation_rang_1\n  &lt;fct&gt;                       &lt;dbl&gt;\n1 Gatineau                 -0.00914\n2 Montréal                  0.0853 \n3 Québec                    0.119  \n4 Sherbrooke               -0.185  \n\n\nLes retards sont calculés après tri dans chaque groupe. Une moyenne de résidus proche de zéro ne suffit pas : des signes semblables peuvent se suivre. Les frontières entre succursales ne sont pas des mois consécutifs d’une même série."
+    "text": "Exercice 2 - Diagnostiquer par succursale Ajustez un modèle simple sur 2020 à 2024, puis calculez l’autocorrélation de rang 1 des résidus séparément par succursale. Pourquoi ne pas joindre la fin d’une succursale au début de la suivante? Astuce Corrigé de l’exercice 2 modele_base <- lm (ventes ~ indice_temps + promotion + succursale, data = entrainement_service) diagnostic <- entrainement_service |> mutate ( residu = residuals (modele_base)) |> arrange (succursale, date) |> group_by (succursale) |> summarise ( autocorrelation_rang_1 = cor (residu, lag (residu), use = \"complete.obs\" ), .groups = \"drop\" ) diagnostic # A tibble: 4 × 2 succursale autocorrelation_rang_1 <fct> <dbl> 1 Gatineau -0.00914 2 Montréal 0.0853 3 Québec 0.119 4 Sherbrooke -0.185 Les retards sont calculés après tri dans chaque groupe. Une moyenne de résidus proche de zéro ne suffit pas : des signes semblables peuvent se suivre. Les frontières entre succursales ne sont pas des mois consécutifs d’une même série."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-3",
     "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-3",
     "title": "Exercices - Module 09",
     "section": "Exercice 3 - Comparer des scénarios",
-    "text": "Exercice 3 - Comparer des scénarios\nDepuis la fin de 2025, construisez deux scénarios pour janvier 2026 à Québec : capacité stable ou augmentée de 5 %, promotion non et dernières ventes connues. Utilisez le même modèle et interprétez la différence sans conclure à un effet causal.\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 3\n\n\n\n\n\n\n# Un mois à partir de fin 2025 : le dernier mois et son chiffre de ventes sont disponibles.\nmodele_scenario &lt;- lm(ventes ~ indice_temps + promotion + capacite + ventes_retard_1,\n                      data = service |&gt; filter(!is.na(ventes_retard_1)))\nprofil &lt;- service |&gt; filter(succursale == \"Québec\") |&gt; slice_max(date, n = 1, with_ties = FALSE) |&gt;\n  transmute(indice_temps = indice_temps + 1, promotion = factor(\"non\", levels = levels(service$promotion)),\n            capacite, ventes_retard_1 = ventes)\nscenarios &lt;- bind_rows(profil |&gt; mutate(scenario = \"Capacité inchangée\"),\n                       profil |&gt; mutate(capacite = capacite * 1.05, scenario = \"Capacité augmentée de 5 %\")) |&gt;\n  mutate(prevision = as.numeric(predict(modele_scenario, newdata = pick(everything()))))\nscenarios\n\n# A tibble: 2 × 6\n  indice_temps promotion capacite ventes_retard_1 scenario             prevision\n         &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;\n1           73 non           2400          230891 Capacité inchangée     196781.\n2           73 non           2520          230891 Capacité augmentée …   205502.\n\n\nLa capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. La formule de capacité est une hypothèse, pas un plan vérifié."
+    "text": "Exercice 3 - Comparer des scénarios Depuis la fin de 2025, construisez deux scénarios pour janvier 2026 à Québec : capacité stable ou augmentée de 5 %, promotion non et dernières ventes connues. Utilisez le même modèle et interprétez la différence sans conclure à un effet causal. Astuce Corrigé de l’exercice 3 # Un mois à partir de fin 2025 : le dernier mois et son chiffre de ventes sont disponibles. modele_scenario <- lm (ventes ~ indice_temps + promotion + capacite + ventes_retard_1, data = service |> filter ( ! is.na (ventes_retard_1))) profil <- service |> filter (succursale == \"Québec\" ) |> slice_max (date, n = 1 , with_ties = FALSE ) |> transmute ( indice_temps = indice_temps + 1 , promotion = factor ( \"non\" , levels = levels (service $ promotion)), capacite, ventes_retard_1 = ventes) scenarios <- bind_rows (profil |> mutate ( scenario = \"Capacité inchangée\" ), profil |> mutate ( capacite = capacite * 1.05 , scenario = \"Capacité augmentée de 5 %\" )) |> mutate ( prevision = as.numeric ( predict (modele_scenario, newdata = pick ( everything ())))) scenarios # A tibble: 2 × 6 indice_temps promotion capacite ventes_retard_1 scenario prevision <dbl> <fct> <dbl> <dbl> <chr> <dbl> 1 73 non 2400 230891 Capacité inchangée 196781. 2 73 non 2520 230891 Capacité augmentée … 205502. La capacité varie entre succursales dans ces données, mais ne varie pas dans le temps à l’intérieur de chacune; sa pente peut refléter des différences entre succursales. Une hausse hypothétique pour Québec peut extrapoler et n’est pas une estimation causale. À Québec, les 72 mois ont une capacité de 2 400 unités. Le modèle commun prévoit environ 196 781 $ à cette capacité et 205 502 $ à 2 520 unités. L’écart prédit d’environ 8 721 $ dépend de l’hypothèse que l’association entre succursales se transpose à un changement de capacité à Québec."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-4",
     "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-4",
     "title": "Exercices - Module 09",
     "section": "Exercice 4 - Formuler une recommandation",
-    "text": "Exercice 4 - Formuler une recommandation\nRédigez une recommandation distinguant fuite d’information, diagnostic par succursale et scénario. Nommez un risque d’extrapolation.\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 4\n\n\n\n\n\nRetirer les variables du mois cible connues après coup, ou utiliser une prévision distincte explicitement incertaine. Examiner les résidus dans chaque succursale et au fil du temps. Présenter la hausse de capacité comme un scénario conditionnel et vérifier si la valeur envisagée se situe dans la plage des données et convient à Québec."
+    "text": "Exercice 4 - Formuler une recommandation Rédigez une recommandation distinguant fuite d’information, diagnostic par succursale et scénario. Nommez un risque d’extrapolation. Astuce Corrigé de l’exercice 4 Retirer les variables du mois cible connues après coup, ou utiliser une prévision distincte explicitement incertaine. Examiner les résidus dans chaque succursale et au fil du temps. Présenter la hausse de capacité comme un scénario conditionnel et vérifier si la valeur envisagée se situe dans la plage des données et convient à Québec."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-5",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-5",
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#pratique-supplementaire",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#pratique-supplementaire",
     "title": "Exercices - Module 09",
-    "section": "Exercice 5 - Retard et horizon",
-    "text": "Exercice 5 - Retard et horizon\nÀ la fin de décembre, les ventes de décembre sont connues. Peut-on les utiliser pour prévoir janvier et février?\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 5\n\n\n\n\n\nPour janvier, oui si la mesure de décembre est disponible à l’origine. Pour février, le retard d’un mois serait la vente de janvier, encore inconnue à la fin de décembre; il faut la prévoir, utiliser un autre retard disponible ou mettre à jour la prévision après janvier."
+    "section": "Pratique supplémentaire",
+    "text": "Pratique supplémentaire Les exercices 5 à 7 permettent d’approfondir la disponibilité des retards, le diagnostic et le traitement d’un événement futur. Exercice 5 - Retard et horizon À la fin de décembre, les ventes de décembre sont connues. Peut-on les utiliser pour prévoir janvier et février? Astuce Corrigé de l’exercice 5 Pour janvier, oui si la mesure de décembre est disponible à l’origine. Pour février, le retard d’un mois serait la vente de janvier, encore inconnue à la fin de décembre; il faut la prévoir, utiliser un autre retard disponible ou mettre à jour la prévision après janvier. Exercice 6 - Interpréter une p-valeur Le test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résidus sont indépendants? Astuce Corrigé de l’exercice 6 Non. Le test ne fournit pas assez d’évidence contre l’absence d’autocorrélations examinées, mais une p-valeur élevée ne démontre ni l’indépendance ni l’absence de structure. Examiner aussi le graphique et la taille de l’échantillon. Exercice 7 - Événement spécial Une panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois? Astuce Corrigé de l’exercice 7 Vérifier d’abord si la donnée est erronée et documenter la cause. Selon la question, comparer une analyse avec et sans ce mois ou ajouter un indicateur d’événement; ne pas le supprimer automatiquement. Une prévision future requiert aussi un scénario sur la présence de l’événement."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-6",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-6",
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#auto-vérification",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#auto-vérification",
     "title": "Exercices - Module 09",
-    "section": "Exercice 6 - Interpréter une p-valeur",
-    "text": "Exercice 6 - Interpréter une p-valeur\nLe test de Ljung-Box donne une valeur p de 0,30. Peut-on affirmer que les résidus sont indépendants?\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 6\n\n\n\n\n\nNon. Le test ne fournit pas assez d’évidence contre l’absence d’autocorrélations examinées, mais une p-valeur élevée ne démontre ni l’indépendance ni l’absence de structure. Examiner aussi le graphique et la taille de l’échantillon."
+    "section": "Auto-vérification",
+    "text": "Auto-vérification J’ai calculé les retards et examiné les résidus en respectant l’ordre des mois dans chaque succursale. Ma recommandation situe la décision à Québec et nomme la cible et le mois visé. Je distingue l’hypothèse d’achalandage du changement de capacité et j’explique pourquoi les ventes prévues ne mesurent pas l’effet causal d’un agrandissement."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-7",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/exercices.html#exercice-7",
-    "title": "Exercices - Module 09",
-    "section": "Exercice 7 - Événement spécial",
-    "text": "Exercice 7 - Événement spécial\nUne panne exceptionnelle réduit les ventes une fois. Faut-il supprimer le mois?\n\n\n\n\n\n\nAstuceCorrigé de l’exercice 7\n\n\n\n\n\nVérifier d’abord si la donnée est erronée et documenter la cause. Selon la question, comparer une analyse avec et sans ce mois ou ajouter un indicateur d’événement; ne pas le supprimer automatiquement. Une prévision future requiert aussi un scénario sur la présence de l’événement."
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html",
+    "title": "Lectures - Module 09",
+    "section": "",
+    "text": "Ces explications font partie du socle. Les liens vers l’ouvrage ouvrent des lectures ciblées et ne remplacent pas les démonstrations en R."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#choisir-sa-lecture",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#choisir-sa-lecture",
+    "title": "Lectures - Module 09",
+    "section": "Choisir sa lecture",
+    "text": "Choisir sa lecture Après la capsule Passage à lire Question à reprendre dans le projet 1. Auditer les variables Disponibilité et fuite Que savait-on fin décembre 2024 ? 2. Interpréter la régression Régression avec contexte À quoi compare-t-on les ventes sous promotion ? 3. Lire les résidus Résidus et autocorrélation Que suggèrent les retards 1 et 12 ? 4. Comparer les modèles Régression avec erreurs AR Quel modèle obtient les erreurs les plus faibles en 2025 ? 5. Communiquer la décision Scénarios et décision Le prix de 60 $ a-t-il été observé dans les deux groupes ?"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-1",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-1",
+    "title": "Lectures - Module 09",
+    "section": "Disponibilité et fuite",
+    "text": "Disponibilité et fuite Une prévision doit reposer sur l’information disponible à son origine. Le calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques. L’indice économique peut nécessiter sa propre prévision. Une valeur du futur observée après coup est utile pour une analyse rétrospective, mais elle ne prouve pas la performance d’une prévision réalisable. Par exemple, à la fin de décembre, le calendrier du mois de janvier est connu. Une promotion n’est connue que si la décision est déjà prise; sinon, on peut examiner un scénario. La valeur de l’indice effectivement observée en janvier devient disponible après l’origine : l’utiliser pour comparer rétrospectivement deux modèles ne donne pas une prévision réalisable à partir des seules informations de décembre. Une valeur passée déjà publiée peut être admissible si elle était disponible à cette date."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-2",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-2",
+    "title": "Lectures - Module 09",
+    "section": "Régression avec contexte",
+    "text": "Régression avec contexte La régression combine tendance, mois, promotion, prix et indice. La promotion binaire se lit par rapport à la catégorie non, en dollars, les autres termes du modèle étant fixés. Une association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison. Supposons que le coefficient associé à « promotion oui » soit de 2 000 $. Dans ce modèle, deux situations qui ne diffèrent que par l’indicateur de promotion ont des ventes ajustées qui diffèrent de 2 000 $. Il s’agit d’une comparaison dans le modèle, avec prix, indice, mois et tendance identiques. Le responsable peut avoir décidé les promotions en fonction d’autres informations; le coefficient ne démontre donc pas l’effet d’une intervention."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-3",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-3",
+    "title": "Lectures - Module 09",
+    "section": "Résidus et autocorrélation",
+    "text": "Résidus et autocorrélation Le résidu est l’observation moins la valeur ajustée. Un retard 1 rapproche les erreurs de deux mois consécutifs; un retard 12 compare des mois séparés d’une année. Des signes positifs persistants peuvent signaler une sous-prévision répétée. Une ACF de la série brute peut refléter tendance et saisonnalité, et ne doit pas être confondue avec celle des résidus. Un test de Ljung-Box examine collectivement les autocorrélations jusqu’au retard choisi; une p-valeur élevée ne démontre pas leur absence ni l’indépendance. Commencez par tracer les résidus dans l’ordre des mois. Plusieurs résidus positifs consécutifs peuvent indiquer que le modèle sous-estime successivement les observations; l’ACF donne ensuite un résumé par retard. Une barre à un retard indique une association estimée entre résidus séparés par ce nombre de mois, avec une incertitude d’échantillonnage. L’absence de barre marquée ne prouve pas l’indépendance et une barre marquée ne désigne pas à elle seule la cause du motif. Sur un graphique d’ACF mensuelle, une barre positive au retard 1 indique que les résidus séparés d’un mois tendent à varier dans le même sens; une barre négative suggère une alternance. Au retard 12, la comparaison concerne des mois séparés d’une année. Les pointillés sont des repères approximatifs, pas une frontière qui prouverait l’indépendance : l’ajustement du modèle et la lecture de plusieurs retards invitent à la prudence. Comparez toujours l’ACF au graphique des résidus dans le temps. Pour approfondir, le test de Ljung-Box regroupe plusieurs retards dans une même vérification. Une petite valeur p fournit un indice contre l’hypothèse testée; une grande valeur p ne démontre pas son exactitude. Le test est facultatif ici : le socle est la lecture du graphique des résidus et de leur ACF."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-4",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-4",
+    "title": "Lectures - Module 09",
+    "section": "Régression avec erreurs AR",
+    "text": "Régression avec erreurs AR Écrire y t = x t β + η t y_t = x_t \\beta + \\eta_t puis η t = ϕ η t − 1 + ε t \\eta_t = \\phi \\eta_{t-1} + \\varepsilon_t signifie que la partie non expliquée par les prédicteurs dépend directement de sa valeur au mois précédent. Par récurrence, une innovation peut encore influer sur les mois suivants. Les innovations ε ne sont pas la même chose que les erreurs de régression η. Le modèle est estimé sur les 60 premiers mois. Les candidats sont comparés sur les mêmes 12 mois et les mêmes prédicteurs. Les paramètres estimés et les diagnostics restent incertains. Une erreur AR(1) et une vente retardée utilisée comme prédicteur ne sont pas la même opération. Dans le premier cas, la dépendance est décrite dans la partie non expliquée par la régression; dans le second, on ajoute explicitement une vente passée à la formule. Pour chaque horizon, il faut vérifier que la vente retardée nécessaire est disponible à l’origine ou préciser comment elle sera prévue. Cette structure est une option plus technique, présentée avec du code complet dans la démonstration. Pour l’activité, il suffit de lire et comparer les résultats fournis : on ne demande pas de construire le modèle AR(1) de mémoire. Une MAE plus faible sur les mêmes douze mois décrit une meilleure performance sur ce bloc pour ce critère; elle ne garantit pas la performance sur une autre période. Ici les valeurs externes de 2025 sont connues après coup : la comparaison est conditionnelle à ces valeurs."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-5",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-5",
+    "title": "Lectures - Module 09",
+    "section": "Scénarios et décision",
+    "text": "Scénarios et décision Une prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis. Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs. Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire. Une différence prédite ne garantit pas l’effet d’une intervention. Pour lire les intervalles, demandez-vous ce qui est supposé connu. Un intervalle calculé avec un prix et une promotion fixés décrit l’incertitude sous ces valeurs; il n’ajoute pas automatiquement l’incertitude sur un prix ou une promotion encore inconnus. Utilisez l’exercice de scénario pour comparer deux hypothèses à valeurs restantes identiques, puis formulez une limite opérationnelle. Dans le cas guidé, 60 $ se situe dans la plage des prix observés sans promotion. En promotion, le prix maximal de l’entraînement est de 57,86 $. Le scénario avec promotion exige donc aussi une extrapolation."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lectures-ciblées-et-documentation",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lectures-ciblées-et-documentation",
+    "title": "Lectures - Module 09",
+    "section": "Lectures ciblées et documentation",
+    "text": "Lectures ciblées et documentation Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition : régression et prévision ex ante/ex post , sections 7.3 et 7.6; diagnostic des résidus , section 5.4; régression dynamique , sections 10.1 à 10.3. La documentation de forecast::Arima explique xreg et order . Pour approfondir seulement : modèles ARIMA , sections 9.1 à 9.5, et complément facultatif . Revenir à l’exercice correspondant après chaque lecture."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/complements.html",
@@ -1047,35 +1145,350 @@
     "href": "modules/semaine-09-variables-externes-autocorrelation/complements.html#retards-et-fonction-dautocorrélation",
     "title": "Compléments facultatifs - Module 09",
     "section": "Retards et fonction d’autocorrélation",
-    "text": "Retards et fonction d’autocorrélation\nAu retard k, on compare les observations séparées de k périodes. Une série avec tendance peut avoir une ACF positive même si ses résidus, après modélisation, sont différents. Une ACF saisonnière peut présenter des pics aux multiples de 12 pour des données mensuelles, sans que chaque pic constitue une preuve de saisonnalité.\n\nlibrary(tidyverse)\nlibrary(forecast)\n\nracines &lt;- c(\".\", \"modules/semaine-09-variables-externes-autocorrelation\")\nracine &lt;- racines[file.exists(file.path(racines, \"data/ventes_promotions_quebec.csv\"))][1]\nstopifnot(!is.na(racine))\nventes &lt;- read_csv(file.path(racine, \"data/ventes_promotions_quebec.csv\"), show_col_types = FALSE) |&gt;\n  mutate(date = as.Date(date), promotion = factor(promotion, levels = c(\"non\", \"oui\")),\n         mois = factor(mois, levels = 1:12)) |&gt;\n  arrange(date)\nstopifnot(nrow(ventes) == 72, !anyDuplicated(ventes$date),\n          all(!is.na(ventes)), all(ventes$date == seq.Date(as.Date(\"2020-01-01\"), by = \"month\", length.out = 72)))\nentrainement &lt;- ventes |&gt; slice_head(n = 60)\nvalidation &lt;- ventes |&gt; slice_tail(n = 12)\n\n\nventes |&gt; transmute(date, ventes, retard_1 = lag(ventes), retard_12 = lag(ventes, 12)) |&gt; slice_head(n = 14)\n\n# A tibble: 14 × 4\n   date       ventes retard_1 retard_12\n   &lt;date&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;\n 1 2020-01-01 309720       NA        NA\n 2 2020-02-01 329533   309720        NA\n 3 2020-03-01 332527   329533        NA\n 4 2020-04-01 325184   332527        NA\n 5 2020-05-01 405161   325184        NA\n 6 2020-06-01 338213   405161        NA\n 7 2020-07-01 316643   338213        NA\n 8 2020-08-01 405192   316643        NA\n 9 2020-09-01 340965   405192        NA\n10 2020-10-01 433802   340965        NA\n11 2020-11-01 375648   433802        NA\n12 2020-12-01 384917   375648        NA\n13 2021-01-01 441917   384917    309720\n14 2021-02-01 354891   441917    329533\n\nacf(entrainement$ventes, lag.max = 24, main = \"ACF des ventes brutes\")"
+    "text": "Retards et fonction d’autocorrélation Au retard k, on compare les observations séparées de k périodes. Une série avec tendance peut avoir une ACF positive même si ses résidus, après modélisation, sont différents. Une ACF saisonnière peut présenter des pics aux multiples de 12 pour des données mensuelles, sans que chaque pic constitue une preuve de saisonnalité. library (tidyverse) library (forecast) racines <- c ( \".\" , \"modules/semaine-09-variables-externes-autocorrelation\" ) racine <- racines[ file.exists ( file.path (racines, \"data/ventes_promotions_quebec.csv\" ))][ 1 ] stopifnot ( ! is.na (racine)) ventes <- read_csv ( file.path (racine, \"data/ventes_promotions_quebec.csv\" ), show_col_types = FALSE ) |> mutate ( date = as.Date (date), promotion = factor (promotion, levels = c ( \"non\" , \"oui\" )), mois = factor (mois, levels = 1 : 12 )) |> arrange (date) stopifnot ( nrow (ventes) == 72 , ! anyDuplicated (ventes $ date), all ( ! is.na (ventes)), all (ventes $ date == seq.Date ( as.Date ( \"2020-01-01\" ), by = \"month\" , length.out = 72 ))) entrainement <- ventes |> slice_head ( n = 60 ) validation <- ventes |> slice_tail ( n = 12 ) ventes |> transmute (date, ventes, retard_1 = lag (ventes), retard_12 = lag (ventes, 12 )) |> slice_head ( n = 14 ) # A tibble: 14 × 4 date ventes retard_1 retard_12 <date> <dbl> <dbl> <dbl> 1 2020-01-01 309720 NA NA 2 2020-02-01 329533 309720 NA 3 2020-03-01 332527 329533 NA 4 2020-04-01 325184 332527 NA 5 2020-05-01 405161 325184 NA 6 2020-06-01 338213 405161 NA 7 2020-07-01 316643 338213 NA 8 2020-08-01 405192 316643 NA 9 2020-09-01 340965 405192 NA 10 2020-10-01 433802 340965 NA 11 2020-11-01 375648 433802 NA 12 2020-12-01 384917 375648 NA 13 2021-01-01 441917 384917 309720 14 2021-02-01 354891 441917 329533 acf (entrainement $ ventes, lag.max = 24 , main = \"ACF des ventes brutes\" )"
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/complements.html#prévoir-des-résidus-en-deux-étapes",
     "href": "modules/semaine-09-variables-externes-autocorrelation/complements.html#prévoir-des-résidus-en-deux-étapes",
     "title": "Compléments facultatifs - Module 09",
     "section": "Prévoir des résidus en deux étapes",
-    "text": "Prévoir des résidus en deux étapes\nOn peut ajuster d’abord la régression, puis un AR(1) sur ses résidus et ajouter la prévision de ce résidu à celle de la régression. Cette estimation séparée n’est pas forcément identique à une estimation conjointe avec erreurs AR(1). Aux horizons ultérieurs, les résidus inconnus sont remplacés par leurs prévisions; il n’existe pas une limite générale de prévisibilité égale à l’ordre du modèle.\n\nmodele_lm &lt;- lm(ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois,\n                data = entrainement)\ncoef(summary(modele_lm))[c(\"tendance\", \"promotionoui\", \"prix_moyen\", \"indice_confiance\"), ]\n\n                  Estimate Std. Error   t value     Pr(&gt;|t|)\ntendance          3087.438   280.4525 11.008774 3.175226e-14\npromotionoui     47566.125  7396.7293  6.430697 7.845218e-08\nprix_moyen       -4895.027  1628.3779 -3.006075 4.360178e-03\nindice_confiance  2687.160  1269.8958  2.116048 4.003496e-02\n\n\n\nar_residus &lt;- Arima(residuals(modele_lm), order = c(1, 0, 0))\nfutur_residu &lt;- forecast(ar_residus, h = 12)\nprevision_deux_etapes &lt;- as.numeric(predict(modele_lm, newdata = validation)) + as.numeric(futur_residu$mean)\ntibble(date = validation$date, observe = validation$ventes, prevision_deux_etapes) |&gt;\n  summarise(MAE = mean(abs(observe - prevision_deux_etapes)), RMSE = sqrt(mean((observe - prevision_deux_etapes)^2)))\n\n# A tibble: 1 × 2\n    MAE  RMSE\n  &lt;dbl&gt; &lt;dbl&gt;\n1 5129. 6317.\n\n\nLes prédicteurs de validation sont ici les valeurs réalisées après coup; les scores sont conditionnels à ces valeurs. Une comparaison de modèles exige les mêmes cibles et origines."
+    "text": "Prévoir des résidus en deux étapes On peut ajuster d’abord la régression, puis un AR(1) sur ses résidus et ajouter la prévision de ce résidu à celle de la régression. Cette estimation séparée n’est pas forcément identique à une estimation conjointe avec erreurs AR(1). Aux horizons ultérieurs, les résidus inconnus sont remplacés par leurs prévisions; il n’existe pas une limite générale de prévisibilité égale à l’ordre du modèle. modele_lm <- lm (ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois, data = entrainement) coef ( summary (modele_lm))[ c ( \"tendance\" , \"promotionoui\" , \"prix_moyen\" , \"indice_confiance\" ), ] Estimate Std. Error t value Pr(>|t|) tendance 3087.438 280.4525 11.008774 3.175226e-14 promotionoui 47566.125 7396.7293 6.430697 7.845218e-08 prix_moyen -4895.027 1628.3779 -3.006075 4.360178e-03 indice_confiance 2687.160 1269.8958 2.116048 4.003496e-02 ar_residus <- Arima ( residuals (modele_lm), order = c ( 1 , 0 , 0 )) futur_residu <- forecast (ar_residus, h = 12 ) prevision_deux_etapes <- as.numeric ( predict (modele_lm, newdata = validation)) + as.numeric (futur_residu $ mean) tibble ( date = validation $ date, observe = validation $ ventes, prevision_deux_etapes) |> summarise ( MAE = mean ( abs (observe - prevision_deux_etapes)), RMSE = sqrt ( mean ((observe - prevision_deux_etapes) ^ 2 ))) # A tibble: 1 × 2 MAE RMSE <dbl> <dbl> 1 5129. 6317. Les prédicteurs de validation sont ici les valeurs réalisées après coup; les scores sont conditionnels à ces valeurs. Une comparaison de modèles exige les mêmes cibles et origines."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/complements.html#événements-interventions-et-valeurs-atypiques",
     "href": "modules/semaine-09-variables-externes-autocorrelation/complements.html#événements-interventions-et-valeurs-atypiques",
     "title": "Compléments facultatifs - Module 09",
     "section": "Événements, interventions et valeurs atypiques",
-    "text": "Événements, interventions et valeurs atypiques\nUne date d’événement peut être codée par une indicatrice; un changement permanent peut être décrit par une indicatrice active après l’intervention. Vérifier si l’événement est connu à l’origine. Une observation atypique peut être une erreur ou un phénomène réel : la documenter, comparer la sensibilité avec et sans elle et éviter une suppression automatique. Une corrélation entre séries qui partagent une tendance peut être trompeuse. Examiner la structure temporelle et les mécanismes avant de conclure."
+    "text": "Événements, interventions et valeurs atypiques Une date d’événement peut être codée par une indicatrice; un changement permanent peut être décrit par une indicatrice active après l’intervention. Vérifier si l’événement est connu à l’origine. Une observation atypique peut être une erreur ou un phénomène réel : la documenter, comparer la sensibilité avec et sans elle et éviter une suppression automatique. Une corrélation entre séries qui partagent une tendance peut être trompeuse. Examiner la structure temporelle et les mécanismes avant de conclure."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/complements.html#retards-de-publication-et-interactions",
     "href": "modules/semaine-09-variables-externes-autocorrelation/complements.html#retards-de-publication-et-interactions",
     "title": "Compléments facultatifs - Module 09",
     "section": "Retards de publication et interactions",
-    "text": "Retards de publication et interactions\nUne donnée de janvier publiée seulement en mars n’est pas disponible pour une prévision produite en février. Il faut représenter ce délai dans l’entraînement et dans la validation, ou fournir une prévision distincte. À plusieurs horizons, un prédicteur retardé peut lui-même devenir inconnu.\nL’ancien exemple météo et jour ouvrable combinait les deux catégories. Une interaction permet de représenter des associations différentes selon le contexte, sans établir une causalité. Ici, une interaction entre prix et promotion est illustrée seulement pour lire les coefficients et scénarios :\n\nmodele_interaction &lt;- lm(ventes ~ tendance + mois + promotion * prix_moyen + indice_confiance,\n                         data = entrainement)\ncoef(modele_interaction)[c(\"promotionoui\", \"prix_moyen\", \"promotionoui:prix_moyen\")]\n\n           promotionoui              prix_moyen promotionoui:prix_moyen \n            51549.16539             -4863.66638               -69.09116 \n\nmodel.matrix(~ promotion * prix_moyen, data = entrainement) |&gt; head()\n\n  (Intercept) promotionoui prix_moyen promotionoui:prix_moyen\n1           1            0      59.67                    0.00\n2           1            0      58.34                    0.00\n3           1            0      58.38                    0.00\n4           1            0      59.25                    0.00\n5           1            1      54.94                   54.94\n6           1            0      58.19                    0.00\n\n\nL’association de promotion dépend maintenant du prix : coefficient de promotion plus prix multiplié par le coefficient d’interaction. La catégorie de référence reste non. Le choix d’ajouter ce terme doit être justifié et validé; un meilleur ajustement seul ne garantit pas une meilleure prévision."
+    "text": "Retards de publication et interactions Une donnée de janvier publiée seulement en mars n’est pas disponible pour une prévision produite en février. Il faut représenter ce délai dans l’entraînement et dans la validation, ou fournir une prévision distincte. À plusieurs horizons, un prédicteur retardé peut lui-même devenir inconnu. L’ancien exemple météo et jour ouvrable combinait les deux catégories. Une interaction permet de représenter des associations différentes selon le contexte, sans établir une causalité. Ici, une interaction entre prix et promotion est illustrée seulement pour lire les coefficients et scénarios : modele_interaction <- lm (ventes ~ tendance + mois + promotion * prix_moyen + indice_confiance, data = entrainement) coef (modele_interaction)[ c ( \"promotionoui\" , \"prix_moyen\" , \"promotionoui:prix_moyen\" )] promotionoui prix_moyen promotionoui:prix_moyen 51549.16539 -4863.66638 -69.09116 model.matrix ( ~ promotion * prix_moyen, data = entrainement) |> head () (Intercept) promotionoui prix_moyen promotionoui:prix_moyen 1 1 0 59.67 0.00 2 1 0 58.34 0.00 3 1 0 58.38 0.00 4 1 0 59.25 0.00 5 1 1 54.94 54.94 6 1 0 58.19 0.00 L’association de promotion dépend maintenant du prix : coefficient de promotion plus prix multiplié par le coefficient d’interaction. La catégorie de référence reste non. Le choix d’ajouter ce terme doit être justifié et validé; un meilleur ajustement seul ne garantit pas une meilleure prévision."
   },
   {
     "objectID": "modules/semaine-09-variables-externes-autocorrelation/complements.html#arima-différenciation-et-marche-aléatoire",
     "href": "modules/semaine-09-variables-externes-autocorrelation/complements.html#arima-différenciation-et-marche-aléatoire",
     "title": "Compléments facultatifs - Module 09",
     "section": "ARIMA, différenciation et marche aléatoire",
-    "text": "ARIMA, différenciation et marche aléatoire\nUn modèle AR utilise des retards de la série; un modèle MA utilise des innovations passées. Dans ARIMA(p,d,q), p compte les termes autorégressifs, d les différenciations non saisonnières et q les termes de moyenne mobile des innovations. Différencier peut rendre une série plus stable, mais ne garantit pas à lui seul la stationnarité; les modèles saisonniers ou avec tendance déterministe existent. Les modèles de ce cahier sont des illustrations, non une recherche exhaustive du meilleur modèle.\nUne marche aléatoire sans dérive a pour prévision centrale la dernière observation; avec dérive, celle-ci évolue. Son avenir reste incertain. Une ACF de différences apparemment nulle ne démontre pas à elle seule une marche aléatoire, et un test ordinaire de pente égale à 1 n’est pas un test de racine unitaire valide par défaut.\n\nserie &lt;- ts(entrainement$ventes, start = c(2020, 1), frequency = 12)\nmodele_ar &lt;- Arima(serie, order = c(1, 0, 0))\nmodele_ari &lt;- Arima(serie, order = c(1, 1, 0))\nmodele_arima &lt;- Arima(serie, order = c(1, 1, 1))\n# Illustrations sur les mêmes 12 mois; pas de sélection automatique.\ntibble(modele = c(\"AR(1)\", \"ARI(1,1)\", \"ARIMA(1,1,1)\"),\n       MAE = c(mean(abs(validation$ventes - forecast(modele_ar, h = 12)$mean)),\n               mean(abs(validation$ventes - forecast(modele_ari, h = 12)$mean)),\n               mean(abs(validation$ventes - forecast(modele_arima, h = 12)$mean))))\n\n# A tibble: 3 × 2\n  modele          MAE\n  &lt;chr&gt;         &lt;dbl&gt;\n1 AR(1)        91172.\n2 ARI(1,1)     36819.\n3 ARIMA(1,1,1) 37062.\n\n\nCes modèles sans variables externes et sans ajustement saisonnier explicite ne constituent pas nécessairement des modèles appropriés pour cette série; examiner diagnostics et limites avant toute recommandation. Les scores de validation sont calculés sur un bloc déjà consulté."
+    "text": "ARIMA, différenciation et marche aléatoire Un modèle AR utilise des retards de la série; un modèle MA utilise des innovations passées. Dans ARIMA(p,d,q), p compte les termes autorégressifs, d les différenciations non saisonnières et q les termes de moyenne mobile des innovations. Différencier peut rendre une série plus stable, mais ne garantit pas à lui seul la stationnarité; les modèles saisonniers ou avec tendance déterministe existent. Les modèles de ce cahier sont des illustrations, non une recherche exhaustive du meilleur modèle. Une marche aléatoire sans dérive a pour prévision centrale la dernière observation; avec dérive, celle-ci évolue. Son avenir reste incertain. Une ACF de différences apparemment nulle ne démontre pas à elle seule une marche aléatoire, et un test ordinaire de pente égale à 1 n’est pas un test de racine unitaire valide par défaut. serie <- ts (entrainement $ ventes, start = c ( 2020 , 1 ), frequency = 12 ) modele_ar <- Arima (serie, order = c ( 1 , 0 , 0 )) modele_ari <- Arima (serie, order = c ( 1 , 1 , 0 )) modele_arima <- Arima (serie, order = c ( 1 , 1 , 1 )) # Illustrations sur les mêmes 12 mois; pas de sélection automatique. tibble ( modele = c ( \"AR(1)\" , \"ARI(1,1)\" , \"ARIMA(1,1,1)\" ), MAE = c ( mean ( abs (validation $ ventes - forecast (modele_ar, h = 12 ) $ mean)), mean ( abs (validation $ ventes - forecast (modele_ari, h = 12 ) $ mean)), mean ( abs (validation $ ventes - forecast (modele_arima, h = 12 ) $ mean)))) # A tibble: 3 × 2 modele MAE <chr> <dbl> 1 AR(1) 91172. 2 ARI(1,1) 36819. 3 ARIMA(1,1,1) 37062. Ces modèles sans variables externes et sans ajustement saisonnier explicite ne constituent pas nécessairement des modèles appropriés pour cette série; examiner diagnostics et limites avant toute recommandation. Les scores de validation sont calculés sur un bloc déjà consulté."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Qu’est-ce qui est connu à l’origine? Une direction doit prévoir avant de connaître les ventes et l’indice économique du mois à venir."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Classer les variables selon leur disponibilité à l’origine. Distinguer information connue, prévision et scénario. Repérer une information future qui créerait une fuite."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#ce-qui-est-disponible-à-la-fin-de-2024",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#ce-qui-est-disponible-à-la-fin-de-2024",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "Ce qui est disponible à la fin de 2024",
+    "text": "Ce qui est disponible à la fin de 2024 Origine : fin décembre 2024. Le calendrier est connu; un prix ou une promotion peuvent être planifiés. L’indice de confiance futur est prévu ou scénarisé; sa valeur réalisée est inconnue à l’origine."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-la-fin-de-2024",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-la-fin-de-2024",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "À la fin de 2024",
+    "text": "À la fin de 2024 Calendrier Connu à l’origine Prix Planifié ou scénarisé Ventes Cible future, inconnue"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-retenir",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-retenir",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "À retenir",
+    "text": "À retenir Origine fin décembre 2024 : information disponible à cette date Disponibilité valeur connue, prévue ou scénarisée Fuite une valeur future observée après coup ne peut être connue d’avance"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#production-autonome-9.1",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#production-autonome-9.1",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "Production autonome 9.1",
+    "text": "Production autonome 9.1 Classez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible. Cette production se réalise une seule fois dans le rapport guidé. Auto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#références-et-crédits",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#références-et-crédits",
+    "title": "Capsule 1 - Auditer les variables",
+    "section": "Références et crédits",
+    "text": "Références et crédits Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement. Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#pourquoi-ça-compte",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Que signifie le coefficient de promotion? Une direction veut comprendre l’association entre une promotion et les ventes, sans lui attribuer automatiquement une cause."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#objectifs-de-la-capsule",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Ajuster la régression sur les mois d’apprentissage. Interpréter le coefficient de promotion en dollars. Distinguer association conditionnelle et effet causal."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#lire-le-coefficient-dans-son-contexte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#lire-le-coefficient-dans-son-contexte",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Lire le coefficient dans son contexte",
+    "text": "Lire le coefficient dans son contexte Le modèle explique les ventes par la tendance, le mois, la promotion, le prix et l’indice de confiance. Comparer promotion « oui » à « non », en dollars, en maintenant les autres variables fixes. La régression mesure une association conditionnelle."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#une-association-dans-le-cas-guidé",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#une-association-dans-le-cas-guidé",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Une association dans le cas guidé",
+    "text": "Une association dans le cas guidé À prix, indice, tendance et mois identiques, le coefficient estimé de promotion est d’environ 47 566 $ par mois pour « oui » par rapport à « non ». Ce résultat est conditionnel au modèle. Il ne mesure pas nécessairement l’effet causal d’une promotion."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#à-retenir",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#à-retenir",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "À retenir",
+    "text": "À retenir Référence promotion « oui » comparée à « non » Unité différence de ventes en dollars par mois Portée une association conditionnelle, sans effet causal établi"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#production-autonome-9.2",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#production-autonome-9.2",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Production autonome 9.2",
+    "text": "Production autonome 9.2 Ajustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal. Cette production se réalise une seule fois dans le rapport guidé. Auto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#références-et-crédits",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#références-et-crédits",
+    "title": "Capsule 2 - Ajuster et interpréter",
+    "section": "Références et crédits",
+    "text": "Références et crédits Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement. Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Les erreurs successives sont-elles liées? Des erreurs qui se suivent peuvent révéler une structure que les prédicteurs n’expliquent pas."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Distinguer résidu et erreur de prévision. Lire la fonction d’autocorrélation des résidus. Expliquer les limites du diagnostic."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#lire-les-corrélations-entre-résidus",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#lire-les-corrélations-entre-résidus",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Lire les corrélations entre résidus",
+    "text": "Lire les corrélations entre résidus Résidu : observation moins valeur ajustée. Le retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle. Examiner les résidus dans le temps et leur fonction d’autocorrélation (ACF). Le test de Ljung-Box est un complément facultatif."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#autocorrélation-des-résidus-de-2020-à-2024",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#autocorrélation-des-résidus-de-2020-à-2024",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Autocorrélation des résidus de 2020 à 2024",
+    "text": "Autocorrélation des résidus de 2020 à 2024 Résidus mensuels en milliers de dollars, puis ACF. Au retard 1, l’autocorrélation vaut 0,41. Au retard 12, elle vaut −0,30. Les pointillés sont des repères approximatifs, pas une preuve d’indépendance."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#à-retenir",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#à-retenir",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "À retenir",
+    "text": "À retenir Résidus écarts après ajustement, distincts des erreurs de prévision Retards comparer les résidus à un ou plusieurs mois d’intervalle Limite une autocorrélation peu marquée ne prouve pas l’indépendance"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#production-autonome-9.3",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#production-autonome-9.3",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Production autonome 9.3",
+    "text": "Production autonome 9.3 Tracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus. Cette production se réalise une seule fois dans le rapport guidé. Auto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#références-et-crédits",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#références-et-crédits",
+    "title": "Capsule 3 - Diagnostiquer dans le temps",
+    "section": "Références et crédits",
+    "text": "Références et crédits Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement. Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#pourquoi-ça-compte",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte La mémoire des erreurs améliore-t-elle la prévision? Ajouter une dépendance temporelle ne garantit pas une meilleure prévision. La comparaison doit rester commune."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#objectifs-de-la-capsule",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Comparer les deux modèles sur les mêmes mois. Interpréter la MAE et la RMSE en dollars. Nommer les limites de la comparaison conditionnelle."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparer-sur-les-mêmes-douze-mois",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparer-sur-les-mêmes-douze-mois",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Comparer sur les mêmes douze mois",
+    "text": "Comparer sur les mêmes douze mois La régression ordinaire et la régression avec erreurs AR(1) utilisent les mêmes prédicteurs. Les erreurs autorégressives d’ordre 1, AR(1), relient la partie non expliquée à celle du mois précédent. Comparer l’erreur absolue moyenne (MAE) et la racine de l’erreur quadratique moyenne (RMSE) sur les mêmes mois."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparaison-des-douze-mois-de-2025",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparaison-des-douze-mois-de-2025",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Comparaison des douze mois de 2025",
+    "text": "Comparaison des douze mois de 2025 Ventes observées et prévisions conditionnelles en 2025. Régression ordinaire : MAE de 5 088 $ et RMSE de 6 272 $. Erreurs AR(1) : MAE de 5 380 $ et RMSE de 6 417 $. La ligne noire représente les ventes observées."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#à-retenir",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#à-retenir",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "À retenir",
+    "text": "À retenir Comparaison mêmes mois et mêmes prédicteurs pour les deux modèles Information valeurs externes observées en 2025 : résultats conditionnels Validation douze mois déjà examinés, sans nouveau test indépendant"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#production-autonome-9.4",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#production-autonome-9.4",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Production autonome 9.4",
+    "text": "Production autonome 9.4 À partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées. Cette production se réalise une seule fois dans le rapport guidé. Auto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#références-et-crédits",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#références-et-crédits",
+    "title": "Capsule 4 - Comparer deux modèles",
+    "section": "Références et crédits",
+    "text": "Références et crédits Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement. Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#pourquoi-ça-compte",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Quelles informations sont réellement disponibles au moment de prévoir? Une direction veut utiliser une prévision réalisable, en tenant compte des informations et des erreurs."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#objectifs-du-module",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#objectifs-du-module",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Objectifs du module",
+    "text": "Objectifs du module Auditer les variables à l’origine de la prévision. Interpréter une régression et ses résidus temporels. Comparer et communiquer sous des hypothèses explicites."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#disponibilité-et-fuite",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#disponibilité-et-fuite",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Disponibilité et fuite",
+    "text": "Disponibilité et fuite Une prévision doit reposer sur l’information disponible à son origine. Le calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques. L’indice économique peut nécessiter sa propre prévision."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-contexte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-contexte",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Régression avec contexte",
+    "text": "Régression avec contexte La régression combine tendance, mois, promotion, prix et indice. Le coefficient de promotion compare « oui » à « non », en dollars, avec les autres variables maintenues fixes. Une association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#résidus-et-autocorrélation",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#résidus-et-autocorrélation",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Résidus et autocorrélation",
+    "text": "Résidus et autocorrélation Le résidu est l’observation moins la valeur ajustée. Un retard de 1 compare les résidus de deux mois consécutifs; un retard de 12 compare des mois séparés d’une année. Des résidus durablement positifs signalent des valeurs ajustées trop basses sur cette période."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar1",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar1",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Régression avec erreurs AR(1)",
+    "text": "Régression avec erreurs AR(1) La partie non expliquée par les prédicteurs peut avoir une mémoire d’un mois. Une innovation est la partie nouvelle de l’erreur, après prise en compte de sa dépendance au mois précédent. Le modèle est estimé sur les 60 premiers mois."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#scénarios-et-décision",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#scénarios-et-décision",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Scénarios et décision",
+    "text": "Scénarios et décision Une prévision sous scénario est conditionnelle au prix, à la promotion et à l’indice de confiance fournis. Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs. Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#à-retenir",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#à-retenir",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "À retenir",
+    "text": "À retenir Information disponible à l’origine, prévue ou scénarisée Validation comparer sans confondre avec un test indépendant Décision hypothèses explicites et portée limitée"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#les-deux-traces",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#les-deux-traces",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Les deux traces",
+    "text": "Les deux traces Rassemblez les productions 9.1 à 9.5, réalisées une seule fois, dans variables_ventes.qmd . Conservez les exercices de transfert dans variables_succursales.qmd . Auto-vérification Je distingue les valeurs connues, prévues ou scénarisées. Je présente les scores comme conditionnels aux prédicteurs fournis. Je distingue association et effet causal. Mes rapports se rendent après redémarrage de R."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#références-et-crédits",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#références-et-crédits",
+    "title": "Synthèse - Variables externes et autocorrélation",
+    "section": "Références et crédits",
+    "text": "Références et crédits Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition. Données fictives du cours MQT-2101, Université Laval."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Pourquoi ça compte",
+    "text": "Pourquoi ça compte Que dire sous deux scénarios? Une prévision sous scénario dépend des valeurs supposées; elle ne garantit pas ce qui se produira."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Objectifs de la capsule",
+    "text": "Objectifs de la capsule Comparer deux scénarios pour janvier 2025. Expliciter leurs hypothèses communes. Distinguer différence prédite et effet causal."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#garder-les-autres-hypothèses-identiques",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#garder-les-autres-hypothèses-identiques",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Garder les autres hypothèses identiques",
+    "text": "Garder les autres hypothèses identiques Janvier 2025 : prix de 60 $ par unité, indice de confiance de 100 points. Comparer promotion « oui » et « non » avec les autres valeurs identiques. Nommer la cible, l’horizon et les hypothèses."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#janvier-2025-sous-deux-scénarios",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#janvier-2025-sous-deux-scénarios",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Janvier 2025 sous deux scénarios",
+    "text": "Janvier 2025 sous deux scénarios 498 619 $ Sans promotion 546 185 $ Avec promotion 60 $ et 100 Prix par unité et indice supposés Prix observés de 2020 à 2024 : de 53,17 à 57,86 $ avec promotion et de 57,47 à 62,72 $ sans promotion. À 60 $, le modèle extrapole pour la promotion."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#à-retenir",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#à-retenir",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "À retenir",
+    "text": "À retenir Scénarios prix de 60 $ et indice de 100 points dans les deux cas Intervalle conditionnel aux valeurs fixées des prédicteurs Portée une différence prédite, sans effet causal démontré"
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#production-autonome-9.5",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#production-autonome-9.5",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Production autonome 9.5",
+    "text": "Production autonome 9.5 Pour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs. Cette production se réalise une seule fois dans le rapport guidé. Auto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé."
+  },
+  {
+    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#références-et-crédits",
+    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#références-et-crédits",
+    "title": "Capsule 5 - Communiquer un scénario",
+    "section": "Références et crédits",
+    "text": "Références et crédits Matériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement. Hyndman et Athanasopoulos (2021), Forecasting: Principles and Practice , 3e édition."
   },
   {
     "objectID": "modules/atelier-03-series-chronologiques/exercices.html",
@@ -9324,181 +9737,6 @@
     "text": "Références et crédits\n\n\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition.\nÉquipes forecast et slider: documentation des fonctions R.\nDonnées simulées du cours MQT-2101, Université Laval.\nAncien matériel consulté: séance 07 et script attribué à Paolo Landa (2021).\n\n\n\nRéférences détaillées et lectures ciblées sur la page Lectures. Les archives anciennes privées ne sont pas redistribuées."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html",
-    "title": "Démonstrations R - Module 09",
-    "section": "",
-    "text": "Le cas reprend les ventes commerciales du transfert du module 08. Les données sont fictives. Les 60 premiers mois servent à ajuster les modèles; les 12 mois de 2025 servent à les comparer. Ils ont déjà été consultés au module 08 : ce bloc ne constitue pas un test final indépendant."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#preparation",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#preparation",
-    "title": "Démonstrations R - Module 09",
-    "section": "Préparation",
-    "text": "Préparation\nInstallez tidyverse et forecast au besoin, ouvrez le projet et exécutez les blocs dans l’ordre. Le code est complet dans une session neuve.\n\nlibrary(tidyverse)\nlibrary(forecast)\n\nracines &lt;- c(\".\", \"modules/semaine-09-variables-externes-autocorrelation\")\nracine &lt;- racines[file.exists(file.path(racines, \"data/ventes_promotions_quebec.csv\"))][1]\nstopifnot(!is.na(racine))\nventes &lt;- read_csv(file.path(racine, \"data/ventes_promotions_quebec.csv\"), show_col_types = FALSE) |&gt;\n  mutate(date = as.Date(date), promotion = factor(promotion, levels = c(\"non\", \"oui\")),\n         mois = factor(mois, levels = 1:12)) |&gt;\n  arrange(date)\nstopifnot(nrow(ventes) == 72, !anyDuplicated(ventes$date),\n          all(!is.na(ventes)), all(ventes$date == seq.Date(as.Date(\"2020-01-01\"), by = \"month\", length.out = 72)))\nentrainement &lt;- ventes |&gt; slice_head(n = 60)\nvalidation &lt;- ventes |&gt; slice_tail(n = 12)"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#disponibilite",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#disponibilite",
-    "title": "Démonstrations R - Module 09",
-    "section": "1. Disponibilité",
-    "text": "1. Disponibilité\nLes valeurs de 2025 dans le fichier sont observées après coup. Une promotion pourrait être connue si elle était déjà approuvée; un prix peut être planifié ou scénarisé; l’indice peut être prévu séparément. Aucune de ces disponibilités n’est attestée par le fichier fictif. Les ventes futures sont la cible.\n\nventes |&gt; select(date, ventes, promotion, prix_moyen, indice_confiance) |&gt; slice_head(n = 4)\n\n# A tibble: 4 × 5\n  date       ventes promotion prix_moyen indice_confiance\n  &lt;date&gt;      &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;\n1 2020-01-01 309720 non             59.7             99.6\n2 2020-02-01 329533 non             58.3            101. \n3 2020-03-01 332527 non             58.4            101. \n4 2020-04-01 325184 non             59.2            100."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#regression",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#regression",
-    "title": "Démonstrations R - Module 09",
-    "section": "2. Régression conditionnelle",
-    "text": "2. Régression conditionnelle\nLa catégorie de référence est non. La pente de promotion compare deux valeurs ajustées, avec les autres variables maintenues fixes. Les données observationnelles ne garantissent pas une interprétation causale.\n\nmodele_lm &lt;- lm(ventes ~ tendance + promotion + prix_moyen + indice_confiance + mois,\n                data = entrainement)\ncoef(summary(modele_lm))[c(\"tendance\", \"promotionoui\", \"prix_moyen\", \"indice_confiance\"), ]\n\n                  Estimate Std. Error   t value     Pr(&gt;|t|)\ntendance          3087.438   280.4525 11.008774 3.175226e-14\npromotionoui     47566.125  7396.7293  6.430697 7.845218e-08\nprix_moyen       -4895.027  1628.3779 -3.006075 4.360178e-03\nindice_confiance  2687.160  1269.8958  2.116048 4.003496e-02"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#diagnostic",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#diagnostic",
-    "title": "Démonstrations R - Module 09",
-    "section": "3. Autocorrélation des résidus",
-    "text": "3. Autocorrélation des résidus\nUne erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. Elle est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.\n\nresidus_lm &lt;- residuals(modele_lm)\nplot(entrainement$date, residus_lm, type = \"l\", xlab = \"Mois\", ylab = \"Résidu (dollars)\")\nabline(h = 0, lty = 2)\n\n\n\n\n\n\n\nacf(residus_lm, lag.max = 12, main = \"ACF des résidus\")\n\n\n\n\n\n\n\nBox.test(residus_lm, lag = 12, type = \"Ljung-Box\", fitdf = 0)\n\n\n    Box-Ljung test\n\ndata:  residus_lm\nX-squared = 22.853, df = 12, p-value = 0.029"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#comparaison",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#comparaison",
-    "title": "Démonstrations R - Module 09",
-    "section": "4. Comparaison accompagnée avec erreurs AR(1)",
-    "text": "4. Comparaison accompagnée avec erreurs AR(1)\nPour l’activité 9.4, vous pouvez exécuter le code complet ci-dessous et vous concentrer sur la comparaison et ses limites. L’ajustement AR(1) est présenté comme un approfondissement accompagné : sa construction de mémoire n’est pas exigée. Les candidats possèdent les mêmes prédicteurs. La régression avec erreurs AR(1) modélise la dépendance de la partie non expliquée par ces prédicteurs. Les valeurs externes réalisées en 2025 sont utilisées dans les deux modèles : la comparaison est rétrospective et conditionnelle, pas une preuve de performance opérationnelle à l’origine de fin 2024. Les intervalles AR(1) conditionnent eux aussi sur les prédicteurs fournis.\n\nformule_x &lt;- ~ tendance + promotion + prix_moyen + indice_confiance + mois\nx_train &lt;- model.matrix(formule_x, data = entrainement)[, -1, drop = FALSE]\nx_validation &lt;- model.matrix(formule_x, data = validation)[, -1, drop = FALSE]\nstopifnot(identical(colnames(x_train), colnames(x_validation)))\nmodele_ar1 &lt;- Arima(entrainement$ventes, xreg = x_train, order = c(1, 0, 0), include.mean = TRUE)\nprevision_ar1 &lt;- forecast(modele_ar1, xreg = x_validation, h = nrow(validation), level = c(80, 95))\ncomparaison &lt;- validation |&gt;\n  transmute(date, observe = ventes, regression = as.numeric(predict(modele_lm, newdata = validation)),\n            erreurs_ar1 = as.numeric(prevision_ar1$mean)) |&gt;\n  pivot_longer(c(regression, erreurs_ar1), names_to = \"methode\", values_to = \"prevision\") |&gt;\n  mutate(erreur = observe - prevision)\nscores &lt;- comparaison |&gt;\n  group_by(methode) |&gt;\n  summarise(ME = mean(erreur), MAE = mean(abs(erreur)), RMSE = sqrt(mean(erreur^2)), .groups = \"drop\")\nscores\n\n# A tibble: 2 × 4\n  methode        ME   MAE  RMSE\n  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 erreurs_ar1 1408. 5380. 6417.\n2 regression  1474. 5088. 6272.\n\n\nPour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation.\n\ninnovations &lt;- residuals(modele_ar1)\nacf(innovations, lag.max = 12, main = \"ACF des innovations du modèle AR(1)\")\n\n\n\n\n\n\n\nBox.test(innovations, lag = 12, type = \"Ljung-Box\", fitdf = 1)\n\n\n    Box-Ljung test\n\ndata:  innovations\nX-squared = 6.1972, df = 11, p-value = 0.8599\n\n\nLa ligne noire représente les ventes observées; les deux lignes colorées représentent les prévisions.\n\ncomparaison |&gt; ggplot(aes(date, observe)) +\n  geom_line(colour = \"black\") + geom_line(aes(y = prevision, colour = methode)) +\n  labs(x = \"Mois de 2025\", y = \"Ventes (dollars)\", colour = \"Modèle\") + theme_minimal()"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#scenario",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#scenario",
-    "title": "Démonstrations R - Module 09",
-    "section": "5. Scénario",
-    "text": "5. Scénario\nPour janvier 2025, on suppose un prix de 60 $ par unité et un indice de 100 points avec ou sans promotion. Les valeurs sont hypothétiques. La différence entre les prévisions est une association du modèle; elle n’établit pas l’effet d’une intervention. Elle ne tient pas compte de l’incertitude sur les valeurs futures des prédicteurs.\n\nscenario &lt;- tibble(tendance = 61, mois = factor(1, levels = 1:12),\n                   promotion = factor(c(\"non\", \"oui\"), levels = c(\"non\", \"oui\")),\n                   prix_moyen = 60, indice_confiance = 100)\nscenario &lt;- scenario |&gt; mutate(prevision = as.numeric(predict(modele_lm, newdata = scenario)))\nscenario\n\n# A tibble: 2 × 6\n  tendance mois  promotion prix_moyen indice_confiance prevision\n     &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;\n1       61 1     non               60              100   498619.\n2       61 1     oui               60              100   546185."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#pour-conclure",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/demonstrations.html#pour-conclure",
-    "title": "Démonstrations R - Module 09",
-    "section": "Pour conclure",
-    "text": "Pour conclure\nComparez les scores calculés sans présumer quel modèle gagne. Un meilleur résultat sur ce bloc ne garantit pas une amélioration future; testez un scénario disponible à l’origine et une période ultérieure quand elles existeront."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#pourquoi-ça-compte",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQu’est-ce qui est connu à l’origine?\n\n\nUne direction doit prévoir avant de connaître les ventes et l’indice économique du mois à venir."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nClasser les variables selon leur disponibilité à l’origine.\nDistinguer information connue, prévision et scénario.\nRepérer une information future qui créerait une fuite."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-la-fin-de-2024",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-la-fin-de-2024",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "À la fin de 2024",
-    "text": "À la fin de 2024\n\n\n\nCalendrier\n\n\nConnu à l’origine\n\n\n\n\nPrix\n\n\nPlanifié ou scénarisé\n\n\n\n\nVentes\n\n\nCible future, inconnue"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-retenir",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#à-retenir",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\nOrigine\n\n\nfin décembre 2024 : information disponible à cette date\n\n\n\n\nDisponibilité\n\n\nvaleur connue, prévue ou scénarisée\n\n\n\n\nFuite\n\n\nune valeur future observée après coup ne peut être connue d’avance"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#production-autonome-9.1",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#production-autonome-9.1",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "Production autonome 9.1",
-    "text": "Production autonome 9.1\n\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe précise l’origine.\nJe distingue une valeur prévue d’une valeur observée après coup.\nJe ne mets pas la cible future parmi les prédicteurs."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#références-et-crédits",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#références-et-crédits",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "Références et crédits",
-    "text": "Références et crédits\nMatériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#pourquoi-ça-compte",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nLes erreurs successives sont-elles liées?\n\n\nDes erreurs qui se suivent peuvent révéler une structure que les prédicteurs n’expliquent pas."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nDistinguer résidu et erreur de prévision.\nLire la fonction d’autocorrélation des résidus.\nExpliquer les limites du diagnostic."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#à-retenir",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#à-retenir",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\nRésidus\n\n\nécarts après ajustement, distincts des erreurs de prévision\n\n\n\n\nRetards\n\n\ncomparer les résidus à un ou plusieurs mois d’intervalle\n\n\n\n\nLimite\n\n\nune autocorrélation peu marquée ne prouve pas l’indépendance"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#production-autonome-9.3",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#production-autonome-9.3",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Production autonome 9.3",
-    "text": "Production autonome 9.3\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe garde l’ordre des mois et distingue résidus et erreurs de prévision.\nJe décris les retards et les motifs visibles.\nJe sais qu’une ACF peu marquée ne prouve pas l’indépendance."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#références-et-crédits",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#références-et-crédits",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Références et crédits",
-    "text": "Références et crédits\nMatériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#pourquoi-ça-compte",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQue dire sous deux scénarios?\n\n\nUne prévision sous scénario dépend des valeurs supposées; elle ne garantit pas ce qui se produira."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#objectifs-de-la-capsule",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Objectifs de la capsule",
-    "text": "Objectifs de la capsule\n\n\nComparer deux scénarios pour janvier 2025.\nExpliciter leurs hypothèses communes.\nDistinguer différence prédite et effet causal."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#janvier-2025-sous-deux-scénarios",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#janvier-2025-sous-deux-scénarios",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Janvier 2025 sous deux scénarios",
-    "text": "Janvier 2025 sous deux scénarios\n\n\n\n498 619 $\n\n\nSans promotion\n\n\n\n\n546 185 $\n\n\nAvec promotion\n\n\n\n\n60 $ et 100\n\n\nPrix par unité et indice supposés"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#à-retenir",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#à-retenir",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "À retenir",
-    "text": "À retenir\n\n\n\nScénarios\n\n\nprix de 60 $ et indice de 100 points dans les deux cas\n\n\n\n\nIntervalle\n\n\nconditionnel aux valeurs fixées des prédicteurs\n\n\n\n\nPortée\n\n\nune différence prédite, sans effet causal démontré"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#production-autonome-9.5",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#production-autonome-9.5",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Production autonome 9.5",
-    "text": "Production autonome 9.5\n\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\n\nCette production se réalise une seule fois dans le rapport guidé.\nAuto-vérification\n\n\nJe donne la cible, l’horizon et les valeurs du scénario.\nJe ne présente pas la différence comme un effet causal établi.\nJe rappelle que le scénario n’est pas nécessairement le futur réalisé."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#références-et-crédits",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#références-et-crédits",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Références et crédits",
-    "text": "Références et crédits\nMatériel du cours MQT-2101, Université Laval. Données fictives simulées pour l’enseignement.\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition."
-  },
-  {
     "objectID": "modules/semaine-10-classification-modeles-avances/demonstrations.html",
     "href": "modules/semaine-10-classification-modeles-avances/demonstrations.html",
     "title": "Démonstrations R - Module 10",
@@ -10101,76 +10339,6 @@
     "text": "Logiciels et environnement\n\n\n  \n    R\n    Langage principal utilisé dans le cours.\n    Télécharger R\n  \n\n  \n    RStudio Desktop\n    Environnement recommandé pour travailler avec R et Quarto.\n    Télécharger RStudio\n  \n\n  \n    Positron\n    Environnement moderne compatible avec R et les workflows de science des données.\n    Découvrir Positron\n  \n\n\n\n  Bibliothèque de packages R\n  Cette section rassemble les principaux packages R utilisés dans les exemples, démonstrations et travaux du cours.\n\n  \n    \n      \n      \n        tidyverse\n        Écosystème pour importer, transformer, visualiser et modéliser des données.\n      \n    \n\n    \n      \n      \n        ggplot2\n        Visualisation statistique avec la grammaire des graphiques.\n      \n    \n\n    \n      \n      \n        dplyr\n        Manipulation de tableaux avec des verbes lisibles.\n      \n    \n\n    \n      \n      \n        forecast\n        Méthodes classiques de prévision et séries temporelles dans R.\n      \n    \n\n    \n      \n      \n        fable\n        Modélisation et prévision avec l'écosystème tidyverts.\n      \n    \n\n    \n      \n      \n        tsibble\n        Structure de données tidy pour séries temporelles."
   },
   {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#ce-qui-est-disponible-à-la-fin-de-2024",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html#ce-qui-est-disponible-à-la-fin-de-2024",
-    "title": "Capsule 1 - Auditer les variables",
-    "section": "Ce qui est disponible à la fin de 2024",
-    "text": "Ce qui est disponible à la fin de 2024\n\n\nOrigine : fin décembre 2024.\nLe calendrier est connu; un prix ou une promotion peuvent être planifiés.\nL’indice de confiance futur est prévu ou scénarisé; sa valeur réalisée est inconnue à l’origine."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#lire-le-coefficient-dans-son-contexte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html#lire-le-coefficient-dans-son-contexte",
-    "title": "Capsule 2 - Ajuster et interpréter",
-    "section": "Lire le coefficient dans son contexte",
-    "text": "Lire le coefficient dans son contexte\n\n\nLe modèle explique les ventes par la tendance, le mois, la promotion, le prix et l’indice de confiance.\nComparer promotion « oui » à « non », en dollars, en maintenant les autres variables fixes.\nLa régression mesure une association conditionnelle."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#lire-les-corrélations-entre-résidus",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#lire-les-corrélations-entre-résidus",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Lire les corrélations entre résidus",
-    "text": "Lire les corrélations entre résidus\n\n\nRésidu : observation moins valeur ajustée.\nLe retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle.\nExaminer les résidus dans le temps et leur fonction d’autocorrélation (ACF).\nLe test de Ljung-Box est un complément facultatif."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#autocorrélation-des-résidus-de-2020-à-2024",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html#autocorrélation-des-résidus-de-2020-à-2024",
-    "title": "Capsule 3 - Diagnostiquer dans le temps",
-    "section": "Autocorrélation des résidus de 2020 à 2024",
-    "text": "Autocorrélation des résidus de 2020 à 2024\n\n\nLes pointillés sont des repères approximatifs, pas une preuve d’indépendance."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparer-sur-les-mêmes-douze-mois",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html#comparer-sur-les-mêmes-douze-mois",
-    "title": "Capsule 4 - Comparer deux modèles",
-    "section": "Comparer sur les mêmes douze mois",
-    "text": "Comparer sur les mêmes douze mois\n\n\nLa régression ordinaire et la régression avec erreurs AR(1) utilisent les mêmes prédicteurs.\nLes erreurs autorégressives d’ordre 1, AR(1), relient la partie non expliquée à celle du mois précédent.\nComparer l’erreur absolue moyenne (MAE) et la racine de l’erreur quadratique moyenne (RMSE) sur les mêmes mois."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#garder-les-autres-hypothèses-identiques",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html#garder-les-autres-hypothèses-identiques",
-    "title": "Capsule 5 - Communiquer un scénario",
-    "section": "Garder les autres hypothèses identiques",
-    "text": "Garder les autres hypothèses identiques\n\n\nJanvier 2025 : prix de 60 $ par unité, indice de confiance de 100 points.\nComparer promotion « oui » et « non » avec les autres valeurs identiques.\nNommer la cible, l’horizon et les hypothèses."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#pourquoi-ça-compte",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#pourquoi-ça-compte",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Pourquoi ça compte",
-    "text": "Pourquoi ça compte\n\nQuelles informations sont réellement disponibles au moment de prévoir?\n\n\nUne direction veut utiliser une prévision réalisable, en tenant compte des informations et des erreurs."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#objectifs-du-module",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#objectifs-du-module",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Objectifs du module",
-    "text": "Objectifs du module\n\n\nAuditer les variables à l’origine de la prévision.\nInterpréter une régression et ses résidus temporels.\nComparer et communiquer sous des hypothèses explicites."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar1",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#régression-avec-erreurs-ar1",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Régression avec erreurs AR(1)",
-    "text": "Régression avec erreurs AR(1)\n\n\nLa partie non expliquée par les prédicteurs peut avoir une mémoire d’un mois.\nUne innovation est la partie nouvelle de l’erreur, après prise en compte de sa dépendance au mois précédent.\nLe modèle est estimé sur les 60 premiers mois."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#les-deux-traces",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/notes-cours.html#les-deux-traces",
-    "title": "Synthèse - Variables externes et autocorrélation",
-    "section": "Les deux traces",
-    "text": "Les deux traces\n\nRassemblez les productions 9.1 à 9.5, réalisées une seule fois, dans variables_ventes.qmd. Conservez les exercices de transfert dans variables_succursales.qmd.\n\nAuto-vérification\n\n\nJe distingue les valeurs connues, prévues ou scénarisées.\nJe présente les scores comme conditionnels aux prédicteurs fournis.\nJe distingue association et effet causal.\nMes rapports se rendent après redémarrage de R."
-  },
-  {
     "objectID": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#définir-la-cible-avant-dajuster",
     "href": "modules/semaine-10-classification-modeles-avances/media/qmd/capsule-01-support.html#définir-la-cible-avant-dajuster",
     "title": "Capsule 1 - Définir la cible et les partitions",
@@ -10344,55 +10512,6 @@
     "title": "Guide en classe - Laboratoire 04",
     "section": "Rapport et relecture",
     "text": "Rapport et relecture\nRemettez une synthèse de deux pages maximum, en plus du code repliable. Une seule voie analytique doit être développée en profondeur. L’autre doit être résumée en trois phrases pour montrer que vous comprenez la différence de cible et de mesures. Le choix de la voie fait partie de l’évaluation. Il doit correspondre à la décision formulée. Incluez une déclaration IA, si applicable.\nVérifiez le rendu, demandez une relecture à un autre binôme ou à l’enseignant, puis corrigez un point précis. Le transfert facultatif est distinct du rapport principal."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html",
-    "title": "Lectures - Module 09",
-    "section": "",
-    "text": "Ces explications font partie du socle. Les liens vers l’ouvrage ouvrent des lectures ciblées et ne remplacent pas les démonstrations en R."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-1",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-1",
-    "title": "Lectures - Module 09",
-    "section": "Disponibilité et fuite",
-    "text": "Disponibilité et fuite\nUne prévision doit reposer sur l’information disponible à son origine. Le calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques. L’indice économique peut nécessiter sa propre prévision. Une valeur du futur observée après coup est utile pour une analyse rétrospective, mais elle ne prouve pas la performance d’une prévision réalisable.\nPar exemple, à la fin de décembre, le calendrier du mois de janvier est connu. Une promotion n’est connue que si la décision est déjà prise; sinon, on peut examiner un scénario. La valeur de l’indice effectivement observée en janvier devient disponible après l’origine : l’utiliser pour comparer rétrospectivement deux modèles ne donne pas une prévision réalisable à partir des seules informations de décembre. Une valeur passée déjà publiée peut être admissible si elle était disponible à cette date."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-2",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-2",
-    "title": "Lectures - Module 09",
-    "section": "Régression avec contexte",
-    "text": "Régression avec contexte\nLa régression combine tendance, mois, promotion, prix et indice. La promotion binaire se lit par rapport à la catégorie non, en dollars, les autres termes du modèle étant fixés. Une association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison.\nSupposons que le coefficient associé à « promotion oui » soit de 2 000 $. Dans ce modèle, deux situations qui ne diffèrent que par l’indicateur de promotion ont des ventes ajustées qui diffèrent de 2 000 $. Il s’agit d’une comparaison dans le modèle, avec prix, indice, mois et tendance identiques. Le responsable peut avoir décidé les promotions en fonction d’autres informations; le coefficient ne démontre donc pas l’effet d’une intervention."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-3",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-3",
-    "title": "Lectures - Module 09",
-    "section": "Résidus et autocorrélation",
-    "text": "Résidus et autocorrélation\nLe résidu est l’observation moins la valeur ajustée. Un retard 1 rapproche les erreurs de deux mois consécutifs; un retard 12 compare des mois séparés d’une année. Des signes positifs persistants peuvent signaler une sous-prévision répétée. Une ACF de la série brute peut refléter tendance et saisonnalité, et ne doit pas être confondue avec celle des résidus. Un test de Ljung-Box examine collectivement les autocorrélations jusqu’au retard choisi; une p-valeur élevée ne démontre pas leur absence ni l’indépendance.\nCommencez par tracer les résidus dans l’ordre des mois. Plusieurs résidus positifs consécutifs peuvent indiquer que le modèle sous-estime successivement les observations; l’ACF donne ensuite un résumé par retard. Une barre à un retard indique une association estimée entre résidus séparés par ce nombre de mois, avec une incertitude d’échantillonnage. L’absence de barre marquée ne prouve pas l’indépendance et une barre marquée ne désigne pas à elle seule la cause du motif.\nSur un graphique d’ACF mensuelle, une barre positive au retard 1 indique que les résidus séparés d’un mois tendent à varier dans le même sens; une barre négative suggère une alternance. Au retard 12, la comparaison concerne des mois séparés d’une année. Les pointillés sont des repères approximatifs, pas une frontière qui prouverait l’indépendance : l’ajustement du modèle et la lecture de plusieurs retards invitent à la prudence. Comparez toujours l’ACF au graphique des résidus dans le temps.\nPour approfondir, le test de Ljung-Box regroupe plusieurs retards dans une même vérification. Une petite valeur p fournit un indice contre l’hypothèse testée; une grande valeur p ne démontre pas son exactitude. Le test est facultatif ici : le socle est la lecture du graphique des résidus et de leur ACF."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-4",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-4",
-    "title": "Lectures - Module 09",
-    "section": "Régression avec erreurs AR",
-    "text": "Régression avec erreurs AR\nÉcrire \\(y_t = x_t \\beta + \\eta_t\\) puis \\(\\eta_t = \\phi \\eta_{t-1} + \\varepsilon_t\\) signifie que la partie non expliquée par les prédicteurs a une mémoire d’un mois. Les innovations ε ne sont pas la même chose que les erreurs de régression η. Le modèle est estimé sur les 60 premiers mois. Les candidats sont comparés sur les mêmes 12 mois et les mêmes prédicteurs. Les paramètres estimés et les diagnostics restent incertains.\nUne erreur AR(1) et une vente retardée utilisée comme prédicteur ne sont pas la même opération. Dans le premier cas, la dépendance est décrite dans la partie non expliquée par la régression; dans le second, on ajoute explicitement une vente passée à la formule. Pour chaque horizon, il faut vérifier que la vente retardée nécessaire est disponible à l’origine ou préciser comment elle sera prévue.\nCette structure est une option plus technique, présentée avec du code complet dans la démonstration. Pour l’activité, il suffit de lire et comparer les résultats fournis : on ne demande pas de construire le modèle AR(1) de mémoire. Une MAE plus faible sur les mêmes douze mois décrit une meilleure performance sur ce bloc pour ce critère; elle ne garantit pas la performance sur une autre période. Ici les valeurs externes de 2025 sont connues après coup : la comparaison est conditionnelle à ces valeurs."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-5",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lecture-5",
-    "title": "Lectures - Module 09",
-    "section": "Scénarios et décision",
-    "text": "Scénarios et décision\nUne prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis. Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs. Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire. Une différence prédite ne garantit pas l’effet d’une intervention.\nPour lire les intervalles, demandez-vous ce qui est supposé connu. Un intervalle calculé avec un prix et une promotion fixés décrit l’incertitude sous ces valeurs; il n’ajoute pas automatiquement l’incertitude sur un prix ou une promotion encore inconnus. Utilisez l’exercice de scénario pour comparer deux hypothèses à valeurs restantes identiques, puis formulez une limite opérationnelle."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lectures-ciblées-et-documentation",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/lectures.html#lectures-ciblées-et-documentation",
-    "title": "Lectures - Module 09",
-    "section": "Lectures ciblées et documentation",
-    "text": "Lectures ciblées et documentation\nHyndman et Athanasopoulos (2021), Forecasting: Principles and Practice, 3e édition : régression et prévision ex ante/ex post, sections 7.3 et 7.6; diagnostic des résidus, section 5.4; régression dynamique, sections 10.1 à 10.3. La documentation de forecast::Arima explique xreg et order.\nPour approfondir seulement : modèles ARIMA, sections 9.1 à 9.5, et complément facultatif. Revenir à l’exercice correspondant après chaque lecture."
   },
   {
     "objectID": "modules/atelier-03-series-chronologiques/presentation.html#pourquoi-ça-compte",
@@ -11947,111 +12066,6 @@
     "title": "Capsules - Module 08",
     "section": "Après le parcours: consolider ou approfondir",
     "text": "Après le parcours: consolider ou approfondir\nLe cahier facultatif conserve les autres familles de l’ancienne séance, avec leur niveau et leurs prérequis: tendances quadratique et exponentielle, approfondissement de la décomposition, harmoniques, tslm(), stationnarité et différences. Il ne s’ajoute pas à la trace principale. Les exercices commerciaux accompagnés préparent le module 09."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html",
-    "title": "Capsules - Module 09",
-    "section": "",
-    "text": "Les supports PDF et HTML sont disponibles; aucune vidéo ou version annotée n’est annoncée avant sa mise à disposition. Chaque production ci-dessous est la même que sur l’accueil et la dernière diapositive correspondante : réalisez-la une seule fois dans le rapport guidé.\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF harmonisé du 3 novembre 2026."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-1",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 1 - Auditer les variables",
-    "text": "Capsule 1 - Auditer les variables\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.1\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\nAuto-vérification : Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\nLa production se réalise une seule fois. Poursuivez avec le transfert."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-2",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 2 - Ajuster et interpréter",
-    "text": "Capsule 2 - Ajuster et interpréter\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.2\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\nAuto-vérification : Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\nLa production se réalise une seule fois. Après la capsule 3, faites l’exercice 2, qui combine l’ajustement et le diagnostic par succursale."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-3",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 3 - Diagnostiquer dans le temps",
-    "text": "Capsule 3 - Diagnostiquer dans le temps\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.3\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\nAuto-vérification : Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\nLa production se réalise une seule fois. Poursuivez avec le diagnostic par succursale."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-4",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 4 - Comparer deux modèles",
-    "text": "Capsule 4 - Comparer deux modèles\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.4\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\nAuto-vérification : Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\nLa production se réalise une seule fois. La comparaison avec erreurs AR(1) est accompagnée; la pratique des scénarios suit à la capsule 5."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/capsules.html#capsule-5",
-    "title": "Capsules - Module 09",
-    "section": "Capsule 5 - Communiquer un scénario",
-    "text": "Capsule 5 - Communiquer un scénario\n\nPDFHTML\n\n\nOuvrir le PDF\n\n\nOuvrir les diapositives\n\n\n\n\nActivité 9.5\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\nAuto-vérification : Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\nLa production se réalise une seule fois. Poursuivez avec le scénario de transfert, puis la recommandation."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "",
-    "text": "Séance autonome\n\n\nUne promotion ou un prix peuvent aider à expliquer les ventes. Encore faut-il connaître ou scénariser ces valeurs au moment de prévoir.\n\n\n\n\n\n\n\nOrganisation\n\n\nÀ votre rythme\n\n\n\n\n\n\n\n\n\nOutils\n\n\nR, RStudio et Quarto\n\n\n\n\n\n\n\n\n\nCas guidé\n\n\nVentes mensuelles fictives\n\n\n\n\n\n\n\n\n\nTrace finale\n\n\nRapport guidé et transfert"
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#on-passe-au-concret",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "On passe au concret",
-    "text": "On passe au concret\n\n\n\n\n\n\nNoteLa question du module\n\n\n\nUne direction veut prévoir ses ventes avant l’année suivante. Comment utiliser une promotion et un prix prévus sans prétendre connaître l’indice économique futur, et que faire si les erreurs se suivent?\n\n\nLe module 08 a introduit tendance et calendrier; son transfert utilisait déjà ces données commerciales. Le module 09 ajoute les variables externes et le diagnostic temporel. Les 12 mois de 2025 ont déjà été examinés : ils ne sont pas un test indépendant. Les scores utilisant les valeurs externes réalisées en 2025 sont conditionnels à ces valeurs."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#avant-de-commencer",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Avant de commencer",
-    "text": "Avant de commencer\nRevoir la régression et ses résidus (module 03), l’origine et les mesures d’erreur (module 06), puis la tendance et les mois (module 08). Les données fictives et les unités sont décrites dans le dictionnaire. Installez tidyverse et forecast, ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto.\nTéléchargez le projet guidé et le projet de transfert. Les cinq productions 9.1 à 9.5 sont les mêmes dans cet accueil, les capsules et les diapositives : faites chacune une seule fois dans variables_ventes.qmd. Le transfert se réalise séparément dans variables_succursales.qmd."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#votre-parcours",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Votre parcours",
-    "text": "Votre parcours\nLes cinq capsules suivent les cinq décisions utiles : disponibilité, régression, diagnostic, comparaison et scénario. Elles sont distinctes parce que chacune produit une interprétation différente. Les lectures et démonstrations permettent de travailler sans vidéo. Le test de Ljung-Box est un complément facultatif; pour la comparaison AR(1), utilisez les résultats et le code complet fournis : il n’est pas nécessaire de savoir construire ce modèle de mémoire.\n\n\n\n1Auditer les variablesActivité 9.1Capsule 1DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 1 · Lecture française\n\n\n\nActivité 9.1\n\n\nClassez la promotion, le prix, l’indice de confiance et les ventes futures selon leur disponibilité à la fin de 2024. Indiquez pour chacun une source connue, un scénario ou une information indisponible.\n\n\n\nAuto-vérification Je précise l’origine. Je distingue une valeur prévue d’une valeur observée après coup. Je ne mets pas la cible future parmi les prédicteurs.\n\n\nTransfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.\n\n\n\n\n\n2Ajuster et interpréterActivité 9.2Capsule 2DémoOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 2 · Lecture française\n\n\n\nActivité 9.2\n\n\nAjustez la régression des ventes sur la tendance, le mois, la promotion, le prix et l’indice de confiance avec les 60 premiers mois. Interprétez le coefficient de promotion en dollars, à autres variables fixées, sans conclure à un effet causal.\n\n\n\nAuto-vérification Je nomme la catégorie de référence et les unités. Je distingue association conditionnelle et causalité. Je n’utilise pas les douze mois de validation pour ajuster le modèle.\n\n\nTransfert distinct Après l’activité 9.3, l’exercice 2 combine l’ajustement et le diagnostic par succursale.\n\n\n\n\n\n3Diagnostiquer dans le tempsActivité 9.3Capsule 3DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 3 · Lecture française\n\n\n\nActivité 9.3\n\n\nTracez les résidus de la régression en fonction du temps et leur autocorrélation. Décrivez les motifs observés et expliquez pourquoi ils ne prouvent pas à eux seuls l’indépendance des résidus.\n\n\n\nAuto-vérification Je garde l’ordre des mois et distingue résidus et erreurs de prévision. Je décris les retards et les motifs visibles. Je sais qu’une ACF peu marquée ne prouve pas l’indépendance.\n\n\nTransfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.\n\n\n\n\n\n4Comparer deux modèlesActivité 9.4Capsule 4DémoOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 4 · Lecture française\n\n\n\nActivité 9.4\n\n\nÀ partir de la démonstration fournie, comparez la régression ordinaire et la régression avec erreurs AR(1) sur les mêmes douze mois à l’aide de la MAE et de la RMSE. Indiquez que les prédicteurs de validation sont les valeurs effectivement observées.\n\n\n\nAuto-vérification Je compare les deux modèles sur les mêmes observations et prédicteurs. J’exprime les scores en dollars. Je présente cette comparaison comme conditionnelle aux valeurs réalisées.\n\n\nTransfert distinct La comparaison AR(1) est accompagnée dans cette activité. Le transfert des scénarios suit à l’étape 5.\n\n\n\n\n\n5Communiquer un scénarioActivité 9.5Capsule 5DémoExerciceOuvrir l’étapeRéduire\n\n\n\nRessource Capsule 5 · Lecture française\n\n\n\nActivité 9.5\n\n\nPour janvier 2025, comparez les prévisions de la régression ordinaire sous promotion oui et non, à prix et indice identiques. Présentez les hypothèses, une limite causale et l’incertitude non couverte liée aux prédicteurs futurs.\n\n\n\nAuto-vérification Je donne la cible, l’horizon et les valeurs du scénario. Je ne présente pas la différence comme un effet causal établi. Je rappelle que le scénario n’est pas nécessairement le futur réalisé.\n\n\nTransfert distinct Faites l’exercice 3, puis l’exercice 4 pour rassembler votre recommandation; ouvrez les corrigés après votre tentative."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#trace-finale",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Trace finale",
-    "text": "Trace finale\nLe rapport guidé contient un tableau de disponibilité, la régression et son interprétation, les diagnostics, les scores conditionnels et un scénario. Le rapport de transfert traite de succursales et d’une capacité. Il distingue les variables disponibles, les résidus par série et une hypothèse de capacité."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#ressources-du-module",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Ressources du module",
-    "text": "Ressources du module\nLes cinq capsules et la synthèse sont regroupées dans le lot PDF harmonisé du 3 novembre 2026.\n\nCapsules et productions, démonstrations R, lectures françaises et exercices avec corrigés.\nNotes de synthèse HTML et PDF.\nDémonstration complète et corrigé de transfert.\nCompléments facultatifs : retards, événements, modèle en deux étapes et repères ARIMA; télécharger le cahier."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#auto-vérification",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Auto-vérification",
-    "text": "Auto-vérification\n\nJe situe l’origine et la disponibilité de chaque prédicteur.\nJ’explique une association sans prétendre à la causalité.\nJe lis les résidus et l’ACF dans leur ordre temporel.\nJe compare les modèles sur les mêmes cibles et indique les valeurs externes utilisées.\nJe nomme les hypothèses et les limites du scénario."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#je-suis-bloquée",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Je suis bloqué·e",
-    "text": "Je suis bloqué·e\nCommencez par la préparation complète, puis faites une activité à la fois. Pour les erreurs de code, vérifiez le répertoire du projet et les noms des colonnes. Comparez vos tentatives aux corrigés repliables, puis demandez de l’aide dans les canaux habituels du cours."
-  },
-  {
-    "objectID": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
-    "href": "modules/semaine-09-variables-externes-autocorrelation/index.html#lien-avec-lévaluation",
-    "title": "Module 09 - Variables externes et autocorrélation",
-    "section": "Lien avec l’évaluation",
-    "text": "Lien avec l’évaluation\nCe module prépare les questions du final sur les variables externes, les diagnostics temporels et la validité d’une prévision conditionnelle. Les activités sont des entraînements."
   },
   {
     "objectID": "modules/semaine-10-classification-modeles-avances/index.html",
