@@ -46,13 +46,79 @@ Des erreurs qui se suivent peuvent révéler une structure que les prédicteurs 
 - Expliquer les limites du diagnostic.
 :::
 
-## Lire les corrélations entre résidus
+## Deux écarts, deux moments
 
-::: {.keypoints}
-- Résidu : observation moins valeur ajustée.
-- Le retard 1 compare deux mois voisins; le retard 12 compare deux mois à un an d’intervalle.
-- Examiner les résidus dans le temps et leur fonction d’autocorrélation (ACF).
-- Le test de Ljung-Box est un complément facultatif.
+:::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Sur les mois d’entraînement
+:::
+::: {.text}
+Résidu = vente observée moins vente ajustée. Le mois étudié a servi à estimer les coefficients.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Sur un mois tenu à part
+:::
+::: {.text}
+Erreur de prévision = vente observée moins prévision produite avec le modèle déjà ajusté.
+:::
+:::
+::::
+
+## Calculer un résidu avant de lire le graphique
+
+::: {.example-box}
+En juillet 2020, les ventes atteignent 316 643 $. Le modèle ajuste environ 338 760 $. Le résidu vaut donc environ −22 117 $.
+:::
+
+::: {.note-box}
+Le point est sous zéro. La vente observée est inférieure à la valeur ajustée. Quel signe attendriez-vous si le modèle sous-estimait les ventes ?
+:::
+
+## Suivre une séquence de mois
+
+| 2020 | Mai | Juin | Juillet | Août |
+|---|---|---|---|---|
+| Résidu arrondi | −1 992 $ | −5 073 $ | −22 117 $ | −11 969 $ |
+
+::: {.note-box}
+Durant ces quatre mois, le modèle surestime à chaque fois. Pour savoir si cette persistance se répète, il faut examiner les 60 résidus.
+:::
+
+## Fabriquer les paires d’un retard
+
+:::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Retard 1
+:::
+::: {.text}
+Janvier avec février, février avec mars, et ainsi de suite. Les 60 mois fournissent 59 paires voisines.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Retard 12
+:::
+::: {.text}
+Janvier 2020 avec janvier 2021, puis février avec février. Il reste 48 paires séparées d’une année.
+:::
+:::
+::::
+
+## Demander les autocorrélations à R
+
+```r
+r <- residuals(modele_lm)
+a <- acf(r, lag.max = 12, plot = FALSE)
+data.frame(retard = as.numeric(a$lag),
+           acf = round(as.numeric(a$acf), 2))
+```
+
+::: {.note-box}
+La première ligne correspond au retard 0. Sa valeur de 1 vient de la comparaison de la série avec elle-même.
 :::
 
 ## Autocorrélation des résidus de 2020 à 2024
@@ -61,6 +127,37 @@ Des erreurs qui se suivent peuvent révéler une structure que les prédicteurs 
 
 ::: {.note-box}
 Les pointillés sont des repères approximatifs, pas une preuve d’indépendance.
+:::
+
+## Lire deux barres de signes opposés
+
+:::: {.concept-grid}
+::: {.concept-card}
+::: {.tag}
+Au retard 1 : +0,41
+:::
+::: {.text}
+Des écarts de même sens tendent à se suivre. Le tracé temporel permet de localiser les mois en cause.
+:::
+:::
+::: {.concept-card}
+::: {.tag}
+Au retard 12 : −0,30
+:::
+::: {.text}
+Les écarts à un an de distance tendent à être de sens opposés. Une explication saisonnière demanderait d’autres éléments.
+:::
+:::
+::::
+
+## Du diagnostic à une comparaison
+
+::: {.example-box}
+Les repères individuels valent environ ±1,96 / √60, soit ±0,25. Deux barres les franchissent. Que proposez-vous d’essayer ?
+:::
+
+::: {.note-box}
+Tester un modèle où l’écart d’un mois dépend de celui du mois précédent, puis comparer ses prévisions. Le graphique seul ne désigne pas le meilleur modèle.
 :::
 
 ## À retenir

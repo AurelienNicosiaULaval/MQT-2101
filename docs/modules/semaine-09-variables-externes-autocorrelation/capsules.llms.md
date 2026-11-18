@@ -4,9 +4,11 @@
 
 À la fin du parcours, vous pourrez comparer deux prévisions de ventes et expliquer à la direction quelles hypothèses rendent leur utilisation possible. Ouvrez le [projet guidé](telechargements/variables-ventes.zip) et suivez la [préparation en R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation). Consignez chaque production une seule fois dans `variables_ventes.qmd`. Vous retrouverez la même consigne sur l’accueil et à la fin du diaporama.
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF du 18 novembre 2026](telechargements/module-09-pdf-2026-11-18.zip).
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF enrichi pour le tournage](telechargements/module-09-pdf-2026-11-18-tournage.zip).
 
 ## Capsule 1 - Auditer les variables
+
+À la fin de décembre, quelles colonnes de la ligne de janvier peut-on vraiment remplir ? Utilisez le prix moyen et la date de diffusion de l’indice pour trancher.
 
 ## PDF
 
@@ -34,6 +36,8 @@ Auto-vérification : Je précise l’origine. Je distingue une valeur prévue d�
 
 ## Capsule 2 - Ajuster et interpréter
 
+Les ventes moyennes sont plus élevées les mois de promotion. Comparez cet écart brut au coefficient ajusté, puis faites varier le prix.
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
@@ -59,6 +63,8 @@ Auto-vérification : Je nomme la catégorie de référence et les unités. Je di
 > Après la capsule 3, faites l’[exercice 2](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-2), qui combine l’ajustement et le diagnostic par succursale.
 
 ## Capsule 3 - Diagnostiquer dans le temps
+
+Calculez le résidu de juillet 2020. Suivez quatre mois successifs sur le tracé avant de lire les retards 1 et 12 de l’ACF.
 
 ## PDF
 
@@ -86,6 +92,8 @@ Auto-vérification : Je garde l’ordre des mois et distingue résidus et erreur
 
 ## Capsule 4 - Comparer deux modèles
 
+Suivez la propagation d’un écart dans un modèle AR(1), puis départagez les deux modèles sur janvier, juillet et enfin sur les douze mois.
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
@@ -109,6 +117,8 @@ Auto-vérification : Je compare les deux modèles sur les mêmes observations et
 Le transfert reprend à la capsule 5 avec la décision de capacité de la succursale de Québec.
 
 ## Capsule 5 - Communiquer un scénario
+
+Comparez les deux fiches de janvier, déplacez le prix dans la zone commune et examinez ce qui change lorsque l’indice passe de 100 à 105.
 
 ## PDF
 

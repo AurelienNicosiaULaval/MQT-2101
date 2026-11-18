@@ -114,7 +114,7 @@ Ce module prépare les questions du final sur les variables externes, les diagno
 
 ## Ressources du module
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF du 18 novembre 2026](telechargements/module-09-pdf-2026-11-18.zip).
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF enrichi pour le tournage](telechargements/module-09-pdf-2026-11-18-tournage.zip).
 
 [CapsulesCinq supports PDF et HTML et leurs productions guidées.](capsules.llms.md) [Notes de coursSynthèse des cinq étapes en diapositives.](notes-cours.llms.md) [Démonstrations RReproduire la régression, les diagnostics et les scénarios de ventes.](demonstrations.llms.md) [Exercices et corrigésÉtudier la capacité des succursales et vérifier ses réponses après une tentative.](exercices.llms.md) [LecturesReprendre une notion en français et consulter les passages ciblés du manuel.](lectures.llms.md)
 
