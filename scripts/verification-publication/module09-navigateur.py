@@ -14,7 +14,7 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--window-size=1365,900")
 def get(page):
-    driver.get(site + page + ".html?controle=9867010db7cf92b9d091a21e60b51f053e5b3da2")
+    driver.get(site + page + ".html?controle=c36234ce88e85fa40aebbf66918fe33945c384d5")
     wait.until(lambda d: d.find_elements(By.CSS_SELECTOR,"main"))
 def click(el):
     driver.execute_script("arguments[0].scrollIntoView({block:'center',behavior:'instant'})",el)
@@ -34,7 +34,7 @@ with webdriver.Chrome(options=options, service=Service(shutil.which("chromedrive
     get("capsules")
     groups = driver.find_elements(By.CSS_SELECTOR, "main .panel-tabset")
     assert len(groups)==5
-    for group in groups:
+    for index, group in enumerate(groups):
         pdf, html = group.find_elements(By.CSS_SELECTOR, "[role=tab]")
         assert [pdf.text,html.text] == ["PDF","HTML"]
         click(html)
@@ -42,7 +42,7 @@ with webdriver.Chrome(options=options, service=Service(shutil.which("chromedrive
         wait.until(lambda d: frame.get_dom_attribute("src"))
         driver.switch_to.frame(frame)
         wait.until(lambda d: d.execute_script("return !!window.Reveal && Reveal.isReady()"))
-        assert len(driver.find_elements(By.CSS_SELECTOR,".slides > section"))==8
+        assert len(driver.find_elements(By.CSS_SELECTOR,".slides > section"))==[13,13,14,14,14][index]
         driver.switch_to.default_content()
         click(pdf)
     for page,count in [("capsules",5),("exercices",7)]:
