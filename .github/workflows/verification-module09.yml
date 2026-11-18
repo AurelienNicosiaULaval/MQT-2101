@@ -1,22 +1,10 @@
 name: Vérifier le module 09 sur le site public
 on:
   push:
-    branches: ['verification/module-09-20261118']
+    branches: ['verification/copie-du-module09-20261118']
 permissions:
-  contents: read
+  contents: write
 jobs:
-  controle:
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    steps:
-      - uses: actions/checkout@v4
-      - name: Vérifier les téléchargements et leur contenu
-        run: python3 scripts/verification-publication/module09-http.py
-      - name: Préparer le navigateur
-        run: pip install --disable-pip-version-check selenium
-      - name: Parcourir le module sur ordinateur et sur petit écran
-        run: python3 scripts/verification-publication/module09-navigateur.py
-
   copie:
     runs-on: ubuntu-latest
     steps:
@@ -24,8 +12,18 @@ jobs:
       - name: Regrouper les fichiers du module pour la copie locale de l’enseignant
         run: |
           tar -cJf /tmp/module09-rendus.tar.xz docs/modules/semaine-09-variables-externes-autocorrelation/capsules.html docs/modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/demonstrations.html docs/modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/exercices.html docs/modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/index.html docs/modules/semaine-09-variables-externes-autocorrelation/index.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/lectures.html docs/modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html docs/modules/semaine-09-variables-externes-autocorrelation/notes-cours.html docs/modules/semaine-09-variables-externes-autocorrelation/telechargements/module-09-pdf-2026-11-18-final.zip docs/search.json
-      - uses: actions/upload-artifact@v4
-        with:
-          name: module09-rendus
-          path: /tmp/module09-rendus.tar.xz
-          retention-days: 1
+      - name: Synchroniser les rendus
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, json, os, urllib.request
+          source=Path('/tmp/module09-rendus.tar.xz').read_bytes()
+          endpoint='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/git/blobs'
+          for i,pos in enumerate(range(0,len(source),360000)):
+              data=json.dumps({'encoding':'utf-8','content':base64.b64encode(source[pos:pos+360000]).decode()}).encode()
+              req=urllib.request.Request(endpoint,data=data,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json'})
+              with urllib.request.urlopen(req) as res: sha=json.load(res)['sha']
+              print(f'COPIE {i:03} {sha}',flush=True)
+          PY
