@@ -1,0 +1,18 @@
+name: Vérifier le module 09 sur le site public
+on:
+  push:
+    branches: ['verification/module-09-20261118']
+permissions:
+  contents: read
+jobs:
+  controle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier les téléchargements et leur contenu
+        run: python3 scripts/verification-publication/module09-http.py
+      - name: Préparer le navigateur
+        run: pip install --disable-pip-version-check selenium
+      - name: Parcourir le module sur ordinateur et sur petit écran
+        run: python3 scripts/verification-publication/module09-navigateur.py
