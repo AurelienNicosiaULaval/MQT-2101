@@ -70,11 +70,11 @@ Erreur de prévision = vente observée moins prévision produite avec le modèle
 ## Calculer un résidu avant de lire le graphique
 
 ::: {.example-box}
-En juillet 2020, les ventes atteignent 316 643 $. Le modèle ajuste environ 338 760 $. Le résidu vaut donc environ −22 117 $.
+Résidu = vente observée − vente ajustée<br>Juillet 2020 : 316 643 $ − 338 760 $ ≈ −22 117 $
 :::
 
 ::: {.note-box}
-Le point est sous zéro. La vente observée est inférieure à la valeur ajustée. Quel signe attendriez-vous si le modèle sous-estimait les ventes ?
+Placez le point sous la ligne zéro. Le modèle surestime la vente de juillet. De quel côté placeriez-vous un mois où le modèle sous-estime les ventes ?
 :::
 
 ## Suivre une séquence de mois
@@ -89,24 +89,11 @@ Durant ces quatre mois, le modèle surestime à chaque fois. Pour savoir si cett
 
 ## Fabriquer les paires d’un retard
 
-:::: {.concept-grid}
-::: {.concept-card}
-::: {.tag}
-Retard 1
+![](../paires-residus.png){width="85%" fig-alt="59 couples de résidus consécutifs. Juin et juillet 2020 forment le point entouré, situé dans le quadrant négatif."}
+
+::: {.note-box}
+Au retard 1, juin et juillet donnent le point (−5,1 , −22,1) en milliers de dollars. Au retard 12, associez janvier 2020 à janvier 2021. Combien de paires restent-elles ?
 :::
-::: {.text}
-Janvier avec février, février avec mars, et ainsi de suite. Les 60 mois fournissent 59 paires voisines.
-:::
-:::
-::: {.concept-card}
-::: {.tag}
-Retard 12
-:::
-::: {.text}
-Janvier 2020 avec janvier 2021, puis février avec février. Il reste 48 paires séparées d’une année.
-:::
-:::
-::::
 
 ## Demander les autocorrélations à R
 
