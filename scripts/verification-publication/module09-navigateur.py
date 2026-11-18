@@ -14,7 +14,7 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--window-size=1365,900")
 def get(page):
-    driver.get(site + page + ".html?controle=c36234ce88e85fa40aebbf66918fe33945c384d5")
+    driver.get(site + page + ".html?controle=53932a5b355260168297c61324038838a328c6f0")
     wait.until(lambda d: d.find_elements(By.CSS_SELECTOR,"main"))
 def click(el):
     driver.execute_script("arguments[0].scrollIntoView({block:'center',behavior:'instant'})",el)
@@ -31,6 +31,15 @@ with webdriver.Chrome(options=options, service=Service(shutil.which("chromedrive
         wait.until(lambda d: card.get_property("open"))
         click(summary)
         wait.until(lambda d: not card.get_property("open"))
+    for card in cards:
+        detail = card.find_element(By.CSS_SELECTOR, ".step-detail").get_attribute("textContent")
+        assert all(label in detail for label in ["Objectif","Ressource","Action","Auto-vérification"])
+    get("lectures")
+    assert driver.find_elements(By.CSS_SELECTOR, "main table")[0].find_element(By.TAG_NAME, "thead").text.count("personnelle") == 1
+    assert len(driver.find_elements(By.CSS_SELECTOR, "main h2[id^='lecture-'], main section[id^='lecture-']")) >= 5
+    driver.get(site + "notes-cours.html?controle=53932a5b355260168297c61324038838a328c6f0")
+    wait.until(lambda d: d.execute_script("return !!window.Reveal && Reveal.isReady()"))
+    assert len(driver.find_elements(By.CSS_SELECTOR,".slides > section")) == 34
     get("capsules")
     groups = driver.find_elements(By.CSS_SELECTOR, "main .panel-tabset")
     assert len(groups)==5
@@ -45,7 +54,7 @@ with webdriver.Chrome(options=options, service=Service(shutil.which("chromedrive
         assert len(driver.find_elements(By.CSS_SELECTOR,".slides > section"))==[13,13,14,14,14][index]
         driver.switch_to.default_content()
         click(pdf)
-    for page,count in [("capsules",5),("exercices",7)]:
+    for page,count in [("capsules",5),("exercices",10)]:
         get(page)
         headers=driver.find_elements(By.CSS_SELECTOR,'main .callout-header[data-bs-toggle="collapse"]')
         assert len(headers)==count

@@ -16,3 +16,16 @@ jobs:
         run: pip install --disable-pip-version-check selenium
       - name: Parcourir le module sur ordinateur et sur petit écran
         run: python3 scripts/verification-publication/module09-navigateur.py
+
+  copie:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regrouper les fichiers du module pour la copie locale de l’enseignant
+        run: |
+          tar -cJf /tmp/module09-rendus.tar.xz docs/modules/semaine-09-variables-externes-autocorrelation/capsules.html docs/modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/demonstrations.html docs/modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/exercices.html docs/modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/index.html docs/modules/semaine-09-variables-externes-autocorrelation/index.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/lectures.html docs/modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-01-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-02-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-03-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-04-support.html docs/modules/semaine-09-variables-externes-autocorrelation/media/qmd/capsule-05-support.html docs/modules/semaine-09-variables-externes-autocorrelation/notes-cours.html docs/modules/semaine-09-variables-externes-autocorrelation/telechargements/module-09-pdf-2026-11-18-final.zip docs/search.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: module09-rendus
+          path: /tmp/module09-rendus.tar.xz
+          retention-days: 1

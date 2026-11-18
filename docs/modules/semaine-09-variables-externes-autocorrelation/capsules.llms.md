@@ -4,7 +4,7 @@
 
 À la fin du parcours, vous pourrez comparer deux prévisions de ventes et expliquer à la direction quelles hypothèses rendent leur utilisation possible. Ouvrez le [projet guidé](telechargements/variables-ventes.zip) et suivez la [préparation en R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation). Consignez chaque production une seule fois dans `variables_ventes.qmd`. Vous retrouverez la même consigne sur l’accueil et à la fin du diaporama.
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF enrichi pour le tournage](telechargements/module-09-pdf-2026-11-18-tournage.zip).
+Téléchargez le [lot des cinq capsules et des notes de cours](telechargements/module-09-pdf-2026-11-18-final.zip).
 
 ## Capsule 1 - Auditer les variables
 

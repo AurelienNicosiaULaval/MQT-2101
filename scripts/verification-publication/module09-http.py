@@ -8,7 +8,7 @@ import time
 
 module = "modules/semaine-09-variables-externes-autocorrelation/"
 site = "https://aureliennicosiaulaval.github.io/MQT-2101/"
-revision = "c36234ce88e85fa40aebbf66918fe33945c384d5"
+revision = "53932a5b355260168297c61324038838a328c6f0"
 docs = Path("docs")
 paths = sorted(p for p in (docs / module).rglob("*") if p.is_file() and not p.name.startswith("."))
 def verify(path):
@@ -23,7 +23,7 @@ def verify(path):
             if path.suffix == ".zip":
                 with ZipFile(BytesIO(received)) as archive:
                     assert archive.testzip() is None
-                    if path.name in {"module-09-pdf-2026-11-18.zip", "module-09-pdf-2026-11-18-tournage.zip"}:
+                    if path.name in {"module-09-pdf-2026-11-18-final.zip", "module-09-pdf-2026-11-18.zip", "module-09-pdf-2026-11-18-tournage.zip"}:
                         pdfs = sorted((docs / module / "media/pdf").glob("*.pdf"))
                         assert sorted(archive.namelist()) == [p.name for p in pdfs]
                         for pdf in pdfs:
