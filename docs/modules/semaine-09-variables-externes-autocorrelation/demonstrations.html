@@ -7119,7 +7119,8 @@ padding: 1rem;
 <p>Le cas reprend les ventes commerciales du transfert du module 08. Les données sont fictives. Les 60 premiers mois servent à ajuster les modèles; les 12 mois de 2025 servent à les comparer. Ils ont déjà été consultés au module 08 : ce bloc ne constitue pas un test final indépendant.</p>
 <section id="preparation" class="level2">
 <h2 class="anchored" data-anchor-id="preparation">Préparation</h2>
-<p>Installez <code>tidyverse</code> et <code>forecast</code> au besoin, ouvrez le projet et exécutez les blocs dans l’ordre. Le code est complet dans une session neuve.</p>
+<p>Dans RStudio, ouvrez <code>variables-ventes.Rproj</code>, puis <code>variables_ventes.qmd</code>. Si nécessaire, installez <code>tidyverse</code> et <code>forecast</code> une première fois. Exécutez ensuite les blocs dans l’ordre. Dans ce cas, « janvier » est un niveau du facteur mois. Le traiter comme le nombre 1 dans une pente linéaire imposerait le même changement de janvier à février que de novembre à décembre.</p>
+<p>Avant de lancer le modèle, demandez-vous ce que vous devriez voir dans les deux objets. La dernière ligne de <code>entrainement</code> devrait être décembre 2024, et la première de <code>validation</code> janvier 2025. Chaque ligne est un mois, quel que soit le nombre de transactions ce mois-là.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
@@ -7141,25 +7142,45 @@ padding: 1rem;
 <h2 class="anchored" data-anchor-id="disponibilite">1. Disponibilité</h2>
 <p>Les valeurs de 2025 dans le fichier sont observées après coup. Une promotion pourrait être connue si elle était déjà approuvée; un prix peut être planifié ou scénarisé; l’indice peut être prévu séparément. Aucune de ces disponibilités n’est attestée par le fichier fictif. Les ventes futures sont la cible.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span> <span class="fu">select</span>(date, ventes, promotion, prix_moyen, indice_confiance) <span class="sc">|&gt;</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ventes <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">%in%</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">&quot;2024-12-01&quot;</span>, <span class="st">&quot;2025-01-01&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, ventes, promotion, prix_moyen, indice_confiance)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
+<pre><code># A tibble: 2 × 5
   date       ventes promotion prix_moyen indice_confiance
   &lt;date&gt;      &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;
-1 2020-01-01 309720 non             59.7             99.6
-2 2020-02-01 329533 non             58.3            101. 
-3 2020-03-01 332527 non             58.4            101. 
-4 2020-04-01 325184 non             59.2            100. </code></pre>
+1 2024-12-01 542217 non             61.2             112.
+2 2025-01-01 526715 non             61.6             111.</code></pre>
 </div>
 </div>
+<p>Le prix moyen de janvier est 61,59 $ et l’indice vaut 111,1 dans le fichier terminé. Pour refaire la décision de décembre, cachez ces deux cellules et les ventes de janvier. Le mois reste connu. Pour le prix, il faudrait un tarif daté et une hypothèse sur les transactions. Pour l’indice, il faudrait une prévision disponible à l’origine ou une valeur de scénario. Conservez cette distinction dans l’activité 9.1.</p>
 </section>
 <section id="regression" class="level2">
 <h2 class="anchored" data-anchor-id="regression">2. Régression conditionnelle</h2>
+<section id="commencer-par-les-groupes-observés" class="level3">
+<h3 class="anchored" data-anchor-id="commencer-par-les-groupes-observés">Commencer par les groupes observés</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>entrainement <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(promotion) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mois_observes =</span> <span class="fu">n</span>(), <span class="at">ventes_moyennes =</span> <span class="fu">mean</span>(ventes),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">prix_moyen_du_groupe =</span> <span class="fu">mean</span>(prix_moyen), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  promotion mois_observes ventes_moyennes prix_moyen_du_groupe
+  &lt;fct&gt;             &lt;int&gt;           &lt;dbl&gt;                &lt;dbl&gt;
+1 non                  42         420892.                 59.8
+2 oui                  18         503764.                 55.9</code></pre>
+</div>
+</div>
+<p>Les 18 mois avec promotion affichent en moyenne 503 764 $ de ventes, contre 420 892 $ pour les 42 autres. Ils ont aussi un prix moyen plus bas, 55,87 $ contre 59,81 $. Soustrayez les ventes. Le résultat décrit les deux groupes tels qu’ils se présentent dans les données. Pour parler d’un même mois à un même prix, il faut poser une autre question.</p>
+</section>
+<section id="construire-la-comparaison-ajustée" class="level3">
+<h3 class="anchored" data-anchor-id="construire-la-comparaison-ajustée">Construire la comparaison ajustée</h3>
 <p>La catégorie de référence est <code>non</code>. La pente de promotion compare deux valeurs ajustées, avec les autres variables maintenues fixes. Les données observationnelles ne garantissent pas une interprétation causale.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>modele_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> tendance <span class="sc">+</span> promotion <span class="sc">+</span> prix_moyen <span class="sc">+</span> indice_confiance <span class="sc">+</span> mois,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> entrainement)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(modele_lm))[<span class="fu">c</span>(<span class="st">&quot;tendance&quot;</span>, <span class="st">&quot;promotionoui&quot;</span>, <span class="st">&quot;prix_moyen&quot;</span>, <span class="st">&quot;indice_confiance&quot;</span>), ]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>modele_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(ventes <span class="sc">~</span> tendance <span class="sc">+</span> promotion <span class="sc">+</span> prix_moyen <span class="sc">+</span> indice_confiance <span class="sc">+</span> mois,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> entrainement)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(modele_lm))[<span class="fu">c</span>(<span class="st">&quot;tendance&quot;</span>, <span class="st">&quot;promotionoui&quot;</span>, <span class="st">&quot;prix_moyen&quot;</span>, <span class="st">&quot;indice_confiance&quot;</span>), ]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  Estimate Std. Error   t value     Pr(&gt;|t|)
 tendance          3087.438   280.4525 11.008774 3.175226e-14
@@ -7168,14 +7189,37 @@ prix_moyen       -4895.027  1628.3779 -3.006075 4.360178e-03
 indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
 </div>
 </div>
+<p>Pour deux profils identiques sauf la promotion, la différence ajustée est de 47 566 $. Si le prix baisse aussi d’un dollar, deux termes changent. La pente estimée du prix est d’environ −4 895 $ de ventes par dollar de prix. Le contraste devient donc 47 566 + 4 895 ≈ 52 461 $. Cette arithmétique décrit l’équation ajustée. Le fichier ne révèle pas pourquoi les responsables ont choisi les mois des campagnes.</p>
+</section>
 </section>
 <section id="diagnostic" class="level2">
 <h2 class="anchored" data-anchor-id="diagnostic">3. Autocorrélation des résidus</h2>
 <p>Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. La valeur p est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.</p>
+<section id="partir-dun-mois-identifiable" class="level3">
+<h3 class="anchored" data-anchor-id="partir-dun-mois-identifiable">Partir d’un mois identifiable</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>residus_lm <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modele_lm)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(entrainement<span class="sc">$</span>date, residus_lm, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Mois&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Résidu (dollars)&quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diagnostic_mois <span class="ot">&lt;-</span> entrainement <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(date, ventes, <span class="at">ajustees =</span> <span class="fu">fitted</span>(modele_lm),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">residu =</span> ventes <span class="sc">-</span> ajustees, <span class="at">precedent =</span> <span class="fu">lag</span>(residu))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>diagnostic_mois <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">between</span>(date, <span class="fu">as.Date</span>(<span class="st">&quot;2020-05-01&quot;</span>), <span class="fu">as.Date</span>(<span class="st">&quot;2020-08-01&quot;</span>)))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  date       ventes ajustees  residu precedent
+  &lt;date&gt;      &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+1 2020-05-01 405161  407153.  -1992.    -5371.
+2 2020-06-01 338213  343286.  -5073.    -1992.
+3 2020-07-01 316643  338760. -22117.    -5073.
+4 2020-08-01 405192  417161. -11969.   -22117.</code></pre>
+</div>
+</div>
+<p>En juillet 2020, le résidu vaut 316 643 − 338 760 ≈ −22 117 $. En juin, il était déjà négatif. Sur le tracé chronologique, ce sont deux points voisins sous zéro. Pour le retard 1, ce sont les deux coordonnées d’une seule paire. Les 60 mois donnent 59 paires voisines et 48 paires séparées d’une année.</p>
+</section>
+<section id="passer-des-dates-aux-retards" class="level3">
+<h3 class="anchored" data-anchor-id="passer-des-dates-aux-retards">Passer des dates aux retards</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>residus_lm <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modele_lm)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(entrainement<span class="sc">$</span>date, residus_lm, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Mois&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Résidu (dollars)&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -7183,7 +7227,7 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(residus_lm, <span class="at">lag.max =</span> <span class="dv">12</span>, <span class="at">main =</span> <span class="st">&quot;ACF des résidus&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(residus_lm, <span class="at">lag.max =</span> <span class="dv">12</span>, <span class="at">main =</span> <span class="st">&quot;ACF des résidus&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -7191,7 +7235,24 @@ indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(residus_lm, <span class="at">lag =</span> <span class="dv">12</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">fitdf =</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">acf</span>(residus_lm, <span class="at">lag.max =</span> <span class="dv">12</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">retard =</span> <span class="fu">as.numeric</span>(a<span class="sc">$</span>lag), <span class="at">correlation =</span> <span class="fu">as.numeric</span>(a<span class="sc">$</span>acf)) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(retard <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  retard correlation
+   &lt;dbl&gt;       &lt;dbl&gt;
+1      0       1    
+2      1       0.413
+3     12      -0.295</code></pre>
+</div>
+</div>
+<p>Le retard zéro compare chaque résidu à lui-même et vaut 1. La barre suivante décrit les mois voisins. Une même valeur d’ACF peut résulter de séquences placées à des dates différentes, d’où l’intérêt du premier graphique.</p>
+<p>Pour le test facultatif mentionné ci-dessus :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(residus_lm, <span class="at">lag =</span> <span class="dv">12</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">fitdf =</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box-Ljung test
@@ -7202,25 +7263,26 @@ X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 </div>
 <p>Au retard 1, l’ACF des résidus vaut environ 0,41. Au retard 12, elle vaut environ −0,30. Ces deux barres dépassent en valeur absolue le repère approximatif de 0,25. La première suggère que des écarts de même signe tendent à se suivre. Une seule barre au retard 12 ne suffit pas à identifier un mécanisme saisonnier.</p>
 </section>
+</section>
 <section id="comparaison" class="level2">
 <h2 class="anchored" data-anchor-id="comparaison">4. Comparaison accompagnée avec erreurs AR(1)</h2>
 <p>Pour l’activité 9.4, vous pouvez exécuter le code complet ci-dessous et vous concentrer sur la comparaison et ses limites. L’ajustement AR(1) est présenté comme un approfondissement accompagné : sa construction de mémoire n’est pas exigée. Les candidats possèdent les mêmes prédicteurs. La régression avec erreurs AR(1) modélise la dépendance de la partie non expliquée par ces prédicteurs. Les valeurs externes réalisées en 2025 sont utilisées dans les deux modèles : la comparaison est rétrospective et conditionnelle, pas une preuve de performance opérationnelle à l’origine de fin 2024. Les intervalles AR(1) conditionnent eux aussi sur les prédicteurs fournis.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>formule_x <span class="ot">&lt;-</span> <span class="er">~</span> tendance <span class="sc">+</span> promotion <span class="sc">+</span> prix_moyen <span class="sc">+</span> indice_confiance <span class="sc">+</span> mois</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x_train <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formule_x, <span class="at">data =</span> entrainement)[, <span class="sc">-</span><span class="dv">1</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x_validation <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formule_x, <span class="at">data =</span> validation)[, <span class="sc">-</span><span class="dv">1</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">identical</span>(<span class="fu">colnames</span>(x_train), <span class="fu">colnames</span>(x_validation)))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>modele_ar1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(entrainement<span class="sc">$</span>ventes, <span class="at">xreg =</span> x_train, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">include.mean =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>prevision_ar1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(modele_ar1, <span class="at">xreg =</span> x_validation, <span class="at">h =</span> <span class="fu">nrow</span>(validation), <span class="at">level =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">95</span>))</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>comparaison <span class="ot">&lt;-</span> validation <span class="sc">|&gt;</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(date, <span class="at">observe =</span> ventes, <span class="at">regression =</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(modele_lm, <span class="at">newdata =</span> validation)),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreurs_ar1 =</span> <span class="fu">as.numeric</span>(prevision_ar1<span class="sc">$</span>mean)) <span class="sc">|&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(regression, erreurs_ar1), <span class="at">names_to =</span> <span class="st">&quot;methode&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;prevision&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">erreur =</span> observe <span class="sc">-</span> prevision)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> comparaison <span class="sc">|&gt;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(methode) <span class="sc">|&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ME =</span> <span class="fu">mean</span>(erreur), <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(erreur)), <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(erreur<span class="sc">^</span><span class="dv">2</span>)), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>scores</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>formule_x <span class="ot">&lt;-</span> <span class="er">~</span> tendance <span class="sc">+</span> promotion <span class="sc">+</span> prix_moyen <span class="sc">+</span> indice_confiance <span class="sc">+</span> mois</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x_train <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formule_x, <span class="at">data =</span> entrainement)[, <span class="sc">-</span><span class="dv">1</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>x_validation <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(formule_x, <span class="at">data =</span> validation)[, <span class="sc">-</span><span class="dv">1</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">identical</span>(<span class="fu">colnames</span>(x_train), <span class="fu">colnames</span>(x_validation)))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>modele_ar1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(entrainement<span class="sc">$</span>ventes, <span class="at">xreg =</span> x_train, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">include.mean =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>prevision_ar1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(modele_ar1, <span class="at">xreg =</span> x_validation, <span class="at">h =</span> <span class="fu">nrow</span>(validation), <span class="at">level =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">95</span>))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>comparaison <span class="ot">&lt;-</span> validation <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(date, <span class="at">observe =</span> ventes, <span class="at">regression =</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(modele_lm, <span class="at">newdata =</span> validation)),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreurs_ar1 =</span> <span class="fu">as.numeric</span>(prevision_ar1<span class="sc">$</span>mean)) <span class="sc">|&gt;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(regression, erreurs_ar1), <span class="at">names_to =</span> <span class="st">&quot;methode&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;prevision&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">erreur =</span> observe <span class="sc">-</span> prevision)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> comparaison <span class="sc">|&gt;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(methode) <span class="sc">|&gt;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ME =</span> <span class="fu">mean</span>(erreur), <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(erreur)), <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(erreur<span class="sc">^</span><span class="dv">2</span>)), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>scores</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   methode        ME   MAE  RMSE
@@ -7229,11 +7291,28 @@ X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 2 regression  1474. 5088. 6272.</code></pre>
 </div>
 </div>
+<section id="vérifier-le-classement-avant-de-conclure" class="level3">
+<h3 class="anchored" data-anchor-id="vérifier-le-classement-avant-de-conclure">Vérifier le classement avant de conclure</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>comparaison <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">%in%</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">&quot;2025-01-01&quot;</span>, <span class="st">&quot;2025-07-01&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, methode, observe, prevision, erreur)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  date       methode     observe prevision erreur
+  &lt;date&gt;     &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+1 2025-01-01 regression   526715   520664.  6051.
+2 2025-01-01 erreurs_ar1  526715   518310.  8405.
+3 2025-07-01 regression   615840   600840. 15000.
+4 2025-07-01 erreurs_ar1  615840   602557. 13283.</code></pre>
+</div>
+</div>
+<p>En janvier, les deux modèles sous-prévoient. L’erreur absolue est plus faible pour la régression ordinaire (environ 6 051 $ contre 8 405 $). En juillet, l’ordre s’inverse (15 000 $ contre 13 283 $). Choisir un seul mois après avoir vu les résultats changerait la question. Le tableau des scores utilise les douze mois pour les deux candidats.</p>
 <p>Sur les douze mois de 2025, la régression ordinaire donne une MAE de 5 088 $ et une RMSE de 6 272 $. Avec les erreurs AR(1), on obtient 5 380 $ et 6 417 $. Les deux critères favorisent ici la régression ordinaire malgré l’autocorrélation observée à l’entraînement.</p>
 <p>Pour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>innovations <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modele_ar1)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(innovations, <span class="at">lag.max =</span> <span class="dv">12</span>, <span class="at">main =</span> <span class="st">&quot;ACF des innovations du modèle AR(1)&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>innovations <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modele_ar1)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(innovations, <span class="at">lag.max =</span> <span class="dv">12</span>, <span class="at">main =</span> <span class="st">&quot;ACF des innovations du modèle AR(1)&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -7241,7 +7320,7 @@ X-squared = 22.853, df = 12, p-value = 0.029</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(innovations, <span class="at">lag =</span> <span class="dv">12</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">fitdf =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(innovations, <span class="at">lag =</span> <span class="dv">12</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">fitdf =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box-Ljung test
@@ -7252,9 +7331,9 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
 </div>
 <p>La ligne noire représente les ventes observées; les deux lignes colorées représentent les prévisions.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>comparaison <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, observe)) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> prevision, <span class="at">colour =</span> methode)) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Mois de 2025&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Ventes (dollars)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Modèle&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>comparaison <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, observe)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> prevision, <span class="at">colour =</span> methode)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Mois de 2025&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Ventes (dollars)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Modèle&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -7264,15 +7343,16 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
 </div>
 </div>
 </section>
+</section>
 <section id="scenario" class="level2">
 <h2 class="anchored" data-anchor-id="scenario">5. Scénario</h2>
 <p>Pour janvier 2025, on suppose un prix de 60 $ par unité et un indice de 100 points avec ou sans promotion. Les valeurs sont hypothétiques. La différence entre les prévisions est une association du modèle; elle n’établit pas l’effet d’une intervention. Elle ne tient pas compte de l’incertitude sur les valeurs futures des prédicteurs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>scenario <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">tendance =</span> <span class="dv">61</span>, <span class="at">mois =</span> <span class="fu">factor</span>(<span class="dv">1</span>, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">promotion =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>)),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">prix_moyen =</span> <span class="dv">60</span>, <span class="at">indice_confiance =</span> <span class="dv">100</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>scenario <span class="ot">&lt;-</span> scenario <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">prevision =</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(modele_lm, <span class="at">newdata =</span> scenario)))</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>scenario</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>scenario <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">tendance =</span> <span class="dv">61</span>, <span class="at">mois =</span> <span class="fu">factor</span>(<span class="dv">1</span>, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">promotion =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>)),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">prix_moyen =</span> <span class="dv">60</span>, <span class="at">indice_confiance =</span> <span class="dv">100</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>scenario <span class="ot">&lt;-</span> scenario <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">prevision =</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(modele_lm, <span class="at">newdata =</span> scenario)))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>scenario</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   tendance mois  promotion prix_moyen indice_confiance prevision
@@ -7283,9 +7363,9 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
 </div>
 <p>Vérifiez si le prix du scénario a déjà été observé dans chaque groupe de promotion.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>entrainement <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(promotion) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prix_min =</span> <span class="fu">min</span>(prix_moyen), <span class="at">prix_max =</span> <span class="fu">max</span>(prix_moyen), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>entrainement <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(promotion) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prix_min =</span> <span class="fu">min</span>(prix_moyen), <span class="at">prix_max =</span> <span class="fu">max</span>(prix_moyen), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   promotion prix_min prix_max
@@ -7295,6 +7375,34 @@ X-squared = 6.1972, df = 11, p-value = 0.8599</code></pre>
 </div>
 </div>
 <p>À 60 $ et avec un indice de 100, le modèle prévoit 498 619 $ sans promotion et 546 185 $ avec promotion. Le prix de 60 $ appartient à la plage observée sans promotion (57,47 à 62,72 $). En promotion, les prix observés vont de 53,17 à 57,86 $. Le scénario avec promotion extrapole donc la relation ajustée au-delà des prix observés dans ce groupe.</p>
+<section id="modifier-une-hypothèse-à-la-fois" class="level3">
+<h3 class="anchored" data-anchor-id="modifier-une-hypothèse-à-la-fois">Modifier une hypothèse à la fois</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>variantes <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">prix_moyen =</span> <span class="fu">c</span>(<span class="fl">57.70</span>, <span class="dv">60</span>), <span class="at">indice_confiance =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">105</span>),</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">promotion =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;non&quot;</span>, <span class="st">&quot;oui&quot;</span>), <span class="at">levels =</span> <span class="fu">levels</span>(entrainement<span class="sc">$</span>promotion))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">tendance =</span> <span class="dv">61</span>, <span class="at">mois =</span> <span class="fu">factor</span>(<span class="dv">1</span>, <span class="at">levels =</span> <span class="fu">levels</span>(entrainement<span class="sc">$</span>mois)))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>resultats_scenario <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(variantes, <span class="fu">as_tibble</span>(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(modele_lm, <span class="at">newdata =</span> variantes, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>resultats_scenario <span class="sc">|&gt;</span> <span class="fu">select</span>(prix_moyen, indice_confiance, promotion, fit, lwr, upr)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 6
+  prix_moyen indice_confiance promotion     fit     lwr     upr
+       &lt;dbl&gt;            &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1       57.7              100 non       509878. 468863. 550893.
+2       57.7              100 oui       557444. 520709. 594179.
+3       57.7              105 non       523314. 491215. 555412.
+4       57.7              105 oui       570880. 543745. 598014.
+5       60                100 non       498619. 459670. 537568.
+6       60                100 oui       546185. 508885. 583485.
+7       60                105 non       512055. 482727. 541383.
+8       60                105 oui       559621. 531817. 587426.</code></pre>
+</div>
+</div>
+<p>À 57,70 $, les deux groupes ont une plage de prix compatible avec le scénario. L’écart entre les prévisions demeure 47 566 $, car la formule ne comporte aucune interaction entre prix et promotion. Cela ne garantit pas que les deux profils complets ont été fréquemment observés.</p>
+<p>À 60 $, sans promotion, faire passer l’indice de 100 à 105 déplace la prévision de 498 619 $ à 512 055 $. Les colonnes <code>lwr</code> et <code>upr</code> répondent à une autre question. Pour la première de ces lignes, elles donnent environ 459 670 à 537 568 $ pour une nouvelle vente mensuelle sous les entrées fixées. Il s’agit de l’intervalle classique de <code>lm</code>. Sa couverture théorique suppose notamment des erreurs indépendantes, alors que le diagnostic temporel invite ici à la prudence. La variation future de l’indice n’y est pas incorporée.</p>
+</section>
 </section>
 <section id="pour-conclure" class="level2">
 <h2 class="anchored" data-anchor-id="pour-conclure">Pour conclure</h2>

@@ -2,56 +2,85 @@
 
 Ces explications font partie du socle. Les liens vers l’ouvrage ouvrent des lectures ciblées et ne remplacent pas les démonstrations en R.
 
-## Choisir sa lecture
+## Lire au moment où la question se pose
 
-| Après la capsule | Passage à lire | Question à reprendre dans le projet |
-|----|----|----|
-| [1. Auditer les variables](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-1) | [Disponibilité et fuite](#lecture-1) | [Que savait-on fin décembre 2024 ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#disponibilite) |
-| [2. Interpréter la régression](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-2) | [Régression avec contexte](#lecture-2) | [À quoi compare-t-on les ventes sous promotion ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#regression) |
-| [3. Lire les résidus](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-3) | [Résidus et autocorrélation](#lecture-3) | [Que suggèrent les retards 1 et 12 ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#diagnostic) |
-| [4. Comparer les modèles](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-4) | [Régression avec erreurs AR](#lecture-4) | [Quel modèle obtient les erreurs les plus faibles en 2025 ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#comparaison) |
-| [5. Communiquer la décision](../../modules/semaine-09-variables-externes-autocorrelation/capsules.llms.md#capsule-5) | [Scénarios et décision](#lecture-5) | [Le prix de 60 \$ a-t-il été observé dans les deux groupes ?](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#scenario) |
+Le tableau suit les cinq productions du rapport guidé. Lisez le passage en français, puis essayez de répondre à la dernière colonne avant de consulter la démonstration. Les lectures du manuel en fin de page sont facultatives.
+
+| Moment | Statut et passage à lire | Ce qu’il faut en retenir | Vérification personnelle |
+|----|----|----|----|
+| Avant l’activité 9.1 | Socle · [Disponibilité](#lecture-1) | Dater la décision, la cible et les entrées | Que manque-t-il pour traiter le prix moyen de janvier comme connu ? |
+| Après le premier ajustement | Socle · [Régression](#lecture-2) | Un contraste dépend de ce qui est maintenu fixe | Pourquoi deux calculs donnent-ils 82 872 \$ et 47 566 \$ ? |
+| Avant de commenter le diagnostic | Socle · [Résidus et retards](#lecture-3) | Relier une barre à des paires de mois | Combien de paires entrent au retard 12 avec 60 mois ? |
+| Avant de choisir un modèle | Socle · [Erreurs AR(1)](#lecture-4) | Distinguer structure des erreurs et précision future | Pourquoi le diagnostic et la MAE peuvent-ils favoriser des conclusions différentes ? |
+| Avant de rédiger à la direction | Socle · [Scénarios](#lecture-5) | Vérifier le domaine des prix et les sources d’incertitude | Que change un prix de 57,70 \$ dans la comparaison ? |
 
 ## Disponibilité et fuite
 
-Une prévision doit reposer sur l’information disponible à son origine. Le calendrier est connu; une promotion ou un prix peuvent être connus si approuvés, ou seulement hypothétiques. L’indice économique peut nécessiter sa propre prévision. Une valeur du futur observée après coup est utile pour une analyse rétrospective, mais elle ne prouve pas la performance d’une prévision réalisable.
+Le 31 décembre 2024, la direction veut prévoir le chiffre des ventes de janvier. Dans le CSV terminé un an plus tard, janvier tient sur une seule ligne. À la date de décision, ses colonnes ont pourtant des statuts différents. Janvier appartient au calendrier. Une campagne peut être inscrite au plan commercial, le prix moyen dépend des transactions du mois et l’indice a son propre calendrier de diffusion. Le jour inscrit dans la colonne `date` identifie le mois décrit. Il ne donne aucune date de publication.
 
-Par exemple, à la fin de décembre, le calendrier du mois de janvier est connu. Une promotion n’est connue que si la décision est déjà prise; sinon, on peut examiner un scénario. La valeur de l’indice effectivement observée en janvier devient disponible après l’origine : l’utiliser pour comparer rétrospectivement deux modèles ne donne pas une prévision réalisable à partir des seules informations de décembre. Une valeur passée déjà publiée peut être admissible si elle était disponible à cette date.
+Pour reconstruire la décision, tracez deux colonnes sur une feuille. Dans la première, notez ce qu’on pouvait écrire le 31 décembre, avec le justificatif ou l’hypothèse. Dans la seconde, inscrivez les valeurs éventuellement révélées après la clôture. Par exemple, « prix moyen supposé de 60 \$ » va dans la première, tandis que 61,59 \$, prix moyen réalisé, va dans la seconde. Un tarif annoncé pourrait justifier le scénario de 60 \$, mais une moyenne mensuelle dépend aussi des articles réellement vendus. Les ventes de janvier, 526 715 \$, serviront plus tard à calculer l’erreur.
+
+### Et si on prévoit février ?
+
+Les ventes de décembre peuvent servir de retard d’un mois pour janvier si elles étaient clôturées à l’origine. Avec la même origine, le retard d’un mois requis pour février est janvier. Il faut donc prévoir cette vente, utiliser une entrée déjà disponible ou repousser l’origine de décision. Dans le dernier cas, il faut aussi changer l’horizon annoncé. [Revoir les deux lignes de données dans R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#disponibilite).
 
 ## Régression avec contexte
 
-La régression combine tendance, mois, promotion, prix et indice. La promotion binaire se lit par rapport à la catégorie non, en dollars, les autres termes du modèle étant fixés. Une association conditionnelle n’est pas automatiquement causale : des facteurs omis ou le choix des promotions peuvent influencer la comparaison.
+Une première question descriptive consiste à comparer les mois tels qu’ils ont eu lieu. Les mois en promotion rapportent en moyenne 503 764 \$, les autres 420 892 \$. La soustraction donne 82 872 \$. Les prix moyens des deux groupes sont aussi différents, 55,87 \$ et 59,81 \$ respectivement. Le calendrier, la tendance et l’indice peuvent également différer. On ne peut pas attribuer au seul prix tout ce qui sépare ce calcul du suivant.
 
-Supposons que le coefficient associé à « promotion oui » soit de 2 000 \$. Dans ce modèle, deux situations qui ne diffèrent que par l’indicateur de promotion ont des ventes ajustées qui diffèrent de 2 000 \$. Il s’agit d’une comparaison dans le modèle, avec prix, indice, mois et tendance identiques. Le responsable peut avoir décidé les promotions en fonction d’autres informations; le coefficient ne démontre donc pas l’effet d’une intervention.
+La seconde question porte sur deux profils spécifiés. Écrivons la moyenne modélisée sous la forme
+
+``` math
+m_t = b_0 + b_T t + s_{m(t)} + b_P P_t + b_p p_t + b_I I_t.
+```
+
+Ici, $`t`$ compte les mois, $`s_{m(t)}`$ représente le mois du calendrier, $`P_t`$ vaut 0 ou 1 selon la promotion, $`p_t`$ est le prix moyen et $`I_t`$ l’indice. Janvier et l’absence de promotion servent de références. Le modèle donne ainsi des moyennes différentes à deux mois de janvier séparés d’un an, à cause de la tendance.
+
+Pour un même profil, passons de $`P=0`$ à $`P=1`$. À la soustraction, les termes communs s’annulent. Il reste $`b_P`$, estimé à 47 566 \$. Si le prix baisse lui aussi de 1 \$, il faut ajouter $`(-4\,895)\times(-1)`$, soit environ 4 895 \$ de ventes. Les deux entrées qui bougent donnent donc un contraste d’environ 52 461 \$. Un responsable qui dirait « la campagne a rapporté ce montant » irait au-delà du calcul. Le choix des mois de campagne peut dépendre d’informations absentes du fichier. [Refaire les deux comparaisons dans R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#regression).
 
 ## Résidus et autocorrélation
 
-Le résidu est l’observation moins la valeur ajustée. Un retard 1 rapproche les erreurs de deux mois consécutifs; un retard 12 compare des mois séparés d’une année. Des signes positifs persistants peuvent signaler une sous-prévision répétée. Une ACF de la série brute peut refléter tendance et saisonnalité, et ne doit pas être confondue avec celle des résidus. Un test de Ljung-Box examine collectivement les autocorrélations jusqu’au retard choisi; une p-valeur élevée ne démontre pas leur absence ni l’indépendance.
+Commencez par juillet 2020. Les ventes atteignent 316 643 \$ et la valeur ajustée environ 338 760 \$. Le résidu, observation moins valeur ajustée, vaut environ −22 117 \$. Le point se place sous zéro parce que le modèle a surestimé les ventes. Une erreur de prévision sur janvier 2025 utilise la même convention de signe, mais janvier n’a pas servi à l’ajustement.
 
-Commencez par tracer les résidus dans l’ordre des mois. Plusieurs résidus positifs consécutifs peuvent indiquer que le modèle sous-estime successivement les observations; l’ACF donne ensuite un résumé par retard. Une barre à un retard indique une association estimée entre résidus séparés par ce nombre de mois, avec une incertitude d’échantillonnage. L’absence de barre marquée ne prouve pas l’indépendance et une barre marquée ne désigne pas à elle seule la cause du motif.
+### De deux points à une paire
 
-Sur un graphique d’ACF mensuelle, une barre positive au retard 1 indique que les résidus séparés d’un mois tendent à varier dans le même sens; une barre négative suggère une alternance. Au retard 12, la comparaison concerne des mois séparés d’une année. Les pointillés sont des repères approximatifs, pas une frontière qui prouverait l’indépendance : l’ajustement du modèle et la lecture de plusieurs retards invitent à la prudence. Comparez toujours l’ACF au graphique des résidus dans le temps.
+Sur le graphique chronologique, juin et juillet sont deux points voisins. Pour examiner le retard 1, formez plutôt un point dont l’abscisse est le résidu de juin et l’ordonnée celui de juillet. Répétez pour chaque mois qui a un prédécesseur. Si les points se concentrent dans les quadrants où les deux écarts ont le même signe, les écarts tendent à se suivre. Une seule paire ou une seule séquence ne suffit pas pour généraliser.
 
-Pour approfondir, le test de Ljung-Box regroupe plusieurs retards dans une même vérification. Une petite valeur p fournit un indice contre l’hypothèse testée; une grande valeur p ne démontre pas son exactitude. Le test est facultatif ici : le socle est la lecture du graphique des résidus et de leur ACF.
+L’ACF résume la série à différents retards. Au retard 1, 59 paires sont disponibles et `acf()` donne environ 0,41. Au retard 12, il reste 48 paires et la valeur est environ −0,30. La barre du retard zéro vaut 1 par construction. Les pointillés autour de zéro sont des repères approximatifs. On examine plusieurs barres et on a estimé les coefficients de la régression. Il faut donc revenir aux dates et au contexte avant de proposer un mécanisme. Calculer l’ACF des ventes brutes mélangerait aussi tendance, calendrier et dépendance résiduelle.
 
-## Régression avec erreurs AR
+Le test de Ljung-Box, facultatif, rassemble plusieurs retards. Une faible valeur p suggère une incompatibilité avec l’absence d’autocorrélations aux retards considérés, sous les hypothèses du test. Une valeur p élevée ne certifie pas l’indépendance. [Reproduire les deux graphiques et lire les retards dans R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#diagnostic).
 
-Écrire $`y_t = x_t \beta + \eta_t`$ puis $`\eta_t = \phi \eta_{t-1} + \varepsilon_t`$ signifie que la partie non expliquée par les prédicteurs dépend directement de sa valeur au mois précédent. Par récurrence, une innovation peut encore influer sur les mois suivants. Les innovations ε ne sont pas la même chose que les erreurs de régression η. Le modèle est estimé sur les 60 premiers mois. Les candidats sont comparés sur les mêmes 12 mois et les mêmes prédicteurs. Les paramètres estimés et les diagnostics restent incertains.
+## Régression avec erreurs AR(1)
 
-Une erreur AR(1) et une vente retardée utilisée comme prédicteur ne sont pas la même opération. Dans le premier cas, la dépendance est décrite dans la partie non expliquée par la régression; dans le second, on ajoute explicitement une vente passée à la formule. Pour chaque horizon, il faut vérifier que la vente retardée nécessaire est disponible à l’origine ou préciser comment elle sera prévue.
+La régression représente les ventes par $`y_t=m_t+\eta_t`$. Dans le second candidat, l’erreur suit $`\eta_t=\phi\eta_{t-1}+\varepsilon_t`$. Le premier terme transmet une partie de l’écart précédent. Le second est l’innovation, ce qui reste de nouveau à ce mois. Les paramètres de régression et de dépendance sont estimés ensemble. La valeur estimée de $`\phi`$, environ 0,465, peut donc différer de l’ACF à un mois calculée sur les résidus de la régression ordinaire.
 
-Cette structure est une option plus technique, présentée avec du code complet dans la démonstration. Pour l’activité, il suffit de lire et comparer les résultats fournis : on ne demande pas de construire le modèle AR(1) de mémoire. Une MAE plus faible sur les mêmes douze mois décrit une meilleure performance sur ce bloc pour ce critère; elle ne garantit pas la performance sur une autre période. Ici les valeurs externes de 2025 sont connues après coup : la comparaison est conditionnelle à ces valeurs.
+Isolez une erreur initiale de +10 000 \$ et supposez les innovations futures de moyenne nulle. Sa contribution attendue à un mois est d’environ 4 652 \$. À deux mois, on applique une seconde fois le coefficient et il reste environ 2 164 \$. La prévision totale comprend aussi la moyenne correspondant au futur prix, à l’indice et aux autres entrées. Ajouter les ventes du mois précédent comme prédicteur serait une autre spécification. Cela demanderait de disposer de ces ventes à chaque horizon.
+
+### Comment départager les deux candidats ?
+
+Les deux candidats sont estimés sur les mois de 2020 à 2024, puis évalués sur les mêmes douze ventes de 2025 avec les mêmes valeurs externes réalisées. En janvier, la régression ordinaire donne l’erreur absolue la plus petite. En juillet, le modèle à erreurs AR(1) fait mieux. Sur les douze mois, la MAE de la régression ordinaire vaut 5 088 \$ contre 5 380 \$. Le motif résiduel justifiait l’essai du second modèle. Les scores renseignent sur une autre question, celle de sa performance sur le bloc réservé. Comme ces données ont déjà servi au module 08 et que les entrées réelles n’étaient pas toutes disponibles à l’origine, une mise en service demanderait une nouvelle évaluation. [Examiner les douze erreurs dans la démonstration](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#comparaison).
 
 ## Scénarios et décision
 
-Une prévision sous hypothèses est conditionnelle au prix, à la promotion et à l’indice fournis. Les intervalles d’une régression dynamique avec prédicteurs fixés ne couvrent pas toute l’incertitude sur ces futurs prédicteurs. Pour deux scénarios, maintenir les autres entrées identiques et préciser la date, les unités et le destinataire. Une différence prédite ne garantit pas l’effet d’une intervention.
+Deux lignes représentant janvier suffisent à poser la question de la direction. Gardez la tendance à 61, le mois à janvier, le prix à 60 \$ et l’indice à 100. Changez uniquement la promotion. Les ventes prévues passent de 498 619 \$ à 546 185 \$. Ce calcul est cohérent avec le coefficient de promotion de la régression additive. Il faut encore vérifier où ces profils se situent dans les données.
 
-Pour lire les intervalles, demandez-vous ce qui est supposé connu. Un intervalle calculé avec un prix et une promotion fixés décrit l’incertitude sous ces valeurs; il n’ajoute pas automatiquement l’incertitude sur un prix ou une promotion encore inconnus. Utilisez l’exercice de scénario pour comparer deux hypothèses à valeurs restantes identiques, puis formulez une limite opérationnelle.
+Pendant l’entraînement, les prix avec promotion vont de 53,17 à 57,86 \$, ceux sans promotion de 57,47 à 62,72 \$. À 60 \$, l’un des profils demande une extrapolation sur le prix. À 57,70 \$, chaque groupe couvre ce prix. Ce contrôle univarié ne garantit pas que le même mois à ce prix, avec le même indice, soit bien représenté dans les deux groupes.
 
-Dans le cas guidé, 60 \$ se situe dans la plage des prix observés sans promotion. En promotion, le prix maximal de l’entraînement est de 57,86 \$. Le scénario avec promotion exige donc aussi une extrapolation.
+### Que couvre une fourchette ?
 
-## Lectures ciblées et documentation
+Même si l’indice vaut exactement 100, la vente du mois varie autour de la valeur ajustée. Un intervalle de prévision conditionnel concerne cette nouvelle observation sous le modèle et les entrées spécifiés. Faire passer l’indice de 100 à 105 déplace, en plus, la prévision centrale d’environ 13 436 \$. Le tableau de scénarios ne fournit aucune probabilité pour ces deux indices. Dans ce cas, l’autocorrélation observée fragilise aussi la couverture nominale des intervalles classiques de la régression ordinaire.
 
-Hyndman et Athanasopoulos (2021), *Forecasting: Principles and Practice*, 3e édition : [régression et prévision ex ante/ex post](https://otexts.com/fpp3/regression.html), sections 7.3 et 7.6; [diagnostic des résidus](https://otexts.com/fpp3/toolbox.html), section 5.4; [régression dynamique](https://otexts.com/fpp3/dynamic-regression.html), sections 10.1 à 10.3. La [documentation de forecast::Arima](https://pkg.robjhyndman.com/forecast/reference/Arima.html) explique `xreg` et `order`.
+Pour vérifier votre phrase finale, remplacez « rapportera » par une formulation que les données permettent de défendre. Nommez janvier, la promotion, le prix, l’indice et l’extrapolation éventuelle. En transfert, posez la même question sur la capacité réellement observée à Québec. [Comparer les scénarios dans R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#scenario).
 
-Pour approfondir seulement : [modèles ARIMA](https://otexts.com/fpp3/arima.html), sections 9.1 à 9.5, et [complément facultatif](../../modules/semaine-09-variables-externes-autocorrelation/complements.llms.md). Revenir à l’exercice correspondant après chaque lecture.
+## Passages du manuel et pratique ciblée
+
+Hyndman et Athanasopoulos (2021), *Forecasting: Principles and Practice*, 3e édition. Choisissez le passage correspondant à la difficulté rencontrée. Le manuel emploie `fable` pour ses exemples. Les projets du cours fournissent le code équivalent utilisé ici avec `lm` et `forecast::Arima`.
+
+| Difficulté | Passage facultatif | Puis essayer |
+|----|----|----|
+| Dater les entrées futures | Chapitre 7, section 7.6, « Ex-ante versus ex-post forecasts » et « Scenario based forecasting ». [Régression temporelle](https://otexts.com/fpp3/regression.html) | [Retard et horizon](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-5) |
+| Interpréter le coefficient avec prudence | Chapitre 7, section 7.8, « Correlation, causation and forecasting ». [Régression temporelle](https://otexts.com/fpp3/regression.html) | [Contraste de deux profils](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-8) |
+| Lire une ACF et les pointillés | Chapitre 5, section 5.4, « Residual diagnostics », jusqu’aux tests groupés. [Diagnostic des résidus](https://otexts.com/fpp3/toolbox.html) | [Interpréter une valeur p](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-6) |
+| Distinguer erreur et innovation | Chapitre 10, introduction et section 10.3, « Forecasting ». [Régression dynamique](https://otexts.com/fpp3/dynamic-regression.html) | [Comparer deux méthodes](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-9) |
+
+La [documentation de `forecast::Arima`](https://pkg.robjhyndman.com/forecast/reference/Arima.html) précise le rôle de `xreg` et de `order`. Les [compléments du module](../../modules/semaine-09-variables-externes-autocorrelation/complements.llms.md) développent les événements, les retards et la différenciation. Ils sont facultatifs.
