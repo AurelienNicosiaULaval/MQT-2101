@@ -4,7 +4,9 @@ Le cas reprend les ventes commerciales du transfert du module 08. Les données s
 
 ## Préparation
 
-Installez `tidyverse` et `forecast` au besoin, ouvrez le projet et exécutez les blocs dans l’ordre. Le code est complet dans une session neuve.
+Dans RStudio, ouvrez `variables-ventes.Rproj`, puis `variables_ventes.qmd`. Si nécessaire, installez `tidyverse` et `forecast` une première fois. Exécutez ensuite les blocs dans l’ordre. Dans ce cas, « janvier » est un niveau du facteur mois. Le traiter comme le nombre 1 dans une pente linéaire imposerait le même changement de janvier à février que de novembre à décembre.
+
+Avant de lancer le modèle, demandez-vous ce que vous devriez voir dans les deux objets. La dernière ligne de `entrainement` devrait être décembre 2024, et la première de `validation` janvier 2025. Chaque ligne est un mois, quel que soit le nombre de transactions ce mois-là.
 
 ``` r
 library(tidyverse)
@@ -28,18 +30,39 @@ validation <- ventes |> slice_tail(n = 12)
 Les valeurs de 2025 dans le fichier sont observées après coup. Une promotion pourrait être connue si elle était déjà approuvée; un prix peut être planifié ou scénarisé; l’indice peut être prévu séparément. Aucune de ces disponibilités n’est attestée par le fichier fictif. Les ventes futures sont la cible.
 
 ``` r
-ventes |> select(date, ventes, promotion, prix_moyen, indice_confiance) |> slice_head(n = 4)
+ventes |>
+  filter(date %in% as.Date(c("2024-12-01", "2025-01-01"))) |>
+  select(date, ventes, promotion, prix_moyen, indice_confiance)
 ```
 
-    # A tibble: 4 × 5
+    # A tibble: 2 × 5
       date       ventes promotion prix_moyen indice_confiance
       <date>      <dbl> <fct>          <dbl>            <dbl>
-    1 2020-01-01 309720 non             59.7             99.6
-    2 2020-02-01 329533 non             58.3            101. 
-    3 2020-03-01 332527 non             58.4            101. 
-    4 2020-04-01 325184 non             59.2            100. 
+    1 2024-12-01 542217 non             61.2             112.
+    2 2025-01-01 526715 non             61.6             111.
+
+Le prix moyen de janvier est 61,59 \$ et l’indice vaut 111,1 dans le fichier terminé. Pour refaire la décision de décembre, cachez ces deux cellules et les ventes de janvier. Le mois reste connu. Pour le prix, il faudrait un tarif daté et une hypothèse sur les transactions. Pour l’indice, il faudrait une prévision disponible à l’origine ou une valeur de scénario. Conservez cette distinction dans l’activité 9.1.
 
 ## 2. Régression conditionnelle
+
+### Commencer par les groupes observés
+
+``` r
+entrainement |>
+  group_by(promotion) |>
+  summarise(mois_observes = n(), ventes_moyennes = mean(ventes),
+            prix_moyen_du_groupe = mean(prix_moyen), .groups = "drop")
+```
+
+    # A tibble: 2 × 4
+      promotion mois_observes ventes_moyennes prix_moyen_du_groupe
+      <fct>             <int>           <dbl>                <dbl>
+    1 non                  42         420892.                 59.8
+    2 oui                  18         503764.                 55.9
+
+Les 18 mois avec promotion affichent en moyenne 503 764 \$ de ventes, contre 420 892 \$ pour les 42 autres. Ils ont aussi un prix moyen plus bas, 55,87 \$ contre 59,81 \$. Soustrayez les ventes. Le résultat décrit les deux groupes tels qu’ils se présentent dans les données. Pour parler d’un même mois à un même prix, il faut poser une autre question.
+
+### Construire la comparaison ajustée
 
 La catégorie de référence est `non`. La pente de promotion compare deux valeurs ajustées, avec les autres variables maintenues fixes. Les données observationnelles ne garantissent pas une interprétation causale.
 
@@ -55,9 +78,32 @@ coef(summary(modele_lm))[c("tendance", "promotionoui", "prix_moyen", "indice_con
     prix_moyen       -4895.027  1628.3779 -3.006075 4.360178e-03
     indice_confiance  2687.160  1269.8958  2.116048 4.003496e-02
 
+Pour deux profils identiques sauf la promotion, la différence ajustée est de 47 566 \$. Si le prix baisse aussi d’un dollar, deux termes changent. La pente estimée du prix est d’environ −4 895 \$ de ventes par dollar de prix. Le contraste devient donc 47 566 + 4 895 ≈ 52 461 \$. Cette arithmétique décrit l’équation ajustée. Le fichier ne révèle pas pourquoi les responsables ont choisi les mois des campagnes.
+
 ## 3. Autocorrélation des résidus
 
 Une erreur positive signifie une observation supérieure à la valeur ajustée. L’ACF présente la corrélation estimée à chaque retard; l’incertitude est importante avec 60 mois. Le test facultatif de Ljung-Box regroupe les retards jusqu’à 12. La valeur p est approximative ici, notamment après ajustement de nombreux coefficients : elle complète les graphiques et ne prouve pas la blancheur des résidus.
+
+### Partir d’un mois identifiable
+
+``` r
+diagnostic_mois <- entrainement |>
+  transmute(date, ventes, ajustees = fitted(modele_lm),
+            residu = ventes - ajustees, precedent = lag(residu))
+diagnostic_mois |> filter(between(date, as.Date("2020-05-01"), as.Date("2020-08-01")))
+```
+
+    # A tibble: 4 × 5
+      date       ventes ajustees  residu precedent
+      <date>      <dbl>    <dbl>   <dbl>     <dbl>
+    1 2020-05-01 405161  407153.  -1992.    -5371.
+    2 2020-06-01 338213  343286.  -5073.    -1992.
+    3 2020-07-01 316643  338760. -22117.    -5073.
+    4 2020-08-01 405192  417161. -11969.   -22117.
+
+En juillet 2020, le résidu vaut 316 643 − 338 760 ≈ −22 117 \$. En juin, il était déjà négatif. Sur le tracé chronologique, ce sont deux points voisins sous zéro. Pour le retard 1, ce sont les deux coordonnées d’une seule paire. Les 60 mois donnent 59 paires voisines et 48 paires séparées d’une année.
+
+### Passer des dates aux retards
 
 ``` r
 residus_lm <- residuals(modele_lm)
@@ -65,13 +111,30 @@ plot(entrainement$date, residus_lm, type = "l", xlab = "Mois", ylab = "Résidu (
 abline(h = 0, lty = 2)
 ```
 
-![](demonstrations_files/figure-html/unnamed-chunk-3-1.png)
+![](demonstrations_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
 acf(residus_lm, lag.max = 12, main = "ACF des résidus")
 ```
 
-![](demonstrations_files/figure-html/unnamed-chunk-3-2.png)
+![](demonstrations_files/figure-html/unnamed-chunk-6-2.png)
+
+``` r
+a <- acf(residus_lm, lag.max = 12, plot = FALSE)
+tibble(retard = as.numeric(a$lag), correlation = as.numeric(a$acf)) |>
+  filter(retard %in% c(0, 1, 12))
+```
+
+    # A tibble: 3 × 2
+      retard correlation
+       <dbl>       <dbl>
+    1      0       1    
+    2      1       0.413
+    3     12      -0.295
+
+Le retard zéro compare chaque résidu à lui-même et vaut 1. La barre suivante décrit les mois voisins. Une même valeur d’ACF peut résulter de séquences placées à des dates différentes, d’où l’intérêt du premier graphique.
+
+Pour le test facultatif mentionné ci-dessus :
 
 ``` r
 Box.test(residus_lm, lag = 12, type = "Ljung-Box", fitdf = 0)
@@ -113,6 +176,24 @@ scores
     1 erreurs_ar1 1408. 5380. 6417.
     2 regression  1474. 5088. 6272.
 
+### Vérifier le classement avant de conclure
+
+``` r
+comparaison |>
+  filter(date %in% as.Date(c("2025-01-01", "2025-07-01"))) |>
+  select(date, methode, observe, prevision, erreur)
+```
+
+    # A tibble: 4 × 5
+      date       methode     observe prevision erreur
+      <date>     <chr>         <dbl>     <dbl>  <dbl>
+    1 2025-01-01 regression   526715   520664.  6051.
+    2 2025-01-01 erreurs_ar1  526715   518310.  8405.
+    3 2025-07-01 regression   615840   600840. 15000.
+    4 2025-07-01 erreurs_ar1  615840   602557. 13283.
+
+En janvier, les deux modèles sous-prévoient. L’erreur absolue est plus faible pour la régression ordinaire (environ 6 051 \$ contre 8 405 \$). En juillet, l’ordre s’inverse (15 000 \$ contre 13 283 \$). Choisir un seul mois après avoir vu les résultats changerait la question. Le tableau des scores utilise les douze mois pour les deux candidats.
+
 Sur les douze mois de 2025, la régression ordinaire donne une MAE de 5 088 \$ et une RMSE de 6 272 \$. Avec les erreurs AR(1), on obtient 5 380 \$ et 6 417 \$. Les deux critères favorisent ici la régression ordinaire malgré l’autocorrélation observée à l’entraînement.
 
 Pour approfondir, examinez aussi les innovations du modèle AR(1). Leur test reste indicatif après estimation.
@@ -122,7 +203,7 @@ innovations <- residuals(modele_ar1)
 acf(innovations, lag.max = 12, main = "ACF des innovations du modèle AR(1)")
 ```
 
-![](demonstrations_files/figure-html/unnamed-chunk-5-1.png)
+![](demonstrations_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
 Box.test(innovations, lag = 12, type = "Ljung-Box", fitdf = 1)
@@ -142,7 +223,7 @@ comparaison |> ggplot(aes(date, observe)) +
   labs(x = "Mois de 2025", y = "Ventes (dollars)", colour = "Modèle") + theme_minimal()
 ```
 
-![](demonstrations_files/figure-html/unnamed-chunk-6-1.png)
+![](demonstrations_files/figure-html/unnamed-chunk-12-1.png)
 
 ## 5. Scénario
 
@@ -177,6 +258,35 @@ entrainement |>
     2 oui           53.2     57.9
 
 À 60 \$ et avec un indice de 100, le modèle prévoit 498 619 \$ sans promotion et 546 185 \$ avec promotion. Le prix de 60 \$ appartient à la plage observée sans promotion (57,47 à 62,72 \$). En promotion, les prix observés vont de 53,17 à 57,86 \$. Le scénario avec promotion extrapole donc la relation ajustée au-delà des prix observés dans ce groupe.
+
+### Modifier une hypothèse à la fois
+
+``` r
+variantes <- expand_grid(
+  prix_moyen = c(57.70, 60), indice_confiance = c(100, 105),
+  promotion = factor(c("non", "oui"), levels = levels(entrainement$promotion))
+) |> mutate(tendance = 61, mois = factor(1, levels = levels(entrainement$mois)))
+resultats_scenario <- bind_cols(variantes, as_tibble(
+  predict(modele_lm, newdata = variantes, interval = "prediction", level = 0.95)
+))
+resultats_scenario |> select(prix_moyen, indice_confiance, promotion, fit, lwr, upr)
+```
+
+    # A tibble: 8 × 6
+      prix_moyen indice_confiance promotion     fit     lwr     upr
+           <dbl>            <dbl> <fct>       <dbl>   <dbl>   <dbl>
+    1       57.7              100 non       509878. 468863. 550893.
+    2       57.7              100 oui       557444. 520709. 594179.
+    3       57.7              105 non       523314. 491215. 555412.
+    4       57.7              105 oui       570880. 543745. 598014.
+    5       60                100 non       498619. 459670. 537568.
+    6       60                100 oui       546185. 508885. 583485.
+    7       60                105 non       512055. 482727. 541383.
+    8       60                105 oui       559621. 531817. 587426.
+
+À 57,70 \$, les deux groupes ont une plage de prix compatible avec le scénario. L’écart entre les prévisions demeure 47 566 \$, car la formule ne comporte aucune interaction entre prix et promotion. Cela ne garantit pas que les deux profils complets ont été fréquemment observés.
+
+À 60 \$, sans promotion, faire passer l’indice de 100 à 105 déplace la prévision de 498 619 \$ à 512 055 \$. Les colonnes `lwr` et `upr` répondent à une autre question. Pour la première de ces lignes, elles donnent environ 459 670 à 537 568 \$ pour une nouvelle vente mensuelle sous les entrées fixées. Il s’agit de l’intervalle classique de `lm`. Sa couverture théorique suppose notamment des erreurs indépendantes, alors que le diagnostic temporel invite ici à la prudence. La variation future de l’indice n’y est pas incorporée.
 
 ## Pour conclure
 

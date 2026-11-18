@@ -32,9 +32,13 @@ Le module 08 a introduit tendance et calendrier; son transfert utilisait déjà 
 
 ## Avant de commencer
 
-Revoir la régression et ses résidus (module 03), l’origine et les mesures d’erreur (module 06), puis la tendance et les mois (module 08). Les données fictives et les unités sont décrites dans le [dictionnaire](data/dictionnaires.md). Installez `tidyverse` et `forecast`, ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto.
+Si le signe d’un résidu vous échappe, reprenez la [démonstration de régression du module 03](../../modules/semaine-03-regression-lineaire/demonstrations.llms.md). Pour les horizons et la MAE, consultez les [notes du module 06](../../modules/semaine-06-series-chronologiques-intro/notes-cours.llms.md). Le [module 08](../../modules/semaine-08-tendance-saisonnalite/index.llms.md) explique comment représenter le mois et la tendance. Les données fictives et les unités sont décrites dans le [dictionnaire](data/dictionnaires.md). Installez `tidyverse` et `forecast`, ouvrez les projets téléchargés dans RStudio et rendez les fichiers Quarto.
 
 Téléchargez le [projet guidé](telechargements/variables-ventes.zip) et le [projet de transfert](telechargements/variables-succursales.zip). Les cinq productions 9.1 à 9.5 sont les mêmes dans cet accueil, les capsules et les diapositives : faites chacune une seule fois dans `variables_ventes.qmd`. Le transfert se réalise séparément dans `variables_succursales.qmd`.
+
+1.  Décompressez le projet guidé. Ouvrez son fichier `variables-ventes.Rproj`, puis `variables_ventes.qmd`. Exécutez le bloc de préparation et vérifiez que l’entraînement se termine en décembre 2024.
+2.  Laissez ce rapport ouvert pendant les cinq étapes. La démonstration utilise les mêmes noms d’objets. Commencez chaque activité dans votre document avant d’ouvrir son corrigé.
+3.  Lorsque la carte vous renvoie aux succursales, ouvrez `variables-succursales.Rproj` dans une autre session. Une ligne y décrit une succursale pendant un mois. Les ventes de deux succursales successives dans le fichier ne forment pas une série.
 
 ## Votre parcours
 
@@ -42,7 +46,11 @@ Les cinq capsules suivent les cinq décisions utiles : disponibilité, régressi
 
 1Auditer les variablesQue sait-on fin 2024?[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md#disponibilite)[Exercice](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
 
-Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Lecture française](lectures.llms.md#lecture-1)
+Objectif Dater une information avant de l’introduire dans une prévision.
+
+Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Lecture française](lectures.llms.md#lecture-1) · [Démonstration R](demonstrations.llms.md#disponibilite)
+
+Action Cachez la ligne de janvier. Remplissez les colonnes « information disponible » et « justification » avant de regarder les ventes réalisées.
 
 Activité 9.1
 
@@ -54,7 +62,11 @@ Transfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.
 
 2Ajuster et interpréterQue représente le coefficient?[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md#regression)Ouvrir l’étapeRéduire
 
-Ressource [Capsule 2](capsules.llms.md#capsule-2) · [Lecture française](lectures.llms.md#lecture-2)
+Objectif Passer de deux moyennes observées à une comparaison entre profils identiques.
+
+Ressource [Capsule 2](capsules.llms.md#capsule-2) · [Lecture française](lectures.llms.md#lecture-2) · [Démonstration R](demonstrations.llms.md#regression)
+
+Action Comparez les deux moyennes de ventes, puis repérez la ligne `promotionoui` de la régression. Expliquez ce que chacune des deux comparaisons maintient fixe.
 
 Activité 9.2
 
@@ -66,7 +78,11 @@ Transfert distinct Après l’activité 9.3, l’exercice 2 combine l’ajusteme
 
 3Diagnostiquer dans le tempsLes écarts se suivent-ils?[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md#diagnostic)[Exercice](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
 
-Ressource [Capsule 3](capsules.llms.md#capsule-3) · [Lecture française](lectures.llms.md#lecture-3)
+Objectif Relier un écart daté à une barre du graphique d’autocorrélation.
+
+Ressource [Capsule 3](capsules.llms.md#capsule-3) · [Lecture française](lectures.llms.md#lecture-3) · [Démonstration R](demonstrations.llms.md#diagnostic)
+
+Action Calculez le résidu de juillet 2020. Repérez ce mois sur le tracé, puis construisez la paire juin-juillet avant de lire l’ACF.
 
 Activité 9.3
 
@@ -78,7 +94,11 @@ Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
 
 4Comparer deux modèlesQuel modèle prévoit le mieux?[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md#comparaison)Ouvrir l’étapeRéduire
 
-Ressource [Capsule 4](capsules.llms.md#capsule-4) · [Lecture française](lectures.llms.md#lecture-4)
+Objectif Choisir entre deux modèles pour un même usage et un même horizon.
+
+Ressource [Capsule 4](capsules.llms.md#capsule-4) · [Lecture française](lectures.llms.md#lecture-4) · [Démonstration R](demonstrations.llms.md#comparaison)
+
+Action Avant de lire la moyenne annuelle, comparez les erreurs absolues en janvier et en juillet. Vérifiez ce qui est commun aux deux candidats.
 
 Activité 9.4
 
@@ -90,7 +110,11 @@ Transfert distinct La comparaison AR(1) est accompagnée dans cette activité. L
 
 5Communiquer un scénarioÀ quelles hypothèses tient la prévision?[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md#scenario)[Exercice](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
 
-Ressource [Capsule 5](capsules.llms.md#capsule-5) · [Lecture française](lectures.llms.md#lecture-5)
+Objectif Écrire un message à la direction qui précise les hypothèses de janvier.
+
+Ressource [Capsule 5](capsules.llms.md#capsule-5) · [Lecture française](lectures.llms.md#lecture-5) · [Démonstration R](demonstrations.llms.md#scenario)
+
+Action Prévoyez janvier sous les deux promotions. Changez ensuite le prix seul et examinez si cette valeur a déjà été observée dans chaque groupe.
 
 Activité 9.5
 
@@ -102,7 +126,7 @@ Transfert distinct Faites l’exercice 3, puis l’exercice 4 pour rassembler vo
 
 ## Exercices d’application
 
-Dans le [projet de transfert](telechargements/variables-succursales.zip), la direction de la succursale de Québec envisage d’augmenter sa capacité de 5 %. Faites les [exercices 1 à 4](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-1) aux étapes indiquées, puis ouvrez les corrigés. Les [exercices 5 à 7](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#pratique-supplementaire) offrent une pratique supplémentaire.
+Dans le [projet de transfert](telechargements/variables-succursales.zip), la direction de la succursale de Québec envisage d’augmenter sa capacité de 5 %. Faites les [exercices 1 à 4](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-1) aux étapes indiquées, puis ouvrez les corrigés. Les [exercices 5 à 10](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#pratique-supplementaire) offrent une pratique supplémentaire.
 
 ## Trace finale
 
@@ -114,13 +138,22 @@ Ce module prépare les questions du final sur les variables externes, les diagno
 
 ## Ressources du module
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF enrichi pour le tournage](telechargements/module-09-pdf-2026-11-18-tournage.zip).
+Téléchargez le [lot des cinq capsules et des notes de cours](telechargements/module-09-pdf-2026-11-18-final.zip).
 
 [CapsulesCinq supports PDF et HTML et leurs productions guidées.](capsules.llms.md) [Notes de coursSynthèse des cinq étapes en diapositives.](notes-cours.llms.md) [Démonstrations RReproduire la régression, les diagnostics et les scénarios de ventes.](demonstrations.llms.md) [Exercices et corrigésÉtudier la capacité des succursales et vérifier ses réponses après une tentative.](exercices.llms.md) [LecturesReprendre une notion en français et consulter les passages ciblés du manuel.](lectures.llms.md)
 
 - [Notes de synthèse HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).
 - [Démonstration complète](telechargements/demonstration-variables.zip) et [corrigé de transfert](telechargements/corrige-succursales.zip).
 - [Compléments facultatifs](../../modules/semaine-09-variables-externes-autocorrelation/complements.llms.md) : retards, événements, modèle en deux étapes et repères ARIMA; [télécharger le cahier](telechargements/complements-variables.zip).
+
+## Erreurs fréquentes
+
+| Si vous obtenez ce résultat | Où reprendre |
+|----|----|
+| Vous avez inscrit 61,59 \$ comme prix connu en décembre | Vérifiez la date de disponibilité et la différence entre tarif et prix moyen dans la [lecture 1](../../modules/semaine-09-variables-externes-autocorrelation/lectures.llms.md#lecture-1). |
+| Vous donnez 82 872 \$ comme coefficient de promotion | Comparez les moyennes brutes aux deux profils de la [démonstration de régression](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#regression). |
+| Vous choisissez le modèle AR(1) uniquement parce que la première barre dépasse les pointillés | Recalculez les erreurs sur les douze mois de [comparaison](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#comparaison). |
+| Vous présentez 8 721 \$ comme le rendement attendu d’un agrandissement | Vérifiez la variation de la capacité à l’intérieur de Québec dans l’[exercice 3](../../modules/semaine-09-variables-externes-autocorrelation/exercices.llms.md#exercice-3). |
 
 ## Auto-vérification
 
