@@ -1,0 +1,21 @@
+name: Relire les contrôles pédagogiques du module 09
+on:
+  push:
+    branches: [verification/r-tournage-module09-20261118]
+permissions:
+  contents: read
+jobs:
+  valider:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c36234ce88e85fa40aebbf66918fe33945c384d5
+      - name: Exécuter les quatre contrôles du cours dans R
+        run: |
+          docker run --rm -v "$PWD:/cours:ro" -w /cours rocker/r-ver:4.5.1 sh -ec '
+            Rscript scripts/12_validate_module_coherence.R
+            Rscript scripts/13_validate_data_assets.R
+            Rscript scripts/14_validate_site_output.R
+            Rscript scripts/25_validate_module06_format.R
+          '
