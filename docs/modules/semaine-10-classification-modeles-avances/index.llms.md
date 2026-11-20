@@ -47,15 +47,21 @@ Revoir une variable réponse, une régression et un résidu (module 03), la comp
 
 Dans le cas guidé, le partage stratifié est de l’ordre de 60 % pour l’apprentissage, 20 % pour la validation et 20 % pour le test. Les deux seuils et les coûts fictifs sont fixés avant la comparaison; la validation choisit la règle et le test évalue la règle retenue. Le partage aléatoire est pédagogique : le fichier ne contient pas les dates permettant une validation temporelle réelle.
 
+Ouvrez le fichier du même nom que le dossier du projet (extension .Rproj), puis son rapport Quarto. Rendez le document une première fois après avoir exécuté sa préparation.
+
 ## Votre parcours
 
 Les activités 10.1 à 10.5 dans l’accueil, les capsules et les diapositives sont les mêmes productions. Réalisez chacune une seule fois dans `classification_clients.qmd`. Les exercices portent sur une décision distincte et se réalisent séparément dans `classification_service.qmd`.
 
 Les cinq capsules correspondent aux décisions de définir la cible, estimer, lire les erreurs, choisir la règle et évaluer l’action. La calibration et la capacité restent ensemble au moment de communiquer la décision, afin de conserver un parcours cohérent.
 
-1Définir la cible et les partitionsActivité 10.1[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md)[Ex. 1](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
+1Définir la cible et les partitionsQue savait-on avant le départ ?[Capsule 1](capsules.llms.md#capsule-1)[Démo](demonstrations.llms.md#preparation)[Ex. 1](exercices.llms.md#exercice-1)Ouvrir l’étapeRéduire
+
+Objectif Définir l’unité, l’horizon et les trois rôles du partage.
 
 Ressource [Capsule 1](capsules.llms.md#capsule-1) · [Lecture française](lectures.llms.md#lecture-1)
+
+Action Repérez dans le dictionnaire une variable connue à la décision et une information qui ne sera disponible qu’après le suivi.
 
 Activité 10.1
 
@@ -63,11 +69,15 @@ Définissez l’unité, la classe positive, l’horizon et le moment des prédic
 
 Auto-vérification Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.
 
-Transfert distinct Faites l’exercice 1 avant d’ouvrir son corrigé.
+Transfert distinct Faites l’[exercice 1](exercices.llms.md#exercice-1) sur le mois-succursale.
 
-2Estimer et interpréterActivité 10.2[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md)[Ex. 2](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
+2Estimer et interpréterQue change un ticket de plus ?[Capsule 2](capsules.llms.md#capsule-2)[Démo](demonstrations.llms.md#modele)[Ex. 2](exercices.llms.md#exercice-2)Ouvrir l’étapeRéduire
+
+Objectif Passer d’un rapport de cotes à deux risques chiffrés.
 
 Ressource [Capsule 2](capsules.llms.md#capsule-2) · [Lecture française](lectures.llms.md#lecture-2)
+
+Action Comparez à la main les cotes des profils à un et trois tickets, puis vérifiez leurs probabilités dans R.
 
 Activité 10.2
 
@@ -75,11 +85,15 @@ Ajustez une régression logistique sur l’apprentissage. Interprétez un rappor
 
 Auto-vérification Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.
 
-Transfert distinct Faites l’exercice 2 avant d’ouvrir son corrigé.
+Transfert distinct Faites l’[exercice 2](exercices.llms.md#exercice-2) sur les ruptures de stock.
 
-3Lire une matrice de confusionActivité 10.3[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md)[Ex. 3](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
+3Lire une matrice de confusionQui figure au dénominateur ?[Capsule 3](capsules.llms.md#capsule-3)[Démo](demonstrations.llms.md#matrices)Ouvrir l’étapeRéduire
+
+Objectif Lire séparément les erreurs parmi les départs et parmi les clients ciblés.
 
 Ressource [Capsule 3](capsules.llms.md#capsule-3) · [Lecture française](lectures.llms.md#lecture-3)
+
+Action Tracez une grille de deux lignes et deux colonnes. Écrivez d’abord les totaux, puis les ratios.
 
 Activité 10.3
 
@@ -87,11 +101,15 @@ Sur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez se
 
 Auto-vérification Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.
 
-Transfert distinct Faites l’exercice 3 avant d’ouvrir son corrigé.
+Transfert distinct Conservez vos deux matrices. L’exercice 3 sur les succursales vient après la capsule 4, une fois les coûts expliqués.
 
-4Choisir une règle avant le testActivité 10.4[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md)[Ex. 4](exercices.llms.md#exercice-4)Ouvrir l’étapeRéduire
+4Choisir une règle avant le testCombien coûte chaque erreur ?[Capsule 4](capsules.llms.md#capsule-4)[Démo](demonstrations.llms.md#validation)[Ex. 3](exercices.llms.md#exercice-3)Ouvrir l’étapeRéduire
+
+Objectif Choisir une règle en validation pour des coûts énoncés.
 
 Ressource [Capsule 4](capsules.llms.md#capsule-4) · [Lecture française](lectures.llms.md#lecture-4)
+
+Action Reprenez les quatre effectifs de chaque seuil et appliquez les mêmes coûts aux deux règles.
 
 Activité 10.4
 
@@ -99,11 +117,15 @@ Sur la validation seulement, comparez les deux seuils avec un coût fictif de 4 
 
 Auto-vérification Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.
 
-Transfert distinct Faites l’exercice 4 avant d’ouvrir son corrigé.
+Transfert distinct Faites l’[exercice 3](exercices.llms.md#exercice-3) et fixez le seuil du transfert avant d’ouvrir son test.
 
-5Évaluer et recommanderActivité 10.5[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md)[Ex. 5](exercices.llms.md#exercice-5)Ouvrir l’étapeRéduire
+5Évaluer et recommanderCombien de clients peut-on appeler ?[Capsule 5](capsules.llms.md#capsule-5)[Démo](demonstrations.llms.md#test)[Ex. 4 et 5](exercices.llms.md#exercice-4)Ouvrir l’étapeRéduire
+
+Objectif Évaluer le choix figé et vérifier sa faisabilité.
 
 Ressource [Capsule 5](capsules.llms.md#capsule-5) · [Lecture française](lectures.llms.md#lecture-5)
+
+Action Confrontez le nombre de contacts, les départs détectés et les risques moyens avant de rédiger votre recommandation.
 
 Activité 10.5
 
@@ -111,20 +133,34 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
 
 Auto-vérification Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.
 
-Transfert distinct Faites l’exercice 5 avant d’ouvrir son corrigé.
+Transfert distinct Terminez les [exercices 4 et 5](exercices.llms.md#exercice-4) sur la capacité mensuelle et la recommandation.
+
+## Exercices d’application
+
+Les ventes d’une succursale et les tickets d’un client ne décrivent pas la même décision. Dans le transfert, la direction dispose de deux interventions par mois pour quatre succursales. Travaillez dans le [projet des succursales](telechargements/classification-service.zip). Réalisez les exercices 1 et 2 après les capsules 1 et 2, l’exercice 3 après la capsule 4, puis les exercices 4 et 5 après la capsule 5. Ouvrez chaque corrigé après votre tentative.
 
 ## Trace finale
 
-Dans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois.
+Dans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois. Redémarrez R et rendez chacun des deux rapports à partir de son propre projet.
 
 ## Ressources du module
 
-Les cinq capsules et la synthèse sont regroupées dans le [lot PDF harmonisé du 3 novembre 2026](telechargements/module-10-pdf-2026-11-03-harmonise.zip).
+Les cinq capsules et la synthèse sont regroupées dans le [lot PDF des cinq capsules et des notes de cours](telechargements/module-10-pdf-2026-11-20-tournage.zip).
 
-- [Capsules](../../modules/semaine-10-classification-modeles-avances/capsules.llms.md), [démonstrations R](../../modules/semaine-10-classification-modeles-avances/demonstrations.llms.md), [exercices et corrigés](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md) et [lectures](../../modules/semaine-10-classification-modeles-avances/lectures.llms.md).
+[CapsulesCinq supports PDF et HTML avec leurs activités guidées.](capsules.llms.md) [Notes de coursRetrouver les définitions et les exemples chiffrés.](notes-cours.llms.md) [Démonstrations RReproduire les probabilités et comparer deux règles de ciblage.](demonstrations.llms.md) [Exercices et corrigésChoisir des interventions dans quatre succursales et vérifier sa réponse.](exercices.llms.md) [LecturesRelire une notion en français et vérifier sa compréhension.](lectures.llms.md)
+
 - Notes de synthèse [HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).
 - [Démonstration complète](telechargements/demonstration-classification.zip), [corrigé du transfert](telechargements/corrige-service.zip) et [cahier facultatif](telechargements/complements-classification.zip).
 - [Compléments facultatifs en ligne](../../modules/semaine-10-classification-modeles-avances/complements.llms.md) : cotes, vraisemblance, ROC, arbre et réseaux de neurones.
+
+## Erreurs fréquentes
+
+| Si vous obtenez ce résultat | Où reprendre |
+|----|----|
+| Vous annoncez une hausse de 44,3 points pour un ticket de plus | [Comparer deux profils aux autres variables fixées](../../modules/semaine-10-classification-modeles-avances/demonstrations.llms.md#modele) |
+| Vous obtenez 75 % de précision au seuil de 0,30 | [Identifier la ligne des contacts et la colonne des départs](../../modules/semaine-10-classification-modeles-avances/lectures.llms.md#lecture-3) |
+| Vous changez le seuil après avoir lu les résultats du test | [Refaire le choix avec la validation](../../modules/semaine-10-classification-modeles-avances/demonstrations.llms.md#validation) |
+| Vous prenez les 24 meilleurs scores de l’année pour les interventions | [Appliquer la limite à chaque mois](../../modules/semaine-10-classification-modeles-avances/exercices.llms.md#exercice-4) |
 
 ## Auto-vérification
 

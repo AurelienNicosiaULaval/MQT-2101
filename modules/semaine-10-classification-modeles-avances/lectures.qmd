@@ -5,6 +5,7 @@ format:
   html:
     embed-resources: true
     toc-depth: 2
+    code-fold: false
     code-copy: true
     code-overflow: wrap
     css: media/module10-pages.css
@@ -14,11 +15,27 @@ execute:
 ---
 Lisez ces repères en parallèle avec les démonstrations et les exercices. Les pages expliquent le socle sans supposer qu’une vidéo est disponible.
 
+## Quand utiliser chaque lecture ?
+
+::: {.table-responsive}
+
+| Moment | Statut et passage à lire | Ce qu’il faut en retenir | Vérification personnelle |
+|---|---|---|---|
+| Avant 10.1 | Socle : [cible et séparation](#lecture-1) | Dater la décision, le prédicteur et l’issue | Que sait-on d’un client suivi seulement 20 jours ? |
+| Après l’ajustement | Socle : [cotes et probabilités](#lecture-2) | Revenir à la probabilité après avoir multiplié la cote | Pourquoi deux tickets supplémentaires donnent-ils 49,5 % pour le profil B ? |
+| Avant le choix du seuil | Socle : [matrice et mesures](#lecture-3) | Repérer les départs et les contacts dans deux marges différentes | Pourquoi 30/40 et 30/49 répondent-ils à deux questions ? |
+| Avant d’ouvrir le test | Socle : [coût et capacité](#lecture-4) | Fixer les coûts, puis choisir en validation | Combien de faux positifs supplémentaires pour 13 départs manqués de moins ? |
+| Avant la recommandation | Socle : [calibration et action](#lecture-5) | Distinguer qualité des probabilités, capacité et effet d’un appel | Que peut-on conclure des 12 départs parmi les 19 personnes ciblées ? |
+
+:::
+
 ## Cible, unité et séparation {#lecture-1}
 
 Un résultat binaire décrit un événement observable avec une classe positive définie. La décision précède la réalisation de la cible : chaque prédicteur doit être disponible à cette origine. Séparer l’apprentissage, qui estime les coefficients, la validation, qui choisit une règle, et le test, qui l’évalue après fixation. Pour des données temporelles ou des personnes répétées, un partage aléatoire peut être inadapté.
 
 Exemple : une ligne représente une cliente et la cible indique si elle part dans les 90 jours suivant la date de décision. Les caractéristiques utilisées doivent être connues à cette date. L’apprentissage sert à estimer le modèle; la validation sert à choisir une règle; le test distinct sert à évaluer la règle fixée. Si un seul bloc hors apprentissage sert au choix, il constitue une validation et son score n’est pas un test final indépendant.
+
+Dans les succursales, l’étiquette de décembre 2024 concerne le service de janvier 2025. L’utiliser pour choisir un seuil censé être fixé fin 2024 reviendrait à connaître le mois de janvier. Le transfert écarte donc décembre à chaque frontière. Pour une clientèle réelle, il faudrait connaître la date d’entrée dans le suivi et disposer du recul nécessaire pour attribuer un 0 à chaque personne restée cliente.
 
 ## Logistique, cotes et probabilités {#lecture-2}
 
@@ -26,11 +43,15 @@ Pour une probabilité p, la cote vaut p/(1-p). La régression logistique pose lo
 
 Par exemple, une probabilité de 0,20 correspond à une cote de 0,20/0,80 = 0,25. Si les cotes doublent, elles valent 0,50 et la probabilité devient 0,50/(1 + 0,50), soit environ 0,33. La probabilité n’a donc pas doublé. Dans une régression, cette comparaison suppose une variation d’une unité du prédicteur concerné et les autres prédicteurs maintenus fixes; elle ne démontre pas une relation causale.
 
+Dans le projet, deux clients hypothétiques se distinguent uniquement par leurs tickets. Avec un ticket, la probabilité vaut environ 0,320, soit une cote de 0,471. Passer à trois tickets multiplie cette cote par le carré du rapport estimé pour un ticket, soit 1,443². La cote devient environ 0,981. En revenant à la probabilité, on obtient 0,495. L’écart de 17,5 points dépend du profil fixé.
+
 ## Matrice et mesures {#lecture-3}
 
 Les vrais positifs VP sont les événements ciblés; les faux négatifs FN sont les événements manqués. Les faux positifs FP sont des non-événements ciblés et les vrais négatifs VN les non-événements écartés. Sensibilité = VP/(VP+FN), spécificité = VN/(VN+FP), précision = VP/(VP+FP), exactitude = (VP+VN)/N. Une mesure est indéfinie si son dénominateur vaut zéro. L’exactitude seule peut masquer les événements manqués.
 
 Avec 30 événements réels et 70 non-événements, supposons VP = 24, FN = 6, FP = 28 et VN = 42. La sensibilité vaut 24/30 = 80 % : elle porte sur les événements réels. La précision vaut 24/52 ≈ 46 % : elle porte sur les 52 personnes ciblées. La spécificité vaut 42/70 = 60 %. Ces questions ont des dénominateurs différents; toujours commencer par identifier la classe positive.
+
+Dans la véritable validation du projet, 40 des 130 clients partent. À 0,30, la règle en détecte 30 et cible aussi 19 personnes qui restent. Si la direction vous demande « sur 100 appels semblables, combien concerneraient un futur départ ? », le dénominateur pertinent est le nombre de contacts, soit 49. Si elle demande combien de départs passent sous le radar, il en reste 10 sur 40. Passez à 0,50 et refaites les deux calculs. Les personnes qui changent de décision avaient un risque compris entre 0,30 inclus et 0,50 exclu.
 
 ## Seuil, coût et capacité {#lecture-4}
 
@@ -38,14 +59,18 @@ Le seuil transforme une probabilité en classe. Abaisser le seuil ne diminue pas
 
 Supposons qu’un contact manqué coûte quatre unités et un contact inutile une unité. Sur la validation, comparez les coûts des règles envisagées, puis fixez celle qui convient au contexte. Une capacité limitée peut plutôt conduire à classer les risques et à cibler un nombre maximal de personnes. La proportion réellement ciblée à un seuil fixe peut changer d’un groupe à l’autre; un seuil fixe ne garantit donc pas une capacité fixe.
 
+Au seuil de 0,30 plutôt que 0,50, on compte 12 faux positifs de plus et 13 faux négatifs de moins. Si un faux positif coûte une unité et un faux négatif quatre, ce changement économise 40 unités sur les mêmes clients. Si manquer un départ ne coûtait qu’une demi-unité, le changement coûterait 5,5 unités de plus. Le protocole initial garde le rapport de coûts annoncé. Il n’est pas nécessaire de chercher un autre seuil sur le test.
+
 ## Calibration et action {#lecture-5}
 
 Une calibration descriptive compare, par groupes de risques prédits, la probabilité moyenne à la fréquence observée. Les groupes peuvent être petits et les résultats incertains. Le score de Brier résume l’erreur quadratique des probabilités mais ne mesure pas uniquement la calibration. Un modèle prédit un risque de départ; il n’estime pas nécessairement l’effet d’un contact ni les bénéfices causals de l’intervention.
 
 Si, parmi des personnes dont le risque prédit moyen est de 20 %, environ 20 % vivent l’événement, le groupe est descriptivement cohérent avec cette prévision. Il faut aussi regarder les autres groupes et leurs effectifs : un seul partage ou de petits groupes ne suffisent pas à prouver la calibration future. Un risque prédit élevé ne démontre pas qu’un contact va empêcher le départ.
 
+Sur le test, le groupe des 27 risques les plus faibles a une probabilité moyenne de 6,4 %, et cinq départs y sont observés, soit 18,5 %. Le groupe des 26 risques les plus élevés a une probabilité moyenne de 57,3 % et quatorze départs. Ces nombres permettent de discuter la direction des écarts. Ils ne donnent pas une garantie pour le prochain groupe. Pour l’équipe de fidélisation, 19 contacts sont réalisables sous le plafond de 15 % et 20 le dépassent. Un modèle bien classé ou bien calibré ne suffit toujours pas à savoir à qui un appel profiterait.
+
 ## Lectures ciblées et documentation
 
-James, Witten, Hastie et Tibshirani (2021), *An Introduction to Statistical Learning with Applications in R*, 2e édition, [chapitre 4 sur la classification](https://www.statlearning.com/). Lire la régression logistique, la prédiction et les mesures d’évaluation; le chapitre 5 complète la validation. La documentation R de [`glm`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html) présente la famille binomiale. Les définitions de [sensibilité](https://yardstick.tidymodels.org/reference/sens.html) et de [précision](https://yardstick.tidymodels.org/reference/precision.html) précisent le rôle de la classe positive.
+James, Witten, Hastie et Tibshirani (2021), *An Introduction to Statistical Learning with Applications in R*, 2e édition, [ressources de la deuxième édition](https://www.statlearning.com/resources-second-edition). Après la capsule 2, lire les sections 4.3.1 à 4.3.4 du chapitre 4 sur le modèle logistique, les prédictions et les prédicteurs multiples. Après la capsule 4, la section 5.1.1 sur le jeu de validation permet de reprendre le rôle du partage. Ces lectures sont facultatives. La documentation R de [`glm`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html) présente la famille binomiale. Les définitions de [sensibilité](https://yardstick.tidymodels.org/reference/sens.html) et de [précision](https://yardstick.tidymodels.org/reference/precision.html) précisent le rôle de la classe positive.
 
 Pour approfondir les cotes, la vraisemblance, la déviance, la courbe ROC, un arbre et les réseaux de neurones, ouvrez le [complément facultatif](complements.qmd). Ces outils ne sont pas tous requis pour terminer les rapports.

@@ -54,6 +54,32 @@ Une équipe veut repérer les clients susceptibles de partir dans les 90 jours p
 - Apprentissage pour ajuster, validation pour choisir, test pour évaluer.
 :::
 
+## Une ligne, deux moments
+
+Une équipe doit décider aujourd’hui quels clients contacter. Quelles informations peut-elle inscrire sur sa fiche?
+
+| À la décision | Pendant les 90 jours suivants |
+| --- | --- |
+| Ancienneté, contrat, tickets déjà ouverts | Observer un départ éventuel |
+| Satisfaction déjà recueillie | Attribuer la cible 1 ou 0 à la fin du suivi |
+
+::: {.note-box}
+Une plainte reçue après le départ révélerait une partie de la réponse.
+:::
+
+## Que faire d’un suivi incomplet ?
+
+Deux clients sont toujours présents au dernier jour des données.
+
+| Historique disponible | Peut-on inscrire 0 ? |
+| --- | --- |
+| Client A suivi pendant 90 jours | Oui, si aucun départ n’a été observé. |
+| Client B suivi pendant 20 jours | Les 70 jours restants sont inconnus. |
+
+::: {.note-box}
+Dans le fichier fictif, les 650 étiquettes sont fournies. En pratique, il faudrait auditer les dates.
+:::
+
 ## Trois ensembles aux rôles distincts
 
 :::: {.metric-grid}
@@ -84,6 +110,47 @@ Test : évaluer
 ::::
 
 Les proportions sont approximatives et stratifiées par classe.
+
+## Ouvrir les trois enveloppes dans l’ordre
+
+Le tirage répartit les clients à l’intérieur de chaque classe.
+
+| Ensemble | Restent | Partent | Total |
+| --- | --- | --- | --- |
+| Apprentissage | 271 | 118 | 389 |
+| Validation | 90 | 40 | 130 |
+| Test | 91 | 40 | 131 |
+
+::: {.note-box}
+389 + 130 + 131 = 650 clients. Chaque identifiant apparaît dans un seul ensemble.
+:::
+
+## Quel partage pour quatre succursales ?
+
+Une ligne représente désormais une succursale pendant un mois. La cible concerne le mois suivant.
+
+| Usage | Mois de décision |
+| --- | --- |
+| Ajuster | Janvier 2020 à novembre 2023 |
+| Choisir la règle | Janvier à novembre 2024 |
+| Évaluer | Janvier à décembre 2025 |
+
+::: {.note-box}
+Pourquoi écarter décembre 2024 ? Son étiquette concerne janvier 2025, déjà dans la période de test.
+:::
+
+## Que garantit la séparation ?
+
+Les ensembles de clients sont disjoints. Peut-on promettre la même performance à la prochaine campagne ?
+
+| Vérifiable dans le CSV | À documenter en situation réelle |
+| --- | --- |
+| Unicité des clients et effectifs | Date de mesure de chaque variable |
+| Partage reproductible | Évolution de la clientèle et du taux de départ |
+
+::: {.note-box}
+Le partage aléatoire répond à une question sur des clients distincts. La stabilité dans le temps reste à vérifier.
+:::
 
 ## À retenir
 

@@ -54,6 +54,21 @@ Un départ manqué et un client ciblé à tort n’ont pas les mêmes conséquen
 - Sensibilité = VP / (VP + FN); précision = VP / (VP + FP).
 :::
 
+## Suivre quatre décisions à la main
+
+Exemple illustratif. Au seuil de 0,30, un score égal au seuil déclenche un contact.
+
+| Client | Risque | Départ observé | Décision |
+| --- | --- | --- | --- |
+| A | 0,74 | Oui | Ciblé : VP |
+| B | 0,30 | Non | Ciblé : FP |
+| C | 0,29 | Oui | Écarté : FN |
+| D | 0,08 | Non | Écarté : VN |
+
+::: {.note-box}
+Le seuil décide de l’action. Le résultat observé détermine ensuite dans quelle case cette action se trouve.
+:::
+
 ## Exemple sur 100 clients
 
 :::: {.metric-grid}
@@ -84,6 +99,62 @@ Sensibilité, environ 67 %
 ::::
 
 La précision est 20 / 35, environ 57 %.
+
+## Retrouver les 130 clients de validation
+
+Au seuil de 0,30, complétez les totaux avant de calculer les pourcentages.
+
+| Décision | Départ | Aucun départ | Total |
+| --- | --- | --- | --- |
+| Ciblé | 30 | 19 | 49 |
+| Non ciblé | 10 | 71 | 81 |
+| Total | 40 | 90 | 130 |
+
+::: {.note-box}
+Une colonne répond à « parmi les départs ». Une ligne répond à « parmi les personnes ciblées ».
+:::
+
+## Choisir le bon dénominateur
+
+La même case de 30 vrais positifs répond à deux questions différentes.
+
+| Question | Calcul | Réponse |
+| --- | --- | --- |
+| Parmi les départs, combien sont détectés ? | 30 / 40 | 75,0 % |
+| Parmi les clients ciblés, combien partent ? | 30 / 49 | 61,2 % |
+| Parmi les non-départs, combien sont écartés ? | 71 / 90 | 78,9 % |
+| Quelle part des clients faut-il contacter ? | 49 / 130 | 37,7 % |
+
+::: {.note-box}
+Dire « nous détectons 75 % des départs » précise la population au dénominateur.
+:::
+
+## Que perd-on en relevant le seuil ?
+
+Les 130 probabilités et les événements observés restent les mêmes.
+
+| Seuil | VP | FP | FN | VN |
+| --- | --- | --- | --- | --- |
+| 0,30 | 30 | 19 | 10 | 71 |
+| 0,50 | 17 | 7 | 23 | 83 |
+
+::: {.note-box}
+Le seuil de 0,50 évite 12 faux positifs et manque 13 départs de plus. La capsule suivante donne une valeur à cet échange.
+:::
+
+## Quand la précision est-elle indéfinie ?
+
+Une règle décide de ne contacter personne parmi les 130 clients de validation.
+
+| Mesure | Calcul | Interprétation |
+| --- | --- | --- |
+| Sensibilité | 0 / 40 = 0 | Aucun départ détecté |
+| Précision | 0 / 0 | Aucune personne ciblée à évaluer |
+| Exactitude | 90 / 130 ≈ 69,2 % | Les 90 non-départs sont bien classés |
+
+::: {.note-box}
+Une exactitude proche de 70 % est compatible avec une règle qui manque tous les départs.
+:::
 
 ## À retenir
 

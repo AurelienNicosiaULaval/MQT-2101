@@ -1573,7 +1573,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1585,16 +1585,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1639,7 +1639,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1701,7 +1701,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1715,7 +1715,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6927,147 +6927,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7082,7 +7082,7 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#preparation" id="toc-preparation" class="nav-link active" data-scroll-target="#preparation">Préparation</a></li>
   <li><a href="#exercice-1" id="toc-exercice-1" class="nav-link" data-scroll-target="#exercice-1">Exercice 1 - Définir le problème</a></li>
@@ -7090,9 +7090,13 @@ padding: 1rem;
   <li><a href="#exercice-3" id="toc-exercice-3" class="nav-link" data-scroll-target="#exercice-3">Exercice 3 - Choisir un seuil</a></li>
   <li><a href="#exercice-4" id="toc-exercice-4" class="nav-link" data-scroll-target="#exercice-4">Exercice 4 - Évaluer et vérifier la capacité</a></li>
   <li><a href="#exercice-5" id="toc-exercice-5" class="nav-link" data-scroll-target="#exercice-5">Exercice 5 - Recommandation</a></li>
+  <li><a href="#pratique-supplementaire" id="toc-pratique-supplementaire" class="nav-link" data-scroll-target="#pratique-supplementaire">Pratique supplémentaire</a></li>
   <li><a href="#exercice-6" id="toc-exercice-6" class="nav-link" data-scroll-target="#exercice-6">Exercice 6 - Cotes et probabilités</a></li>
   <li><a href="#exercice-7" id="toc-exercice-7" class="nav-link" data-scroll-target="#exercice-7">Exercice 7 - Mesure indéfinie</a></li>
   <li><a href="#exercice-8" id="toc-exercice-8" class="nav-link" data-scroll-target="#exercice-8">Exercice 8 - Fuite et disponibilité</a></li>
+  <li><a href="#exercice-9" id="toc-exercice-9" class="nav-link" data-scroll-target="#exercice-9">Exercice 9 - Choisir avec une autre échelle de coûts</a></li>
+  <li><a href="#exercice-10" id="toc-exercice-10" class="nav-link" data-scroll-target="#exercice-10">Exercice 10 - Un quota mensuel ou annuel ?</a></li>
+  <li><a href="#exercice-11" id="toc-exercice-11" class="nav-link" data-scroll-target="#exercice-11">Exercice 11 - Lire un groupe de calibration</a></li>
   </ul>
 </nav>
     </div>
@@ -7108,17 +7112,17 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
 
 
-<p>Le transfert traite d’une intervention en succursale, différente du ciblage de clients. Essayez les cinq exercices suivis avant d’ouvrir les corrigés; les exercices 6 à 8 sont des pratiques supplémentaires. Les étiquettes et coûts sont simulés.</p>
+<p>Le transfert traite d’une intervention en succursale, différente du ciblage de clients. Essayez les cinq exercices suivis avant d’ouvrir les corrigés; les exercices 6 à 11 sont des pratiques supplémentaires. Les étiquettes et coûts sont simulés. Faites les exercices 1 et 2 après les capsules correspondantes, le 3 après la capsule 4, puis les exercices 4 et 5 après la capsule 5. Exécutez la préparation puis les blocs des corrigés dans l’ordre : le modèle de l’exercice 2 est requis aux exercices 3 et 4.</p>
 <section id="preparation" class="level2">
 <h2 class="anchored" data-anchor-id="preparation">Préparation</h2>
 <p>Les conditions du mois courant sont supposées connues à la décision. Les mois de décembre 2023 et décembre 2024 sont écartés afin que les étiquettes à horizon d’un mois soient disponibles avant la période suivante.</p>
@@ -7201,7 +7205,7 @@ padding: 1rem;
 2              0.9              5             5            7       0.335</code></pre>
 </div>
 </div>
-<p>Ces probabilités dépendent des conditions fixées et du modèle. Elles ne sont ni des certitudes ni la preuve qu’une rupture cause un futur service insuffisant. Vérifiez aussi si les profils sont plausibles.</p>
+<p>Le modèle donne environ 29,6 % pour zéro rupture et 33,5 % pour cinq ruptures, à utilisation, attente et satisfaction identiques. Ces probabilités dépendent des conditions fixées et du modèle. Elles ne sont ni des certitudes ni la preuve qu’une rupture cause un futur service insuffisant. Vérifiez aussi si les profils sont plausibles.</p>
 </div>
 </div>
 </div>
@@ -7248,7 +7252,7 @@ padding: 1rem;
 <pre><code>[1] 0.25</code></pre>
 </div>
 </div>
-<p>Le seuil est choisi avant consultation du test. Les coûts sont des hypothèses de travail et les mesures en validation servent au choix; elles ne sont pas un test final indépendant.</p>
+<p>Sur les 44 lignes de validation, les couples (FP, FN) valent (9, 6) à 0,25 et (3, 8) à 0,50. Les coûts valent donc 33 et 35 unités. On retient 0,25 pour les coûts annoncés. Le seuil est choisi avant consultation du test. Les coûts sont des hypothèses de travail et les mesures en validation servent au choix; elles ne sont pas un test final indépendant.</p>
 </div>
 </div>
 </div>
@@ -7306,7 +7310,7 @@ padding: 1rem;
 1     24                 6      0.25</code></pre>
 </div>
 </div>
-<p>La règle de capacité n’est pas identique à un seuil fixe. Les égalités sont départagées par le nom de succursale. La comparaison est descriptive sur ce test : une sélection supplémentaire à partir de ce même test nécessiterait une nouvelle évaluation indépendante.</p>
+<p>Le seuil 0,25 signale 22 des 48 mois-succursales de 2025 et détecte 6 des 8 positifs. La règle de capacité affecte 24 interventions sur l’année et détecte également 6 positifs. Les affectations par succursale sont 10 pour Gatineau, 3 pour Montréal, 4 pour Québec et 7 pour Sherbrooke. Ces totaux annuels n’indiquent pas que les deux politiques sélectionnent les mêmes lignes. La règle de capacité n’est pas identique à un seuil fixe. Les égalités sont départagées par le nom de succursale. La comparaison est descriptive sur ce test : une sélection supplémentaire à partir de ce même test nécessiterait une nouvelle évaluation indépendante.</p>
 </div>
 </div>
 </div>
@@ -7326,10 +7330,15 @@ padding: 1rem;
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>Exemple de réponse à la direction : « Avec deux interventions disponibles chaque mois, la règle de classement a retenu 24 mois-succursales et retrouvé 6 des 8 insuffisances simulées en 2025. Gatineau concentre 10 interventions sur 24. Avant un déploiement, je vérifierais cette concentration avec les équipes locales et suivrais les insuffisances effectivement observées lors de la période suivante. »</p>
 <p>Rapportez les résultats effectivement calculés et les coûts supposés. Précisez que la cible est une étiquette simulée et que les lignes d’une même succursale se suivent dans le temps. Surveillez la répartition, puis vérifiez la règle sur une période ultérieure et des données réelles appropriées.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="pratique-supplementaire" class="level2">
+<h2 class="anchored" data-anchor-id="pratique-supplementaire">Pratique supplémentaire</h2>
+<p>Choisissez une difficulté à retravailler. Ces réponses ne sont pas exigées dans le rapport de transfert.</p>
 </section>
 <section id="exercice-6" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-6">Exercice 6 - Cotes et probabilités</h2>
@@ -7387,6 +7396,66 @@ padding: 1rem;
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Non : elle est connue après l’événement à prédire. Sa présence crée une fuite de cible. Il faut utiliser les informations réellement disponibles à l’origine et vérifier les dates de collecte.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-9" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-9">Exercice 9 - Choisir avec une autre échelle de coûts</h2>
+<p>En validation des succursales, un FP coûte maintenant deux unités et un FN quatre. Comparez 0,25 et 0,50.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 9">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 9
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Avec (9 FP, 6 FN), le coût à 0,25 devient 2 × 9 + 4 × 6 = 42. Avec (3 FP, 8 FN), le coût à 0,50 est 38. Le classement est inversé. C’est une nouvelle hypothèse de coût appliquée à la validation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-10" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-10">Exercice 10 - Un quota mensuel ou annuel ?</h2>
+<p>La direction propose de prendre les 24 risques les plus élevés de 2025. Cela garantit-il deux interventions au plus chaque mois ?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 10">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 10
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Non. Trois des 24 plus grands risques pourraient se trouver en janvier. Il faut classer les quatre succursales à l’intérieur de chaque mois et retenir les deux premières. De plus, une liste annuelle construite après décembre utiliserait des informations futures pour décider en janvier.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-11" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-11">Exercice 11 - Lire un groupe de calibration</h2>
+<p>Dans le premier groupe du test clients, 5 personnes sur 27 sont parties pour un risque moyen de 6,4 %. Donnez la fréquence observée et une limite.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corrigé de l’exercice 11">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Corrigé de l’exercice 11
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>5/27 vaut environ 18,5 %. L’écart observé est d’environ 12,1 points de pourcentage. Il concerne un seul groupe de 27 personnes sur ce partage. On peut proposer une nouvelle évaluation sur une autre cohorte avant d’adapter les probabilités.</p>
 </div>
 </div>
 </div>
@@ -7478,7 +7547,7 @@ padding: 1rem;
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7498,11 +7567,11 @@ padding: 1rem;
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7579,7 +7648,7 @@ padding: 1rem;
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7654,7 +7723,7 @@ padding: 1rem;
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7682,7 +7751,7 @@ padding: 1rem;
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7706,7 +7775,7 @@ padding: 1rem;
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7746,7 +7815,7 @@ padding: 1rem;
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7872,7 +7941,7 @@ padding: 1rem;
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

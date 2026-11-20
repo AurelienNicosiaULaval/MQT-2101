@@ -64,6 +64,71 @@ Coût fictif = 4 × faux négatifs + 1 × faux positifs.
 Le seuil choisi dépend de ces hypothèses. Le test n’a pas servi au choix.
 :::
 
+## Facturer les deux types d’erreur
+
+Dans cet exercice, un faux positif coûte une unité et un faux négatif en coûte quatre.
+
+| Seuil | Faux positifs | Faux négatifs | Coût total |
+| --- | --- | --- | --- |
+| 0,30 | 19 × 1 | 10 × 4 | 59 unités |
+| 0,50 | 7 × 1 | 23 × 4 | 99 unités |
+
+::: {.note-box}
+Les nombres proviennent de la validation. Les coûts unitaires sont des hypothèses de décision.
+:::
+
+## Le choix tient-il aux coûts ?
+
+Passer de 0,50 à 0,30 ajoute 12 contacts inutiles et évite 13 départs manqués.
+
+| Coût d’un faux négatif, FP = 1 | Coût à 0,30 | Coût à 0,50 |
+| --- | --- | --- |
+| 4 unités | 59 | 99 |
+| 0,5 unité | 24 | 18,5 |
+
+::: {.note-box}
+Le classement s’inverse lorsque manquer un départ ne coûte qu’une demi-unité. Cette analyse de sensibilité ne change pas le protocole initial.
+:::
+
+## Un seuil n’impose pas un quota
+
+En validation, combien d’appels faudrait-il planifier avec chacune des règles ?
+
+| Seuil | Contacts | Part des 130 clients |
+| --- | --- | --- |
+| 0,30 | 49 | 37,7 % |
+| 0,50 | 24 | 18,5 % |
+
+::: {.note-box}
+Si l’équipe peut appeler au plus 15 % des clients, aucune de ces deux listes de validation ne respecte ce plafond.
+:::
+
+## Écrire la règle avant d’ouvrir le test
+
+Deux politiques sont annoncées. Elles répondent à deux contraintes différentes.
+
+| Décision | Règle fixée |
+| --- | --- |
+| Coût fictif minimal parmi les deux seuils | Cibler si le risque atteint 0,30 |
+| Au plus 15 % de contacts | Classer les risques et arrondir l’effectif maximal à l’entier inférieur |
+
+::: {.note-box}
+À risque égal pour le quota, départager par identifiant. Les résultats du test serviront à décrire ces politiques.
+:::
+
+## Que change le cas des succursales ?
+
+L’équipe d’intervention choisit sur 44 mois-succursales de validation.
+
+| Seuil | FP | FN | Coût : FP + 4 × FN |
+| --- | --- | --- | --- |
+| 0,25 | 9 | 6 | 33 |
+| 0,50 | 3 | 8 | 35 |
+
+::: {.note-box}
+Ici, la marge est de deux unités. Le plafond d’intervention s’applique à chaque mois, à l’échelle du réseau.
+:::
+
 ## À retenir
 
 :::: {.metric-grid}

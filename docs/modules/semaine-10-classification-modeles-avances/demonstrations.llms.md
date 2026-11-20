@@ -4,7 +4,7 @@ Le cas est fictif et porte sur un départ dans les 90 jours. Les coûts et la ca
 
 ## Préparation et cible
 
-Installez `tidyverse` si nécessaire, ouvrez le projet et exécutez les blocs dans l’ordre à partir d’une session neuve. Classe positive : départ = 1. L’identifiant sert aux vérifications et aux égalités, pas comme prédicteur.
+Dans le projet de départ, ouvrez `classification-clients.Rproj`. Pour consulter le projet entièrement résolu, ouvrez `demonstration-classification.Rproj` dans sa propre archive. Installez `tidyverse` si nécessaire et exécutez les blocs dans l’ordre à partir d’une session neuve. Classe positive : départ = 1. L’identifiant sert aux vérifications et aux égalités, pas comme prédicteur.
 
 ``` r
 library(tidyverse)
@@ -42,6 +42,8 @@ clients |> count(partition, depart_90j)
     5 validation             0    90
     6 validation             1    40
 
+Les effectifs attendus sont 389, 130 et 131. La classe positive compte respectivement 118, 40 et 40 clients. La répartition est stratifiée et les effectifs sont entiers. Changer la graine modifierait les personnes présentes dans chaque groupe et les résultats des étapes suivantes.
+
 ## Régression et probabilités
 
 Un rapport de cotes de 1,5 signifie des cotes multipliées par 1,5, pas une probabilité augmentée de 50 %. Les profils comparés sont hypothétiques. L’association conditionnelle n’est pas une preuve causale.
@@ -54,12 +56,12 @@ stopifnot(modele$converged, all(is.finite(coef(modele))))
 exp(coef(modele))
 ```
 
-               (Intercept)        anciennete_mois  utilisation_mensuelle
-                89.1555181              0.9698880              0.9025786
-        tickets_service_6m           satisfaction    type_contratmensuel
-                 1.4428952              0.5410943              1.9203206
-     rabais_actuelfidélité rabais_actuelrétention
-                 0.8721358              1.7765345
+               (Intercept)        anciennete_mois  utilisation_mensuelle 
+                89.1555181              0.9698880              0.9025786 
+        tickets_service_6m           satisfaction    type_contratmensuel 
+                 1.4428952              0.5410943              1.9203206 
+     rabais_actuelfidélité rabais_actuelrétention 
+                 0.8721358              1.7765345 
 
 ``` r
 profils <- tibble(anciennete_mois = c(24, 24), utilisation_mensuelle = c(12, 12),
@@ -75,6 +77,8 @@ profils |> mutate(probabilite = predict(modele, newdata = profils, type = "respo
                    <dbl>       <dbl>
     1                  1       0.320
     2                  3       0.495
+
+Le rapport de cotes pour un ticket supplémentaire vaut environ 1,443. Les deux profils ont respectivement un et trois tickets. Pour ces profils, passer de 32,0 % à 49,5 % représente environ 17,5 points de pourcentage. Le contrat est mensuel dans les deux cas et la catégorie de référence du coefficient de contrat est le contrat annuel.
 
 ## Matrices de confusion
 
@@ -95,22 +99,20 @@ mesures_seuil <- function(observe, probabilite, seuil, cout_fp = 1, cout_fn = 4)
 }
 ```
 
-## Choisir en validation
-
-La validation sert au choix. Un faux négatif coûte ici 4 unités et un faux positif 1 unité, uniquement pour illustrer une décision; la comparaison n’est valide que pour ces hypothèses. En cas d’égalité, la règle fixe le seuil inférieur. Une fois le seuil choisi, ne pas l’ajuster en regardant le test.
+Commencez par calculer les probabilités sur les 130 clients de validation. Un score exactement égal au seuil entraîne un contact.
 
 ``` r
 validation <- validation |> mutate(probabilite = predict(modele, newdata = validation, type = "response"))
 resultats_validation <- bind_rows(mesures_seuil(validation$depart_90j, validation$probabilite, 0.30),
                                  mesures_seuil(validation$depart_90j, validation$probabilite, 0.50))
-resultats_validation |> select(seuil, VP, FP, VN, FN, cout)
+resultats_validation |> select(seuil, VP, FP, VN, FN)
 ```
 
-    # A tibble: 2 × 6
-      seuil    VP    FP    VN    FN  cout
-      <dbl> <int> <int> <int> <int> <dbl>
-    1   0.3    30    19    71    10    59
-    2   0.5    17     7    83    23    99
+    # A tibble: 2 × 5
+      seuil    VP    FP    VN    FN
+      <dbl> <int> <int> <int> <int>
+    1   0.3    30    19    71    10
+    2   0.5    17     7    83    23
 
 ``` r
 resultats_validation |> select(seuil, sensibilite, specificite, precision, proportion_ciblee)
@@ -122,12 +124,30 @@ resultats_validation |> select(seuil, sensibilite, specificite, precision, propo
     1   0.3       0.75        0.789     0.612             0.377
     2   0.5       0.425       0.922     0.708             0.185
 
+À 0,30, 49 clients sont ciblés, dont 30 futurs départs. La sensibilité vaut 30/40 et la précision 30/49. À 0,50, il reste 24 contacts, dont 17 futurs départs. La sensibilité descend à 17/40 et la précision monte à 17/24. L’exemple illustratif sur 100 clients du diaporama sert à apprendre les définitions. Les deux matrices du rapport utilisent les 130 clients du fichier de validation.
+
+## Choisir en validation
+
+La validation sert au choix. Un faux négatif coûte ici 4 unités et un faux positif 1 unité, uniquement pour illustrer une décision; la comparaison n’est valide que pour ces hypothèses. En cas d’égalité, la règle fixe le seuil inférieur. Une fois le seuil choisi, ne pas l’ajuster en regardant le test.
+
+``` r
+resultats_validation |> select(seuil, FP, FN, cout)
+```
+
+    # A tibble: 2 × 4
+      seuil    FP    FN  cout
+      <dbl> <int> <int> <dbl>
+    1   0.3    19    10    59
+    2   0.5     7    23    99
+
 ``` r
 seuil_retenu <- resultats_validation |> arrange(cout, seuil) |> slice(1) |> pull(seuil)
 seuil_retenu
 ```
 
     [1] 0.3
+
+La comparaison donne 59 unités à 0,30 et 99 à 0,50. Abaisser le seuil ajoute 12 faux positifs et évite 13 faux négatifs. À quatre unités par départ manqué, le gain net sur la validation vaut 13 × 4 − 12 = 40 unités. Le rapport de coûts est fictif. Une règle choisie pour le coût peut aussi demander plus d’appels que l’équipe ne peut en faire.
 
 ## Évaluer et communiquer
 
@@ -203,5 +223,9 @@ tibble(clients = nrow(test), cibles = nrow(selection),
       clients cibles departs_detectes precision
         <int>  <int>            <dbl>     <dbl>
     1     131     19               12     0.632
+
+Le seuil 0,30 cible 50 des 131 clients du test et repère 22 des 40 départs. La règle de capacité prend 19 personnes et repère 12 départs. Elle augmente ici la précision de la liste tout en réduisant sa couverture. La règle majoritaire prédit 0 pour tous : son exactitude de 91/131 dépasse celle de la règle au seuil (85/131), mais elle manque les 40 départs.
+
+Le groupe de risque le plus faible réunit 27 personnes et cinq départs. Sa fréquence observée de 18,5 % dépasse la moyenne prévue de 6,4 %. Les autres groupes figurent dans le tableau. Le score de Brier global vaut environ 0,191.
 
 Un ciblage efficace exige aussi qu’un contact puisse aider, ce que ce modèle de risque ne mesure pas. Examiner les coûts réels, la disponibilité des variables, les populations touchées et une période ultérieure avant toute utilisation.

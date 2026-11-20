@@ -1538,7 +1538,7 @@ const initMatch = () => ({
   i: 0,
   lohisByNode: new Map()
 })
-/**
+/** 
  * keeps track of the start (lo) and end (hi) index of the match per node (leaf)
  * note: mutates the contents of `matchContext`
  */
@@ -1550,16 +1550,16 @@ const advanceMatch = (leaf, leafi, matchContext) => {
   matchContext.lohisByNode.set(leaf, { lo: curLoHi?.lo ?? leafi, hi: leafi })
 }
 /**
- * Finds all non-overlapping matches for a search string in the document.
+ * Finds all non-overlapping matches for a search string in the document. 
  * The search string may be split between multiple consecutive leaf nodes.
- *
+ * 
  * Whitespace in the search string must be present in the document to match, but
  * there may be addititional whitespace in the document that is ignored.
- *
+ * 
  * e.g. searching for `dogs rock` would match `dogs  \n <span> rock</span>`,
- * and would contribute the match
+ * and would contribute the match 
  * `{ i:9, els: new Map([[textNode, {lo:0, hi:8}],[spanNode,{lo:0,hi:5}]]) }`
- *
+ * 
  * @returns {Map<HTMLElement,{lo:number,hi:number}>[]}
  */
 function searchMatches(inSearch, el) {
@@ -1604,7 +1604,7 @@ function searchMatches(inSearch, el) {
   return matches
 }
 
-/**
+/** 
  * e.g. `markMatches(myTextNode, [[0,5],[12,15]])` would wrap the
  * character sequences in myTextNode from 0-5 and 12-15 in marks.
  * Its important to mark all sequences in a text node at once
@@ -1666,7 +1666,7 @@ function scrollToFirstVisibleMatch(mainEl) {
  *
  * arrayMapPush(m, 'dog', 'Max')
  * console.log(m) // Map { dog->['Max'] }
- *
+ * 
  * arrayMapPush(m, 'dog', 'Samba')
  * arrayMapPush(m, 'cat', 'Scruffle')
  * console.log(m) // Map { dog->['Max', 'Samba'], cat->['Scruffle'] }
@@ -1680,7 +1680,7 @@ const arrayMapPush = (map, key, item) => {
 // copy&paste any string from a quarto page and
 // this should find that string in the page and highlight it.
 // exception: text that starts outside/inside a tabset and ends
-// inside/outside that tabset.
+// inside/outside that tabset. 
 function highlight(searchStr, el) {
   const matches = searchMatches(searchStr, el);
 
@@ -6892,147 +6892,147 @@ padding: 1rem;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../plan-de-cours.html">
+    <a class="nav-link" href="../../plan-de-cours.html"> 
 <span class="menu-text">Plan de cours</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../calendrier.html">
+    <a class="nav-link" href="../../calendrier.html"> 
 <span class="menu-text">Calendrier</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../installation.html">
+    <a class="nav-link" href="../../installation.html"> 
 <span class="menu-text">Installation</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules-et-ateliers" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Modules et ateliers</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules-et-ateliers">    
         <li>
     <a class="dropdown-item" href="../../modules/semaine-01-introduction/index.html">
  <span class="dropdown-text">Module 01 - Introduction</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-02-r-quarto/index.html">
  <span class="dropdown-text">Module 02 - R et Quarto</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-01-r/index.html">
  <span class="dropdown-text">Atelier 01 - Explorer un tableau</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-03-regression-lineaire/index.html">
  <span class="dropdown-text">Module 03 - Régression linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-02-regression/index.html">
  <span class="dropdown-text">Atelier 02 - Régression</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-04-regression-nonlineaire/index.html">
  <span class="dropdown-text">Module 04 - Régression non linéaire</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-05-preparation-intra/index.html">
  <span class="dropdown-text">Module 05 - Préparation intra</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-06-series-chronologiques-intro/index.html">
  <span class="dropdown-text">Module 06 - Séries chronologiques</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-07-lissage/index.html">
  <span class="dropdown-text">Module 07 - Lissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-08-tendance-saisonnalite/index.html">
  <span class="dropdown-text">Module 08 - Tendance et saisonnalité</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-03-series-chronologiques/index.html">
  <span class="dropdown-text">Atelier 03 - Prévoir la demande</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-09-variables-externes-autocorrelation/index.html">
  <span class="dropdown-text">Module 09 - Variables externes</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/semaine-10-classification-modeles-avances/index.html">
  <span class="dropdown-text">Module 10 - Classification</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../modules/atelier-04-recapitulation/index.html">
  <span class="dropdown-text">Atelier 04 - Intégration</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../evaluations/index.html">
+    <a class="nav-link" href="../../evaluations/index.html"> 
 <span class="menu-text">Évaluations</span></a>
-  </li>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Ressources</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ressources">    
         <li>
     <a class="dropdown-item" href="../../ressources/index.html">
  <span class="dropdown-text">Ressources - Accueil</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/lectures.html">
  <span class="dropdown-text">Lectures et ressources</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/faq.html">
  <span class="dropdown-text">Foire aux questions</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="https://chatgpt.com/g/g-6a0b2ec33d948191ad25b2f247b15de1-analyse-et-modelisation-des-donnees?ref=mini">
  <span class="dropdown-text">GPT du cours</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/ia.html">
  <span class="dropdown-text">IA et apprentissage</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/declaration-ia.html">
  <span class="dropdown-text">Déclaration IA</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-1.html">
  <span class="dropdown-text">Gabarit mini-rapport 1</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/gabarit-mini-rapport-2.html">
  <span class="dropdown-text">Gabarit mini-rapport 2</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/feuille-reference.html">
  <span class="dropdown-text">Feuille de référence</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-r.html">
  <span class="dropdown-text">Aide-mémoire R</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-stat.html">
  <span class="dropdown-text">Aide-mémoire statistique</span></a>
-  </li>
+  </li>  
         <li>
     <a class="dropdown-item" href="../../ressources/aide-memoire-modelisation.html">
  <span class="dropdown-text">Aide-mémoire modélisation</span></a>
-  </li>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../donnees/index.html">
+    <a class="nav-link" href="../../donnees/index.html"> 
 <span class="menu-text">Données</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -7047,14 +7047,16 @@ padding: 1rem;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Sur cette page</h2>
-
+   
   <ul class="collapse">
   <li><a href="#on-passe-au-concret" id="toc-on-passe-au-concret" class="nav-link active" data-scroll-target="#on-passe-au-concret">On passe au concret</a></li>
   <li><a href="#parcours-anticipe" id="toc-parcours-anticipe" class="nav-link" data-scroll-target="#parcours-anticipe">Parcours anticipé pour le mini-rapport 2</a></li>
   <li><a href="#avant-de-commencer" id="toc-avant-de-commencer" class="nav-link" data-scroll-target="#avant-de-commencer">Avant de commencer</a></li>
   <li><a href="#votre-parcours" id="toc-votre-parcours" class="nav-link" data-scroll-target="#votre-parcours">Votre parcours</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication">Exercices d’application</a></li>
   <li><a href="#trace-finale" id="toc-trace-finale" class="nav-link" data-scroll-target="#trace-finale">Trace finale</a></li>
   <li><a href="#ressources-du-module" id="toc-ressources-du-module" class="nav-link" data-scroll-target="#ressources-du-module">Ressources du module</a></li>
+  <li><a href="#erreurs-fréquentes" id="toc-erreurs-fréquentes" class="nav-link" data-scroll-target="#erreurs-fréquentes">Erreurs fréquentes</a></li>
   <li><a href="#auto-vérification" id="toc-auto-vérification" class="nav-link" data-scroll-target="#auto-vérification">Auto-vérification</a></li>
   <li><a href="#je-suis-bloquée" id="toc-je-suis-bloquée" class="nav-link" data-scroll-target="#je-suis-bloquée">Je suis bloqué·e</a></li>
   <li><a href="#lien-avec-lévaluation" id="toc-lien-avec-lévaluation" class="nav-link" data-scroll-target="#lien-avec-lévaluation">Lien avec l’évaluation</a></li>
@@ -7073,11 +7075,11 @@ padding: 1rem;
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
@@ -7180,6 +7182,7 @@ Rapport guidé et transfert
 <h2 class="anchored" data-anchor-id="avant-de-commencer">Avant de commencer</h2>
 <p>Revoir une variable réponse, une régression et un résidu (module 03), la comparaison hors échantillon (module 04) et l’importation dans R (module 02). La <a href="../../modules/semaine-10-classification-modeles-avances/lectures.html">lecture française</a> explique les cotes, les mesures et la calibration. Installez <code>tidyverse</code>, puis téléchargez et ouvrez dans RStudio le <a href="telechargements/classification-clients.zip">projet guidé</a> et le <a href="telechargements/classification-service.zip">projet de transfert</a>. Les deux données et leurs unités figurent dans le <a href="data/dictionnaires.md">dictionnaire</a>.</p>
 <p>Dans le cas guidé, le partage stratifié est de l’ordre de 60 % pour l’apprentissage, 20 % pour la validation et 20 % pour le test. Les deux seuils et les coûts fictifs sont fixés avant la comparaison; la validation choisit la règle et le test évalue la règle retenue. Le partage aléatoire est pédagogique : le fichier ne contient pas les dates permettant une validation temporelle réelle.</p>
+<p>Ouvrez le fichier du même nom que le dossier du projet (extension .Rproj), puis son rapport Quarto. Rendez le document une première fois après avoir exécuté sa préparation.</p>
 </section>
 <section id="votre-parcours" class="level2">
 <h2 class="anchored" data-anchor-id="votre-parcours">Votre parcours</h2>
@@ -7188,11 +7191,17 @@ Rapport guidé et transfert
 <div class="path-grid interactive-path">
 <details class="path-card" id="etape-1">
 <summary>
-<span class="path-number">1</span><span class="path-title">Définir la cible et les partitions</span><span class="path-preview">Activité 10.1</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+<span class="path-number">1</span><span class="path-title">Définir la cible et les partitions</span><span class="path-preview">Que savait-on avant le départ ?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-1">Capsule 1</a><a class="summary-resource-link demo-link" href="demonstrations.html#preparation">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-1">Ex. 1</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
 </summary>
 <div class="step-detail">
 <p>
+<span class="step-label">Objectif</span> Définir l’unité, l’horizon et les trois rôles du partage.
+</p>
+<p>
 <span class="step-label">Ressource</span> <a href="capsules.html#capsule-1">Capsule 1</a> · <a href="lectures.html#lecture-1">Lecture française</a>
+</p>
+<p>
+<span class="step-label">Action</span> Repérez dans le dictionnaire une variable connue à la décision et une information qui ne sera disponible qu’après le suivi.
 </p>
 <div class="ae-box">
 <p class="ae-title">
@@ -7206,17 +7215,23 @@ Définissez l’unité, la classe positive, l’horizon et le moment des prédic
 <span class="step-label">Auto-vérification</span> Je définis un départ observable dans les 90 jours. Je vérifie les identifiants et les trois partitions. Je réserve le test à la règle choisie.
 </p>
 <p>
-<span class="step-label">Transfert distinct</span> Faites l’exercice 1 avant d’ouvrir son corrigé.
+<span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-1">exercice 1</a> sur le mois-succursale.
 </p>
 </div>
 </details>
 <details class="path-card" id="etape-2">
 <summary>
-<span class="path-number">2</span><span class="path-title">Estimer et interpréter</span><span class="path-preview">Activité 10.2</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+<span class="path-number">2</span><span class="path-title">Estimer et interpréter</span><span class="path-preview">Que change un ticket de plus ?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-2">Capsule 2</a><a class="summary-resource-link demo-link" href="demonstrations.html#modele">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-2">Ex. 2</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
 </summary>
 <div class="step-detail">
 <p>
+<span class="step-label">Objectif</span> Passer d’un rapport de cotes à deux risques chiffrés.
+</p>
+<p>
 <span class="step-label">Ressource</span> <a href="capsules.html#capsule-2">Capsule 2</a> · <a href="lectures.html#lecture-2">Lecture française</a>
+</p>
+<p>
+<span class="step-label">Action</span> Comparez à la main les cotes des profils à un et trois tickets, puis vérifiez leurs probabilités dans R.
 </p>
 <div class="ae-box">
 <p class="ae-title">
@@ -7230,17 +7245,23 @@ Ajustez une régression logistique sur l’apprentissage. Interprétez un rappor
 <span class="step-label">Auto-vérification</span> Je distingue une cote d’une probabilité. Je nomme la référence et les variables maintenues fixes. Je ne prétends pas mesurer l’effet de l’intervention.
 </p>
 <p>
-<span class="step-label">Transfert distinct</span> Faites l’exercice 2 avant d’ouvrir son corrigé.
+<span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-2">exercice 2</a> sur les ruptures de stock.
 </p>
 </div>
 </details>
 <details class="path-card" id="etape-3">
 <summary>
-<span class="path-number">3</span><span class="path-title">Lire une matrice de confusion</span><span class="path-preview">Activité 10.3</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+<span class="path-number">3</span><span class="path-title">Lire une matrice de confusion</span><span class="path-preview">Qui figure au dénominateur ?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-3">Capsule 3</a><a class="summary-resource-link demo-link" href="demonstrations.html#matrices">Démo</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
 </summary>
 <div class="step-detail">
 <p>
+<span class="step-label">Objectif</span> Lire séparément les erreurs parmi les départs et parmi les clients ciblés.
+</p>
+<p>
 <span class="step-label">Ressource</span> <a href="capsules.html#capsule-3">Capsule 3</a> · <a href="lectures.html#lecture-3">Lecture française</a>
+</p>
+<p>
+<span class="step-label">Action</span> Tracez une grille de deux lignes et deux colonnes. Écrivez d’abord les totaux, puis les ratios.
 </p>
 <div class="ae-box">
 <p class="ae-title">
@@ -7254,17 +7275,23 @@ Sur la validation, construisez les matrices aux seuils 0,30 et 0,50. Calculez se
 <span class="step-label">Auto-vérification</span> Je vérifie la classe positive. Je distingue faux positifs et faux négatifs. Je précise les dénominateurs et les mesures éventuellement indéfinies.
 </p>
 <p>
-<span class="step-label">Transfert distinct</span> Faites l’exercice 3 avant d’ouvrir son corrigé.
+<span class="step-label">Transfert distinct</span> Conservez vos deux matrices. L’exercice 3 sur les succursales vient après la capsule 4, une fois les coûts expliqués.
 </p>
 </div>
 </details>
 <details class="path-card" id="etape-4">
 <summary>
-<span class="path-number">4</span><span class="path-title">Choisir une règle avant le test</span><span class="path-preview">Activité 10.4</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4">Ex. 4</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+<span class="path-number">4</span><span class="path-title">Choisir une règle avant le test</span><span class="path-preview">Combien coûte chaque erreur ?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-4">Capsule 4</a><a class="summary-resource-link demo-link" href="demonstrations.html#validation">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-3">Ex. 3</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
 </summary>
 <div class="step-detail">
 <p>
+<span class="step-label">Objectif</span> Choisir une règle en validation pour des coûts énoncés.
+</p>
+<p>
 <span class="step-label">Ressource</span> <a href="capsules.html#capsule-4">Capsule 4</a> · <a href="lectures.html#lecture-4">Lecture française</a>
+</p>
+<p>
+<span class="step-label">Action</span> Reprenez les quatre effectifs de chaque seuil et appliquez les mêmes coûts aux deux règles.
 </p>
 <div class="ae-box">
 <p class="ae-title">
@@ -7278,17 +7305,23 @@ Sur la validation seulement, comparez les deux seuils avec un coût fictif de 4 
 <span class="step-label">Auto-vérification</span> Je fixe les coûts et les seuils avant la comparaison. Je n’utilise pas le test pour choisir le seuil. Je présente le coût comme une hypothèse pédagogique.
 </p>
 <p>
-<span class="step-label">Transfert distinct</span> Faites l’exercice 4 avant d’ouvrir son corrigé.
+<span class="step-label">Transfert distinct</span> Faites l’<a href="exercices.html#exercice-3">exercice 3</a> et fixez le seuil du transfert avant d’ouvrir son test.
 </p>
 </div>
 </details>
 <details class="path-card" id="etape-5">
 <summary>
-<span class="path-number">5</span><span class="path-title">Évaluer et recommander</span><span class="path-preview">Activité 10.5</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-5">Ex. 5</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
+<span class="path-number">5</span><span class="path-title">Évaluer et recommander</span><span class="path-preview">Combien de clients peut-on appeler ?</span><span class="path-resource"><a class="summary-resource-link video-link" href="capsules.html#capsule-5">Capsule 5</a><a class="summary-resource-link demo-link" href="demonstrations.html#test">Démo</a><a class="summary-resource-link exercise-link" href="exercices.html#exercice-4">Ex. 4 et 5</a></span><span class="path-toggle"><span class="closed-label">Ouvrir l’étape</span><span class="open-label">Réduire</span></span>
 </summary>
 <div class="step-detail">
 <p>
+<span class="step-label">Objectif</span> Évaluer le choix figé et vérifier sa faisabilité.
+</p>
+<p>
 <span class="step-label">Ressource</span> <a href="capsules.html#capsule-5">Capsule 5</a> · <a href="lectures.html#lecture-5">Lecture française</a>
+</p>
+<p>
+<span class="step-label">Action</span> Confrontez le nombre de contacts, les départs détectés et les risques moyens avant de rédiger votre recommandation.
 </p>
 <div class="ae-box">
 <p class="ae-title">
@@ -7302,25 +7335,60 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
 <span class="step-label">Auto-vérification</span> Je sépare choix en validation et évaluation en test. Je décris la calibration sans la prouver. Je distingue risque de départ et effet d’un contact.
 </p>
 <p>
-<span class="step-label">Transfert distinct</span> Faites l’exercice 5 avant d’ouvrir son corrigé.
+<span class="step-label">Transfert distinct</span> Terminez les <a href="exercices.html#exercice-4">exercices 4 et 5</a> sur la capacité mensuelle et la recommandation.
 </p>
 </div>
 </details>
 </div>
 </section>
+<section id="exercices-dapplication" class="level2">
+<h2 class="anchored" data-anchor-id="exercices-dapplication">Exercices d’application</h2>
+<p>Les ventes d’une succursale et les tickets d’un client ne décrivent pas la même décision. Dans le transfert, la direction dispose de deux interventions par mois pour quatre succursales. Travaillez dans le <a href="telechargements/classification-service.zip">projet des succursales</a>. Réalisez les exercices 1 et 2 après les capsules 1 et 2, l’exercice 3 après la capsule 4, puis les exercices 4 et 5 après la capsule 5. Ouvrez chaque corrigé après votre tentative.</p>
+</section>
 <section id="trace-finale" class="level2">
 <h2 class="anchored" data-anchor-id="trace-finale">Trace finale</h2>
-<p>Dans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois.</p>
+<p>Dans le rapport guidé, présentez la cible et les partitions, les probabilités et rapports de cotes, les deux matrices de validation, le choix de seuil, le test, la calibration descriptive et une recommandation avec limites. Le transfert traite du service insuffisant le mois suivant, de coûts et d’une capacité de deux interventions par mois. Redémarrez R et rendez chacun des deux rapports à partir de son propre projet.</p>
 </section>
 <section id="ressources-du-module" class="level2">
 <h2 class="anchored" data-anchor-id="ressources-du-module">Ressources du module</h2>
-<p>Les cinq capsules et la synthèse sont regroupées dans le <a href="telechargements/module-10-pdf-2026-11-03-harmonise.zip">lot PDF harmonisé du 3 novembre 2026</a>.</p>
+<p>Les cinq capsules et la synthèse sont regroupées dans le <a href="telechargements/module-10-pdf-2026-11-20-tournage.zip">lot PDF des cinq capsules et des notes de cours</a>.</p>
+<div class="resource-list">
+<p><a class="resource-row" href="capsules.html"><span class="resource-row-icon video-icon" aria-hidden="true"></span><span><span class="resource-row-title">Capsules</span><span class="resource-row-text">Cinq supports PDF et HTML avec leurs activités guidées.</span></span></a> <a class="resource-row" href="notes-cours.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Notes de cours</span><span class="resource-row-text">Retrouver les définitions et les exemples chiffrés.</span></span></a> <a class="resource-row" href="demonstrations.html"><span class="resource-row-icon demo-icon" aria-hidden="true"></span><span><span class="resource-row-title">Démonstrations R</span><span class="resource-row-text">Reproduire les probabilités et comparer deux règles de ciblage.</span></span></a> <a class="resource-row" href="exercices.html"><span class="resource-row-icon exercise-icon" aria-hidden="true"></span><span><span class="resource-row-title">Exercices et corrigés</span><span class="resource-row-text">Choisir des interventions dans quatre succursales et vérifier sa réponse.</span></span></a> <a class="resource-row" href="lectures.html"><span class="resource-row-icon reading-icon" aria-hidden="true"></span><span><span class="resource-row-title">Lectures</span><span class="resource-row-text">Relire une notion en français et vérifier sa compréhension.</span></span></a></p>
+</div>
 <ul>
-<li><a href="../../modules/semaine-10-classification-modeles-avances/capsules.html">Capsules</a>, <a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html">démonstrations R</a>, <a href="../../modules/semaine-10-classification-modeles-avances/exercices.html">exercices et corrigés</a> et <a href="../../modules/semaine-10-classification-modeles-avances/lectures.html">lectures</a>.</li>
 <li>Notes de synthèse <a href="notes-cours.html">HTML</a> et <a href="media/pdf/notes-cours.pdf">PDF</a>.</li>
 <li><a href="telechargements/demonstration-classification.zip">Démonstration complète</a>, <a href="telechargements/corrige-service.zip">corrigé du transfert</a> et <a href="telechargements/complements-classification.zip">cahier facultatif</a>.</li>
 <li><a href="../../modules/semaine-10-classification-modeles-avances/complements.html">Compléments facultatifs en ligne</a> : cotes, vraisemblance, ROC, arbre et réseaux de neurones.</li>
 </ul>
+</section>
+<section id="erreurs-fréquentes" class="level2">
+<h2 class="anchored" data-anchor-id="erreurs-fréquentes">Erreurs fréquentes</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Si vous obtenez ce résultat</th>
+<th>Où reprendre</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vous annoncez une hausse de 44,3 points pour un ticket de plus</td>
+<td><a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html#modele">Comparer deux profils aux autres variables fixées</a></td>
+</tr>
+<tr class="even">
+<td>Vous obtenez 75 % de précision au seuil de 0,30</td>
+<td><a href="../../modules/semaine-10-classification-modeles-avances/lectures.html#lecture-3">Identifier la ligne des contacts et la colonne des départs</a></td>
+</tr>
+<tr class="odd">
+<td>Vous changez le seuil après avoir lu les résultats du test</td>
+<td><a href="../../modules/semaine-10-classification-modeles-avances/demonstrations.html#validation">Refaire le choix avec la validation</a></td>
+</tr>
+<tr class="even">
+<td>Vous prenez les 24 meilleurs scores de l’année pour les interventions</td>
+<td><a href="../../modules/semaine-10-classification-modeles-avances/exercices.html#exercice-4">Appliquer la limite à chaque mois</a></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="auto-vérification" class="level2">
 <h2 class="anchored" data-anchor-id="auto-vérification">Auto-vérification</h2>
@@ -7428,7 +7496,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -7448,11 +7516,11 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copié");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -7529,7 +7597,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -7604,7 +7672,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -7632,7 +7700,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -7656,7 +7724,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -7696,7 +7764,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");
@@ -7822,7 +7890,7 @@ Appliquez au test le seuil retenu, décrivez la calibration par groupes et exami
   <div class="nav-footer">
     <div class="nav-footer-left">
 <p>MQT-2101 - Université Laval</p>
-</div>
+</div>   
     <div class="nav-footer-center">
        
     </div>

@@ -1,6 +1,6 @@
 # Exercices - Module 10
 
-Le transfert traite d’une intervention en succursale, différente du ciblage de clients. Essayez les cinq exercices suivis avant d’ouvrir les corrigés; les exercices 6 à 8 sont des pratiques supplémentaires. Les étiquettes et coûts sont simulés.
+Le transfert traite d’une intervention en succursale, différente du ciblage de clients. Essayez les cinq exercices suivis avant d’ouvrir les corrigés; les exercices 6 à 11 sont des pratiques supplémentaires. Les étiquettes et coûts sont simulés. Faites les exercices 1 et 2 après les capsules correspondantes, le 3 après la capsule 4, puis les exercices 4 et 5 après la capsule 5. Exécutez la préparation puis les blocs des corrigés dans l’ordre : le modèle de l’exercice 2 est requis aux exercices 3 et 4.
 
 ## Préparation
 
@@ -65,7 +65,7 @@ Ajustez une régression sur l’apprentissage et comparez deux profils ne diffé
 >     1              0.9              0             5            7       0.296
 >     2              0.9              5             5            7       0.335
 >
-> Ces probabilités dépendent des conditions fixées et du modèle. Elles ne sont ni des certitudes ni la preuve qu’une rupture cause un futur service insuffisant. Vérifiez aussi si les profils sont plausibles.
+> Le modèle donne environ 29,6 % pour zéro rupture et 33,5 % pour cinq ruptures, à utilisation, attente et satisfaction identiques. Ces probabilités dépendent des conditions fixées et du modèle. Elles ne sont ni des certitudes ni la preuve qu’une rupture cause un futur service insuffisant. Vérifiez aussi si les profils sont plausibles.
 
 ## Exercice 3 - Choisir un seuil
 
@@ -104,7 +104,7 @@ En validation, comparez les seuils 0,25 et 0,50 avec un coût fictif de 4 unité
 >
 >     [1] 0.25
 >
-> Le seuil est choisi avant consultation du test. Les coûts sont des hypothèses de travail et les mesures en validation servent au choix; elles ne sont pas un test final indépendant.
+> Sur les 44 lignes de validation, les couples (FP, FN) valent (9, 6) à 0,25 et (3, 8) à 0,50. Les coûts valent donc 33 et 35 unités. On retient 0,25 pour les coûts annoncés. Le seuil est choisi avant consultation du test. Les coûts sont des hypothèses de travail et les mesures en validation servent au choix; elles ne sont pas un test final indépendant.
 
 ## Exercice 4 - Évaluer et vérifier la capacité
 
@@ -156,7 +156,7 @@ Sur 2025, appliquez le seuil choisi. Calculez aussi, comme règle alternative fi
 >        <int>             <dbl>     <dbl>
 >     1     24                 6      0.25
 >
-> La règle de capacité n’est pas identique à un seuil fixe. Les égalités sont départagées par le nom de succursale. La comparaison est descriptive sur ce test : une sélection supplémentaire à partir de ce même test nécessiterait une nouvelle évaluation indépendante.
+> Le seuil 0,25 signale 22 des 48 mois-succursales de 2025 et détecte 6 des 8 positifs. La règle de capacité affecte 24 interventions sur l’année et détecte également 6 positifs. Les affectations par succursale sont 10 pour Gatineau, 3 pour Montréal, 4 pour Québec et 7 pour Sherbrooke. Ces totaux annuels n’indiquent pas que les deux politiques sélectionnent les mêmes lignes. La règle de capacité n’est pas identique à un seuil fixe. Les égalités sont départagées par le nom de succursale. La comparaison est descriptive sur ce test : une sélection supplémentaire à partir de ce même test nécessiterait une nouvelle évaluation indépendante.
 
 ## Exercice 5 - Recommandation
 
@@ -164,7 +164,13 @@ Rédigez une recommandation courte avec la cible, l’horizon, les erreurs, une 
 
 > **TIP:**
 >
+> Exemple de réponse à la direction : « Avec deux interventions disponibles chaque mois, la règle de classement a retenu 24 mois-succursales et retrouvé 6 des 8 insuffisances simulées en 2025. Gatineau concentre 10 interventions sur 24. Avant un déploiement, je vérifierais cette concentration avec les équipes locales et suivrais les insuffisances effectivement observées lors de la période suivante. »
+>
 > Rapportez les résultats effectivement calculés et les coûts supposés. Précisez que la cible est une étiquette simulée et que les lignes d’une même succursale se suivent dans le temps. Surveillez la répartition, puis vérifiez la règle sur une période ultérieure et des données réelles appropriées.
+
+## Pratique supplémentaire
+
+Choisissez une difficulté à retravailler. Ces réponses ne sont pas exigées dans le rapport de transfert.
 
 ## Exercice 6 - Cotes et probabilités
 
@@ -189,3 +195,27 @@ Une variable « nombre de plaintes après le départ » améliore la performance
 > **TIP:**
 >
 > Non : elle est connue après l’événement à prédire. Sa présence crée une fuite de cible. Il faut utiliser les informations réellement disponibles à l’origine et vérifier les dates de collecte.
+
+## Exercice 9 - Choisir avec une autre échelle de coûts
+
+En validation des succursales, un FP coûte maintenant deux unités et un FN quatre. Comparez 0,25 et 0,50.
+
+> **TIP:**
+>
+> Avec (9 FP, 6 FN), le coût à 0,25 devient 2 × 9 + 4 × 6 = 42. Avec (3 FP, 8 FN), le coût à 0,50 est 38. Le classement est inversé. C’est une nouvelle hypothèse de coût appliquée à la validation.
+
+## Exercice 10 - Un quota mensuel ou annuel ?
+
+La direction propose de prendre les 24 risques les plus élevés de 2025. Cela garantit-il deux interventions au plus chaque mois ?
+
+> **TIP:**
+>
+> Non. Trois des 24 plus grands risques pourraient se trouver en janvier. Il faut classer les quatre succursales à l’intérieur de chaque mois et retenir les deux premières. De plus, une liste annuelle construite après décembre utiliserait des informations futures pour décider en janvier.
+
+## Exercice 11 - Lire un groupe de calibration
+
+Dans le premier groupe du test clients, 5 personnes sur 27 sont parties pour un risque moyen de 6,4 %. Donnez la fréquence observée et une limite.
+
+> **TIP:**
+>
+> 5/27 vaut environ 18,5 %. L’écart observé est d’environ 12,1 points de pourcentage. Il concerne un seul groupe de 27 personnes sur ce partage. On peut proposer une nouvelle évaluation sur une autre cohorte avant d’adapter les probabilités.
