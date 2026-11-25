@@ -1,0 +1,59 @@
+name: Vérifier les médias publiés du module 09
+on:
+  push:
+    branches:
+      - verification/medias-module-09-20261125
+permissions: {}
+jobs:
+  verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Télécharger les pages et les supports depuis le site étudiant
+        shell: python
+        run: |
+          from hashlib import sha256
+          from io import BytesIO
+          from urllib.request import urlopen
+          from zipfile import ZipFile
+          from time import sleep
+          from urllib.error import HTTPError
+          base = "https://aureliennicosiaulaval.github.io/MQT-2101/modules/semaine-09-variables-externes-autocorrelation/"
+          expected = {
+              "index.html": "74036baab7c0bf4fd33490e6b1ad80fb7302ef0abccd677c147ed8ee0382a072",
+              "capsules.html": "5b79a397b0a33dcaf62bec6f0abe4dc4deab506b0b7115ebed91610553774038",
+              "media/pdf/capsule-01-support-annote.pdf": "dba43e7d2a85a37f267f0037d174b9c26969b8f483b9e4a30d6633e2f70a844d",
+              "media/pdf/capsule-01-support.pdf": "ef91308781d43806348eee9ff57e2f0ca13002ff9211a458ff21beb58a9b247f",
+              "media/pdf/capsule-02-support-annote.pdf": "95e9a2ac99f0465788dc7c8769794d8e0c4fb0550813611c0b623e406c104093",
+              "media/pdf/capsule-02-support.pdf": "70172aacb6e182b80169a97b166b410fb6eb4f38fe0b1938986734b1a9990c59",
+              "media/pdf/capsule-03-support-annote.pdf": "95dbcf20cd9b6b74e5f3f622128a60e95e523a1fbd0e7bb37982aa1ba53acc08",
+              "media/pdf/capsule-03-support.pdf": "b3dc55ba8717a1fd5b6028d1297ebe65eaca0f66c4e4569912a40d4c617b93ff",
+              "media/pdf/capsule-04-support-annote.pdf": "b04070fdd7a950e0fd9871f2f4ff63dcf1f99bf885acb43d95473c89895b1bf7",
+              "media/pdf/capsule-04-support.pdf": "6a800bce610c19738a694b0bc2d0552a756656d1be7f0966f0801ecb0e17722d",
+              "media/pdf/capsule-05-support-annote.pdf": "78c03973d385380a9312b2606294dbc0d761ea09819aa1eb8df1cbc6b9d3320a",
+              "media/pdf/capsule-05-support.pdf": "b989b45158f75c9a5cc81ea63042f05b14e7a6ffbfcf9edb054bd4bd62d00ad1",
+              "media/pdf/notes-cours.pdf": "00cfc1450420be54c3d97c807a0265c858967991e84059934fcf09fd56b307ee",
+              "telechargements/module-09-pdf-2026-11-25-annote.zip": "c80734043744d520af128a9f3ad92fea0b42e4f7738d49d1b2f69a08074f2350"
+          }
+          def download(path):
+              with urlopen(base + path, timeout=30) as response:
+                  assert response.status == 200, (path, response.status)
+                  return response.read()
+          for attempt in range(12):
+              try:
+                  current = download("capsules.html")
+                  if sha256(current).hexdigest() == expected["capsules.html"]:
+                      break
+              except HTTPError as error:
+                  print(error, flush=True)
+              sleep(5)
+          for path, digest in expected.items():
+              body = download(path)
+              assert sha256(body).hexdigest() == digest, path
+              if path.endswith(".zip"):
+                  with ZipFile(BytesIO(body)) as archive:
+                      assert archive.testzip() is None
+                      assert sorted("media/pdf/" + n for n in archive.namelist()) == sorted(p for p in expected if p.startswith("media/pdf/"))
+                      for n in archive.namelist():
+                          assert sha256(archive.read(n)).hexdigest() == expected["media/pdf/" + n], n
+              print("HTTP 200 et SHA-256 vérifié", path, flush=True)
