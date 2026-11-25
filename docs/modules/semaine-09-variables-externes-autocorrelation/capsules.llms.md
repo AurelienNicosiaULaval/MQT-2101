@@ -4,7 +4,7 @@
 
 À la fin du parcours, vous pourrez comparer deux prévisions de ventes et expliquer à la direction quelles hypothèses rendent leur utilisation possible. Ouvrez le [projet guidé](telechargements/variables-ventes.zip) et suivez la [préparation en R](../../modules/semaine-09-variables-externes-autocorrelation/demonstrations.llms.md#preparation). Consignez chaque production une seule fois dans `variables_ventes.qmd`. Vous retrouverez la même consigne sur l’accueil et à la fin du diaporama.
 
-Téléchargez le [lot des cinq capsules et des notes de cours](telechargements/module-09-pdf-2026-11-18-final.zip).
+Téléchargez le [lot PDF pour tablette](telechargements/module-09-pdf-2026-11-25-annote.zip) : les cinq supports, leurs versions annotées et les notes de cours.
 
 ## Capsule 1 - Auditer les variables
 
@@ -13,6 +13,10 @@ Téléchargez le [lot des cinq capsules et des notes de cours](telechargements/m
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-01-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-01-support-annote.pdf)
 
 ## HTML
 
@@ -42,6 +46,10 @@ Les ventes moyennes sont plus élevées les mois de promotion. Comparez cet éca
 
 [Ouvrir le PDF](media/pdf/capsule-02-support.pdf) · [Télécharger le PDF](media/pdf/capsule-02-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-02-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-02-support-annote.pdf)
+
 ## HTML
 
 [Ouvrir les diapositives](media/qmd/capsule-02-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-02-support.llms.md)
@@ -69,6 +77,10 @@ Calculez le résidu de juillet 2020. Suivez quatre mois successifs sur le tracé
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-03-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-03-support-annote.pdf)
 
 ## HTML
 
@@ -98,6 +110,10 @@ Suivez la propagation d’un écart dans un modèle AR(1), puis départagez les 
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
 
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-04-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-04-support-annote.pdf)
+
 ## HTML
 
 [Ouvrir les diapositives](media/qmd/capsule-04-support.llms.md) · [Télécharger les diapositives](media/qmd/capsule-04-support.llms.md)
@@ -123,6 +139,10 @@ Comparez les deux fiches de janvier, déplacez le prix dans la zone commune et e
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-05-support.pdf) · [Télécharger le PDF](media/pdf/capsule-05-support.pdf)
+
+## PDF annoté
+
+[Ouvrir le PDF annoté](media/pdf/capsule-05-support-annote.pdf) · [Télécharger le PDF annoté](media/pdf/capsule-05-support-annote.pdf)
 
 ## HTML
 

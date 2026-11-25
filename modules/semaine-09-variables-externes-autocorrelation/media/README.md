@@ -1,3 +1,3 @@
 # Médias du module 09
 
-Les supports de cinq capsules et la synthèse sont fournis en HTML et PDF. Aucune vidéo ni version PDF annotée n’est annoncée. Les références détaillées et les notes d’animation sont dans le guide enseignant séparé. Les attributions figurent aussi dans les diapositives de fin et les notices de données.
+Chaque capsule comprend des diapositives HTML, un PDF et sa version annotée. Le lot PDF pour tablette réunit les dix supports et les notes de synthèse. Les références détaillées et les notes d’animation sont dans le guide enseignant séparé. Les attributions figurent aussi dans les diapositives de fin et les notices de données.
