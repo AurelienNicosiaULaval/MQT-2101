@@ -140,7 +140,7 @@ Ce module prépare les questions du final sur les variables externes, les diagno
 
 Téléchargez le [lot PDF pour tablette](telechargements/module-09-pdf-2026-11-25-annote.zip) : les cinq supports, leurs versions annotées et les notes de cours.
 
-[CapsulesCinq capsules avec diapositives HTML, PDF originaux et PDF annotés. Chaque capsule comprend une production guidée.](capsules.llms.md) [Notes de coursSynthèse des cinq étapes en diapositives.](notes-cours.llms.md) [Démonstrations RReproduire la régression, les diagnostics et les scénarios de ventes.](demonstrations.llms.md) [Exercices et corrigésÉtudier la capacité des succursales et vérifier ses réponses après une tentative.](exercices.llms.md) [LecturesReprendre une notion en français et consulter les passages ciblés du manuel.](lectures.llms.md)
+[CapsulesChaque vidéo est accompagnée du PDF, du PDF annoté et des diapositives HTML. Chaque capsule comprend une production guidée.](capsules.llms.md) [Notes de coursSynthèse des cinq étapes en diapositives.](notes-cours.llms.md) [Démonstrations RReproduire la régression, les diagnostics et les scénarios de ventes.](demonstrations.llms.md) [Exercices et corrigésÉtudier la capacité des succursales et vérifier ses réponses après une tentative.](exercices.llms.md) [LecturesReprendre une notion en français et consulter les passages ciblés du manuel.](lectures.llms.md)
 
 - [Notes de synthèse HTML](notes-cours.llms.md) et [PDF](media/pdf/notes-cours.pdf).
 - [Démonstration complète](telechargements/demonstration-variables.zip) et [corrigé de transfert](telechargements/corrige-succursales.zip).

@@ -10,6 +10,10 @@ Téléchargez le [lot PDF pour tablette](telechargements/module-09-pdf-2026-11-2
 
 À la fin de décembre, quelles colonnes de la ligne de janvier peut-on vraiment remplir ? Utilisez le prix moyen et la date de diffusion de l’indice pour trancher.
 
+## Vidéo
+
+[Ouvrir la capsule 1 sur YouTube](https://www.youtube.com/watch?v=C_iJnWW_FhI)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-01-support.pdf) · [Télécharger le PDF](media/pdf/capsule-01-support.pdf)
@@ -41,6 +45,10 @@ Auto-vérification : Je précise l’origine. Je distingue une valeur prévue d�
 ## Capsule 2 - Ajuster et interpréter
 
 Les ventes moyennes sont plus élevées les mois de promotion. Comparez cet écart brut au coefficient ajusté, puis faites varier le prix.
+
+## Vidéo
+
+[Ouvrir la capsule 2 sur YouTube](https://www.youtube.com/watch?v=y_t__plVm_0)
 
 ## PDF
 
@@ -74,6 +82,10 @@ Auto-vérification : Je nomme la catégorie de référence et les unités. Je di
 
 Calculez le résidu de juillet 2020. Suivez quatre mois successifs sur le tracé avant de lire les retards 1 et 12 de l’ACF.
 
+## Vidéo
+
+[Ouvrir la capsule 3 sur YouTube](https://www.youtube.com/watch?v=undNxWDkMCE)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-03-support.pdf) · [Télécharger le PDF](media/pdf/capsule-03-support.pdf)
@@ -106,6 +118,10 @@ Auto-vérification : Je garde l’ordre des mois et distingue résidus et erreur
 
 Suivez la propagation d’un écart dans un modèle AR(1), puis départagez les deux modèles sur janvier, juillet et enfin sur les douze mois.
 
+## Vidéo
+
+[Ouvrir la capsule 4 sur YouTube](https://www.youtube.com/watch?v=_D9EQnQFy6M)
+
 ## PDF
 
 [Ouvrir le PDF](media/pdf/capsule-04-support.pdf) · [Télécharger le PDF](media/pdf/capsule-04-support.pdf)
@@ -135,6 +151,10 @@ Le transfert reprend à la capsule 5 avec la décision de capacité de la succur
 ## Capsule 5 - Communiquer un scénario
 
 Comparez les deux fiches de janvier, déplacez le prix dans la zone commune et examinez ce qui change lorsque l’indice passe de 100 à 105.
+
+## Vidéo
+
+[Ouvrir la capsule 5 sur YouTube](https://www.youtube.com/watch?v=SDH0CIlCli8)
 
 ## PDF
 
