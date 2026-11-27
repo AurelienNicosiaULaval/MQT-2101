@@ -138,14 +138,11 @@ Les nombres proviennent de la validation. Les coûts unitaires sont des hypothè
 
 ## Que change le cas des succursales ?
 
-L’équipe d’intervention choisit sur 44 mois-succursales de validation.
+Quel seuil recommanderiez-vous à l’équipe d’intervention : 0,25 ou 0,50 ?
 
-| Seuil | FP | FN | Coût : FP + 4 × FN |
-| --- | --- | --- | --- |
-| 0,25 | 9 | 6 | 33 |
-| 0,50 | 3 | 8 | 35 |
+Dans l’exercice 3, utilisez les 44 mois-succursales de validation. Pour chaque seuil, comptez les fausses alertes et les insuffisances de service manquées.
 
-Ici, la marge est de deux unités. Le plafond d’intervention s’applique à chaque mois, à l’échelle du réseau.
+Une fausse alerte coûte 1 unité et une insuffisance manquée en coûte 4. Justifiez votre choix avant de consulter les données de 2025.
 
 ## Calibration et action
 
